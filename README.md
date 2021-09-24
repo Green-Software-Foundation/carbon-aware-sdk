@@ -1,11 +1,15 @@
-# WG Scope
-WG Scope extract from the Charter
+# Project Summary
+An SDK to enable the creation of carbon aware applications, applications that do more when the electricity is clean and do less when the electricity is dirty.
 
 ## Appointments 
 * Chair/Project lead - Vaughan Knight (MSFT)
 * Vice Chair
 
 ## Projects Scope
+
+For developers to build carbon aware software, there is a need for a unified baseline to be implemented.  The Carbon Aware Core SDK is a project to build a common core, that is flexible, agnostic, and open, allowing software and systems to build around carbon aware capabilities, and provide the information so those systems themselves become carbon aware.
+
+The Carbon Aware Core API will look to standardise and simplify carbon awareness for developers through a unified API, command line interface, and modular carbon-aware-logic plugin architecture.
 
 ## Resources
 
