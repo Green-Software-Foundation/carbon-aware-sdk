@@ -8,7 +8,7 @@ copyrightDate: "2021"
 logo: "images/gsf_logo.png"
 documentName: "Carbon Aware SDK"
 files:
-  - License.md
+  - license.md
   - carbon-aware-sdk.md
   - Appendix_A.md
 ---
