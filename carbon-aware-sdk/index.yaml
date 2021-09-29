@@ -1,0 +1,14 @@
+---
+title: "Carbon Aware SDK"
+status: "Draft"
+version: "1.0"
+organisationName: "Green Software Foundation"
+date: "2021-10-01"
+copyrightDate: "2021"
+logo: "images/gsf_logo.png"
+documentName: "Carbon Aware SDK"
+files:
+  - License.md
+  - carbon-aware-sdk.md
+  - Appendix_A.md
+---
