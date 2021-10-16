@@ -1,2 +1,6 @@
 ~$*
 *.tmp
+*.dll
+*.pdb
+
+Debug
