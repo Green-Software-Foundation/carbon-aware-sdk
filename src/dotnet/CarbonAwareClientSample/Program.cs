@@ -12,7 +12,7 @@ namespace CarbonAwareClientSample
 
             var ed = ca.GetEmissionsDataForLocationByTime(null, DateTime.Now);
 
-            Console.WriteLine(ed.)
+            Console.WriteLine($"Ratings for location is: {ed.Rating}");
         }
     }
 }

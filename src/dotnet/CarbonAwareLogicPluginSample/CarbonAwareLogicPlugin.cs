@@ -18,10 +18,12 @@ namespace CarbonAwareLogicPluginSample
 
         private static EmissionsData DummyEmissionsData()
         {
+            var rating = ((float)DateTime.Now.Second) / 60f;
+
             return new EmissionsData()
             {
                 Location = null,
-                Rating = 0.5f,
+                Rating = rating,
                 Time = DateTime.Now
             };
         }

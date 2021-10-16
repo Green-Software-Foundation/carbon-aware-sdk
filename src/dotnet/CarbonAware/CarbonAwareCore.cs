@@ -51,7 +51,7 @@ namespace CarbonAware
         /// <returns>magic</returns>
         public EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time)
         {
-            throw new NotImplementedException();
+            return _plugin.GetEmissionsDataForLocationByTime(location, time);
         }
 
         public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> location, DateTime time)
