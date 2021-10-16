@@ -10,9 +10,11 @@ namespace CarbonAwareClientSample
         {
             var ca = new CarbonAwareCore(new CarbonAwareLogicSamplePlugin());
 
-            var ed = ca.GetEmissionsDataForLocationByTime(null, DateTime.Now);
+            var loc = Location.Parse("100.25,20.4");
 
-            Console.WriteLine($"Ratings for location is: {ed.Rating}");
+            var ed = ca.GetEmissionsDataForLocationByTime(loc, DateTime.Now);
+
+            Console.WriteLine($"Ratings for location '{loc}' is: {ed.Rating}");
         }
     }
 }
