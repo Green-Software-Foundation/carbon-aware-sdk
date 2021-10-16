@@ -2,5 +2,8 @@
 *.tmp
 *.dll
 *.pdb
+*.suo
+.suo
 
-Debug
+bin
+obj
