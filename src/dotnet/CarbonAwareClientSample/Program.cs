@@ -10,8 +10,9 @@ namespace CarbonAwareClientSample
         {
             var ca = new CarbonAwareCore(new CarbonAwareLogicSamplePlugin());
 
-            ca.GetEmissionsDataForLocationByTime(null, DateTime.Now);
+            var ed = ca.GetEmissionsDataForLocationByTime(null, DateTime.Now);
 
+            Console.WriteLine(ed.)
         }
     }
 }
