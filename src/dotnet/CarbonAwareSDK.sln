@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware", "CarbonAware\CarbonAware.csproj", "{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareClientSample", "CarbonAwareClientSample\CarbonAwareClientSample.csproj", "{0EAF5F69-2191-4263-925E-6F8F2B3D385B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareCLI", "CarbonAwareCLI\CarbonAwareCLI.csproj", "{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAwareLogicPluginSample", "CarbonAwareLogicPluginSample\CarbonAwareLogicPluginSample.csproj", "{5E7CD769-50E0-4B1B-A5CA-08541121F55D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA} = {40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B21A5E96-73BC-4BC1-86C7-4A4FE4634C34}
+	EndGlobalSection
+EndGlobal

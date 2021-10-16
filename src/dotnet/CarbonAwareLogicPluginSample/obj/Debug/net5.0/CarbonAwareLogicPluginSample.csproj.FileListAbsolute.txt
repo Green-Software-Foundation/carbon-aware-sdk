@@ -1,0 +1,15 @@
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\bin\Debug\net5.0\CarbonAwareLogicPluginSample.deps.json
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\bin\Debug\net5.0\CarbonAwareLogicPluginSample.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\bin\Debug\net5.0\ref\CarbonAwareLogicPluginSample.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\bin\Debug\net5.0\CarbonAwareLogicPluginSample.pdb
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\bin\Debug\net5.0\CarbonAware.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\bin\Debug\net5.0\CarbonAware.pdb
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.csprojAssemblyReference.cache
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.AssemblyInfoInputs.cache
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.AssemblyInfo.cs
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.csproj.CopyComplete
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\ref\CarbonAwareLogicPluginSample.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAwareLogicPluginSample\obj\Debug\net5.0\CarbonAwareLogicPluginSample.pdb

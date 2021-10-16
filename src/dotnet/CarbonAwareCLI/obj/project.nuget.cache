@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "V9t5HJi3Qde2yFaHHBTKeJtcYwpjud1WNL9Bjr03Xw8zFfIseqBgR4FU8rHooJWn3zbh+G70D0DKBnlSGghcEA==",
+  "success": true,
+  "projectFilePath": "D:\\Projects\\GitHub\\carbon_aware_core\\src\\dotnet\\CarbonAwareCLI\\CarbonAwareCLI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Vaughan\\.nuget\\packages\\commandlineparser\\2.8.0\\commandlineparser.2.8.0.nupkg.sha512"
+  ],
+  "logs": []
+}

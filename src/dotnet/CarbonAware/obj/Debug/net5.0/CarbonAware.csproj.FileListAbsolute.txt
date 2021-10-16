@@ -1,0 +1,12 @@
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\bin\Debug\net5.0\CarbonAware.deps.json
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\bin\Debug\net5.0\CarbonAware.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\bin\Debug\net5.0\ref\CarbonAware.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\bin\Debug\net5.0\CarbonAware.pdb
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.csprojAssemblyReference.cache
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.AssemblyInfoInputs.cache
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.AssemblyInfo.cs
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.csproj.CoreCompileInputs.cache
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\ref\CarbonAware.dll
+D:\Projects\GitHub\carbon_aware_core\src\dotnet\CarbonAware\obj\Debug\net5.0\CarbonAware.pdb
