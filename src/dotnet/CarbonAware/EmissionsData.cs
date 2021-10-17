@@ -10,6 +10,6 @@ namespace CarbonAware
     {
         public Location Location { get; set; }
         public DateTime Time { get; set; }
-        public float Rating { get; set; }
+        public double Rating { get; set; }
     }
 }

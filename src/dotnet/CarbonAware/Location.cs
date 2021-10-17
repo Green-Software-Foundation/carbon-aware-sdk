@@ -7,21 +7,30 @@ using System.Threading.Tasks;
 namespace CarbonAware
 {
     /// <summary>
-    /// The location class by Vaughan
+    /// Basic geocoordinate representation 
     /// </summary>
     public class Location
     {
-        public string Latitude { get; }
-        public string Longitude { get; }
-        /// <summary>
-        /// Vaughan's awesome summary
-        /// </summary>
+        public double Latitude { get; }
+        public double Longitude { get; }
+
+        public bool Equals(Location other)
+        {
+            return this.Latitude == other.Latitude && this.Longitude == other.Longitude;
+        }
+
         public Location(string latitude, string longitude)
+        {
+            this.Latitude = double.Parse(latitude);
+            this.Longitude = double.Parse(longitude);
+        }
+
+        public Location(double latitude, double longitude)
         {
             this.Latitude = latitude;
             this.Longitude = longitude;
         }
-
+        
         public override string ToString()
         {
             return $"{this.Latitude},{this.Longitude}";
@@ -36,7 +45,7 @@ namespace CarbonAware
                 return new Location(latLong[0], latLong[1]);
             }
 
-            throw new Exception($"Latitude,Longitude string is no in comma seperated format: '{latitudeLongitude}'");
+            throw new Exception($"Latitude,Longitude string is no in comma separated format: '{latitudeLongitude}'");
         }
     }
 }

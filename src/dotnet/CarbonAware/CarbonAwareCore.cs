@@ -18,10 +18,16 @@ namespace CarbonAware
     {
 
         EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time);
-        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> location, DateTime time);
+        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locationList, DateTime time);
         EmissionsData GetEmissionsDataForLocationByTimeWindow(Location location, TimeWindow timeWindow);
         List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> location, TimeWindow timeWindow);
 
+        EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time);
+    }
+
+    public interface ICarbonDataService
+    {
+        List<EmissionsData> GetData();
     }
 
     /// <summary>
@@ -44,9 +50,9 @@ namespace CarbonAware
         }
 
         /// <summary>
-        /// Get emissions data for a specific location, at a specific time
+        /// Get emissions data for a specific locationList, at a specific time
         /// </summary>
-        /// <param name="location">The location for which the emissions data should be retrieved.</param>
+        /// <param name="location">The locationList for which the emissions data should be retrieved.</param>
         /// <param name="time">The date and time for which the emissions data should be retrieved.</param>
         /// <returns>magic</returns>
         public EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time)
@@ -54,7 +60,7 @@ namespace CarbonAware
             return _plugin.GetEmissionsDataForLocationByTime(location, time);
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> location, DateTime time)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locationList, DateTime time)
         {
             throw new NotImplementedException();
         }
@@ -68,5 +74,11 @@ namespace CarbonAware
         {
             throw new NotImplementedException();
         }
+
+        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time)
+        {
+            throw new NotImplementedException();
+        }
+        
     }
 }

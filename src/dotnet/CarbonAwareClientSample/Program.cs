@@ -8,13 +8,13 @@ namespace CarbonAwareClientSample
     {
         static void Main(string[] args)
         {
-            var ca = new CarbonAwareCore(new CarbonAwareLogicSamplePlugin());
+            //var ca = new CarbonAwareCore(new CarbonAwareLogicPlugin(new EmissionsData()));
 
-            var loc = Location.Parse("100.25,20.4");
+            //var loc = Location.Parse("100.25,20.4");
 
-            var ed = ca.GetEmissionsDataForLocationByTime(loc, DateTime.Now);
+            //var ed = ca.GetEmissionsDataForLocationByTime(loc, DateTime.Now);
 
-            Console.WriteLine($"Ratings for location '{loc}' is: {ed.Rating}");
+            //Console.WriteLine($"Ratings for location '{loc}' is: {ed.Rating}");
         }
     }
 }

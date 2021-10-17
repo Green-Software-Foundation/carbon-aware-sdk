@@ -9,9 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareClientSample", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareCLI", "CarbonAwareCLI\CarbonAwareCLI.csproj", "{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAwareLogicPluginSample", "CarbonAwareLogicPluginSample\CarbonAwareLogicPluginSample.csproj", "{5E7CD769-50E0-4B1B-A5CA-08541121F55D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareLogicPluginSample", "CarbonAwareLogicPluginSample\CarbonAwareLogicPluginSample.csproj", "{5E7CD769-50E0-4B1B-A5CA-08541121F55D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA} = {40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAwareLogicPluginSampleTest", "CarbonAwareLogicPluginSampleTest\CarbonAwareLogicPluginSampleTest.csproj", "{51A511D6-5985-4E57-9EBB-BB972D0BA495}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E7CD769-50E0-4B1B-A5CA-08541121F55D} = {5E7CD769-50E0-4B1B-A5CA-08541121F55D}
 	EndProjectSection
 EndProject
 Global
@@ -36,6 +41,10 @@ Global
 		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E7CD769-50E0-4B1B-A5CA-08541121F55D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51A511D6-5985-4E57-9EBB-BB972D0BA495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51A511D6-5985-4E57-9EBB-BB972D0BA495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51A511D6-5985-4E57-9EBB-BB972D0BA495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51A511D6-5985-4E57-9EBB-BB972D0BA495}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
