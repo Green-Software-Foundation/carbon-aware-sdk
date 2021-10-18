@@ -5,8 +5,6 @@ using System.Linq;
 
 namespace CarbonAwareLogicPluginSample
 {
-    
-
     public class CarbonAwareLogicPlugin: ICarbonAwarePlugin
     {
         public string Name => "CarbonAwareLogicSamplePlugin";
@@ -47,7 +45,6 @@ namespace CarbonAwareLogicPluginSample
             return _emissionsData.Where(ed => location.Contains(ed.Location)).ToList();
         }
         
-        //@todo dummy implementation 
         public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time)
         {
             var locationEmissionsData = _emissionsData.Where(ed => location.Contains(ed.Location)).ToList();

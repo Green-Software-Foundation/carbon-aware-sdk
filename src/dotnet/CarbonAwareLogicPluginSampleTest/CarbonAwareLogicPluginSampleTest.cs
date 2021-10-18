@@ -55,7 +55,7 @@ namespace CarbonAwareLogicPluginSampleTest
 
     public class Tests
     {
-        private CarbonAwareLogicPlugin _plugin;
+        private ICarbonAwareCore _plugin;
 
         [SetUp]
         public void Setup()

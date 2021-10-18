@@ -16,13 +16,13 @@ namespace CarbonAware
 
     public interface ICarbonAwareCore
     {
-
         EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time);
         List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locationList, DateTime time);
         EmissionsData GetEmissionsDataForLocationByTimeWindow(Location location, TimeWindow timeWindow);
         List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> location, TimeWindow timeWindow);
 
         EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time);
+        // more best emissions 
     }
 
     public interface ICarbonDataService
@@ -57,6 +57,7 @@ namespace CarbonAware
         /// <returns>magic</returns>
         public EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time)
         {
+            // telemetry here 
             return _plugin.GetEmissionsDataForLocationByTime(location, time);
         }
 
