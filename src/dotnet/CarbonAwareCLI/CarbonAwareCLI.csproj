@@ -7,6 +7,12 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarbonAwareLogicPluginSample\CarbonAwareLogicPluginSample.csproj" />
+    <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
   </ItemGroup>
 
 </Project>

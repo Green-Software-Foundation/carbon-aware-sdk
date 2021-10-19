@@ -35,19 +35,19 @@ namespace CarbonAwareLogicPluginSample
             return _emissionsData.FirstOrDefault(ed => ed.Location.Equals(location));
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locationList, DateTime time)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locations, DateTime time)
         {
-            return _emissionsData.Where(ed => locationList.Contains(ed.Location)).ToList();
+            return _emissionsData.Where(ed => locations.Contains(ed.Location)).ToList();
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> location, TimeWindow timeWindow)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> locations, TimeWindow timeWindow)
         {
-            return _emissionsData.Where(ed => location.Contains(ed.Location)).ToList();
+            return _emissionsData.Where(ed => locations.Contains(ed.Location)).ToList();
         }
         
-        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time)
+        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> locations, DateTime time)
         {
-            var locationEmissionsData = _emissionsData.Where(ed => location.Contains(ed.Location)).ToList();
+            var locationEmissionsData = _emissionsData.Where(ed => locations.Contains(ed.Location)).ToList();
             var min = locationEmissionsData.Min(ed => ed.Rating);
 
             return locationEmissionsData.First(ed => ed.Rating == min);

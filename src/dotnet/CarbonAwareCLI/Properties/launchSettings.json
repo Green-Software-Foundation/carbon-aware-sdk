@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CarbonAwareCLI": {
+      "commandName": "Project",
+      "commandLineArgs": "-l 102,102 --timeWindowFrom 123 --timeWindowTo 456 -o json -v"
+    }
+  }
+}

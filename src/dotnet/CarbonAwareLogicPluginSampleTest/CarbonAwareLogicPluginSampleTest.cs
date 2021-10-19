@@ -55,13 +55,15 @@ namespace CarbonAwareLogicPluginSampleTest
 
     public class Tests
     {
-        private ICarbonAwareCore _plugin;
+        private ICarbonAwarePlugin _plugin;
+        private CarbonAwareCore _core;
 
         [SetUp]
         public void Setup()
         {
             Console.WriteLine("Test Setup");
             _plugin = new CarbonAwareLogicPlugin(new MockCarbonDataService());
+            _core = new CarbonAwareCore(_plugin);
         }
 
         [TearDown]
@@ -75,6 +77,10 @@ namespace CarbonAwareLogicPluginSampleTest
         {
             var ed = _plugin.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now);
             Assert.AreEqual(ed.Rating, MockRatings.Sydney);
+
+            // Core running on same plugin should have same result
+            ed = _core.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now);
+            Assert.AreEqual(ed.Rating, MockRatings.Sydney);
         }
 
 
@@ -84,10 +90,16 @@ namespace CarbonAwareLogicPluginSampleTest
             var locations = new List<Location>() {MockLocations.Sydney, MockLocations.Auckland};
 
             var emissionDataList = _plugin.GetEmissionsDataForLocationsByTime(locations, DateTime.Now);
-            
             Assert.AreEqual(emissionDataList.Count, 2);
             Assert.AreEqual(emissionDataList[0].Rating, MockRatings.Sydney);
             Assert.AreEqual(emissionDataList[1].Rating, MockRatings.Auckland);
+
+            // Core should have the same result with the same plugin
+            emissionDataList = _core.GetEmissionsDataForLocationsByTime(locations, DateTime.Now);
+            Assert.AreEqual(emissionDataList.Count, 2);
+            Assert.AreEqual(emissionDataList[0].Rating, MockRatings.Sydney);
+            Assert.AreEqual(emissionDataList[1].Rating, MockRatings.Auckland);
+
         }
 
         [Test]
@@ -96,10 +108,16 @@ namespace CarbonAwareLogicPluginSampleTest
             var locations1 = new List<Location>() { MockLocations.Sydney, MockLocations.Melbourne };
             var locations2 = new List<Location>() { MockLocations.Sydney, MockLocations.Auckland, MockLocations.Melbourne };
 
+            // Plugin should find the lowest emissions location 
             var ed = _plugin.GetBestEmissionsDataForLocationsByTime(locations1, DateTime.Now);
             Assert.AreEqual(ed.Location, MockLocations.Melbourne);
-
             ed = _plugin.GetBestEmissionsDataForLocationsByTime(locations2, DateTime.Now);
+            Assert.AreEqual(ed.Location, MockLocations.Auckland);
+
+            // Core should have the same result with the same plugin 
+            ed = _core.GetBestEmissionsDataForLocationsByTime(locations1, DateTime.Now);
+            Assert.AreEqual(ed.Location, MockLocations.Melbourne);
+            ed = _core.GetBestEmissionsDataForLocationsByTime(locations2, DateTime.Now);
             Assert.AreEqual(ed.Location, MockLocations.Auckland);
         }
     }

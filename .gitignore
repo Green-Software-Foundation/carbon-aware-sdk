@@ -4,6 +4,7 @@
 *.pdb
 *.suo
 .suo
+.vs
 
 bin
 obj

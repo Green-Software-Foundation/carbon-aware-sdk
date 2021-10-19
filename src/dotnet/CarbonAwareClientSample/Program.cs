@@ -8,11 +8,19 @@ namespace CarbonAwareClientSample
     {
         static void Main(string[] args)
         {
-            //var ca = new CarbonAwareCore(new BasicPlugin(new WattTimeService(licensekey)));
+            //EmissionsData ed;
+
+            //var ca = new CarbonAwareCore(new BasicPlugin(new BasicDataService()));
 
             //var loc = Location.Parse("100.25,20.4");
 
-            //var ed = ca.GetBestEmissionsDataForLocationsByTime(locArray, DateTime.Now);
+            //ed = ca.GetBestEmissionsDataForLocationsByTime(locArray, DateTime.Now);
+
+            //RunWorkloadInLocation(ed.Location);
+
+            //ScheduleWorkloadAtTime(ed.Time);
+
+            //ScheduleWorkloadAtTimeInLocation(ed.Location, ed.Time);
 
             //Console.WriteLine($"Ratings for location '{loc}' is: {ed.Rating}");
         }

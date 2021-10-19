@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace CarbonAware
 {
-    public interface ICarbonAwarePlugin : ICarbonAwareCore
+    public interface ICarbonAwarePlugin : ICarbonAwareBase
     {
         string Name { get; }
         string Description { get; }
@@ -14,14 +14,14 @@ namespace CarbonAware
         object URL { get; }
     }
 
-    public interface ICarbonAwareCore
+    public interface ICarbonAwareBase
     {
         EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time);
-        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locationList, DateTime time);
+        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locations, DateTime time);
         EmissionsData GetEmissionsDataForLocationByTimeWindow(Location location, TimeWindow timeWindow);
-        List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> location, TimeWindow timeWindow);
+        List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> locations, TimeWindow timeWindow);
 
-        EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time);
+        EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> locations, DateTime time);
         // more best emissions 
     }
 
@@ -33,9 +33,9 @@ namespace CarbonAware
     /// <summary>
     /// Carbon Aware SDK Core Library 
     /// </summary>
-    public class CarbonAwareCore : ICarbonAwareCore
+    public class CarbonAwareCore : ICarbonAwareBase
     {
-        private ICarbonAwarePlugin _plugin;
+        private readonly ICarbonAwarePlugin _plugin;
 
         public CarbonAwareCore(ICarbonAwarePlugin plugin)
         {
@@ -50,9 +50,9 @@ namespace CarbonAware
         }
 
         /// <summary>
-        /// Get emissions data for a specific locationList, at a specific time
+        /// Get emissions data for a specific locations, at a specific time
         /// </summary>
-        /// <param name="location">The locationList for which the emissions data should be retrieved.</param>
+        /// <param name="location">The locations for which the emissions data should be retrieved.</param>
         /// <param name="time">The date and time for which the emissions data should be retrieved.</param>
         /// <returns>magic</returns>
         public EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time)
@@ -61,9 +61,9 @@ namespace CarbonAware
             return _plugin.GetEmissionsDataForLocationByTime(location, time);
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locationList, DateTime time)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locations, DateTime time)
         {
-            throw new NotImplementedException();
+            return _plugin.GetEmissionsDataForLocationsByTime(locations, time);
         }
 
         public EmissionsData GetEmissionsDataForLocationByTimeWindow(Location location, TimeWindow timeWindow)
@@ -71,14 +71,14 @@ namespace CarbonAware
             throw new NotImplementedException();
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> location, TimeWindow timeWindow)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> locations, TimeWindow timeWindow)
         {
             throw new NotImplementedException();
         }
 
-        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> location, DateTime time)
+        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> locations, DateTime time)
         {
-            throw new NotImplementedException();
+            return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time);
         }
         
     }

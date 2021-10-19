@@ -11,12 +11,17 @@ namespace CarbonAware
     /// </summary>
     public class Location
     {
-        public double Latitude { get; }
-        public double Longitude { get; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
 
         public bool Equals(Location other)
         {
             return this.Latitude == other.Latitude && this.Longitude == other.Longitude;
+        }
+
+        public Location()
+        {
+
         }
 
         public Location(string latitude, string longitude)
@@ -45,7 +50,7 @@ namespace CarbonAware
                 return new Location(latLong[0], latLong[1]);
             }
 
-            throw new Exception($"Latitude,Longitude string is no in comma separated format: '{latitudeLongitude}'");
+            throw new ArgumentException($"Latitude,Longitude string is no in comma separated format: '{latitudeLongitude}'");
         }
     }
 }
