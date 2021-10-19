@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CarbonAware;
+﻿using CarbonAware;
 using CarbonAwareLogicPluginSample;
 using CommandLine;
 using Newtonsoft.Json;
+using System;
 
 namespace CarbonAwareCLI
 {
@@ -32,7 +27,7 @@ namespace CarbonAwareCLI
             [Option('o', "output", Required = false, Default = "console", HelpText = "Output value.  Options: console, json")]
             public string Output { get; set; }
 
-            [Option('v', "verbose",  Required = false, HelpText = "Set output to verbose messages.")]
+            [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
             public bool Verbose { get; set; }
         }
 
@@ -70,14 +65,26 @@ namespace CarbonAwareCLI
             {
                 Console.WriteLine("Error: Invalid arguments.");
                 Console.WriteLine(e.Message);
-                return; 
+                return;
             }
 
             var ca = new CarbonAwareCore(new CarbonAwareLogicPlugin(new CarbonAwareLogicSampleJsonDataService()));
 
             var emissions = ca.GetEmissionsDataForLocationByTime(_state.Location, DateTime.Now);
 
-            Console.WriteLine($"Emissions for {_state.Location}: {emissions}");
+            switch (_state.OutputOption)
+            {
+                case OutputOptionStates.Default:
+                {
+                    Console.WriteLine($"Emissions for {emissions.Location} at {emissions.Time}: {emissions.Rating}");
+                    break;
+                }
+                case OutputOptionStates.Json:
+                {
+                    Console.WriteLine($"{JsonConvert.SerializeObject(emissions)}");
+                    break;
+                }
+            }
         }
 
         private void ValidateCommandLineArguments(Options o)
@@ -85,7 +92,7 @@ namespace CarbonAwareCLI
             if (o.Verbose)
             {
                 var jsonText = JsonConvert.SerializeObject(o);
-                Console.WriteLine($"Verbose output enabled. Current Arguments: {jsonText}" );
+                //Console.WriteLine($"Verbose output enabled. Current Arguments: {jsonText}");
             }
 
             if (o.Location is not null)
@@ -113,19 +120,19 @@ namespace CarbonAwareCLI
                 switch (o.Output)
                 {
                     case "json":
-                    {
-                        _state.OutputOption = OutputOptionStates.Json;
-                        break;
-                    }
+                        {
+                            _state.OutputOption = OutputOptionStates.Json;
+                            break;
+                        }
                     case "console":
-                    {
-                        _state.OutputOption = OutputOptionStates.Default;
-                        break;
-                    }
+                        {
+                            _state.OutputOption = OutputOptionStates.Default;
+                            break;
+                        }
                     default:
-                    {
-                        throw new ArgumentException($"Error: '{o.Output}' is an invalid output option.  Valid options are 'json' and 'console'.");
-                    }
+                        {
+                            throw new ArgumentException($"Error: '{o.Output}' is an invalid output option.  Valid options are 'json' and 'console'.");
+                        }
                 }
             }
         }

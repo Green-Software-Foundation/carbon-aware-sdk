@@ -1,0 +1,29 @@
+{
+	"name": "Dev Container",
+	"dockerFile": "Dockerfile",
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined" ],
+
+	// Use 'settings' to set *default* container specific settings.json values on container create. 
+	// You can edit these settings after create using File > Preferences > Settings > Remote.
+	// "settings": { 
+	// 	"terminal.integrated.shell.linux": "/bin/bash",
+	// 	"lldb.executable": "/usr/bin/lldb"
+	// },
+
+	// Use 'appPort' to create a container with published ports. If the port isn't working, be sure
+	// your server accepts connections from all interfaces (0.0.0.0 or '*'), not just localhost.
+	// "appPort": [],
+
+	// Uncomment the next line to run commands after the container is created.
+	// "postCreateCommand": "rustc --version",
+
+	// Comment out the next line to run as root
+	// "remoteUser": "vscode",
+
+	// Add the IDs of extensions you want installed when the container is created in the array below.
+	// "extensions": [
+	// 	"typescript.ts",
+	// 	"json.json",
+	// 	"html.html"
+	// ]
+}

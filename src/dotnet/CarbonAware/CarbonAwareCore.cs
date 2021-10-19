@@ -41,12 +41,12 @@ namespace CarbonAware
         {
             _plugin = plugin;
 
-            Console.WriteLine($"Carbon Aware Core loaded with carbon logic.");
-            Console.WriteLine($"\tName: '{plugin.Name}'");
-            Console.WriteLine($"\tAuthor: '{plugin.Author}'");
-            Console.WriteLine($"\tDescription: '{plugin.Description}'");
-            Console.WriteLine($"\tVersion: '{plugin.Version}'");
-            Console.WriteLine($"\tURL: '{plugin.URL}'");
+            //Console.WriteLine($"Carbon Aware Core loaded with carbon logic.");
+            //Console.WriteLine($"\tName: '{plugin.Name}'");
+            //Console.WriteLine($"\tAuthor: '{plugin.Author}'");
+            //Console.WriteLine($"\tDescription: '{plugin.Description}'");
+            //Console.WriteLine($"\tVersion: '{plugin.Version}'");
+            //Console.WriteLine($"\tURL: '{plugin.URL}'");
         }
 
         /// <summary>
