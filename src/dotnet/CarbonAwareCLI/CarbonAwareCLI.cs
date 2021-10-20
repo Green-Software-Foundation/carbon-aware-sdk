@@ -106,8 +106,8 @@ namespace CarbonAwareCLI
                 }
             }
             
-            // This long term should move into the plugin, vs doing it here and assuming it's making
-            // the best decision
+            // This long term should move into the plugin, vs doing it here and
+            // assuming it's making the best decision
             if (_state.Lowest && foundEmissions.Count > 0)
             {
                 var min = foundEmissions.Min(ed => ed.Rating);
