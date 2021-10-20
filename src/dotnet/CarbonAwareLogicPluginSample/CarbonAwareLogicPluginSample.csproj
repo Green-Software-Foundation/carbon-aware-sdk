@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="locations.json" />
     <None Remove="sample-emissions-data.json" />
   </ItemGroup>
 

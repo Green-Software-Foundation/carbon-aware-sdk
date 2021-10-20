@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using CarbonAware;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace CarbonAwareLogicPluginSample
 {

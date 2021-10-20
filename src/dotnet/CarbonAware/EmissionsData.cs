@@ -8,7 +8,7 @@ namespace CarbonAware
 {
     public record EmissionsData
     {
-        public Location Location;
+        public string Location;
         public DateTime Time;
         public double Rating;
 

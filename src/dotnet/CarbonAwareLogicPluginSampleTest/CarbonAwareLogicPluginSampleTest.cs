@@ -8,9 +8,9 @@ namespace CarbonAwareLogicPluginSampleTest
 {
     public class MockLocations
     {
-        public static Location Sydney = new Location(101, 101);
-        public static Location Melbourne = new Location(102, 102);
-        public static Location Auckland = new Location(103, 103);
+        public static string Sydney = "Sydney";
+        public static string Melbourne = "Melbourne";
+        public static string Auckland = "Melbourne";
     }
 
     public class MockRatings
@@ -87,7 +87,7 @@ namespace CarbonAwareLogicPluginSampleTest
         [Test]
         public void TestEmissionsDataForLocationsByTime()
         {
-            var locations = new List<Location>() {MockLocations.Sydney, MockLocations.Auckland};
+            var locations = new List<string>() {MockLocations.Sydney, MockLocations.Auckland};
 
             var emissionDataList = _plugin.GetEmissionsDataForLocationsByTime(locations, DateTime.Now);
             Assert.AreEqual(emissionDataList.Count, 2);
@@ -105,8 +105,8 @@ namespace CarbonAwareLogicPluginSampleTest
         [Test]
         public void TestEmissionsDataForBestLocationByTime()
         {
-            var locations1 = new List<Location>() { MockLocations.Sydney, MockLocations.Melbourne };
-            var locations2 = new List<Location>() { MockLocations.Sydney, MockLocations.Auckland, MockLocations.Melbourne };
+            var locations1 = new List<string>() { MockLocations.Sydney, MockLocations.Melbourne };
+            var locations2 = new List<string>() { MockLocations.Sydney, MockLocations.Auckland, MockLocations.Melbourne };
 
             // Plugin should find the lowest emissions location 
             var ed = _plugin.GetBestEmissionsDataForLocationsByTime(locations1, DateTime.Now);

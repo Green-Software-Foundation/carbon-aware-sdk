@@ -16,12 +16,12 @@ namespace CarbonAware
 
     public interface ICarbonAwareBase
     {
-        EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time);
-        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locations, DateTime time);
-        EmissionsData GetEmissionsDataForLocationByTimeWindow(Location location, TimeWindow timeWindow);
-        List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> locations, TimeWindow timeWindow);
+        EmissionsData GetEmissionsDataForLocationByTime(string location, DateTime time);
+        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time);
+        EmissionsData GetEmissionsDataForLocationByTimeWindow(string location, TimeWindow timeWindow);
+        List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<string> locations, TimeWindow timeWindow);
 
-        EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> locations, DateTime time);
+        EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time);
         // more best emissions 
     }
 
@@ -55,28 +55,28 @@ namespace CarbonAware
         /// <param name="location">The locations for which the emissions data should be retrieved.</param>
         /// <param name="time">The date and time for which the emissions data should be retrieved.</param>
         /// <returns>magic</returns>
-        public EmissionsData GetEmissionsDataForLocationByTime(Location location, DateTime time)
+        public EmissionsData GetEmissionsDataForLocationByTime(string location, DateTime time)
         {
             // telemetry here 
             return _plugin.GetEmissionsDataForLocationByTime(location, time);
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<Location> locations, DateTime time)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time)
         {
             return _plugin.GetEmissionsDataForLocationsByTime(locations, time);
         }
 
-        public EmissionsData GetEmissionsDataForLocationByTimeWindow(Location location, TimeWindow timeWindow)
+        public EmissionsData GetEmissionsDataForLocationByTimeWindow(string location, TimeWindow timeWindow)
         {
             throw new NotImplementedException();
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<Location> locations, TimeWindow timeWindow)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<string> locations, TimeWindow timeWindow)
         {
             throw new NotImplementedException();
         }
 
-        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<Location> locations, DateTime time)
+        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time)
         {
             return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time);
         }

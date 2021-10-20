@@ -11,7 +11,5 @@ namespace CarbonAwareCLI
         {
             var cli = new CarbonAwareCLI(args);
         }
-
-        
     }
 }
