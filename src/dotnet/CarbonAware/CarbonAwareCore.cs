@@ -25,7 +25,7 @@ namespace CarbonAware
         // more best emissions 
     }
 
-    public interface ICarbonDataService
+    public interface ICarbonAwareStaticDataService
     {
         List<EmissionsData> GetData();
     }

@@ -1,12 +1,11 @@
 ﻿using CarbonAware;
-using CarbonAwareLogicPluginSample;
+using CarbonAware.Plugins.BasicJsonPlugin;
 using CommandLine;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace CarbonAwareCLI
 {
@@ -93,11 +92,13 @@ namespace CarbonAwareCLI
                 return;
             }
 
-            var ca = new CarbonAwareCore(new CarbonAwareLogicPlugin(new CarbonAwareLogicSampleJsonDataService()));
+            var ca = new CarbonAwareCore(
+                new CarbonAwareBasicDataPlugin(
+                    new CarbonAwareStaticJsonDataService("sample-emissions-data.json")));
 
             List<EmissionsData> foundEmissions = new List<EmissionsData>();
 
-            foreach(var loc in _state.Locations)
+            foreach (var loc in _state.Locations)
             {
                 var emissions = ca.GetEmissionsDataForLocationByTime(loc, _state.Time);
                 if (emissions != EmissionsData.None)
@@ -105,7 +106,7 @@ namespace CarbonAwareCLI
                     foundEmissions.Add(emissions);
                 }
             }
-            
+
             // This long term should move into the plugin, vs doing it here and
             // assuming it's making the best decision
             if (_state.Lowest && foundEmissions.Count > 0)
@@ -122,20 +123,20 @@ namespace CarbonAwareCLI
             switch (_state.OutputOption)
             {
                 case OutputOptionStates.Default:
-                {
-                    foreach (var e in emissions)
                     {
-                        Console.WriteLine(
-                            $"Emissions for {e.Location} at {e.Time}: {e.Rating}");
-                    }
+                        foreach (var e in emissions)
+                        {
+                            Console.WriteLine(
+                                $"Emissions for {e.Location} at {e.Time}: {e.Rating}");
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case OutputOptionStates.Json:
-                {
-                    Console.WriteLine($"{JsonConvert.SerializeObject(emissions)}");
-                    break;
-                }
+                    {
+                        Console.WriteLine($"{JsonConvert.SerializeObject(emissions)}");
+                        break;
+                    }
             }
         }
 
@@ -176,14 +177,14 @@ namespace CarbonAwareCLI
             {
                 // Should never be null
             }
-            else 
+            else
             {
                 try
                 {
                     var locationStrings = JsonConvert.DeserializeObject<List<string>>(o.Location);
                     foreach (var ls in locationStrings)
                     {
-                        _state.Locations.Add(ls); 
+                        _state.Locations.Add(ls);
                         _state.LocationOption = LocationOptionStates.List;
                     }
                 }
@@ -234,20 +235,20 @@ namespace CarbonAwareCLI
                 switch (o.Output)
                 {
                     case "json":
-                    {
-                        _state.OutputOption = OutputOptionStates.Json;
-                        break;
-                    }
+                        {
+                            _state.OutputOption = OutputOptionStates.Json;
+                            break;
+                        }
                     case "console":
-                    {
-                        _state.OutputOption = OutputOptionStates.Default;
-                        break;
-                    }
+                        {
+                            _state.OutputOption = OutputOptionStates.Default;
+                            break;
+                        }
                     default:
-                    {
-                        throw new ArgumentException(
-                            $"Error: '{o.Output}' is an invalid output option.  Valid options are 'json' and 'console'.");
-                    }
+                        {
+                            throw new ArgumentException(
+                                $"Error: '{o.Output}' is an invalid output option.  Valid options are 'json' and 'console'.");
+                        }
                 }
             }
         }

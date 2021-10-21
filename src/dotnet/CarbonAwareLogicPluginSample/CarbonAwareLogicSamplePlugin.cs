@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CarbonAwareLogicPluginSample
+namespace CarbonAware.Plugins.BasicJsonPlugin
 {
-    public class CarbonAwareLogicPlugin: ICarbonAwarePlugin
+    public class CarbonAwareBasicDataPlugin : ICarbonAwarePlugin
     {
         public string Name => "CarbonAwareLogicSamplePlugin";
 
@@ -17,12 +17,12 @@ namespace CarbonAwareLogicPluginSample
 
         public object URL => "http://github.com/greensoftwarefoudation";
 
-        private ICarbonDataService _carbonDataService { get; }
+        private ICarbonAwareStaticDataService CarbonAwareStaticDataService { get; }
         private List<EmissionsData> _emissionsData { get; }
-        public CarbonAwareLogicPlugin(ICarbonDataService carbonDataServiceService)
+        public CarbonAwareBasicDataPlugin(ICarbonAwareStaticDataService carbonAwareStaticDataServiceService)
         {
-            this._carbonDataService = carbonDataServiceService;
-            this._emissionsData = this._carbonDataService.GetData();
+            this.CarbonAwareStaticDataService = carbonAwareStaticDataServiceService;
+            this._emissionsData = this.CarbonAwareStaticDataService.GetData();
         }
 
         public EmissionsData GetEmissionsDataForLocationByTime(string location, DateTime time)
@@ -63,6 +63,5 @@ namespace CarbonAwareLogicPluginSample
 
             return locationEmissionsData.First(ed => ed.Rating == min);
         }
-        
     }
 }

@@ -1,8 +1,8 @@
 ﻿using CarbonAware;
-using CarbonAwareLogicPluginSample;
+using CarbonAware.Plugins.BasicJsonPlugin;
 using System;
 
-namespace CarbonAwareClientSample
+namespace CarbonAware.Sample.Client
 {
     class Program
     {

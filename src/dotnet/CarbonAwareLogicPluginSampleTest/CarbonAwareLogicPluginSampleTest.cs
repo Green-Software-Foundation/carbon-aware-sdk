@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using CarbonAware;
-using CarbonAwareLogicPluginSample;
 using NUnit.Framework;
 
-namespace CarbonAwareLogicPluginSampleTest
+namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
 {
     public class MockLocations
     {
@@ -20,7 +18,7 @@ namespace CarbonAwareLogicPluginSampleTest
         public static double Auckland = 0.1;
     }
 
-    public class MockCarbonDataService : ICarbonDataService
+    public class MockCarbonAwareStaticDataService : ICarbonAwareStaticDataService
     {
         private readonly List<EmissionsData> _data = new List<EmissionsData>()
         {
@@ -62,7 +60,7 @@ namespace CarbonAwareLogicPluginSampleTest
         public void Setup()
         {
             Console.WriteLine("Test Setup");
-            _plugin = new CarbonAwareLogicPlugin(new MockCarbonDataService());
+            _plugin = new CarbonAwareBasicDataPlugin(new MockCarbonAwareStaticDataService());
             _core = new CarbonAwareCore(_plugin);
         }
 

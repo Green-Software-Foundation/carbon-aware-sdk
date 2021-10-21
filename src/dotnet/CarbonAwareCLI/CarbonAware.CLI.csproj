@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>CarbonAwareCLI</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarbonAwareLogicPluginSample\CarbonAwareLogicPluginSample.csproj" />
+    <ProjectReference Include="..\CarbonAwareLogicPluginSample\CarbonAware.Plugins.BasicJsonPlugin.csproj" />
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
   </ItemGroup>
 

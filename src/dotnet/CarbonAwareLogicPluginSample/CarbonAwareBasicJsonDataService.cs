@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using CarbonAware;
 using Newtonsoft.Json;
 
-namespace CarbonAwareLogicPluginSample
+namespace CarbonAware.Plugins.BasicJsonPlugin
 {
-    public class CarbonAwareLogicSampleJsonDataService : ICarbonDataService
+    public class CarbonAwareStaticJsonDataService : ICarbonAwareStaticDataService
     {
         private class JsonFile
         {
@@ -17,9 +17,16 @@ namespace CarbonAwareLogicPluginSample
             public List<EmissionsData> Emissions { get; set; }
         }
 
+        private string _fileName { get; }
+
+        public CarbonAwareStaticJsonDataService(string fileName)
+        {
+            _fileName = fileName;
+        }
+
         public List<EmissionsData> GetData()
         {
-            using StreamReader file = File.OpenText(@"sample-emissions-data.json");
+            using StreamReader file = File.OpenText(_fileName);
             var jsonObject = JsonConvert.DeserializeObject<JsonFile>(file.ReadToEnd());
             return jsonObject.Emissions;
         }

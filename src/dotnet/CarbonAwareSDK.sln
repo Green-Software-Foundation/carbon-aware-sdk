@@ -5,16 +5,16 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware", "CarbonAware\CarbonAware.csproj", "{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareClientSample", "CarbonAwareClientSample\CarbonAwareClientSample.csproj", "{0EAF5F69-2191-4263-925E-6F8F2B3D385B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Sample.Client", "CarbonAwareClientSample\CarbonAware.Sample.Client.csproj", "{0EAF5F69-2191-4263-925E-6F8F2B3D385B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareCLI", "CarbonAwareCLI\CarbonAwareCLI.csproj", "{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI", "CarbonAwareCLI\CarbonAware.CLI.csproj", "{CD397D5B-D7C3-4890-AF06-E34EC7A6958D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAwareLogicPluginSample", "CarbonAwareLogicPluginSample\CarbonAwareLogicPluginSample.csproj", "{5E7CD769-50E0-4B1B-A5CA-08541121F55D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJsonPlugin", "CarbonAwareLogicPluginSample\CarbonAware.Plugins.BasicJsonPlugin.csproj", "{5E7CD769-50E0-4B1B-A5CA-08541121F55D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA} = {40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAwareLogicPluginSampleTest", "CarbonAwareLogicPluginSampleTest\CarbonAwareLogicPluginSampleTest.csproj", "{51A511D6-5985-4E57-9EBB-BB972D0BA495}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJsonPlugin.Tests", "CarbonAwareLogicPluginSampleTest\CarbonAware.Plugins.BasicJsonPlugin.Tests.csproj", "{51A511D6-5985-4E57-9EBB-BB972D0BA495}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5E7CD769-50E0-4B1B-A5CA-08541121F55D} = {5E7CD769-50E0-4B1B-A5CA-08541121F55D}
 	EndProjectSection
