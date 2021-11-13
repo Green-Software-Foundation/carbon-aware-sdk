@@ -30,5 +30,9 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
 
-    - name: Test
+    - name: Unit Tests
       run: dotnet test --no-build --verbosity normal
+      
+    - name: Regression Tests 'Get Emission Data for Sydney'
+      run: dotnet run -l Sydney
+      working-directory: './src/dotnet/CarbonAwareCLI/'
