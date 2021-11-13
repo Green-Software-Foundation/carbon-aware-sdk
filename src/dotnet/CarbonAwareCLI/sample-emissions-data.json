@@ -1,0 +1,48 @@
+﻿{
+  "Description":  "This is just a demo json file, data is all fictional.", 
+  "Date": "metadate goes here",
+  "License": "metadate goes here",
+
+  "Emissions": [
+    {
+      "Location": "Sydney",
+      "Rating": "0.6",
+      "Time": "2021-01-01T00:00:01"
+    },
+    {
+      "Location": "Sydney",
+      "Rating": "0.7",
+      "Time": "2021-04-01T00:00:01"
+    },
+    {
+      "Location": "Sydney",
+      "Rating": "0.9",
+      "Time": "2021-07-01T00:00:01"
+    },
+    {
+      "Location": "Sydney",
+      "Rating": "0.72",
+      "Time": "2021-10-01T00:00:01"
+    },
+    {
+      "Location": "Sydney",
+      "Rating": "0.01",
+      "Time": "2022-10-01T00:00:01"
+    },
+    {
+      "Location": "Melbourne",
+      "Rating": "0.71",
+      "Time": "2021-01-01T00:00:02"
+    },
+    {
+      "Location": "US-East",
+      "Rating": "0.65",
+      "Time": "2021-01-01T00:00:02"
+    },
+    {
+      "Location": "Auckland",
+      "Rating": "0.1",
+      "Time": "2021-01-01T00:00:03"
+    }
+  ]
+}
