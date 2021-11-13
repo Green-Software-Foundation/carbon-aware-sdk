@@ -1,4 +1,4 @@
-name: .NET
+name: BUILD CLI in DOTNET
 
 on:
   push:
