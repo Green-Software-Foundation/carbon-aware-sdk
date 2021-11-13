@@ -3,11 +3,11 @@ name: BUILD CLI in DOTNET
 on:
   push:
     paths:
-      - src/dotnet/**
+      - 'src/dotnet/**'
   pull_request:
     branches: [ dev, main ]
     paths:
-      - src/dotnet/**
+      - 'src/dotnet/**'
 
 jobs:
   build:
