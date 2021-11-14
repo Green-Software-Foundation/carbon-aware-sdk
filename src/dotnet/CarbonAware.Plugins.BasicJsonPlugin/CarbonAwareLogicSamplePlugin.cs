@@ -27,18 +27,16 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
 
         public EmissionsData GetEmissionsDataForLocationByTime(string location, DateTime time)
         {
-            var edList = _emissionsData.Where(ed => ed.Location.Equals(location)).ToList();
+            var emissionsBeforeNowAtLocation = _emissionsData.Where(ed => ed.Location.Equals(location) && ed.Time <= time).ToList();
 
-            var beforeTime = edList.Where(ed => ed.Time <= time).ToList();
-
-            if (beforeTime.Count == 0)
+            if (emissionsBeforeNowAtLocation.Count == 0)
             {
                 return EmissionsData.None;
             }
 
-            var maxTime = beforeTime.Max(ed => ed.Time);
+            var mostRecentEmissions = emissionsBeforeNowAtLocation.MaxBy(ed => ed.Time);
 
-            return beforeTime.FirstOrDefault(ed => ed.Time == maxTime);
+            return mostRecentEmissions;
         }
 
         public EmissionsData GetEmissionsDataForLocationByTimeWindow(string location, TimeWindow timeWindow)
