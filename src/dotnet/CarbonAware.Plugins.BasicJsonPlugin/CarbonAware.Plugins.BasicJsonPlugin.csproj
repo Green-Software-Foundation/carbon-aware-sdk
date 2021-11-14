@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,13 +12,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="aws-regions.json">
+    <Content Include="data-files\aws-regions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="azure-regions.json">
+    <Content Include="data-files\azure-regions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="sample-emissions-data.json">
+    <Content Include="data-files\sample-emissions-data.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

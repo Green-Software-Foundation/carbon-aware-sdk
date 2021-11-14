@@ -29,16 +29,16 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         {
             var edList = _emissionsData.Where(ed => ed.Location.Equals(location)).ToList();
 
-            var beforeNow = edList.Where(ed => ed.Time <= time).ToList();
+            var beforeTime = edList.Where(ed => ed.Time <= time).ToList();
 
-            if (beforeNow.Count == 0)
+            if (beforeTime.Count == 0)
             {
                 return EmissionsData.None;
             }
 
-            var maxTime = beforeNow.Max(ed => ed.Time);
+            var maxTime = beforeTime.Max(ed => ed.Time);
 
-            return beforeNow.FirstOrDefault(ed => ed.Time == maxTime);
+            return beforeTime.FirstOrDefault(ed => ed.Time == maxTime);
         }
 
         public EmissionsData GetEmissionsDataForLocationByTimeWindow(string location, TimeWindow timeWindow)
@@ -58,10 +58,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         
         public EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time)
         {
-            var locationEmissionsData = _emissionsData.Where(ed => locations.Contains(ed.Location)).ToList();
-            var min = locationEmissionsData.Min(ed => ed.Rating);
-
-            return locationEmissionsData.First(ed => ed.Rating == min);
+            return _emissionsData.Where(ed => locations.Contains(ed.Location)).MinBy(ed => ed.Rating);
         }
     }
 }
