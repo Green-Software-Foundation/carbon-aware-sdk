@@ -1,5 +1,5 @@
 ﻿using CarbonAware;
-using CarbonAware.Plugins.BasicJsonPlugin;
+//using CarbonAware.Plugins.BasicJsonPlugin;
 using System;
 
 namespace CarbonAware.Sample.Client

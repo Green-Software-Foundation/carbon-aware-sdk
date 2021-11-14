@@ -1,0 +1,8882 @@
+[
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T14:59:05.477765+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T15:59:05.4778238+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T16:59:05.477825+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T17:59:05.4778252+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T18:59:05.4778254+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T19:59:05.4778258+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T20:59:05.477826+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T21:59:05.4778262+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T22:59:05.4778264+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-25T23:59:05.4778267+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T00:59:05.4778269+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T01:59:05.4778271+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T02:59:05.4778273+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T03:59:05.4778275+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T04:59:05.4778277+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T05:59:05.4778279+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T06:59:05.4778281+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T07:59:05.4778283+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T08:59:05.4778285+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T09:59:05.4778287+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T10:59:05.4778289+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T11:59:05.4778291+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T12:59:05.4778293+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "eastus",
+    "Time": "2021-10-26T13:59:05.4778295+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T14:59:05.4778298+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T15:59:05.47783+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T16:59:05.4778302+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T17:59:05.4778303+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T18:59:05.4778305+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T19:59:05.4778307+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T20:59:05.4778309+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T21:59:05.4778311+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T22:59:05.4778313+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-25T23:59:05.4778315+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T00:59:05.4778317+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T01:59:05.4778319+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T02:59:05.4778321+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T03:59:05.4778323+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T04:59:05.4778325+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T05:59:05.4778327+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T06:59:05.4778329+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T07:59:05.477833+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T08:59:05.4778332+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T09:59:05.4778334+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T10:59:05.4778336+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T11:59:05.4778338+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T12:59:05.477834+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "eastus2",
+    "Time": "2021-10-26T13:59:05.4778342+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T14:59:05.4778344+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T15:59:05.4778346+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T16:59:05.4778348+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T17:59:05.4778349+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T18:59:05.4778351+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T19:59:05.4778353+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T20:59:05.4778355+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T21:59:05.4778357+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T22:59:05.4778359+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-25T23:59:05.4778361+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T00:59:05.4778363+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T01:59:05.4778365+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T02:59:05.4778367+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T03:59:05.4778369+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T04:59:05.4778371+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T05:59:05.4778373+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T06:59:05.4778375+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T07:59:05.4778377+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T08:59:05.4778379+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T09:59:05.4778381+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T10:59:05.4778383+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T11:59:05.4778385+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T12:59:05.4778386+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "southcentralus",
+    "Time": "2021-10-26T13:59:05.4778388+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T14:59:05.477839+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T15:59:05.4778393+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T16:59:05.4778395+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T17:59:05.4778397+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T18:59:05.4778398+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T19:59:05.47784+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T20:59:05.4778402+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T21:59:05.4778404+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T22:59:05.4778406+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-25T23:59:05.4778408+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T00:59:05.4778409+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T01:59:05.4778437+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T02:59:05.477844+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T03:59:05.4778442+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T04:59:05.4778444+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T05:59:05.4778446+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T06:59:05.4778447+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T07:59:05.4778449+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T08:59:05.4778451+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T09:59:05.4778453+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T10:59:05.4778455+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T11:59:05.4778457+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T12:59:05.4778459+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "westus2",
+    "Time": "2021-10-26T13:59:05.4778461+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T14:59:05.4778463+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T15:59:05.4778465+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T16:59:05.4778467+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T17:59:05.4778469+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T18:59:05.4778471+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T19:59:05.4778473+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T20:59:05.4778474+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T21:59:05.4778476+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T22:59:05.4778478+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-25T23:59:05.477848+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T00:59:05.4778482+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T01:59:05.4778484+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T02:59:05.4778485+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T03:59:05.4778487+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T04:59:05.4778489+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T05:59:05.4778491+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T06:59:05.4778493+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T07:59:05.4778495+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T08:59:05.4778497+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T09:59:05.4778498+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T10:59:05.47785+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T11:59:05.4778502+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T12:59:05.4778504+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "westus3",
+    "Time": "2021-10-26T13:59:05.4778506+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T14:59:05.4778508+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T15:59:05.477851+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T16:59:05.4778511+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T17:59:05.4778513+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T18:59:05.4778515+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T19:59:05.4778517+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T20:59:05.4778519+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T21:59:05.477852+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T22:59:05.4778522+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-25T23:59:05.4778525+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T00:59:05.4778527+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T01:59:05.4778529+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T02:59:05.4778531+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T03:59:05.4778533+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T04:59:05.4778534+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T05:59:05.4778536+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T06:59:05.4778538+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T07:59:05.477854+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T08:59:05.4778542+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T09:59:05.4778544+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T10:59:05.4778546+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T11:59:05.4778547+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T12:59:05.4778549+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "australiaeast",
+    "Time": "2021-10-26T13:59:05.4778551+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T14:59:05.4778553+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T15:59:05.4778555+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T16:59:05.4778557+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T17:59:05.4778559+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T18:59:05.4778561+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T19:59:05.4778563+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T20:59:05.4778564+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T21:59:05.4778566+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T22:59:05.4778568+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-25T23:59:05.477857+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T00:59:05.4778572+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T01:59:05.4778574+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T02:59:05.4778576+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T03:59:05.4778577+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T04:59:05.4778579+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T05:59:05.4778581+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T06:59:05.4778583+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T07:59:05.4778585+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T08:59:05.4778586+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T09:59:05.4778588+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T10:59:05.477859+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T11:59:05.4778592+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T12:59:05.4778594+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "southeastasia",
+    "Time": "2021-10-26T13:59:05.4778596+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T14:59:05.4778598+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T15:59:05.4778599+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T16:59:05.4778601+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T17:59:05.4778603+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T18:59:05.4778605+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T19:59:05.4778607+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T20:59:05.4778609+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T21:59:05.477861+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T22:59:05.4778612+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-25T23:59:05.4778614+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T00:59:05.4778616+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T01:59:05.4778618+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T02:59:05.4778619+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T03:59:05.4778621+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T04:59:05.4778623+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T05:59:05.4778625+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T06:59:05.4778627+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T07:59:05.4778629+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T08:59:05.477863+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T09:59:05.4778632+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T10:59:05.4778634+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T11:59:05.4778636+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T12:59:05.4778638+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "northeurope",
+    "Time": "2021-10-26T13:59:05.477864+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T14:59:05.4778642+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T15:59:05.4778644+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T16:59:05.4778646+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T17:59:05.4778647+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T18:59:05.4778649+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T19:59:05.4778651+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T20:59:05.4778653+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T21:59:05.4778655+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T22:59:05.4778657+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-25T23:59:05.4778659+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T00:59:05.477866+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T01:59:05.4778662+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T02:59:05.4778664+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T03:59:05.4778666+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T04:59:05.4778668+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T05:59:05.4778669+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T06:59:05.4778671+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T07:59:05.4778673+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T08:59:05.4778675+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T09:59:05.4778677+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T10:59:05.4778678+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T11:59:05.477868+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T12:59:05.4778682+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "swedencentral",
+    "Time": "2021-10-26T13:59:05.4778684+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T14:59:05.4778686+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T15:59:05.4778688+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T16:59:05.477869+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T17:59:05.4778691+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T18:59:05.4778693+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T19:59:05.4778695+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T20:59:05.4778697+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T21:59:05.4778699+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T22:59:05.4778701+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-25T23:59:05.4778703+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T00:59:05.4778704+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T01:59:05.4778706+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T02:59:05.4778708+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T03:59:05.477871+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T04:59:05.4778712+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T05:59:05.4778713+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T06:59:05.4778715+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T07:59:05.4778717+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T08:59:05.4778719+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T09:59:05.4778721+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T10:59:05.4778742+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T11:59:05.4778744+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T12:59:05.4778747+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "uksouth",
+    "Time": "2021-10-26T13:59:05.4778748+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T14:59:05.477875+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T15:59:05.4778752+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T16:59:05.4778754+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T17:59:05.4778756+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T18:59:05.4778758+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T19:59:05.477876+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T20:59:05.4778762+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T21:59:05.4778763+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T22:59:05.4778765+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-25T23:59:05.4778767+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T00:59:05.4778769+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T01:59:05.4778771+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T02:59:05.4778773+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T03:59:05.4778775+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T04:59:05.4778776+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T05:59:05.4778778+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T06:59:05.477878+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T07:59:05.4778783+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T08:59:05.4778785+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T09:59:05.4778787+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T10:59:05.4778789+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T11:59:05.4778791+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T12:59:05.4778792+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "westeurope",
+    "Time": "2021-10-26T13:59:05.4778794+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T14:59:05.4778796+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T15:59:05.4778798+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T16:59:05.47788+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T17:59:05.4778802+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T18:59:05.4778804+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T19:59:05.4778806+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T20:59:05.4778807+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T21:59:05.4778809+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T22:59:05.4778811+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-25T23:59:05.4778813+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T00:59:05.4778815+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T01:59:05.4778817+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T02:59:05.4778819+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T03:59:05.477882+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T04:59:05.4778822+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T05:59:05.4778824+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T06:59:05.4778826+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T07:59:05.4778828+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T08:59:05.477883+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T09:59:05.4778831+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T10:59:05.4778833+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T11:59:05.4778835+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T12:59:05.4778837+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "centralus",
+    "Time": "2021-10-26T13:59:05.4778839+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T14:59:05.4778841+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T15:59:05.4778842+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T16:59:05.4778844+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T17:59:05.4778846+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T18:59:05.4778848+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T19:59:05.477885+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T20:59:05.4778852+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T21:59:05.4778854+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T22:59:05.4778855+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-25T23:59:05.4778857+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T00:59:05.4778859+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T01:59:05.4778861+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T02:59:05.4778863+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T03:59:05.4778864+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T04:59:05.4778866+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T05:59:05.4778868+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T06:59:05.477887+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T07:59:05.4778872+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T08:59:05.4778874+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T09:59:05.4778875+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T10:59:05.4778877+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T11:59:05.4778879+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T12:59:05.4778881+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "northcentralus",
+    "Time": "2021-10-26T13:59:05.4778883+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T14:59:05.4778885+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T15:59:05.4778887+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T16:59:05.4778889+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T17:59:05.477889+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T18:59:05.4778892+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T19:59:05.4778894+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T20:59:05.4778896+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T21:59:05.4778898+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T22:59:05.47789+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-25T23:59:05.4778901+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T00:59:05.4778903+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T01:59:05.4778905+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T02:59:05.4778907+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T03:59:05.4778909+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T04:59:05.477891+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T05:59:05.4778912+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T06:59:05.4778914+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T07:59:05.4778916+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T08:59:05.4778918+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T09:59:05.477892+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T10:59:05.4778921+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T11:59:05.4778923+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T12:59:05.4778925+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "westus",
+    "Time": "2021-10-26T13:59:05.4778927+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T14:59:05.4778929+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T15:59:05.4778954+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T16:59:05.4778956+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T17:59:05.4778958+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T18:59:05.477896+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T19:59:05.4778962+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T20:59:05.4778964+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T21:59:05.4778966+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T22:59:05.4778968+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-25T23:59:05.4778969+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T00:59:05.4778971+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T01:59:05.4778973+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T02:59:05.4778975+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T03:59:05.4778977+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T04:59:05.4778979+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T05:59:05.4778981+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T06:59:05.4778982+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T07:59:05.4778984+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T08:59:05.4778986+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T09:59:05.4778988+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T10:59:05.477899+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T11:59:05.4778992+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T12:59:05.4778993+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "southafricanorth",
+    "Time": "2021-10-26T13:59:05.4778995+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T14:59:05.4778997+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T15:59:05.4778999+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T16:59:05.4779001+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T17:59:05.4779003+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T18:59:05.4779004+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T19:59:05.4779006+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T20:59:05.4779008+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T21:59:05.477901+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T22:59:05.4779012+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-25T23:59:05.4779014+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T00:59:05.4779015+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T01:59:05.4779017+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T02:59:05.4779019+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T03:59:05.4779021+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T04:59:05.4779023+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T05:59:05.4779025+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T06:59:05.4779026+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T07:59:05.4779028+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T08:59:05.477903+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T09:59:05.4779032+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T10:59:05.4779034+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T11:59:05.4779036+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T12:59:05.4779037+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "centralindia",
+    "Time": "2021-10-26T13:59:05.4779039+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T14:59:05.4779041+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T15:59:05.4779044+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T16:59:05.4779046+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T17:59:05.4779047+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T18:59:05.4779049+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T19:59:05.4779051+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T20:59:05.4779053+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T21:59:05.4779055+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T22:59:05.4779057+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-25T23:59:05.4779059+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T00:59:05.4779061+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T01:59:05.4779062+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T02:59:05.4779064+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T03:59:05.4779066+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T04:59:05.4779068+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T05:59:05.477907+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T06:59:05.4779072+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T07:59:05.4779074+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T08:59:05.4779075+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T09:59:05.4779077+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T10:59:05.4779079+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T11:59:05.4779081+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T12:59:05.4779083+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "eastasia",
+    "Time": "2021-10-26T13:59:05.4779085+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T14:59:05.4779087+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T15:59:05.4779088+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T16:59:05.477909+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T17:59:05.4779092+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T18:59:05.4779094+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T19:59:05.4779096+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T20:59:05.4779097+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T21:59:05.4779099+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T22:59:05.4779101+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-25T23:59:05.4779103+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T00:59:05.4779105+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T01:59:05.4779107+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T02:59:05.4779109+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T03:59:05.477911+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T04:59:05.4779112+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T05:59:05.4779114+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T06:59:05.4779116+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T07:59:05.4779118+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T08:59:05.477912+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T09:59:05.4779121+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T10:59:05.4779123+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T11:59:05.4779125+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T12:59:05.4779127+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "japaneast",
+    "Time": "2021-10-26T13:59:05.4779129+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T14:59:05.4779131+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T15:59:05.4779133+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T16:59:05.4779134+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T17:59:05.4779136+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T18:59:05.4779138+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T19:59:05.477914+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T20:59:05.4779142+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T21:59:05.4779144+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T22:59:05.4779146+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-25T23:59:05.4779148+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T00:59:05.4779149+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T01:59:05.4779151+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T02:59:05.4779153+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T03:59:05.4779155+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T04:59:05.4779157+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T05:59:05.4779159+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T06:59:05.477916+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T07:59:05.4779162+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T08:59:05.4779164+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T09:59:05.4779166+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T10:59:05.4779168+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T11:59:05.477917+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T12:59:05.4779171+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "jioindiawest",
+    "Time": "2021-10-26T13:59:05.4779173+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T14:59:05.4779175+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T15:59:05.4779177+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T16:59:05.4779179+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T17:59:05.4779181+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T18:59:05.4779183+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T19:59:05.4779184+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T20:59:05.4779186+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T21:59:05.4779188+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T22:59:05.477919+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-25T23:59:05.4779192+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T00:59:05.4779193+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T01:59:05.4779195+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T02:59:05.4779197+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T03:59:05.4779199+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T04:59:05.4779201+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T05:59:05.4779203+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T06:59:05.4779205+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T07:59:05.4779206+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T08:59:05.4779208+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T09:59:05.477921+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T10:59:05.4779212+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T11:59:05.4779214+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T12:59:05.4779216+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "koreacentral",
+    "Time": "2021-10-26T13:59:05.4779218+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T14:59:05.477922+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T15:59:05.4779221+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T16:59:05.4779223+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T17:59:05.4779225+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T18:59:05.4779227+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T19:59:05.4779229+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T20:59:05.4779231+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T21:59:05.4779232+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T22:59:05.4779234+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-25T23:59:05.4779236+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T00:59:05.4779238+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T01:59:05.477924+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T02:59:05.4779242+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T03:59:05.4779244+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T04:59:05.4779245+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T05:59:05.4779247+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T06:59:05.4779249+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T07:59:05.4779251+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T08:59:05.4779253+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T09:59:05.4779255+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T10:59:05.4779257+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T11:59:05.4779259+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T12:59:05.477926+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "canadacentral",
+    "Time": "2021-10-26T13:59:05.4779262+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T14:59:05.4779264+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T15:59:05.4779266+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T16:59:05.4779268+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T17:59:05.477927+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T18:59:05.4779272+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T19:59:05.4779273+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T20:59:05.4779275+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T21:59:05.4779277+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T22:59:05.4779279+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-25T23:59:05.477931+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T00:59:05.4779312+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T01:59:05.4779314+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T02:59:05.4779316+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T03:59:05.4779318+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T04:59:05.477932+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T05:59:05.4779322+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T06:59:05.4779324+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T07:59:05.4779326+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T08:59:05.4779327+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T09:59:05.4779329+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T10:59:05.4779331+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T11:59:05.4779333+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T12:59:05.4779335+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "francecentral",
+    "Time": "2021-10-26T13:59:05.4779337+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T14:59:05.4779339+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T15:59:05.4779341+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T16:59:05.4779343+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T17:59:05.4779345+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T18:59:05.4779347+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T19:59:05.4779349+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T20:59:05.477935+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T21:59:05.4779352+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T22:59:05.4779354+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-25T23:59:05.4779356+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T00:59:05.4779358+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T01:59:05.477936+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T02:59:05.4779362+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T03:59:05.4779376+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T04:59:05.4779378+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T05:59:05.477938+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T06:59:05.4779382+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T07:59:05.4779384+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T08:59:05.4779386+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T09:59:05.4779388+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T10:59:05.477939+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T11:59:05.4779392+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T12:59:05.4779393+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "germanywestcentral",
+    "Time": "2021-10-26T13:59:05.4779395+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T14:59:05.4779397+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T15:59:05.4779399+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T16:59:05.4779401+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T17:59:05.4779403+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T18:59:05.4779405+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T19:59:05.4779407+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T20:59:05.4779409+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T21:59:05.4779411+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T22:59:05.4779413+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-25T23:59:05.4779415+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T00:59:05.4779416+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T01:59:05.4779418+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T02:59:05.477942+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T03:59:05.4779422+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T04:59:05.4779424+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T05:59:05.4779426+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T06:59:05.4779428+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T07:59:05.477943+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T08:59:05.4779432+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T09:59:05.4779433+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T10:59:05.4779435+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T11:59:05.4779438+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T12:59:05.4779439+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "norwayeast",
+    "Time": "2021-10-26T13:59:05.4779441+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T14:59:05.4779443+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T15:59:05.4779445+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T16:59:05.4779447+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T17:59:05.4779449+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T18:59:05.4779451+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T19:59:05.4779453+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T20:59:05.4779455+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T21:59:05.4779457+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T22:59:05.4779459+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-25T23:59:05.4779461+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T00:59:05.4779463+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T01:59:05.4779465+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T02:59:05.4779466+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T03:59:05.4779468+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T04:59:05.477947+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T05:59:05.4779472+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T06:59:05.4779474+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T07:59:05.4779476+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T08:59:05.4779478+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T09:59:05.477948+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T10:59:05.4779482+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T11:59:05.4779484+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T12:59:05.4779485+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "switzerlandnorth",
+    "Time": "2021-10-26T13:59:05.4779487+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T14:59:05.4779489+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T15:59:05.4779491+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T16:59:05.4779493+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T17:59:05.4779495+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T18:59:05.4779497+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T19:59:05.4779499+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T20:59:05.4779501+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T21:59:05.4779503+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T22:59:05.4779504+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-25T23:59:05.4779506+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T00:59:05.4779508+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T01:59:05.477951+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T02:59:05.4779512+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T03:59:05.4779514+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T04:59:05.4779516+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T05:59:05.4779518+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T06:59:05.477952+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T07:59:05.4779521+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T08:59:05.4779523+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T09:59:05.4779525+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T10:59:05.4779527+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T11:59:05.4779529+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T12:59:05.4779531+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "uaenorth",
+    "Time": "2021-10-26T13:59:05.4779533+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T14:59:05.4779535+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T15:59:05.4779537+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T16:59:05.4779538+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T17:59:05.477954+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T18:59:05.4779542+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T19:59:05.4779544+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T20:59:05.4779546+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T21:59:05.4779548+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T22:59:05.477955+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-25T23:59:05.4779552+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T00:59:05.4779554+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T01:59:05.4779555+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T02:59:05.4779557+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T03:59:05.4779559+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T04:59:05.4779561+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T05:59:05.4779563+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T06:59:05.4779565+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T07:59:05.4779567+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T08:59:05.4779569+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T09:59:05.477957+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T10:59:05.4779572+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T11:59:05.4779574+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T12:59:05.4779576+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "brazilsouth",
+    "Time": "2021-10-26T13:59:05.4779578+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T14:59:05.477958+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T15:59:05.4779582+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T16:59:05.4779584+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T17:59:05.4779586+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T18:59:05.4779588+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T19:59:05.477959+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T20:59:05.4779592+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T21:59:05.4779593+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T22:59:05.4779595+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-25T23:59:05.4779597+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T00:59:05.4779599+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T01:59:05.4779601+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T02:59:05.4779603+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T03:59:05.4779604+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T04:59:05.4779606+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T05:59:05.4779608+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T06:59:05.477961+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T07:59:05.4779612+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T08:59:05.4779614+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T09:59:05.4779616+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T10:59:05.4779617+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T11:59:05.4779619+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T12:59:05.4779621+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "centralusstage",
+    "Time": "2021-10-26T13:59:05.4779623+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T14:59:05.4779625+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T15:59:05.4779627+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T16:59:05.4779629+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T17:59:05.4779631+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T18:59:05.4779632+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T19:59:05.4779634+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T20:59:05.4779636+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T21:59:05.4779638+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T22:59:05.477964+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-25T23:59:05.4779642+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T00:59:05.4779643+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T01:59:05.4779645+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T02:59:05.4779647+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T03:59:05.4779649+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T04:59:05.4779651+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T05:59:05.4779653+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T06:59:05.4779654+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T07:59:05.4779656+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T08:59:05.4779658+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T09:59:05.477966+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T10:59:05.4779662+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T11:59:05.4779663+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T12:59:05.4779665+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "eastusstage",
+    "Time": "2021-10-26T13:59:05.4779667+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T14:59:05.4779669+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T15:59:05.4779671+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T16:59:05.4779673+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T17:59:05.4779675+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T18:59:05.4779677+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T19:59:05.4779679+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T20:59:05.477968+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T21:59:05.4779682+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T22:59:05.4779684+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-25T23:59:05.4779686+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T00:59:05.4779688+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T01:59:05.477969+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T02:59:05.4779691+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T03:59:05.4779693+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T04:59:05.4779695+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T05:59:05.4779697+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T06:59:05.4779699+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T07:59:05.4779701+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T08:59:05.4779703+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T09:59:05.4779704+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T10:59:05.4779706+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T11:59:05.4779708+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T12:59:05.477971+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "eastus2stage",
+    "Time": "2021-10-26T13:59:05.4779712+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T14:59:05.4779714+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T15:59:05.4779716+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T16:59:05.4779718+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T17:59:05.4779719+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T18:59:05.4779721+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T19:59:05.4779723+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T20:59:05.4779725+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T21:59:05.4779727+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T22:59:05.4779729+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-25T23:59:05.477973+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T00:59:05.4779732+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T01:59:05.4779734+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T02:59:05.4779736+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T03:59:05.4779738+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T04:59:05.477974+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T05:59:05.4779741+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T06:59:05.4779743+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T07:59:05.4779745+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T08:59:05.4779747+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T09:59:05.4779749+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T10:59:05.4779751+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T11:59:05.4779752+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T12:59:05.4779754+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "northcentralusstage",
+    "Time": "2021-10-26T13:59:05.4779756+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T14:59:05.477979+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T15:59:05.4779793+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T16:59:05.4779795+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T17:59:05.4779797+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T18:59:05.4779799+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T19:59:05.4779801+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T20:59:05.4779803+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T21:59:05.4779805+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T22:59:05.4779806+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-25T23:59:05.4779808+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T00:59:05.477981+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T01:59:05.4779812+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T02:59:05.4779814+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T03:59:05.4779815+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T04:59:05.4779817+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T05:59:05.4779819+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T06:59:05.4779821+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T07:59:05.4779823+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T08:59:05.4779825+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T09:59:05.4779826+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T10:59:05.4779828+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T11:59:05.477983+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T12:59:05.4779832+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "southcentralusstage",
+    "Time": "2021-10-26T13:59:05.4779834+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T14:59:05.4779836+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T15:59:05.4779838+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T16:59:05.4779839+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T17:59:05.4779841+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T18:59:05.4779843+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T19:59:05.4779845+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T20:59:05.4779847+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T21:59:05.4779849+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T22:59:05.4779851+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-25T23:59:05.4779852+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T00:59:05.4779854+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T01:59:05.4779856+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T02:59:05.4779858+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T03:59:05.477986+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T04:59:05.4779861+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T05:59:05.4779863+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T06:59:05.4779865+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T07:59:05.4779867+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T08:59:05.4779869+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T09:59:05.4779871+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T10:59:05.4779873+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T11:59:05.4779874+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T12:59:05.4779876+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "westusstage",
+    "Time": "2021-10-26T13:59:05.4779878+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T14:59:05.477988+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T15:59:05.4779882+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T16:59:05.4779884+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T17:59:05.4779886+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T18:59:05.4779887+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T19:59:05.4779889+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T20:59:05.4779891+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T21:59:05.4779893+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T22:59:05.4779895+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-25T23:59:05.4779897+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T00:59:05.4779898+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T01:59:05.47799+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T02:59:05.4779902+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T03:59:05.4779904+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T04:59:05.4779906+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T05:59:05.4779908+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T06:59:05.4779909+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T07:59:05.4779911+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T08:59:05.4779913+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T09:59:05.4779915+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T10:59:05.4779917+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T11:59:05.4779918+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T12:59:05.477992+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "westus2stage",
+    "Time": "2021-10-26T13:59:05.4779922+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T14:59:05.4779924+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T15:59:05.4779926+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T16:59:05.4779928+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T17:59:05.477993+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T18:59:05.4779932+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T19:59:05.4779933+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T20:59:05.4779935+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T21:59:05.4779937+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T22:59:05.4779939+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-25T23:59:05.4779941+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T00:59:05.4779943+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T01:59:05.4779945+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T02:59:05.4779947+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T03:59:05.4779948+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T04:59:05.477995+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T05:59:05.4779952+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T06:59:05.4779954+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T07:59:05.4779956+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T08:59:05.4779957+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T09:59:05.4779959+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T10:59:05.4779961+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T11:59:05.4779963+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T12:59:05.4779965+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "asia",
+    "Time": "2021-10-26T13:59:05.4779966+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T14:59:05.4779968+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T15:59:05.477997+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T16:59:05.4779972+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T17:59:05.4779974+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T18:59:05.4779976+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T19:59:05.4779977+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T20:59:05.4779979+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T21:59:05.4779981+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T22:59:05.4779983+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-25T23:59:05.4779985+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T00:59:05.4779987+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T01:59:05.4779989+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T02:59:05.477999+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T03:59:05.4779992+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T04:59:05.4779994+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T05:59:05.4779996+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T06:59:05.4779998+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T07:59:05.478+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T08:59:05.4780001+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T09:59:05.4780003+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T10:59:05.4780005+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T11:59:05.4780007+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T12:59:05.4780009+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "asiapacific",
+    "Time": "2021-10-26T13:59:05.4780011+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T14:59:05.4780013+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T15:59:05.4780015+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T16:59:05.4780017+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T17:59:05.4780019+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T18:59:05.4780021+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T19:59:05.4780022+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T20:59:05.4780024+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T21:59:05.4780026+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T22:59:05.4780028+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-25T23:59:05.478003+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T00:59:05.4780032+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T01:59:05.4780033+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T02:59:05.4780035+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T03:59:05.4780037+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T04:59:05.4780039+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T05:59:05.4780041+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T06:59:05.4780043+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T07:59:05.4780045+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T08:59:05.4780047+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T09:59:05.4780048+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T10:59:05.478005+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T11:59:05.4780052+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T12:59:05.4780054+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "australia",
+    "Time": "2021-10-26T13:59:05.4780056+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T14:59:05.4780058+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T15:59:05.478006+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T16:59:05.4780061+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T17:59:05.4780063+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T18:59:05.4780065+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T19:59:05.4780067+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T20:59:05.4780069+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T21:59:05.478007+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T22:59:05.4780072+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-25T23:59:05.4780074+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T00:59:05.4780076+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T01:59:05.4780078+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T02:59:05.478008+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T03:59:05.4780082+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T04:59:05.4780083+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T05:59:05.4780085+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T06:59:05.4780087+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T07:59:05.4780089+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T08:59:05.4780091+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T09:59:05.4780093+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T10:59:05.4780094+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T11:59:05.4780096+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T12:59:05.4780098+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "brazil",
+    "Time": "2021-10-26T13:59:05.47801+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T14:59:05.4780102+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T15:59:05.4780104+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T16:59:05.4780106+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T17:59:05.4780108+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T18:59:05.478011+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T19:59:05.4780112+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T20:59:05.4780114+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T21:59:05.4780116+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T22:59:05.4780117+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-25T23:59:05.4780119+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T00:59:05.4780121+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T01:59:05.4780123+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T02:59:05.4780125+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T03:59:05.4780127+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T04:59:05.4780128+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T05:59:05.478013+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T06:59:05.4780132+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T07:59:05.4780134+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T08:59:05.4780136+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T09:59:05.4780138+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T10:59:05.478014+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T11:59:05.4780141+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T12:59:05.4780143+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "canada",
+    "Time": "2021-10-26T13:59:05.4780145+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T14:59:05.4780147+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T15:59:05.4780149+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T16:59:05.4780151+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T17:59:05.4780153+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T18:59:05.4780155+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T19:59:05.4780156+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T20:59:05.4780158+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T21:59:05.478016+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T22:59:05.4780162+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-25T23:59:05.4780164+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T00:59:05.4780166+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T01:59:05.4780167+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T02:59:05.4780191+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T03:59:05.4780193+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T04:59:05.4780195+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T05:59:05.4780197+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T06:59:05.4780199+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T07:59:05.4780201+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T08:59:05.4780203+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T09:59:05.4780205+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T10:59:05.4780206+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T11:59:05.4780208+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T12:59:05.478021+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "europe",
+    "Time": "2021-10-26T13:59:05.4780212+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T14:59:05.4780214+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T15:59:05.4780216+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T16:59:05.4780217+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T17:59:05.4780219+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T18:59:05.4780221+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T19:59:05.4780223+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T20:59:05.4780225+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T21:59:05.4780227+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T22:59:05.4780228+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-25T23:59:05.478023+11:00",
+    "Rating": 39.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T00:59:05.4780232+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T01:59:05.4780234+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T02:59:05.4780236+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T03:59:05.4780238+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T04:59:05.478024+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T05:59:05.4780241+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T06:59:05.4780243+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T07:59:05.4780245+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T08:59:05.4780247+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T09:59:05.4780249+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T10:59:05.4780251+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T11:59:05.4780252+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T12:59:05.4780254+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "france",
+    "Time": "2021-10-26T13:59:05.4780256+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T14:59:05.4780258+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T15:59:05.478026+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T16:59:05.4780262+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T17:59:05.4780263+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T18:59:05.4780265+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T19:59:05.4780267+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T20:59:05.4780269+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T21:59:05.4780271+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T22:59:05.4780272+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-25T23:59:05.4780274+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T00:59:05.4780276+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T01:59:05.4780278+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T02:59:05.478028+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T03:59:05.4780282+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T04:59:05.4780284+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T05:59:05.4780285+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T06:59:05.4780287+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T07:59:05.4780289+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T08:59:05.4780291+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T09:59:05.4780293+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T10:59:05.4780295+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T11:59:05.4780296+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T12:59:05.4780298+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "germany",
+    "Time": "2021-10-26T13:59:05.47803+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T14:59:05.4780302+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T15:59:05.4780304+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T16:59:05.4780306+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T17:59:05.4780308+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T18:59:05.478031+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T19:59:05.4780311+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T20:59:05.4780313+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T21:59:05.4780315+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T22:59:05.4780317+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-25T23:59:05.4780319+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T00:59:05.4780321+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T01:59:05.4780322+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T02:59:05.4780324+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T03:59:05.4780326+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T04:59:05.4780328+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T05:59:05.478033+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T06:59:05.4780332+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T07:59:05.4780389+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T08:59:05.4780391+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T09:59:05.4780393+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T10:59:05.4780395+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T11:59:05.4780397+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T12:59:05.4780398+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "global",
+    "Time": "2021-10-26T13:59:05.47804+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T14:59:05.4780402+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T15:59:05.4780404+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T16:59:05.4780406+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T17:59:05.4780408+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T18:59:05.478041+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T19:59:05.4780412+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T20:59:05.4780413+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T21:59:05.4780415+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T22:59:05.4780417+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-25T23:59:05.4780419+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T00:59:05.4780421+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T01:59:05.4780423+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T02:59:05.4780425+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T03:59:05.4780426+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T04:59:05.4780428+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T05:59:05.478043+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T06:59:05.4780432+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T07:59:05.4780434+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T08:59:05.4780436+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T09:59:05.4780437+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T10:59:05.4780439+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T11:59:05.4780441+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T12:59:05.4780443+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "india",
+    "Time": "2021-10-26T13:59:05.4780445+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T14:59:05.4780447+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T15:59:05.4780449+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T16:59:05.4780451+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T17:59:05.4780452+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T18:59:05.4780454+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T19:59:05.4780456+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T20:59:05.4780458+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T21:59:05.478046+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T22:59:05.4780462+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-25T23:59:05.4780463+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T00:59:05.4780465+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T01:59:05.4780467+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T02:59:05.4780469+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T03:59:05.4780471+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T04:59:05.4780473+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T05:59:05.4780474+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T06:59:05.4780476+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T07:59:05.4780478+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T08:59:05.478048+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T09:59:05.4780482+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T10:59:05.4780484+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T11:59:05.4780485+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T12:59:05.4780487+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "japan",
+    "Time": "2021-10-26T13:59:05.4780489+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T14:59:05.4780491+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T15:59:05.4780493+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T16:59:05.4780495+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T17:59:05.4780497+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T18:59:05.4780499+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T19:59:05.4780501+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T20:59:05.4780502+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T21:59:05.4780504+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T22:59:05.4780506+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-25T23:59:05.4780508+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T00:59:05.478051+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T01:59:05.4780511+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T02:59:05.4780513+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T03:59:05.4780515+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T04:59:05.4780517+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T05:59:05.4780519+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T06:59:05.4780521+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T07:59:05.4780522+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T08:59:05.4780524+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T09:59:05.4780526+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T10:59:05.4780528+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T11:59:05.478053+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T12:59:05.4780532+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "korea",
+    "Time": "2021-10-26T13:59:05.4780533+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T14:59:05.4780535+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T15:59:05.4780537+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T16:59:05.4780539+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T17:59:05.4780541+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T18:59:05.4780543+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T19:59:05.4780545+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T20:59:05.4780546+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T21:59:05.4780548+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T22:59:05.478055+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-25T23:59:05.4780552+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T00:59:05.4780554+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T01:59:05.4780555+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T02:59:05.4780557+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T03:59:05.4780559+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T04:59:05.4780561+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T05:59:05.4780563+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T06:59:05.4780565+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T07:59:05.4780567+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T08:59:05.4780568+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T09:59:05.478057+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T10:59:05.4780572+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T11:59:05.4780574+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T12:59:05.4780576+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "norway",
+    "Time": "2021-10-26T13:59:05.4780577+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T14:59:05.4780579+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T15:59:05.4780581+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T16:59:05.4780583+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T17:59:05.4780585+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T18:59:05.4780587+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T19:59:05.4780589+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T20:59:05.478059+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T21:59:05.4780592+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T22:59:05.4780594+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-25T23:59:05.4780596+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T00:59:05.4780598+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T01:59:05.47806+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T02:59:05.4780601+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T03:59:05.4780603+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T04:59:05.4780605+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T05:59:05.4780607+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T06:59:05.4780609+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T07:59:05.4780611+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T08:59:05.4780612+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T09:59:05.4780614+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T10:59:05.4780616+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T11:59:05.4780618+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T12:59:05.478062+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "southafrica",
+    "Time": "2021-10-26T13:59:05.4780622+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T14:59:05.4780646+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T15:59:05.4780648+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T16:59:05.478065+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T17:59:05.4780652+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T18:59:05.4780654+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T19:59:05.4780656+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T20:59:05.4780658+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T21:59:05.478066+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T22:59:05.4780662+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-25T23:59:05.4780663+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T00:59:05.4780665+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T01:59:05.4780667+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T02:59:05.4780669+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T03:59:05.4780671+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T04:59:05.4780672+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T05:59:05.4780674+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T06:59:05.4780676+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T07:59:05.4780678+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T08:59:05.478068+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T09:59:05.4780681+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T10:59:05.4780683+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T11:59:05.4780685+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T12:59:05.4780687+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "switzerland",
+    "Time": "2021-10-26T13:59:05.4780689+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T14:59:05.4780691+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T15:59:05.4780692+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T16:59:05.4780694+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T17:59:05.4780696+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T18:59:05.4780698+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T19:59:05.47807+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T20:59:05.4780702+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T21:59:05.4780704+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T22:59:05.4780705+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-25T23:59:05.4780707+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T00:59:05.4780709+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T01:59:05.4780711+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T02:59:05.4780713+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T03:59:05.4780715+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T04:59:05.4780717+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T05:59:05.4780718+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T06:59:05.478072+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T07:59:05.4780722+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T08:59:05.4780724+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T09:59:05.4780726+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T10:59:05.4780727+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T11:59:05.4780729+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T12:59:05.4780731+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "uae",
+    "Time": "2021-10-26T13:59:05.4780733+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T14:59:05.4780735+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T15:59:05.4780737+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T16:59:05.4780739+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T17:59:05.4780741+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T18:59:05.4780743+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T19:59:05.4780745+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T20:59:05.4780746+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T21:59:05.4780748+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T22:59:05.478075+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-25T23:59:05.4780752+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T00:59:05.4780754+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T01:59:05.4780756+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T02:59:05.4780758+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T03:59:05.4780759+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T04:59:05.4780761+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T05:59:05.4780763+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T06:59:05.4780765+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T07:59:05.4780767+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T08:59:05.4780768+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T09:59:05.478077+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T10:59:05.4780772+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T11:59:05.4780774+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T12:59:05.4780776+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "uk",
+    "Time": "2021-10-26T13:59:05.4780778+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T14:59:05.478078+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T15:59:05.4780782+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T16:59:05.4780784+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T17:59:05.4780785+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T18:59:05.4780787+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T19:59:05.4780789+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T20:59:05.4780791+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T21:59:05.4780793+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T22:59:05.4780795+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-25T23:59:05.4780797+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T00:59:05.4780799+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T01:59:05.4780801+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T02:59:05.4780802+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T03:59:05.4780804+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T04:59:05.4780806+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T05:59:05.4780808+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T06:59:05.478081+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T07:59:05.4780812+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T08:59:05.4780814+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T09:59:05.4780816+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T10:59:05.4780818+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T11:59:05.478082+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T12:59:05.4780822+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "unitedstates",
+    "Time": "2021-10-26T13:59:05.4780823+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T14:59:05.4780826+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T15:59:05.4780827+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T16:59:05.4780829+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T17:59:05.4780831+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T18:59:05.4780833+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T19:59:05.4780835+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T20:59:05.4780837+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T21:59:05.4780839+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T22:59:05.4780841+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-25T23:59:05.4780842+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T00:59:05.4780844+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T01:59:05.4780846+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T02:59:05.4780848+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T03:59:05.478085+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T04:59:05.4780852+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T05:59:05.4780854+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T06:59:05.4780856+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T07:59:05.4780857+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T08:59:05.4780859+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T09:59:05.4780861+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T10:59:05.4780863+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T11:59:05.4780865+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T12:59:05.4780867+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "eastasiastage",
+    "Time": "2021-10-26T13:59:05.4780869+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T14:59:05.4780871+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T15:59:05.4780873+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T16:59:05.4780875+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T17:59:05.4780877+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T18:59:05.4780878+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T19:59:05.478088+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T20:59:05.4780882+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T21:59:05.4780884+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T22:59:05.4780886+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-25T23:59:05.4780888+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T00:59:05.478089+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T01:59:05.4780892+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T02:59:05.4780894+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T03:59:05.4780895+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T04:59:05.4780897+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T05:59:05.4780899+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T06:59:05.4780901+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T07:59:05.4780903+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T08:59:05.4780905+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T09:59:05.4780907+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T10:59:05.4780909+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T11:59:05.4780911+11:00",
+    "Rating": 27.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T12:59:05.4780912+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "southeastasiastage",
+    "Time": "2021-10-26T13:59:05.4780914+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T14:59:05.4780916+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T15:59:05.4780918+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T16:59:05.478092+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T17:59:05.4780922+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T18:59:05.4780924+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T19:59:05.4780926+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T20:59:05.4780927+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T21:59:05.4780929+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T22:59:05.4780931+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-25T23:59:05.4780933+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T00:59:05.4780935+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T01:59:05.4780937+11:00",
+    "Rating": 30.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T02:59:05.4780939+11:00",
+    "Rating": 25.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T03:59:05.4780941+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T04:59:05.4780943+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T05:59:05.4780945+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T06:59:05.4780947+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T07:59:05.4780948+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T08:59:05.478095+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T09:59:05.4780952+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T10:59:05.4780954+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T11:59:05.4780956+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T12:59:05.4780958+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "centraluseuap",
+    "Time": "2021-10-26T13:59:05.478096+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T14:59:05.4780962+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T15:59:05.4780964+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T16:59:05.4780966+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T17:59:05.4780967+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T18:59:05.4780969+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T19:59:05.4780971+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T20:59:05.4780973+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T21:59:05.4780975+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T22:59:05.4780977+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-25T23:59:05.4780978+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T00:59:05.478098+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T01:59:05.4780982+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T02:59:05.4780984+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T03:59:05.4780986+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T04:59:05.4780988+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T05:59:05.4780989+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T06:59:05.4780991+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T07:59:05.4780993+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T08:59:05.4780995+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T09:59:05.4780997+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T10:59:05.4780999+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T11:59:05.4781+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T12:59:05.4781002+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "eastus2euap",
+    "Time": "2021-10-26T13:59:05.4781004+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T14:59:05.4781006+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T15:59:05.4781008+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T16:59:05.478101+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T17:59:05.4781012+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T18:59:05.4781013+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T19:59:05.4781015+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T20:59:05.4781017+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T21:59:05.4781019+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T22:59:05.4781021+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-25T23:59:05.4781023+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T00:59:05.4781025+11:00",
+    "Rating": 16.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T01:59:05.4781027+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T02:59:05.4781028+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T03:59:05.4781075+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T04:59:05.4781078+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T05:59:05.478108+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T06:59:05.4781082+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T07:59:05.4781084+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T08:59:05.4781085+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T09:59:05.4781087+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T10:59:05.4781089+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T11:59:05.4781091+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T12:59:05.4781093+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "westcentralus",
+    "Time": "2021-10-26T13:59:05.4781095+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T14:59:05.4781097+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T15:59:05.4781099+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T16:59:05.47811+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T17:59:05.4781102+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T18:59:05.4781104+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T19:59:05.4781106+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T20:59:05.4781108+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T21:59:05.478111+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T22:59:05.4781112+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-25T23:59:05.4781114+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T00:59:05.4781115+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T01:59:05.4781117+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T02:59:05.4781119+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T03:59:05.4781121+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T04:59:05.4781123+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T05:59:05.4781125+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T06:59:05.4781127+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T07:59:05.4781128+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T08:59:05.478113+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T09:59:05.4781132+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T10:59:05.4781134+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T11:59:05.4781136+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T12:59:05.4781137+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "southafricawest",
+    "Time": "2021-10-26T13:59:05.4781139+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T14:59:05.4781141+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T15:59:05.4781143+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T16:59:05.4781145+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T17:59:05.4781147+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T18:59:05.4781149+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T19:59:05.4781151+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T20:59:05.4781152+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T21:59:05.4781154+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T22:59:05.4781156+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-25T23:59:05.4781158+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T00:59:05.478116+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T01:59:05.4781162+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T02:59:05.4781163+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T03:59:05.4781165+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T04:59:05.4781167+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T05:59:05.4781169+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T06:59:05.4781171+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T07:59:05.4781173+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T08:59:05.4781175+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T09:59:05.4781176+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T10:59:05.4781178+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T11:59:05.478118+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T12:59:05.4781182+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "australiacentral",
+    "Time": "2021-10-26T13:59:05.4781184+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T14:59:05.4781186+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T15:59:05.4781187+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T16:59:05.4781189+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T17:59:05.4781191+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T18:59:05.4781193+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T19:59:05.4781195+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T20:59:05.4781197+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T21:59:05.4781198+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T22:59:05.47812+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-25T23:59:05.4781202+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T00:59:05.4781204+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T01:59:05.4781206+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T02:59:05.4781208+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T03:59:05.4781209+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T04:59:05.4781211+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T05:59:05.4781213+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T06:59:05.4781215+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T07:59:05.4781217+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T08:59:05.4781219+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T09:59:05.478122+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T10:59:05.4781222+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T11:59:05.4781224+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T12:59:05.4781226+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "australiacentral2",
+    "Time": "2021-10-26T13:59:05.4781228+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T14:59:05.478123+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T15:59:05.4781232+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T16:59:05.4781233+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T17:59:05.4781235+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T18:59:05.4781237+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T19:59:05.4781239+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T20:59:05.4781241+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T21:59:05.4781243+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T22:59:05.4781244+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-25T23:59:05.4781246+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T00:59:05.4781248+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T01:59:05.478125+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T02:59:05.4781252+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T03:59:05.4781253+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T04:59:05.4781255+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T05:59:05.4781257+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T06:59:05.4781259+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T07:59:05.4781261+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T08:59:05.4781262+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T09:59:05.4781264+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T10:59:05.4781266+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T11:59:05.4781268+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T12:59:05.478127+11:00",
+    "Rating": 47.0
+  },
+  {
+    "Location": "australiasoutheast",
+    "Time": "2021-10-26T13:59:05.4781272+11:00",
+    "Rating": 22.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T14:59:05.4781274+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T15:59:05.4781276+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T16:59:05.4781278+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T17:59:05.4781279+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T18:59:05.4781281+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T19:59:05.4781283+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T20:59:05.4781285+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T21:59:05.4781287+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T22:59:05.4781288+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-25T23:59:05.478129+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T00:59:05.4781292+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T01:59:05.4781294+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T02:59:05.4781296+11:00",
+    "Rating": 28.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T03:59:05.4781298+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T04:59:05.4781299+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T05:59:05.4781301+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T06:59:05.4781303+11:00",
+    "Rating": 87.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T07:59:05.4781305+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T08:59:05.4781307+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T09:59:05.4781309+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T10:59:05.4781311+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T11:59:05.4781312+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T12:59:05.4781314+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "japanwest",
+    "Time": "2021-10-26T13:59:05.4781316+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T14:59:05.4781318+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T15:59:05.478132+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T16:59:05.4781322+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T17:59:05.4781323+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T18:59:05.4781325+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T19:59:05.4781327+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T20:59:05.4781329+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T21:59:05.4781331+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T22:59:05.4781333+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-25T23:59:05.4781335+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T00:59:05.4781336+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T01:59:05.4781338+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T02:59:05.478134+11:00",
+    "Rating": 75.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T03:59:05.4781342+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T04:59:05.4781344+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T05:59:05.4781346+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T06:59:05.4781348+11:00",
+    "Rating": 69.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T07:59:05.4781349+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T08:59:05.4781351+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T09:59:05.4781353+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T10:59:05.4781355+11:00",
+    "Rating": 10.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T11:59:05.4781357+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T12:59:05.4781359+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "jioindiacentral",
+    "Time": "2021-10-26T13:59:05.4781361+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T14:59:05.4781363+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T15:59:05.4781365+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T16:59:05.4781366+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T17:59:05.4781368+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T18:59:05.478137+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T19:59:05.4781372+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T20:59:05.4781374+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T21:59:05.4781376+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T22:59:05.4781378+11:00",
+    "Rating": 90.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-25T23:59:05.4781379+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T00:59:05.4781381+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T01:59:05.4781383+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T02:59:05.4781385+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T03:59:05.4781387+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T04:59:05.4781389+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T05:59:05.4781391+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T06:59:05.4781392+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T07:59:05.4781394+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T08:59:05.4781396+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T09:59:05.4781398+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T10:59:05.47814+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T11:59:05.4781402+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T12:59:05.4781403+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "koreasouth",
+    "Time": "2021-10-26T13:59:05.4781405+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T14:59:05.4781407+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T15:59:05.4781409+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T16:59:05.4781411+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T17:59:05.4781413+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T18:59:05.4781415+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T19:59:05.4781416+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T20:59:05.4781418+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T21:59:05.478142+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T22:59:05.4781422+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-25T23:59:05.4781424+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T00:59:05.4781425+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T01:59:05.4781427+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T02:59:05.4781429+11:00",
+    "Rating": 65.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T03:59:05.4781431+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T04:59:05.4781433+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T05:59:05.4781435+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T06:59:05.4781437+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T07:59:05.4781439+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T08:59:05.478144+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T09:59:05.4781442+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T10:59:05.4781444+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T11:59:05.4781446+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T12:59:05.4781448+11:00",
+    "Rating": 8.0
+  },
+  {
+    "Location": "southindia",
+    "Time": "2021-10-26T13:59:05.4781449+11:00",
+    "Rating": 86.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T14:59:05.4781451+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T15:59:05.4781474+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T16:59:05.4781476+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T17:59:05.4781478+11:00",
+    "Rating": 67.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T18:59:05.478148+11:00",
+    "Rating": 73.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T19:59:05.4781481+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T20:59:05.4781483+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T21:59:05.4781485+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T22:59:05.4781487+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-25T23:59:05.4781489+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T00:59:05.4781491+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T01:59:05.4781493+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T02:59:05.4781495+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T03:59:05.4781496+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T04:59:05.4781498+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T05:59:05.47815+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T06:59:05.4781502+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T07:59:05.4781504+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T08:59:05.4781505+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T09:59:05.4781507+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T10:59:05.4781509+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T11:59:05.4781511+11:00",
+    "Rating": 82.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T12:59:05.4781513+11:00",
+    "Rating": 72.0
+  },
+  {
+    "Location": "westindia",
+    "Time": "2021-10-26T13:59:05.4781515+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T14:59:05.4781516+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T15:59:05.4781518+11:00",
+    "Rating": 89.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T16:59:05.478152+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T17:59:05.4781522+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T18:59:05.4781524+11:00",
+    "Rating": 96.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T19:59:05.4781526+11:00",
+    "Rating": 34.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T20:59:05.4781527+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T21:59:05.4781529+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T22:59:05.4781531+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-25T23:59:05.4781533+11:00",
+    "Rating": 29.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T00:59:05.4781535+11:00",
+    "Rating": 84.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T01:59:05.4781537+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T02:59:05.4781539+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T03:59:05.478154+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T04:59:05.4781542+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T05:59:05.4781544+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T06:59:05.4781546+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T07:59:05.4781548+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T08:59:05.478155+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T09:59:05.4781551+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T10:59:05.4781553+11:00",
+    "Rating": 1.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T11:59:05.4781555+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T12:59:05.4781557+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "canadaeast",
+    "Time": "2021-10-26T13:59:05.4781559+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T14:59:05.4781561+11:00",
+    "Rating": 62.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T15:59:05.4781562+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T16:59:05.4781564+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T17:59:05.4781566+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T18:59:05.4781568+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T19:59:05.478157+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T20:59:05.4781572+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T21:59:05.4781573+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T22:59:05.4781575+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-25T23:59:05.4781577+11:00",
+    "Rating": 92.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T00:59:05.4781579+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T01:59:05.4781581+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T02:59:05.4781583+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T03:59:05.4781584+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T04:59:05.4781586+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T05:59:05.4781588+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T06:59:05.478159+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T07:59:05.4781592+11:00",
+    "Rating": 23.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T08:59:05.4781594+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T09:59:05.4781596+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T10:59:05.4781597+11:00",
+    "Rating": 51.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T11:59:05.4781599+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T12:59:05.4781601+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "francesouth",
+    "Time": "2021-10-26T13:59:05.4781603+11:00",
+    "Rating": 71.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T14:59:05.4781605+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T15:59:05.4781607+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T16:59:05.4781609+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T17:59:05.478161+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T18:59:05.4781612+11:00",
+    "Rating": 33.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T19:59:05.4781614+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T20:59:05.4781616+11:00",
+    "Rating": 46.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T21:59:05.4781618+11:00",
+    "Rating": 83.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T22:59:05.478162+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-25T23:59:05.4781621+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T00:59:05.4781623+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T01:59:05.4781625+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T02:59:05.4781627+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T03:59:05.4781629+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T04:59:05.4781631+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T05:59:05.4781633+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T06:59:05.4781634+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T07:59:05.4781636+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T08:59:05.4781638+11:00",
+    "Rating": 5.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T09:59:05.478164+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T10:59:05.4781642+11:00",
+    "Rating": 13.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T11:59:05.4781644+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T12:59:05.4781646+11:00",
+    "Rating": 59.0
+  },
+  {
+    "Location": "germanynorth",
+    "Time": "2021-10-26T13:59:05.4781648+11:00",
+    "Rating": 93.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T14:59:05.478165+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T15:59:05.4781651+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T16:59:05.4781653+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T17:59:05.4781655+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T18:59:05.4781657+11:00",
+    "Rating": 31.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T19:59:05.4781659+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T20:59:05.4781661+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T21:59:05.4781663+11:00",
+    "Rating": 21.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T22:59:05.4781665+11:00",
+    "Rating": 98.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-25T23:59:05.4781667+11:00",
+    "Rating": 54.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T00:59:05.4781668+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T01:59:05.478167+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T02:59:05.4781672+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T03:59:05.4781674+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T04:59:05.4781676+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T05:59:05.4781678+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T06:59:05.478168+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T07:59:05.4781681+11:00",
+    "Rating": 49.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T08:59:05.4781683+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T09:59:05.4781685+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T10:59:05.4781687+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T11:59:05.4781689+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T12:59:05.4781691+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "norwaywest",
+    "Time": "2021-10-26T13:59:05.4781692+11:00",
+    "Rating": 78.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T14:59:05.4781694+11:00",
+    "Rating": 17.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T15:59:05.4781697+11:00",
+    "Rating": 19.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T16:59:05.4781699+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T17:59:05.4781701+11:00",
+    "Rating": 43.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T18:59:05.4781702+11:00",
+    "Rating": 35.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T19:59:05.4781704+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T20:59:05.4781706+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T21:59:05.4781708+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T22:59:05.478171+11:00",
+    "Rating": 44.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-25T23:59:05.4781712+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T00:59:05.4781713+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T01:59:05.4781715+11:00",
+    "Rating": 55.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T02:59:05.4781717+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T03:59:05.4781719+11:00",
+    "Rating": 68.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T04:59:05.4781721+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T05:59:05.4781723+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T06:59:05.4781725+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T07:59:05.4781726+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T08:59:05.4781728+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T09:59:05.478173+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T10:59:05.4781732+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T11:59:05.4781734+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T12:59:05.4781736+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "switzerlandwest",
+    "Time": "2021-10-26T13:59:05.4781738+11:00",
+    "Rating": 58.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T14:59:05.4781739+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T15:59:05.4781741+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T16:59:05.4781743+11:00",
+    "Rating": 94.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T17:59:05.4781745+11:00",
+    "Rating": 63.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T18:59:05.4781747+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T19:59:05.4781749+11:00",
+    "Rating": 64.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T20:59:05.478175+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T21:59:05.4781752+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T22:59:05.4781754+11:00",
+    "Rating": 14.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-25T23:59:05.4781756+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T00:59:05.4781758+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T01:59:05.478176+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T02:59:05.4781762+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T03:59:05.4781763+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T04:59:05.4781765+11:00",
+    "Rating": 85.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T05:59:05.4781767+11:00",
+    "Rating": 53.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T06:59:05.4781769+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T07:59:05.4781771+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T08:59:05.4781773+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T09:59:05.4781774+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T10:59:05.4781776+11:00",
+    "Rating": 2.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T11:59:05.4781778+11:00",
+    "Rating": 88.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T12:59:05.478178+11:00",
+    "Rating": 24.0
+  },
+  {
+    "Location": "ukwest",
+    "Time": "2021-10-26T13:59:05.4781782+11:00",
+    "Rating": 76.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T14:59:05.4781784+11:00",
+    "Rating": 97.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T15:59:05.4781786+11:00",
+    "Rating": 15.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T16:59:05.4781787+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T17:59:05.4781789+11:00",
+    "Rating": 6.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T18:59:05.4781791+11:00",
+    "Rating": 77.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T19:59:05.4781793+11:00",
+    "Rating": 9.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T20:59:05.4781795+11:00",
+    "Rating": 20.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T21:59:05.4781796+11:00",
+    "Rating": 12.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T22:59:05.4781798+11:00",
+    "Rating": 79.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-25T23:59:05.47818+11:00",
+    "Rating": 45.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T00:59:05.4781802+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T01:59:05.4781804+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T02:59:05.4781806+11:00",
+    "Rating": 50.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T03:59:05.4781808+11:00",
+    "Rating": 95.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T04:59:05.4781809+11:00",
+    "Rating": 26.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T05:59:05.4781811+11:00",
+    "Rating": 80.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T06:59:05.4781813+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T07:59:05.4781815+11:00",
+    "Rating": 38.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T08:59:05.4781817+11:00",
+    "Rating": 41.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T09:59:05.4781818+11:00",
+    "Rating": 99.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T10:59:05.478182+11:00",
+    "Rating": 7.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T11:59:05.4781822+11:00",
+    "Rating": 40.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T12:59:05.4781824+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "uaecentral",
+    "Time": "2021-10-26T13:59:05.4781826+11:00",
+    "Rating": 91.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T14:59:05.4781828+11:00",
+    "Rating": 52.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T15:59:05.478183+11:00",
+    "Rating": 60.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T16:59:05.4781832+11:00",
+    "Rating": 57.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T17:59:05.4781833+11:00",
+    "Rating": 81.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T18:59:05.4781835+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T19:59:05.4781837+11:00",
+    "Rating": 61.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T20:59:05.4781839+11:00",
+    "Rating": 56.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T21:59:05.4781841+11:00",
+    "Rating": 74.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T22:59:05.4781842+11:00",
+    "Rating": 36.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-25T23:59:05.4781844+11:00",
+    "Rating": 18.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T00:59:05.4781846+11:00",
+    "Rating": 66.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T01:59:05.4781848+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T02:59:05.478185+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T03:59:05.4781864+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T04:59:05.4781867+11:00",
+    "Rating": 37.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T05:59:05.4781869+11:00",
+    "Rating": 4.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T06:59:05.4781871+11:00",
+    "Rating": 0.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T07:59:05.4781873+11:00",
+    "Rating": 48.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T08:59:05.4781874+11:00",
+    "Rating": 32.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T09:59:05.4781876+11:00",
+    "Rating": 42.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T10:59:05.4781878+11:00",
+    "Rating": 70.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T11:59:05.478188+11:00",
+    "Rating": 11.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T12:59:05.4781882+11:00",
+    "Rating": 3.0
+  },
+  {
+    "Location": "brazilsoutheast",
+    "Time": "2021-10-26T13:59:05.4781884+11:00",
+    "Rating": 0.0
+  }
+]

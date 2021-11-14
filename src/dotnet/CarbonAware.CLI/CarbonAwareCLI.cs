@@ -20,8 +20,8 @@ namespace CarbonAwareCLI
 
         public class Options
         {
-            [Option('l', "location", Required = true, HelpText = "The location in latitude/longitude format i.e. \"123.0454,21.4857\"")]
-            public string Location { get; set; }
+            [Option('l', "location", Separator = ',', Required = true, HelpText = "The location in latitude/longitude format i.e. \"123.0454,21.4857\"")]
+            public List<string> Location { get; set; }
 
             [Option("lowest", Required = false, HelpText = "Only return the lowest emission result of all matching results.")]
             public bool Lowest { get; set; }
@@ -40,7 +40,6 @@ namespace CarbonAwareCLI
 
             [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
             public bool Verbose { get; set; }
-
         }
 
         private enum TimeOptionStates
@@ -179,20 +178,22 @@ namespace CarbonAwareCLI
             }
             else
             {
-                try
-                {
-                    var locationStrings = JsonConvert.DeserializeObject<List<string>>(o.Location);
-                    foreach (var ls in locationStrings)
-                    {
-                        _state.Locations.Add(ls);
-                        _state.LocationOption = LocationOptionStates.List;
-                    }
-                }
-                catch (Exception e)
-                {
-                    _state.Locations.Add(o.Location);
-                    _state.LocationOption = LocationOptionStates.Single;
-                }
+                // THIS IS NOW A LIST
+
+                //try
+                //{
+                //    var locationStrings = JsonConvert.DeserializeObject<List<string>>(o.Location);
+                //    foreach (var ls in locationStrings)
+                //    {
+                //        _state.Locations.Add(ls);
+                //        _state.LocationOption = LocationOptionStates.List;
+                //    }
+                //}
+                //catch (Exception e)
+                //{
+                //    _state.Locations.Add(o.Location);
+                //    _state.LocationOption = LocationOptionStates.Single;
+                //}
             }
         }
 
