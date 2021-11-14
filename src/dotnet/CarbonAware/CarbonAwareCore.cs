@@ -5,33 +5,9 @@ using System.Reflection;
 
 namespace CarbonAware
 {
-    public interface ICarbonAwarePlugin : ICarbonAwareBase
-    {
-        string Name { get; }
-        string Description { get; }
-        string Author { get; }
-        string Version { get; }
-        object URL { get; }
-    }
-
-    public interface ICarbonAwareBase
-    {
-        EmissionsData GetEmissionsDataForLocationByTime(string location, DateTime time);
-        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time);
-        EmissionsData GetEmissionsDataForLocationByTimeWindow(string location, TimeWindow timeWindow);
-        List<EmissionsData> GetEmissionsDataForLocationsByTimeWindow(List<string> locations, TimeWindow timeWindow);
-
-        EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time);
-        // more best emissions 
-    }
-
-    public interface ICarbonAwareStaticDataService
-    {
-        List<EmissionsData> GetData();
-    }
-
+ 
     /// <summary>
-    /// Carbon Aware SDK Core Library 
+    /// Carbon Aware SDK Core class, called via CLI, native, and web endpoints.
     /// </summary>
     public class CarbonAwareCore : ICarbonAwareBase
     {
@@ -48,16 +24,9 @@ namespace CarbonAware
             //Console.WriteLine($"\tVersion: '{plugin.Version}'");
             //Console.WriteLine($"\tURL: '{plugin.URL}'");
         }
-
-        /// <summary>
-        /// Get emissions data for a specific locations, at a specific time
-        /// </summary>
-        /// <param name="location">The locations for which the emissions data should be retrieved.</param>
-        /// <param name="time">The date and time for which the emissions data should be retrieved.</param>
-        /// <returns>magic</returns>
+                
         public EmissionsData GetEmissionsDataForLocationByTime(string location, DateTime time)
         {
-            // telemetry here 
             return _plugin.GetEmissionsDataForLocationByTime(location, time);
         }
 

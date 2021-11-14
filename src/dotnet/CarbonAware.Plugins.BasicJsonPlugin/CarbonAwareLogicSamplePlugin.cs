@@ -50,7 +50,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         /// <summary>
         /// Returns the most recent prior emissions data record for a list of specified locations.
         /// </summary>
-        /// <param name="location">The name of the locations to filter by.</param>
+        /// <param name="locations">The name of the locations to filter by.</param>
         /// <param name="time">The time to retrieve the most recent data for.</param>
         /// <returns>A List&lt;EmissionsData&gt; for each emissions data record for each location available.  If no records are found, returns an empty List.</returns>
         public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time)
