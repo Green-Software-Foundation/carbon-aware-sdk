@@ -97,21 +97,17 @@ namespace CarbonAwareCLI
 
             List<EmissionsData> foundEmissions = new List<EmissionsData>();
 
-            foreach (var loc in _state.Locations)
+            if (_state.Lowest)
             {
-                var emissions = ca.GetEmissionsDataForLocationByTime(loc, _state.Time);
+                var emissions = ca.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
                 if (emissions != EmissionsData.None)
                 {
                     foundEmissions.Add(emissions);
                 }
             }
-
-            // This long term should move into the plugin, vs doing it here and
-            // assuming it's making the best decision
-            if (_state.Lowest && foundEmissions.Count > 0)
+            else
             {
-                var min = foundEmissions.Min(ed => ed.Rating);
-                foundEmissions = foundEmissions.Where(ed => ed.Rating == min).ToList();
+                foundEmissions = ca.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
             }
 
             OutputEmissionsData(foundEmissions);
@@ -156,6 +152,8 @@ namespace CarbonAwareCLI
             // -o --output 
             ParseOutput(o);
         }
+
+        #region Parse Options 
 
         private void ParseLowest(Options o)
         {
@@ -217,7 +215,7 @@ namespace CarbonAwareCLI
                 {
                     _state.Time = DateTime.Parse(o.Time);
                 }
-                catch (FormatException e)
+                catch 
                 {
                     throw new ArgumentException(
                         $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.Time}'.");
@@ -253,5 +251,6 @@ namespace CarbonAwareCLI
                 }
             }
         }
+        #endregion
     }
 }

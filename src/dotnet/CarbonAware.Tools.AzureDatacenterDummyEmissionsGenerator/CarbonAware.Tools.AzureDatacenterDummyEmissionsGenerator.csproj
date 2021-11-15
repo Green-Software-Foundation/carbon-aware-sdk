@@ -1,21 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="aws-regions.json" />
     <None Remove="azure-regions.json" />
-    <None Remove="locations.json" />
-    <None Remove="sample-emissions-data.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="data-files\aws-regions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="data-files\sample-emissions-data.json">
+    <Content Include="azure-regions.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

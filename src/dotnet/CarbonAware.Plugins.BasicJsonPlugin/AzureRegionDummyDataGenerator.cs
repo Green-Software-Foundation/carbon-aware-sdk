@@ -9,32 +9,30 @@ using Newtonsoft.Json;
 
 namespace CarbonAware.Plugins.BasicJsonPlugin
 {
-    public class AwsRegionStaticDataService 
+    public class AzureRegionDummyDataGenerator 
     {
-        public class AwsRegionData
+        public class AzureRegionData
         {
             public string name { get; set; }
-            public string full_name { get; set; }
-            public string code { get; set; }
-            public List<string> zones { get; set; }
         }
 
         private string _fileName { get; }
 
-        public AwsRegionStaticDataService(string fileName)
+        public AzureRegionDummyDataGenerator(string fileName)
         {
             _fileName = fileName;
         }
 
-        public List<AwsRegionData> GetRegionData()
+
+        public List<AzureRegionData> GetRegionData()
         {
             using StreamReader file = File.OpenText(_fileName);
-            var jsonObject = JsonConvert.DeserializeObject<List<AwsRegionData>>(file.ReadToEnd());
+            var jsonObject = JsonConvert.DeserializeObject<List<AzureRegionData>>(file.ReadToEnd());
            
             return jsonObject;
         }
 
-        public List<EmissionsData> GenerateDummyData(List<AwsRegionData> regionData)
+        public List<EmissionsData> GenerateDummyData(List<AzureRegionData> regionData)
         {
             List<EmissionsData> emData = new List<EmissionsData>();
             var ran = new Random(DateTime.Now.Millisecond);
@@ -46,7 +44,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
                     var e = new EmissionsData()
                     {
                         Time = DateTime.Now + TimeSpan.FromHours(i),
-                        Location = region.code,
+                        Location = region.name,
                         Rating = ran.Next(100)
                     };
                     emData.Add(e);

@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace CarbonAware
 {
     /// <summary>
-    /// Basic geocoordinate representation 
+    /// Basic geocoordinate representation.  
+    /// Currently not used as "location" is simply a string.  
     /// </summary>
     public class Location
     {

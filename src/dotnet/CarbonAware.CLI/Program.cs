@@ -29,7 +29,7 @@ namespace CarbonAwareCLI
 
         private static void GenerateDummyAzureData()
         {
-            var aws = new AzureRegionStaticDataService(@"azure-regions.json");
+            var aws = new AzureRegionDummyDataGenerator(@"azure-regions.json");
             var regions = aws.GetRegionData();
             var emData = aws.GenerateDummyData(regions);
             var s = JsonConvert.SerializeObject(emData);
