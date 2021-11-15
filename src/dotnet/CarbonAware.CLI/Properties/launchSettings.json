@@ -2,7 +2,7 @@
   "profiles": {
     "CarbonAwareCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-l Sydney -o json -v"
+      "commandLineArgs": "-l eastus westus -o json -v -d \"data-files\\dummy-data-azure-emissions.json\""
     }
   }
 }

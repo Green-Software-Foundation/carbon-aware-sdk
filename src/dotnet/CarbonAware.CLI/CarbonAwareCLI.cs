@@ -6,13 +6,18 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace CarbonAwareCLI
 {
     public class CarbonAwareCLI
     {
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
+        private CarbonAwareStaticJsonDataService _staticDataService;
+        private CarbonAwareCore _carbonAwareCore;
+
+        /// <summary>
+        /// Indicates if the command line arguments have been parsed successfully 
+        /// </summary>
         public bool Parsed { get; private set; } = false;
 
         public CarbonAwareCLI(string[] args)
@@ -23,6 +28,9 @@ namespace CarbonAwareCLI
             {
                 parseResult.WithParsed(ValidateCommandLineArguments);
                 Parsed = true;
+
+                _staticDataService = new CarbonAwareStaticJsonDataService(_state.DataFile);
+                _carbonAwareCore = new CarbonAwareCore(new CarbonAwareBasicDataPlugin(_staticDataService));
             }
             catch (ArgumentException e)
             {
@@ -32,16 +40,12 @@ namespace CarbonAwareCLI
         }
 
         public List<EmissionsData> GetEmissions()
-        { 
-            var ca = new CarbonAwareCore(
-                new CarbonAwareBasicDataPlugin(
-                    new CarbonAwareStaticJsonDataService("data-files\\sample-emissions-data.json")));
-
+        {
             List<EmissionsData> foundEmissions = new List<EmissionsData>();
 
             if (_state.Lowest)
             {
-                var emissions = ca.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
+                var emissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
                 if (emissions != EmissionsData.None)
                 {
                     foundEmissions.Add(emissions);
@@ -49,7 +53,7 @@ namespace CarbonAwareCLI
             }
             else
             {
-                foundEmissions = ca.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
+                foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
             }
             return foundEmissions;
         }
@@ -81,9 +85,6 @@ namespace CarbonAwareCLI
             // -v --verbose 
             ParseVerbose(o);
 
-            // -l --location --locations
-            ParseLocation(o);
-
             // -t --time --timeWindowTo --timeWindowFrom
             ParseTime(o);
 
@@ -92,47 +93,43 @@ namespace CarbonAwareCLI
 
             // -o --output 
             ParseOutput(o);
+
+            // -d --dafa-file
+            ParseDataFile(o);
+
+            // -l --locations
+            ParseLocations(o);
         }
 
         #region Parse Options 
+
+        private void ParseLocations(CLIOptions o)
+        {
+            _state.Locations.AddRange(o.Location);
+        }
 
         private void ParseLowest(CLIOptions o)
         {
             _state.Lowest = o.Lowest;
         }
 
-        private static void ParseVerbose(CLIOptions o)
+        private void ParseVerbose(CLIOptions o)
         {
             if (o.Verbose)
             {
-                var jsonText = JsonConvert.SerializeObject(o);
+                _state.Verbose = true;
             }
         }
 
-        private void ParseLocation(CLIOptions o)
+        private void ParseDataFile(CLIOptions o)
         {
-            if (o.Location is null)
+            if (o.DataFile is not null)
             {
-                // Should never be null
-            }
-            else
-            {
-                // THIS IS NOW A LIST
-
-                //try
-                //{
-                //    var locationStrings = JsonConvert.DeserializeObject<List<string>>(o.Location);
-                //    foreach (var ls in locationStrings)
-                //    {
-                //        _state.Locations.Add(ls);
-                //        _state.LocationOption = LocationOptionStates.List;
-                //    }
-                //}
-                //catch (Exception e)
-                //{
-                //    _state.Locations.Add(o.Location);
-                //    _state.LocationOption = LocationOptionStates.Single;
-                //}
+                if (!File.Exists(o.DataFile))
+                {
+                    throw new ArgumentException($"File '{o.DataFile}' could not be found.");
+                }
+                _state.DataFile = o.DataFile;  
             }
         }
 
@@ -156,7 +153,7 @@ namespace CarbonAwareCLI
                 {
                     _state.Time = DateTime.Parse(o.Time);
                 }
-                catch 
+                catch
                 {
                     throw new ArgumentException(
                         $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.Time}'.");

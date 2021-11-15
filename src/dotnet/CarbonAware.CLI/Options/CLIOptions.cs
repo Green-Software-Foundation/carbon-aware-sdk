@@ -6,7 +6,7 @@ namespace CarbonAwareCLI.Options
     public class CLIOptions
     {
         [Option('l', "location", Separator = ',', Required = true, HelpText = "The location is a comma seperated list of named locations or regions specific to the emissions data provided.")]
-        public List<string> Location { get; set; }
+        public IEnumerable<string> Location { get; set; }
 
         [Option("lowest", Required = false, HelpText = "Only return the lowest emission result of all matching results.")]
         public bool Lowest { get; set; }
@@ -25,5 +25,9 @@ namespace CarbonAwareCLI.Options
 
         [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
         public bool Verbose { get; set; }
+
+        [Option('d', "data-file", Required = true, HelpText = "Emmisions Data File.")]
+        public string DataFile { get; set; }
+
     }
 }

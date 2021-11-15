@@ -13,5 +13,7 @@ namespace CarbonAwareCLI
         public bool Lowest { get; set; }
         public LocationOptionStates LocationOption { get; set; }
         public bool Parsed { get; set;  } = false;
+        public string DataFile { get; set; }
+        public bool Verbose { get; set; }
     }
 }
