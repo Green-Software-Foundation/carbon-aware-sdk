@@ -1,5 +1,6 @@
 ﻿using CarbonAware;
 using CarbonAware.Plugins.BasicJsonPlugin;
+using CarbonAwareCLI.Options;
 using CommandLine;
 using Newtonsoft.Json;
 using System;
@@ -11,89 +12,30 @@ namespace CarbonAwareCLI
 {
     public class CarbonAwareCLI
     {
-        private class LocationJsonFile
-        {
-            public List<Location> Locations { get; set; }
-        }
-
-        private State _state { get; set; } = new State();
-
-        public class Options
-        {
-            [Option('l', "location", Separator = ',', Required = true, HelpText = "The location in latitude/longitude format i.e. \"123.0454,21.4857\"")]
-            public List<string> Location { get; set; }
-
-            [Option("lowest", Required = false, HelpText = "Only return the lowest emission result of all matching results.")]
-            public bool Lowest { get; set; }
-
-            [Option('t', "time", Required = false, HelpText = "The date and time to get the emissions from.  If no time or time window is provide.")]
-            public string Time { get; set; }
-
-            [Option("timeWindowFrom", Required = false, HelpText = "The date and time the start of a time window")]
-            public string TimeWindowFrom { get; set; }
-
-            [Option("timeWindowTo", Required = false, HelpText = "The date and time for the end of a time window")]
-            public string TimeWindowTo { get; set; }
-
-            [Option('o', "output", Required = false, Default = "console", HelpText = "Output value.  Options: console, json")]
-            public string Output { get; set; }
-
-            [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
-            public bool Verbose { get; set; }
-        }
-
-        private enum TimeOptionStates
-        {
-            Time,
-            TimeWindow
-        }
-
-        private enum OutputOptionStates
-        {
-            Default,
-            Json
-        }
-
-        private enum LocationOptionStates
-        {
-            Single,
-            File,
-            List
-        }
-
-        private class State
-        {
-            public TimeOptionStates TimeOption { get; set; }
-            public OutputOptionStates OutputOption { get; set; }
-
-            public List<string> Locations { get; set; } = new List<string>();
-
-            public DateTime Time { get; set; }
-
-            public bool Lowest { get; set; }
-
-            public LocationOptionStates LocationOption { get; set; }
-        }
-
+        private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
+        public bool Parsed { get; private set; } = false;
 
         public CarbonAwareCLI(string[] args)
         {
-            var parseResult = Parser.Default.ParseArguments<Options>(args);
+            var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
 
             try
             {
                 parseResult.WithParsed(ValidateCommandLineArguments);
+                Parsed = true;
             }
             catch (ArgumentException e)
             {
                 Console.WriteLine("Error: Invalid arguments.");
                 Console.WriteLine(e.Message);
-                return;
             }
+        }
 
+        public List<EmissionsData> GetEmissions()
+        { 
             var ca = new CarbonAwareCore(
                 new CarbonAwareBasicDataPlugin(
-                    new CarbonAwareStaticJsonDataService("sample-emissions-data.json")));
+                    new CarbonAwareStaticJsonDataService("data-files\\sample-emissions-data.json")));
 
             List<EmissionsData> foundEmissions = new List<EmissionsData>();
 
@@ -109,11 +51,10 @@ namespace CarbonAwareCLI
             {
                 foundEmissions = ca.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
             }
-
-            OutputEmissionsData(foundEmissions);
+            return foundEmissions;
         }
 
-        private void OutputEmissionsData(List<EmissionsData> emissions)
+        public void OutputEmissionsData(List<EmissionsData> emissions)
         {
             switch (_state.OutputOption)
             {
@@ -135,7 +76,7 @@ namespace CarbonAwareCLI
             }
         }
 
-        private void ValidateCommandLineArguments(Options o)
+        private void ValidateCommandLineArguments(CLIOptions o)
         {
             // -v --verbose 
             ParseVerbose(o);
@@ -155,12 +96,12 @@ namespace CarbonAwareCLI
 
         #region Parse Options 
 
-        private void ParseLowest(Options o)
+        private void ParseLowest(CLIOptions o)
         {
             _state.Lowest = o.Lowest;
         }
 
-        private static void ParseVerbose(Options o)
+        private static void ParseVerbose(CLIOptions o)
         {
             if (o.Verbose)
             {
@@ -168,7 +109,7 @@ namespace CarbonAwareCLI
             }
         }
 
-        private void ParseLocation(Options o)
+        private void ParseLocation(CLIOptions o)
         {
             if (o.Location is null)
             {
@@ -195,7 +136,7 @@ namespace CarbonAwareCLI
             }
         }
 
-        private void ParseTime(Options o)
+        private void ParseTime(CLIOptions o)
         {
             // Validate time arguments
             if (o.Time is not null && (o.TimeWindowFrom is not null || o.TimeWindowTo is not null))
@@ -227,7 +168,7 @@ namespace CarbonAwareCLI
             }
         }
 
-        private void ParseOutput(Options o)
+        private void ParseOutput(CLIOptions o)
         {
             if (o.Output is not null)
             {

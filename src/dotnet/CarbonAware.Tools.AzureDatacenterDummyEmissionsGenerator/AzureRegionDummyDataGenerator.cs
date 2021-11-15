@@ -9,11 +9,15 @@ using Newtonsoft.Json;
 
 namespace CarbonAware.Tools
 {
+    /// <summary>
+    /// Generates a dummy data json string as output based on the 
+    /// azure-regions.json structure 
+    /// </summary>
     public class AzureRegionDummyDataGenerator 
     {
         public class AzureRegionData
         {
-            public string name { get; set; }
+            public string? name { get; set; }
         }
 
         private string _fileName { get; }

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware", "CarbonAware\CarbonAware.csproj", "{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Sample.Client", "CarbonAware.Sample.Client\CarbonAware.Sample.Client.csproj", "{0EAF5F69-2191-4263-925E-6F8F2B3D385B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJsonPlugin", "CarbonAware.Plugins.BasicJsonPlugin\CarbonAware.Plugins.BasicJsonPlugin.csproj", "{7F8C741C-3101-44F9-A352-B5CBEC00FEFC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJsonPlugin.Tests", "CarbonAware.Plugins.BasicJsonPlugin.Tests\CarbonAware.Plugins.BasicJsonPlugin.Tests.csproj", "{0B53454A-CB47-41D2-8A39-5C056E43695C}"
@@ -27,10 +25,6 @@ Global
 		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0EAF5F69-2191-4263-925E-6F8F2B3D385B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7F8C741C-3101-44F9-A352-B5CBEC00FEFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7F8C741C-3101-44F9-A352-B5CBEC00FEFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F8C741C-3101-44F9-A352-B5CBEC00FEFC}.Release|Any CPU.ActiveCfg = Release|Any CPU

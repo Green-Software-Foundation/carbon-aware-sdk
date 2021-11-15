@@ -2,7 +2,7 @@
   "profiles": {
     "CarbonAwareCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-l ['Sydxney','Melbxourne'] -o json -v"
+      "commandLineArgs": "-l Sydney -o json -v"
     }
   }
 }

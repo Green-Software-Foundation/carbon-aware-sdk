@@ -12,10 +12,10 @@ namespace CarbonAware.Tools
     {
         public class AwsRegionData
         {
-            public string name { get; set; }
-            public string full_name { get; set; }
-            public string code { get; set; }
-            public List<string> zones { get; set; }
+            public string? name { get; set; }
+            public string? full_name { get; set; }
+            public string? code { get; set; }
+            public List<string>? zones { get; set; }
         }
 
         private string _fileName { get; }
