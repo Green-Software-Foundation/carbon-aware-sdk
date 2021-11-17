@@ -32,6 +32,6 @@ namespace CarbonAware
         /// <param name="toTime">Optional: The end time of the time window.</param>
         /// <returns>>A single emissions data record for the location based on the "best" emissions 
         /// i.e. in thie case, the lowest.  Returns EmissionsData.None if no results are found.</returns>
-        EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null);
+        List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null);
     }
 }

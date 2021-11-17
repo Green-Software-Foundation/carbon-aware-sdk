@@ -35,7 +35,7 @@ namespace CarbonAware
             return _plugin.GetEmissionsDataForLocationsByTime(locations, time, toTime);
         }
 
-        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null)
+        public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null)
         {
             return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time, toTime);
         }

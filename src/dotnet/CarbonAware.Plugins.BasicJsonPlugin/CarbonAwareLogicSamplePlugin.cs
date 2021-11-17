@@ -77,14 +77,19 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         /// <param name="location">The name of the locations to filter by.</param>
         /// <param name="time">The time to retrieve the most recent data for.</param>
         /// <returns>>A single emissions data record for the location based on the "best" emissions i.e. in thie case, the lowest.  Returns EmissionsData.None if no results are found.</returns>
-        public EmissionsData GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null)
+        public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null)
         {
+            List<EmissionsData> emissionsData = new List<EmissionsData>();
+
             var emissions = GetEmissionsDataForLocationsByTime(locations, time, toTime);
-            if(emissions.Count == 0)
+
+            if(emissions.Count != 0)
             {
-                return EmissionsData.None;
+                var minimumEmissionsRating = emissions.MinBy(ed => ed.Rating).Rating;
+                var minimumEmissions = emissions.Where(ed => ed.Rating == minimumEmissionsRating);
+                emissionsData.AddRange(minimumEmissions);
             }
-            return emissions.MinBy(ed => ed.Rating);
+            return emissionsData;
         }
     }
 }

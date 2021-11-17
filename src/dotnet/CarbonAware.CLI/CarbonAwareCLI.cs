@@ -45,16 +45,13 @@ namespace CarbonAwareCLI
 
             if (_state.Lowest)
             {
-                var emissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
-                if (emissions != EmissionsData.None)
-                {
-                    foundEmissions.Add(emissions);
-                }
+                foundEmissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
             }
             else
             {
                 foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
             }
+
             return foundEmissions;
         }
 
