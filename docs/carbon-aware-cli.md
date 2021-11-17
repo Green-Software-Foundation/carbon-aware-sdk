@@ -12,10 +12,10 @@ The following is the documentation for the Carbon Aware CLI
 | Short  | Long         | Required / Optional | Description | 
 |--------|--------------|---------------------|-------------|
 | -l     | --location   | Required            |  The location is a comma seperated list of named locations or regions specific to the emissions data provided.           |
+| -d      | --data-file   | Required            | Path to the emissions source data file | 
 | -t     | --fromTime   | Optional            |  The desired date and time to retrieve the emissions for.  Defaults to 'now'. |
 | -o      | --output    | Optional            | Output format.  Options: console, json.  Default is `json` | 
 | -v      | --verbose   | Optional            | Verbose output | 
-| -d      | --data-file   | Required            | Path to the emissions source data file | 
 |         | --lowest | Optional | Only return the results with the lowest emissions.  |
 
 ## Examples
