@@ -4,7 +4,7 @@ The following is the documentation for the Carbon Aware CLI
 
 ### Format
 
->   `$ CarbonAwareCLI -t <time> -l <location 1> <location 2> -o json -d <path to data file>`
+`$ CarbonAwareCLI -t <time> -l <location 1> <location 2> -o json -d <path to data file>`
 
 
 ### Parameters
@@ -21,7 +21,7 @@ The following is the documentation for the Carbon Aware CLI
 ## Examples
 
 ### Get the current emissions for a location
-> `$ ./CarbonAwareCLI -l westus -d "azure-emissions-data.json"`
+`$ ./CarbonAwareCLI -l westus -d "azure-emissions-data.json"`
 #### Response
 <pre>
 [
@@ -34,7 +34,7 @@ The following is the documentation for the Carbon Aware CLI
 </pre>
 
 ### Get the current emissions for multiple locations
-> `$ ./CarbonAwareCLI -l westus eastus -d "azure-emissions-data.json"`
+ `$ ./CarbonAwareCLI -l westus eastus -d "azure-emissions-data.json"`
 #### Response
 <pre>
 [
@@ -53,7 +53,7 @@ The following is the documentation for the Carbon Aware CLI
 
 
 ### Get the emissions for multiple locations at a specified time
-> `$ ./CarbonAwareCLI -l westus eastus -t 2021-11-28 -d "azure-emissions-data.json"`
+`$ ./CarbonAwareCLI -l westus eastus -t 2021-11-28 -d "azure-emissions-data.json"`
 #### Response
 <pre>
 [
@@ -71,7 +71,7 @@ The following is the documentation for the Carbon Aware CLI
 </pre>
 
 ### Get the lowest emissions for multiple locations at a specified time 
-> `$ ./CarbonAwareCLI -l westus eastus -t 2021-11-28 --lowest -d "azure-emissions-data.json"`
+`$ ./CarbonAwareCLI -l westus eastus -t 2021-11-28 --lowest -d "azure-emissions-data.json"`
 #### Response
 <pre>
 [
@@ -84,7 +84,7 @@ The following is the documentation for the Carbon Aware CLI
 </pre>
 
 ### Get the lowest emissions for multiple locations at a specified time window
-> `$ ./CarbonAwareCLI -l westus eastus -t 2021-11-27 --toTime 2021-11-29 --lowest -d "azure-emissions-data.json"`
+`$ ./CarbonAwareCLI -l westus eastus -t 2021-11-27 --toTime 2021-11-29 --lowest -d "azure-emissions-data.json"`
 #### Response
 <pre>
 [
