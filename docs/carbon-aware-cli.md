@@ -4,7 +4,7 @@ The following is the documentation for the Carbon Aware CLI
 
 ### Format
 
-`$ CarbonAwareCLI -t <time> -l <location 1> <location 2> -o json -d <path to data file>`
+`$ CarbonAwareCLI -t <time> -l <location 1> <location 2> -d <path to data file>`
 
 
 ### Parameters
