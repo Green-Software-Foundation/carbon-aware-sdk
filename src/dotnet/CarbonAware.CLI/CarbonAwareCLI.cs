@@ -45,7 +45,7 @@ namespace CarbonAwareCLI
 
             if (_state.Lowest)
             {
-                var emissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
+                var emissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
                 if (emissions != EmissionsData.None)
                 {
                     foundEmissions.Add(emissions);
@@ -53,7 +53,7 @@ namespace CarbonAwareCLI
             }
             else
             {
-                foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time);
+                foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
             }
             return foundEmissions;
         }
@@ -65,7 +65,7 @@ namespace CarbonAwareCLI
                 case OutputOptionStates.Default:
                     {
                         foreach (var e in emissions)
-                        {
+                        { 
                             Console.WriteLine(
                                 $"Emissions for {e.Location} at {e.Time}: {e.Rating}");
                         }
@@ -74,7 +74,7 @@ namespace CarbonAwareCLI
                     }
                 case OutputOptionStates.Json:
                     {
-                        Console.WriteLine($"{JsonConvert.SerializeObject(emissions)}");
+                        Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
                         break;
                     }
             }
@@ -85,7 +85,7 @@ namespace CarbonAwareCLI
             // -v --verbose 
             ParseVerbose(o);
 
-            // -t --time --timeWindowTo --timeWindowFrom
+            // -t --time --toTime
             ParseTime(o);
 
             // --lowest
@@ -136,12 +136,7 @@ namespace CarbonAwareCLI
         private void ParseTime(CLIOptions o)
         {
             // Validate time arguments
-            if (o.Time is not null && (o.TimeWindowFrom is not null || o.TimeWindowTo is not null))
-            {
-                throw new ArgumentException($"-t --time is designed to be used exclusively for a single point in time and must not be used in conjunction with the time window arguments --timeWindowFrom and --timeWindowTo.");
-            }
-
-            if (o.Time is null && o.TimeWindowFrom is null && o.TimeWindowTo is null)
+            if (o.Time is null)
             {
                 _state.TimeOption = TimeOptionStates.Time;
                 _state.Time = DateTime.Now;
@@ -159,9 +154,20 @@ namespace CarbonAwareCLI
                         $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.Time}'.");
                 }
             }
-            else if (o.TimeWindowFrom is not null && o.TimeWindowTo is not null)
+
+            if (o.ToTime is not null)
             {
                 _state.TimeOption = TimeOptionStates.TimeWindow;
+
+                try
+                {
+                    _state.ToTime = DateTime.Parse(o.ToTime);
+                }
+                catch
+                {
+                    throw new ArgumentException(
+                        $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.ToTime}'.");
+                }
             }
         }
 

@@ -9,13 +9,8 @@ using Newtonsoft.Json;
 
 namespace CarbonAware.Plugins.BasicJsonPlugin
 {
-    public class CarbonAwareStaticJsonDataService : ICarbonAwareStaticDataService
+    public partial class CarbonAwareStaticJsonDataService : ICarbonAwareStaticDataService
     {
-        private class JsonFile
-        {
-            public string Date { get; set; }
-            public List<EmissionsData> Emissions { get; set; }
-        }
 
         private string _fileName { get; }
 
@@ -27,7 +22,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         public List<EmissionsData> GetData()
         {
             using StreamReader file = File.OpenText(_fileName);
-            var jsonObject = JsonConvert.DeserializeObject<JsonFile>(file.ReadToEnd());
+            var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(file.ReadToEnd());
             return jsonObject.Emissions;
         }
     }

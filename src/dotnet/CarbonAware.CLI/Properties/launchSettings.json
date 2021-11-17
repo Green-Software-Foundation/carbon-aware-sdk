@@ -2,7 +2,7 @@
   "profiles": {
     "CarbonAwareCLI": {
       "commandName": "Project",
-      "commandLineArgs": "-l eastus westus -o json -v -d \"data-files\\dummy-data-azure-emissions.json\""
+      "commandLineArgs": "-l eastus westus australiaeast northeurope -t 2021-12-28 --toTime 2021-12-30 -o json -v -d \"data-files/dummy-data-azure-emissions.json\" "
     }
   }
 }

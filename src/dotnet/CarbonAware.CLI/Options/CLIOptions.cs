@@ -11,14 +11,11 @@ namespace CarbonAwareCLI.Options
         [Option("lowest", Required = false, HelpText = "Only return the lowest emission result of all matching results.")]
         public bool Lowest { get; set; }
 
-        [Option('t', "time", Required = false, HelpText = "The date and time to get the emissions from.  If no time or time window is provide.")]
+        [Option('t', "fromTime", Required = false, HelpText = "The desired date and time to retrieve the emissions for.  Defaults to 'now'.")]
         public string Time { get; set; }
 
-        [Option("timeWindowFrom", Required = false, HelpText = "The date and time the start of a time window")]
-        public string TimeWindowFrom { get; set; }
-
-        [Option("timeWindowTo", Required = false, HelpText = "The date and time for the end of a time window")]
-        public string TimeWindowTo { get; set; }
+        [Option("toTime", Required = false, HelpText = "The date and time to get the emissions to when looking across a time window.")]
+        public string ToTime { get; set; }
 
         [Option('o', "output", Required = false, Default = "console", HelpText = "Output value.  Options: console, json")]
         public string Output { get; set; }

@@ -1,4 +1,5 @@
 ﻿
+using CarbonAware.Plugins.BasicJsonPlugin;
 using CarbonAware.Tools;
 using Newtonsoft.Json;
 
@@ -12,4 +13,10 @@ var data = generator.GetRegionData();
 
 var emissions = generator.GenerateDummyData(data);
 
-Console.WriteLine(JsonConvert.SerializeObject(emissions));
+var jsonFile = new EmissionsJsonFile()
+{
+    Date = DateTime.Now.ToString(),
+    Emissions = emissions,
+};
+
+Console.WriteLine(JsonConvert.SerializeObject(jsonFile));

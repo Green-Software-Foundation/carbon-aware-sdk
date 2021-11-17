@@ -42,15 +42,19 @@ namespace CarbonAware.Tools
 
             foreach (var region in regionData)
             {
-                for (var i = 0; i < 24; i++)
+                for (var days = 0; days < 365; days++)
                 {
-                    var e = new EmissionsData()
+                    for (var hours = 0; hours < 3; hours++)
                     {
-                        Time = DateTime.Now + TimeSpan.FromHours(i),
-                        Location = region.name,
-                        Rating = ran.Next(100)
-                    };
-                    emData.Add(e);
+                        var e = new EmissionsData()
+                        {
+                            // 3 times per day (8 hours apart), 365 days per year 
+                            Time = DateTime.Now + TimeSpan.FromHours(8 * hours) + TimeSpan.FromDays(days),
+                            Location = region.name,
+                            Rating = ran.Next(100)
+                        };
+                        emData.Add(e);
+                    }
                 }
             }
 

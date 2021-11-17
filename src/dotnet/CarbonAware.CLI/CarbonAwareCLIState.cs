@@ -15,5 +15,6 @@ namespace CarbonAwareCLI
         public bool Parsed { get; set;  } = false;
         public string DataFile { get; set; }
         public bool Verbose { get; set; }
+        public DateTime ToTime { get; internal set; }
     }
 }
