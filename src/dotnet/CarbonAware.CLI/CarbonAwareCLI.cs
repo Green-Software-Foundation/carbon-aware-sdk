@@ -27,16 +27,41 @@ namespace CarbonAwareCLI
             try
             {
                 parseResult.WithParsed(ValidateCommandLineArguments);
-                Parsed = true;
+
+                parseResult.WithNotParsed(ThrowOnParseError);
 
                 _staticDataService = new CarbonAwareStaticJsonDataService(_state.DataFile);
                 _carbonAwareCore = new CarbonAwareCore(new CarbonAwareBasicDataPlugin(_staticDataService));
+                Parsed = true;
             }
             catch (ArgumentException e)
             {
                 Console.WriteLine("Error: Invalid arguments.");
                 Console.WriteLine(e.Message);
             }
+        }
+
+        /// <summary>
+        /// Handles missing messages.  Currently reports the message tag as an argument exception.
+        /// This method needs updating to add detailed "Missing parameter" messages
+        /// </summary>
+        /// <param name="errors"></param>
+        /// <exception cref="ArgumentException"></exception>
+        private void ThrowOnParseError(IEnumerable<Error> errors)
+        {
+            var enumerator = errors.GetEnumerator();
+
+            if (enumerator.MoveNext())
+            {
+                throw new ArgumentException(enumerator.Current.Tag.ToString());
+            }
+
+            // TODO: add error message builder such as
+            //var builder = SentenceBuilder.Create();
+            //var errorMessages = HelpText.RenderParsingErrorsTextAsLines(result, builder.FormatError, builder.FormatMutuallyExclusiveSetErrors, 1);
+            //var excList = errorMessages.Select(msg => new ArgumentException(msg)).ToList();
+            //if (excList.Any())
+            //    throw new AggregateException(excList);
         }
 
         public List<EmissionsData> GetEmissions()
@@ -62,7 +87,7 @@ namespace CarbonAwareCLI
                 case OutputOptionStates.Default:
                     {
                         foreach (var e in emissions)
-                        { 
+                        {
                             Console.WriteLine(
                                 $"Emissions for {e.Location} at {e.Time}: {e.Rating}");
                         }
@@ -126,7 +151,7 @@ namespace CarbonAwareCLI
                 {
                     throw new ArgumentException($"File '{o.DataFile}' could not be found.");
                 }
-                _state.DataFile = o.DataFile;  
+                _state.DataFile = o.DataFile;
             }
         }
 
