@@ -56,8 +56,10 @@ jobs:
         include-prerelease: True  #Yass: Ask for Vaughan whether to keep or not
     - name: Restore dependencies
       run: dotnet restore
+      working-directory: './src/dotnet/'
     - name: Build
       run: dotnet build --no-restore
+      working-directory: './src/dotnet/'
   
     # Autobuild attempts to build any compiled languages  (C/C++, C#, or Java).
     # If this step fails, then you should remove it and run the build manually (see below)
