@@ -53,7 +53,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '6.0'
-        include-prerelease: True  #Yass: Ask for Vaughan whether to keep or not
+
     - name: Restore dependencies
       run: dotnet restore
       working-directory: './src/dotnet/'
