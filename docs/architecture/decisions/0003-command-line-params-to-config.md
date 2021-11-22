@@ -24,5 +24,7 @@ Regardless of plugin, the command line parameters will always be the same.  This
 
 For native integration to the SDK, this configuration would usually be in code.  This can still occur, however it would not be possible to store this configuration externally if required, making the native code configurable also.
 
+Configuration may differ betweeen platforms/languages - however this would be the case via command line.  This means there will be consistency in the command line between platforms, hiding platform depdendencies from the parameters and moved to the config.
+
 ## Green Architecture Considerations
 Neutral
