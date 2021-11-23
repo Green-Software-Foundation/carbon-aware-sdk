@@ -13,7 +13,6 @@ using System.IO;
 
 namespace CarbonAwareCLI
 {
-
     public class CarbonAwareCLI
     {
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
@@ -55,6 +54,9 @@ namespace CarbonAwareCLI
         private const string CONFIG_SECTION_SERVICE_REGISTRATIONS = "service-registrations";
         private const string CONFIG_SERVICES_ARRAY = "services";
 
+        /// <summary>
+        /// Configures the service provider 
+        /// </summary>
         private void ConfigureServices()
         {
             var builder = new ConfigurationBuilder()
@@ -68,6 +70,7 @@ namespace CarbonAwareCLI
             var serviceCollection = new ServiceCollection()
                .AddLogging();
 
+            // Register Services
             foreach (var service in services)
             {
                 var serviceType = Type.GetType(service.service, true);
@@ -78,6 +81,7 @@ namespace CarbonAwareCLI
 
             _serviceProvider = serviceCollection.BuildServiceProvider();
 
+            // Configure Services
             foreach (var service in services)
             {
                 var serviceType = Type.GetType(service.service, true);
