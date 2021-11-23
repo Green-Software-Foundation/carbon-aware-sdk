@@ -82,24 +82,7 @@ namespace CarbonAwareCLI
 
         public void OutputEmissionsData(List<EmissionsData> emissions)
         {
-            switch (_state.OutputOption)
-            {
-                case OutputOptionStates.Default:
-                    {
-                        foreach (var e in emissions)
-                        {
-                            Console.WriteLine(
-                                $"Emissions for {e.Location} at {e.Time}: {e.Rating}");
-                        }
-
-                        break;
-                    }
-                case OutputOptionStates.Json:
-                    {
-                        Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
-                        break;
-                    }
-            }
+            Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
         }
 
         private void ValidateCommandLineArguments(CLIOptions o)
@@ -112,9 +95,6 @@ namespace CarbonAwareCLI
 
             // --lowest
             ParseLowest(o);
-
-            // -o --output 
-            ParseOutput(o);
 
             // -d --dafa-file
             ParseDataFile(o);
@@ -193,30 +173,6 @@ namespace CarbonAwareCLI
             }
         }
 
-        private void ParseOutput(CLIOptions o)
-        {
-            if (o.Output is not null)
-            {
-                switch (o.Output)
-                {
-                    case "json":
-                        {
-                            _state.OutputOption = OutputOptionStates.Json;
-                            break;
-                        }
-                    case "console":
-                        {
-                            _state.OutputOption = OutputOptionStates.Default;
-                            break;
-                        }
-                    default:
-                        {
-                            throw new ArgumentException(
-                                $"Error: '{o.Output}' is an invalid output option.  Valid options are 'json' and 'console'.");
-                        }
-                }
-            }
-        }
         #endregion
     }
 }

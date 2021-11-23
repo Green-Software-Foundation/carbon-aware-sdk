@@ -17,9 +17,6 @@ namespace CarbonAwareCLI.Options
         [Option("toTime", Required = false, HelpText = "The date and time to get the emissions to when looking across a time window.")]
         public string ToTime { get; set; }
 
-        [Option('o', "output", Required = false, Default = "json", HelpText = "Output value.  Options: console, json")]
-        public string Output { get; set; }
-
         [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
         public bool Verbose { get; set; }
 
