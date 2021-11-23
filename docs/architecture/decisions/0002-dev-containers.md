@@ -16,7 +16,7 @@ All platforms will have consistency, allowing for faster development of the SDK,
 
 Platform dependenct implementations and deployments will not have a focus as they are abstracted.  
 
-## Green Architecture Considerations
+## Green Impact
 Positive
 
 By creating consistency in the developer environment we can ensure green practices can be considered across all developer environments.  This consistency removes the compute minutes/hours of setup and time lost debugging across environments, and testing time due to consistency across all environments.
