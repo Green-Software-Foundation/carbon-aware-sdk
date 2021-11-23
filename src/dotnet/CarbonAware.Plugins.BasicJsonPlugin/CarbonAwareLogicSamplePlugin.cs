@@ -1,4 +1,5 @@
 ﻿using CarbonAware;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -93,6 +94,11 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
                 emissionsData.AddRange(minimumEmissions);
             }
             return emissionsData;
+        }
+
+        public void Configure(IConfigurationSection config)
+        {
+            // nothing to configure 
         }
     }
 }

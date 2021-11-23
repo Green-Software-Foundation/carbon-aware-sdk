@@ -5,18 +5,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CarbonAware;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 
 namespace CarbonAware.Plugins.BasicJsonPlugin
 {
-    public partial class CarbonAwareStaticJsonDataService : ICarbonAwareStaticDataService
+    public class CarbonAwareStaticJsonDataService : ICarbonAwareStaticDataService
     {
 
         private string _fileName { get; set; }
 
         public CarbonAwareStaticJsonDataService()
         {
-            
+
         }
 
         public List<EmissionsData> GetData()
@@ -26,9 +27,10 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
             return jsonObject.Emissions;
         }
 
-        public void LoadData(string location)
+        public void Configure(IConfigurationSection configuration)
         {
-            _fileName = location;
+            _fileName = configuration.GetSection("data-file").Value;
+            // TODO: File validation needs to be checked here now since moving it to configuration load
         }
     }
 }

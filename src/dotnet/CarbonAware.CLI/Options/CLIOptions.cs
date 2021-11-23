@@ -20,10 +20,7 @@ namespace CarbonAwareCLI.Options
         [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
         public bool Verbose { get; set; }
 
-        [Option('d', "data-file", Required = true, HelpText = "Emmisions Data File.")]
-        public string DataFile { get; set; }
-
-        [Option('c', "config", Required = false, Default = "carbon-aware.json", HelpText = "Custom carbon aware configuration file.")]
+        [Option('c', "config", Required = false, Default = CarbonAwareCLIState.DEFAULT_CONFIG_FILE_NAME, HelpText = "Custom carbon aware configuration file.")]
         public string ConfigPath { get; set; }
 
     }

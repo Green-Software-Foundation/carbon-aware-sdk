@@ -1,7 +1,9 @@
 ﻿using CarbonAware;
 using CarbonAware.Plugins.BasicJsonPlugin;
+using CarbonAwareCLI.Config;
 using CarbonAwareCLI.Options;
 using CommandLine;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
@@ -11,6 +13,7 @@ using System.IO;
 
 namespace CarbonAwareCLI
 {
+
     public class CarbonAwareCLI
     {
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
@@ -26,22 +29,15 @@ namespace CarbonAwareCLI
         {
             var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
 
-            // Set up DI.  Currently hard coded but will be made configurable
-            _serviceProvider = new ServiceCollection()
-                .AddLogging()
-                .AddSingleton<ICarbonAwareStaticDataService, CarbonAwareStaticJsonDataService>()
-                .AddSingleton<ICarbonAwarePlugin, CarbonAwareBasicDataPlugin>()
-                .BuildServiceProvider();
-
             try
             {
                 // Parse command line parameters
                 parseResult.WithParsed(ValidateCommandLineArguments);
                 parseResult.WithNotParsed(ThrowOnParseError);
+                
+                // Configure the services
+                ConfigureServices();
 
-                // Load the services 
-                var jsonDataService = _serviceProvider.GetService<ICarbonAwareStaticDataService>();
-                jsonDataService.LoadData(_state.DataFile);
                 var plugin = _serviceProvider.GetService<ICarbonAwarePlugin>();
 
                 // Create the new core using the plugin
@@ -53,6 +49,42 @@ namespace CarbonAwareCLI
             {
                 Console.WriteLine("Error: Invalid arguments.");
                 Console.WriteLine(e.Message);
+            }
+        }
+
+        private const string CONFIG_SECTION_SERVICE_REGISTRATIONS = "service-registrations";
+        private const string CONFIG_SERVICES_ARRAY = "services";
+
+        private void ConfigureServices()
+        {
+            var builder = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile(_state.ConfigPath);
+
+            var config = builder.Build();
+            var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
+            var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
+
+            var serviceCollection = new ServiceCollection()
+               .AddLogging();
+
+            foreach (var service in services)
+            {
+                var serviceType = Type.GetType(service.service, true);
+                var serviceImplementation = Type.GetType(service.implementation);
+
+                serviceCollection.AddSingleton(serviceType, serviceImplementation);
+            }
+
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+
+            foreach (var service in services)
+            {
+                var serviceType = Type.GetType(service.service, true);
+                var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
+                var registeredServiceName = registeredService.GetType().Name;
+                var configSection = config.GetSection(registeredServiceName);
+                registeredService.Configure(configSection);
             }
         }
 
@@ -111,8 +143,8 @@ namespace CarbonAwareCLI
             // --lowest
             ParseLowest(o);
 
-            // -d --dafa-file
-            ParseDataFile(o);
+            // -c --config
+            ParseConfigPath(o);
 
             // -l --locations
             ParseLocations(o);
@@ -138,15 +170,15 @@ namespace CarbonAwareCLI
             }
         }
 
-        private void ParseDataFile(CLIOptions o)
+        private void ParseConfigPath(CLIOptions o)
         {
-            if (o.DataFile is not null)
+            if (o.ConfigPath is not null)
             {
-                if (!File.Exists(o.DataFile))
+                if (!File.Exists(o.ConfigPath))
                 {
-                    throw new ArgumentException($"File '{o.DataFile}' could not be found.");
+                    throw new ArgumentException($"File '{o.ConfigPath}' could not be found.");
                 }
-                _state.DataFile = o.DataFile;
+                _state.ConfigPath = o.ConfigPath;
             }
         }
 

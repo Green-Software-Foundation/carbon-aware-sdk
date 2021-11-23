@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
@@ -45,15 +46,16 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
             }
         };
 
+        public void Configure(IConfigurationSection configuration)
+        {
+
+        }
+
         public List<EmissionsData> GetData()
         {
             return _data;
         }
 
-        public void LoadData(string location)
-        {
-            
-        }
     }
 
     public class Tests
