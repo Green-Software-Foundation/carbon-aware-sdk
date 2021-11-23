@@ -1,4 +1,5 @@
 # 1. Title
+> Anything quoted, such as this, should be removed in the final template and is provided for guidance only
 
 ## Status
 
