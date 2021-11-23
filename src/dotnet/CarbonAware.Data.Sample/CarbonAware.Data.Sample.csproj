@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="data-files\aws-regions.json" />
+    <None Remove="data-files\dummy-data-aws-emissions.json" />
+    <None Remove="data-files\dummy-data-azure-emissions.json" />
+    <None Remove="data-files\sample-emissions-data.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="data-files\aws-regions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data-files\dummy-data-aws-emissions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data-files\dummy-data-azure-emissions.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="data-files\sample-emissions-data.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
+  </ItemGroup>
+
+</Project>

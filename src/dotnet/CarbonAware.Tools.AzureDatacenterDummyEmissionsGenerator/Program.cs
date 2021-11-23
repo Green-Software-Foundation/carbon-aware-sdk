@@ -1,5 +1,5 @@
 ﻿
-using CarbonAware.Plugins.BasicJsonPlugin;
+using CarbonAware.Data.Sample;
 using CarbonAware.Tools;
 using Newtonsoft.Json;
 

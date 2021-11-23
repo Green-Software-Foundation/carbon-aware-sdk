@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJs
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI", "CarbonAware.CLI\CarbonAware.CLI.csproj", "{D057DD75-CFFA-496F-B493-171E122AC91D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Tools.AzureDatacenterDummyEmissionsGenerator", "CarbonAware.Tools.AzureDatacenterDummyEmissionsGenerator\CarbonAware.Tools.AzureDatacenterDummyEmissionsGenerator.csproj", "{F58B109D-6D0D-4550-B2B6-48CD0F0B1E00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AzureDatacenterDummyEmissionsGenerator", "CarbonAware.Tools.AzureDatacenterDummyEmissionsGenerator\CarbonAware.Tools.AzureDatacenterDummyEmissionsGenerator.csproj", "{F58B109D-6D0D-4550-B2B6-48CD0F0B1E00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator", "CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator\CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator.csproj", "{16B15877-9DFC-43E8-84FE-BA67C4C71899}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator", "CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator\CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator.csproj", "{16B15877-9DFC-43E8-84FE-BA67C4C71899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Data.Sample", "CarbonAware.Data.Sample\CarbonAware.Data.Sample.csproj", "{34B58DE8-6327-4BDF-8D58-7E76146CA85C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{16B15877-9DFC-43E8-84FE-BA67C4C71899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16B15877-9DFC-43E8-84FE-BA67C4C71899}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16B15877-9DFC-43E8-84FE-BA67C4C71899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34B58DE8-6327-4BDF-8D58-7E76146CA85C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34B58DE8-6327-4BDF-8D58-7E76146CA85C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34B58DE8-6327-4BDF-8D58-7E76146CA85C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34B58DE8-6327-4BDF-8D58-7E76146CA85C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

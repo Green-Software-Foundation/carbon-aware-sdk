@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 
 namespace CarbonAwareCLI
@@ -69,6 +71,8 @@ namespace CarbonAwareCLI
                 
                 ValidateServiceSyntax(services);
 
+                LoadPluginAssemblies();
+
                 var serviceCollection = new ServiceCollection()
                    .AddLogging();
 
@@ -94,6 +98,22 @@ namespace CarbonAwareCLI
             {
                 throw (ae);
             }
+        }
+
+        private CompositionContainer _container;
+
+        private void LoadPluginAssemblies()
+        {
+            // An aggregate catalog that combines multiple catalogs.
+            var catalog = new AggregateCatalog();
+            // Adds all the parts found in the same assembly as the Program class.
+            catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
+            catalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory + "plugins"));
+
+            // Create the CompositionContainer with the parts in the catalog.
+            _container = new CompositionContainer(catalog);
+
+            _container.ComposeParts(this);
         }
 
         private void ValidateServiceSyntax(List<ServiceRegistration> services)
