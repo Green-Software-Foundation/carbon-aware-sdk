@@ -17,6 +17,7 @@ namespace CarbonAwareCLI
     {
         private const string CONFIG_SECTION_SERVICE_REGISTRATIONS = "service-registrations";
         private const string CONFIG_SERVICES_ARRAY = "services";
+        private const string PLUGINS_FOLDER = "plugins";
 
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
         private CarbonAwareCore _carbonAwareCore;
@@ -60,44 +61,37 @@ namespace CarbonAwareCLI
         /// </summary>
         private void ConfigureServices()
         {
-            try
-            {
-                var builder = new ConfigurationBuilder()
-                       .SetBasePath(Directory.GetCurrentDirectory())
-                       .AddJsonFile(_state.ConfigPath);
+            var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(_state.ConfigPath);
 
-                var config = builder.Build();
-                var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
-                var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
+            var config = builder.Build();
+            var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
+            var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
                 
-                ValidateServiceSyntax(services);
+            ValidateServiceSyntax(services);
 
-                LoadPluginAssemblies();
+            LoadPluginAssemblies();
 
-                var serviceCollection = new ServiceCollection()
-                   .AddLogging();
+            var serviceCollection = new ServiceCollection()
+                .AddLogging();
 
-                // Register Services
-                foreach (var service in services)
-                {
-                    AddService(serviceCollection, service);
-                }
-
-                _serviceProvider = serviceCollection.BuildServiceProvider();
-
-                // Configure Services
-                foreach (var service in services)
-                {
-                    var serviceType = Type.GetType(service.service, true);
-                    var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
-                    var registeredServiceName = registeredService.GetType().Name;
-                    var configSection = config.GetSection(registeredServiceName);
-                    registeredService.Configure(configSection);
-                }
-            }
-            catch (ArgumentException ae)
+            // Register Services
+            foreach (var service in services)
             {
-                throw (ae);
+                AddService(serviceCollection, service);
+            }
+
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+
+            // Configure Services
+            foreach (var service in services)
+            {
+                var serviceType = Type.GetType(service.service, true);
+                var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
+                var registeredServiceName = registeredService.GetType().Name;
+                var configSection = config.GetSection(registeredServiceName);
+                registeredService.Configure(configSection);
             }
         }
 
@@ -108,7 +102,9 @@ namespace CarbonAwareCLI
             var catalog = new AggregateCatalog();
             // Adds all the parts found in the same assembly as the Program class.
             catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
-            catalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory + "plugins"));
+            
+            // Add all the parts found in the "plugins" folder
+            catalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory + PLUGINS_FOLDER));
 
             // Create the CompositionContainer with the parts in the catalog.
             _container = new CompositionContainer(catalog);
