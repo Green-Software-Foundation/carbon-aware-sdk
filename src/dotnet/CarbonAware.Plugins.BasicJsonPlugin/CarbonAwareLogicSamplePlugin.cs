@@ -19,11 +19,14 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
 
         private ICarbonAwareStaticDataService CarbonAwareStaticDataService { get; }
         private List<EmissionsData> _emissionsData { get; }
-        public CarbonAwareBasicDataPlugin(ICarbonAwareStaticDataService carbonAwareStaticDataService)
+        public CarbonAwareBasicDataPlugin(ICarbonAwareStaticDataService dataService)
         {
-            this.CarbonAwareStaticDataService = carbonAwareStaticDataService;
+            // load the data service based on config.  we will assume basic json service for now
+            this.CarbonAwareStaticDataService = dataService;
+
             this._emissionsData = this.CarbonAwareStaticDataService.GetData();
         }
+
 
         /// <summary>
         /// Returns the most recent prior emissions data record for the specified location.

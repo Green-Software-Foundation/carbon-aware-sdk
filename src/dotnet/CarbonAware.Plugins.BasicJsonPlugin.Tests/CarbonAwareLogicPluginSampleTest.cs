@@ -49,6 +49,11 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
         {
             return _data;
         }
+
+        public void LoadData(string location)
+        {
+            
+        }
     }
 
     public class Tests

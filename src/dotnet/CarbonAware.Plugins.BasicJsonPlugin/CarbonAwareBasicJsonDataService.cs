@@ -12,11 +12,11 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
     public partial class CarbonAwareStaticJsonDataService : ICarbonAwareStaticDataService
     {
 
-        private string _fileName { get; }
+        private string _fileName { get; set; }
 
-        public CarbonAwareStaticJsonDataService(string fileName)
+        public CarbonAwareStaticJsonDataService()
         {
-            _fileName = fileName;
+            
         }
 
         public List<EmissionsData> GetData()
@@ -24,6 +24,11 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
             using StreamReader file = File.OpenText(_fileName);
             var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(file.ReadToEnd());
             return jsonObject.Emissions;
+        }
+
+        public void LoadData(string location)
+        {
+            _fileName = location;
         }
     }
 }

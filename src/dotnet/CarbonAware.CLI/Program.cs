@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using CarbonAware;
 using CarbonAware.Plugins.BasicJsonPlugin;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CarbonAwareCLI
 {

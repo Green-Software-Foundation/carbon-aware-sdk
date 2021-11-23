@@ -2,6 +2,8 @@
 using CarbonAware.Plugins.BasicJsonPlugin;
 using CarbonAwareCLI.Options;
 using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,8 @@ namespace CarbonAwareCLI
     public class CarbonAwareCLI
     {
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
-        private CarbonAwareStaticJsonDataService _staticDataService;
         private CarbonAwareCore _carbonAwareCore;
+        private ServiceProvider _serviceProvider;
 
         /// <summary>
         /// Indicates if the command line arguments have been parsed successfully 
@@ -24,14 +26,27 @@ namespace CarbonAwareCLI
         {
             var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
 
+            // Set up DI.  Currently hard coded but will be made configurable
+            _serviceProvider = new ServiceCollection()
+                .AddLogging()
+                .AddSingleton<ICarbonAwareStaticDataService, CarbonAwareStaticJsonDataService>()
+                .AddSingleton<ICarbonAwarePlugin, CarbonAwareBasicDataPlugin>()
+                .BuildServiceProvider();
+
             try
             {
+                // Parse command line parameters
                 parseResult.WithParsed(ValidateCommandLineArguments);
-
                 parseResult.WithNotParsed(ThrowOnParseError);
 
-                _staticDataService = new CarbonAwareStaticJsonDataService(_state.DataFile);
-                _carbonAwareCore = new CarbonAwareCore(new CarbonAwareBasicDataPlugin(_staticDataService));
+                // Load the services 
+                var jsonDataService = _serviceProvider.GetService<ICarbonAwareStaticDataService>();
+                jsonDataService.LoadData(_state.DataFile);
+                var plugin = _serviceProvider.GetService<ICarbonAwarePlugin>();
+
+                // Create the new core using the plugin
+                _carbonAwareCore = new CarbonAwareCore(plugin);
+
                 Parsed = true;
             }
             catch (ArgumentException e)
