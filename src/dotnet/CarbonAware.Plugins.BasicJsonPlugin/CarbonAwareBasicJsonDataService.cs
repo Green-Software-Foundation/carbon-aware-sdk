@@ -28,19 +28,26 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
             return jsonObject.Emissions;
         }
 
-        public void Configure(IConfigurationSection configuration)
+        public void SetFileName(string fileName)
         {
-            _fileName = configuration.GetSection("data-file").Value;
+            _fileName = fileName;
 
             if (_fileName == null)
             {
                 throw new ArgumentException("Error configuring CarbonAwareStaticJsonDataService.");
             }
 
-            if(!File.Exists(_fileName))
+            if (!File.Exists(_fileName))
             {
                 throw new ArgumentException($"Error configuring CarbonAwareStaticJsonDataService.  The data-file '{_fileName}' does not exist.");
             }
+        }
+
+        public void Configure(IConfigurationSection configuration)
+        {
+            var fileName = configuration.GetSection("data-file").Value;
+
+            SetFileName(fileName);
         }
     }
 }
