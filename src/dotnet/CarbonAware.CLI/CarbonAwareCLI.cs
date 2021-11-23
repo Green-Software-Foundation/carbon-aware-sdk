@@ -21,6 +21,7 @@ namespace CarbonAwareCLI
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
         private CarbonAwareCore _carbonAwareCore;
         private ServiceProvider _serviceProvider;
+        private CompositionContainer _container;
 
         /// <summary>
         /// Indicates if the command line arguments have been parsed successfully 
@@ -100,7 +101,6 @@ namespace CarbonAwareCLI
             }
         }
 
-        private CompositionContainer _container;
 
         private void LoadPluginAssemblies()
         {
@@ -112,8 +112,9 @@ namespace CarbonAwareCLI
 
             // Create the CompositionContainer with the parts in the catalog.
             _container = new CompositionContainer(catalog);
-
             _container.ComposeParts(this);
+
+            // Plugins folder DLL's are now loaded!
         }
 
         private void ValidateServiceSyntax(List<ServiceRegistration> services)
