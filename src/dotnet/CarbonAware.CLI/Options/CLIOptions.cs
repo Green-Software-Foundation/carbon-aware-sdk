@@ -23,5 +23,8 @@ namespace CarbonAwareCLI.Options
         [Option('d', "data-file", Required = true, HelpText = "Emmisions Data File.")]
         public string DataFile { get; set; }
 
+        [Option('c', "config", Required = false, Default = "carbon-aware.json", HelpText = "Custom carbon aware configuration file.")]
+        public string ConfigPath { get; set; }
+
     }
 }
