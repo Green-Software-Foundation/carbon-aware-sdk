@@ -1,11 +1,9 @@
 ﻿using CarbonAware;
-using CarbonAware.Plugins.BasicJsonPlugin;
 using CarbonAwareCLI.Config;
 using CarbonAwareCLI.Options;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +13,9 @@ namespace CarbonAwareCLI
 {
     public class CarbonAwareCLI
     {
+        private const string CONFIG_SECTION_SERVICE_REGISTRATIONS = "service-registrations";
+        private const string CONFIG_SERVICES_ARRAY = "services";
+
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
         private CarbonAwareCore _carbonAwareCore;
         private ServiceProvider _serviceProvider;
@@ -33,7 +34,7 @@ namespace CarbonAwareCLI
                 // Parse command line parameters
                 parseResult.WithParsed(ValidateCommandLineArguments);
                 parseResult.WithNotParsed(ThrowOnParseError);
-                
+
                 // Configure the services
                 ConfigureServices();
 
@@ -46,49 +47,79 @@ namespace CarbonAwareCLI
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine("Error: Invalid arguments.");
+                Console.WriteLine("Error:");
                 Console.WriteLine(e.Message);
             }
         }
-
-        private const string CONFIG_SECTION_SERVICE_REGISTRATIONS = "service-registrations";
-        private const string CONFIG_SERVICES_ARRAY = "services";
 
         /// <summary>
         /// Configures the service provider 
         /// </summary>
         private void ConfigureServices()
         {
-            var builder = new ConfigurationBuilder()
-                   .SetBasePath(Directory.GetCurrentDirectory())
-                   .AddJsonFile(_state.ConfigPath);
+            try
+            {
+                var builder = new ConfigurationBuilder()
+                       .SetBasePath(Directory.GetCurrentDirectory())
+                       .AddJsonFile(_state.ConfigPath);
 
-            var config = builder.Build();
-            var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
-            var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
+                var config = builder.Build();
+                var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
+                var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
+                
+                ValidateServiceSyntax(services);
 
-            var serviceCollection = new ServiceCollection()
-               .AddLogging();
+                var serviceCollection = new ServiceCollection()
+                   .AddLogging();
 
-            // Register Services
+                // Register Services
+                foreach (var service in services)
+                {
+                    AddService(serviceCollection, service);
+                }
+
+                _serviceProvider = serviceCollection.BuildServiceProvider();
+
+                // Configure Services
+                foreach (var service in services)
+                {
+                    var serviceType = Type.GetType(service.service, true);
+                    var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
+                    var registeredServiceName = registeredService.GetType().Name;
+                    var configSection = config.GetSection(registeredServiceName);
+                    registeredService.Configure(configSection);
+                }
+            }
+            catch (ArgumentException ae)
+            {
+                throw (ae);
+            }
+        }
+
+        private void ValidateServiceSyntax(List<ServiceRegistration> services)
+        {
+            if (services == null) throw new ArgumentException($"Configuration file '{_state.ConfigPath}' is invalid.  Could not find services.");
             foreach (var service in services)
+            {
+                if (service.service is null || service.implementation is null)
+                {
+                    throw new ArgumentException($"Service configuration is invalid.  Service: '{service.service}', Implementation: '{service.implementation}'");
+                }
+            }
+        }
+
+        private static void AddService(IServiceCollection serviceCollection, ServiceRegistration service)
+        {
+            try
             {
                 var serviceType = Type.GetType(service.service, true);
                 var serviceImplementation = Type.GetType(service.implementation);
 
                 serviceCollection.AddSingleton(serviceType, serviceImplementation);
             }
-
-            _serviceProvider = serviceCollection.BuildServiceProvider();
-
-            // Configure Services
-            foreach (var service in services)
+            catch
             {
-                var serviceType = Type.GetType(service.service, true);
-                var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
-                var registeredServiceName = registeredService.GetType().Name;
-                var configSection = config.GetSection(registeredServiceName);
-                registeredService.Configure(configSection);
+                throw new ArgumentException($"Error configuring service '${service.service}' with type $'{service.implementation}'");
             }
         }
 

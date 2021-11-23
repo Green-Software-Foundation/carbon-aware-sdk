@@ -30,7 +30,16 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         public void Configure(IConfigurationSection configuration)
         {
             _fileName = configuration.GetSection("data-file").Value;
-            // TODO: File validation needs to be checked here now since moving it to configuration load
+
+            if (_fileName == null)
+            {
+                throw new ArgumentException("Error configuring CarbonAwareStaticJsonDataService.");
+            }
+
+            if(!File.Exists(_fileName))
+            {
+                throw new ArgumentException($"Error configuring CarbonAwareStaticJsonDataService.  The data-file '{_fileName}' does not exist.");
+            }
         }
     }
 }
