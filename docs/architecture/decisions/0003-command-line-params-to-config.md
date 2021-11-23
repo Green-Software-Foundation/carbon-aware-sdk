@@ -1,4 +1,4 @@
-# 3. Dev Containers
+# 3. Move Command Line Parameters to Config File
 
 ## Status
 Accepted
@@ -26,5 +26,5 @@ For native integration to the SDK, this configuration would usually be in code. 
 
 Configuration may differ betweeen platforms/languages - however this would be the case via command line.  This means there will be consistency in the command line between platforms, hiding platform depdendencies from the parameters and moved to the config.
 
-## Green Architecture Considerations
+## Green Impact
 Neutral

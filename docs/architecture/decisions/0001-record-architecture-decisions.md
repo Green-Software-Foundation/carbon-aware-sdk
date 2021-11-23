@@ -12,7 +12,7 @@ We will use Architecture Decision Records, as described by Michael Nygard in thi
 ## Consequences
 See Michael Nygard's article, linked above.
 
-## Green Architecture Considerations
+## Green Impact
 Positive
 
 By ensuring all architecture decisions have green software considerations, we will endeavour this to drive greener software engineering behaviours.
