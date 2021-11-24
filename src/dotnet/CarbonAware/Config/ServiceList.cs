@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CarbonAwareCLI.Config
+namespace CarbonAware.Config
 {
     public class ServiceList
     {

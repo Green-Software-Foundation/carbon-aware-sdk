@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using CarbonAware.Plugins.BasicJsonPlugin;
+using CarbonAware.Config;
 
 namespace CarbonAware.WebApi.Controllers
 {
@@ -9,10 +9,13 @@ namespace CarbonAware.WebApi.Controllers
     {
         private readonly ILogger<CarbonAwareController> _logger;
         private ICarbonAwarePlugin _plugin;
+        private ServiceManager _serviceManager;
+
         public CarbonAwareController(ILogger<CarbonAwareController> logger)
         {
             _logger = logger;
-            _plugin = GetPlugin();
+            _serviceManager = new ServiceManager("carbon-aware.json");
+            _plugin = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
         }
 
         [HttpPost("GetBestEmissionsDataForLocationsByTime")]
@@ -39,14 +42,13 @@ namespace CarbonAware.WebApi.Controllers
             return response;
         }
 
-        private static CarbonAwareBasicDataPlugin GetPlugin()
+        [HttpGet("Test")]
+        public bool Test()
         {
-            var dataService = new CarbonAwareStaticJsonDataService();
-            var filePath = Path.Combine("data-files", "dummy-data-azure-emissions.json");
+            
 
-            dataService.SetFileName(filePath);
-            var plugin = new CarbonAwareBasicDataPlugin(dataService);
-            return plugin;
+            return true;
         }
+
     }
 }
