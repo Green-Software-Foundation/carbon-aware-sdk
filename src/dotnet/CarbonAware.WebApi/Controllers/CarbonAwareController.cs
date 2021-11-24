@@ -41,14 +41,5 @@ namespace CarbonAware.WebApi.Controllers
 
             return response;
         }
-
-        [HttpGet("Test")]
-        public bool Test()
-        {
-            
-
-            return true;
-        }
-
     }
 }

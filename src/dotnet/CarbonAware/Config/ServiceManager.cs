@@ -70,9 +70,9 @@ namespace CarbonAware.Config
         {
             // An aggregate catalog that combines multiple catalogs.
             var catalog = new AggregateCatalog();
+            
             // Adds all the parts found in the same assembly as the Program class.
-
-//            catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
+            //catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
 
             // Add all the parts found in the "plugins" folder
             catalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory + PLUGINS_FOLDER));
