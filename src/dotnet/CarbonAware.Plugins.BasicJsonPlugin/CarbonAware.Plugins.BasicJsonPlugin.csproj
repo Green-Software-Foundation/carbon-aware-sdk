@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir)CarbonAware.CLI\bin\Debug\net6.0\plugins\$(TargetName).dll&quot;&#xD;&#xA;copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir)CarbonAware.WebApi\plugins\$(TargetName).dll&quot;&#xD;&#xA;" />
+    <Exec Command="echo copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir)CarbonAware.CLI\bin\Debug\net6.0\plugins\$(TargetName).dll&quot;&#xD;&#xA;echo copy /Y &quot;$(TargetDir)$(TargetName).dll&quot; &quot;$(SolutionDir)CarbonAware.WebApi\plugins\$(TargetName).dll&quot;&#xD;&#xA;" />
   </Target>
 
 </Project>
