@@ -15,9 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AzureData
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator", "CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator\CarbonAware.Tools.AWSDatacenterDummyEmissionsGenerator.csproj", "{16B15877-9DFC-43E8-84FE-BA67C4C71899}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Data.Sample", "CarbonAware.Data.Sample\CarbonAware.Data.Sample.csproj", "{34B58DE8-6327-4BDF-8D58-7E76146CA85C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Data.Sample", "CarbonAware.Data.Sample\CarbonAware.Data.Sample.csproj", "{34B58DE8-6327-4BDF-8D58-7E76146CA85C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.WebApi", "CarbonAware.WebApi\CarbonAware.WebApi.csproj", "{1A606EAE-C8BE-454F-B3F7-C649C9293B65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi", "CarbonAware.WebApi\CarbonAware.WebApi.csproj", "{1A606EAE-C8BE-454F-B3F7-C649C9293B65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Tests", "CarbonAware.Tests\CarbonAware.Tests.csproj", "{834D7E6B-8807-4808-96CF-1BCA36C17F6D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{1A606EAE-C8BE-454F-B3F7-C649C9293B65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A606EAE-C8BE-454F-B3F7-C649C9293B65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A606EAE-C8BE-454F-B3F7-C649C9293B65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{834D7E6B-8807-4808-96CF-1BCA36C17F6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{834D7E6B-8807-4808-96CF-1BCA36C17F6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{834D7E6B-8807-4808-96CF-1BCA36C17F6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{834D7E6B-8807-4808-96CF-1BCA36C17F6D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

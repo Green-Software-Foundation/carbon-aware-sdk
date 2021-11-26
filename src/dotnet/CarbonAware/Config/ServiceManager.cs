@@ -28,33 +28,42 @@ namespace CarbonAware.Config
         {
             _configPath = configPath;
 
-            var builder = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile(_configPath);
-
-
-            var config = builder.Build();
-            var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
-            var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
-
-            ValidateServiceSyntax(services);
-            LoadPluginAssemblies();
-            RegisterServices(services, config);
+            // Remove this later once other code is refactored
+            // but moved constructor logic to Initialize to make it more testable
+            Initialize();
         }
 
-        private void RegisterServices(List<ServiceRegistration> services, IConfigurationRoot config)
+        public void Initialize()
         {
-            var serviceCollection = new ServiceCollection()
-                            .AddLogging();
+            IConfigurationRoot config = LoadConfigFile(_configPath);
+            List<ServiceRegistration> services = GetServicesFromConfig(config);
 
-            // Register Services
-            foreach (var service in services)
-            {
-                AddService(serviceCollection, service);
-            }
+            ValidateServiceSyntax(services);
 
-            _serviceProvider = serviceCollection.BuildServiceProvider();
+            LoadPluginAssemblies();
 
+            CreateServiceProvider(services);
+            ConfigureServices(services, config);
+        }
+
+        private static List<ServiceRegistration> GetServicesFromConfig(IConfigurationRoot config)
+        {
+            var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
+            var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
+            return services;
+        }
+
+        private static IConfigurationRoot LoadConfigFile(string configPath)
+        {
+            var builder = new ConfigurationBuilder()
+                                .SetBasePath(Directory.GetCurrentDirectory())
+                                .AddJsonFile(configPath);
+            var config = builder.Build();
+            return config;
+        }
+
+        public void ConfigureServices(List<ServiceRegistration> services, IConfigurationRoot config)
+        {
             // Configure Services
             foreach (var service in services)
             {
@@ -66,11 +75,23 @@ namespace CarbonAware.Config
             }
         }
 
+        public void CreateServiceProvider(List<ServiceRegistration> services)
+        {
+            var serviceCollection = new ServiceCollection()
+                            .AddLogging();
+            // Register Services
+            foreach (var service in services)
+            {
+                AddService(serviceCollection, service);
+            }
+            _serviceProvider = serviceCollection.BuildServiceProvider();
+        }
+
         public void LoadPluginAssemblies()
         {
             // An aggregate catalog that combines multiple catalogs.
             var catalog = new AggregateCatalog();
-            
+
             // Adds all the parts found in the same assembly as the Program class.
             //catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
 
