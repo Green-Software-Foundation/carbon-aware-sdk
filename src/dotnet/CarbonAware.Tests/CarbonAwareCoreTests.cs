@@ -14,6 +14,12 @@ public class CarbonAwareCoreTests
         // Create a carbon aware core with a mock plugin
         // and data service
         var staticDataService = new MockDataService();
+        
+        // Assume the data service is set
+        Assert.NotNull(staticDataService.EmissionsFile.Date);
+        
+        Assert.Greater(staticDataService.EmissionsFile.Emissions.Count, 0);
+
         var plugin = new MockLogicPlugin(staticDataService);
         var carbonAware = new CarbonAwareCore(plugin);
 
@@ -22,13 +28,13 @@ public class CarbonAwareCoreTests
         // This should return what the mock service returns
         // which is the entire list from the data source
         // with zero filtering or logic
-        var list = carbonAware.GetBestEmissionsDataForLocationsByTime(new List<string> { "westus" }, DateTime.Now);
+        var list1 = carbonAware.GetBestEmissionsDataForLocationsByTime(new List<string> { "westus" }, DateTime.Now);
         var directList = staticDataService.GetData();
-        Assert.AreEqual(list, directList);
+        Assert.AreEqual(list1, directList);
 
         // ... regardless of parameters... 
-        list = carbonAware.GetBestEmissionsDataForLocationsByTime(new List<string> { "eastus" }, DateTime.Now);
-        directList = staticDataService.GetData();
-        Assert.AreEqual(list, directList);
+        var list2 = carbonAware.GetBestEmissionsDataForLocationsByTime(new List<string> { "eastus" }, DateTime.Now);
+        Assert.AreEqual(list2, directList);
+
     }
 }

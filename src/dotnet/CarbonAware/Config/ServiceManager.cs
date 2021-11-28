@@ -6,7 +6,7 @@ namespace CarbonAware.Config;
 
 public class ServiceManager
 {
-    private const string PLUGINS_FOLDER = "plugins";
+    public const string PLUGINS_FOLDER = "plugins";
 
     private ServiceProvider _serviceProvider;
     private CompositionContainer _container;
@@ -44,6 +44,11 @@ public class ServiceManager
     {
         var serviceType = Type.GetType(service.service, true);
         var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
+        LoadServiceConfiguration(registeredService);
+    }
+
+    private void LoadServiceConfiguration(IConfigurable registeredService)
+    {
         var registeredServiceName = registeredService.GetType().Name;
         var configSection = _configManager.GetConfigurationSection(registeredServiceName);
         registeredService.Configure(configSection);

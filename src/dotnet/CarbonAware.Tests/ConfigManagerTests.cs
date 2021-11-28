@@ -31,6 +31,47 @@ public class ConfigManagerTests
     }
 
     [Test]
+    public void ValidServiceRegistration()
+    {
+        var validRegistration = new ServiceRegistration()
+        {
+            implementation = "anything",
+            service = "anything"
+        };
+
+        try
+        {
+            ConfigManager.ValidateService(validRegistration);
+            Assert.Pass();
+        }
+        catch (ArgumentException)
+        {
+            Assert.Fail();
+        }
+    }
+
+
+    [Test]
+    public void HandleInvalidServiceRegistration()
+    {
+        var invalidRegistration = new ServiceRegistration()
+        {
+            implementation = null,
+            service = null
+        };
+
+        try
+        {
+            ConfigManager.ValidateService(invalidRegistration);
+            Assert.Fail();
+        }
+        catch(ArgumentException)
+        {
+            Assert.Pass();
+        }
+    }
+
+    [Test]
     public void HandlesMalformedJson()
     {
         try

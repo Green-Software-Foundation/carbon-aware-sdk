@@ -32,7 +32,7 @@ public class ConfigManager : IConfigManager
         }
     }
 
-    private static void ValidateService(ServiceRegistration service)
+    public static void ValidateService(ServiceRegistration service)
     {
         if (service.service is null || service.implementation is null)
         {

@@ -43,6 +43,13 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
                 Location = MockLocations.Auckland,
                 Rating = MockRatings.Auckland,
                 Time = DateTime.Now
+            },
+            // Auckland with very low emissions
+            new EmissionsData()
+            {
+                Location = MockLocations.Sydney,
+                Rating = MockRatings.Sydney,
+                Time = DateTime.Now + TimeSpan.FromMinutes(1)
             }
         };
 
@@ -78,6 +85,16 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
         }
 
         [Test]
+        public void AssertMetadataPropertiesAreSet()
+        {
+            Assert.NotNull(_plugin.Author);
+            Assert.NotNull(_plugin.Description);
+            Assert.NotNull(_plugin.Name);
+            Assert.NotNull(_plugin.URL);
+            Assert.NotNull(_plugin.Version);
+        }
+
+        [Test]
         public void TestEmissionsDataForLocationByTime()
         {
             var ed = _plugin.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now);
@@ -93,6 +110,10 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
 
             // Core running on same plugin should have same result
             ed = _core.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now);
+            Assert.AreEqual(MockRatings.Sydney, ed[0].Rating);
+
+            // Core running on same plugin should have same result
+            ed = _core.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now, DateTime.Now + TimeSpan.FromHours(1));
             Assert.AreEqual(MockRatings.Sydney, ed[0].Rating);
         }
 

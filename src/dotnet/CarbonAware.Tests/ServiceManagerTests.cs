@@ -24,6 +24,34 @@ public class ServiceManagerTests
     }
 
     [Test]
+    public void CreatesWithoutPluginDirectory()
+    {
+        var pluginDirPath = AppDomain.CurrentDomain.BaseDirectory + ServiceManager.PLUGINS_FOLDER;
+        if (Directory.Exists(pluginDirPath))
+        {
+            Directory.Delete(pluginDirPath);
+        }
+
+        var serviceManager = new ServiceManager(_goodConfigManager);
+        Assert.Pass();
+    }
+
+    [Test]
+    public void CreatesWithPluginDirectory()
+    {
+        var pluginDirPath = AppDomain.CurrentDomain.BaseDirectory + ServiceManager.PLUGINS_FOLDER;
+        if (!Directory.Exists(pluginDirPath))
+        {
+            Directory.CreateDirectory(pluginDirPath);
+        }
+
+        var serviceManager = new ServiceManager(_goodConfigManager);
+        Assert.Pass();
+
+        Directory.Delete(pluginDirPath);
+    }
+
+    [Test]
     public void CreatesAndRetrievesServices()
     {
         var serviceManager = new ServiceManager(_goodConfigManager);
@@ -50,6 +78,7 @@ public class ServiceManagerTests
             Assert.Pass();
         }
     }
+
 
     [Test]
     public void HandlesBadServiceConfig()

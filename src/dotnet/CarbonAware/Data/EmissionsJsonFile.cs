@@ -2,7 +2,6 @@
 
 public class EmissionsJsonFile
 {
-#nullable enable
-    public string? Date { get; set; }
-    public List<EmissionsData>? Emissions { get; set; }
+    public string Date { get; set; } = "Undefined";
+    public List<EmissionsData> Emissions { get; set; } = new List<EmissionsData>();
 }
