@@ -142,19 +142,31 @@ namespace CarbonAwareCLI
 
         private void ParseConfigPath(CLIOptions o)
         {
-            if (o.ConfigPath is not null)
+            var configPath = o.ConfigPath;
+
+            if (configPath is not null)
             {
-                if (!File.Exists(o.ConfigPath))
-                {
-                    throw new ArgumentException($"File '{o.ConfigPath}' could not be found.");
-                }
-                _state.ConfigPath = o.ConfigPath;
+                CheckFileExists(configPath);
+                _state.ConfigPath = configPath;
+            }
+        }
+
+        private static void CheckFileExists(string configPath)
+        {
+            if (!File.Exists(configPath))
+            {
+                throw new ArgumentException($"File '{configPath}' could not be found.");
             }
         }
 
         private void ParseTime(CLIOptions o)
         {
-            // Validate time arguments
+            ParseTimeFromTime(o);
+            ParseTimeToTime(o);
+        }
+
+        private void ParseTimeFromTime(CLIOptions o)
+        {
             if (o.Time is null)
             {
                 _state.TimeOption = TimeOptionStates.Time;
@@ -173,7 +185,10 @@ namespace CarbonAwareCLI
                         $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.Time}'.");
                 }
             }
+        }
 
+        private void ParseTimeToTime(CLIOptions o)
+        {
             if (o.ToTime is not null)
             {
                 _state.TimeOption = TimeOptionStates.TimeWindow;
