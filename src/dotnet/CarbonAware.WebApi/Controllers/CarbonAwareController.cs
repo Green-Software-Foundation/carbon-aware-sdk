@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
 using CarbonAware.Config;
 using CarbonAware.Data;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CarbonAware.WebApi.Controllers
 {
@@ -20,7 +20,7 @@ namespace CarbonAware.WebApi.Controllers
             _configManager = new ConfigManager("carbon-aware.json");
             _serviceManager = new ServiceManager(_configManager);
             var pluginService = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
-            
+
             if (pluginService is not null)
             {
                 _plugin = pluginService;
@@ -43,7 +43,7 @@ namespace CarbonAware.WebApi.Controllers
         public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
         {
             var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, duration);
-       
+
             return response;
         }
 

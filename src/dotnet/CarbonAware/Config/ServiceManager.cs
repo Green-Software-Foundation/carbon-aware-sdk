@@ -74,7 +74,7 @@ public class ServiceManager
         if (!Directory.Exists(pluginsFolder)) return;
 
         // Add all the parts found in the "plugins" folder
-        catalog.Catalogs.Add(new DirectoryCatalog(pluginsFolder)); 
+        catalog.Catalogs.Add(new DirectoryCatalog(pluginsFolder));
 
         // Create the CompositionContainer with the parts in the catalog.
         _container = new CompositionContainer(catalog);

@@ -49,7 +49,7 @@ public class ConfigManagerTests
     {
         var c = new ConfigManager("files/carbon-aware/test-carbon-aware-clean.json");
         var services = c.GetServiceConfiguration();
-        
+
         Assert.AreEqual(2, services.Count);
 
         Assert.AreEqual("Data Service", services[0].name);

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CarbonAware;
-using CarbonAware.Data;
+﻿using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 

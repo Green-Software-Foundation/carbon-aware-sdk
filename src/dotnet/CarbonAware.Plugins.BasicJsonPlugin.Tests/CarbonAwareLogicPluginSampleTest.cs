@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
@@ -101,7 +99,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
         [Test]
         public void TestEmissionsDataForLocationsByTime()
         {
-            var locations = new List<string>() {MockLocations.Sydney, MockLocations.Auckland};
+            var locations = new List<string>() { MockLocations.Sydney, MockLocations.Auckland };
 
             var emissionDataList = _plugin.GetEmissionsDataForLocationsByTime(locations, DateTime.Now);
             Assert.AreEqual(2, emissionDataList.Count);

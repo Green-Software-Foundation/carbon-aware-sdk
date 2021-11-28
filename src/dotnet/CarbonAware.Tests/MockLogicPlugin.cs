@@ -1,10 +1,5 @@
 ﻿using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarbonAware.Tests
 {
@@ -24,7 +19,7 @@ namespace CarbonAware.Tests
 
         public void Configure(IConfigurationSection config)
         {
-            
+
         }
 
         public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, TimeSpan? duration = null)

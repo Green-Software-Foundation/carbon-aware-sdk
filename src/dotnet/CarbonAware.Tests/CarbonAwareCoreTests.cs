@@ -5,7 +5,7 @@ public class CarbonAwareCoreTests
     [SetUp]
     public void Setup()
     {
-        
+
     }
 
     [Test]

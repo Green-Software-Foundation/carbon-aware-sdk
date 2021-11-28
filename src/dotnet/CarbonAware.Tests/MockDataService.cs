@@ -1,10 +1,5 @@
 ﻿using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CarbonAware.Tests
 {
@@ -31,7 +26,7 @@ namespace CarbonAware.Tests
                 Time = DateTime.Now - TimeSpan.FromHours(1)
             }
         };
-        
+
         public void Configure(IConfigurationSection config)
         {
             // Nothing, all hard coded
