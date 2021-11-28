@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace CarbonAware.Data
 {
     [Serializable]
-    public class EmissionsData
+    public record EmissionsData
     {
-        public string Location { get;  set; }
-        public DateTime Time { get;  set; }
-        public double Rating { get;  set; }
+        public string Location { get; set; }
+        public DateTime Time { get; set; }
+        public double Rating { get; set; }
 
     }
 }
