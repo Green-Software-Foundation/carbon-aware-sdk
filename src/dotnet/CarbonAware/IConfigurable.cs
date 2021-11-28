@@ -1,9 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace CarbonAware
+namespace CarbonAware;
+
+public interface IConfigurable
 {
-    public interface IConfigurable
-    {
-        public void Configure(IConfigurationSection config);
-    }
+    public void Configure(IConfigurationSection config);
 }

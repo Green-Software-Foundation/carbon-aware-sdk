@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
+﻿namespace CarbonAware.Config;
 
-namespace CarbonAware.Config
+public class ServiceList
 {
-    public class ServiceList
-    {
-        List<ServiceRegistration> Services { get; set; }
-    }
+    List<ServiceRegistration> Services { get; set; }
 }
+

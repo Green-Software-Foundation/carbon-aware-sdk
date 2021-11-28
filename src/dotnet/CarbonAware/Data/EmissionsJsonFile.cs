@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
+﻿namespace CarbonAware.Data; 
 
-namespace CarbonAware.Data
+public class EmissionsJsonFile
 {
-    public class EmissionsJsonFile
-    {
-        #nullable enable
-        public string? Date { get; set; }
-        public List<EmissionsData>? Emissions { get; set; }
-    }
+    #nullable enable
+    public string? Date { get; set; }
+    public List<EmissionsData>? Emissions { get; set; }
 }

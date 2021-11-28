@@ -1,8 +1,7 @@
-﻿namespace CarbonAware.Config
+﻿namespace CarbonAware.Config;
+
+public class ServiceRegistration
 {
-    public class ServiceRegistration
-    {
-        public string service { get; set; }
-        public string implementation { get; set; }
-    }
+    public string service { get; set; }
+    public string implementation { get; set; }
 }
