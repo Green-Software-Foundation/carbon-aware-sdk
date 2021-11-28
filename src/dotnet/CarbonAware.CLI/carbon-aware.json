@@ -12,7 +12,7 @@
     ]
   },
   "CarbonAwareStaticJsonDataService": {
-    "data-file": "data-files/dummy-data-azure-emissions.json"
+    "data-file": "data-files/test-data-azure-emissions.json"
   },
   "CarbonAwareBasicDataPlugin": {
     // nothing 

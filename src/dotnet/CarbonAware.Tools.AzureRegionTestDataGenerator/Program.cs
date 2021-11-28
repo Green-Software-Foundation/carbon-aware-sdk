@@ -4,14 +4,14 @@ using CarbonAware.Tools;
 using Newtonsoft.Json;
 
 /// <summary>
-/// Generates a dummy data json string as output based on the 
+/// Generates a test data json string as output based on the 
 /// azure-regions.json structure built from the Azure CLI
 /// </summary>
-var generator = new AzureRegionDummyDataGenerator(@"azure-regions.json");
+var generator = new AzureRegionTestDataGenerator(@"azure-regions.json");
 
 var data = generator.GetRegionData();
 
-var emissions = generator.GenerateDummyData(data);
+var emissions = generator.GenerateTestData(data);
 
 var jsonFile = new EmissionsJsonFile()
 {
