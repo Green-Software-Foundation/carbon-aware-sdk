@@ -7,5 +7,6 @@
 .vs
 
 bin
+out
 obj
 build
