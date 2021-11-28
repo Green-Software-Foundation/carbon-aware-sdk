@@ -37,17 +37,17 @@ namespace CarbonAware.WebApi.Controllers
         }
 
         [HttpPost("GetEmissionsDataForLocationsByTime")]
-        public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null)
+        public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
         {
-            var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime);
+            var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, duration);
        
             return response;
         }
 
         [HttpGet("GetEmissionsDataForLocationByTime")]
-        public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null)
+        public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
         {
-            var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime);
+            var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, duration);
 
             return response;
         }

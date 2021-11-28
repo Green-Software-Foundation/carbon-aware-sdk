@@ -13,7 +13,7 @@ namespace CarbonAware
         /// <param name="time">The time to retrieve the most recent data for.</param>
         /// <param name="toTime">Optional: The end time of the time window.</param>
         /// <returns>A single emissions data record for the location, and EmissionsData.None if no results are found.</returns>
-        List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null);
+        List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, TimeSpan? duration = null);
 
         /// <summary>
         /// Returns the most recent prior emissions data record for a list of specified locations.
@@ -23,7 +23,7 @@ namespace CarbonAware
         /// <param name="toTime">Optional: The end time of the time window.</param>
         /// <returns>A List&lt;EmissionsData&gt; for each emissions data record for each location available.  
         /// If no records are found, returns an empty List.</returns>
-        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null);
+        List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, TimeSpan? duration = null);
 
         /// <summary>
         /// Returns the lowest emissions record for a list of specified locations at a specific time.

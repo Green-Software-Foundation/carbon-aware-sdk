@@ -26,14 +26,14 @@ namespace CarbonAware
             //Console.WriteLine($"\tURL: '{plugin.URL}'");
         }
                 
-        public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null)
+        public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, TimeSpan? duration = null)
         {
-            return _plugin.GetEmissionsDataForLocationByTime(location, time, toTime);
+            return _plugin.GetEmissionsDataForLocationByTime(location, time, toTime, duration);
         }
 
-        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, TimeSpan? duration = null)
         {
-            return _plugin.GetEmissionsDataForLocationsByTime(locations, time, toTime);
+            return _plugin.GetEmissionsDataForLocationsByTime(locations, time, toTime, duration);
         }
 
         public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null)
