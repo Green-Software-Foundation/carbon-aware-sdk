@@ -10,69 +10,47 @@ namespace CarbonAware.Config
 {
     public class ServiceManager
     {
-        private const string CONFIG_SECTION_SERVICE_REGISTRATIONS = "service-registrations";
-        private const string CONFIG_SERVICES_ARRAY = "services";
         private const string PLUGINS_FOLDER = "plugins";
 
         private ServiceProvider _serviceProvider;
         private CompositionContainer _container;
-
-        private string _configPath;
+        private IConfigManager _configManager;
 
         public ServiceProvider ServiceProvider
         {
             get { return _serviceProvider; }
         }
 
-        public ServiceManager(string configPath)
+        public ServiceManager(IConfigManager configManager)
         {
-            _configPath = configPath;
-
-            // Remove this later once other code is refactored
-            // but moved constructor logic to Initialize to make it more testable
+            _configManager = configManager;
             Initialize();
         }
 
         public void Initialize()
         {
-            IConfigurationRoot config = LoadConfigFile(_configPath);
-            List<ServiceRegistration> services = GetServicesFromConfig(config);
-
-            ValidateServiceSyntax(services);
-
+            List<ServiceRegistration> configuredServices = _configManager.GetServiceConfiguration();
             LoadPluginAssemblies();
-
-            CreateServiceProvider(services);
-            ConfigureServices(services, config);
+            CreateServiceProvider(configuredServices);
+            ConfigureServices(configuredServices);
         }
 
-        private static List<ServiceRegistration> GetServicesFromConfig(IConfigurationRoot config)
-        {
-            var section = config.GetSection(CONFIG_SECTION_SERVICE_REGISTRATIONS);
-            var services = section.GetSection(CONFIG_SERVICES_ARRAY).Get<List<ServiceRegistration>>();
-            return services;
-        }
-
-        private static IConfigurationRoot LoadConfigFile(string configPath)
-        {
-            var builder = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile(configPath);
-            var config = builder.Build();
-            return config;
-        }
-
-        public void ConfigureServices(List<ServiceRegistration> services, IConfigurationRoot config)
+        public void ConfigureServices(List<ServiceRegistration> services)
         {
             // Configure Services
             foreach (var service in services)
             {
-                var serviceType = Type.GetType(service.service, true);
-                var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
-                var registeredServiceName = registeredService.GetType().Name;
-                var configSection = config.GetSection(registeredServiceName);
-                registeredService.Configure(configSection);
+                ConfigureService(service);
             }
+        }
+
+        private void ConfigureService(ServiceRegistration service)
+        {
+            var serviceType = Type.GetType(service.service, true);
+            var registeredService = _serviceProvider.GetService(serviceType) as IConfigurable;
+            var registeredServiceName = registeredService.GetType().Name;
+            var configSection = _configManager.GetConfigurationSection(registeredServiceName);
+            registeredService.Configure(configSection);
         }
 
         public void CreateServiceProvider(List<ServiceRegistration> services)
@@ -105,17 +83,7 @@ namespace CarbonAware.Config
             // Plugins folder DLL's are now loaded!
         }
 
-        public void ValidateServiceSyntax(List<ServiceRegistration> services)
-        {
-            if (services == null) throw new ArgumentException($"Configuration file '{_configPath}' is invalid.  Could not find services.");
-            foreach (var service in services)
-            {
-                if (service.service is null || service.implementation is null)
-                {
-                    throw new ArgumentException($"Service configuration is invalid.  Service: '{service.service}', Implementation: '{service.implementation}'");
-                }
-            }
-        }
+        
 
         public static void AddService(IServiceCollection serviceCollection, ServiceRegistration service)
         {

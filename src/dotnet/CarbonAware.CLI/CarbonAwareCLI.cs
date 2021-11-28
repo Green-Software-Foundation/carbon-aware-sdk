@@ -21,7 +21,7 @@ namespace CarbonAwareCLI
         private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
         private CarbonAwareCore _carbonAwareCore;
         private ServiceManager _serviceManager;
-
+        private IConfigManager _configManager;
         /// <summary>
         /// Indicates if the command line arguments have been parsed successfully 
         /// </summary>
@@ -38,7 +38,9 @@ namespace CarbonAwareCLI
                 parseResult.WithNotParsed(ThrowOnParseError);
 
                 // Configure the services
-                _serviceManager = new ServiceManager(_state.ConfigPath);
+
+                _configManager = new ConfigManager(_state.ConfigPath);
+                _serviceManager = new ServiceManager(_configManager);
 
                 var plugin = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
 
