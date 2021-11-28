@@ -46,9 +46,9 @@ public class ServiceManagerTests
         }
 
         var serviceManager = new ServiceManager(_goodConfigManager);
-        Assert.Pass();
-
         Directory.Delete(pluginDirPath);
+
+        Assert.Pass();
     }
 
     [Test]
@@ -71,7 +71,6 @@ public class ServiceManagerTests
         try
         {
             var serviceManager = new ServiceManager(_badTypesConfigManager);
-            Assert.Fail();
         }
         catch (ArgumentException)
         {
@@ -86,7 +85,6 @@ public class ServiceManagerTests
         try
         {
             var serviceManager = new ServiceManager(_badServiceConfigManager);
-            Assert.Fail();
         }
         catch (ArgumentException)
         {

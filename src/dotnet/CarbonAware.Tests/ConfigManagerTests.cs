@@ -63,7 +63,6 @@ public class ConfigManagerTests
         try
         {
             ConfigManager.ValidateService(invalidRegistration);
-            Assert.Fail();
         }
         catch(ArgumentException)
         {
@@ -77,7 +76,6 @@ public class ConfigManagerTests
         try
         {
             var c = new ConfigManager("files/test-malformed-json.json");
-            Assert.Fail();
         }
         catch (ArgumentException)
         {

@@ -48,7 +48,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
 
             if (toTime != null)
             {
-                var timeWindowEmissions = emissionsDataForLocation.Where(ed => ed.Time > time && ed.Time <= toTime).ToList();
+                var timeWindowEmissions = emissionsDataForLocation.Where(ed => ed.TimeBetween(time,toTime)).ToList();
                 matchingEmissionsData.AddRange(timeWindowEmissions);
             }
 
