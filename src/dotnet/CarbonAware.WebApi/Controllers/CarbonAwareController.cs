@@ -29,7 +29,7 @@ namespace CarbonAware.WebApi.Controllers
         }
 
         [HttpPost("GetBestEmissionsDataForLocationsByTime")]
-        public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null)
+        public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
         {
             var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime);
 
