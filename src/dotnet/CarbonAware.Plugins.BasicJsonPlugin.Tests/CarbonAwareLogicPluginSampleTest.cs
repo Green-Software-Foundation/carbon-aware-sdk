@@ -11,6 +11,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
         public static string Sydney = "Sydney";
         public static string Melbourne = "Melbourne";
         public static string Auckland = "Auckland";
+        public static string DoesNotExist = "DOES NOT EXIST";
     }
 
     public class MockRatings
@@ -84,11 +85,18 @@ namespace CarbonAware.Plugins.BasicJsonPlugin.Tests
             var ed = _plugin.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now);
             Assert.AreEqual(MockRatings.Sydney, ed[0].Rating);
 
+            // Should get nothing if there is no location
+            ed = _plugin.GetEmissionsDataForLocationByTime(MockLocations.DoesNotExist, DateTime.Now);
+            Assert.AreEqual(0, ed.Count);
+
+            // Should get nothing if there is no data prior
+            ed = _plugin.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now - TimeSpan.FromDays(100));
+            Assert.AreEqual(0, ed.Count);
+
             // Core running on same plugin should have same result
             ed = _core.GetEmissionsDataForLocationByTime(MockLocations.Sydney, DateTime.Now);
             Assert.AreEqual(MockRatings.Sydney, ed[0].Rating);
         }
-
 
         [Test]
         public void TestEmissionsDataForLocationsByTime()
