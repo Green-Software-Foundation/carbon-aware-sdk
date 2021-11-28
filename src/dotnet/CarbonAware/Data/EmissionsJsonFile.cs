@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace CarbonAware.Data.Sample
+namespace CarbonAware.Data
 {
     public class EmissionsJsonFile
     {
+        #nullable enable
         public string? Date { get; set; }
         public List<EmissionsData>? Emissions { get; set; }
     }

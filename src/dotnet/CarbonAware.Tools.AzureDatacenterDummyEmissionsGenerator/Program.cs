@@ -1,5 +1,5 @@
 ﻿
-using CarbonAware.Data.Sample;
+using CarbonAware.Data;
 using CarbonAware.Tools;
 using Newtonsoft.Json;
 

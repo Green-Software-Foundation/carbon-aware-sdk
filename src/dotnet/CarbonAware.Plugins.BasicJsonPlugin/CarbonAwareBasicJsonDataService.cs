@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CarbonAware;
-using CarbonAware.Data.Sample;
+using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 

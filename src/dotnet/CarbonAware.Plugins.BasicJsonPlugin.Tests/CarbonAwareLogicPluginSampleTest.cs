@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 

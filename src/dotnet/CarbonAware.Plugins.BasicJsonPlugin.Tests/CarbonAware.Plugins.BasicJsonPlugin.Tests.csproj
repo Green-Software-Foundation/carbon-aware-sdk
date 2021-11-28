@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarbonAware.Data.Sample\CarbonAware.Data.Sample.csproj" />
     <ProjectReference Include="..\CarbonAware.Plugins.BasicJsonPlugin\CarbonAware.Plugins.BasicJsonPlugin.csproj" />
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
   </ItemGroup>

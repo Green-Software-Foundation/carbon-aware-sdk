@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using CarbonAware.Config;
+using CarbonAware.Data;
 
 namespace CarbonAware.WebApi.Controllers
 {
@@ -15,7 +16,16 @@ namespace CarbonAware.WebApi.Controllers
         {
             _logger = logger;
             _serviceManager = new ServiceManager("carbon-aware.json");
-            _plugin = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
+            var pluginService = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
+            
+            if (pluginService is not null)
+            {
+                _plugin = pluginService;
+            }
+            else
+            {
+                throw new Exception("Services are not configured properly.  Could not find plugin service.");
+            }
         }
 
         [HttpPost("GetBestEmissionsDataForLocationsByTime")]

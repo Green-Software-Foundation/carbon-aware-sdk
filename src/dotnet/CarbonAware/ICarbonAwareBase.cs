@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarbonAware.Data;
+using System;
 using System.Collections.Generic;
 
 namespace CarbonAware

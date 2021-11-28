@@ -1,4 +1,5 @@
 ﻿using CarbonAware;
+using CarbonAware.Data;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;

@@ -1,5 +1,6 @@
 ﻿using CarbonAware;
 using CarbonAware.Config;
+using CarbonAware.Data;
 using CarbonAwareCLI.Options;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
