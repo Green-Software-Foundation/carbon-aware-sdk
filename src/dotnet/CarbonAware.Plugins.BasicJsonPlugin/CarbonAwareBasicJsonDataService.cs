@@ -46,6 +46,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         public void Configure(IConfigurationSection configuration)
         {
             var fileName = configuration.GetSection("data-file").Value;
+            fileName = AppDomain.CurrentDomain.BaseDirectory + fileName;
 
             SetFileName(fileName);
         }

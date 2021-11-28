@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="plugins\plugins.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="plugins\plugins.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
@@ -16,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarbonAware.Data.Sample\CarbonAware.Data.Sample.csproj" />
+    <ProjectReference Include="..\CarbonAware.Plugins.BasicJsonPlugin\CarbonAware.Plugins.BasicJsonPlugin.csproj" />
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
   </ItemGroup>
 
@@ -31,18 +42,6 @@
     <Content Update="carbon-aware.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="data-files\aws-regions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="data-files\dummy-data-aws-emissions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="data-files\dummy-data-azure-emissions.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Update="data-files\sample-emissions-data.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -52,14 +51,12 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="plugins\" />
-  </ItemGroup>
+	<Target Name="CopyDataFiles" AfterTargets="Build">
+		<ItemGroup>
+			<DataFiles Include="$(ProjectDir)..\CarbonAware.data.Sample\data-files\*.*" />
+		</ItemGroup>
 
-  <ItemGroup>
-    <None Update="plugins\CarbonAware.Plugins.BasicJsonPlugin.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files\" SkipUnchangedFiles="true" />
+	</Target>
 
 </Project>
