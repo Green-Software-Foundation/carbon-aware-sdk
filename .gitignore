@@ -1,0 +1,13 @@
+~$*
+*.tmp
+*.dll
+*.pdb
+*.suo
+.suo
+.vs
+
+bin
+out
+obj
+build
+TestResults
