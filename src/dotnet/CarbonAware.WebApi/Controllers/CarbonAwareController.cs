@@ -16,6 +16,7 @@ namespace CarbonAware.WebApi.Controllers
         public CarbonAwareController(ILogger<CarbonAwareController> logger)
         {
             _logger = logger;
+
             _configManager = new ConfigManager("carbon-aware.json");
             _serviceManager = new ServiceManager(_configManager);
             var pluginService = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
