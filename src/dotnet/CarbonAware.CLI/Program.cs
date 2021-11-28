@@ -1,23 +1,14 @@
-﻿using CommandLine;
-using System;
-using System.Collections.Generic;
-using CarbonAware;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.DependencyInjection;
+﻿namespace CarbonAwareCLI;
 
-namespace CarbonAwareCLI
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        var cli = new CarbonAwareCLI(args);
+        if (cli.Parsed)
         {
-            var cli = new CarbonAwareCLI(args);
-            if (cli.Parsed)
-            {
-                var emissions = cli.GetEmissions();
-                cli.OutputEmissionsData(emissions);
-            }
+            var emissions = cli.GetEmissions();
+            cli.OutputEmissionsData(emissions);
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace CarbonAwareCLI.Options
+﻿namespace CarbonAwareCLI.Options;
+
+public enum TimeOptionStates
 {
-    public enum TimeOptionStates
-    {
-        Time,
-        TimeWindow
-    }
+    Time,
+    TimeWindow
 }

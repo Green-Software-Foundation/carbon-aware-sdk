@@ -1,9 +1,8 @@
-﻿namespace CarbonAwareCLI.Options
+﻿namespace CarbonAwareCLI.Options;
+
+public enum LocationOptionStates
 {
-    public enum LocationOptionStates
-    {
-        Single,
-        File,
-        List
-    }
+    Single,
+    File,
+    List
 }
