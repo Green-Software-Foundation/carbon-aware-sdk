@@ -23,7 +23,7 @@ public class ServiceManager
         Initialize();
     }
 
-    public void Initialize()
+    private void Initialize()
     {
         List<ServiceRegistration> configuredServices = _configManager.GetServiceConfiguration();
         LoadPluginAssemblies();
@@ -31,7 +31,7 @@ public class ServiceManager
         ConfigureServices(configuredServices);
     }
 
-    public void ConfigureServices(List<ServiceRegistration> services)
+    private void ConfigureServices(List<ServiceRegistration> services)
     {
         // Configure Services
         foreach (var service in services)
@@ -49,7 +49,7 @@ public class ServiceManager
         registeredService.Configure(configSection);
     }
 
-    public void CreateServiceProvider(List<ServiceRegistration> services)
+    private void CreateServiceProvider(List<ServiceRegistration> services)
     {
         var serviceCollection = new ServiceCollection()
                         .AddLogging();
@@ -61,16 +61,20 @@ public class ServiceManager
         _serviceProvider = serviceCollection.BuildServiceProvider();
     }
 
-    public void LoadPluginAssemblies()
+    private void LoadPluginAssemblies()
     {
         // An aggregate catalog that combines multiple catalogs.
         var catalog = new AggregateCatalog();
 
         // Adds all the parts found in the same assembly as the Program class.
         //catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
+        var pluginsFolder = AppDomain.CurrentDomain.BaseDirectory + PLUGINS_FOLDER;
+
+        // If there is no plugins folder, simply return
+        if (!Directory.Exists(pluginsFolder)) return;
 
         // Add all the parts found in the "plugins" folder
-        catalog.Catalogs.Add(new DirectoryCatalog(AppDomain.CurrentDomain.BaseDirectory + PLUGINS_FOLDER));
+        catalog.Catalogs.Add(new DirectoryCatalog(pluginsFolder)); 
 
         // Create the CompositionContainer with the parts in the catalog.
         _container = new CompositionContainer(catalog);
@@ -79,9 +83,7 @@ public class ServiceManager
         // Plugins folder DLL's are now loaded!
     }
 
-
-
-    public static void AddService(IServiceCollection serviceCollection, ServiceRegistration service)
+    private static void AddService(IServiceCollection serviceCollection, ServiceRegistration service)
     {
         try
         {

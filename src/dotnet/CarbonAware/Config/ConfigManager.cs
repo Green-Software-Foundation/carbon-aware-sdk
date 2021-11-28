@@ -54,11 +54,19 @@ namespace CarbonAware.Config
 
         private IConfigurationRoot LoadConfigFile(string configPath)
         {
-            var builder = new ConfigurationBuilder()
-                                .SetBasePath(Directory.GetCurrentDirectory())
-                                .AddJsonFile(configPath);
-            var config = builder.Build();
-            return config;
+            try
+            {
+                var builder = new ConfigurationBuilder()
+                                    .SetBasePath(Directory.GetCurrentDirectory())
+                                    .AddJsonFile(AppDomain.CurrentDomain.BaseDirectory + configPath);
+
+                var config = builder.Build();
+                return config;
+            }
+            catch(InvalidDataException ide)
+            {
+                throw new ArgumentException($"Json configuration file '{ configPath }' is not valid.", ide);
+            }
         }
     }
 }
