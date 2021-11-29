@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 namespace CarbonAware.Tools;
 
 /// <summary>
-/// Generates a dummy data json string as output based on the 
+/// Generates a test data json string as output based on the 
 /// azure-regions.json structure 
 /// </summary>
-public class AzureRegionDummyDataGenerator
+public class AzureRegionTestDataGenerator
 {
     public class AzureRegionData
     {
@@ -16,7 +16,7 @@ public class AzureRegionDummyDataGenerator
 
     private string _fileName { get; }
 
-    public AzureRegionDummyDataGenerator(string fileName)
+    public AzureRegionTestDataGenerator(string fileName)
     {
         _fileName = fileName;
     }
@@ -29,7 +29,7 @@ public class AzureRegionDummyDataGenerator
         return jsonObject;
     }
 
-    public List<EmissionsData> GenerateDummyData(List<AzureRegionData> regionData)
+    public List<EmissionsData> GenerateTestData(List<AzureRegionData> regionData)
     {
         List<EmissionsData> emData = new List<EmissionsData>();
         var ran = new Random(DateTime.Now.Millisecond);

@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace CarbonAware.Tools;
 
-public class AWSRegionDummyDataGenerator
+public class AWSRegionTestDataGenerator
 {
     public class AwsRegionData
     {
@@ -15,7 +15,7 @@ public class AWSRegionDummyDataGenerator
 
     private string _fileName { get; }
 
-    public AWSRegionDummyDataGenerator(string fileName)
+    public AWSRegionTestDataGenerator(string fileName)
     {
         _fileName = fileName;
     }
@@ -28,7 +28,7 @@ public class AWSRegionDummyDataGenerator
         return jsonObject;
     }
 
-    public List<EmissionsData> GenerateDummyData(List<AwsRegionData> regionData)
+    public List<EmissionsData> GenerateTestData(List<AwsRegionData> regionData)
     {
         List<EmissionsData> emData = new List<EmissionsData>();
         var ran = new Random(DateTime.Now.Millisecond);
