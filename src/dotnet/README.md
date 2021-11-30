@@ -26,9 +26,9 @@ Best for when you are using .NET, and you have the ability to change the code, a
 ## Basic Plugin
 There is a basic plugin provided that reads static data and queries over them using _basic_ logic.  
 
-## Data
+## Data Files
 Data files are stored in the `data` folder.  The `test-data-cloud-remissions.json` files being the most important for testing.
 
 All files placed here will be copied into teh CLI and WebApi at build time.
-## Generators
-There are 2 generators that help to generate the data files for testing purposes. These created data for all regions in the respective cloud providers, and can be used for demos or recreating more test data.
+## Test Data Generators
+There are 2 data generators that help to generate the data files for testing purposes. These created data for all regions in the respective cloud providers, and can be used for demos or recreating more test data.
