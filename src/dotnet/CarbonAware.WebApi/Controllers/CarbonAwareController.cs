@@ -32,25 +32,25 @@ namespace CarbonAware.WebApi.Controllers
         }
 
         [HttpPost("GetBestEmissionsDataForLocationsByTime")]
-        public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
+        public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
         {
-            var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime);
+            var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
 
             return response;
         }
 
         [HttpPost("GetEmissionsDataForLocationsByTime")]
-        public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
+        public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
         {
-            var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, duration);
+            var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
 
             return response;
         }
 
         [HttpGet("GetEmissionsDataForLocationByTime")]
-        public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, TimeSpan? duration = null)
+        public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
         {
-            var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, duration);
+            var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
 
             return response;
         }

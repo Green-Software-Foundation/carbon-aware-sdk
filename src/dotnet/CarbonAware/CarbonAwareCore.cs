@@ -19,18 +19,18 @@ public class CarbonAwareCore : ICarbonAwareBase
         //Console.WriteLine($"\tURL: '{plugin.URL}'");
     }
 
-    public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, TimeSpan? duration = null)
+    public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
     {
-        return _plugin.GetEmissionsDataForLocationByTime(location, time, toTime, duration);
+        return _plugin.GetEmissionsDataForLocationByTime(location, time, toTime, durationMinutes);
     }
 
-    public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, TimeSpan? duration = null)
+    public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
     {
-        return _plugin.GetEmissionsDataForLocationsByTime(locations, time, toTime, duration);
+        return _plugin.GetEmissionsDataForLocationsByTime(locations, time, toTime, durationMinutes);
     }
 
-    public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, TimeSpan? duration = null)
+    public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
     {
-        return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time, toTime);
+        return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time, toTime, durationMinutes);
     }
 }
