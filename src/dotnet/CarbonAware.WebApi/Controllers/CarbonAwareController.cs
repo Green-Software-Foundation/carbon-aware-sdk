@@ -2,57 +2,56 @@ using CarbonAware.Config;
 using CarbonAware.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarbonAware.WebApi.Controllers
+namespace CarbonAware.WebApi.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class CarbonAwareController : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class CarbonAwareController : ControllerBase
+    private readonly ILogger<CarbonAwareController> _logger;
+    private ICarbonAwarePlugin _plugin;
+    private ServiceManager _serviceManager;
+    private IConfigManager _configManager;
+
+    public CarbonAwareController(ILogger<CarbonAwareController> logger)
     {
-        private readonly ILogger<CarbonAwareController> _logger;
-        private ICarbonAwarePlugin _plugin;
-        private ServiceManager _serviceManager;
-        private IConfigManager _configManager;
+        _logger = logger;
 
-        public CarbonAwareController(ILogger<CarbonAwareController> logger)
+        _configManager = new ConfigManager("carbon-aware.json");
+        _serviceManager = new ServiceManager(_configManager);
+        var pluginService = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
+
+        if (pluginService is not null)
         {
-            _logger = logger;
-
-            _configManager = new ConfigManager("carbon-aware.json");
-            _serviceManager = new ServiceManager(_configManager);
-            var pluginService = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
-
-            if (pluginService is not null)
-            {
-                _plugin = pluginService;
-            }
-            else
-            {
-                throw new Exception("Services are not configured properly.  Could not find plugin service.");
-            }
+            _plugin = pluginService;
         }
-
-        [HttpPost("GetBestEmissionsDataForLocationsByTime")]
-        public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+        else
         {
-            var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
-
-            return response;
+            throw new Exception("Services are not configured properly.  Could not find plugin service.");
         }
+    }
 
-        [HttpPost("GetEmissionsDataForLocationsByTime")]
-        public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
-        {
-            var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
+    [HttpPost("GetBestEmissionsDataForLocationsByTime")]
+    public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    {
+        var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
 
-            return response;
-        }
+        return response;
+    }
 
-        [HttpGet("GetEmissionsDataForLocationByTime")]
-        public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
-        {
-            var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
+    [HttpPost("GetEmissionsDataForLocationsByTime")]
+    public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    {
+        var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
 
-            return response;
-        }
+        return response;
+    }
+
+    [HttpGet("GetEmissionsDataForLocationByTime")]
+    public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    {
+        var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
+
+        return response;
     }
 }
