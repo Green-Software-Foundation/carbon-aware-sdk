@@ -1,7 +1,6 @@
 using CarbonAware.Config;
 using CarbonAware.Data;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace CarbonAware.WebApi.Controllers;
