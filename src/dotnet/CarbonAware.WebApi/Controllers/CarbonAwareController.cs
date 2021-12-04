@@ -1,11 +1,13 @@
 using CarbonAware.Config;
 using CarbonAware.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Http;
+using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace CarbonAware.WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Microsoft.AspNetCore.Mvc.Route("emissions")]
 public class CarbonAwareController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
@@ -31,23 +33,23 @@ public class CarbonAwareController : ControllerBase
         }
     }
 
-    [HttpPost("GetBestEmissionsDataForLocationsByTime")]
-    public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    [HttpGet("bylocations/best")]
+    public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
+        var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations.ToList(), time ?? DateTime.Now, toTime, durationMinutes);
 
         return response;
     }
 
-    [HttpPost("GetEmissionsDataForLocationsByTime")]
-    public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    [HttpGet("bylocations")]
+    public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var response = _plugin.GetEmissionsDataForLocationsByTime(locations, time ?? DateTime.Now, toTime, durationMinutes);
+        var response = _plugin.GetEmissionsDataForLocationsByTime(locations.ToList(), time ?? DateTime.Now, toTime, durationMinutes);
 
         return response;
     }
 
-    [HttpGet("GetEmissionsDataForLocationByTime")]
+    [HttpGet("bylocation")]
     public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
         var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
