@@ -1,4 +1,4 @@
-﻿namespace CarbonAware.Data;
+﻿namespace CarbonAware.Model;
 
 public class EmissionsJsonFile
 {

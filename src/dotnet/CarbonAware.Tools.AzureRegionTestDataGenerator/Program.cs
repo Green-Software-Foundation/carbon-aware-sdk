@@ -1,4 +1,4 @@
-﻿using CarbonAware.Data;
+﻿using CarbonAware.Model;
 using CarbonAware.Tools;
 using Newtonsoft.Json;
 

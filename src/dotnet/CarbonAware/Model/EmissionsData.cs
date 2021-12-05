@@ -1,4 +1,4 @@
-﻿namespace CarbonAware.Data;
+﻿namespace CarbonAware.Model;
 
 [Serializable]
 public record EmissionsData

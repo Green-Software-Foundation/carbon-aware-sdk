@@ -1,9 +1,9 @@
-﻿using CarbonAware.Data;
+﻿using CarbonAware.Model;
 using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Tests
 {
-    
+
 
     internal class MockDataService : ICarbonAwareStaticDataService
     {

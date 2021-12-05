@@ -1,5 +1,5 @@
 using CarbonAware.Config;
-using CarbonAware.Data;
+using CarbonAware.Model;
 using Microsoft.AspNetCore.Mvc;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 

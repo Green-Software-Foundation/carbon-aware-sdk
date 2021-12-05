@@ -1,4 +1,4 @@
-using CarbonAware.Data;
+using CarbonAware.Model;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 

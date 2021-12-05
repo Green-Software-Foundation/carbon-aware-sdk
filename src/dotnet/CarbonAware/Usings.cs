@@ -1,1 +1,1 @@
-﻿global using CarbonAware.Data;
+﻿global using CarbonAware.Model;
