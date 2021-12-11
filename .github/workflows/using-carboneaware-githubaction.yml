@@ -13,9 +13,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/dotnet
+
     steps:
         
     - name: CarboneAWare metrics
