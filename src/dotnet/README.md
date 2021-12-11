@@ -2,7 +2,8 @@
 
 # Using the Carbon Aware SDK
 There are 3 ways to use the Carbon Aware Dotnet SDK being:
-* CLI - Invoke via command line
+* CLI - Invoke via command line (or use as a Docker image)
+* Github Action - Invoke as a step in your CICD pipeline
 * WebApi - Deploy as a REST end point
 * Native Library - Write code against the .NET library
 
