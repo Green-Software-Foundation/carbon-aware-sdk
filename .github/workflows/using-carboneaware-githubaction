@@ -1,0 +1,32 @@
+name: using CarboneAware Github action in sample pipeline
+
+on:
+  push:
+    paths:
+      - 'src/dotnet/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - 'src/dotnet/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: CarboneAWare metrics
+      id: carboneaware-metrics
+      uses: Green-Software-Foundation/carbon-aware-sdk/src/dotnet@container-build
+      env:
+        GREETINGS: 'Hello, .NET developers!' # ${{ secrets.GITHUB_TOKEN }}
+      with:
+        location: westeurope
+        config: carbon-aware.json
