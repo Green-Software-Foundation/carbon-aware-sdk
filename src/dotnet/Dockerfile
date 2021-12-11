@@ -1,0 +1,22 @@
+# Set the base image as the .NET 5.0 SDK (this includes the runtime)
+FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
+
+# Copy everything and publish the release (publish implicitly restores and builds)
+COPY . ./
+RUN dotnet publish ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --no-self-contained
+
+# Label the container
+#LABEL maintainer=""
+LABEL repository="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
+LABEL homepage="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
+
+# Label as GitHub action
+LABEL com.github.actions.name="CarbonAware"
+LABEL com.github.actions.description="A Github Action to enable the creation of carbon aware applications, applications that do more when the electricity is clean and do less when the electricity is dirty"
+LABEL com.github.actions.icon="sliders"
+LABEL com.github.actions.color="purple"
+
+# Relayer the .NET SDK, anew with the build output
+FROM mcr.microsoft.com/dotnet/sdk:6.0
+COPY --from=build-env /out .
+ENTRYPOINT [ "CarbonAwareCLI" ]
