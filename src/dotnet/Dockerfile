@@ -19,4 +19,6 @@ LABEL com.github.actions.color="purple"
 # Relayer the .NET SDK, anew with the build output
 FROM mcr.microsoft.com/dotnet/sdk:6.0
 COPY --from=build-env /out .
-ENTRYPOINT ["./CarbonAwareCLI" ]
+ENTRYPOINT ["dotnet" ]
+CMD ["./CarbonAwareCLI"]
+#ENTRYPOINT ["./CarbonAwareCLI" ]
