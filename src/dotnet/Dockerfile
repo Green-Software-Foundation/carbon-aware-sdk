@@ -6,7 +6,7 @@ COPY . ./
 RUN dotnet publish ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --no-self-contained
 
 # Label the container
-#LABEL maintainer=""
+#LABEL maintainer="Green-Software-Foundation"
 LABEL repository="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
 LABEL homepage="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
 
