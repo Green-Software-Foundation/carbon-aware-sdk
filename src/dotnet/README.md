@@ -20,7 +20,9 @@ The WebApi replicates the CLI and SDK functionality, leveraging the same configu
 
 
 ## Github action
-Based on the CLUI docker image, the Github action allows to use the Carbon Aware metrics as part of your deployment pipeline in Github.
+Based on the CLI docker image, the Github action allows to use the Carbon Aware metrics as part of your deployment pipeline in Github.
+
+check out the sample Github Action pipeline: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/container-build/.github/workflows/using-carboneaware-githubaction.yml
 
 ## Native Library
 Best for when you are using .NET, and you have the ability to change the code, and do not have the ability to deploy the WebApi.  
