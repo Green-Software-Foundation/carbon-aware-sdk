@@ -11,10 +11,16 @@ Best for use with systems you can not change the code in but can invoke command 
 
 The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via command line and outputs the results as json to stdout.  
 
+**You can use the CLI as a docker image 
+
 ## WebApi
 ***Highly Recommended*** - Best for when you can change the code, and deploy separately.  This also allows you to manage the Carbon Aware logic independently of the system using it.
 
 The WebApi replicates the CLI and SDK functionality, leveraging the same configuration and providing a REST end point with Swagger/OpenAPI definition for client generation.
+
+
+## Github action
+Based on the CLUI docker image, the Github action allows to use the Carbon Aware metrics as part of your deployment pipeline in Github.
 
 ## Native Library
 Best for when you are using .NET, and you have the ability to change the code, and do not have the ability to deploy the WebApi.  
