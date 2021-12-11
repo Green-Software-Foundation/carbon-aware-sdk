@@ -4,7 +4,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
 # Copy everything and publish the release (publish implicitly restores and builds)
 COPY . ./
 RUN dotnet publish ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --no-self-contained
-RUN cp ./CarbonAware.CLI/carbone-aware.json out
+RUN cp ./CarbonAware.CLI/carbon-aware.json out
 RUN cp -r  ./data/data-files/ out
 
 # Label the container
