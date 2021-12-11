@@ -13,9 +13,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-        
+    
     - name: CarboneAWare metrics
       id: carboneaware-metrics
       uses: Green-Software-Foundation/carbon-aware-sdk/src/dotnet@container-build
