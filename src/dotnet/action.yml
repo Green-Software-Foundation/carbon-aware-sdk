@@ -19,7 +19,7 @@ inputs:
     required: false
   fromTime:
     description:
-      'The desired date and time to retrieve the emissions for.  Defaults to 'now'.'
+      'The desired date and time to retrieve the emissions for.  Defaults to "now". '
     required: false
   toTime:
     description:
