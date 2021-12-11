@@ -19,8 +19,6 @@ jobs:
     - name: CarboneAWare metrics
       id: carboneaware-metrics
       uses: Green-Software-Foundation/carbon-aware-sdk/src/dotnet@container-build
-      env:
-        GREETINGS: 'Hello, .NET developers!' # ${{ secrets.GITHUB_TOKEN }}
       with:
         location: westeurope
         config: carbon-aware.json
