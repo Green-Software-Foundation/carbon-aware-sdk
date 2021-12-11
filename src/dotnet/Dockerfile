@@ -20,4 +20,3 @@ LABEL com.github.actions.color="purple"
 FROM mcr.microsoft.com/dotnet/runtime:6.0
 COPY --from=build-env /out .
 ENTRYPOINT ["/CarbonAwareCLI"]
-#ENTRYPOINT ["./CarbonAwareCLI" ]
