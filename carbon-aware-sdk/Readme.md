@@ -11,9 +11,9 @@ Today, as part of the tenets laid down by Green software foundation there are 3 
 ## What is the Carbon Aware SDK project ?
 To help build applications that are carbon aware, the Carbon Aware SDK project is an initiative to bring home the concept of building sustainable applications to the development community. There are multiple flavors of the SDK being planned.
 
-	- For native integration with standard programming languages ,a library will be developed that developers can integrate with directly .
-	- For integration with applications using standard protocols like REST , a Web API will be exposed 
-	- A command line interface will also be made available to account for scenarios like build and deployment pipelines that do not have a graphical user interface. 
+* For native integration with standard programming languages ,a library will be developed that developers can integrate with directly .
+* For integration with applications using standard protocols like REST , a Web API will be exposed 
+* A command line interface will also be made available to account for scenarios like build and deployment pipelines that do not have a graphical user interface. 
 
 ## Why is there a need for a SDK ?
 
