@@ -1,5 +1,5 @@
 
-# Placeholder - Work in Progress
+# Work in Progress
 
 ## Intent
 
