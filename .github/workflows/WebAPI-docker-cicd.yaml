@@ -33,7 +33,7 @@ jobs:
             username: ${{ secrets.REGISTRY_USERNAME }}
             password: ${{ secrets.REGISTRY_PASSWORD }}
         - run: |
-            docker build . -t -f DockerfileWebAPI carbonesdk.azurecr.io/webapi:${{ github.sha }}
+            docker build . -t carbonesdk.azurecr.io/webapi:${{ github.sha }} -f DockerfileWebAPI
             docker push carbonesdk.azurecr.io/webapi:${{ github.sha }}
 
         - name: 'Deploy to Azure Container Instances'
