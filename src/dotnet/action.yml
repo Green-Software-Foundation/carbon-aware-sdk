@@ -12,7 +12,7 @@ inputs:
     description:
       'Custom carbon aware configuration file'
     required: false
-    default: 'carbon-aware.json'
+    default: '/carbon-aware.json'
   lowest:
     description:
       'Only return the lowest emission result of all matching results'

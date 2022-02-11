@@ -1,20 +1,29 @@
 # Carbon Aware SDK Dotnet
 
 # Using the Carbon Aware SDK
-There are 3 ways to use the Carbon Aware Dotnet SDK being:
-* CLI - Invoke via command line
+There are 4 ways to use the Carbon Aware Dotnet SDK being:
+* CLI - Invoke via command line (or use as a Docker image)
+* Github Action - Invoke as a step in your CICD pipeline
 * WebApi - Deploy as a REST end point
 * Native Library - Write code against the .NET library
+
+
+## WebApi
+***Highly Recommended*** - Best for when you can change the code, and deploy separately.  This also allows you to manage the Carbon Aware logic independently of the system using it.
+
+The WebApi replicates the CLI and SDK functionality, leveraging the same configuration and providing a REST end point with Swagger/OpenAPI definition for client generation.
 
 ## CLI
 Best for use with systems you can not change the code in but can invoke command line.  For example - build pipelines.
 
 The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via command line and outputs the results as json to stdout.  
 
-## WebApi
-***Highly Recommended*** - Best for when you can change the code, and deploy separately.  This also allows you to manage the Carbon Aware logic independently of the system using it.
+**You can use the CLI as a docker image 
 
-The WebApi replicates the CLI and SDK functionality, leveraging the same configuration and providing a REST end point with Swagger/OpenAPI definition for client generation.
+## Github action
+Based on the CLI as docker image, the Github action allows to use the Carbon Aware metrics as part of your deployment pipeline in Github.
+
+check out the sample Github Action pipeline: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/container-build/.github/workflows/using-carboneaware-githubaction.yml
 
 ## Native Library
 Best for when you are using .NET, and you have the ability to change the code, and do not have the ability to deploy the WebApi.  
