@@ -1,0 +1,49 @@
+name: using CarboneAware Github action in sample pipeline
+
+on:
+  push:
+    paths:
+      - 'src/dotnet/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - 'src/dotnet/**'
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            working-directory: ./src/dotnet/
+        steps:
+        # checkout the repo
+        - name: 'Checkout GitHub Action'
+          uses: actions/checkout@master
+          
+        - name: 'Login via Azure CLI'
+          uses: azure/login@v1
+          with:
+            creds: ${{ secrets.AZURE_CREDENTIALS }}
+        
+        - uses: azure/docker-login@v1
+          with:
+            login-server: carbonesdk.azurecr.io
+            username: ${{ secrets.REGISTRY_USERNAME }}
+            password: ${{ secrets.REGISTRY_PASSWORD }}
+        - run: |
+            docker build . -t -f DockerfileWebAPI carbonesdk.azurecr.io/webapi:${{ github.sha }}
+            docker push carbonesdk.azurecr.io/webapi:${{ github.sha }}
+
+        - name: 'Deploy to Azure Container Instances'
+          uses: 'azure/aci-deploy@v1'
+          with:
+            resource-group: carbonesdk
+            dns-name-label: carbonesdk-api
+            image: carbonesdk.azurecr.io/webapi:${{ github.sha }}
+            cpu: 1   #Optional
+            memory: 0.1   #Optional
+            registry-username: ${{ secrets.REGISTRY_USERNAME }}
+            registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+            name: carbonesdk-container
+            location: 'west us'
