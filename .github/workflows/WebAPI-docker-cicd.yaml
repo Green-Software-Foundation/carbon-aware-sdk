@@ -1,4 +1,4 @@
-name: using CarboneAware Github action in sample pipeline
+name: Dotnet WebAPI Build&Test
 
 on:
   push:
