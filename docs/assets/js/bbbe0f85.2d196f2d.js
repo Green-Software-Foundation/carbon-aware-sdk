@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdoc_website=self.webpackChunkdoc_website||[]).push([[446],{7678:function(a){a.exports=JSON.parse('{"allTagsPath":"/carbon-aware-sdk/blog/tags","slug":"/carbon-aware-sdk/blog/tags/docusaurus","name":"docusaurus","count":4,"permalink":"/carbon-aware-sdk/blog/tags/docusaurus"}')}}]);

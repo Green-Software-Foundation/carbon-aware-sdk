@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdoc_website=self.webpackChunkdoc_website||[]).push([[415],{1166:function(a){a.exports=JSON.parse('{"allTagsPath":"/carbon-aware-sdk/blog/tags","slug":"/carbon-aware-sdk/blog/tags/facebook","name":"facebook","count":1,"permalink":"/carbon-aware-sdk/blog/tags/facebook"}')}}]);
