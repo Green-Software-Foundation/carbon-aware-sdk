@@ -2,46 +2,26 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Quick Start
+Getting started with the Carbon Aware SDK
 
-Let's discover **Docusaurus in less than 5 minutes**.
+## dotnet
+The dotnet SDK is built in .NET 6.0.  It supports devcontainers, and can be buitl via command line or via Visual Studio.  This quickstart assumes you know how to use dev containers.  To learn more about dev containers please check out _link here_
 
-## Getting Started
+1. First step is to clone the project with git
+<pre>$ git clone command here</pre>
+2. Open the root folder of the project in Visual Studio Code
+3. Bring up the console with ctrl-` 
+4. Change to the src/dotnet/build directory by typing the following in the console
+<pre>$ cd src/dotnet/build</pre>
+5. Publish the build
+<pre>$ dotnet publish .. -o .</pre>
+6. Run with the hello world test data set
+<pre>$ CarbonAwareCLI -l westus eastus -d "data-files/hello-world.json"</pre>
+7. You should see the following results
+<pre>TODO: results sample here</pre>
+8. Sucess!  You now have the CLI running in the dev container
+9. The build folder will also have all class libraries to add to your own dotnet project.  Check out the "Sample Client" project in the solution for an example of where to start
 
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+# Next Steps
+For more advanced capabilties and to learn more about what you can do with the CLI, please refer to the Carbon Aware CLI documentation.
