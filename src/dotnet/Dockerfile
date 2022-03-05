@@ -7,7 +7,10 @@ RUN dotnet publish ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --
 RUN cp ./CarbonAware.CLI/carbon-aware.json out
 RUN cp -r  ./data/data-files/ out
 
-ADD entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN cp ./entrypoint.sh out
+
+RUN chmod +X out/entrypoint.sh
 
 # Label the container
 #LABEL maintainer="Green-Software-Foundation"
