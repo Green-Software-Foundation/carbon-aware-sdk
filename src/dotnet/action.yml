@@ -41,6 +41,8 @@ runs:
   - ${{ inputs.config }}
   - '--lowest'
 
+post-entrypoint: 'exportOutputEmissionsData.sh'
+
 outputs:
   OutputEmissionsData: # id of the output
     description: 'The Output Emissions Data returned from executing the CarboneAware CLI, with the specified inputs'
