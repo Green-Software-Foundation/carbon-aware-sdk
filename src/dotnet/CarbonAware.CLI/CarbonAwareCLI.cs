@@ -87,7 +87,7 @@ public class CarbonAwareCLI
     { if (_state.Lowest)
         {
             Console.WriteLine($"{JsonConvert.SerializeObject(emissions[0], Formatting.Indented)}");
-             Environment.SetEnvironmentVariable("GithubActionOutput", {JsonConvert.SerializeObject(emissions[0])});
+             Environment.SetEnvironmentVariable("GithubActionOutput", $"{JsonConvert.SerializeObject(emissions[0])}" );
         }
         else
         {
