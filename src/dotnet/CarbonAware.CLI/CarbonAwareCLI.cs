@@ -86,7 +86,7 @@ public class CarbonAwareCLI
     public void OutputEmissionsData(List<EmissionsData> emissions)
     { if (_state.Lowest)
         {
-            Console.WriteLine("france");
+            Console.WriteLine($"{JsonConvert.SerializeObject(emissions[0], Formatting.Indented)}");
         }
         else
         {
