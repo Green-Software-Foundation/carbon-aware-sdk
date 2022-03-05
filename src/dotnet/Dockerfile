@@ -24,7 +24,7 @@ LABEL com.github.actions.color="purple"
 # Relayer the .NET SDK, anew with the build output
 FROM mcr.microsoft.com/dotnet/runtime:6.0
 COPY --from=build-env /out .
-RUN apk update && apk add jq
+RUN apt-get install jq
 
 RUN chmod +x entrypoint.sh
 #ENTRYPOINT ["/CarbonAwareCLI"]
