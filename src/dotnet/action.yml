@@ -2,7 +2,7 @@ name: 'CarboneAware GitHub Action'
 description: 'A Github Action to enable the creation of carbon aware applications, applications that do more when the electricity is clean and do less when the electricity is dirty'
 branding:
   icon: activity
-  color: orange
+  color: purple
 inputs:
   location:
     description:
@@ -40,3 +40,7 @@ runs:
   - '-c'
   - ${{ inputs.config }}
   - '--lowest'
+
+outputs:
+  OutputEmissionsData: # id of the output
+    description: 'The Output Emissions Data returned from executing the CarboneAware CLI, with the specified inputs'
