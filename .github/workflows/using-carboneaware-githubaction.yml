@@ -16,7 +16,7 @@ jobs:
     steps:
     - name: CarboneAWare metrics
       id: carboneaware-metrics
-      uses: Green-Software-Foundation/carbon-aware-sdk/src/dotnet@container-build
+      uses: Green-Software-Foundation/carbon-aware-sdk@container-build
       with:
         location: westeurope
         #config: /carbon-aware.json
