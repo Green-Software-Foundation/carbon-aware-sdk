@@ -42,5 +42,5 @@ runs:
 entrypoint: 'entrypoint.sh'
 
 outputs:
-  OutputEmissionsData: # id of the output
-    description: 'The Output Emissions Data returned from executing the CarboneAware CLI, with the specified inputs'
+  LowestEmissionsLocation: # id of the output
+    description: 'The Region with Lowet Carbon Emissions, within the list of specified regions as input, at the specified time frame.'
