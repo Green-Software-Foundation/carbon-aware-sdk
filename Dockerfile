@@ -9,10 +9,6 @@ COPY entrypoint.sh /entrypoint.sh
 WORKDIR /src/dotnet
 
 
-
-
-
-
 RUN dotnet publish  ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --no-self-contained
 RUN cp ./CarbonAware.CLI/carbon-aware.json out
 RUN cp -r  ./data/data-files/ out
