@@ -38,7 +38,7 @@ Innovation WG projects are copyrighted under [Creative Commons Attribution 4.0](
 No Patent License. No patent licenses are granted for the Draft Deliverables or Approved Deliverables developed by this Working Group.
 
 ## License
-Innovation WG projects are licensed under the MIT License - see the [License.md](license/innovation-wg-license.md)file for details 
+Innovation WG projects are licensed under the MIT License - see the [License.md](/carbon-aware-sdk/license.md)file for details 
 
 ## Dataset
 CDLA-Permissive-1.0
