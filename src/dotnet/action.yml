@@ -35,9 +35,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-  - '-l'
   - ${{ inputs.location }}
-  - '-c'
   - ${{ inputs.config }}
   - '--lowest'
 
