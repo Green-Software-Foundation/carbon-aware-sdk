@@ -24,4 +24,4 @@ jobs:
         #toTime
         
     - name: Get Selected Region
-      run: echo "The selected Region is ${{ steps.carboneaware-metrics.outputs}}"
+      run: echo "The selected Region is ${{ steps.carboneaware-metrics.outputs.Location}}"
