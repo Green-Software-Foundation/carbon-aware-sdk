@@ -22,6 +22,9 @@ jobs:
         #config: /carbon-aware.json
         #fromTime:
         #toTime
+    - id: outputemissionsdata
+      run: echo "::set-output name=OutputEmissionsData::$(echo $OutputEmissionsData)"
+      shell: bash
         
     - name: Get Selected Region
       run: echo "${{ steps.carboneaware-metrics.outputs.OutputEmissionsData}}"
