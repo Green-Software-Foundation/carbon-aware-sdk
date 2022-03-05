@@ -24,4 +24,4 @@ jobs:
         #toTime
         
     - name: Get Selected Region
-      run: echo "${{ steps.carboneaware-metrics.outputs}}" | jq '.'
+      run: echo "${{ steps.carboneaware-metrics.outputs}}"
