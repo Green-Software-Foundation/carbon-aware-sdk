@@ -18,7 +18,7 @@ jobs:
       id: carboneaware-metrics
       uses: Green-Software-Foundation/carbon-aware-sdk@container-build
       with:
-        location: westeurope
+        location: westeurope,francecentral,westus
         #config: /carbon-aware.json
         #fromTime:
         #toTime:
