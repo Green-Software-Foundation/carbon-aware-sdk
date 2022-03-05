@@ -41,7 +41,7 @@ runs:
   - ${{ inputs.config }}
   - '--lowest'
 
-post-entrypoint: 'exportOutputEmissionsData.sh'
+post-entrypoint: '/exportOutputEmissionsData.sh'
 
 outputs:
   OutputEmissionsData: # id of the output
