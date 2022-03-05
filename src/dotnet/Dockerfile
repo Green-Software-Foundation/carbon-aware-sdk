@@ -7,6 +7,8 @@ RUN dotnet publish ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --
 RUN cp ./CarbonAware.CLI/carbon-aware.json out
 RUN cp -r  ./data/data-files/ out
 
+ADD entrypoint.sh /entrypoint.sh
+
 # Label the container
 #LABEL maintainer="Green-Software-Foundation"
 LABEL repository="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
