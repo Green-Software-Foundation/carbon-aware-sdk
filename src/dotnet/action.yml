@@ -40,7 +40,6 @@ runs:
   - '--lowest'
 
 entrypoint: 'entrypoint.sh'
-post-entrypoint: 'exportOutputEmissionsData.sh'
 
 outputs:
   OutputEmissionsData: # id of the output
