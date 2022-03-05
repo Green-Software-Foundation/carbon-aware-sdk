@@ -39,3 +39,4 @@ runs:
   - ${{ inputs.location }}
   - '-c'
   - ${{ inputs.config }}
+  - '--lowest'
