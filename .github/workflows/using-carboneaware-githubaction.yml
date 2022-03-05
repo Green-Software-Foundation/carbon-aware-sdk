@@ -23,5 +23,5 @@ jobs:
         #fromTime:
         #toTime
         
-    - name: Get Selected Region
-      run: echo "${{ steps.carboneaware-metrics.outputs.OutputEmissionsData}}"
+    - name: Deplpoy Workload to Selected Region
+      run: echo deploying ML Training Job to Region "${{ steps.carboneaware-metrics.outputs.LowestEmissionsLocation}}"
