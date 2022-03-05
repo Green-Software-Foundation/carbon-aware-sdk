@@ -87,11 +87,6 @@ public class CarbonAwareCLI
     { if (_state.Lowest)
         {
             Console.WriteLine($"{JsonConvert.SerializeObject(emissions[0], Formatting.Indented)}");
-
-             //Output the Result as an Env VAR, required to be able to export the result and Github Action Output 
-             Environment.SetEnvironmentVariable("OutputEmissionsData", $"{JsonConvert.SerializeObject(emissions[0])}" );
-        
-            Console.WriteLine(Environment.GetEnvironmentVariable("OutputEmissionsData"));
         }
         else
         {
