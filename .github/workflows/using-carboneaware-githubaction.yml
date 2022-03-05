@@ -21,7 +21,7 @@ jobs:
         location: westeurope
         #config: /carbon-aware.json
         #fromTime:
-        #toTime
+        #toTime:
         
     - name: Deplpoy Workload to Selected Region
       run: echo deploying ML Training Job to Region "${{ steps.carboneaware-metrics.outputs.LowestEmissionsLocation}}"
