@@ -89,7 +89,7 @@ public class CarbonAwareCLI
             Console.WriteLine($"{JsonConvert.SerializeObject(emissions[0], Formatting.Indented)}");
              Environment.SetEnvironmentVariable("OutputEmissionsData", $"{JsonConvert.SerializeObject(emissions[0])}" );
         
-            console.WriteLine(Environment.SetEnvironmentVariable("OutputEmissionsData"));
+            Console.WriteLine(Environment.SetEnvironmentVariable("OutputEmissionsData"));
         }
         else
         {
