@@ -6,6 +6,11 @@ There are 3 ways to use the Carbon Aware Dotnet SDK being:
 * WebApi - Deploy as a REST end point
 * Native Library - Write code against the .NET library
 
+## IDE Support
+The solution can be be developed and modified using either VS Code or Visual Studio 2022. The solution is built on .Net 6.0  and  Visual studio 2019 does not support .Net 6.0
+
+Apart from performance gains from using the latest version of .Net , .Net 6.0  is also cross platform compatible. It is a culmination of work done to bring together the full .Net framework and .Net core and hence building on .Net 6.0 is future proof and scalable.
+
 ## CLI
 Best for use with systems you can not change the code in but can invoke command line.  For example - build pipelines.
 
