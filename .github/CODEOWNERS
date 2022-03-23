@@ -1,0 +1,7 @@
+# This is a comment.
+# Each line is a file pattern followed by one or more owners.
+
+# Setting build up so that license changes and CODEOWNERS changes 
+# require admin approval.
+/carbon-aware-sdk/license.md @microsoft/csefsi-admins
+.github/CODEOWNERS @microsoft/csefsi-admins
