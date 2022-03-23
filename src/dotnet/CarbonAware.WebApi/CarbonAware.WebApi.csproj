@@ -47,4 +47,12 @@
 		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files\" SkipUnchangedFiles="true" />
 	</Target>
 
+	<Target Name="CopyDataFilesForPublish" AfterTargets="AfterPublish">
+		<ItemGroup>
+			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PublishDir)\data-files\" SkipUnchangedFiles="true" />
+	</Target>
+
 </Project>
