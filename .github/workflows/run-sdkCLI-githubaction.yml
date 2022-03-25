@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: CarboneAWare metrics
       id: carboneaware-metrics
-      uses: Green-Software-Foundation/carbon-aware-sdk@sdkCLI-githubaction
+      uses: Green-Software-Foundation/carbon-aware-sdk@sdkCLI-githubaction  # here "sdkCLI-githubaction" is the name of the branch
       with:
         location: westeurope,francecentral,westus
         #config: /carbon-aware.json
