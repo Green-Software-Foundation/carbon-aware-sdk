@@ -26,7 +26,6 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0
 COPY --from=build-env /out .
 RUN apt-get update && apt-get install jq -y
 
-
 RUN chmod +x entrypoint.sh
 #ENTRYPOINT ["/CarbonAwareCLI"]
 ENTRYPOINT ["/entrypoint.sh"]
