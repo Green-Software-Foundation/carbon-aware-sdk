@@ -39,7 +39,8 @@ runs:
   - ${{ inputs.config }}
   - '--lowest'
 
-entrypoint: 'entrypoint.sh'
+entrypoint: 'toto.sh'
+#entrypoint: 'entrypoint.sh'
 
 outputs:
   LowestEmissionsLocation: # id of the output
