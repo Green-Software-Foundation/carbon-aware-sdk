@@ -5,7 +5,6 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
 COPY ./src/dotnet/ ./
 COPY ./entrypoint.sh ./
 
-RUN ls
 
 #WORKDIR /src/dotnet
 
@@ -29,7 +28,7 @@ LABEL com.github.actions.color="purple"
 
 # Relayer the .NET SDK, anew with the build output
 FROM mcr.microsoft.com/dotnet/runtime:6.0
-COPY --from=build-env /src/dotnet/out .
+COPY --from=build-env /out .
 RUN apt-get update && apt-get install jq -y
 
 RUN chmod +x entrypoint.sh
