@@ -23,7 +23,7 @@ The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via com
 ## Github action
 Based on the CLI as docker image, the Github action allows to use the Carbon Aware metrics as part of your deployment pipeline in Github.
 
-check out the sample Github Action pipeline: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/container-build/.github/workflows/using-carboneaware-githubaction.yml
+check out the sample Github Action pipeline: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/sdkCLI-githubaction/.github/workflows/run-sdkCLI-githubaction.yml
 
 ## Native Library
 Best for when you are using .NET, and you have the ability to change the code, and do not have the ability to deploy the WebApi.  
