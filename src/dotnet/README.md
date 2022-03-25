@@ -26,7 +26,7 @@ Best for when you are using .NET, and you have the ability to change the code, a
 
 > NOTE: If you can deploy the REST service, it is still recommended to to this regardless of if you are using .NET due to the cleaner decoupling, deployment lifecycle, and abstraction that it provides.
 
-# Other Components
+# Other Components:
 
 ## Basic Plugin
 There is a basic plugin provided that reads static data and queries over them using _basic_ logic.  
