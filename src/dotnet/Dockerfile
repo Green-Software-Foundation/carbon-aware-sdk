@@ -10,6 +10,8 @@ RUN cp -r  ./data/data-files/ out
 COPY entrypoint.sh /entrypoint.sh
 RUN cp ./entrypoint.sh out
 
+
+
 # Label the container
 #LABEL maintainer="Green-Software-Foundation"
 LABEL repository="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
