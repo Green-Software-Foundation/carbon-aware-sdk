@@ -3,7 +3,6 @@ namespace CarbonAwareCLI;
 public class CarbonAwareCLI
 {
 
-
     private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
     private CarbonAwareCore _carbonAwareCore;
     private ServiceManager _serviceManager;
