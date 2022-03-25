@@ -5,6 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
 COPY . ./
 #COPY entrypoint.sh /entrypoint.sh
 
+RUN cp ./entrypoint.sh out
 
 WORKDIR /src/dotnet
 
@@ -12,7 +13,7 @@ WORKDIR /src/dotnet
 RUN dotnet publish  ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --no-self-contained
 RUN cp ./CarbonAware.CLI/carbon-aware.json out
 RUN cp -r  ./data/data-files/ out
-#RUN cp ./entrypoint.sh out
+
 
 
 # Label the container
@@ -31,6 +32,6 @@ FROM mcr.microsoft.com/dotnet/runtime:6.0
 COPY --from=build-env /src/dotnet/out .
 RUN apt-get update && apt-get install jq -y
 
-#RUN chmod +x entrypoint.sh
-ENTRYPOINT ["/CarbonAwareCLI"]
-#ENTRYPOINT ["/entrypoint.sh"]
+RUN chmod +x entrypoint.sh
+#ENTRYPOINT ["/CarbonAwareCLI"]
+ENTRYPOINT ["/entrypoint.sh"]
