@@ -22,9 +22,6 @@
 
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
-	// 	"typescript.ts",
-	// 	"json.json",
-	// 	"html.html",
 		"ms-dotnettools.csharp"	
 	]
 }
