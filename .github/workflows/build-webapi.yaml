@@ -24,7 +24,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Restore dependencies
-      run: dotnet restore "CarbonAware.WebApi/CarbonAware.WebApi.csproj"
+      run: dotnet restore
       working-directory: ./src/dotnet/CarbonAware.WebApi
 
     - name: Build
@@ -41,17 +41,17 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Docker Build All
-      run: docker build . -t ca-api
-      working-directory: ./src/dotnet/CarbonAware.WebApi
+      run: docker build . -f CarbonAware.WebApi/Dockerfile -t ca-api
+      working-directory: ./src/dotnet
 
     - name: Docker Build Step
-      run: docker build --target=build . -t ca-api-build
-      working-directory: ./src/dotnet/CarbonAware.WebApi
+      run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
+      working-directory: ./src/dotnet
 
     - name: Docker Unit Test
       run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
-      working-directory: ./src/dotnet/CarbonAware.WebApi
+      working-directory: ./src/dotnet
 
     - name: Docker Basic Plugin Test
       run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
-      working-directory: ./src/dotnet/CarbonAware.WebApi
+      working-directory: ./src/dotnet
