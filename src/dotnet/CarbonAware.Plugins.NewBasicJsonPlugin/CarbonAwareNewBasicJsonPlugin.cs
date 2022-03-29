@@ -10,7 +10,7 @@ public class CarbonAwareNewBasicJsonPlugin : ICarbonAware
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-    public async Task<IEnumerable<EmissionsData>> GetEmissionsData(IDictionary props)
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
         Logger.LogInformation("New Data");
         // return await Task.Run(() => Enumerable.Empty<EmissionsData>());
@@ -23,13 +23,13 @@ public class CarbonAwareNewBasicJsonPlugin : ICarbonAware
             new EmissionsData {
                 Location = "eastus",
                 Time = new DateTime(2018, 09, 09),
-                Rating = 10
+                Rating = 2
 
             }
         });
     }
 
-    public async Task<IEnumerable<EmissionsData>> GetEmissionsData(IDictionary props, Func<QueryObject, bool> filter)
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props, Func<QueryObject, bool> filter)
     {
         return await Task.Run(() => Enumerable.Empty<EmissionsData>());
     }

@@ -60,10 +60,9 @@ public class CarbonAwareController : ControllerBase
     }
 
     [HttpGet("newdata")]
-    public async Task<IActionResult> GetNewEmissions()
+    public async Task<IActionResult> GetNewEmissionsAsync()
     {
-        var data = await NewPlugin.GetEmissionsData(new Dictionary<string, string>());
-        return this.Ok(data);
-         
+        var data = await NewPlugin.GetEmissionsDataAsync(new Dictionary<string, string>());
+        return Ok(data);
     }
 }
