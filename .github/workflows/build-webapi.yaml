@@ -1,4 +1,4 @@
-name: WEB API BUILD ON DOTNET
+name: Docker Web API Build
 
 on:
   push:
@@ -11,25 +11,41 @@ on:
       - 'src/dotnet/**'
 
 jobs:
-  build:
+  build app in container:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/dotnet/sdk:6.0
     defaults:
       run:
         working-directory: ./src/dotnet/CarbonAware.WebApi
     steps:
 
     - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore "CarbonAware.WebApi/CarbonAware.WebApi.csproj"
 
     - name: Build
       run: dotnet build --no-restore
 
     - name: Unit Tests
       run: dotnet test --no-build --verbosity normal
-      
+  
+  build containerized app:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/dotnet/CarbonAware.WebApi
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Docker Build All
+      run: docker build . -f CarbonAware.WebApi/Dockerfile -t ca-api
+
+    - name: Docker Build Step
+      run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
+
+    - name: Docker Unit Test
+      run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
+
+    - name: Docker Basic Plugin Test
+      run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
