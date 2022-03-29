@@ -1,0 +1,45 @@
+name: 'CarboneAware GitHub Action'
+description: 'A Github Action to enable the creation of carbon aware applications, applications that do more when the electricity is clean and do less when the electricity is dirty'
+branding:
+  icon: activity
+  color: purple
+inputs:
+  location:
+    description:
+      'Required. The location is a comma seperated list of named locations or regions specific to the emissions data provided.'
+    required: true
+  config:
+    description:
+      'Custom carbon aware configuration file'
+    required: false
+    default: '/carbon-aware.json'
+  lowest:
+    description:
+      'Only return the lowest emission result of all matching results'
+    required: false
+  fromTime:
+    description:
+      'The desired date and time to retrieve the emissions for.  Defaults to "now". '
+    required: false
+  toTime:
+    description:
+      'The date and time to get the emissions to when looking across a time window.'
+    required: false
+    default: 'now'
+  verbose:
+    description:
+      'Set output to verbose messages.'
+    required: false
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+  - ${{ inputs.location }}
+  - ${{ inputs.config }}
+  - '--lowest'
+
+
+outputs:
+  LowestEmissionsLocation: # id of the output
+    description: 'The Region with Lowet Carbon Emissions, within the list of specified regions as input, at the specified time frame.'
