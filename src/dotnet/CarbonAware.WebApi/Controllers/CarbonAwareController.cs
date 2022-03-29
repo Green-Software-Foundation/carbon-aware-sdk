@@ -14,9 +14,12 @@ public class CarbonAwareController : ControllerBase
     private ServiceManager _serviceManager;
     private IConfigManager _configManager;
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger)
+    private readonly ICarbonAware NewPlugin;
+
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAware newPlugin)
     {
         _logger = logger;
+        NewPlugin = newPlugin ?? throw new ArgumentNullException(nameof(newPlugin));
 
         _configManager = new ConfigManager("carbon-aware.json");
         _serviceManager = new ServiceManager(_configManager);
@@ -54,5 +57,13 @@ public class CarbonAwareController : ControllerBase
         var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
 
         return response;
+    }
+
+    [HttpGet("newdata")]
+    public async Task<IActionResult> GetNewEmissions()
+    {
+        var data = await NewPlugin.GetEmissionsData(new Dictionary<string, string>());
+        return this.Ok(data);
+         
     }
 }

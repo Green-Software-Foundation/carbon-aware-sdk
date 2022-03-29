@@ -12,7 +12,21 @@ public class CarbonAwareNewBasicJsonPlugin : ICarbonAware
     }
     public async Task<IEnumerable<EmissionsData>> GetEmissionsData(IDictionary props)
     {
-        return await Task.Run(() => Enumerable.Empty<EmissionsData>());
+        Logger.LogInformation("New Data");
+        // return await Task.Run(() => Enumerable.Empty<EmissionsData>());
+        return await Task.Run(() => new List<EmissionsData>() {
+            new EmissionsData {
+                Location = "eastus",
+                Time = DateTime.Now,
+                Rating = 10
+            },
+            new EmissionsData {
+                Location = "eastus",
+                Time = new DateTime(2018, 09, 09),
+                Rating = 10
+
+            }
+        });
     }
 
     public async Task<IEnumerable<EmissionsData>> GetEmissionsData(IDictionary props, Func<QueryObject, bool> filter)
