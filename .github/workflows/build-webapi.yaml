@@ -20,38 +20,38 @@ jobs:
   build app in container:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/dotnet/sdk:6.0
-    defaults:
-      run:
-        working-directory: ./src/dotnet/CarbonAware.WebApi
     steps:
-
     - uses: actions/checkout@v2
 
     - name: Restore dependencies
       run: dotnet restore "CarbonAware.WebApi/CarbonAware.WebApi.csproj"
+      working-directory: ./src/dotnet/CarbonAware.WebApi
 
     - name: Build
       run: dotnet build --no-restore
+      working-directory: ./src/dotnet/CarbonAware.WebApi
 
     - name: Unit Tests
       run: dotnet test --no-build --verbosity normal
+      working-directory: ./src/dotnet/CarbonAware.WebApi
   
   build containerized app:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/dotnet/CarbonAware.WebApi
     steps:
     - uses: actions/checkout@v2
 
     - name: Docker Build All
-      run: docker build . -f CarbonAware.WebApi/Dockerfile -t ca-api
+      run: docker build . -t ca-api
+      working-directory: ./src/dotnet/CarbonAware.WebApi
 
     - name: Docker Build Step
-      run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
+      run: docker build --target=build . -t ca-api-build
+      working-directory: ./src/dotnet/CarbonAware.WebApi
 
     - name: Docker Unit Test
       run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
+      working-directory: ./src/dotnet/CarbonAware.WebApi
 
     - name: Docker Basic Plugin Test
       run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
+      working-directory: ./src/dotnet/CarbonAware.WebApi
