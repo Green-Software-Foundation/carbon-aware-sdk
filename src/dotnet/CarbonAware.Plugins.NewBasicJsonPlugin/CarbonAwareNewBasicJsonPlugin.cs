@@ -5,19 +5,18 @@ using Microsoft.Extensions.Logging;
 namespace CarbonAware.Plugins.NewBasicJsonPlugin;
 public class CarbonAwareNewBasicJsonPlugin : ICarbonAware
 {
-
     private readonly ILogger<CarbonAwareNewBasicJsonPlugin> Logger;
     public CarbonAwareNewBasicJsonPlugin(ILogger<CarbonAwareNewBasicJsonPlugin> logger)
     {
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
-    Task<IEnumerable<EmissionsData>> ICarbonAware.GetEmissionsData(IDictionary props)
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsData(IDictionary props)
     {
-        throw new NotImplementedException();
+        return await Task.Run(() => Enumerable.Empty<EmissionsData>());
     }
 
-    Task<IEnumerable<EmissionsData>> ICarbonAware.GetEmissionsData(IDictionary props, Func<QueryObject, bool> filter)
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsData(IDictionary props, Func<QueryObject, bool> filter)
     {
-        throw new NotImplementedException();
+        return await Task.Run(() => Enumerable.Empty<EmissionsData>());
     }
 }
