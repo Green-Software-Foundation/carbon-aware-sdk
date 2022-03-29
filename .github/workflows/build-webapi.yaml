@@ -17,7 +17,7 @@ on:
     - "kanishk/cli-first-pass"
 
 jobs:
-  build app in container:
+  app-build:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/dotnet/sdk:6.0
     steps:
@@ -35,7 +35,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
       working-directory: ./src/dotnet/CarbonAware.WebApi
   
-  build containerized app:
+  container-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
