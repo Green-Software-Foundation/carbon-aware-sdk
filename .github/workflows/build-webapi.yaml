@@ -1,14 +1,20 @@
 name: Docker Web API Build
 
-on:
+# on:
+#   push:
+#     paths:
+#       - 'src/dotnet/**'
+#       - '.github/workflows/**'
+#   pull_request:
+#     branches: [ dev, main ]
+#     paths:
+#       - 'src/dotnet/**'
+
+
+on: 
   push:
-    paths:
-      - 'src/dotnet/**'
-      - '.github/workflows/**'
-  pull_request:
-    branches: [ dev, main ]
-    paths:
-      - 'src/dotnet/**'
+    branches:
+    - "kanishk/cli-first-pass"
 
 jobs:
   build app in container:
