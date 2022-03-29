@@ -55,3 +55,8 @@ jobs:
     - name: Docker Basic Plugin Test
       run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
       working-directory: ./src/dotnet
+
+    - name: Docker Ping Container
+      run: |
+        docker run -p 8080:80 ca-api
+        curl localhost:8080/emissions/bylocation
