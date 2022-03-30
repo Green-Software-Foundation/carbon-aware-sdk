@@ -46,7 +46,7 @@ jobs:
         working-directory: ./src/dotnet
         
       - name: Docker Run Container
-        run: docker run --name publish-container -p 8080:80 ca-api
+        run: docker run -d --name publish-container -p 8080:80 ca-api
       
       - name: Docker Ping Container
         run: curl 0.0.0.0:8080/emissions/bylocation
