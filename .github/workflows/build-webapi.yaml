@@ -17,29 +17,12 @@ on:
     - "kanishk/cli-first-pass"
 
 jobs:
-  app-build:
-    runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:6.0
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Restore dependencies
-      run: dotnet restore
-      working-directory: ./src/dotnet/CarbonAware.WebApi
-
-    - name: Build
-      run: dotnet build --no-restore
-      working-directory: ./src/dotnet/CarbonAware.WebApi
-
-    - name: Unit Tests
-      run: dotnet test --no-build --verbosity normal
-      working-directory: ./src/dotnet/CarbonAware.WebApi
-  
   container-build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    
     - name: Docker Build All
       run: docker build . -f CarbonAware.WebApi/Dockerfile -t ca-api
       working-directory: ./src/dotnet
@@ -58,5 +41,5 @@ jobs:
 
     - name: Docker Ping Container
       run: |
-        docker run -p 8080:80 ca-api
+        docker run --network host -p 8080:80 ca-api 
         curl localhost:8080/emissions/bylocation
