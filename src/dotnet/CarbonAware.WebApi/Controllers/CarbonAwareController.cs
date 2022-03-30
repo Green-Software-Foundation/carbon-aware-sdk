@@ -62,7 +62,18 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("newdata")]
     public async Task<IActionResult> GetNewEmissionsAsync()
     {
-        var data = await NewPlugin.GetEmissionsDataAsync(new Dictionary<string, string>());
+        // Example of using filter
+        var props = new Dictionary<string, string>() {
+            { "firstkey", "firstvalue" },
+            { "secondkey", "secondvalue" }
+        };
+        // faking data that might come from HttpHeaders for instance
+        var headerLoc = "eastus";
+        var headerRating = 5;
+
+        var data = await NewPlugin.GetEmissionsDataAsync(props, (x) => {
+            return x.Location == headerLoc && x.Rating < headerRating;
+        });
         return Ok(data);
     }
 }
