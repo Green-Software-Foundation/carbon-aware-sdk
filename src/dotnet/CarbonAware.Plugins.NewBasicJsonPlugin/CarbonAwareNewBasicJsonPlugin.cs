@@ -15,16 +15,16 @@ public class CarbonAwareNewBasicJsonPlugin : ICarbonAware
 
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
-        Logger.LogInformation("New Data");
-        foreach (var k in props.Keys)
-        {
-            Logger.LogInformation($"Key: {k} - Value: {props[k]}");
-        }
         return await Task.Run(() => FakeData());
     }
 
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props, Func<QueryObject, bool> filter)
     {
+        Logger.LogInformation("New Data");
+        foreach (var k in props.Keys)
+        {
+            Logger.LogInformation($"Key: {k} - Value: {props[k]}");
+        }
         return await Task.Run(() => FakeData().Where((x) => filter(new QueryObject { 
             Location = x.Location,
             Time = x.Time,
