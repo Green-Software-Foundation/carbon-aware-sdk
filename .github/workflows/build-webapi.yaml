@@ -17,17 +17,13 @@ on:
     - "kanishk/cli-first-pass"
 
 jobs:
-  container-build:
+  container-build-step:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
     
-    - name: Docker Build All
-      run: docker build . -f CarbonAware.WebApi/Dockerfile -t ca-api
-      working-directory: ./src/dotnet
-
-    - name: Docker Build Step
+    - name: Docker Target Build
       run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
       working-directory: ./src/dotnet
 
@@ -39,8 +35,18 @@ jobs:
       run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
       working-directory: ./src/dotnet
 
-    - name: Docker Ping Container
-      run: |
-        docker run --name publish-container -p 8080:80 ca-api
-        docker container ls
-        curl 0.0.0.0:8080/emissions/bylocation
+  container-publish-step:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Docker Target Final
+        run: docker build . -f CarbonAware.WebApi/Dockerfile -t ca-api
+        working-directory: ./src/dotnet
+        
+      - name: Docker Run Container
+        run: docker run --name publish-container -p 8080:80 ca-api
+      
+      - name: Docker Ping Container
+        run: curl 0.0.0.0:8080/emissions/bylocation
