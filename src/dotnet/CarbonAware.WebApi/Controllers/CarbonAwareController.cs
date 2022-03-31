@@ -35,6 +35,9 @@ public class CarbonAwareController : ControllerBase
         }
     }
 
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
@@ -50,6 +53,9 @@ public class CarbonAwareController : ControllerBase
         return Ok(response);
     }
 
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
@@ -64,6 +70,9 @@ public class CarbonAwareController : ControllerBase
         return Ok(response);
     }
 
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
