@@ -36,27 +36,46 @@ public class CarbonAwareController : ControllerBase
     }
 
     [HttpGet("bylocations/best")]
-    public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations.ToList(), time ?? DateTime.Now, toTime, durationMinutes);
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.LOCATIONS, locations.ToList() },
+            { CarbonAwareConstants.START, time ?? DateTime.Now },
+            { CarbonAwareConstants.END, toTime },
+            { CarbonAwareConstants.DURATION, durationMinutes },
+            { CarbonAwareConstants.LOWEST, true }
+        };
+        var response = await NewPlugin.GetEmissionsDataAsync(props);
 
-        return response;
+        return Ok(response);
     }
 
     [HttpGet("bylocations")]
-    public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var response = _plugin.GetEmissionsDataForLocationsByTime(locations.ToList(), time ?? DateTime.Now, toTime, durationMinutes);
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.LOCATIONS, locations.ToList() },
+            { CarbonAwareConstants.START, time ?? DateTime.Now },
+            { CarbonAwareConstants.END, toTime },
+            { CarbonAwareConstants.DURATION, durationMinutes },
+        };
+        var response = await NewPlugin.GetEmissionsDataAsync(props);
 
-        return response;
+        return Ok(response);
     }
 
     [HttpGet("bylocation")]
-    public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.LOCATIONS, new List<string>(){ location } },
+            { CarbonAwareConstants.START, time ?? DateTime.Now },
+            { CarbonAwareConstants.END, toTime },
+            { CarbonAwareConstants.DURATION, durationMinutes },
+        };
+        var response = await NewPlugin.GetEmissionsDataAsync(props);
 
-        return response;
+        return Ok(response);
     }
 
     [HttpGet("newdata")]
