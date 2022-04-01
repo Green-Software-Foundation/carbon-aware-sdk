@@ -1,7 +1,3 @@
-// <copyright file="SubstrateServiceClientTests.cs" company="Microsoft">
-// Copyright (c) Microsoft. All rights reserved.
-// </copyright>
-
 namespace CarbonAware.WepApi.UnitTests
 {
     using System.Collections.Generic;
