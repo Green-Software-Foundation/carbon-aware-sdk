@@ -26,16 +26,13 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         {
             Logger.LogInformation($"Key: {k} - Value: {props[k]}");
         }
-        return await Task.Run(() => this.CarbonAwareDataService.GetData());
+        return await Task.Run(() => this.CarbonAwareDataService.GetData().Where(x => String.Equals(x.Location,props["location"])));
     }
 
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props, Func<QueryObject, bool> filter)
     {
-        return await Task.Run(() => this.CarbonAwareDataService.GetData().Where((x) => filter(new QueryObject { 
-            Location = x.Location,
-            Time = x.Time,
-            Rating = x.Rating
-        })));
+        return await Task.Run(() => this.CarbonAwareDataService.GetData().Where(x => String.Equals(x.Location,props["location"])));
+
     }
 
 
