@@ -1,79 +1,97 @@
-using CarbonAware.Config;
 using CarbonAware.Model;
 using Microsoft.AspNetCore.Mvc;
-using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 
 namespace CarbonAware.WebApi.Controllers;
 
 [ApiController]
-[Microsoft.AspNetCore.Mvc.Route("emissions")]
+[Route("emissions")]
 public class CarbonAwareController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
-    private ICarbonAwarePlugin _plugin;
-    private ServiceManager _serviceManager;
-    private IConfigManager _configManager;
+    private readonly ICarbonAware _plugin;
 
-    private readonly ICarbonAware NewPlugin;
-
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAware newPlugin)
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAware plugin)
     {
-        _logger = logger;
-        NewPlugin = newPlugin ?? throw new ArgumentNullException(nameof(newPlugin));
-
-        _configManager = new ConfigManager("carbon-aware.json");
-        _serviceManager = new ServiceManager(_configManager);
-        var pluginService = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
-
-        if (pluginService is not null)
-        {
-            _plugin = pluginService;
-        }
-        else
-        {
-            throw new Exception("Services are not configured properly.  Could not find plugin service.");
-        }
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _plugin = plugin ?? throw new ArgumentNullException(nameof(plugin));
     }
 
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("bylocations/best")]
-    public IEnumerable<EmissionsData> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var response = _plugin.GetBestEmissionsDataForLocationsByTime(locations.ToList(), time ?? DateTime.Now, toTime, durationMinutes);
-
-        return response;
-    }
-
-    [HttpGet("bylocations")]
-    public IEnumerable<EmissionsData> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
-    {
-        var response = _plugin.GetEmissionsDataForLocationsByTime(locations.ToList(), time ?? DateTime.Now, toTime, durationMinutes);
-
-        return response;
-    }
-
-    [HttpGet("bylocation")]
-    public IEnumerable<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
-    {
-        var response = _plugin.GetEmissionsDataForLocationByTime(location, time ?? DateTime.Now, toTime, durationMinutes);
-
-        return response;
-    }
-
-    [HttpGet("newdata")]
-    public async Task<IActionResult> GetNewEmissionsAsync()
-    {
-        // Example of using filter
-        var props = new Dictionary<string, string>() {
-            { "firstkey", "firstvalue" },
-            { "secondkey", "secondvalue" }
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.LOCATIONS, locations.ToList() },
+            { CarbonAwareConstants.START, time ?? DateTime.Now },
+            { CarbonAwareConstants.END, toTime },
+            { CarbonAwareConstants.DURATION, durationMinutes },
+            { CarbonAwareConstants.LOWEST, true }
         };
-        // faking data that might come from HttpHeaders for instance
-        var headerLoc = "eastus";
-        var headerRating = 5;
+        return await GetEmissionsDataAsync(props);
+    }
 
-        var data = await NewPlugin.GetEmissionsDataAsync(props, (x) => {
-            return x.Location == headerLoc && x.Rating < headerRating;
-        });
-        return Ok(data);
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpGet("bylocations")]
+    public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    {
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.LOCATIONS, locations.ToList() },
+            { CarbonAwareConstants.START, time ?? DateTime.Now },
+            { CarbonAwareConstants.END, toTime },
+            { CarbonAwareConstants.DURATION, durationMinutes },
+        };
+        return await GetEmissionsDataAsync(props);
+    }
+
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpGet("bylocation")]
+    public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    {
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.LOCATIONS, new List<string>(){ location } },
+            { CarbonAwareConstants.START, time ?? DateTime.Now },
+            { CarbonAwareConstants.END, toTime },
+            { CarbonAwareConstants.DURATION, durationMinutes },
+        };
+        return await GetEmissionsDataAsync(props);
+    }
+
+    /// <summary>
+    /// Given a dictionary of properties, handles call to GetEmissionsDataAsync including logging and response handling.
+    /// </summary>
+    /// <param name="props"> Dictionary of properties to call plugin. </param>
+    /// <returns>Result of the plugin call or resulting status response</returns>
+    private async Task<IActionResult> GetEmissionsDataAsync(Dictionary<string, object?> props)
+    {
+        // NOTE: Any auth information would need to be redacted from logging
+        _logger.LogInformation("Calling plugin GetEmissionsDataAsync with paylod {@props}", props);
+        try
+        {
+            var response = await _plugin.GetEmissionsDataAsync(props);
+            if (response.Any())
+            {
+                _logger.LogInformation("Plugin call successful with result {@result}", response);
+                return Ok(response);
+            }
+            else
+            {
+                _logger.LogInformation("Plugin call returned empty result");
+                return StatusCode(204, response);
+            }
+        } 
+        catch (Exception ex)
+        {
+            _logger.LogError("Exception occured during plugin execution", ex);
+            return StatusCode(400, ex);
+        }
     }
 }
