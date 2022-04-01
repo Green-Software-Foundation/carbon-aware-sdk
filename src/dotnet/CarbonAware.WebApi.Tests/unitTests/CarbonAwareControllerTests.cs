@@ -7,7 +7,7 @@ namespace CarbonAware.WepApi.UnitTests
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
-    /// Testing substrate service client.
+    /// Testing Web API Controller
     /// </summary>
     [TestClass]
     public class CarbonAwareControllerTests : TestsBase
@@ -20,6 +20,9 @@ namespace CarbonAware.WepApi.UnitTests
             this.controller = new CarbonAwareController(this.MockLogger.Object, this.MockPlugin.Object);
         }
 
+        /// <summary>
+        /// Tests that successful plugin calls (which return any data) result in Ok action (200 status)
+        /// </summary>
         [TestMethod]
         public async Task SuccessfulCallReturnsOk()
         {
@@ -50,6 +53,9 @@ namespace CarbonAware.WepApi.UnitTests
             Assert.IsNotNull(or3);
         }
 
+        /// <summary>
+        /// Tests that empty result from plugin results in action with 204 status
+        /// </summary>
         [TestMethod]
         public async Task EmptyResultRetuns204()
         {
@@ -75,6 +81,9 @@ namespace CarbonAware.WepApi.UnitTests
             Assert.IsTrue(or3.StatusCode == 204);
         }
 
+        /// <summary>
+        /// Tests that exception in plugin results in action with 400 status
+        /// </summary>
         [TestMethod]
         public async Task ExceptionReturns400()
         {
