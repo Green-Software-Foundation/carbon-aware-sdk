@@ -13,23 +13,9 @@ public class CarbonAwareNewBasicJsonPlugin : ICarbonAware
         Logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
         return await Task.Run(() => FakeData());
-    }
-
-    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props, Func<QueryObject, bool> filter)
-    {
-        Logger.LogInformation("New Data");
-        foreach (var k in props.Keys)
-        {
-            Logger.LogInformation($"Key: {k} - Value: {props[k]}");
-        }
-        return await Task.Run(() => FakeData().Where((x) => filter(new QueryObject { 
-            Location = x.Location,
-            Time = x.Time,
-            Rating = x.Rating
-        })));
     }
 
     private IEnumerable<EmissionsData> FakeData()
