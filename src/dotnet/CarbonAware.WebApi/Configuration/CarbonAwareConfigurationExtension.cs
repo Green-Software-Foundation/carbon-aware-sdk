@@ -14,7 +14,7 @@ public static class CarbonAwareServicesConfiguration
             // services.AddSingleton<ICarbonAware, CarbonAwareWattTime>();
             // services.AddSingleton<IRestClientWattTime, RestClientWattTime>();
         } else {
-            services.AddSingleton<ICarbonAware, CarbonAwareNewBasicJsonPlugin>();
+            services.AddSingleton<ICarbonAware, CarbonAwareJsonReaderPlugin>();
         }
     }
 }
