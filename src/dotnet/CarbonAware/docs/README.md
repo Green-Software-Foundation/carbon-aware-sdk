@@ -68,7 +68,39 @@ cd src/dotnet
 dotnet new classlib -o CarbonAware.Plugin.MyPlugin
 dotnet sln add CarbonAware.Plugin.MyPlugin/CarbonAware.Plugin.MyPlugin.csprj
 dotnet add CarbonAware.Plugin.MyPlugin/CarbonAware.Plugin.MyPlugin.csprj reference CarbonAware/CarbonAware.csproj
-
 ```
-###  Interface - ICarbonAware
+###  Implement Interface - ICarbonAware
+
+Given the fact all the registration of the implementation are using DI, the following steps adds the package to the new project.
+
+```sh
+cd CarbonAware.Plugin.MyPlugin
+dotnet add package Microsoft.Extensions.DependencyInjection
+```
+
+Now create the implementation of `ICarbonAwaare`
+
+```csharp
+...
+using CarbonAware;
+using CarbonAware.Model;
+
+namespace CarbonAware.Plugin.MyPlugin;
+
+public class JsonPlugin : ICarbonAware
+{
+
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
+    {
+        // some code here.
+    }
+}
+```
+
+Now build the project or the solution
+
+```sh
+cd ..
+dotnet build
+```
 
