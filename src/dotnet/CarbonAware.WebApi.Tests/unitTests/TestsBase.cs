@@ -12,15 +12,12 @@ namespace CarbonAware.WepApi.UnitTests
     {
         protected TestsBase()
         {
-            this.MockRepository = new MockRepository(MockBehavior.Strict);
             this.MockLogger = new Mock<ILogger<CarbonAwareController>>();
             this.MockPlugin = new Mock<ICarbonAware>();
         }
 
         protected Mock<ILogger<CarbonAwareController>> MockLogger { get; }
         protected Mock<ICarbonAware> MockPlugin { get; }
-
-        protected MockRepository MockRepository { get; }
 
         protected void SetupPluginWithData(List<EmissionsData> data) =>
             this.MockPlugin.Setup(x =>
