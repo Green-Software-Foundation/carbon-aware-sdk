@@ -17,23 +17,23 @@ on:
     - "kanishk/cli-first-pass"
 
 jobs:
-#   container-build-step:
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Checkout Repository
-#       uses: actions/checkout@v2
+  container-build-step:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
     
-#     - name: Docker Target Build
-#       run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
-#       working-directory: ./src/dotnet
+    - name: Docker Target Build
+      run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
+      working-directory: ./src/dotnet
 
-#     - name: Docker Unit Test
-#       run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
-#       working-directory: ./src/dotnet
+    - name: Docker Unit Test
+      run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
+      working-directory: ./src/dotnet
 
-#     - name: Docker Basic Plugin Test
-#       run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
-#       working-directory: ./src/dotnet
+    - name: Docker Basic Plugin Test
+      run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
+      working-directory: ./src/dotnet
 
   container-publish-step:
       runs-on: ubuntu-latest
