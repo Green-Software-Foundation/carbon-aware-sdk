@@ -56,13 +56,7 @@ jobs:
           docker exec publish-container apt install -y wget
           docker exec publish-container wget -t 5 --waitretry=5 0.0.0.0:80/emissions/bylocation?location=eastus
 
-#       - name: Docker Ping Inside Container
-#         run: |
-#           docker exec publish-container apt update
-#           docker exec publish-container apt install -y curl
-#           docker exec publish-container curl 0.0.0.0:80/emissions/bylocation
-
       - name: Docker Ping From Host
         run: |
-          wget -t 5 --waitretry=5 0.0.0.0:80/emissions/bylocation?location=eastus
+          wget -t 5 --waitretry=5 0.0.0.0:8080/emissions/bylocation?location=eastus
 
