@@ -10,11 +10,16 @@ namespace CarbonAware.WepApi.UnitTests
     {
         public static void AssertStatusCode(IActionResult result, int code)
         {
-            var obj = result as ObjectResult;
-
-            //Assert
-            Assert.IsNotNull(obj);
-            Assert.IsTrue(obj!.StatusCode == code);
+            if (result is not ObjectResult obj)
+            {
+                var statusCodeResult = result as StatusCodeResult;
+                Assert.IsNotNull(statusCodeResult);
+                Assert.IsTrue(statusCodeResult!.StatusCode == code);
+            }
+            else
+            {
+                Assert.IsTrue(obj!.StatusCode == code);
+            }
         }
     }
 }
