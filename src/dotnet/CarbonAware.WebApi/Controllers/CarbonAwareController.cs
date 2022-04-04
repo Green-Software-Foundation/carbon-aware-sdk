@@ -23,13 +23,16 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var props = new Dictionary<string, object?>() {
+        var props = new Dictionary<string, object>() {
             { CarbonAwareConstants.LOCATIONS, locations.ToList() },
             { CarbonAwareConstants.START, time ?? DateTime.Now },
-            { CarbonAwareConstants.END, toTime },
             { CarbonAwareConstants.DURATION, durationMinutes },
             { CarbonAwareConstants.LOWEST, true }
         };
+        if(toTime != null) 
+        {
+            props[CarbonAwareConstants.END] = toTime;
+        }
         return await GetEmissionsDataAsync(props);
     }
 
@@ -40,12 +43,16 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var props = new Dictionary<string, object?>() {
+        var props = new Dictionary<string, object>() {
             { CarbonAwareConstants.LOCATIONS, locations.ToList() },
             { CarbonAwareConstants.START, time ?? DateTime.Now },
-            { CarbonAwareConstants.END, toTime },
             { CarbonAwareConstants.DURATION, durationMinutes },
         };
+        
+        if(toTime != null) 
+        {
+            props[CarbonAwareConstants.END] = toTime;
+        }
         return await GetEmissionsDataAsync(props);
     }
 
@@ -56,12 +63,16 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var props = new Dictionary<string, object?>() {
+        var props = new Dictionary<string, object>() {
             { CarbonAwareConstants.LOCATIONS, new List<string>(){ location } },
             { CarbonAwareConstants.START, time ?? DateTime.Now },
-            { CarbonAwareConstants.END, toTime },
             { CarbonAwareConstants.DURATION, durationMinutes },
         };
+        
+        if(toTime != null) 
+        {
+            props[CarbonAwareConstants.END] = toTime;
+        }
         return await GetEmissionsDataAsync(props);
     }
 
@@ -70,7 +81,7 @@ public class CarbonAwareController : ControllerBase
     /// </summary>
     /// <param name="props"> Dictionary of properties to call plugin. </param>
     /// <returns>Result of the plugin call or resulting status response</returns>
-    private async Task<IActionResult> GetEmissionsDataAsync(Dictionary<string, object?> props)
+    private async Task<IActionResult> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
         // NOTE: Any auth information would need to be redacted from logging
         _logger.LogInformation("Calling plugin GetEmissionsDataAsync with paylod {@props}", props);
