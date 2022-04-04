@@ -87,12 +87,18 @@ using CarbonAware.Model;
 
 namespace CarbonAware.Plugin.MyPlugin;
 
-public class JsonPlugin : ICarbonAware
+public class MyPlugin : ICarbonAware
 {
+
+    private readonly ILogger<MyPuglin> _logger;
+    public MyPuglin(ILogger<MyPlugin> logger)
+    {
+        _logger = logger;
+    }
 
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
-        // some code here.
+        // code specific.
     }
 }
 ```
