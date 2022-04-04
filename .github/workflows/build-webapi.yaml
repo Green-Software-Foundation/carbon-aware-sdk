@@ -58,6 +58,5 @@ jobs:
 
       - name: Docker Ping From Host
         run: |
-          sleep 5
           curl -v 0.0.0.0:8080/emissions/bylocation
 
