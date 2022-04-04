@@ -49,7 +49,9 @@ jobs:
         run: |
           docker run -d --name publish-container -p 8080:80 ca-api
           docker container ls
-          curl -v 0.0.0.0:8080/emissions/bylocation
+          docker exec publish-container sudo apt install -y curl
+          docker exec curl 0.0.0.0:80/emissions/bylocation
       
       - name: Docker Ping Container
-        run: curl 0.0.0.0:8080/emissions/bylocation
+        run: curl -v 0.0.0.0:8080/emissions/bylocation
+
