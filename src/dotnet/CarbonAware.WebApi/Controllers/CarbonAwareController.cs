@@ -77,21 +77,12 @@ public class CarbonAwareController : ControllerBase
         try
         {
             var response = await _plugin.GetEmissionsDataAsync(props);
-            if (response.Any())
-            {
-                _logger.LogInformation("Plugin call successful with result {@result}", response);
-                return Ok(response);
-            }
-            else
-            {
-                _logger.LogInformation("Plugin call returned empty result");
-                return StatusCode(204, response);
-            }
+            return response.Any() ? Ok(response) : NoContent();
         } 
         catch (Exception ex)
         {
             _logger.LogError("Exception occured during plugin execution", ex);
-            return StatusCode(400, ex);
+            return BadRequest(ex.ToString());
         }
     }
 }
