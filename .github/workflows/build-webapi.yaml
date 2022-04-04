@@ -48,7 +48,7 @@ jobs:
       - name: Docker Run Container
         run: |
           docker run -d --name publish-container -p 8080:80 ca-api
-          docker ls
+          docker container ls
           curl -v 0.0.0.0:8080/emissions/bylocation
       
       - name: Docker Ping Container
