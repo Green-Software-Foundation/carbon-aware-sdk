@@ -22,7 +22,8 @@ steps:
 - task: Docker@2
   inputs:
     command: 'build'
-    Dockerfile: '**/src/dotnet/CarbonAware.WebApi/Dockerfile'
+    Dockerfile: './src/dotnet/CarbonAware.WebApi/Dockerfile'
+    buildContext: './src/dotnet'
     tags: 'ca-api'
 
 - task: ComponentGovernanceComponentDetection@0
