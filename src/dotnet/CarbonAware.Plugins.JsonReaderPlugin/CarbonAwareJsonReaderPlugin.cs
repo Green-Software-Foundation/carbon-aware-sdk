@@ -19,9 +19,42 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
         var data = GetSampleJson();
+
+        return await Task.Run(() => GetFilteredData(data, props));
+    }
+
+    private IEnumerable<EmissionsData> GetFilteredData(IEnumerable<EmissionsData> data, IDictionary props) {
         var l = props[CarbonAwareConstants.LOCATIONS] as IEnumerable<string>;
-        var location = l.FirstOrDefault();
-        return await Task.Run(() => data.Where(x => x.Location == location));
+        List<String> locations = l !=null ? l.ToList() : new List<string>();
+
+        var s = props[CarbonAwareConstants.START];
+        DateTime start = s != null ? (DateTime)s : DateTime.Now;
+        
+        var e = props[CarbonAwareConstants.END];
+        DateTime? end =  e != null ? (DateTime)e : null;
+
+        var d = props[CarbonAwareConstants.DURATION];
+        int durationMinutes =  d!= null ? (int)d : 0;
+        
+        foreach (var location in locations)
+        {
+            data = data.Where(ed => ed.Location.Equals(location));        
+
+        }
+
+        if (end != null)
+        {
+            data = data.Where(ed => ed.TimeBetween(start,end)).ToList();
+        } else {
+            data = data.Where(ed => ed.Time <= start);
+        }
+
+        if (data.Count() != 0)
+        {
+            data.MaxBy(ed => ed.Time);
+        }
+
+        return data;
     }
 
     private string ReadFromResource(string key)
