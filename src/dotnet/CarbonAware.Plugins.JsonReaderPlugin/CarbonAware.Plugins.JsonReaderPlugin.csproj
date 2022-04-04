@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-    <PackageReference Include=" " Version="4.3.0" />
   </ItemGroup>
   
   <ItemGroup>
@@ -24,6 +23,4 @@
     <EmbeddedResource Include="..\data\data-files\sample-emissions-data.json" />
     <EmbeddedResource Include="..\data\data-files\test-data-azure-emissions.json" />
   </ItemGroup>
-
-
 </Project>

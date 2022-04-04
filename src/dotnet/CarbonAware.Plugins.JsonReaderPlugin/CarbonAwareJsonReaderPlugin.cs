@@ -60,7 +60,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
     private string ReadFromResource(string key)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        using Stream streamMetaData = assembly.GetManifestResourceStream(key);
+        using Stream streamMetaData = assembly.GetManifestResourceStream(key) ?? throw new NullReferenceException("StreamMedataData is null");
         using StreamReader readerMetaData = new StreamReader(streamMetaData);
         return readerMetaData.ReadToEnd();
     }
