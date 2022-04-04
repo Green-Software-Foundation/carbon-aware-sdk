@@ -29,7 +29,7 @@ public class CarbonAwareController : ControllerBase
             { CarbonAwareConstants.DURATION, durationMinutes },
             { CarbonAwareConstants.LOWEST, true }
         };
-        if (toTime != null)
+        if(toTime != null) 
         {
             props[CarbonAwareConstants.END] = toTime;
         }
@@ -48,8 +48,8 @@ public class CarbonAwareController : ControllerBase
             { CarbonAwareConstants.START, time ?? DateTime.Now },
             { CarbonAwareConstants.DURATION, durationMinutes },
         };
-
-        if (toTime != null)
+        
+        if(toTime != null) 
         {
             props[CarbonAwareConstants.END] = toTime;
         }
@@ -68,8 +68,8 @@ public class CarbonAwareController : ControllerBase
             { CarbonAwareConstants.START, time ?? DateTime.Now },
             { CarbonAwareConstants.DURATION, durationMinutes },
         };
-
-        if (toTime != null)
+        
+        if(toTime != null) 
         {
             props[CarbonAwareConstants.END] = toTime;
         }
