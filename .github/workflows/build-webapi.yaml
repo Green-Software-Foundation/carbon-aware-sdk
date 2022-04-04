@@ -1,20 +1,15 @@
 name: Docker Web API Build
 
-# on:
-#   push:
-#     paths:
-#       - 'src/dotnet/**'
-#       - '.github/workflows/**'
-#   pull_request:
-#     branches: [ dev, main ]
-#     paths:
-#       - 'src/dotnet/**'
-
-
-on: 
+on:
   push:
-    branches:
-    - "kanishk/cli-first-pass"
+    paths:
+      - 'src/dotnet/**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - 'src/dotnet/**'
+      - '.github/workflows/**'
 
 jobs:
   container-build-step:
