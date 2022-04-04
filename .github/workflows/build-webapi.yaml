@@ -49,6 +49,7 @@ jobs:
         run: |
           docker run -d --name publish-container -p 8080:80 ca-api
           docker container ls
+          docker exec publish-container apt update
           docker exec publish-container apt install -y curl
           docker exec curl 0.0.0.0:80/emissions/bylocation
       
