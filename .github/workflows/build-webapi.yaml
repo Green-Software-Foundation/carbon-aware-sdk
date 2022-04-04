@@ -49,10 +49,15 @@ jobs:
         run: |
           docker run -d --name publish-container -p 8080:80 ca-api
           docker container ls
+
+      - name: Docker Ping Inside Container
+        run: |
           docker exec publish-container apt update
           docker exec publish-container apt install -y curl
           docker exec publish-container curl 0.0.0.0:80/emissions/bylocation
-      
-      - name: Docker Ping Container
-        run: curl -v 0.0.0.0:8080/emissions/bylocation
+
+      - name: Docker Ping From Host
+        run: |
+          sleep 5
+          curl -v 0.0.0.0:8080/emissions/bylocation
 
