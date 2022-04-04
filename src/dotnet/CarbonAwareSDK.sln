@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AWSRegion
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AzureRegionTestDataGenerator", "CarbonAware.Tools.AzureRegionTestDataGenerator\CarbonAware.Tools.AzureRegionTestDataGenerator.csproj", "{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Plugins.NewBasicJsonPlugin", "CarbonAware.Plugins.NewBasicJsonPlugin\CarbonAware.Plugins.NewBasicJsonPlugin.csproj", "{7D28A4B1-39CB-4181-9514-2CD522B566F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.NewBasicJsonPlugin", "CarbonAware.Plugins.NewBasicJsonPlugin\CarbonAware.Plugins.NewBasicJsonPlugin.csproj", "{7D28A4B1-39CB-4181-9514-2CD522B566F5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.UnitTests", "CarbonAware.WebApi.Tests\unitTests\CarbonAware.WebApi.UnitTests.csproj", "{1258104B-8D9A-4F91-A294-8B32EE895EED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{7D28A4B1-39CB-4181-9514-2CD522B566F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D28A4B1-39CB-4181-9514-2CD522B566F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D28A4B1-39CB-4181-9514-2CD522B566F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
