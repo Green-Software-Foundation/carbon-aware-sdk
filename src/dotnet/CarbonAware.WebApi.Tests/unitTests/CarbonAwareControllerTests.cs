@@ -21,7 +21,7 @@ namespace CarbonAware.WepApi.UnitTests
         }
 
         /// <summary>
-        /// Tests that successful plugin calls (which return any data) result in Ok action (200 status)
+        /// Tests that successfull call to plugin results in action with 200 status
         /// </summary>
         [TestMethod]
         public async Task SuccessfulCallReturnsOk()
@@ -43,14 +43,9 @@ namespace CarbonAware.WepApi.UnitTests
             IActionResult ar2 = await this.controller!.GetBestEmissionsDataForLocationsByTime(new string[] { location });
             IActionResult ar3 = await this.controller!.GetEmissionsDataForLocationsByTime(new string[] { location });
 
-            var or1 = ar1 as OkObjectResult;
-            var or2 = ar2 as OkObjectResult;
-            var or3 = ar3 as OkObjectResult;
-
-            //Assert
-            Assert.IsNotNull(or1);
-            Assert.IsNotNull(or2);
-            Assert.IsNotNull(or3);
+            TestHelpers.AssertStatusCode(ar1, 200);
+            TestHelpers.AssertStatusCode(ar2, 200);
+            TestHelpers.AssertStatusCode(ar3, 200);
         }
 
         /// <summary>
@@ -66,19 +61,10 @@ namespace CarbonAware.WepApi.UnitTests
             IActionResult ar2 = await this.controller!.GetBestEmissionsDataForLocationsByTime(new string[] {location});
             IActionResult ar3 = await this.controller!.GetEmissionsDataForLocationsByTime(new string[] { location });
 
-            var or1 = ar1 as ObjectResult;
-            var or2 = ar2 as ObjectResult;
-            var or3 = ar3 as ObjectResult;
-
             //Assert
-            Assert.IsNotNull(or1);
-            Assert.IsTrue(or1.StatusCode == 204);
-
-            Assert.IsNotNull(or2);
-            Assert.IsTrue(or2.StatusCode == 204);
-
-            Assert.IsNotNull(or3);
-            Assert.IsTrue(or3.StatusCode == 204);
+            TestHelpers.AssertStatusCode(ar1, 204);
+            TestHelpers.AssertStatusCode(ar2, 204);
+            TestHelpers.AssertStatusCode(ar3, 204);
         }
 
         /// <summary>
@@ -94,19 +80,10 @@ namespace CarbonAware.WepApi.UnitTests
             IActionResult ar2 = await this.controller!.GetBestEmissionsDataForLocationsByTime(new string[] { location });
             IActionResult ar3 = await this.controller!.GetEmissionsDataForLocationsByTime(new string[] { location });
 
-            var or1 = ar1 as ObjectResult;
-            var or2 = ar2 as ObjectResult;
-            var or3 = ar3 as ObjectResult;
-
-            //Assert
-            Assert.IsNotNull(or1);
-            Assert.IsTrue(or1.StatusCode == 400);
-
-            Assert.IsNotNull(or2);
-            Assert.IsTrue(or2.StatusCode == 400);
-
-            Assert.IsNotNull(or3);
-            Assert.IsTrue(or3.StatusCode == 400);
+            // Assert
+            TestHelpers.AssertStatusCode(ar1, 400);
+            TestHelpers.AssertStatusCode(ar2, 400);
+            TestHelpers.AssertStatusCode(ar3, 400);
         }
     }
 }
