@@ -1,7 +1,7 @@
 namespace CarbonAware.WepApi.UnitTests
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     /// <summary>
     /// Tests helpers for all WebAPI specific tests.
@@ -14,7 +14,7 @@ namespace CarbonAware.WepApi.UnitTests
 
             //Assert
             Assert.IsNotNull(obj);
-            Assert.IsTrue(obj.StatusCode == code);
+            Assert.IsTrue(obj!.StatusCode == code);
         }
     }
 }

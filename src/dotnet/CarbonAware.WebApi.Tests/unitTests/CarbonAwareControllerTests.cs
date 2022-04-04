@@ -4,18 +4,18 @@ namespace CarbonAware.WepApi.UnitTests
     using CarbonAware.Model;
     using CarbonAware.WebApi.Controllers;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using NUnit.Framework;
 
     /// <summary>
     /// Testing Web API Controller
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class CarbonAwareControllerTests : TestsBase
     {   
         private CarbonAwareController? controller;
 
-        [TestInitialize]
-        public void TestInitialize()
+        [SetUp]
+        public void SetUp()
         {
             this.controller = new CarbonAwareController(this.MockLogger.Object, this.MockPlugin.Object);
         }
@@ -23,7 +23,7 @@ namespace CarbonAware.WepApi.UnitTests
         /// <summary>
         /// Tests that successfull call to plugin results in action with 200 status
         /// </summary>
-        [TestMethod]
+        [Test]
         public async Task SuccessfulCallReturnsOk()
         {
             string location = "Sydney";
@@ -51,7 +51,7 @@ namespace CarbonAware.WepApi.UnitTests
         /// <summary>
         /// Tests that empty result from plugin results in action with 204 status
         /// </summary>
-        [TestMethod]
+        [Test]
         public async Task EmptyResultRetuns204()
         {
             this.SetupPluginWithData(new List<EmissionsData>());
@@ -70,7 +70,7 @@ namespace CarbonAware.WepApi.UnitTests
         /// <summary>
         /// Tests that exception in plugin results in action with 400 status
         /// </summary>
-        [TestMethod]
+        [Test]
         public async Task ExceptionReturns400()
         {
             this.SetupPluginWithException();

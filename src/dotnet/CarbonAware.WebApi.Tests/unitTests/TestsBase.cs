@@ -3,7 +3,6 @@ namespace CarbonAware.WepApi.UnitTests
     using CarbonAware.Model;
     using CarbonAware.WebApi.Controllers;
     using Microsoft.Extensions.Logging;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Moq;
 
     /// <summary>
@@ -32,8 +31,5 @@ namespace CarbonAware.WepApi.UnitTests
             this.MockPlugin.Setup(x =>
                 x.GetEmissionsDataAsync(
                     It.IsAny<Dictionary<string, object>>())).Throws<Exception>();
-
-        [TestCleanup]
-        public void TestCleanup() => this.MockRepository.VerifyAll();
     }
 }
