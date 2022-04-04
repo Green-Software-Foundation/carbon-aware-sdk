@@ -17,23 +17,23 @@ on:
     - "kanishk/cli-first-pass"
 
 jobs:
-  container-build-step:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+#   container-build-step:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Repository
+#       uses: actions/checkout@v2
     
-    - name: Docker Target Build
-      run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
-      working-directory: ./src/dotnet
+#     - name: Docker Target Build
+#       run: docker build --target=build . -f CarbonAware.WebApi/Dockerfile -t ca-api-build
+#       working-directory: ./src/dotnet
 
-    - name: Docker Unit Test
-      run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
-      working-directory: ./src/dotnet
+#     - name: Docker Unit Test
+#       run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
+#       working-directory: ./src/dotnet
 
-    - name: Docker Basic Plugin Test
-      run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
-      working-directory: ./src/dotnet
+#     - name: Docker Basic Plugin Test
+#       run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
+#       working-directory: ./src/dotnet
 
   container-publish-step:
       runs-on: ubuntu-latest
@@ -46,7 +46,10 @@ jobs:
         working-directory: ./src/dotnet
         
       - name: Docker Run Container
-        run: docker run -d --name publish-container -p 8080:80 ca-api
+        run: |
+          docker run -d --name publish-container -p 8080:80 ca-api
+          docker ls
+          curl -v 0.0.0.0:8080/emissions/bylocation
       
       - name: Docker Ping Container
         run: curl 0.0.0.0:8080/emissions/bylocation
