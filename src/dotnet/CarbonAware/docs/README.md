@@ -39,14 +39,14 @@ public class MyClass {
         ...
     }
 
-    public void MyMethod()
+    public async Task MyMethod()
     {
         ...
         var props = new Dictionary<string, object>();
         params.Add(CarbonAwareConstants.LOCATIONS, new List<string> {
             "eastus"
         });
-        var results = _plugin.GetEmissions(props);
+        var results = await _plugin.GetEmissionsDataAsync(props);
         foreach (var r in results)
         {
             Console.WriteLine($"EmissionsData Location: {r.Location}");
