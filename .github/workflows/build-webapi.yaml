@@ -23,11 +23,7 @@ jobs:
       working-directory: ./src/dotnet
 
     - name: Docker Unit Test
-      run: docker run -w //src/CarbonAware.Tests ca-api-build dotnet test
-      working-directory: ./src/dotnet
-
-    - name: Docker Basic Plugin Test
-      run: docker run -w //src/CarbonAware.Plugins.BasicJsonPlugin.Tests ca-api-build dotnet test
+      run: docker run -w //src/ ca-api-build dotnet test
       working-directory: ./src/dotnet
 
   container-publish-step:
