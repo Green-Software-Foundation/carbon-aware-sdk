@@ -20,7 +20,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AzureRegionTestDataGenerator", "CarbonAware.Tools.AzureRegionTestDataGenerator\CarbonAware.Tools.AzureRegionTestDataGenerator.csproj", "{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Plugins.JsonReaderPlugin", "CarbonAware.Plugins.JsonReaderPlugin\CarbonAware.Plugins.JsonReaderPlugin.csproj", "{EBC55CE4-19D9-49F0-A27C-2424E78283E2}"
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.UnitTests", "CarbonAware.WebApi.Tests\unitTests\CarbonAware.WebApi.UnitTests.csproj", "{1258104B-8D9A-4F91-A294-8B32EE895EED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CarbonAware.WebApi.Tests", "CarbonAware.WebApi.Tests", "{4C29539D-476A-4752-B4B8-6AA9E0674DDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.WebApi.UnitTests", "CarbonAware.WebApi.Tests\unitTests\CarbonAware.WebApi.UnitTests.csproj", "{03AA1318-A1DC-4760-BA57-839B2B515D87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,11 +75,18 @@ Global
 		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1258104B-8D9A-4F91-A294-8B32EE895EED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03AA1318-A1DC-4760-BA57-839B2B515D87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03AA1318-A1DC-4760-BA57-839B2B515D87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03AA1318-A1DC-4760-BA57-839B2B515D87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03AA1318-A1DC-4760-BA57-839B2B515D87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B21A5E96-73BC-4BC1-86C7-4A4FE4634C34}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{03AA1318-A1DC-4760-BA57-839B2B515D87} = {4C29539D-476A-4752-B4B8-6AA9E0674DDC}
 	EndGlobalSection
 EndGlobal
