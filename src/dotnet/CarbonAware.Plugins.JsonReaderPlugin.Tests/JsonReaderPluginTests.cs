@@ -18,7 +18,6 @@ public class JsonReaderPluginTests
     [Test]
     public async Task TestDataByLocation_WhenLocationProvided()
     {
-        
         var mockPlugin = SetupMockPlugin();
 
         Dictionary<string, object> props = new Dictionary<string, object>();
@@ -27,7 +26,7 @@ public class JsonReaderPluginTests
         var result = await plugin.GetEmissionsDataAsync(props);
         
         Assert.AreEqual(2, result.Count());
-        foreach (EmissionsData e in result.ToList()) {
+        foreach (var e in result) {
              Assert.AreEqual("eastus", e.Location);
         }
     }
@@ -55,7 +54,7 @@ public class JsonReaderPluginTests
         List<string> locations = (List<string>)props[CarbonAwareConstants.LOCATIONS];
         Assert.AreEqual(3, result.Count());
 
-        foreach (EmissionsData r in result.ToList()) {
+        foreach (var r in result) {
              Assert.IsTrue(locations.Contains(r.Location));
         }
     }
@@ -74,7 +73,7 @@ public class JsonReaderPluginTests
         var result = await plugin.GetEmissionsDataAsync(props);
         
         Assert.AreEqual(1, result.Count());
-        Assert.AreEqual("eastus", result.ToList()[0].Location);
+        Assert.AreEqual("eastus", result.First().Location);
     }
 
     [Test]
@@ -90,8 +89,8 @@ public class JsonReaderPluginTests
         var result = await plugin.GetEmissionsDataAsync(props);
         
         Assert.AreEqual(1, result.Count());
-        Assert.AreEqual("eastus", result.ToList()[0].Location);
-        Assert.AreEqual(DateTime.Parse("2021-09-01"), result.ToList()[0].Time);
+        Assert.AreEqual("eastus", result.First().Location);
+        Assert.AreEqual(DateTime.Parse("2021-09-01"), result.First().Time);
     }
 
     [Test]

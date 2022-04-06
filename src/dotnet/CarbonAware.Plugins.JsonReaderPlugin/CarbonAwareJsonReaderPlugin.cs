@@ -36,7 +36,8 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         var d = props[CarbonAwareConstants.DURATION];
         int durationMinutes =  d!= null ? (int)d : 0;
         
-        if(locations.Any()) {
+        if (locations.Any()) 
+        {
             data = data.Where(ed => locations.Contains(ed.Location));
         }
 
