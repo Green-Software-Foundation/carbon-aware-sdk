@@ -110,3 +110,26 @@ cd ..
 dotnet build
 ```
 
+### Add Unit Tests
+
+Implement unit tests for the new Plugin to have coverage of the functionality. Below are the steps on how to add one
+
+```sh
+cd src/dotnet
+dotnet new nunit -o CarbonAware.Plugin.MyPlugin.Tests
+dotnet sln CarbonAwareSDK.sln add CarbonAware.Plugin.MyPlugin.Tests/CarbonAware.Plugin.MyPlugin.Tests.csproj
+dotnet add CarbonAware.Plugin.MyPlugin.Tests/CarbonAware.Plugin.MyPlugin.csproj  reference CarbonAware.Plugin.MyPlugin/CarbonAware.Plugin.MyPlugin.csproj
+```
+Add `Moq` if needed
+
+```sh
+cd CarbonAware.Plugin.MyPlugin.Tests
+dotnet add package Moq
+```
+
+After these steps, the skeleton of the unit test is ready, then build and test the project.
+
+```sh
+dotnet build
+dotnet test
+```
