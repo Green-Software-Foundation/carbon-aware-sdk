@@ -5,9 +5,9 @@
 /// </summary>
 public class CarbonAwareConstants
 {
-    public const string LOCATIONS = "locations";
-    public const string START = "start";
-    public const string END = "end";
-    public const string DURATION = "duration";
-    public const string LOWEST = "lowest";
+    public const string Locations = "locations";
+    public const string Start = "start";
+    public const string End = "end";
+    public const string Duration = "duration";
+    public const string Lowest = "lowest";
 }
