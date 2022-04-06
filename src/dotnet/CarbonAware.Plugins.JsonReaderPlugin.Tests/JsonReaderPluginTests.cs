@@ -21,7 +21,7 @@ public class JsonReaderPluginTests
         var mockPlugin = SetupMockPlugin();
 
         Dictionary<string, object> props = new Dictionary<string, object>();
-        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
+        props[CarbonAwareConstants.Locations] = new List<string> { "eastus"};
         var plugin = mockPlugin.Object;
         var result = await plugin.GetEmissionsDataAsync(props);
         
@@ -48,10 +48,10 @@ public class JsonReaderPluginTests
         var mockPlugin = SetupMockPlugin();
 
         Dictionary<string, object> props = new Dictionary<string, object>();
-        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus", "westus"};
+        props[CarbonAwareConstants.Locations] = new List<string> { "eastus", "westus"};
         var plugin = mockPlugin.Object;
         var result = await plugin.GetEmissionsDataAsync(props);
-        List<string> locations = (List<string>)props[CarbonAwareConstants.LOCATIONS];
+        List<string> locations = (List<string>)props[CarbonAwareConstants.Locations];
         Assert.AreEqual(3, result.Count());
 
         foreach (var r in result) {
@@ -65,9 +65,9 @@ public class JsonReaderPluginTests
         var mockPlugin = SetupMockPlugin();
         
         Dictionary<string, object> props = new Dictionary<string, object>();
-        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
-        props[CarbonAwareConstants.START] = "2021-08-09";
-        props[CarbonAwareConstants.END] = "2021-12-09";
+        props[CarbonAwareConstants.Locations] = new List<string> { "eastus"};
+        props[CarbonAwareConstants.Start] = "2021-08-09";
+        props[CarbonAwareConstants.End] = "2021-12-09";
 
         var plugin = mockPlugin.Object;
         var result = await plugin.GetEmissionsDataAsync(props);
@@ -82,8 +82,8 @@ public class JsonReaderPluginTests
         var mockPlugin = SetupMockPlugin();
         
         Dictionary<string, object> props = new Dictionary<string, object>();
-        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
-        props[CarbonAwareConstants.START] = "2021-12-09";
+        props[CarbonAwareConstants.Locations] = new List<string> { "eastus"};
+        props[CarbonAwareConstants.Start] = "2021-12-09";
 
         var plugin = mockPlugin.Object;
         var result = await plugin.GetEmissionsDataAsync(props);
@@ -99,7 +99,7 @@ public class JsonReaderPluginTests
         var mockPlugin = SetupMockPlugin();
         
         Dictionary<string, object> props = new Dictionary<string, object>();
-        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "xyz"};
+        props[CarbonAwareConstants.Locations] = new List<string> { "xyz"};
         
         var plugin = mockPlugin.Object;
         var result = await plugin.GetEmissionsDataAsync(props);

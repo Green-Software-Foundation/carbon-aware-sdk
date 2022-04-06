@@ -28,11 +28,14 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         List<String> locations = l !=null ? l.ToList() : new List<string>();
 
         var s = props[CarbonAwareConstants.Start];
-        DateTime start = s != null ? DateTime.Parse(s.ToString()) : DateTime.Now;
-        
+        var start = DateTime.Now;
+        if (s != null)
+        {
+            DateTime.TryParse(s.ToString(), out start);
+        }
         var e = props[CarbonAwareConstants.End];
-        DateTime? end =  e != null ? DateTime.Parse(e.ToString()) : null;
-
+        
+        DateTime? end = e != null ? DateTime.Parse(new string(e.ToString())) : null;
         var d = props[CarbonAwareConstants.Duration];
         int durationMinutes =  d!= null ? (int)d : 0;
         
