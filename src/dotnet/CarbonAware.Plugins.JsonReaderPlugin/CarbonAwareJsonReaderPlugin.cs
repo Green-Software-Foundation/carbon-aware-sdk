@@ -49,7 +49,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
 
         if (data.Count() != 0)
         {
-            data = data.MaxBy(ed => ed.Time);
+            data.MaxBy(ed => ed.Time);
         }
 
         return data;
