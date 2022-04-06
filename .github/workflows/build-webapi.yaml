@@ -13,9 +13,11 @@ on:
 
 env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/Dockerfile"
+  HEALTH_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
+  #Health Check Endpoint to be added as another story and replaced here
 
 jobs:
-  container-build-step:
+  container-unit-test:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
@@ -29,7 +31,7 @@ jobs:
       run: docker run -w //src/ ca-api-build dotnet test
       working-directory: ./src/dotnet
 
-  container-publish-step:
+  container-validation:
       runs-on: ubuntu-latest
       steps:
       - name: Checkout Repository
@@ -41,16 +43,9 @@ jobs:
         
       - name: Docker Run Container
         run: |
-          docker run -d --name publish-container -p 8080:80 ca-api
+          docker run -d --name runnable-container -p 8080:80 ca-api
           docker container ls
-          
-      - name: Docker Wget in container
-        run: |
-          docker exec publish-container apt update
-          docker exec publish-container apt install -y wget
-          docker exec publish-container wget -t 5 --waitretry=5 0.0.0.0:80/emissions/bylocation?location=eastus
 
-      - name: Docker Ping From Host
+      - name: Docker WGET Health Endpoint
         run: |
-          wget -t 5 --waitretry=5 0.0.0.0:8080/emissions/bylocation?location=eastus
-
+          wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
