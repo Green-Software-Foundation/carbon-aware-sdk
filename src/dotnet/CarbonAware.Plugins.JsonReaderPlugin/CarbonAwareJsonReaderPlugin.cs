@@ -36,10 +36,8 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         var d = props[CarbonAwareConstants.DURATION];
         int durationMinutes =  d!= null ? (int)d : 0;
         
-        foreach (var location in locations)
-        {
-            data = data.Where(ed => ed.Location.Equals(location));        
-
+        if(locations.Any()) {
+            data = data.Where(ed => locations.Contains(ed.Location));
         }
 
         if (end != null)
@@ -51,7 +49,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
 
         if (data.Count() != 0)
         {
-            data.MaxBy(ed => ed.Time);
+            data = data.MaxBy(ed => ed.Time);
         }
 
         return data;
@@ -65,7 +63,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         return readerMetaData.ReadToEnd();
     }
  
-    private List<EmissionsData> GetSampleJson()
+    protected virtual List<EmissionsData> GetSampleJson()
     {
         var data = ReadFromResource("CarbonAware.Plugins.JsonReaderPlugin.test-data-azure-emissions.json");
         var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(data);

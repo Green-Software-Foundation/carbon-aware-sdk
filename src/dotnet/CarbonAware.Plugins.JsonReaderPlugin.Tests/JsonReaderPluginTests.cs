@@ -8,70 +8,128 @@ using System.Threading.Tasks;
 using CarbonAware.Model;
 using System;
 using System.Linq;
+using Moq.Protected;
 
 namespace CarbonAware.Plugins.JsonReaderPlugin.Tests;
 
 public class JsonReaderPluginTests
 {
 
-    private ICarbonAware? jsonReaderPlugin;
-    private Mock<ILogger<CarbonAwareJsonReaderPlugin>> MockLogger = new Mock<ILogger<CarbonAwareJsonReaderPlugin>>(); 
-
-
-    [SetUp]
-    public void Setup()
+    [Test]
+    public async Task TestDataByLocation_WhenLocationProvided()
     {
-        jsonReaderPlugin = new CarbonAwareJsonReaderPlugin(this.MockLogger.Object);
+        
+        var mockPlugin = SetupMockPlugin();
+
+        Dictionary<string, object> props = new Dictionary<string, object>();
+        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
+        var plugin = mockPlugin.Object;
+        var result = await plugin.GetEmissionsDataAsync(props);
+        
+        Assert.AreEqual(2, result.Count());
+
     }
 
     [Test]
-    public void TestDataByLocation()
+    public async Task TestDataByLocation_WhenLocationNotProvided()
     {
-        Dictionary<string, object> props = new Dictionary<string, object>();
-        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
+        var mockPlugin = SetupMockPlugin();
 
-        Task<IEnumerable<EmissionsData>> data = jsonReaderPlugin.GetEmissionsDataAsync(props);
-        List<EmissionsData> emissionsData = data.Result.ToList();
-        IEnumerable<EmissionsData> filteredData = data.Result.Where(ed => ed.Location.Equals("westus"));        
-
-       Assert.IsEmpty(filteredData);
-
+        var plugin = mockPlugin.Object;
+        var result = await plugin.GetEmissionsDataAsync(new Dictionary<string, object>());
+        
+        Assert.AreEqual(4, result.Count());
     }
 
-    
     [Test]
-    public void TestDataByLocationAndTimePeriod()
+    public async Task TestDataByLocation_WhenMultipleLocationsProvided()
     {
+        
+        var mockPlugin = SetupMockPlugin();
+
+        Dictionary<string, object> props = new Dictionary<string, object>();
+        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus", "westus"};
+        var plugin = mockPlugin.Object;
+        var result = await plugin.GetEmissionsDataAsync(props);
+        
+        Assert.AreEqual(3, result.Count());
+    }
+
+    [Test]
+    public async Task TestDataByLocationAndTimePeriod()
+    {
+        var mockPlugin = SetupMockPlugin();
+        
         Dictionary<string, object> props = new Dictionary<string, object>();
         props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
-        props[CarbonAwareConstants.START] = "2021-09-09";
+        props[CarbonAwareConstants.START] = "2021-08-09";
         props[CarbonAwareConstants.END] = "2021-12-09";
 
-        Task<IEnumerable<EmissionsData>> data = jsonReaderPlugin.GetEmissionsDataAsync(props);
-        List<EmissionsData> emissionsData = data.Result.ToList();
-
-        IEnumerable<EmissionsData> filteredData = data.Result.Where(ed => ed.Time > DateTime.Parse(props[CarbonAwareConstants.END].ToString()));        
-        Assert.IsEmpty(filteredData);
-
-        filteredData = data.Result.Where(ed => ed.Time < DateTime.Parse(props[CarbonAwareConstants.END].ToString()));        
-        Assert.IsNotEmpty(filteredData);
+        var plugin = mockPlugin.Object;
+        var result = await plugin.GetEmissionsDataAsync(props);
+        
+        Assert.AreEqual(1, result.Count());
 
     }
 
-    
-    // [Test]
-    // public void TestDataByDuration()
-    // {
-    //     Dictionary<string, string> props = new Dictionary<string, string>();
-    //     props[CarbonAwareConstants.LOCATIONS] = "eastus";
-    //     props[CarbonAwareConstants.DURATION] = "60";
+    [Test]
+    public async Task TestData_WhenNoEndTimeSpecified()
+    {
+        var mockPlugin = SetupMockPlugin();
+        
+        Dictionary<string, object> props = new Dictionary<string, object>();
+        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "eastus"};
+        props[CarbonAwareConstants.START] = "2021-12-09";
 
-    //     Task<IEnumerable<EmissionsData>> data = jsonReaderPlugin.GetEmissionsDataAsync(props);
-    //     List<EmissionsData> emissionsData = data.Result.ToList();
-    //     IEnumerable<EmissionsData> filteredData1 = data.Result.Where(ed => ed.Location.Equals("westus"));        
+        var plugin = mockPlugin.Object;
+        var result = await plugin.GetEmissionsDataAsync(props);
+        
+        Assert.AreEqual(1, result.Count());
+    }
 
-    //     List<EmissionsData> filteredData = emissionsData.FindAll(x => (x.Location == "mmm"));
-    //   //  Assert.IsEmpty(filteredData1);
+    [Test]
+    public async Task TestData_WhenNoMatchedCriteria()
+    {
+        var mockPlugin = SetupMockPlugin();
+        
+        Dictionary<string, object> props = new Dictionary<string, object>();
+        props[CarbonAwareConstants.LOCATIONS] = new List<string> { "xyz"};
+        
+        var plugin = mockPlugin.Object;
+        var result = await plugin.GetEmissionsDataAsync(props);
+        
+        Assert.AreEqual(0, result.Count());
+    }
 
-    // }
+    private Mock<CarbonAwareJsonReaderPlugin> SetupMockPlugin() {
+        var logger = Mock.Of<ILogger<CarbonAwareJsonReaderPlugin>>();
+        var mockPlugin = new Mock<CarbonAwareJsonReaderPlugin>(logger);
+        
+        mockPlugin.Protected()
+            .Setup<List<EmissionsData>>("GetSampleJson")
+            .Returns(GetTestEmissionData())
+            .Verifiable();
+
+        return mockPlugin;
+    }
+    private List<EmissionsData> GetTestEmissionData() {
+        return new List<EmissionsData>() {
+                new EmissionsData {
+                    Location = "eastus",
+                    Time = DateTime.Parse("2021-09-01")
+                },
+                new EmissionsData {
+                    Location = "westus",
+                    Time = DateTime.Parse("2021-12-01")
+                },
+                new EmissionsData {
+                    Location = "eastus",
+                    Time = DateTime.Parse("2022-02-01")
+                },
+                new EmissionsData {
+                    Location = "midwest",
+                    Time = DateTime.Parse("2021-05-01")
+                }
+            };
+    }
 }
