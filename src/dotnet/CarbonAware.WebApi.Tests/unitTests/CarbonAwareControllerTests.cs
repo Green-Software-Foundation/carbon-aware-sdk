@@ -12,14 +12,6 @@ using NUnit.Framework;
 [TestFixture]
 public class CarbonAwareControllerTests : TestsBase
 {   
-    private CarbonAwareController? controller;
-
-    [SetUp]
-    public void SetUp()
-    {
-        this.controller = new CarbonAwareController(this.MockLogger.Object, this.MockPlugin.Object);
-    }
-
     /// <summary>
     /// Tests that successfull call to plugin results in action with 200 status
     /// </summary>
@@ -36,12 +28,11 @@ public class CarbonAwareControllerTests : TestsBase
                 Time = DateTime.Now
             }
         };
-        this.SetupPluginWithData(data);
-            
-
-        IActionResult ar1 = await this.controller!.GetEmissionsDataForLocationByTime(location);
-        IActionResult ar2 = await this.controller!.GetBestEmissionsDataForLocationsByTime(new string[] { location });
-        IActionResult ar3 = await this.controller!.GetEmissionsDataForLocationsByTime(new string[] { location });
+        var controller = new CarbonAwareController(this.MockLogger.Object, CreatePluginWithData(data).Object);
+        
+        IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
+        IActionResult ar2 = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { location });
+        IActionResult ar3 = await controller.GetEmissionsDataForLocationsByTime(new string[] { location });
 
         TestHelpers.AssertStatusCode(ar1, 200);
         TestHelpers.AssertStatusCode(ar2, 200);
@@ -54,12 +45,12 @@ public class CarbonAwareControllerTests : TestsBase
     [Test]
     public async Task EmptyResultRetuns204()
     {
-        this.SetupPluginWithData(new List<EmissionsData>());
+        var controller = new CarbonAwareController(this.MockLogger.Object, CreatePluginWithData(new List<EmissionsData>()).Object);
+        
         string location = "Sydney";
-
-        IActionResult ar1 = await this.controller!.GetEmissionsDataForLocationByTime(location);
-        IActionResult ar2 = await this.controller!.GetBestEmissionsDataForLocationsByTime(new string[] {location});
-        IActionResult ar3 = await this.controller!.GetEmissionsDataForLocationsByTime(new string[] { location });
+        IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
+        IActionResult ar2 = await controller.GetBestEmissionsDataForLocationsByTime(new string[] {location});
+        IActionResult ar3 = await controller.GetEmissionsDataForLocationsByTime(new string[] { location });
 
         //Assert
         TestHelpers.AssertStatusCode(ar1, 204);
@@ -73,12 +64,12 @@ public class CarbonAwareControllerTests : TestsBase
     [Test]
     public async Task ExceptionReturns400()
     {
-        this.SetupPluginWithException();
+        var controller = new CarbonAwareController(this.MockLogger.Object, CreatePluginWithException().Object);
+ 
         string location = "Sydney";
-
-        IActionResult ar1 = await this.controller!.GetEmissionsDataForLocationByTime(location);
-        IActionResult ar2 = await this.controller!.GetBestEmissionsDataForLocationsByTime(new string[] { location });
-        IActionResult ar3 = await this.controller!.GetEmissionsDataForLocationsByTime(new string[] { location });
+        IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
+        IActionResult ar2 = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { location });
+        IActionResult ar3 = await controller.GetEmissionsDataForLocationsByTime(new string[] { location });
 
         // Assert
         TestHelpers.AssertStatusCode(ar1, 400);
