@@ -35,7 +35,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         }
         var e = props[CarbonAwareConstants.End];
         
-        DateTime? end = e != null ? DateTime.Parse(new string(e.ToString())) : null;
+        // DateTime? end = e != null ? DateTime.Parse(new string(e.ToString())) : null;
         var d = props[CarbonAwareConstants.Duration];
         int durationMinutes =  d!= null ? (int)d : 0;
         
@@ -44,11 +44,15 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
             data = data.Where(ed => locations.Contains(ed.Location));
         }
 
-        if (end != null)
+        if (e != null)
         {
-            data = data.Where(ed => ed.TimeBetween(start,end)).ToList();
-        } else {
-            data = data.Where(ed => ed.Time <= start);
+            DateTime end;
+            DateTime.TryParse(e.ToString(), out end);
+            data = data.Where(ed => ed.TimeBetween(start, end));  // no need to convert to List
+        }
+        else
+        {
+            data  = data.Where(ed => ed.Time <= start);
         }
 
         if (data.Count() != 0)
