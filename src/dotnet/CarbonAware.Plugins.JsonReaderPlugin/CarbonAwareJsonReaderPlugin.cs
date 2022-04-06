@@ -24,16 +24,16 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
     }
 
     private IEnumerable<EmissionsData> GetFilteredData(IEnumerable<EmissionsData> data, IDictionary props) {
-        var l = props[CarbonAwareConstants.LOCATIONS] as IEnumerable<string>;
+        var l = props[CarbonAwareConstants.Locations] as IEnumerable<string>;
         List<String> locations = l !=null ? l.ToList() : new List<string>();
 
-        var s = props[CarbonAwareConstants.START];
+        var s = props[CarbonAwareConstants.Start];
         DateTime start = s != null ? (DateTime)s : DateTime.Now;
         
-        var e = props[CarbonAwareConstants.END];
+        var e = props[CarbonAwareConstants.End];
         DateTime? end =  e != null ? (DateTime)e : null;
 
-        var d = props[CarbonAwareConstants.DURATION];
+        var d = props[CarbonAwareConstants.Duration];
         int durationMinutes =  d!= null ? (int)d : 0;
         
         foreach (var location in locations)

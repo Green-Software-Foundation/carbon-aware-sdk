@@ -24,14 +24,14 @@ public class CarbonAwareController : ControllerBase
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
         var props = new Dictionary<string, object>() {
-            { CarbonAwareConstants.LOCATIONS, locations.ToList() },
-            { CarbonAwareConstants.START, time ?? DateTime.Now },
-            { CarbonAwareConstants.DURATION, durationMinutes },
-            { CarbonAwareConstants.LOWEST, true }
+            { CarbonAwareConstants.Locations, locations.ToList() },
+            { CarbonAwareConstants.Start, time ?? DateTime.Now },
+            { CarbonAwareConstants.Duration, durationMinutes },
+            { CarbonAwareConstants.Lowest, true }
         };
         if(toTime != null) 
         {
-            props[CarbonAwareConstants.END] = toTime;
+            props[CarbonAwareConstants.End] = toTime;
         }
         return await GetEmissionsDataAsync(props);
     }
@@ -44,14 +44,14 @@ public class CarbonAwareController : ControllerBase
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
         var props = new Dictionary<string, object>() {
-            { CarbonAwareConstants.LOCATIONS, locations.ToList() },
-            { CarbonAwareConstants.START, time ?? DateTime.Now },
-            { CarbonAwareConstants.DURATION, durationMinutes },
+            { CarbonAwareConstants.Locations, locations.ToList() },
+            { CarbonAwareConstants.Start, time ?? DateTime.Now },
+            { CarbonAwareConstants.Duration, durationMinutes },
         };
         
         if(toTime != null) 
         {
-            props[CarbonAwareConstants.END] = toTime;
+            props[CarbonAwareConstants.End] = toTime;
         }
         return await GetEmissionsDataAsync(props);
     }
@@ -64,14 +64,14 @@ public class CarbonAwareController : ControllerBase
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
         var props = new Dictionary<string, object>() {
-            { CarbonAwareConstants.LOCATIONS, new List<string>(){ location } },
-            { CarbonAwareConstants.START, time ?? DateTime.Now },
-            { CarbonAwareConstants.DURATION, durationMinutes },
+            { CarbonAwareConstants.Locations, new List<string>(){ location } },
+            { CarbonAwareConstants.Start, time ?? DateTime.Now },
+            { CarbonAwareConstants.Duration, durationMinutes },
         };
         
         if(toTime != null) 
         {
-            props[CarbonAwareConstants.END] = toTime;
+            props[CarbonAwareConstants.End] = toTime;
         }
         return await GetEmissionsDataAsync(props);
     }
