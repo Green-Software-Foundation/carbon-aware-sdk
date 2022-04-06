@@ -28,25 +28,31 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         List<String> locations = l !=null ? l.ToList() : new List<string>();
 
         var s = props[CarbonAwareConstants.Start];
-        DateTime start = s != null ? (DateTime)s : DateTime.Now;
-        
+        var start = DateTime.Now;
+        if (s != null)
+        {
+            DateTime.TryParse(s.ToString(), out start);
+        }
         var e = props[CarbonAwareConstants.End];
-        DateTime? end =  e != null ? (DateTime)e : null;
-
+        
+        // DateTime? end = e != null ? DateTime.Parse(new string(e.ToString())) : null;
         var d = props[CarbonAwareConstants.Duration];
         int durationMinutes =  d!= null ? (int)d : 0;
         
-        foreach (var location in locations)
+        if (locations.Any()) 
         {
-            data = data.Where(ed => ed.Location.Equals(location));        
-
+            data = data.Where(ed => locations.Contains(ed.Location));
         }
 
-        if (end != null)
+        if (e != null)
         {
-            data = data.Where(ed => ed.TimeBetween(start,end)).ToList();
-        } else {
-            data = data.Where(ed => ed.Time <= start);
+            DateTime end;
+            DateTime.TryParse(e.ToString(), out end);
+            data = data.Where(ed => ed.TimeBetween(start, end));  // no need to convert to List
+        }
+        else
+        {
+            data  = data.Where(ed => ed.Time <= start);
         }
 
         if (data.Count() != 0)
@@ -65,7 +71,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         return readerMetaData.ReadToEnd();
     }
  
-    private List<EmissionsData> GetSampleJson()
+    protected virtual List<EmissionsData> GetSampleJson()
     {
         var data = ReadFromResource("CarbonAware.Plugins.JsonReaderPlugin.test-data-azure-emissions.json");
         var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(data);
