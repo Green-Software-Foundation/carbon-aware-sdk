@@ -2,9 +2,7 @@ name: Docker Web API Build
 
 on:
   push:
-    paths:
-      - 'src/dotnet/**'
-      - '.github/workflows/**'
+    branches: [ dev, main ]
   pull_request:
     branches: [ dev, main ]
     paths:
