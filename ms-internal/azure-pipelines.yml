@@ -10,6 +10,14 @@ pr:
     - dev
     - main
 
+schedules:
+- cron: "0 */6 * * *"
+  displayName: Every-6-hours governance build
+  branches:
+    include:
+    - dev
+    - main
+
 pool:
   vmImage: ubuntu-latest
 
