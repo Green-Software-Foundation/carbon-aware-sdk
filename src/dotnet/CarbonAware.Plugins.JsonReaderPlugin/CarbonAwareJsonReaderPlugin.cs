@@ -10,49 +10,43 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
 {
     private readonly ILogger<CarbonAwareJsonReaderPlugin> _logger;
 
+    private List<EmissionsData>? emissionsData;
+
 
     public CarbonAwareJsonReaderPlugin(ILogger<CarbonAwareJsonReaderPlugin> logger)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
-        var data = GetSampleJson();
-
-        return await Task.Run(() => GetFilteredData(data, props));
+        List<EmissionsData>? emissionsData = GetSampleJson();
+        if (emissionsData == null) {
+            _logger.LogDebug("Emission data list is empty");
+            return new List<EmissionsData>();
+        }
+        _logger.LogDebug("Total emission records retrieved " + emissionsData.Count);
+        
+        return await Task.FromResult(GetFilteredData(emissionsData, props));
     }
 
     private IEnumerable<EmissionsData> GetFilteredData(IEnumerable<EmissionsData> data, IDictionary props) {
-        var l = props[CarbonAwareConstants.Locations] as IEnumerable<string>;
-        List<String> locations = l !=null ? l.ToList() : new List<string>();
+        var location = props[CarbonAwareConstants.Locations] as IEnumerable<string>;
+        List<String> locations = location !=null ? location.ToList() : new List<string>();
 
-        var s = props[CarbonAwareConstants.Start];
-        var start = DateTime.Now;
-        if (s != null)
-        {
-            DateTime.TryParse(s.ToString(), out start);
-        }
-        var e = props[CarbonAwareConstants.End];
+        var startDate = getStartDateFromProps(props);
+        var endDate = props[CarbonAwareConstants.End];
         
-        // DateTime? end = e != null ? DateTime.Parse(new string(e.ToString())) : null;
-        var d = props[CarbonAwareConstants.Duration];
-        int durationMinutes =  d!= null ? (int)d : 0;
-        
-        if (locations.Any()) 
-        {
-            data = data.Where(ed => locations.Contains(ed.Location));
-        }
+        data = filterByLocation(data, locations);
 
-        if (e != null)
+        if (endDate != null)
         {
-            DateTime end;
-            DateTime.TryParse(e.ToString(), out end);
-            data = data.Where(ed => ed.TimeBetween(start, end));  // no need to convert to List
+            data = filterByDateRange(data, startDate, endDate);
         }
         else
         {
-            data  = data.Where(ed => ed.Time <= start);
+            data  = data.Where(ed => ed.Time <= startDate);
         }
 
         if (data.Count() != 0)
@@ -63,6 +57,34 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         return data;
     }
 
+    private IEnumerable<EmissionsData> filterByDateRange(IEnumerable<EmissionsData> data, DateTime startDate, object endDate)
+    {
+        DateTime end;
+        DateTime.TryParse(endDate.ToString(), out end);
+        data = data.Where(ed => ed.TimeBetween(startDate, end));  
+
+        return data;
+    }
+
+    private IEnumerable<EmissionsData> filterByLocation(IEnumerable<EmissionsData> data, List<string> locations)
+    {
+        if (locations.Any()) 
+        {
+            data = data.Where(ed => locations.Contains(ed.Location));
+        }
+
+        return data;
+    }
+
+    private DateTime getStartDateFromProps(IDictionary props) {
+        var start = props[CarbonAwareConstants.Start];
+        var startDate = DateTime.Now;
+        if (start != null)
+        {
+            startDate = DateTime.TryParse(start.ToString(), out startDate)? startDate : DateTime.Now;
+        }
+        return startDate;
+    }
     private string ReadFromResource(string key)
     {
         var assembly = Assembly.GetExecutingAssembly();
@@ -71,10 +93,13 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
         return readerMetaData.ReadToEnd();
     }
  
-    protected virtual List<EmissionsData> GetSampleJson()
+    protected virtual List<EmissionsData>? GetSampleJson()
     {
-        var data = ReadFromResource("CarbonAware.Plugins.JsonReaderPlugin.test-data-azure-emissions.json");
-        var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(data);
-        return jsonObject.Emissions;
+        if(emissionsData != null && !emissionsData.Any()) {
+            var data = ReadFromResource("CarbonAware.Plugins.JsonReaderPlugin.test-data-azure-emissions.json");
+            var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(data);
+            emissionsData = jsonObject.Emissions;
+        }
+        return emissionsData;
     }
 }
