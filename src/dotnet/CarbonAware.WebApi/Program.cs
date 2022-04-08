@@ -1,4 +1,5 @@
-using CarbonAware.WebApi.Configuration;
+
+using CarbonAware.Plugins.JsonReaderPlugin.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Load configuration file then Register CarbonAware Services using Extension.
-var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-builder.Services.AddCarbonAwareServices(configuration);
+builder.Services.AddCarbonAwareServices();
 
 var app = builder.Build();
 
