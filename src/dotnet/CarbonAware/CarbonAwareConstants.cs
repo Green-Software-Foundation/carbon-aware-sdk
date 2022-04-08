@@ -9,5 +9,5 @@ public class CarbonAwareConstants
     public const string Start = "start";
     public const string End = "end";
     public const string Duration = "duration";
-    public const string Lowest = "lowest";
+    public const string Best = "best";
 }
