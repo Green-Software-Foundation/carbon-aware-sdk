@@ -95,7 +95,7 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
  
     protected virtual List<EmissionsData>? GetSampleJson()
     {
-        if(emissionsData != null && !emissionsData.Any()) {
+        if(emissionsData == null || !emissionsData.Any()) {
             var data = ReadFromResource("CarbonAware.Plugins.JsonReaderPlugin.test-data-azure-emissions.json");
             var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(data);
             emissionsData = jsonObject.Emissions;
