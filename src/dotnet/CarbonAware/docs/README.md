@@ -2,22 +2,21 @@
 
 ## What is it   
 
-CarbonAware Plugin allows developers to use different CarbonAware Service Providers either from an in-house development or form an existing already provided. (i.e [WattTime](https://www.wattime.org)) to be incorporated as part of a highler level application (i.e Web Service), with the benefit to avoid all the details to understand the details of how to interact with a specific provider.
+CarbonAware Plugin allows developers to use different CarbonAware Service Providers either from an in-house development or form an existing already provided. (i.e [WattTime](https://www.wattime.org), [ElectricityMapping](https://static.electricitymap.org)) to be incorporated as part of a highler level application (i.e Web Service), with the benefit of avoiding all the details to understand how to interact with a specific provider.
 
 
 ## How to use a Plugin
 
-To consume a Plugin, the application requires to inject into the Registration Service Collection **ICarbonAware** interface with the corresponding Plugin implementation concrete class. (***Note: Subject to change to make it easier to register plugins***). The following example illustrates how to consume the Plugin.
+To consume a Plugin, the application requires to inject into the Registration Service Collection **ICarbonAware** interface with the corresponding Plugin implementation concrete class. (***Note: Subject to change to make it easier to register plugins***). The following example illustrates how to consume the Plugin using a Service Collection Extension.
 
 ### Registration
 
 **Program.cs**
 ```csharp
 
-using CarbonAware;
-using CarbonAware.Plugin.MyPlugin;
-
-serviceCollection.AddSingleton<ICarbonAware, CarbonAwareMyPlugin>();
+using CarbonAware.Plugins.MyPlugin.Configuration;
+..
+serviceCollection.TryAddSingleton<ICarbonAware, CarbonAwareMyPlugin>();
 ....
 ```
 
@@ -58,7 +57,6 @@ public class MyClass {
 }
 ```
 
-
 ## Create a new Plugin
 
 To incorporate a new Plugin, create a new dotnet project with the following steps.
@@ -78,7 +76,7 @@ cd CarbonAware.Plugin.MyPlugin
 dotnet add package Microsoft.Extensions.DependencyInjection
 ```
 
-Now create the implementation of `ICarbonAwaare`
+Now create the implementation of `ICarbonAware`
 
 ```csharp
 ...
@@ -103,6 +101,27 @@ public class MyPlugin : ICarbonAware
 }
 ```
 
+Create Service Collection Extension under `Configuration`
+
+```sh
+mkdir CarbonAware.Plugin.MyPlugin/Configuration
+```
+
+```csharp
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+
+namespace CarbonAware.Plugins.MyPlugin.Configuration;
+
+public static class CarbonAwareServicesConfiguration
+{
+    public static void AddCarbonAwareServices(this IServiceCollection services)
+    {
+        services.TryAddSingleton<ICarbonAware, MyPlugin>();
+    }
+}
+```
+
 Now build the project or the solution
 
 ```sh
@@ -120,6 +139,7 @@ dotnet new nunit -o CarbonAware.Plugin.MyPlugin.Tests
 dotnet sln CarbonAwareSDK.sln add CarbonAware.Plugin.MyPlugin.Tests/CarbonAware.Plugin.MyPlugin.Tests.csproj
 dotnet add CarbonAware.Plugin.MyPlugin.Tests/CarbonAware.Plugin.MyPlugin.csproj  reference CarbonAware.Plugin.MyPlugin/CarbonAware.Plugin.MyPlugin.csproj
 ```
+
 Add `Moq` if needed
 
 ```sh
@@ -132,4 +152,11 @@ After these steps, the skeleton of the unit test is ready, then build and test t
 ```sh
 dotnet build
 dotnet test
+...
+ CarbonAware.Plugins.MyPlugin -> /<workspace>/src/dotnet/CarbonAware.Plugins.MyPlugin/bin/Debug/net6.0/CarbonAware.Plugins.MyPlugin.dll
+ ...
+ Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:    14, Skipped:     0, Total:    14, Duration: 413 ms
 ```
