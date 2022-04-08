@@ -79,10 +79,11 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
     private DateTime getStartDateFromProps(IDictionary props) {
         var start = props[CarbonAwareConstants.Start];
         var startDate = DateTime.Now;
-        if (start != null)
+        if (start != null && !DateTime.TryParse(start.ToString(), out startDate))
         {
-            startDate = DateTime.TryParse(start.ToString(), out startDate)? startDate : DateTime.Now;
+            startDate = DateTime.Now;
         }
+       
         return startDate;
     }
     private string ReadFromResource(string key)
