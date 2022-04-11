@@ -2,25 +2,31 @@ namespace CarbonAware.WepApi.UnitTests;
 
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
+using System.Net;
 
 /// <summary>
 /// Tests helpers for all WebAPI specific tests.
 /// </summary>
 public static class TestHelpers
 {
-    public static void AssertStatusCode(IActionResult result, int code)
+    /// <summary>
+    /// Helper function to assert the HTTP status code of an action result
+    /// </summary>
+    /// <param name="result">Action result. </param>
+    /// <param name="code">Expected HTTP status code. </param>
+    /// <remarks>Certain results, like NoContent(), return a StatusCodeResult
+    /// instead of an ObjectResult so we handle both here.</remarks>
+    public static void AssertStatusCode(IActionResult result, HttpStatusCode code)
     {
         if (result is not ObjectResult obj)
         {
-            // Certain result, like NoContent(), will only return a StatusCodeResult
-            // object instead of the full ObjectResult so we handle here.
             var statusCodeResult = result as StatusCodeResult;
             Assert.IsNotNull(statusCodeResult);
-            Assert.IsTrue(statusCodeResult!.StatusCode == code);
+            Assert.AreEqual(statusCodeResult!.StatusCode, (int)code);
         }
         else
         {
-            Assert.IsTrue(obj!.StatusCode == code);
+            Assert.AreEqual(obj.StatusCode, (int)code);
         }
     }
 }
