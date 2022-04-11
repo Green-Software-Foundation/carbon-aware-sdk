@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AWSRegion
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AzureRegionTestDataGenerator", "CarbonAware.Tools.AzureRegionTestDataGenerator\CarbonAware.Tools.AzureRegionTestDataGenerator.csproj", "{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.WattTimeClient", "CarbonAware.Tools.WattTimeClient\CarbonAware.Tools.WattTimeClient.csproj", "{BDA9EDD2-291A-4554-A617-27923FEDCB9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Tools.WattTimeClient.Tests", "CarbonAware.Tools.WattTimeClient.Tests\CarbonAware.Tools.WattTimeClient.Tests.csproj", "{9122F502-56BB-4B44-9E9D-F481A043963A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
