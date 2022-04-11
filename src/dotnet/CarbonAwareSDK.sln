@@ -27,6 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.UnitTest
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.JsonReaderPlugin.Tests", "CarbonAware.Plugins.JsonReaderPlugin.Tests\CarbonAware.Plugins.JsonReaderPlugin.Tests.csproj", "{7261E3D9-A27F-4D55-AED0-9315E081E3B2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.WattTimeClient", "CarbonAware.Tools.WattTimeClient\CarbonAware.Tools.WattTimeClient.csproj", "{BDA9EDD2-291A-4554-A617-27923FEDCB9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.WattTimeClient.Tests", "CarbonAware.Tools.WattTimeClient.Tests\CarbonAware.Tools.WattTimeClient.Tests.csproj", "{9122F502-56BB-4B44-9E9D-F481A043963A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +81,14 @@ Global
 		{7261E3D9-A27F-4D55-AED0-9315E081E3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7261E3D9-A27F-4D55-AED0-9315E081E3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7261E3D9-A27F-4D55-AED0-9315E081E3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDA9EDD2-291A-4554-A617-27923FEDCB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9122F502-56BB-4B44-9E9D-F481A043963A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

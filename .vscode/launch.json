@@ -11,7 +11,7 @@
         "preLaunchTask": "build",
         "program": "${workspaceFolder}/src/dotnet/CarbonAware.WebApi/bin/Debug/net6.0/CarbonAware.WebApi.dll",
         "args": [],
-        "cwd": "${workspaceFolder}",
+        "cwd": "${workspaceFolder}/src/dotnet/CarbonAware.WebApi/",
         "stopAtEntry": false,
         "serverReadyAction": {
           "action": "openExternally",
@@ -23,6 +23,12 @@
         "sourceFileMap": {
           "/Views": "${workspaceFolder}/Views"
         }
+      },
+
+      {
+        "name": ".NET Core Attach",
+        "type": "coreclr",
+        "request": "attach"
       }
   
     ]
