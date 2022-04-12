@@ -1,6 +1,4 @@
 using NUnit.Framework;
-using CarbonAware.Plugins.JsonReaderPlugin;
-using CarbonAware;
 using Moq;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
