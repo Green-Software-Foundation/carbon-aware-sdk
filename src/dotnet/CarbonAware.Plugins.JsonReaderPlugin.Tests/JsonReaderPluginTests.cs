@@ -119,6 +119,7 @@ public class JsonReaderPluginTests
         return mockPlugin;
     }
     private List<EmissionsData> GetTestEmissionData() {
+        // All the tests above correspond to values in this mock data. If the mock values are changed, the tests need to be updated 
         return new List<EmissionsData>() {
                 new EmissionsData {
                     Location = "eastus",
