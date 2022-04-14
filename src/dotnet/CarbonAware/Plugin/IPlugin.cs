@@ -1,9 +1,14 @@
 using System.Collections;
 
-namespace CarbonAware;
+namespace CarbonAware.Plugin;
 
-public interface ICarbonAware
+public interface IPlugin
 {
+    string Name { get; }
+    string Description { get; }
+    string Author { get; }
+    string Version { get; }
+
     /// <summary>
     /// Returns emissions data records.
     /// </summary>

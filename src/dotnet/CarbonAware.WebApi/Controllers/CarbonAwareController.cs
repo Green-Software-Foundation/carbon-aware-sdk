@@ -1,4 +1,5 @@
 using CarbonAware.Model;
+using CarbonAware.Plugin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarbonAware.WebApi.Controllers;
@@ -8,9 +9,9 @@ namespace CarbonAware.WebApi.Controllers;
 public class CarbonAwareController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
-    private readonly ICarbonAware _plugin;
+    private readonly IPlugin _plugin;
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAware plugin)
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, IPlugin plugin)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _plugin = plugin ?? throw new ArgumentNullException(nameof(plugin));

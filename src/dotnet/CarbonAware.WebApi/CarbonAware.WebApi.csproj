@@ -27,11 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarbonAware.Plugins.BasicJsonPlugin\CarbonAware.Plugins.BasicJsonPlugin.csproj">
-      <TreatAsUsed>true</TreatAsUsed>
-    </ProjectReference>
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
-    <ProjectReference Include="..\CarbonAware.Plugins.JsonReaderPlugin\CarbonAware.Plugins.JsonReaderPlugin.csproj" />
+    <ProjectReference Include="..\CarbonAware.Plugin.Registration\CarbonAware.Plugin.Registration.csproj" />
   </ItemGroup>
 
   <ItemGroup>
