@@ -1,6 +1,4 @@
-﻿using CarbonAware.Plugins.JsonReaderPlugin.Configuration;
-using Microsoft.Extensions.Options;
-
+﻿
 namespace CarbonAwareCLI;
 
 public class CarbonAwareCLI
@@ -92,8 +90,6 @@ public class CarbonAwareCLI
 
     public void OutputEmissionsData(Task<IEnumerable<EmissionsData>> emissions)
     {
-        var size = Task.FromResult(emissions);
-
        Console.WriteLine($"{JsonConvert.SerializeObject(emissions.Result, Formatting.Indented)}");
     }
 
