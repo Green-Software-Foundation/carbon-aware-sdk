@@ -1,20 +1,23 @@
-﻿namespace CarbonAwareCLI;
+﻿using CarbonAware.Plugins.JsonReaderPlugin.Configuration;
+using Microsoft.Extensions.Options;
+
+namespace CarbonAwareCLI;
 
 public class CarbonAwareCLI
 {
 
 
     private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
-    private CarbonAwareCore _carbonAwareCore;
-    private ServiceManager _serviceManager;
-    private IConfigManager _configManager;
+    
     /// <summary>
     /// Indicates if the command line arguments have been parsed successfully 
     /// </summary>
     public bool Parsed { get; private set; } = false;
-
-    public CarbonAwareCLI(string[] args)
+    ICarbonAware _plugin {get; set;}     
+    public CarbonAwareCLI(string[] args, ICarbonAware plugin)
     {
+        this._plugin = plugin;
+
         var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
 
         try
@@ -23,16 +26,7 @@ public class CarbonAwareCLI
             parseResult.WithParsed(ValidateCommandLineArguments);
             parseResult.WithNotParsed(ThrowOnParseError);
 
-            // Configure the services
-
-            _configManager = new ConfigManager(_state.ConfigPath);
-            _serviceManager = new ServiceManager(_configManager);
-
-            var plugin = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
-
             // Create the new core using the plugin
-            _carbonAwareCore = new CarbonAwareCore(plugin);
-
             Parsed = true;
         }
         catch (ArgumentException e)
@@ -67,25 +61,40 @@ public class CarbonAwareCLI
         //    throw new AggregateException(excList);
     }
 
-    public List<EmissionsData> GetEmissions()
+    public async Task<IEnumerable<EmissionsData>> GetEmissions()
     {
-        List<EmissionsData> foundEmissions = new List<EmissionsData>();
+        var props = new Dictionary<string, object?>() {
+            { CarbonAwareConstants.Locations, _state.Locations.ToList() },
+            { CarbonAwareConstants.Start, _state.Time ?? DateTime.Now },
+            { CarbonAwareConstants.End, _state.ToTime },
+            { CarbonAwareConstants.Best, true }
+        };
+        return await GetEmissionsDataAsync(props);
+        // if (_state.Lowest)
+        // {
+        //     foundEmissions = _plugin.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
+        // }
+        // else
+        // {
+        //     foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
+        // }
 
-        if (_state.Lowest)
-        {
-            foundEmissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
-        }
-        else
-        {
-            foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
-        }
-
-        return foundEmissions;
+        // return foundEmissions;
     }
 
-    public void OutputEmissionsData(List<EmissionsData> emissions)
+    private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object?> props)
     {
-        Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
+
+        IEnumerable<EmissionsData> e = await _plugin.GetEmissionsDataAsync(props);
+
+        return await _plugin.GetEmissionsDataAsync(props);
+    }
+
+    public void OutputEmissionsData(Task<IEnumerable<EmissionsData>> emissions)
+    {
+        var size = Task.FromResult(emissions);
+
+       Console.WriteLine($"{JsonConvert.SerializeObject(emissions.Result, Formatting.Indented)}");
     }
 
     private void ValidateCommandLineArguments(CLIOptions o)
