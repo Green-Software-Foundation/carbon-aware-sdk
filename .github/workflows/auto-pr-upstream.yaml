@@ -42,7 +42,7 @@ jobs:
         route: POST /repos/{owner}/{repo}/pulls
         owner: ${OWNER}
         repo: ${REPO}
-        title: "[Weekly Automated] Merge Upstream Reposistory into Main"
+        title: "Automated Merge Upstream Reposistory into Main"
         head: ${UPSTREAM}:dev
         base: dev
         body: "Automatically triggered PR from GSF to MSFT Repository"
