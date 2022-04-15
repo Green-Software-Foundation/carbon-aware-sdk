@@ -42,7 +42,6 @@ public class CarbonAwareJsonReaderPlugin : ICarbonAware
 
         if (endDate != null)
         {
-            Console.WriteLine(startDate + "  "+ endDate);
             data = filterByDateRange(data, startDate, endDate);
         }
         else
