@@ -1,4 +1,4 @@
-﻿namespace CarbonAwareCLI;
+﻿namespace CarbonAware.CLI;
 
 public class CarbonAwareCLIState
 {

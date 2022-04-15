@@ -1,11 +1,13 @@
 ﻿
-namespace CarbonAwareCLI;
+using CarbonAware.CLI.Options;
+using CommandLine;
+using CommandLine.Text;
+
+namespace CarbonAware.CLI;
 
 public class CarbonAwareCLI
 {
-
-
-    private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
+    public CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
     
     /// <summary>
     /// Indicates if the command line arguments have been parsed successfully 
@@ -15,19 +17,16 @@ public class CarbonAwareCLI
     public CarbonAwareCLI(string[] args, ICarbonAware plugin)
     {
         this._plugin = plugin;
-
+        
         var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
-
         try
         {
             // Parse command line parameters
             parseResult.WithParsed(ValidateCommandLineArguments);
-            parseResult.WithNotParsed(ThrowOnParseError);
-
-            // Create the new core using the plugin
+            parseResult.WithNotParsed(errors => ThrowOnParseError(errors, parseResult));
             Parsed = true;
         }
-        catch (ArgumentException e)
+        catch (AggregateException e)
         {
             Console.WriteLine("Error:");
             Console.WriteLine(e.Message);
@@ -37,26 +36,20 @@ public class CarbonAwareCLI
 
 
     /// <summary>
-    /// Handles missing messages.  Currently reports the message tag as an argument exception.
+    /// Handles missing messages.  Currently reports the message tag as an aggregate exception.
     /// This method needs updating to add detailed "Missing parameter" messages
     /// </summary>
     /// <param name="errors"></param>
-    /// <exception cref="ArgumentException"></exception>
-    private void ThrowOnParseError(IEnumerable<Error> errors)
+    /// <exception cref="AggregateException"></exception>
+    private void ThrowOnParseError(IEnumerable<Error> errors, ParserResult<CLIOptions> parseResult)
     {
-        var enumerator = errors.GetEnumerator();
-
-        if (enumerator.MoveNext())
+        var builder = SentenceBuilder.Create();
+        var errorMessages = HelpText.RenderParsingErrorsTextAsLines(parseResult, builder.FormatError, builder.FormatMutuallyExclusiveSetErrors, 1);
+        var excList = errorMessages.Select(msg => new ArgumentException(msg)).ToList();
+        if (excList.Any())
         {
-            throw new ArgumentException(enumerator.Current.Tag.ToString());
+            throw new AggregateException(excList);
         }
-
-        // TODO: add error message builder such as
-        //var builder = SentenceBuilder.Create();
-        //var errorMessages = HelpText.RenderParsingErrorsTextAsLines(result, builder.FormatError, builder.FormatMutuallyExclusiveSetErrors, 1);
-        //var excList = errorMessages.Select(msg => new ArgumentException(msg)).ToList();
-        //if (excList.Any())
-        //    throw new AggregateException(excList);
     }
 
     public async Task<IEnumerable<EmissionsData>> GetEmissions()
@@ -72,7 +65,6 @@ public class CarbonAwareCLI
 
     private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
-
         IEnumerable<EmissionsData> e = await _plugin.GetEmissionsDataAsync(props);
 
         return await _plugin.GetEmissionsDataAsync(props);
@@ -105,6 +97,7 @@ public class CarbonAwareCLI
 
     private void ParseLocations(CLIOptions o)
     {
+
         _state.Locations.AddRange(o.Location);
     }
 
@@ -163,7 +156,7 @@ public class CarbonAwareCLI
             catch
             {
                 throw new ArgumentException(
-                    $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.Time}'.");
+                    $"Date and time needs to be in the format 'xxxx-xx-xx'.  Date and time provided was '{o.Time}'.");
             }
         }
     }
