@@ -1,0 +1,47 @@
+name: Auto PR from Upstream
+
+on:
+  push:
+    - katantia-automerge
+  schedule:
+    - cron: '0 0 * * Wed' # Every Wednesday at midnight
+
+env:
+  OWNER: "microsoft"
+  REPO: "carbon-aware-sdk"
+  UPSTREAM: "Green-Software-Foundation/carbon-aware-sdk"
+  PR-BRANCH: "upstream-pr-${GITHUB_RUN_ID}"
+
+
+jobs:
+  check-for-merge:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    
+    # - name: Create PR Branch
+    #   run: |
+    #     git checkout -b ${PR-BRANCH}
+    #     git push
+    
+    # - name: Sync PR Branch with Upstream Fork
+    #   uses: octokit/request-action@v2.1.3
+    #   with:
+    #     route: POST /repos/{owner}/{repo}/merge-upstream
+    #     owner: ${OWNER}
+    #     repo: ${REPO}
+    #     branch: ${PR-BRANCH}
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Open PR against in Repo Branch      
+      uses: octokit/request-action@v2.1.3
+      with:
+        route: POST /repos/{owner}/{repo}/pulls
+        owner: ${OWNER}
+        repo: ${REPO}
+        title: "[Weekly Automated] Merge Upstream Reposistory into Main"
+        head: ${UPSTREAM}:dev
+        base: dev
+        body: "Automatically triggered PR from GSF to MSFT Repository"
