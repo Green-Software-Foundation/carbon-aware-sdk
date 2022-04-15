@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarbonAware.Plugins.JsonReaderPlugin\CarbonAware.Plugins.JsonReaderPlugin.csproj" />
+    <ProjectReference Include="..\CarbonAware.Plugins.CarbonIntensity\src\CarbonAware.Plugins.CarbonIntensity.csproj" />
   </ItemGroup>
 
 </Project>

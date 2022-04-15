@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using CarbonAware.Plugins.JsonReaderPlugin.Configuration;
+using CarbonAware.Plugins.CarbonIntensity.Configuration;
 
 namespace CarbonAware.Plugin.Configuration;
 public static class PluginServicesConfiguration
@@ -13,6 +14,11 @@ public static class PluginServicesConfiguration
             case PluginType.JSON:
             {
                     services.AddJsonEmissionServices();
+                    break;
+            }
+            case PluginType.CarbonIntensity:
+            {
+                    services.AddCarbonIntensityServices();
                     break;
             }
         }
