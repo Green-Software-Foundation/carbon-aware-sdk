@@ -70,6 +70,7 @@ public class CarbonAwareCLITests
         Console.SetOut(stringWriter);
         
         var ex = Assert.Throws<ArgumentException>(() => new CarbonAwareCLI(args, plugin));
-        StringAssert.Contains("Date and time needs to be in the format", ex.Message);
+
+        StringAssert.Contains("Date and time needs to be in the format", ex?.Message);
     }
 }
