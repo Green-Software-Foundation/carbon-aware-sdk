@@ -45,3 +45,5 @@ jobs:
         head: ${UPSTREAM}:dev
         base: dev
         body: "Automatically triggered PR from GSF to MSFT Repository"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
