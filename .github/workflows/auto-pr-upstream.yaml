@@ -36,7 +36,8 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     - name: Open PR against in Repo Branch      
-      uses: octokit/request-action@v2.1.3
+      uses: octokit/request-action@v2.x
+      id: open_pr
       with:
         route: POST /repos/{owner}/{repo}/pulls
         owner: ${OWNER}
