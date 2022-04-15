@@ -18,18 +18,18 @@ public abstract class TestsBase
 
     protected Mock<ILogger<CarbonAwareController>> MockLogger { get; }
 
-    protected static Mock<IPlugin> CreatePluginWithData(List<EmissionsData> data)
+    protected static Mock<ICarbonAware> CreatePluginWithData(List<EmissionsData> data)
     {
-        var plugin = new Mock<IPlugin>();
+        var plugin = new Mock<ICarbonAware>();
         plugin.Setup(x =>
             x.GetEmissionsDataAsync(
                 It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
         return plugin;
     }
 
-    protected static Mock<IPlugin> CreatePluginWithException()
+    protected static Mock<ICarbonAware> CreatePluginWithException()
     {
-        var plugin = new Mock<IPlugin>();
+        var plugin = new Mock<ICarbonAware>();
         plugin.Setup(x =>
             x.GetEmissionsDataAsync(
                 It.IsAny<Dictionary<string, object>>())).Throws<Exception>();

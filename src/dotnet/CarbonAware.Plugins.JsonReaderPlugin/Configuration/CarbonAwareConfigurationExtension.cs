@@ -8,6 +8,6 @@ public static class CarbonAwareServicesConfiguration
 {
     public static void AddJsonEmissionServices(this IServiceCollection services)
     {
-        services.TryAddSingleton<IPlugin, CarbonAwareJsonReaderPlugin>();
+        services.TryAddSingleton<ICarbonAware, CarbonAwareJsonReaderPlugin>();
     }
 }

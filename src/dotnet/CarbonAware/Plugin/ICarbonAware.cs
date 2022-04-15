@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace CarbonAware.Plugin;
 
-public interface IPlugin
+public interface ICarbonAware
 {
     string Name { get; }
     string Description { get; }

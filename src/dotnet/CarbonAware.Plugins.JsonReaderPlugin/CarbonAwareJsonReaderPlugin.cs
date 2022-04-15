@@ -7,7 +7,7 @@ using CarbonAware.Plugin;
 
 namespace CarbonAware.Plugins.JsonReaderPlugin;
 
-public class CarbonAwareJsonReaderPlugin : IPlugin
+public class CarbonAwareJsonReaderPlugin : ICarbonAware
 {
     public string Name => "CarbonAwareJsonReaderPlugin";
 
