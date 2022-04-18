@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarbonAware.Aggregator.CarbonAware
+namespace CarbonAware.Aggregators.CarbonAware
 {
     public interface ICarbonAwareAggregator : IAggregator
     {

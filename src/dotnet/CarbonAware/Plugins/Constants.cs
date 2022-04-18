@@ -1,4 +1,4 @@
-﻿namespace CarbonAware.Plugin;
+﻿namespace CarbonAware.Plugins;
 
 /// <summary>
 /// Carbon Aware Constants

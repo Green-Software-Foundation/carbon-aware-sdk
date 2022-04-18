@@ -27,8 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
-    <ProjectReference Include="..\CarbonAware.Plugin.Registration\CarbonAware.Plugin.Registration.csproj" />
+    <ProjectReference Include="..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
   </ItemGroup>
 
   <ItemGroup>

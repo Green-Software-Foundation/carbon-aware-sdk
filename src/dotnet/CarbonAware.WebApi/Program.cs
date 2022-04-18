@@ -1,4 +1,4 @@
-using CarbonAware.Plugin.Configuration;
+using CarbonAware.Aggregators.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddEmissionServices(PluginType.JSON);
+builder.Services.AddCarbonAwareEmissionServices();
 
 var app = builder.Build();
 

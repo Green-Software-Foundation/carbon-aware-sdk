@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace CarbonAware.Plugin;
+namespace CarbonAware.Plugins;
 
 public interface ICarbonAware
 {

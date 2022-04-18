@@ -3,7 +3,7 @@ using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 using Newtonsoft.Json;
-using CarbonAware.Plugin;
+using CarbonAware.Plugins;
 
 namespace CarbonAware.Plugins.JsonReaderPlugin;
 

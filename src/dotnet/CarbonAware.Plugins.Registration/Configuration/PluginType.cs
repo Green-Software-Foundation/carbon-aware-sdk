@@ -1,4 +1,4 @@
-namespace CarbonAware.Plugin.Configuration;
+namespace CarbonAware.Plugins.Configuration;
 
 public enum PluginType
 {

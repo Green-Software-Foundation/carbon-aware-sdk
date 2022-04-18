@@ -1,5 +1,5 @@
 using CarbonAware.Model;
-using CarbonAware.Plugin;
+using CarbonAware.Plugins;
 using CarbonAware.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Collections;

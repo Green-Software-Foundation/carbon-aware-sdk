@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace CarbonAware.Aggregator.Tests;
+namespace CarbonAware.Aggregators.Tests;
 
 public class CarbonAwareAggregatorTests
 {

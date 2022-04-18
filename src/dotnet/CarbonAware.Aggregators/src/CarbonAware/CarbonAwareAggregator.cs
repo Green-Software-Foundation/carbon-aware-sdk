@@ -1,9 +1,9 @@
 using CarbonAware.Model;
-using CarbonAware.Plugin;
+using CarbonAware.Plugins;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 
-namespace CarbonAware.Aggregator.CarbonAware
+namespace CarbonAware.Aggregators.CarbonAware
 {
     public class CarbonAwareAggregator : ICarbonAwareAggregator
     {

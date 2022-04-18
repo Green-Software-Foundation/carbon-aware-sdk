@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using CarbonAware.Plugin;
+using CarbonAware.Plugins;
 
 namespace CarbonAware.Plugins.CarbonIntensity.Configuration;
 

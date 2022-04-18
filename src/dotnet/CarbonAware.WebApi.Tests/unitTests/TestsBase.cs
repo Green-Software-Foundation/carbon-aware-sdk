@@ -1,7 +1,7 @@
 namespace CarbonAware.WepApi.UnitTests;
 
 using CarbonAware.Model;
-using CarbonAware.Plugin;
+using CarbonAware.Plugins;
 using CarbonAware.WebApi.Controllers;
 using Microsoft.Extensions.Logging;
 using Moq;
