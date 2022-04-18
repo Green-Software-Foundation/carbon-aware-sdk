@@ -8,11 +8,10 @@ git config user.email "<>"
 
 git remote -v
 
-# git remote add upstream $upstreamRepo
-# git fetch upstream
-git checkout -b $1
-# git pull
-git push -u origin $1
+git remote add upstream $upstreamRepo
+git fetch upstream
+git checkout -b $1 origin/dev
+# git push -u origin $1
 
 gh auth login
 # gh repo sync --source $upstreamRepo --branch $1
