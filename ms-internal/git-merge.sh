@@ -8,9 +8,8 @@ git config user.email "<>"
 
 git branch -v
 
-# git remote -v
-# git checkout dev
-# git checkout -b $1
+git remote -v
+git checkout -b $1 origin/dev
 
 # git remote add upstream $upstreamRepo
 # git fetch upstream
@@ -19,6 +18,8 @@ git branch -v
 gh auth login
 gh repo sync microsoft/carbon-aware-sdk
 # gh repo sync
+
+git status
 
 #gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
 
