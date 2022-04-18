@@ -16,8 +16,12 @@ status=$?
 if [ $status -eq 0 ]; then
     echo "No merge conflicts. Opening PR against the new branch."
     git push --set-upstream origin upstream-pr-${GITHUB_RUN_ID}
+    gh pr create --title "Pull request title" --body "Pull request body"
     exit 0
 else
     echo "Merge Conflicts are preventing auto-merging."
-    exit 1
+    git merge --abort
+    git checkout upstream/dev
+    gp pr create -f
+    exit 0
 fi
