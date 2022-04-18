@@ -7,12 +7,12 @@ git config user.email "<>"
 
 # git remote add upstream $upstreamRepo
 # git fetch upstream
-git checkout -b upstream-dev-$1
+git checkout -b $1
 # git pull
-git push -u origin upstream-dev-$1
+git push -u origin $1
 
 gh auth login
-gh repo sync --branch upstream-dev-$1
+gh repo sync $upstreamRepo --branch $1
 
 gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
 
