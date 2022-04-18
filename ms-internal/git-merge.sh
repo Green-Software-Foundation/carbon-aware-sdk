@@ -5,13 +5,15 @@ upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
 git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
-git remote add upstream $upstreamRepo
-git fetch upstream
-git checkout -b upstream-dev-$1 upstream/dev
-git pull
+# git remote add upstream $upstreamRepo
+# git fetch upstream
+git checkout -b upstream-dev-$1
+# git pull
 git push -u origin upstream-dev-$1
 
 gh auth login
+gh repo sync --branch upstream-dev-$1
+
 gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
 
 # if [ $status -eq 0 ]; then
