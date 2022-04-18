@@ -17,7 +17,7 @@ git branch -v
 # git push -u origin $1
 
 gh auth login
-gh repo sync microsoft/carbon-aware-sdk --branch $1
+gh repo sync microsoft/carbon-aware-sdk
 # gh repo sync
 
 #gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
