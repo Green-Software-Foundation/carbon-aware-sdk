@@ -7,10 +7,10 @@ git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
 git remote -v
+git checkout -b $1 dev
 
 git remote add upstream $upstreamRepo
 git fetch upstream
-git checkout -b $1 origin/dev
 # git push -u origin $1
 
 gh auth login
