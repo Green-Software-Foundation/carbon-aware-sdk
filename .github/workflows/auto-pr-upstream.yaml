@@ -23,7 +23,7 @@ jobs:
     - name: Create PR Branch
       run: |
         git checkout -b ${PR-BRANCH}
-        git push
+        git push --set-upstream origin ${PR-BRANCH}
     
     - name: Git Fetch
       run: |
