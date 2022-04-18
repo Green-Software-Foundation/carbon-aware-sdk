@@ -19,18 +19,20 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
+  
+    - run: git remote -v
+  
+#     - name: Create PR Branch
+#       run: |
+#         git checkout -b upstream-pr-${GITHUB_RUN_ID}
+#         git push --set-upstream origin upstream-pr-${GITHUB_RUN_ID}
     
-    - name: Create PR Branch
-      run: |
-        git checkout -b ${PR-BRANCH}
-        git push --set-upstream origin ${PR-BRANCH}
-    
-    - name: Git Fetch
-      run: |
-        git branch
-        git checkout ${PR-BRANCH}
-        git fetch upstream
-        git merge upstream/dev
+#     - name: Git Fetch
+#       run: |
+#         git branch
+#         git checkout upstream-pr-${GITHUB_RUN_ID}
+#         git fetch upstream
+#         git merge upstream/dev
     
     # - name: Sync PR Branch with Upstream Fork
     #   uses: octokit/request-action@v2.1.3
