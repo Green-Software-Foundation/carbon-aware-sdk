@@ -6,9 +6,11 @@ upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
 git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
-git remote -v
-git checkout dev
-git checkout -b $1
+git branch -v
+
+# git remote -v
+# git checkout dev
+# git checkout -b $1
 
 git remote add upstream $upstreamRepo
 git fetch upstream
