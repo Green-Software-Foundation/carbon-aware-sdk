@@ -19,41 +19,23 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-  
-    - run: git remote -v
-  
-#     - name: Create PR Branch
-#       run: |
-#         git checkout -b upstream-pr-${GITHUB_RUN_ID}
-#         git push --set-upstream origin upstream-pr-${GITHUB_RUN_ID}
-    
-#     - name: Git Fetch
-#       run: |
-#         git branch
-#         git checkout upstream-pr-${GITHUB_RUN_ID}
-#         git fetch upstream
-#         git merge upstream/dev
-    
-    # - name: Sync PR Branch with Upstream Fork
-    #   uses: octokit/request-action@v2.1.3
-    #   with:
-    #     route: POST /repos/{owner}/{repo}/merge-upstream
-    #     owner: ${OWNER}
-    #     repo: ${REPO}
-    #     branch: ${PR-BRANCH}
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
-#     - name: Open PR against in Repo Branch      
-#       uses: octokit/request-action@v2.x
-#       id: open_pr
-#       with:
-#         route: POST /repos/{owner}/{repo}/pulls
-#         owner: ${OWNER}
-#         repo: ${REPO}
-#         title: "Automated Merge Upstream Reposistory into Main"
-#         head: ${UPSTREAM}:dev
-#         base: dev
-#         body: "Automatically triggered PR from GSF to MSFT Repository"
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Run Auto-Merge Script
+      id: auto-merge
+      run: |
+        ./ms-internal/git-merge.sh upstream-pr-${GITHUB_RUN_ID}
+        echo ::set-output name=exit_code::$?
+        
+    - name: Open PR against in Repo Branch      
+      uses: octokit/request-action@v2.x
+      if: steps.auto-merge.outputs.exit-code==0
+      with:
+        route: POST /repos/{owner}/{repo}/pulls
+        owner: ${OWNER}
+        repo: ${REPO}
+        title: "Automated Merge Upstream Reposistory into Main"
+        head: upstream-pr-${GITHUB_RUN_ID}
+        base: dev
+        body: "Automatically triggered PR from GSF to MSFT Repository"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
