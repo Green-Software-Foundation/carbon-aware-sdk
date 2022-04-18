@@ -2,12 +2,11 @@
 
 upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
 
-git remote add upstream $upstreamRepo
-
 git checkout -b $1
 
+git remote add upstream $upstreamRepo
 git fetch upstream
-git merge upstream/dev
+git merge upstream/dev --allow-unrelated-histories
 
 status=$?
 
