@@ -12,7 +12,7 @@ git checkout -b $1
 git push -u origin $1
 
 gh auth login
-gh repo sync $upstreamRepo --branch $1
+gh repo sync --source $upstreamRepo --branch $1
 
 gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
 
