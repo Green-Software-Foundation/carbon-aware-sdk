@@ -11,7 +11,7 @@ git checkout -b upstream-dev-$1 upstream/dev
 git push  --set-upstream origin upstream-dev-$1
 
 gh auth login
-gh pr create -f
+gh pr create -f --base origin/dev
 
 # if [ $status -eq 0 ]; then
 #     echo "No merge conflicts. Opening PR against the new branch."
