@@ -12,9 +12,10 @@ git checkout -b $1
 git push -u origin $1
 
 gh auth login
-gh repo sync --source $upstreamRepo --branch $1
+# gh repo sync --source $upstreamRepo --branch $1
+gh repo sync
 
-gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
+# gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
 
 # if [ $status -eq 0 ]; then
 #     echo "No merge conflicts. Opening PR against the new branch."
