@@ -8,10 +8,11 @@ git config user.email "<>"
 git remote add upstream $upstreamRepo
 git fetch upstream
 git checkout -b upstream-dev-$1 upstream/dev
-git push  --set-upstream origin upstream-dev-$1
+git pull
+git push -u origin upstream-dev-$1
 
 gh auth login
-gh pr create -f --base origin/dev
+gh pr create -R microsoft/carbon-aware-sdk
 
 # if [ $status -eq 0 ]; then
 #     echo "No merge conflicts. Opening PR against the new branch."
