@@ -1,12 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using CarbonAware.Plugins;
 
 namespace CarbonAware.Plugins.CarbonIntensity.Configuration;
 
-public static class CarbonAwareServicesConfiguration
+public static class ServiceCollectionExtensions
 {
-    public static void AddCarbonIntensityServices(this IServiceCollection services)
+    public static void AddCarbonIntensityPluginService(this IServiceCollection services)
     {
         services.TryAddSingleton<ICarbonAware, CarbonIntensityPlugin>();
     }

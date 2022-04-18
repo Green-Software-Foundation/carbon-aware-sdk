@@ -113,7 +113,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.Plugins.MyPlugin.Configuration;
 
-public static class CarbonAwareServicesConfiguration
+public static class ServiceCollectionExtensions 
 {
     public static void AddCarbonAwareServices(this IServiceCollection services)
     {

@@ -5,7 +5,7 @@ using CarbonAware.Plugins.CarbonIntensity.Configuration;
 namespace CarbonAware.Plugins.Configuration;
 public static class ServiceCollectionExtensions
 {
-    public static void AddEmissionServices(this IServiceCollection services, PluginType pType)
+    public static void AddPluginService(this IServiceCollection services, PluginType pType)
     {
         // find all the Classes in the Assembly that implements AddEmissionServices method,
         // and added them here with the specific implementation class.
@@ -13,12 +13,12 @@ public static class ServiceCollectionExtensions
         {
             case PluginType.JSON:
             {
-                    services.AddJsonEmissionServices();
+                    services.AddJsonPluginService();
                     break;
             }
             case PluginType.CarbonIntensity:
             {
-                    services.AddCarbonIntensityServices();
+                    services.AddCarbonIntensityPluginService();
                     break;
             }
         }
