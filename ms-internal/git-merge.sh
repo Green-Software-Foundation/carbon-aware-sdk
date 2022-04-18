@@ -12,8 +12,8 @@ git branch -v
 # git checkout dev
 # git checkout -b $1
 
-git remote add upstream $upstreamRepo
-git fetch upstream
+# git remote add upstream $upstreamRepo
+# git fetch upstream
 # git push -u origin $1
 
 gh auth login
