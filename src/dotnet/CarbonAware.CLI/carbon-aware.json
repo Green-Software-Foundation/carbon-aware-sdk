@@ -2,7 +2,7 @@
   "service-registrations": {
     "services": [
       {
-        "service": "CarbonAware.Interfaces.Interfaces.ICarbonAwareStaticDataService, CarbonAware, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "service": "CarbonAware.Interfaces.ICarbonAwareStaticDataService, CarbonAware, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
         "implementation": "CarbonAware.Plugins.BasicJsonPlugin.CarbonAwareStaticJsonDataService, CarbonAware.Plugins.BasicJsonPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
       },
       {
