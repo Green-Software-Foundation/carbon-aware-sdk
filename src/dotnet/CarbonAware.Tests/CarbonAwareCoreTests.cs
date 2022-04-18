@@ -1,5 +1,5 @@
 ﻿namespace CarbonAware.Tests;
-
+using CarbonAware;
 public class CarbonAwareCoreTests
 {
     [SetUp]

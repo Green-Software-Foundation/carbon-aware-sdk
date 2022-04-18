@@ -1,4 +1,4 @@
-﻿namespace CarbonAware;
+﻿namespace CarbonAware.Interfaces;
 
 public interface ICarbonAwareBase
 {

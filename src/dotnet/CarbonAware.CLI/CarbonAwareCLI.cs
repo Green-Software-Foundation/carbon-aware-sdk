@@ -1,5 +1,7 @@
 ﻿namespace CarbonAwareCLI;
 
+using CarbonAware.Interfaces;
+
 public class CarbonAwareCLI
 {
 

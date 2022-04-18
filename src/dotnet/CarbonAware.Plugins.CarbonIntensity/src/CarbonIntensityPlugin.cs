@@ -1,5 +1,6 @@
 using CarbonAware.Model;
 using CarbonAware.Plugin;
+using CarbonAware.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 
@@ -17,9 +18,12 @@ public class CarbonIntensityPlugin : ICarbonAware
 
     private ILogger<CarbonIntensityPlugin> _logger { get; }
 
-    public CarbonIntensityPlugin(ILogger<CarbonIntensityPlugin> logger)
+    private ICarbonIntensityDataSource _dataSource { get; }
+
+    public CarbonIntensityPlugin(ILogger<CarbonIntensityPlugin> logger, ICarbonIntensityDataSource dataSource)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _dataSource = dataSource;
     }
 
     public Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)

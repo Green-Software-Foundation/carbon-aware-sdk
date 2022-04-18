@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using CarbonAware.Interfaces;
 
 namespace CarbonAware.Tests;
 

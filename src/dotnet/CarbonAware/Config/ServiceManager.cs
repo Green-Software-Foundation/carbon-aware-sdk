@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using CarbonAware.Interfaces;
 
 namespace CarbonAware.Config;
 

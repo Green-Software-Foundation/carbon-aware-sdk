@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace CarbonAware;
+namespace CarbonAware.Interfaces;
 
 public interface IConfigurable
 {
