@@ -1,13 +1,14 @@
 #!/bin/bash
 
-$localRepo="https://github.com/microsoft/carbon-aware-sdk"
+localRepo="https://github.com/microsoft/carbon-aware-sdk"
 upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
 
 git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
 git remote -v
-git checkout -b $1 dev
+git checkout dev
+git checkout -b $1
 
 git remote add upstream $upstreamRepo
 git fetch upstream
