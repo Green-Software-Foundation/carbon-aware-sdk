@@ -35,6 +35,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.CarbonI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.CarbonIntensity", "CarbonAware.Plugins.CarbonIntensity\src\CarbonAware.Plugins.CarbonIntensity.csproj", "{12D19F2D-0427-4591-949D-0DCDEDACF5B2}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Aggregator", "CarbonAware.Aggregator\src\CarbonAware.Aggregator.csproj", "{426EEBAA-E7D7-48FE-B6AB-4E2E8EB152A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Aggregator.Tests", "CarbonAware.Aggregator\test\CarbonAware.Aggregator.Tests.csproj", "{6ABDAEDB-777F-4339-855A-18835A3E8B53}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +109,14 @@ Global
 		{12D19F2D-0427-4591-949D-0DCDEDACF5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D19F2D-0427-4591-949D-0DCDEDACF5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D19F2D-0427-4591-949D-0DCDEDACF5B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{426EEBAA-E7D7-48FE-B6AB-4E2E8EB152A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{426EEBAA-E7D7-48FE-B6AB-4E2E8EB152A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{426EEBAA-E7D7-48FE-B6AB-4E2E8EB152A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{426EEBAA-E7D7-48FE-B6AB-4E2E8EB152A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABDAEDB-777F-4339-855A-18835A3E8B53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABDAEDB-777F-4339-855A-18835A3E8B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABDAEDB-777F-4339-855A-18835A3E8B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABDAEDB-777F-4339-855A-18835A3E8B53}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
