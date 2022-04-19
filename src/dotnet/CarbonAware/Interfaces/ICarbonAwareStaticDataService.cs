@@ -1,4 +1,4 @@
-﻿namespace CarbonAware;
+﻿namespace CarbonAware.Interfaces;
 
 /// <summary>
 /// Interface for a static data services that simply gives a list 

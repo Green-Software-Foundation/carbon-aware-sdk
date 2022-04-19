@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using CarbonAware.Interfaces;
 
 namespace CarbonAware.Config;
 
@@ -74,9 +75,12 @@ public class ServiceManager
         // Adds all the parts found in the same assembly as the Program class.
         //catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
         var pluginsFolder = AppDomain.CurrentDomain.BaseDirectory + PLUGINS_FOLDER;
-
+        Console.WriteLine("plugins folder>" + pluginsFolder);
         // If there is no plugins folder, simply return
-        if (!Directory.Exists(pluginsFolder)) return;
+        if (!Directory.Exists(pluginsFolder)){
+            Console.WriteLine("directory doesn't exist");
+            return;
+        } 
 
         // Add all the parts found in the "plugins" folder
         catalog.Catalogs.Add(new DirectoryCatalog(pluginsFolder));

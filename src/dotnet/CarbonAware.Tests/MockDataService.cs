@@ -1,10 +1,9 @@
 ﻿using CarbonAware.Model;
+using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Tests
 {
-
-
     internal class MockDataService : ICarbonAwareStaticDataService
     {
         public EmissionsJsonFile EmissionsFile = new EmissionsJsonFile()

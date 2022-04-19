@@ -1,5 +1,7 @@
 ﻿namespace CarbonAware;
 
+using CarbonAware.Interfaces;
+
 /// <summary>
 /// Carbon Aware SDK Core class, called via CLI, native, and web endpoints.
 /// </summary>

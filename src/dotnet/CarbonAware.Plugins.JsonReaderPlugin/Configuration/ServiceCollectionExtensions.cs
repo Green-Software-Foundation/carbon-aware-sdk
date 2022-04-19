@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.Plugins.JsonReaderPlugin.Configuration;
 
-public static class CarbonAwareServicesConfiguration
+public static class ServiceCollectionExtensions
 {
-    public static void AddCarbonAwareServices(this IServiceCollection services)
+    public static void AddJsonPluginService(this IServiceCollection services)
     {
         services.TryAddSingleton<ICarbonAware, CarbonAwareJsonReaderPlugin>();
     }
