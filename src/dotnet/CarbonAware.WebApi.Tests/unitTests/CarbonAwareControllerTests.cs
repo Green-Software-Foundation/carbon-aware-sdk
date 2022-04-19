@@ -30,7 +30,7 @@ public class CarbonAwareControllerTests : TestsBase
                 Time = DateTime.Now
             }
         };
-        var controller = new CarbonAwareController(this.MockLogger.Object, CreatePluginWithData(data).Object);
+        var controller = new CarbonAwareController(this.MockLogger.Object, CreateAggregatorWithData(data).Object);
         
         IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
         IActionResult ar2 = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { location });
@@ -47,7 +47,7 @@ public class CarbonAwareControllerTests : TestsBase
     [Test]
     public async Task EmptyResultRetunsNoContent()
     {
-        var controller = new CarbonAwareController(this.MockLogger.Object, CreatePluginWithData(new List<EmissionsData>()).Object);
+        var controller = new CarbonAwareController(this.MockLogger.Object, CreateAggregatorWithData(new List<EmissionsData>()).Object);
         
         string location = "Sydney";
         IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
@@ -66,7 +66,7 @@ public class CarbonAwareControllerTests : TestsBase
     [Test]
     public async Task ExceptionReturnsBadRequest()
     {
-        var controller = new CarbonAwareController(this.MockLogger.Object, CreatePluginWithException().Object);
+        var controller = new CarbonAwareController(this.MockLogger.Object, CreateAggregatorWithException().Object);
  
         string location = "Sydney";
         IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);

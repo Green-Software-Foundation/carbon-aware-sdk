@@ -1,5 +1,5 @@
 using CarbonAware.Model;
-using CarbonAware.Plugins;
+using CarbonAware.Aggregators.CarbonAware;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarbonAware.WebApi.Controllers;
@@ -9,12 +9,12 @@ namespace CarbonAware.WebApi.Controllers;
 public class CarbonAwareController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
-    private readonly ICarbonAware _plugin;
+    private readonly ICarbonAwareAggregator _aggregator;
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAware plugin)
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAwareAggregator aggregator)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _plugin = plugin ?? throw new ArgumentNullException(nameof(plugin));
+        _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
     [Produces("application/json")]
@@ -80,7 +80,7 @@ public class CarbonAwareController : ControllerBase
         _logger.LogInformation("Calling plugin GetEmissionsDataAsync with paylod {@props}", props);
         try
         {
-            var response = await _plugin.GetEmissionsDataAsync(props);
+            var response = await _aggregator.GetEmissionsDataAsync(props);
             return response.Any() ? Ok(response) : NoContent();
         }
         catch (Exception ex)
