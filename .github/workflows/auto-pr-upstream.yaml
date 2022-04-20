@@ -25,8 +25,8 @@ jobs:
       run: |
         ./ms-internal/git-merge.sh upstream-pr-${GITHUB_RUN_ID}
         echo ::set-output name=exit_code::$?
-      # env:
-      #   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     # - name: Open PR against in Repo Branch      
     #   uses: octokit/request-action@v2.x
