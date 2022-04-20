@@ -9,6 +9,7 @@ git config user.email "<>"
 git branch -v
 
 git remote -v
+git fetch origin
 git checkout -b $1 origin/dev
 
 # git remote add upstream $upstreamRepo
