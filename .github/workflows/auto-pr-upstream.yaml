@@ -28,16 +28,16 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # - name: Open PR against in Repo Branch      
-    #   uses: octokit/request-action@v2.x
-    #   if: steps.auto-merge.outputs.exit-code==0
-    #   with:
-    #     route: POST /repos/{owner}/{repo}/pulls
-    #     owner: ${OWNER}
-    #     repo: ${REPO}
-    #     title: "Automated Merge Upstream Reposistory into Main"
-    #     head: upstream-pr-${GITHUB_RUN_ID}
-    #     base: dev
-    #     body: "Automatically triggered PR from GSF to MSFT Repository"
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Open PR against in Repo Branch      
+      uses: octokit/request-action@v2.x
+      # if: steps.auto-merge.outputs.exit-code==0
+      with:
+        route: POST /repos/{owner}/{repo}/pulls
+        owner: microsoft
+        repo: carbon-aware-sdk
+        title: "Automated Merge Upstream Reposistory into Main ${GITHUB_RUN_ID}"
+        head: green-software-foundation:dev
+        base: dev
+        body: "Automatically triggered PR from GSF to MSFT Repository"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
