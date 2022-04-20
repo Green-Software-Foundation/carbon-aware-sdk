@@ -1,4 +1,6 @@
 #!/bin/bash
+gh auth login
+gh auth setup-git
 
 localRepo="https://github.com/microsoft/carbon-aware-sdk"
 upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
@@ -16,9 +18,6 @@ git checkout -b origin-$1 origin/dev
 git remote add upstream $upstreamRepo
 git fetch upstream
 git checkout -b $1 upstream/dev
-
-gh auth login
-gh auth setup-git
 
 git push -u origin $1
 
