@@ -17,10 +17,13 @@ git remote add upstream $upstreamRepo
 git fetch upstream
 git checkout -b $1 upstream/dev
 
+gh auth login
+gh auth setup-git
+
 git push -u origin $1
 
-gh auth login
-gh repo sync microsoft/carbon-aware-sdk
+# gh repo sync microsoft/carbon-aware-sdk
+
 echo status=$status
 # gh repo sync
 
