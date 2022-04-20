@@ -15,6 +15,8 @@ git remote -v
 git fetch origin
 git checkout -b origin-$1 origin/dev
 
+git push -u origin origin-$1
+
 git remote add upstream $upstreamRepo
 git fetch upstream
 git checkout -b $1 upstream/dev
