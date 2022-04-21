@@ -39,7 +39,7 @@ else
     git merge --abort
     git checkout $1
     git push --set-upstream origin $1 # fails without workflow privilege due to new .github\workflow\*.yml file(s)
-    gh pr create -f
-    # gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
+    # gh pr create -f
+    gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
     exit 0
 fi
