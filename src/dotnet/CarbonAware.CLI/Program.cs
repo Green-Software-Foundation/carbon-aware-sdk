@@ -8,12 +8,12 @@ class Program
 {
     public static async Task Main(string[] args)
     {   
-        ICarbonAwareAggregator aggregator =  GetCarbonAwareAggregator();
+        ICarbonAwareAggregator aggregator =  GetRequiredService();
 
-        await GetEmissionsData(args, aggregator);
+        await GetEmissionsAsync(args, aggregator);
     }
 
-    private static ICarbonAwareAggregator GetCarbonAwareAggregator() {
+    private static ICarbonAwareAggregator GetRequiredService() {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddCarbonAwareEmissionServices();
         serviceCollection.AddLogging();     
@@ -23,7 +23,7 @@ class Program
         //Currently there is just one implementation. This will have to change once we implement WattTime
         return services.First();
     }
-    private static async Task GetEmissionsData(string[] args, ICarbonAwareAggregator aggregator) {
+    private static async Task GetEmissionsAsync(string[] args, ICarbonAwareAggregator aggregator) {
         var cli = new CarbonAwareCLI(args, aggregator);
 
         if (cli.Parsed)
