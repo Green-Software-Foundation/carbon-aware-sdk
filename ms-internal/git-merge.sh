@@ -20,12 +20,14 @@ git checkout -b $1 upstream/dev
 git fetch origin
 git checkout -b mergetest-$1 origin/dev
 
-# push used for testing -- this push works, since has no workflow changes
+# BEGIN TEST
+# push and pr-create used for testing -- this push works, since has no workflow changes
 echo TEST_TEST >> README.md
 git add .
 git commit -m "TEST_TEST"
 git push -u origin mergetest-$1 
 gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
+# END TEST
 
 # see if merge has conflicts
 git merge upstream/dev
