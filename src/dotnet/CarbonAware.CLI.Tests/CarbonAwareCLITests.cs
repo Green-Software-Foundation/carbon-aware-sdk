@@ -4,47 +4,39 @@ using Microsoft.Extensions.Logging;
 using CarbonAware.Plugins.JsonReaderPlugin;
 using System;
 using System.IO;
+using CarbonAware.Aggregators.CarbonAware;
 
 namespace CarbonAware.CLI.Tests;
 
 public class CarbonAwareCLITests
 {
-    ICarbonAware? plugin;
-
-    [SetUp]
-    public void Setup()
-    {
-        var logger = Mock.Of<ILogger<CarbonAwareJsonReaderPlugin>>();
-        plugin = new CarbonAwareJsonReaderPlugin(logger);
-    }
-
     [Test]
-    public void testWhenLocationIsProvided()
+    public void ParseCommandLineArguments_SetsLocationWhenProvided()
     {
         string[] args = new string[] {"-l", "test"};
         
-        var cli = new CarbonAwareCLI(args, plugin);
+        var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>());
         
         Assert.AreEqual("test", cli._state.Locations[0]); 
     }
 
     [Test]
-    public void testWhenStartTimeIsProvided()
+    public void ParseCommandLineArguments_SetsStartTimeWhenProvided()
     {
         string[] args = new string[] {"-l", "test", "-t", "2021-11-11"};
         
-        var cli = new CarbonAwareCLI(args, plugin);
+        var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>());
         
         Assert.AreEqual("test", cli._state.Locations[0]); 
         Assert.AreEqual(DateTime.Parse("2021-11-11"), cli._state.Time); 
     }
 
     [Test]
-    public void testWhenStartTimeAndEndTimeIsProvided()
+    public void ParseCommandLineArguments_SetsStartTimeAndEndTimeWhenProvided()
     {
         string[] args = new string[] {"-l", "test", "-t", "2021-11-11", "--toTime", "2021-12-12"};
         
-        var cli = new CarbonAwareCLI(args, plugin);
+        var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>());
 
         Assert.AreEqual("test", cli._state.Locations[0]); 
         Assert.AreEqual(DateTime.Parse("2021-11-11"), cli._state.Time); 
@@ -52,24 +44,24 @@ public class CarbonAwareCLITests
     }
 
     [Test]
-    public void testWhenLocationNotProvided()
+    public void ParseCommandLineArguments_ThorwsErrorWhenLocationNotProvided()
     {
         string[] args = new string[] {};
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
-        new CarbonAwareCLI(args, plugin);
+        new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>());
         StringAssert.Contains("Required option 'l, location' is missing.", stringWriter.ToString());
     }
 
     
     [Test]
-    public void testWhenInvaidDateProvided()
+    public void ParseCommandLineArguments_ThrowsErrorWhenInvalidDateProvided()
     {
         string[] args = new string[] {"-l", "test","-t", "invalid"};
         var stringWriter = new StringWriter();
         Console.SetOut(stringWriter);
         
-        var ex = Assert.Throws<ArgumentException>(() => new CarbonAwareCLI(args, plugin));
+        var ex = Assert.Throws<ArgumentException>(() => new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>()));
 
         StringAssert.Contains("Date and time needs to be in the format", ex?.Message);
     }

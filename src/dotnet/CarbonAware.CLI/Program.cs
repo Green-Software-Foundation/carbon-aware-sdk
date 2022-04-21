@@ -1,16 +1,17 @@
 ﻿namespace CarbonAware.CLI;
 
-using CarbonAware.Plugins.JsonReaderPlugin.Configuration;
+using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Aggregators.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 class Program
 {
-    private static ICarbonAware Plugin;
+    private static ICarbonAwareAggregator _aggregator;
     public static void Main(string[] args)
     {   
         InitializePlugin();
 
-        var cli = new CarbonAwareCLI(args, Plugin);
+        var cli = new CarbonAwareCLI(args, _aggregator);
 
         if (cli.Parsed)
         {
@@ -21,16 +22,16 @@ class Program
 
     private static void InitializePlugin() {
         var serviceCollection = new ServiceCollection();
-        serviceCollection.AddCarbonAwareServices();
+        serviceCollection.AddCarbonAwareEmissionServices();
         serviceCollection.AddLogging();     
         var serviceProvider = serviceCollection.BuildServiceProvider();
-        var services = serviceProvider.GetServices<ICarbonAware>();
+        var services = serviceProvider.GetServices<ICarbonAwareAggregator>();
         
         //Currently there is just one implementation. This will have to change once we implement WattTime
-        Plugin = services.First();
+        _aggregator = services.First();
     }
     private async Task GetEmissionsData(string[] args) {
-        var cli = new CarbonAwareCLI(args, Plugin);
+        var cli = new CarbonAwareCLI(args, _aggregator);
 
         if (cli.Parsed)
         {

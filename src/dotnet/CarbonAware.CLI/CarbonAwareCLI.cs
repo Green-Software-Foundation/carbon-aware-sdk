@@ -5,6 +5,9 @@ using CommandLine.Text;
 
 namespace CarbonAware.CLI;
 
+using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Interfaces;
+
 public class CarbonAwareCLI
 {
     public CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
@@ -13,10 +16,10 @@ public class CarbonAwareCLI
     /// Indicates if the command line arguments have been parsed successfully 
     /// </summary>
     public bool Parsed { get; private set; } = false;
-    ICarbonAware _plugin {get; set;}     
-    public CarbonAwareCLI(string[] args, ICarbonAware plugin)
+    ICarbonAwareAggregator _aggregator {get; set;}     
+    public CarbonAwareCLI(string[] args, ICarbonAwareAggregator aggregator)
     {
-        this._plugin = plugin;
+        this._aggregator = aggregator;
         
         var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
         try
@@ -65,9 +68,9 @@ public class CarbonAwareCLI
 
     private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
-        IEnumerable<EmissionsData> e = await _plugin.GetEmissionsDataAsync(props);
+        IEnumerable<EmissionsData> e = await _aggregator.GetEmissionsDataAsync(props);
 
-        return await _plugin.GetEmissionsDataAsync(props);
+        return await _aggregator.GetEmissionsDataAsync(props);
     }
 
     public void OutputEmissionsData(IEnumerable<EmissionsData> emissions)

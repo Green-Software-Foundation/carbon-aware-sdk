@@ -35,10 +35,10 @@
     <ProjectReference Include="..\CarbonAware.Plugins.BasicJsonPlugin\CarbonAware.Plugins.BasicJsonPlugin.csproj" />
     <ProjectReference Include="..\CarbonAware.Plugins.JsonReaderPlugin\CarbonAware.Plugins.JsonReaderPlugin.csproj" />
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
-  </ItemGroup>
+    <ProjectReference Include="..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
+</ItemGroup>
 
-
-	<Target Name="CopyDataFiles" AfterTargets="Build">
+ <Target Name="CopyDataFiles" AfterTargets="Build">
 		<ItemGroup>
 			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
 		</ItemGroup>
