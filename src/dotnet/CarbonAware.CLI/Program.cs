@@ -6,15 +6,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 class Program
 {
-    private static ICarbonAwareAggregator _aggregator;
     public static async Task Main(string[] args)
     {   
-        InitializePlugin();
+        ICarbonAwareAggregator aggregator =  GetCarbonAwareAggregator();
 
-        await GetEmissionsData(args);
+        await GetEmissionsData(args, aggregator);
     }
 
-    private static void InitializePlugin() {
+    private static ICarbonAwareAggregator GetCarbonAwareAggregator() {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddCarbonAwareEmissionServices();
         serviceCollection.AddLogging();     
@@ -22,10 +21,10 @@ class Program
         var services = serviceProvider.GetServices<ICarbonAwareAggregator>();
         
         //Currently there is just one implementation. This will have to change once we implement WattTime
-        _aggregator = services.First();
+        return services.First();
     }
-    private static async Task GetEmissionsData(string[] args) {
-        var cli = new CarbonAwareCLI(args, _aggregator);
+    private static async Task GetEmissionsData(string[] args, ICarbonAwareAggregator aggregator) {
+        var cli = new CarbonAwareCLI(args, aggregator);
 
         if (cli.Parsed)
         {
