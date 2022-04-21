@@ -20,8 +20,8 @@ git checkout -b $1 upstream/dev
 git fetch origin
 git checkout -b mergetest-$1 origin/dev
 
-# push used for testing
-git push -u origin mergetest-$1 
+# push used for testing -- this push works, since has no workflow changes
+# git push -u origin mergetest-$1 
 
 # see if merge has conflicts
 git merge upstream/dev
