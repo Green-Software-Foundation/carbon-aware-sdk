@@ -9,38 +9,37 @@ git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
 git branch -v
-
 git remote -v
 
-git fetch origin
-git checkout -b origin-$1 origin/dev
-
-git push -u origin origin-$1
-
+# upstream needed for merging
 git remote add upstream $upstreamRepo
 git fetch upstream
-git checkout -b $1 upstream/dev
+git checkout -b $1 upstream/dev 
 
-git push -u origin $1
+# created for upstream/dev merge-attempt
+git fetch origin
+git checkout -b mergetest-$1 origin/dev
 
-# gh repo sync microsoft/carbon-aware-sdk
+# push used for testing
+git push -u origin mergetest-$1 
 
-echo status=$status
-# gh repo sync
+# see if merge has conflicts
+git merge upstream/dev
+status=$?
 
-git status
 
 #gh pr create --title "test" --body "test" --repo microsoft/carbon-aware-sdk
 
-# if [ $status -eq 0 ]; then
-#     echo "No merge conflicts. Opening PR against the new branch."
-#     git push --set-upstream origin upstream-pr-${GITHUB_RUN_ID}
-#     gh pr create --title "Pull request title" --body "Pull request body"
-#     exit 0
-# else
-#     echo "Merge Conflicts are preventing auto-merging."
-#     git merge --abort
-#     git checkout upstream/dev
-#     gh pr create -f
-#     exit 0
-# fi
+if [ $status -eq 0 ]; then
+    echo "No merge conflicts. Fetching Upstream directly."
+    gh repo sync microsoft/carbon-aware-sdk --branch dev
+    exit 0
+else
+    echo "Merge Conflicts are preventing auto-merging. Creating a PR with upstream:dev -> origin:dev."
+    git merge --abort
+    git checkout $1
+    git push --set-upstream origin $1 # fails without workflow privilege due to new .github\workflow\*.yml file(s)
+    # gh pr create -f
+    gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
+    exit 0
+fi
