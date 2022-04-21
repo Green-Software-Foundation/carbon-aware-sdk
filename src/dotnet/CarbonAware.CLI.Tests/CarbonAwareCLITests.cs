@@ -44,7 +44,7 @@ public class CarbonAwareCLITests
     }
 
     [Test]
-    public void ParseCommandLineArguments_ThorwsErrorWhenLocationNotProvided()
+    public void ParseCommandLineArguments_ThrowsErrorWhenLocationNotProvided()
     {
         string[] args = new string[] {};
         var stringWriter = new StringWriter();
