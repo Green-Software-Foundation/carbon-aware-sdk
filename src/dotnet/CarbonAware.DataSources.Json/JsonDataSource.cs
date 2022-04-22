@@ -41,7 +41,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
     public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset startPeriod, DateTimeOffset endPeriod)
     {
-        _logger.LogInformation("Getting carbon intensity for locations {locations} for period {startPeriod} to {endPeriod}.", locations, startPeriod, endPeriod);
+        _logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {startPeriod} to {endPeriod}.", locations, startPeriod, endPeriod);
 
         using (var activity = ActivitySource.StartActivity())
         {

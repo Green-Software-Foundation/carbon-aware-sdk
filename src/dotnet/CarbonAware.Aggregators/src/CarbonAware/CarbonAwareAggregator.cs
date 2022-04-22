@@ -19,48 +19,50 @@ namespace CarbonAware.Aggregators.CarbonAware
 
         public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
         {
-            DateTimeOffset end = GetEndOrDefaultToNow(props);
-            DateTimeOffset start = GetStartOrDefaultToWeek(props, end);
+            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now);
+            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
+            _logger.LogInformation("Aggregator getting carbon intensity from data source");
             return await this._dataSource.GetCarbonIntensityAsync(GetOrDefaultLocation(props), start, end);
 
         }
 
-        private DateTimeOffset GetStartOrDefaultToWeek(IDictionary props, DateTimeOffset endOffset) {
-            var start = props[CarbonAwareConstants.Start];
-            var startDate = endOffset.AddDays(-7);
+        /// <summary>
+        /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, defaults to provided default
+        /// </summary>
+        /// <param name="props"></param>
+        /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
+        /// <exception cref="ArgumentException">Throws exception if prop isn't a valid DateTimeOffset. </exception>
+        private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultDto) 
+        {
+            var dto = props[field];
 
-            // If null, default to start period at a week before end
-            if (start == null) {
-                return startDate;
+            // If null, default
+            if (dto == null)
+            {
+                return defaultDto;
             }
             // If fail to parse property, throw error
-            if (!DateTimeOffset.TryParse(start.ToString(), out startDate))
+            if (!DateTimeOffset.TryParse(dto.ToString(), out defaultDto))
             {
-                throw new ArgumentException("Failed to parse start period. Must be a valid DateTimeOffset");
+                Exception ex = new ArgumentException("Failed to parse" + field + "field. Must be a valid DateTimeOffset");
+                _logger.LogError("argument exception", ex);
+                throw ex;
             }
-        
-            return startDate;
-        }
 
-        private DateTimeOffset GetEndOrDefaultToNow(IDictionary props) {
-            var end = props[CarbonAwareConstants.End];
-            var endDate = DateTimeOffset.Now;
-
-            // If null, default to end period at now
-            if (end == null) {
-                return endDate;
-            }
-            // If fail to parse property, throw error
-            if (!DateTimeOffset.TryParse(end.ToString(), out endDate))
-            {
-                throw new ArgumentException("Failed to parse end period. Must be a valid DateTimeOffset");
-            }
-        
-            return endDate;
+            return defaultDto;
         }
 
         private IEnumerable<Location> GetOrDefaultLocation(IDictionary props) {
-            return props[CarbonAwareConstants.Locations] as IEnumerable<Location> ?? throw new ArgumentException("locations parameter must be provided and be non empty");
+            IEnumerable<Location>? locations = props[CarbonAwareConstants.Locations] as IEnumerable<Location>;
+            if (locations == null)
+            {
+                Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
+                _logger.LogError("argument exception", ex);
+                throw ex;
+            } else
+            {
+                return locations;
+            }
         }
     }
 }
