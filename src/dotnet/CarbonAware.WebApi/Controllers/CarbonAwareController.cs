@@ -24,9 +24,10 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
+        IEnumerable<Location> locs = locations.Select(loc => new Location(){ RegionName = loc });
         var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, locations.ToList() },
-            { CarbonAwareConstants.Start, time ?? DateTime.Now },
+            { CarbonAwareConstants.Locations, locs },
+            { CarbonAwareConstants.Start, time},
             { CarbonAwareConstants.End, toTime },
             { CarbonAwareConstants.Duration, durationMinutes },
             { CarbonAwareConstants.Best, true }
@@ -42,10 +43,11 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
+        IEnumerable<Location> locs = locations.Select(loc => new Location(){ RegionName = loc });
         var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, locations.ToList() },
-            { CarbonAwareConstants.Start, time ?? DateTime.Now },
-            { CarbonAwareConstants.End, toTime },
+            { CarbonAwareConstants.Locations, locs },
+            { CarbonAwareConstants.Start, time },
+            { CarbonAwareConstants.End, toTime},
             { CarbonAwareConstants.Duration, durationMinutes },
         };
         
@@ -58,10 +60,11 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
-    {
+    {;
+        var loc = new Location(){ RegionName = location };
         var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, new List<string>(){ location } },
-            { CarbonAwareConstants.Start, time ?? DateTime.Now },
+            { CarbonAwareConstants.Locations, new List<Location>(){ loc } },
+            { CarbonAwareConstants.Start, time },
             { CarbonAwareConstants.End, toTime },
             { CarbonAwareConstants.Duration, durationMinutes },
         };
