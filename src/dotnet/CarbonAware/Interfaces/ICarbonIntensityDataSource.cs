@@ -14,8 +14,8 @@ public interface ICarbonIntensityDataSource
     /// Gets the carbon intensity for a given SciScoreCalculation.
     /// </summary>
     /// <param name="locations">The locations that should be used for getting emissions data.</param>
-    /// <param name="startPeriod">The start period.</param>
-    /// <param name="endPeriod">The end period.</param>
+    /// <param name="periodStartTime">The start time of the period.</param>
+    /// <param name="periodEndTime">The end time of the period.</param>
     /// <returns>A list of emissions data for the given time period.</returns>
-    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset startPeriod, DateTimeOffset endPeriod);
+    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime);
 }

@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Net;
 using CarbonAware.Tools.WattTimeClient.Configuration;
 using CarbonAware.Tools.WattTimeClient.Constants;
+using System.Globalization;
 
 namespace CarbonAware.Tools.WattTimeClient;
 
@@ -47,15 +48,15 @@ public class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string balancingAuthorityAbbreviation, string startTime, string endTime)
+    public async Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string balancingAuthorityAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         Log.LogInformation("Requesting grid emission data using start time {startTime} and endTime {endTime}", startTime, endTime);
 
         var parameters = new Dictionary<string, string>()
         {
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation },
-            { QueryStrings.StartTime, startTime },
-            { QueryStrings.EndTime, endTime }
+            { QueryStrings.StartTime, startTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
+            { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
         };
 
         var tags = new Dictionary<string, string>()
@@ -69,7 +70,7 @@ public class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(BalancingAuthority balancingAuthority, string startTime, string endTime)
+    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(BalancingAuthority balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         return this.GetDataAsync(balancingAuthority.Abbreviation, startTime, endTime);
     }
@@ -102,15 +103,15 @@ public class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<Forecast>> GetForecastByDateAsync(string balancingAuthority, string startTime, string endTime)
+    public async Task<IEnumerable<Forecast>> GetForecastByDateAsync(string balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         Log.LogInformation("Requesting forecast from balancingAuthority {balancingAuthority} using start time {startTime} and endTime {endTime}", balancingAuthority, startTime, endTime);
 
         var parameters = new Dictionary<string, string>()
         {
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthority },
-            { QueryStrings.StartTime, startTime },
-            { QueryStrings.EndTime, endTime }
+            { QueryStrings.StartTime, startTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
+            { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
         };
 
         var tags = new Dictionary<string, string>()
@@ -124,7 +125,7 @@ public class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(BalancingAuthority balancingAuthority, string startTime, string endTime)
+    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(BalancingAuthority balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         return this.GetForecastByDateAsync(balancingAuthority.Abbreviation, startTime, endTime);
     }

@@ -22,7 +22,7 @@ public class Location
     /// <summary>
     /// Gets or sets the type of location this location object represents.
     /// </summary>
-    public LocationType LocationType { get; set; }
+    public LocationType LocationType { get; set; } = LocationType.NotProvided;
 
     /// <summary>
     /// Gets or sets the region name to use.  When set to GeoPosition, this value should be null, otherwise, it should be the region name for the specified provider.

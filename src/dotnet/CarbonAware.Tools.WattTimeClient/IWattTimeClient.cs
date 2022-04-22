@@ -15,7 +15,7 @@ public interface IWattTimeClient
     /// <param name="endTime">End time of the time period</param>
     /// <returns>An <see cref="Task{IEnumerable}{GridEmissionDataPoint}"/> which contains all emissions data points in a period.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string balancingAuthorityAbbreviation, string startTime, string endTime);
+    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string balancingAuthorityAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);
 
     /// <summary>
     /// Async method to get observed emission data for a given balancing authority and time period.
@@ -25,7 +25,7 @@ public interface IWattTimeClient
     /// <param name="endTime">End time of the time period</param>
     /// <returns>An <see cref="Task{IEnumerable}{GridEmissionDataPoint}"/> which contains all emissions data points in a period.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(BalancingAuthority balancingAuthority, string startTime, string endTime);
+    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(BalancingAuthority balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime);
 
     /// <summary>
     /// Async method to get the most recent 24 hour forecasted emission data for a given balancing authority.
@@ -51,7 +51,7 @@ public interface IWattTimeClient
     /// <param name="endTime">End time of the time period</param>
     /// <returns>An <see cref="Task{IEnumerable}{Forecast}"/> which contains all forecast sets generated in the given period.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(string balancingAuthorityAbbreviation, string startTime, string endTime);
+    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(string balancingAuthorityAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);
 
     /// <summary>
     /// Async method to get all generated forecasts in the given period and balancing authority.
@@ -61,7 +61,7 @@ public interface IWattTimeClient
     /// <param name="endTime">End time of the time period</param>
     /// <returns>An <see cref="Task{IEnumerable}{Forecast}"/> which contains all forecast sets generated in the given period.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(BalancingAuthority balancingAuthority, string startTime, string endTime);
+    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(BalancingAuthority balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime);
 
     /// <summary>
     /// Async method to get the balancing authority for a given location.
