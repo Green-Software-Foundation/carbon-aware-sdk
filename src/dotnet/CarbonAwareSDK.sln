@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AWSRegion
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.AzureRegionTestDataGenerator", "CarbonAware.Tools.AzureRegionTestDataGenerator\CarbonAware.Tools.AzureRegionTestDataGenerator.csproj", "{8B5D8681-D9A5-4AA1-BA13-3E6D86D3082A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.JsonReaderPlugin", "CarbonAware.Plugins.JsonReaderPlugin\CarbonAware.Plugins.JsonReaderPlugin.csproj", "{EBC55CE4-19D9-49F0-A27C-2424E78283E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Json", "CarbonAware.DataSources.Json\CarbonAware.DataSources.Json.csproj", "{EBC55CE4-19D9-49F0-A27C-2424E78283E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.JsonReaderPlugin.Tests", "CarbonAware.Plugins.JsonReaderPlugin.Tests\CarbonAware.Plugins.JsonReaderPlugin.Tests.csproj", "{7261E3D9-A27F-4D55-AED0-9315E081E3B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Json.Tests", "CarbonAware.DataSources.Json.Tests\CarbonAware.DataSources.Json.Tests.csproj", "{7261E3D9-A27F-4D55-AED0-9315E081E3B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.WattTimeClient", "CarbonAware.Tools.WattTimeClient\CarbonAware.Tools.WattTimeClient.csproj", "{BDA9EDD2-291A-4554-A617-27923FEDCB9B}"
 EndProject
@@ -29,15 +29,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.WattTimeC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.UnitTests", "CarbonAware.WebApi.Tests\unitTests\CarbonAware.WebApi.UnitTests.csproj", "{7E9E3B13-8C74-4E51-9224-E209D2B13E7A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.CarbonIntensity.Tests", "CarbonAware.Plugins.CarbonIntensity\test\CarbonAware.Plugins.CarbonIntensity.Tests.csproj", "{74CEA7CE-FD6E-498C-9552-161D6EDD4B69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.WattTime.Tests", "CarbonAware.DataSources.WattTime\test\CarbonAware.DataSources.WattTime.Tests.csproj", "{74CEA7CE-FD6E-498C-9552-161D6EDD4B69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.CarbonIntensity", "CarbonAware.Plugins.CarbonIntensity\src\CarbonAware.Plugins.CarbonIntensity.csproj", "{12D19F2D-0427-4591-949D-0DCDEDACF5B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.WattTime", "CarbonAware.DataSources.WattTime\src\CarbonAware.DataSources.WattTime.csproj", "{12D19F2D-0427-4591-949D-0DCDEDACF5B2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Aggregators", "CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj", "{D538572C-1412-47FE-8CC3-950EF295EB7F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Aggregator.Tests", "CarbonAware.Aggregators\test\CarbonAware.Aggregator.Tests.csproj", "{78FADFFF-294B-4A2E-AAD3-73FD469F4E0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.Registration", "CarbonAware.Plugins.Registration\CarbonAware.Plugins.Registration.csproj", "{5CFC4F4D-7E8D-4682-A659-35050C637FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Registration", "CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj", "{5CFC4F4D-7E8D-4682-A659-35050C637FF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

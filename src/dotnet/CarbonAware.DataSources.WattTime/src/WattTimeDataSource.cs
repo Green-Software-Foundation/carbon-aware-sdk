@@ -1,14 +1,12 @@
 using CarbonAware.Model;
-using CarbonAware.Plugins;
 using CarbonAware.Interfaces;
 using Microsoft.Extensions.Logging;
-using System.Collections;
 
-namespace CarbonAware.Plugins.CarbonIntensity;
+namespace CarbonAware.DataSources.WattTime;
 
-public class CarbonIntensityPlugin : ICarbonAware
+public class WattTimeDataSource : ICarbonIntensityDataSource
 {
-    public string Name => "CarbonIntensityPlugin";
+    public string Name => "WattTimeDataSource";
 
     public string Description => throw new NotImplementedException();
 
@@ -16,17 +14,17 @@ public class CarbonIntensityPlugin : ICarbonAware
 
     public string Version => throw new NotImplementedException();
 
-    private ILogger<CarbonIntensityPlugin> _logger { get; }
+    private ILogger<WattTimeDataSource> _logger { get; }
 
     private ICarbonIntensityDataSource _dataSource { get; }
 
-    public CarbonIntensityPlugin(ILogger<CarbonIntensityPlugin> logger, ICarbonIntensityDataSource dataSource)
+    public WattTimeDataSource(ILogger<WattTimeDataSource> logger, ICarbonIntensityDataSource dataSource)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _dataSource = dataSource;
     }
 
-    public Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
+    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset startPeriod, DateTimeOffset endPeriod)
     {
         throw new NotImplementedException();
     }

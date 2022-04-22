@@ -1,8 +1,8 @@
 using NUnit.Framework;
 
-namespace CarbonAware.Plugins.CarbonIntensity.Tests;
+namespace CarbonAware.DataSources.WattTime.Tests;
 
-public class CarbonIntensityPluginTests
+public class WattTimeDataSourceTests
 {
 
     [Test]

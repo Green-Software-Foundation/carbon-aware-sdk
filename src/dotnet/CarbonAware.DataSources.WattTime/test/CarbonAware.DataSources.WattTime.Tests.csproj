@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\CarbonAware.Plugins.CarbonIntensity.csproj" />
+    <ProjectReference Include="..\src\CarbonAware.DataSources.WattTime.csproj" />
   </ItemGroup>
 
 </Project>
