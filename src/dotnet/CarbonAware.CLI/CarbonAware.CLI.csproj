@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>CarbonAwareCLI</AssemblyName>
+    <AssemblyName>CarbonAware.CLI</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
@@ -32,12 +32,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CarbonAware.Plugins.BasicJsonPlugin\CarbonAware.Plugins.BasicJsonPlugin.csproj" />
     <ProjectReference Include="..\CarbonAware\CarbonAware.csproj" />
+    <ProjectReference Include="..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
+</ItemGroup>
+
+ <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
-
-	<Target Name="CopyDataFiles" AfterTargets="Build">
+ <Target Name="CopyDataFiles" AfterTargets="Build">
 		<ItemGroup>
 			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
 		</ItemGroup>
