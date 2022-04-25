@@ -46,7 +46,9 @@ git checkout -b $1 upstream/dev
     # git checkout $1
     GIT_PUSH_OUTPUT=$(git push --set-upstream origin $1 2>&1) # fails without workflow privilege due to new .github\workflow\*.yml file(s)
     status=$?
+    echo "BEGIN TEST CAPTURE git-push OUTPUT"
     echo $GIT_PUSH_OUTPUT
+    echo "END TEST CAPTURE git-push OUTPUT"
     # gh pr create -f
     # gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
     exit $status
