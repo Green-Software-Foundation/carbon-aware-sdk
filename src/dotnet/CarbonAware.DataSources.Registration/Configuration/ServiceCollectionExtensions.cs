@@ -5,11 +5,11 @@ using CarbonAware.DataSources.WattTime.Configuration;
 namespace CarbonAware.DataSources.Configuration;
 public static class ServiceCollectionExtensions
 {
-    public static void AddDataSourceService(this IServiceCollection services, DataSourceType pType)
+    public static void AddDataSourceService(this IServiceCollection services, DataSourceType dataSourceType)
     {
         // find all the Classes in the Assembly that implements AddEmissionServices method,
         // and added them here with the specific implementation class.
-        switch (pType)
+        switch (dataSourceType)
         {
             case DataSourceType.JSON:
             {

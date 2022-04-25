@@ -65,8 +65,7 @@ public class JsonDataSourceTests
 
     private Mock<JsonDataSource> SetupMockDataSource() {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
-        var activity = new ActivitySource("JsonDataSourceTests");
-        var mockDataSource = new Mock<JsonDataSource>(logger, activity);
+        var mockDataSource = new Mock<JsonDataSource>(logger);
         
         mockDataSource.Protected()
             .Setup<List<EmissionsData>>("GetSampleJson")

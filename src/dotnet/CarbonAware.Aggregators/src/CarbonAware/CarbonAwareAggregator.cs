@@ -32,37 +32,30 @@ namespace CarbonAware.Aggregators.CarbonAware
         /// <param name="props"></param>
         /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
         /// <exception cref="ArgumentException">Throws exception if prop isn't a valid DateTimeOffset. </exception>
-        private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultDto) 
+        private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultValue) 
         {
-            var dto = props[field];
+            // Default if null
+            var dateTimeOffset = props[field] ?? defaultValue;
 
-            // If null, default
-            if (dto == null)
-            {
-                return defaultDto;
-            }
             // If fail to parse property, throw error
-            if (!DateTimeOffset.TryParse(dto.ToString(), out defaultDto))
+            if (!DateTimeOffset.TryParse(dateTimeOffset.ToString(), out defaultValue))
             {
                 Exception ex = new ArgumentException("Failed to parse" + field + "field. Must be a valid DateTimeOffset");
                 _logger.LogError("argument exception", ex);
                 throw ex;
             }
 
-            return defaultDto;
+            return defaultValue;
         }
 
         private IEnumerable<Location> GetOrDefaultLocation(IDictionary props) {
-            IEnumerable<Location>? locations = props[CarbonAwareConstants.Locations] as IEnumerable<Location>;
-            if (locations == null)
-            {
-                Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
-                _logger.LogError("argument exception", ex);
-                throw ex;
-            } else
+            if (props[CarbonAwareConstants.Locations] is IEnumerable<Location> locations)
             {
                 return locations;
             }
+            Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
+            _logger.LogError("argument exception", ex);
+            throw ex;
         }
     }
 }

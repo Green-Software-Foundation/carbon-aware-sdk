@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 namespace CarbonAware.DataSources.Json;
 
 /// <summary>
-/// Reprsents a wattime data source.
+/// Reprsents a JSON data source.
 /// </summary>
 public class JsonDataSource : ICarbonIntensityDataSource
 {
@@ -20,8 +20,6 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
     public string Version => "0.0.1";
 
-    private ActivitySource ActivitySource { get; }
-
     private List<EmissionsData>? emissionsData;
 
     private readonly ILogger<JsonDataSource> _logger;
@@ -31,41 +29,36 @@ public class JsonDataSource : ICarbonIntensityDataSource
     /// Creates a new instance of the <see cref="JsonDataSource"/> class.
     /// </summary>
     /// <param name="logger">The logger for the datasource</param>
-    /// <param name="activitySource">The activity source for telemetry.</param>
-    public JsonDataSource(ILogger<JsonDataSource> logger, ActivitySource activitySource)
+    public JsonDataSource(ILogger<JsonDataSource> logger )
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        this.ActivitySource = activitySource;
-        
     }
 
     public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset startPeriod, DateTimeOffset endPeriod)
     {
         _logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {startPeriod} to {endPeriod}.", locations, startPeriod, endPeriod);
 
-        using (var activity = ActivitySource.StartActivity())
-        {
-            IEnumerable<EmissionsData>? emissionsData = GetSampleJson();
-            if (emissionsData == null) {
-                _logger.LogDebug("Emission data list is empty");
-                return Task.FromResult(Enumerable.Empty<EmissionsData>());
-            }
-            _logger.LogDebug($"Total emission records retrieved {emissionsData.Count()}");
-            IEnumerable<string> stringLocations = locations.Select(loc => loc.RegionName);
-
-            var startDate = startPeriod.DateTime;
-            var endDate = endPeriod.DateTime;
-            
-            emissionsData = FilterByLocation(emissionsData, stringLocations);
-            emissionsData = FilterByDateRange(emissionsData, startDate, endDate);
-
-            if (_logger.IsEnabled(LogLevel.Debug))
-            {
-                _logger.LogDebug("Found {count} total emissions data records for locations {stringLocations} for period {startPeriod} to {endPeriod}.", emissionsData.Count(), stringLocations, startPeriod, endPeriod);
-            }
-
-            return Task.FromResult(emissionsData);
+        IEnumerable<EmissionsData>? emissionsData = GetSampleJson();
+        if (emissionsData == null) {
+            _logger.LogDebug("Emission data list is empty");
+            return Task.FromResult(Enumerable.Empty<EmissionsData>());
         }
+        _logger.LogDebug($"Total emission records retrieved {emissionsData.Count()}");
+        IEnumerable<string> stringLocations = locations.Select(loc => loc.RegionName);
+
+        var startDate = startPeriod.DateTime;
+        var endDate = endPeriod.DateTime;
+            
+        emissionsData = FilterByLocation(emissionsData, stringLocations);
+        emissionsData = FilterByDateRange(emissionsData, startDate, endDate);
+
+        if (_logger.IsEnabled(LogLevel.Debug))
+        {
+            _logger.LogDebug("Found {count} total emissions data records for locations {stringLocations} for period {startPeriod} to {endPeriod}.", emissionsData.Count(), stringLocations, startPeriod, endPeriod);
+        }
+
+        return Task.FromResult(emissionsData);
+        
     }
 
     private IEnumerable<EmissionsData> FilterByDateRange(IEnumerable<EmissionsData> data, DateTime startDate, object endDate)
