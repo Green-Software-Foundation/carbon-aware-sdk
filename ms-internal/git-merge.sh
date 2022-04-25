@@ -17,17 +17,17 @@ git fetch upstream
 git checkout -b $1 upstream/dev 
 
 # # created for upstream/dev merge-attempt
-# git fetch origin
-# git checkout -b mergetest-$1 origin/dev
+git fetch origin
+git checkout -b mergetest-$1 origin/dev
 
-# # BEGIN TEST
-# # push and pr-create used for testing -- this push works, since has no workflow changes
-# echo TEST_TEST >> README.md
-# git add .
-# git commit -m "TEST_TEST"
-# git push -u origin mergetest-$1 
+# BEGIN TEST
+# push and pr-create used for testing -- this push works, since has no workflow changes
+echo TEST_TEST >> README.md
+git add .
+git commit -m "TEST_TEST"
+git push -u origin mergetest-$1 
 # gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
-# # END TEST
+# END TEST
 
 # # see if merge has conflicts
 # git merge upstream/dev
