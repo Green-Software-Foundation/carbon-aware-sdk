@@ -41,14 +41,34 @@ git push -u origin mergetest-$1
 #     gh repo sync microsoft/carbon-aware-sdk --branch dev
 #     exit 0
 # else
-    echo "Creating a PR with upstream:dev -> origin:dev."
+    echo "Creating a PR with fetched-contents from upstream:dev into origin:dev."
     # git merge --abort
     # git checkout $1
-    GIT_PUSH_OUTPUT=$(git push --set-upstream origin $1 2>&1) # fails without workflow privilege due to new .github\workflow\*.yml file(s)
+    GIT_PUSH_OUTPUT=$(git push --set-upstream origin $1 2>&1) # fails without workflow privilege if changes to .github\workflow\*.yml file(s) are present
     status=$?
     echo "BEGIN TEST CAPTURE git-push OUTPUT"
     echo $GIT_PUSH_OUTPUT
     echo "END TEST CAPTURE git-push OUTPUT"
+    if [ $status -ne 0 ]; then
+        commitmessage = "git push of upstream contents failed, saving error info into an empty-manual-PR for investigation"
+        echo $commitmessage
+
+        # 1. re-create branch
+        git branch -D $1
+        git fetch origin
+        git checkout -b $1 origin/dev
+
+        # 2. add + commit
+        echo commitmessage > README-$1.md
+        echo "" > README-$1.md
+        echo $GIT_PUSH_OUTPUT >> README-$1.md
+        git add README-$1.md
+        git commit -m commitmessage
+
+        # 3. push it
+        git push -u origin $1         
+        status=$?
+    fi
     # gh pr create -f
     # gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
     exit $status
