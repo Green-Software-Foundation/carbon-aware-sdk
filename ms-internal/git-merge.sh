@@ -1,6 +1,6 @@
 #!/bin/bash
-gh auth login
-gh auth setup-git
+# gh auth login
+# gh auth setup-git
 
 localRepo="https://github.com/microsoft/carbon-aware-sdk"
 upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
@@ -41,11 +41,11 @@ git checkout -b $1 upstream/dev
 #     gh repo sync microsoft/carbon-aware-sdk --branch dev
 #     exit 0
 # else
-    echo "Merge Conflicts are preventing auto-merging. Creating a PR with upstream:dev -> origin:dev."
+    echo "Creating a PR with upstream:dev -> origin:dev."
     # git merge --abort
     # git checkout $1
     git push --set-upstream origin $1 # fails without workflow privilege due to new .github\workflow\*.yml file(s)
     # gh pr create -f
-    gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
+    # gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
     exit 0
 # fi
