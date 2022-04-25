@@ -24,7 +24,7 @@ jobs:
     - name: Run Auto-Merge Script
       id: auto-merge
       run: |
-        ./ms-internal/git-merge.sh "${PR_BRANCH}"
+        ./ms-internal/git-merge.sh "${PR_BRANCH}" "${BASE}" "${UPSTREAM}"
         echo ::set-output name=exit_code::$?
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
