@@ -4,6 +4,8 @@
 
 localRepo="https://github.com/microsoft/carbon-aware-sdk"
 upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
+commitmessage="git push of upstream contents failed, saving error info into an empty-manual-PR for investigation"
+status=0
 
 git config user.name "GitHub Actions Bot"
 git config user.email "<>"
@@ -50,7 +52,6 @@ git push -u origin mergetest-$1
     echo $GIT_PUSH_OUTPUT
     echo "END TEST CAPTURE git-push OUTPUT"
     if [ $status -ne 0 ]; then
-        commitmessage = "git push of upstream contents failed, saving error info into an empty-manual-PR for investigation"
         echo $commitmessage
 
         # 1. re-create branch
