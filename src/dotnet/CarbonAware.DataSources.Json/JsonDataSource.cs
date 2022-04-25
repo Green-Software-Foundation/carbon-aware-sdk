@@ -34,9 +34,9 @@ public class JsonDataSource : ICarbonIntensityDataSource
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
-    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset startPeriod, DateTimeOffset endPeriod)
+    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
-        _logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {startPeriod} to {endPeriod}.", locations, startPeriod, endPeriod);
+        _logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
 
         IEnumerable<EmissionsData>? emissionsData = GetSampleJson();
         if (emissionsData == null) {
@@ -46,15 +46,15 @@ public class JsonDataSource : ICarbonIntensityDataSource
         _logger.LogDebug($"Total emission records retrieved {emissionsData.Count()}");
         IEnumerable<string> stringLocations = locations.Select(loc => loc.RegionName);
 
-        var startDate = startPeriod.DateTime;
-        var endDate = endPeriod.DateTime;
+        var startDate = periodStartTime.DateTime;
+        var endDate = periodEndTime.DateTime;
             
         emissionsData = FilterByLocation(emissionsData, stringLocations);
         emissionsData = FilterByDateRange(emissionsData, startDate, endDate);
 
         if (_logger.IsEnabled(LogLevel.Debug))
         {
-            _logger.LogDebug("Found {count} total emissions data records for locations {stringLocations} for period {startPeriod} to {endPeriod}.", emissionsData.Count(), stringLocations, startPeriod, endPeriod);
+            _logger.LogDebug("Found {count} total emissions data records for locations {stringLocations} for period {periodStartTime} to {periodEndTime}.", emissionsData.Count(), stringLocations, periodStartTime, periodEndTime);
         }
 
         return Task.FromResult(emissionsData);
