@@ -4,7 +4,7 @@ BRANCH=${1:-"auto-pr-$RANDOM"}
 BASE=${2:-"dev"}
 UPSTREAM=${3:-"Green-Software-Foundation/carbon-aware-sdk"}
 
-UPSTREAMREPO="https://github.com/$UPSTREAM"}
+UPSTREAMREPO="https://github.com/$UPSTREAM"
 COMMITMESSAGE="Warning: git push of upstream contents failed, saving error info into an empty-PR for investigation"
 STATUS=0
 
