@@ -44,8 +44,10 @@ git checkout -b $1 upstream/dev
     echo "Creating a PR with upstream:dev -> origin:dev."
     # git merge --abort
     # git checkout $1
-    git push --set-upstream origin $1 # fails without workflow privilege due to new .github\workflow\*.yml file(s)
+    GIT_PUSH_OUTPUT=$(git push --set-upstream origin $1) # fails without workflow privilege due to new .github\workflow\*.yml file(s)
+    status=$?
+    echo $GIT_PUSH_OUTPUT
     # gh pr create -f
     # gh pr create --title "[automation test] Pull request title" --body "[automation test] Pull request body" --repo microsoft/carbon-aware-sdk
-    exit 0
+    exit $status
 # fi
