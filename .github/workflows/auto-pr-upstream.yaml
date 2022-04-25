@@ -9,8 +9,9 @@ on:
 env:
   OWNER: "microsoft"
   REPO: "carbon-aware-sdk"
+  BASE: "dev"
   UPSTREAM: "Green-Software-Foundation/carbon-aware-sdk"
-  PR-BRANCH: "upstream-pr-${GITHUB_RUN_ID}"
+  PR_BRANCH: "auto-pr-${{github.run_id}}"
 
 
 jobs:
@@ -23,21 +24,21 @@ jobs:
     - name: Run Auto-Merge Script
       id: auto-merge
       run: |
-        ./ms-internal/git-merge.sh upstream-pr-${GITHUB_RUN_ID}
+        ./ms-internal/git-merge.sh "${PR_BRANCH}"
         echo ::set-output name=exit_code::$?
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # - name: Open PR against in Repo Branch      
-    #   uses: octokit/request-action@v2.x
-    #   if: steps.auto-merge.outputs.exit-code==0
-    #   with:
-    #     route: POST /repos/{owner}/{repo}/pulls
-    #     owner: ${OWNER}
-    #     repo: ${REPO}
-    #     title: "Automated Merge Upstream Reposistory into Main"
-    #     head: upstream-pr-${GITHUB_RUN_ID}
-    #     base: dev
-    #     body: "Automatically triggered PR from GSF to MSFT Repository"
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Open PR against in Repo Branch      
+      uses: octokit/request-action@v2.x
+      if: steps.auto-merge.outputs.exit-code==0
+      with:
+        route: POST /repos/{owner}/{repo}/pulls
+        owner: ${{ env.OWNER }}
+        repo: ${{ env.REPO }}
+        title: "Automated Merge Upstream Repository into ${{ env.BASE }}"
+        head: ${{ env.PR_BRANCH }}
+        base: ${{ env.BASE }}
+        body: "Automatically triggered PR from GSF to MSFT Repository"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
