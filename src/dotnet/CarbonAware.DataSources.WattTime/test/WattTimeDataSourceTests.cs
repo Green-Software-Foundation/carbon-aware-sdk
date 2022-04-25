@@ -67,7 +67,7 @@ public class WattTimeDataSourceTests
 
         this.LocationConverter.Setup(r => r.ConvertLocationToBalancingAuthorityAsync(location)).ReturnsAsync(balancingAuthority);
 
-        var result = await this.DataSource.GetCarbonIntensityAsync(location, startDate, endDate);
+        var result = await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { location }, startDate, endDate);
 
         Assert.IsNotNull(result);
         Assert.AreEqual(1, result.Count());
@@ -98,7 +98,7 @@ public class WattTimeDataSourceTests
         this.LocationConverter.Setup(r => r.ConvertLocationToBalancingAuthorityAsync(location)).ReturnsAsync(balancingAuthority);
 
 
-        var result = await this.DataSource.GetCarbonIntensityAsync(location, startDate, endDate);
+        var result = await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { location }, startDate, endDate);
 
 
         Assert.IsNotNull(result);
@@ -114,7 +114,7 @@ public class WattTimeDataSourceTests
 
         this.LocationConverter.Setup(l => l.ConvertLocationToBalancingAuthorityAsync(location)).Throws<LocationConversionException>();
 
-        Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCarbonIntensityAsync(location, startDate, endDate));
+        Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { location }, startDate, endDate));
     }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

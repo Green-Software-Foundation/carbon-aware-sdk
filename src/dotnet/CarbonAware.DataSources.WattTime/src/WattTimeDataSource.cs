@@ -13,6 +13,14 @@ namespace CarbonAware.DataSources.WattTime;
 /// </summary>
 public class WattTimeDataSource : ICarbonIntensityDataSource
 {
+    public string Name => "WattTimeDataSource";
+
+    public string Description => throw new NotImplementedException();
+
+    public string Author => throw new NotImplementedException();
+
+    public string Version => throw new NotImplementedException();
+
     private ILogger<WattTimeDataSource> Logger { get; }
 
     private IWattTimeClient WattTimeClient { get; }
@@ -37,7 +45,19 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
+    public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
+    {
+        this.Logger.LogInformation("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
+        List<EmissionsData> result = new ();
+        foreach (var location in locations)
+        {
+            IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
+            result.AddRange(interimResult);
+        }
+        return result;
+    }
+
+    private async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
         this.Logger.LogInformation("Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.", location, periodStartTime, periodEndTime);
 

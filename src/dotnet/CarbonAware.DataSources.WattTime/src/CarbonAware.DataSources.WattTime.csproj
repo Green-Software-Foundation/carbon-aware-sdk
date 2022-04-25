@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\CarbonAware.Tools.WattTimeClient\CarbonAware.Tools.WattTimeClient.csproj" />
     <ProjectReference Include="..\..\CarbonAware\CarbonAware.csproj" />
   </ItemGroup>
 

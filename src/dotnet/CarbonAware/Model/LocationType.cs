@@ -1,4 +1,4 @@
-﻿namespace CarbonAware.Model;
+namespace CarbonAware.Model;
 
 /// <summary>
 /// The provider type for the location.
