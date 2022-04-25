@@ -4,7 +4,7 @@
 
 localRepo="https://github.com/microsoft/carbon-aware-sdk"
 upstreamRepo="https://github.com/Green-Software-Foundation/carbon-aware-sdk"
-commitmessage="git push of upstream contents failed, saving error info into an empty-manual-PR for investigation"
+commitmessage="Warning: git push of upstream contents failed, saving error info into an empty-manual-PR for investigation"
 status=0
 
 git config user.name "GitHub Actions Bot"
@@ -60,11 +60,11 @@ git push -u origin mergetest-$1
         git checkout -b $1 origin/dev
 
         # 2. add + commit
-        echo commitmessage > README-$1.md
-        echo "" > README-$1.md
+        echo $commitmessage > README-$1.md
+        echo "" >> README-$1.md
         echo $GIT_PUSH_OUTPUT >> README-$1.md
         git add README-$1.md
-        git commit -m commitmessage
+        git commit -m $commitmessage
 
         # 3. push it
         git push -u origin $1         
