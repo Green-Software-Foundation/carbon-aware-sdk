@@ -22,7 +22,7 @@ namespace CarbonAware.Aggregators.CarbonAware
             DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now);
             DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
             _logger.LogInformation("Aggregator getting carbon intensity from data source");
-            return await this._dataSource.GetCarbonIntensityAsync(GetOrDefaultLocation(props), start, end);
+            return await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
 
         }
 
@@ -48,7 +48,7 @@ namespace CarbonAware.Aggregators.CarbonAware
             return defaultValue;
         }
 
-        private IEnumerable<Location> GetOrDefaultLocation(IDictionary props) {
+        private IEnumerable<Location> GetLocationOrThrow(IDictionary props) {
             if (props[CarbonAwareConstants.Locations] is IEnumerable<Location> locations)
             {
                 return locations;
