@@ -64,7 +64,7 @@ git push -u origin mergetest-$1
         echo "" >> README-$1.md
         echo $GIT_PUSH_OUTPUT >> README-$1.md
         git add README-$1.md
-        git commit -m $commitmessage
+        git commit -m "$commitmessage"
 
         # 3. push it
         git push -u origin $1         
