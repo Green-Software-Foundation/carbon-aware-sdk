@@ -24,7 +24,7 @@ if [ $status -ne 0 ]; then
     echo $commitmessage
 
     # 1. re-create branch from origin:dev
-    git checkout -f origin/dev
+    git checkout -f dev
     git branch -D $1
     git fetch origin
     git checkout -b $1 origin/dev
