@@ -24,6 +24,7 @@ if [ $status -ne 0 ]; then
     echo $commitmessage
 
     # 1. re-create branch from origin:dev
+    git checkout -f origin/dev
     git branch -D $1
     git fetch origin
     git checkout -b $1 origin/dev
@@ -36,7 +37,7 @@ if [ $status -ne 0 ]; then
     git commit -m "$commitmessage"
 
     # 3. push to origin
-    git push -u origin $1         
+    git push --set-upstream origin $1         
     status=$?
 fi
 
