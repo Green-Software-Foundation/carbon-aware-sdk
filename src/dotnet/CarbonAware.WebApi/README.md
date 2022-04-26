@@ -46,7 +46,7 @@ The response object MUST include the SCI score and the component variables. EG
 
 This endpoint calculates just the Average Marginal Carbon Intensity which is the `I` portion of the Green Software Foundation specification.  This is useful if you only need to report this value, or if another service is responsible for the other parts of your SCI score. 
 
-The payload object must include location and timeInterval, it is the same as the payload for the sci-score endpoint and follows the same `locationType` requirements as above.
+The payload object must include location and timeInterval, it is the same as the payload for the `/sci-scores` endpoint and follows the same `locationType` requirements as above.
 
 EG
 ```
