@@ -34,13 +34,17 @@ if [ $STATUS -ne 0 ]; then
 
     # 2. add + commit the error details
     echo $COMMITMESSAGE > README-$BRANCH.md
-    echo "-------------" >> README-$BRANCH.md
+    echo "-----------------------" >> README-$BRANCH.md
+    echo "------BEGIN-ERROR------" >> README-$BRANCH.md
     echo $GIT_PUSH_OUTPUT >> README-$BRANCH.md
+    echo "-------END-ERROR-------" >> README-$BRANCH.md
+    echo "-----------------------" >> README-$BRANCH.md
+    echo "Recommend: run \"$0\" manually in your local clone of repo, and manually create a PR from the branch that gets created." >> README-$BRANCH.md
     git add README-$BRANCH.md
     git commit -m "$COMMITMESSAGE"
 
     # 3. push to origin
-    git push --set-upstream origin $BRANCH         
+    git push --set-upstream origin $BRANCH 
     STATUS=$?
 fi
 
