@@ -25,6 +25,12 @@ paths:
               examples: 
                 sci-score-response:
                   '$ref': '#/components/examples/sci-score-response-example'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/CarbonAwareError'
   '/sci-scores/marginal-carbon-intensity':
     post:
       summary: Calculate the average marginal carbon intensity for a given location and time duration.
@@ -45,6 +51,12 @@ paths:
               examples: 
                 carbon-intensity-score-response:
                   '$ref': '#/components/examples/marginal-carbon-intensity-response-example'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/CarbonAwareError'
 components:
   requestBodies:
     SciScoreCalculation:
@@ -107,6 +119,12 @@ components:
           type: string
           description: ISO8601 formatted [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).  This value should be supplied in the UTC (Z) timezone.
           example: 2007-03-01T13:00:00Z/2007-03-01T15:30:00Z
+
+    CarbonAwareError:
+      type: object
+      properties:
+        message:
+          type: string
     
   examples:
     sci-score-calc-example:
