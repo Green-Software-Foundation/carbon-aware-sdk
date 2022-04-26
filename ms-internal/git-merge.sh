@@ -12,7 +12,7 @@ git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
 # upstream contents needed for creating the PR
-set +e
+set +e # don't fail script if upstream exists
 git remote add upstream $UPSTREAMREPO
 set -e
 git fetch upstream
@@ -20,7 +20,7 @@ git checkout -b $BRANCH upstream/$BASE
 
 # git push, capturing output text and exit code
 echo "Creating a PR with fetched-contents from upstream:$BASE into origin:$BASE."
-set +e
+set +e # don't fail script if git push fails, since we want to continue
 GIT_PUSH_OUTPUT=$(git push --set-upstream origin $BRANCH 2>&1) # without 'workflow' permission this fails if changes to .github\workflow\*.yml file(s) are present
 STATUS=$?
 set -e
