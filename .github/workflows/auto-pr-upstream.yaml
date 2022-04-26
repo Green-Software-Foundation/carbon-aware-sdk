@@ -1,6 +1,8 @@
 name: Auto PR from Upstream
 
 on:
+  push:
+    branches: katantia-automerge
   schedule:
     - cron: '59 23 * * Mon' # Every Monday at midnight
 
