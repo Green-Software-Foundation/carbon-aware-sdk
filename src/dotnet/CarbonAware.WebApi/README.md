@@ -4,7 +4,7 @@
 
 ### POST /sci-scores
 
-This endpoint uses a custom plugin which calculates the SCI score using the Green Software Foundation SCI specification formula.
+This endpoint calculates the SCI score using the Green Software Foundation SCI specification formula.
 
 > ((E \* I) + M)/R
 
