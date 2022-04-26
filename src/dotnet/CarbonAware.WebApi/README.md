@@ -13,20 +13,24 @@ This endpoint uses a custom plugin which calculates the SCI score using the Gree
 - (M) Embodied Emissions
 - (R) Functional Unit
 
-The payload object must include location and timeInterval. If location type is CloudProvider, location should include provider and region attributes, if location type is geoposition then the location should include latitude and longitude.
+The payload object must include `location` and `timeInterval`.
+
+If location is of type `CloudProvider`, the object should include the `providerName` and `regionName` attributes.
+If location if of type `Geoposition` then the object should include `latitude` and `longitude` attributes.
+
+EG
 ```
 {
-    "locationType": "CloudProvider",
     "location": {
-        "provider": "Azure",
-        "region": "uswest"
-        "latitude": null,
-        "longitude": null
-    }
+        "locationType": "CloudProvider",
+        "providerName": "Azure",
+        "regionName": "uswest"
+    },
+    "timeInterval": "2007-03-01T13:00:00Z/2007-03-01T15:30:00Z"
 }
 ```
 
-The request object is defined by the calculator, but the response object MUST include the SCI score and the component variables. EG
+The response object MUST include the SCI score and the component variables. EG
 
 ```
 {
@@ -40,27 +44,31 @@ The request object is defined by the calculator, but the response object MUST in
 
 ### POST /sci-scores/marginal-carbon-intensity
 
-The payload object must include location and timeInterval, it is the same as the payload for the sci-score endpoint. If location type is CloudProvider, location should include provider and region attributes, if location type is geoposition then the location should include latitude and longitude.
+This endpoint calculates just the Average Marginal Carbon Intensity which is the `I` portion of the Green Software Foundation specification.  This is useful if you only need to report this value, or if another service is responsible for the other parts of your SCI score. 
+
+The payload object must include location and timeInterval, it is the same as the payload for the sci-score endpoint and follows the same `locationType` requirements as above.
+
+EG
 ```
 {
-    "locationType": "CloudProvider",
     "location": {
-        "provider": "Azure",
-        "region": "uswest"
-        "latitude": null,
-        "longitude": null
-    }
+        "locationType": "Geoposition",
+        "latitude": -37.814,
+        "longitude": 144.96332
+    },
+    "timeInterval": "2007-03-01T13:00:00Z/2007-03-01T15:30:00Z"
 }
 ```
 
+The response object is the same SciScore object as above, but only `marginalCarbonIntensityValue` is populated, the other attributes are set to `null`.
 
-This endpoint calculates just the Average Marginal Carbon Intensity which is the I portion of the Green Software Foundation specification
-
-The response object must include the the value of the marginal carbon intensity.
 EG
-
 ```
 {
-    "marginalCarbonIntensityValue": 750.0
+  "sciScore": null,
+  "energyValue": null,
+  "marginalCarbonIntensityValue": 750.0,
+  "embodiedEmissionsValue": null,
+  "functionalUnitValue": null
 }
 ```
