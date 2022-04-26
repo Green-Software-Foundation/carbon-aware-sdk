@@ -12,7 +12,9 @@ git config user.name "GitHub Actions Bot"
 git config user.email "<>"
 
 # upstream contents needed for creating the PR
+set +e
 git remote add upstream $UPSTREAMREPO
+set -e
 git fetch upstream
 git checkout -b $BRANCH upstream/$BASE 
 
