@@ -2,7 +2,7 @@ name: Auto PR from Upstream
 
 on:
   schedule:
-    - cron: '0 0 * * Wed' # Every Wednesday at midnight
+    - cron: '59 23 * * Mon' # Every Monday at midnight
 
 env:
   OWNER: "microsoft"
