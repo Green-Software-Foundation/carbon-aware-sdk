@@ -1,10 +1,16 @@
 # Carbon Aware REST API
 
+
+- [Carbon Aware REST API](#carbon-aware-rest-api)
+  - [Endpoints](#endpoints)
+    - [POST /sci-scores](#post-sci-scores)
+    - [POST /sci-scores/marginal-carbon-intensity](#post-sci-scoresmarginal-carbon-intensity)
+  
 ## Endpoints
 
 ### POST /sci-scores
 
-This endpoint calculates the SCI score using the Green Software Foundation SCI specification formula.
+This endpoint calculates the SCI score using the [Green Software Foundation SCI specification formula](https://github.com/Green-Software-Foundation/software_carbon_intensity/blob/main/Software_Carbon_Intensity/Software_Carbon_Intensity_Specification.md#methodology-summary).
 
 > ((E \* I) + M)/R
 
