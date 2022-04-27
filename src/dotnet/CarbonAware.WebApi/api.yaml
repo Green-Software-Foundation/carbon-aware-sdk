@@ -7,7 +7,7 @@ info:
 paths:
   '/sci-scores':
     post:
-      summary: Calculate the SCI score using the configured plugins
+      summary: Calculate the SCI score using the configured data sources
       description: ''
       operationId: calculateSciScore
       requestBody:
@@ -64,7 +64,7 @@ components:
         application/json:
           schema:
             '$ref': '#/components/schemas/MarginalCarbonIntensityCalculation'
-      description: Sci Score calculation component payload for configured plugin
+      description: Sci Score calculation component payload for configured data sources
       required: true
     MarginalCarbonIntensityCalculation:
       content:
