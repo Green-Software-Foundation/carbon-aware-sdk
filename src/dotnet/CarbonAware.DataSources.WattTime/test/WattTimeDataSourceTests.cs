@@ -44,7 +44,7 @@ public class WattTimeDataSourceTests
     [Test]
     public async Task GetCarbonIntensity_ReturnsResultsWhenRecordsFound()
     {
-        var location = new Location() { RegionName = "us-east", LocationType = LocationType.Azure };
+        var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
         var balancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         var endDate = new DateTimeOffset(2022, 4, 18, 12, 33, 42, TimeSpan.FromHours(-6));
@@ -84,7 +84,7 @@ public class WattTimeDataSourceTests
     [Test]
     public async Task GetCarbonIntensity_ReturnsEmptyListWhenNoRecordsFound()
     {
-        var location = new Location() { RegionName = "us-east", LocationType = LocationType.Azure };
+        var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
         var balancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         var endDate = new DateTimeOffset(2022, 4, 18, 12, 33, 42, TimeSpan.FromHours(-6));
@@ -108,7 +108,7 @@ public class WattTimeDataSourceTests
     [Test]
     public void GetCarbonIntensity_ThrowsWhenRegionNotFound()
     {
-        var location = new Location() { RegionName = "us-east", LocationType = LocationType.Azure };
+        var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         var endDate = new DateTimeOffset(2022, 4, 18, 12, 33, 42, TimeSpan.FromHours(-6));
 
