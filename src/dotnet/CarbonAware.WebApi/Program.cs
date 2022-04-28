@@ -11,6 +11,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCarbonAwareEmissionServices();
 
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -25,5 +27,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();

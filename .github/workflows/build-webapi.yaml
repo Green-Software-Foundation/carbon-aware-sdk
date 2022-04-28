@@ -11,8 +11,8 @@ on:
 
 env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/Dockerfile"
-  HEALTH_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
-  #Health Check Endpoint to be added as another story and replaced here
+  HEALTH_ENDPOINT: "0.0.0.0:8080/health"
+  DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
 
 jobs:
   container-unit-test:
@@ -47,3 +47,8 @@ jobs:
       - name: Docker WGET Health Endpoint
         run: |
           wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
+
+      - name: Docker WGET Data Endpoint
+        run: |
+          wget -t 5 --waitretry=5 ${DATA_ENDPOINT}
+
