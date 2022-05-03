@@ -2,14 +2,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using CarbonAware.DataSources.Configuration;
 using CarbonAware.Aggregators.CarbonAware;
+using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Aggregators.Configuration;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddCarbonAwareEmissionServices(this IServiceCollection services)
+    /// <summary>
+    /// Add services needed in order to pull data from a Carbon Intensity data source.
+    /// </summary>
+    public static void AddCarbonAwareEmissionServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDataSourceService(DataSourceType.JSON);
+        services.AddDataSourceService(configuration);
         services.TryAddSingleton<ICarbonAwareAggregator, CarbonAwareAggregator>();
     }
 }

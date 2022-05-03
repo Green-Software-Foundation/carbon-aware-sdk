@@ -10,6 +10,7 @@ using NUnit.Framework;
 using Microsoft.Extensions.DependencyInjection;
 using CarbonAware.Aggregators.Configuration;
 using CarbonAware.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Aggregators.Tests;
 
@@ -47,7 +48,7 @@ public class CarbonAwareAggregatorTests
     {
         var serviceCollection = new ServiceCollection();
         serviceCollection.AddLogging(); 
-        serviceCollection.AddCarbonAwareEmissionServices();
+        serviceCollection.AddCarbonAwareEmissionServices(It.IsAny<IConfiguration>());
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var aggregator = serviceProvider.GetRequiredService<ICarbonAwareAggregator>();
         Assert.NotNull(aggregator);
