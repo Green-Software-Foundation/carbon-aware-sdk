@@ -51,5 +51,5 @@
 
 		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PublishDir)\data-files\" SkipUnchangedFiles="true" />
 	</Target>
-  
+
 </Project>
