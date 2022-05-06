@@ -23,17 +23,17 @@ internal class MockLogicPlugin : ICarbonAwarePlugin
         
     }
 
-    public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+    public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
     {
         return _dataService.GetData();
     }
 
-    public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+    public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
     {
         return _dataService.GetData();
     }
 
-    public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+    public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
     {
         return _dataService.GetData();
     }

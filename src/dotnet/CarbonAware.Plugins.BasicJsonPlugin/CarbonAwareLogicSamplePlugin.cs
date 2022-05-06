@@ -32,7 +32,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         /// <param name="location">The name of the location to filter by.</param>
         /// <param name="time">The time to retrieve the most recent data for.</param>
         /// <returns>A single emissions data record for the location, and EmissionsData.None if no results are found.</returns>
-        public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+        public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
         {
             List<EmissionsData> matchingEmissionsData = new List<EmissionsData>();
 
@@ -48,7 +48,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
 
             if (toTime != null)
             {
-                var timeWindowEmissions = emissionsDataForLocation.Where(ed => ed.TimeBetween(time,toTime)).ToList();
+                var timeWindowEmissions = emissionsDataForLocation.Where(ed => ed.TimeBetween(time ?? DateTime.Now, toTime)).ToList();
                 matchingEmissionsData.AddRange(timeWindowEmissions);
             }
 
@@ -61,7 +61,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         /// <param name="locations">The name of the locations to filter by.</param>
         /// <param name="time">The time to retrieve the most recent data for.</param>
         /// <returns>A List&lt;EmissionsData&gt; for each emissions data record for each location available.  If no records are found, returns an empty List.</returns>
-        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+        public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
         {
             var results = new List<EmissionsData>();
             foreach (var location in locations)
@@ -78,7 +78,7 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         /// <param name="location">The name of the locations to filter by.</param>
         /// <param name="time">The time to retrieve the most recent data for.</param>
         /// <returns>>A single emissions data record for the location based on the "best" emissions i.e. in thie case, the lowest.  Returns EmissionsData.None if no results are found.</returns>
-        public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+        public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
         {
             List<EmissionsData> emissionsData = new List<EmissionsData>();
 

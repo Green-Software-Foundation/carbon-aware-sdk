@@ -7,6 +7,11 @@ public record EmissionsData
     public DateTime Time { get; set; }
     public double Rating { get; set; }
 
+    /// <summary>
+    /// DataSource from this emission data.
+    /// </summary>
+    public string DataSource { get; set; }
+
 
     public bool TimeBetween(DateTime fromNotInclusive, DateTime? endInclusive)
     {
