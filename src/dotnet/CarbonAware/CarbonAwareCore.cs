@@ -33,4 +33,19 @@ public class CarbonAwareCore : ICarbonAwareBase
     {
         return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time, toTime, durationMinutes);
     }
+
+    void ICarbonAwareBase.RecordSCIBaseData(SCIBaseData data)
+    {
+        throw new NotImplementedException();
+    }
+
+    SCIBaseData ICarbonAwareBase.GetSCIBaseDataByGuid(Guid guid)
+    {
+        throw new NotImplementedException();
+    }
+
+    List<SCIBaseData> ICarbonAwareBase.GetSCIBaseDataByDateTime(DateTime from, DateTime? to)
+    {
+        throw new NotImplementedException();
+    }
 }

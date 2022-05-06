@@ -97,5 +97,20 @@ namespace CarbonAware.Plugins.BasicJsonPlugin
         {
             // nothing to configure 
         }
+
+        void ICarbonAwareBase.RecordSCIBaseData(SCIBaseData data)
+        {
+            throw new NotImplementedException();
+        }
+
+        SCIBaseData ICarbonAwareBase.GetSCIBaseDataByGuid(Guid guid)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<SCIBaseData> ICarbonAwareBase.GetSCIBaseDataByDateTime(DateTime from, DateTime? to)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

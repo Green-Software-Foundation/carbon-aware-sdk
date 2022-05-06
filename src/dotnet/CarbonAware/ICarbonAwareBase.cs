@@ -34,4 +34,25 @@ public interface ICarbonAwareBase
     /// i.e. in thie case, the lowest.  Returns EmissionsData.  May be mutliple emissions results and times if
     /// the emissions are equal.</returns>
     List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0);
+
+    /// <summary>
+    /// Record base data for calculating Software Carbon Intensity (SCI).
+    /// </summary>
+    /// <param name="data">SCI base data</param>
+    void RecordSCIBaseData(SCIBaseData data);
+
+    /// <summary>
+    /// Returns SCI base data with the given GUID value.
+    /// </summary>
+    /// <param name="guid">GUID value which you want.</param>
+    /// <returns>SCI base data with the given GUID value.</returns>
+    SCIBaseData GetSCIBaseDataByGuid(Guid guid);
+
+    /// <summary>
+    /// Returns SCI base data list within a specified date time.
+    /// </summary>
+    /// <param name="from">Start time to retrieve SCI base data.</param>
+    /// <param name="to">End time to retrieve SCI base data. Current date time will be used if this value is null.</param>
+    /// <returns></returns>
+    List<SCIBaseData> GetSCIBaseDataByDateTime(DateTime from, DateTime? to);
 }
