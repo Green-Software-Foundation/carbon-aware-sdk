@@ -16,8 +16,9 @@ public static class TestHelpers
     /// <param name="code">Expected HTTP status code. </param>
     /// <remarks>Certain results, like NoContent(), return a StatusCodeResult
     /// instead of an ObjectResult so we handle both here.</remarks>
-    public static void AssertStatusCode(IActionResult result, HttpStatusCode code)
+    public static void AssertStatusCode(IActionResult? result, HttpStatusCode code)
     {
+        Assert.IsNotNull(result);
         if (result is not ObjectResult obj)
         {
             var statusCodeResult = result as StatusCodeResult;

@@ -11,7 +11,7 @@ public interface ICarbonIntensityDataSource
     string Version { get; }
 
     /// <summary>
-    /// Gets the carbon intensity for a given SciScoreCalculation.
+    /// Gets the carbon intensity for a location and start and end time
     /// </summary>
     /// <param name="locations">The locations that should be used for getting emissions data.</param>
     /// <param name="periodStartTime">The start time of the period.</param>
