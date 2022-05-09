@@ -39,6 +39,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Aggregator.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Registration", "CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj", "{5CFC4F4D-7E8D-4682-A659-35050C637FF4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Azure", "CarbonAware.LocationSources.Azure\src\CarbonAware.LocationSources.Azure.csproj", "{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Azure.Test", "CarbonAware.LocationSources.Azure\test\CarbonAware.LocationSources.Azure.Test.csproj", "{F4BD1233-447F-4245-AE7B-A877427EB2D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +121,14 @@ Global
 		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

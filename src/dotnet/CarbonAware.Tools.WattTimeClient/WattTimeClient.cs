@@ -131,7 +131,7 @@ public class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public async Task<BalancingAuthority?> GetBalancingAuthorityAsync(string latitude, string longitude)
+    public async Task<BalancingAuthority> GetBalancingAuthorityAsync(string latitude, string longitude)
     {
         Log.LogInformation("Requesting balancing authority for lattitude {lattitude} and longitude {longitude}", latitude, longitude);
 
@@ -148,8 +148,13 @@ public class WattTimeClient : IWattTimeClient
         };
 
         var result = await this.MakeRequestAsync(Paths.BalancingAuthorityFromLocation, parameters, tags);
-
-        return JsonSerializer.Deserialize<BalancingAuthority>(result, options);
+        
+        var balancingAuthority = JsonSerializer.Deserialize<BalancingAuthority>(result, options);
+        if (balancingAuthority == null) 
+        {
+            throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}", new HttpResponseMessage(HttpStatusCode.InternalServerError));
+        }
+        return balancingAuthority;
     }
 
     /// <inheritdoc/>

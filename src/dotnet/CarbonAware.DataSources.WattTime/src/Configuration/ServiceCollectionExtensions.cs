@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Configuration;
 using CarbonAware.Interfaces;
 using CarbonAware.Tools.WattTimeClient.Configuration;
-
+using CarbonAware.LocationSources.Azure;
 
 namespace CarbonAware.DataSources.WattTime.Configuration;
 
@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
         var configurationBuilder = new ConfigurationBuilder();
         var config = configurationBuilder.Build();
         services.ConfigureWattTimeClient(config);
-        services.TryAddSingleton<ILocationConverter, LocationConverter>();
         services.TryAddSingleton<ICarbonIntensityDataSource, WattTimeDataSource>();
+        services.TryAddSingleton<ILocationSource, AzureLocationSource>();
     }
 }

@@ -11,3 +11,4 @@ public class Constants
     public const string Duration = "duration";
     public const string Best = "best";
 }
+

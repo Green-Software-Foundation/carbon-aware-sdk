@@ -24,7 +24,10 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        IEnumerable<Location> locationEnumerable = locations.Select(loc => new Location(){ RegionName = loc });
+        //The LocationType is hardcoded for now. Ideally this should be received from the request or configuration 
+        IEnumerable<Location> locationEnumerable = locations.Select(loc => new Location()
+                                                                            { RegionName = loc, 
+                                                                            LocationType=LocationType.CloudProvider});
         var props = new Dictionary<string, object?>() {
             { CarbonAwareConstants.Locations, locationEnumerable },
             { CarbonAwareConstants.Start, time},

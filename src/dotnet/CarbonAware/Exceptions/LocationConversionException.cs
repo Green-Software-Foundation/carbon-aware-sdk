@@ -1,4 +1,4 @@
-﻿namespace CarbonAware.DataSources.WattTime;
+﻿namespace CarbonAware.Exceptions;
 
 /// <summary>
 /// Represents a conversion exception.

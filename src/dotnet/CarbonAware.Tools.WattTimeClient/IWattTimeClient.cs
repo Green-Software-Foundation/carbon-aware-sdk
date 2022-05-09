@@ -70,7 +70,7 @@ public interface IWattTimeClient
     /// <param name="longitude">Longitude of the location</param>
     /// <returns>An <see cref="Task{BalancingAuthority}"/> which contains the balancing authority details.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<BalancingAuthority?> GetBalancingAuthorityAsync(string latitude, string longitude);
+    public Task<BalancingAuthority> GetBalancingAuthorityAsync(string latitude, string longitude);
 
     /// <summary>
     /// Async method to get the balancing authority abbreviation for a given location.

@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CarbonAware.Model;
 
@@ -22,7 +23,6 @@ public class Location
     /// Gets or sets the longitude.
     /// </summary>
     public decimal? Longitude { get; set; }
-
 
     /// <summary>
     /// Gets or sets the cloud provider name to use.  When location type is GeoPosition, this value should be null..
