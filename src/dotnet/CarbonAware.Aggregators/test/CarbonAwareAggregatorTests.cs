@@ -30,7 +30,7 @@ public class CarbonAwareAggregatorTests
 
         mockDataSrc.Setup(x => x.GetCarbonIntensityAsync(It.IsAny<IEnumerable<Location>>(), 
             It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
-            .ReturnsAsync(FilterRawFakeData(location, startTime, endTime));
+            .ReturnsAsync(TestData.GetFilteredEmissionDataList(location, startTime, endTime));
         
         var aggregator = new CarbonAwareAggregator(logger, mockDataSrc.Object);
         var props = new Dictionary<string, object>() {
@@ -93,41 +93,4 @@ public class CarbonAwareAggregatorTests
         }
         Assert.ThrowsAsync<ArgumentException>(async () => await aggregator.CalcEmissionsAverageAsync(props));
     }
-
-    private IEnumerable<EmissionsData> FilterRawFakeData(string location, string startTime, string endTime)
-    {
-        DateTime start, end;
-        Assert.True(DateTime.TryParse(startTime, out start));
-        Assert.True(DateTime.TryParse(endTime, out end));
-        return RawFakeEmissionData.Where(x => x.Location == location && x.Time >= start && x.Time <= end);
-    }
-
-    static IEnumerable<EmissionsData> RawFakeEmissionData =  new List<EmissionsData>()
-        {
-            new EmissionsData {
-                Location = "westus",
-                Time = DateTime.Parse("2021-11-17"),
-                Rating = 10
-            },
-            new EmissionsData {
-                Location = "westus",
-                Time = DateTime.Parse("2021-11-17"),
-                Rating = 20
-            },
-            new EmissionsData {
-                Location = "westus",
-                Time = DateTime.Parse("2021-11-17"),
-                Rating = 30
-            },
-            new EmissionsData {
-                Location = "westus",
-                Time = DateTime.Parse("2021-11-19"),
-                Rating = 40
-            },
-            new EmissionsData {
-                Location = "eastus",
-                Time = DateTime.Parse("2021-11-18"),
-                Rating = 60
-            }
-        };
 }
