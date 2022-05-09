@@ -30,6 +30,13 @@ public class WattTimeDataSourceTests
 
     private Mock<ILocationSource> LocationSource { get; set; }
 
+    // Magic floating point tolerance to allow for minuscule differences in floating point arithmetic.
+    private const double FLOATING_POINT_TOLERANCE = 0.00000001;
+
+    // Conversion factors for asserting proper unit conversions
+    private const double GRAMS_TO_POUNDS = 0.00220462262185;
+    private const double KWH_TO_MWH = 0.001;
+
 
     [SetUp]
     public void Setup()
@@ -44,12 +51,15 @@ public class WattTimeDataSourceTests
     }
 
     [Test]
+    [DefaultFloatingPointTolerance(FLOATING_POINT_TOLERANCE)]
     public async Task GetCarbonIntensity_ReturnsResultsWhenRecordsFound()
     {
         var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
         var balancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         var endDate = new DateTimeOffset(2022, 4, 18, 12, 33, 42, TimeSpan.FromHours(-6));
+        var lbsPerMwhEmissions = 10;
+        var gPerKwhEmissions = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
 
         var emissionData = new List<GridEmissionDataPoint>()
         {
@@ -57,7 +67,7 @@ public class WattTimeDataSourceTests
             {
                 BalancingAuthorityAbbreviation = balancingAuthority.Abbreviation,
                 PointTime = startDate.DateTime,
-                Value = 5,
+                Value = lbsPerMwhEmissions,
             }
         };
 
@@ -75,7 +85,7 @@ public class WattTimeDataSourceTests
 
         var first = result.First();
         Assert.IsNotNull(first);
-        Assert.AreEqual(5m, first.Rating);
+        Assert.AreEqual(gPerKwhEmissions, first.Rating);
         Assert.AreEqual(balancingAuthority.Abbreviation, first.Location);
         Assert.AreEqual(startDate.DateTime, first.Time);
 
@@ -115,6 +125,21 @@ public class WattTimeDataSourceTests
 
         Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { location }, startDate, endDate));
     }
+
+    [DatapointSource]
+    public float[] moerValues = new float[] { 0.0F, 10.0F, 100.0F, 1000.0F, 596.1367F};
+
+    [Theory]
+    public void GetCarbonIntensity_ConvertsMoerToGramsPerKwh(float lbsPerMwhEmissions)
+    {
+        Assume.That(lbsPerMwhEmissions >= 0.0);
+
+        var result = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
+
+        Assert.That(result >= 0.0);
+        Assert.That(result * GRAMS_TO_POUNDS / KWH_TO_MWH, Is.EqualTo(lbsPerMwhEmissions).Within(FLOATING_POINT_TOLERANCE));
+    }
+
     private void SetupBalancingAuthority(BalancingAuthority balancingAuthority, Location location)
     {
         this.LocationSource.Setup(r => r.ToGeopositionLocationAsync(location)).Returns(Task.FromResult(location));
@@ -125,6 +150,5 @@ public class WattTimeDataSourceTests
         ).ReturnsAsync(() => balancingAuthority);
 
     }
-
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

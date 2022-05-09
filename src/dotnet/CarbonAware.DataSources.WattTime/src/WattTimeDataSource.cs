@@ -29,6 +29,10 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
 
     private ILocationSource LocationSource { get; }
 
+    const double MWH_TO_KWH_CONVERSION_FACTOR = 1000.0;
+    const double LBS_TO_GRAMS_CONVERSION_FACTOR = 453.59237;
+
+
     /// <summary>
     /// Creates a new instance of the <see cref="WattTimeDataSource"/> class.
     /// </summary>
@@ -89,7 +93,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
             var result = data.Select(e => new EmissionsData() 
             { 
                 Location = e.BalancingAuthorityAbbreviation, 
-                Rating = e.Value, 
+                Rating = ConvertMoerToGramsPerKilowattHour(e.Value), 
                 Time = e.PointTime 
             });
 
@@ -100,5 +104,10 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
 
             return result;
         }
+    }
+
+    internal double ConvertMoerToGramsPerKilowattHour(double value)
+    {
+        return value * LBS_TO_GRAMS_CONVERSION_FACTOR / MWH_TO_KWH_CONVERSION_FACTOR;
     }
 }
