@@ -160,3 +160,43 @@ A total of 1 test files matched the specified pattern.
 
 Passed!  - Failed:     0, Passed:    14, Skipped:     0, Total:    14, Duration: 413 ms
 ```
+
+### Configuring LogLevels
+
+The default LogLevel settings for the application are found in the corresponding `appsettings.json`, which may contain the following section -- see here for additional details on [Logging in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging) and on [Logging Providers in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers)
+
+```json
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  }
+```
+
+To permanently change the LogLevel, just update the `appsettings.json` for the app.
+To override a LogLevel at runtime, an environment variable can set the LogLevel value. 
+For example to set the Logging:LogLevel:Default LogLevel to Debug: `export Logging__LogLevel__Default="Debug"` 
+
+Example using the CLI:
+
+```sh
+cd src/dotnet/CarbonAware.CLI
+export Logging__LogLevel__Default="Debug"
+dotnet run -l westus
+```
+
+Example using the WebApp:
+
+```sh
+cd src/dotnet/CarbonAware.WebApi
+export Logging__LogLevel__Default="Debug"
+dotnet run
+```
+
+Or, to change the LogLevel for just one run of the app:
+
+```sh
+cd src/dotnet/CarbonAware.WebApi
+Logging__LogLevel__Default="Debug" dotnet run
+```

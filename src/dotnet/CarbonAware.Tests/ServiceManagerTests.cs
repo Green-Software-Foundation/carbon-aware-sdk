@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using CarbonAware.Interfaces;
+using Moq;
+using Microsoft.Extensions.Logging;
 
 namespace CarbonAware.Tests;
 
@@ -20,7 +22,8 @@ public class ServiceManagerTests
     [Test]
     public void CreatesWithConfigManager()
     {
-        var serviceManager = new ServiceManager(_goodConfigManager);
+        var _logger = Mock.Of<ILogger<ServiceManager>>();
+        var serviceManager = new ServiceManager(_logger, _goodConfigManager);
         Assert.Pass();
     }
 
@@ -33,7 +36,8 @@ public class ServiceManagerTests
             Directory.Delete(pluginDirPath);
         }
 
-        var serviceManager = new ServiceManager(_goodConfigManager);
+        var _logger = Mock.Of<ILogger<ServiceManager>>();
+        var serviceManager = new ServiceManager(_logger, _goodConfigManager);
         Assert.Pass();
     }
 
@@ -46,7 +50,8 @@ public class ServiceManagerTests
             Directory.CreateDirectory(pluginDirPath);
         }
 
-        var serviceManager = new ServiceManager(_goodConfigManager);
+        var _logger = Mock.Of<ILogger<ServiceManager>>();
+        var serviceManager = new ServiceManager(_logger, _goodConfigManager);
         Directory.Delete(pluginDirPath);
 
         Assert.Pass();
@@ -55,7 +60,8 @@ public class ServiceManagerTests
     [Test]
     public void CreatesAndRetrievesServices()
     {
-        var serviceManager = new ServiceManager(_goodConfigManager);
+        var _logger = Mock.Of<ILogger<ServiceManager>>();
+        var serviceManager = new ServiceManager(_logger, _goodConfigManager);
 
         var plugin = serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
         Assert.IsNotNull(plugin);
@@ -71,7 +77,8 @@ public class ServiceManagerTests
     {
         try
         {
-            var serviceManager = new ServiceManager(_badTypesConfigManager);
+            var _logger = Mock.Of<ILogger<ServiceManager>>();
+            var serviceManager = new ServiceManager(_logger, _badTypesConfigManager);
         }
         catch (ArgumentException)
         {
@@ -85,7 +92,8 @@ public class ServiceManagerTests
     {
         try
         {
-            var serviceManager = new ServiceManager(_badServiceConfigManager);
+            var _logger = Mock.Of<ILogger<ServiceManager>>();
+            var serviceManager = new ServiceManager(_logger, _badServiceConfigManager);
         }
         catch (ArgumentException)
         {

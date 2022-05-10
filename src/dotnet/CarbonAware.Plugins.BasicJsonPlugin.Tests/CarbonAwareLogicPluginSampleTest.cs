@@ -2,6 +2,9 @@ using CarbonAware.Model;
 using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
+using Microsoft.Extensions.Logging;
+using Moq;
+
 
 namespace CarbonAware.Plugins.BasicJsonPlugin.Tests;
 
@@ -74,17 +77,18 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        Console.WriteLine("Test Setup");
+        TestContext.Out.WriteLine("Test Setup");
+        var _logger = Mock.Of<ILogger<CarbonAwareCore>>();
         var dataService = new MockCarbonAwareStaticDataService();
         dataService.Configure(null);
         _plugin = new CarbonAwareBasicDataPlugin(dataService);
-        _core = new CarbonAwareCore(_plugin);
+        _core = new CarbonAwareCore(_logger, _plugin);
     }
 
     [TearDown]
     public void TearDown()
     {
-        Console.WriteLine("Test TearDown");
+        TestContext.Out.WriteLine("Test TearDown");
     }
 
     [Test]
