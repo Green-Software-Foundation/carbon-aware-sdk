@@ -46,7 +46,7 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "locations")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        IEnumerable<Location> locationEnumerable = locations.Select(loc => new Location(){ RegionName = loc });
+        IEnumerable<Location> locationEnumerable = locations.Select(loc => new Location(){ RegionName = loc, LocationType=LocationType.CloudProvider });
         var props = new Dictionary<string, object?>() {
             { CarbonAwareConstants.Locations, locationEnumerable },
             { CarbonAwareConstants.Start, time },
@@ -64,7 +64,7 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {;
-        var locations = new List<Location>() { new Location() { RegionName = location } };
+        var locations = new List<Location>() { new Location() { RegionName = location, LocationType=LocationType.CloudProvider } };
         var props = new Dictionary<string, object?>() {
             { CarbonAwareConstants.Locations, locations },
             { CarbonAwareConstants.Start, time },

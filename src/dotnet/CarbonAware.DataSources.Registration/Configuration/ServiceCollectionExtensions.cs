@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
             }
             case DataSourceType.WattTime:
             {
-                    services.AddWattTimeDataSourceService();
+                    services.AddWattTimeDataSourceService(configuration);
                     break;
             }
             case DataSourceType.None:
