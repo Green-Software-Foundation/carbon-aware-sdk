@@ -7,6 +7,7 @@ using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace CarbonAware.Aggregators.Tests;
@@ -63,7 +64,7 @@ public class SciScoreAggregatorTests
     }
 
     [Test]
-    public void CalculateAverageCarbonIntensityAsync_UnderspecifiedTimeInterval()
+    public async Task CalculateAverageCarbonIntensityAsync_UnderspecifiedTimeInterval()
     {
         // Arrange
         var location = new Location() { 
@@ -77,11 +78,12 @@ public class SciScoreAggregatorTests
         };
 
         var timeInterval = "2019-01-01/2019-01-02";
-        var start = new DateTimeOffset(2019, 1, 1, 0, 0, 0, TimeSpan.Zero);
-        var end = new DateTimeOffset(2019, 1, 2, 0, 0, 0, TimeSpan.Zero);
+
+        var start = DateTimeOffset.Parse("2019-01-01", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
+        var end = DateTimeOffset.Parse("2019-01-02", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal);
 
         // Act
-        this.Aggregator.CalculateAverageCarbonIntensityAsync(location, timeInterval);
+        await this.Aggregator.CalculateAverageCarbonIntensityAsync(location, timeInterval);
 
         // Assert
         this.CarbonIntensityDataSource.Verify(r => r.GetCarbonIntensityAsync(locations, start, end), Times.Once);
