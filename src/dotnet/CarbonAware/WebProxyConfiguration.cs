@@ -4,22 +4,22 @@ public class WebProxyConfiguration
 {
 
     /// <summary>
-    /// Sets the UseWebProxy
+    /// Gets or sets a value that determines whether or not a proxy will be used.
     /// </summary>
-    public bool UseWebProxy { get; set; }
+    public bool UseProxy { get; set; }
 
     /// <summary>
-    /// Sets the WebProxy url
+    /// Gets or sets the proxy url
     /// </summary>
-    public string WebProxyUrl { get; set; }
+    public string Url { get; set; }
 
     /// <summary>
-    /// Sets the WebProxy username
+    /// Sets the proxy username
     /// </summary>
-    public string WebProxyUsername { get; set; }
+    public string Username { get; set; }
 
     /// <summary>
-    /// Sets the WebProxy password
+    /// Sets the proxy password
     /// </summary>
-    public string WebProxyPassword { get; set; }
+    public string Password { get; set; }
 }

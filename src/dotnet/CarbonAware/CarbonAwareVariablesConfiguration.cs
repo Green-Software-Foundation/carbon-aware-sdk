@@ -23,6 +23,9 @@ public class CarbonAwareVariablesConfiguration
     public string CarbonIntensityDataSource { get; set; }
 
     #nullable enable
+    /// <summary>
+    /// Gets or sets proxy information for making calls to the internet.
+    /// </summary>
     public WebProxyConfiguration? Proxy { get; set; }
     #nullable disable
 

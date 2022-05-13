@@ -25,6 +25,8 @@ This working group is part of the Green Software Foundation. It is open to any m
 - Familiarize yourself with our scope above and take a look at our current projects in flight - links are above.
 - If you are having any problems with access, please reach out to sean@greensoftware.foundation or helpdesk@greensoftware.foundation
 
+To get started with the carbon aware SDK, see the [Getting Started](GettingStarted.md) document in this repository.
+
 ## Meeting Scheudule
 * Link to the WG groups.io calendar 
 
