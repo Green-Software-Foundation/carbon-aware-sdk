@@ -28,3 +28,6 @@ jobs:
         
     - name: Deplpoy Workload to Selected Region
       run: echo deploying ML Training Job to Region "${{ steps.carboneaware-metrics.outputs.LowestEmissionsLocation}}"
+      
+    - name: Schedule Jobs at Proposed Time with Low Carbon Emissions
+      run: Scheduling ML Training Job at Time "${{ steps.carboneaware-metrics.outputs.LowestEmissionsTime}}"
