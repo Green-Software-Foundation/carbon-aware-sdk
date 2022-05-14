@@ -45,3 +45,5 @@ outputs:
     description: 'The Region with Lowet Carbon Emissions, within the list of specified regions as input, at the specified time frame.'
   LowestEmissionsTime: 
     description: 'The Time during which Carbon Emissions are low, useful for scheduling Jobs'
+  LowestEmissionsTimeCron: 
+    description: 'The Time, in CronExpression, during which Carbon Emissions are low, useful for scheduling Jobs'
