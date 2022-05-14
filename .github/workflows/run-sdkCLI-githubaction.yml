@@ -9,6 +9,8 @@ on:
     branches: [ dev, main ]
     paths:
       - 'src/dotnet/**'
+      - 'entrypoint.sh'
+      - 'action.yml'
 
 
 jobs:
