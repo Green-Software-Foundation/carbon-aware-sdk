@@ -17,13 +17,13 @@ TimeOutput=$(echo $OutputEmissionsData | jq '.[0].Time')
 
 #Parse Time String to Convert to CronExpression
 hour_minute_sec="${TimeOutput#*T}"
-hour=$(cut -d : -f 1 <<< $hour_minute_sec)
-minute=$(cut -d : -f 2 <<< $hour_minute_sec)
-
+hour=$(echo "$hour_minute_sec" | cut -d : -f 1)
+minute=$(echo "$hour_minute_sec" | cut -d : -f 2)
 
 day_month_year="${TimeOutput%T*}"
-month=$(cut -d - -f 2 <<< $day_month_year)
-day=$(cut -d - -f 3 <<< $day_month_year)
+month=$(echo "$day_month_year" | cut -d : -f 2)
+day=$(echo "$day_month_year" | cut -d : -f 3)
+
 
 TimeCron="$minute $hour $day $month *"
 
