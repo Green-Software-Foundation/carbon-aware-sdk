@@ -21,8 +21,8 @@ hour=$(echo "$hour_minute_sec" | cut -d : -f 1)
 minute=$(echo "$hour_minute_sec" | cut -d : -f 2)
 
 day_month_year="${TimeOutput%T*}"
-month=$(echo "$day_month_year" | cut -d : -f 2)
-day=$(echo "$day_month_year" | cut -d : -f 3)
+month=$(echo "$day_month_year" | cut -d - -f 2)
+day=$(echo "$day_month_year" | cut -d - -f 3)
 
 
 TimeCron="$minute $hour $day $month *"
