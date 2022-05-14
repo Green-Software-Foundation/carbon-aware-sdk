@@ -43,3 +43,5 @@ runs:
 outputs:
   LowestEmissionsLocation: # id of the output
     description: 'The Region with Lowet Carbon Emissions, within the list of specified regions as input, at the specified time frame.'
+  LowestEmissionsTime: 
+    description: 'The Time during which Carbon Emissions are low, useful for scheduling Jobs'
