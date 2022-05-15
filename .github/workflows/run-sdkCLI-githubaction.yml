@@ -32,5 +32,5 @@ jobs:
     - name: Schedule Jobs at Proposed Time with Low Carbon Emissions
       run: echo Scheduling ML Training Job at Time "${{ steps.carboneaware-metrics.outputs.LowestEmissionsTime}}"
   
-    - name: Schedule Jobs at Time witth Low Carbon, CronExpression
+    - name: Schedule Jobs at Time witth Low Carbon Emissions, CronExpression
       run: echo Scheduling Job at CronTime "${{ steps.carboneaware-metrics.outputs.LowestEmissionsTimeCron}}"
