@@ -21,7 +21,7 @@ jobs:
       id: carboneaware-metrics
       uses: Green-Software-Foundation/carbon-aware-sdk@sdkCLI-githubaction  # here "sdkCLI-githubaction" is the name of the branch
       with:
-        location: westeurope,francecentral,westus
+        location: westeurope,francecentral,westus,northeurope
         #config: /carbon-aware.json
         #fromTime:
         #toTime:
