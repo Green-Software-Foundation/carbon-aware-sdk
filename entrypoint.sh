@@ -9,7 +9,8 @@ OutputEmissionsData=$(/CarbonAwareCLI -l $1  -c $2 $3 )
 
 #Export the Recommended Region, as a Github Action output, to be used by subsequent workflow steps
 # the CLI might return several Regions, for the current version of the Github Action, we return one of the lowest
-echo ::set-output name=LowestEmissionsLocation::$(echo $OutputEmissionsData | jq '.[0].Location')
+Location=$(echo ::set-output name=LowestEmissionsLocation::$(echo $OutputEmissionsData | jq '.[0].Location'):1:-1})
+echo $Location
 
 echo ::set-output name=LowestEmissionsTime::$(echo $OutputEmissionsData | jq '.[0].Time')
 
