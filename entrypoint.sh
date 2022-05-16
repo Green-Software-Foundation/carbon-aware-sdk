@@ -12,8 +12,8 @@ OutputEmissionsData=$(/CarbonAwareCLI -l $1  -c $2 $3 )
 responseLocation=$(echo $OutputEmissionsData | jq '.[0].Location')
 myLocation=$(echo ::set-output name=LowestEmissionsLocation::$(echo $OutputEmissionsData | jq '.[0].Location' ) )
 
-myLocation="${myLocation#'"'}"
-myLocation="${myLocation%'"'}"
+myLocation="${myLocation#'\"'}"
+myLocation="${myLocation%'\"'}"
 
 echo $myLocation
 
