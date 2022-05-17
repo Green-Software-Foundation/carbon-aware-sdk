@@ -8,7 +8,7 @@ body:
       value: |
         Thank you for wanting to contribute to the Carbon Aware SDK! Please fill out this Issue Template with your feature contribution.
   - type: textarea
-    id: Feature Description
+    id: feature-desc
     attributes:
       label: What happened?
       description: Please Describe the need for the feature

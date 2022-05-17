@@ -24,7 +24,7 @@ body:
       value: "A bug happened!"
     validations:
       required: true
-  - type: textarea
+  - type: dropdown
     id: client
     attributes:
       label: client
