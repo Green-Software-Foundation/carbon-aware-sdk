@@ -24,3 +24,12 @@ body:
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
+  - type: checkboxes
+    id: commitment
+    attributes:
+      label: commitment
+      description: By submitting this issue, you commit to contributing the feature outlined here.
+      options:
+        - label: I commit to contributing this feature as a PR and working with the GSF to merge this feature into the Carbon Aware SDK.
+          required: true
+          

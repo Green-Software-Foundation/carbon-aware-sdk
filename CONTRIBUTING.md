@@ -9,7 +9,7 @@ Welcome to the GSF Carbon Aware SDK, and thank you for contributing to this proj
 - [GSF Member Contribution Guide](#gsf-member-contribution-guide)
   - [Table of Contents](#table-of-contents)
   - [Summary Steps](#summary-steps)
-  - [Public Issue Template](#public-issue-template)
+  - [Public Issues](#public-issues)
   - [PR Template](#pr-template)
   - [Auto-PR Bot](#auto-pr-bot)
 
@@ -29,9 +29,11 @@ For the following:
 7. Once development is over, the Approved Reviewer pushes the PR into the "Ready for Review" state
 8. If the Chair accepts the PR, it merges into `GSF/carbon-aware-sdk/dev`
 
-## Public Issue Template
+## Public Issues
 
-The Public Issue Template can be found [here](TEST).
+All contributions to the GSF are tracked through public issues. Please make a public issue and fill out details on the proposed feature contribution. The issue serves as a commitment by the contributor to developing the feature. 
+
+The Issue is **not** a feature request, but tracks expected feature work. Please do **not** open an issue to request features.
 
 ## PR Template
 
