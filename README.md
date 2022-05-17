@@ -43,6 +43,10 @@ Innovation WG projects are licensed under the MIT License - see the [License.md]
 ## Dataset
 CDLA-Permissive-1.0
 
+## Contributing to the Carbon Aware SDK
+
+See the [Contribution Guidelines](CONTRIBUTING.md)
+
 ## Collaborating With the WG
 
 1. Create a [new Issue](https://github.com/Green-Software-Foundation/standards_wg/issues/new)
