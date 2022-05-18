@@ -40,9 +40,7 @@ In either case, you must provide the hostname of the Grid API server as a parame
 ```bash
 ./generate-clients.sh localhost:5073
 
-./docker-generate-clients.sh localhost:5073
-
-./docker-generate-clients.sh docker.for.mac.localhost:5073
+./docker-generate-clients.sh host.docker.internal:5073
 ```
 
 The generated clients should not be checked into the repo, they should be generated to the latest specifications whenever they are needed. The `.gitignore` file ensures that the supported SDKs are never checked in, however if new ones are generated, this must be updated.
