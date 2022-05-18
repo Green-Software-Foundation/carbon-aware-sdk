@@ -3,7 +3,7 @@ An SDK to enable the creation of carbon aware applications, applications that do
 
 ## Appointments 
 * Chair/Project lead - Vaughan Knight (MSFT)
-* Vice Chair - Szymon Duchniewicz (Avanade)
+* Vice Chair
 
 ## Projects Scope
 
@@ -25,7 +25,7 @@ This working group is part of the Green Software Foundation. It is open to any m
 - Familiarize yourself with our scope above and take a look at our current projects in flight - links are above.
 - If you are having any problems with access, please reach out to sean@greensoftware.foundation or helpdesk@greensoftware.foundation
 
-## Meeting Schedule
+## Meeting Scheudule
 * Link to the WG groups.io calendar 
 
 ## WG G-Drive
@@ -42,6 +42,10 @@ Innovation WG projects are licensed under the MIT License - see the [License.md]
 
 ## Dataset
 CDLA-Permissive-1.0
+
+## Contributing to the Carbon Aware SDK
+
+See the [Contribution Guidelines](CONTRIBUTING.md)
 
 ## Collaborating With the WG
 
