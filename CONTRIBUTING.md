@@ -2,7 +2,7 @@
 
 Welcome to the GSF Carbon Aware SDK, and thank you for contributing to this project. This guide outlines the steps for working within the Carbon Aware SDK and the approved contribution process that members should follow.
 
-**This project is currently only looking for contributions from GSF Members. Please contact the project owners for individual contributions.**
+**Please contact the project owners for individual contributions. Working Group meetings and the internal communication channels are only open to GSF Members.**
 
 ## Table of Contents
 
