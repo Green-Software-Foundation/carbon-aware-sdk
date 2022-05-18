@@ -30,4 +30,4 @@ builder.Services.AddSingleton<IConfig>(config);
 var app = builder.Build();
 app.UseAuthorization();
 app.MapControllers();
-app.Run($"http://localhost:{config.PORT}");
+app.Run($"http://*:{config.PORT}");

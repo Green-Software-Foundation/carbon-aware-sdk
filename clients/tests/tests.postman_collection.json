@@ -50,12 +50,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:50000/emissions/byLocation?location=eastus",
+					"raw": "http://{{base_url}}/emissions/byLocation?location=eastus",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "50000",
 					"path": [
 						"emissions",
 						"byLocation"
@@ -125,12 +124,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:50000/emissions/byLocation?location=eastus&time=2022-05-10T00:00:00.000Z&toTime=2022-05-11T00:00:00.000Z",
+					"raw": "http://{{base_url}}/emissions/byLocation?location=eastus&time=2022-05-10T00:00:00.000Z&toTime=2022-05-11T00:00:00.000Z",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{base_url}}"
 					],
-					"port": "50000",
 					"path": [
 						"emissions",
 						"byLocation"
@@ -152,6 +150,26 @@
 				}
 			},
 			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
