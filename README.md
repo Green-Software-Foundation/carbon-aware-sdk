@@ -3,7 +3,7 @@ An SDK to enable the creation of carbon aware applications, applications that do
 
 ## Appointments 
 * Chair/Project lead - Vaughan Knight (MSFT)
-* Vice Chair
+* Vice Chair - Szymon Duchniewicz (Avanade)
 
 ## Projects Scope
 
@@ -25,7 +25,7 @@ This working group is part of the Green Software Foundation. It is open to any m
 - Familiarize yourself with our scope above and take a look at our current projects in flight - links are above.
 - If you are having any problems with access, please reach out to sean@greensoftware.foundation or helpdesk@greensoftware.foundation
 
-## Meeting Scheudule
+## Meeting Schedule
 * Link to the WG groups.io calendar 
 
 ## WG G-Drive
