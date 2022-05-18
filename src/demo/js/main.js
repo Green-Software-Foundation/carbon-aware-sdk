@@ -77,6 +77,9 @@ var Draw={
 
                 //Location, Time, Rating
                 l.pushpin.setOptions({ color: c });
+
+                Microsoft.Maps.Events.addHandler(l.pushpin, 'click', function () { ShowChart(l.name); });
+
             }
        });
     }
@@ -208,4 +211,61 @@ async function init(){
 
     var D=document.getElementById("event-end").innerHTML;
     Draw.updateLocationData(new Date(D));
+
+    
+}
+
+
+function ShowChart(location){
+    // Select modal
+    var mpopup = document.getElementById('mpopupBox');
+    
+    // Select close action element
+    var close = document.getElementsByClassName("close")[0];
+    
+    // Close modal once close element is clicked
+    close.onclick = function() {
+        mpopup.style.display = "none";
+    };
+    
+    // Close modal when user clicks outside of the modal box
+    window.onclick = function(event) {
+        if (event.target == mpopup) {
+            mpopup.style.display = "none";
+        }
+    };
+
+    mpopup.style.display = "block";
+
+    var d=Global.data.filter(el=>el.Location==location);
+    var data=[];
+    d.forEach(l=>{
+        data.push({x:l.Time, y:l.Rating});
+    });
+    console.log(data)
+
+    var options = {
+        chart: {
+            type: 'line'
+        },
+        series: [{
+            name: 'Intensity',
+            data: data
+        }],
+        xaxis: {
+            type:'datetime'
+        },
+        animations: {
+            enabled: false,
+            animateGradually:{
+                enabled:false
+            },
+            dynamicAnimation:{
+                enabled:false
+            }
+        }
+    }
+
+    var chart = new ApexCharts(document.getElementById("chart"), options);
+    chart.render();
 }
