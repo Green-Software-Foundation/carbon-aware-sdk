@@ -50,12 +50,12 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5112/emissions/byLocation?location=eastus",
+					"raw": "http://localhost:50000/emissions/byLocation?location=eastus",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5112",
+					"port": "50000",
 					"path": [
 						"emissions",
 						"byLocation"
@@ -111,7 +111,7 @@
 							"    var start = new Date(\"2022-05-10T00:00:00.000Z\").getTime();",
 							"    var end = new Date(\"2022-05-11T00:00:00.000Z\").getTime();",
 							"    for (j = 0; j < resp.length; j++) {",
-							"        var time = new Date(resp.time).getTime();",
+							"        var time = new Date(resp[j].time).getTime();",
 							"        pm.expect(time >= start).to.be.true;",
 							"        pm.expect(time <= end).to.be.true;",
 							"    }",

@@ -6,9 +6,13 @@ using dotenv.net;
 // load config
 var config = new Config();
 DotEnv.Load(new DotEnvOptions(envFilePaths: new string[] { "../.env" }));
-if (int.TryParse(Environment.GetEnvironmentVariable("PORT"), out int port))
+if (int.TryParse(Environment.GetEnvironmentVariable("CSHARP_PORT"), out int portA))
 {
-    config.PORT = port;
+    config.PORT = portA;
+}
+else if (int.TryParse(Environment.GetEnvironmentVariable("PORT"), out int portB))
+{
+    config.PORT = portB;
 }
 else
 {
