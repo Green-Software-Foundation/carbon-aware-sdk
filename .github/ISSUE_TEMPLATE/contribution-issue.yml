@@ -1,0 +1,37 @@
+name: Feature Contribution
+description: Contribute a Feature
+title: "[Feature Contribution]: "
+labels: ["feature", "triage"]
+assignees:
+  - vaughanknight
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for wanting to contribute to the Carbon Aware SDK! Please fill out this Issue Template with your feature contribution.
+  - type: textarea
+    id: feature-desc
+    attributes:
+      label: What happened?
+      description: Please Describe the need for the feature
+      placeholder: User stories, feature specifications, contribution benefits.
+      value: "Feature XYZ will perform function ABC and enable development for project 123."
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow the [Way We Work](https://github.com/Green-Software-Foundation/standards_wg/blob/main/the_way_we_work.md)
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
+  - type: checkboxes
+    id: commitment
+    attributes:
+      label: Feature Commitment
+      description: By submitting this issue, you commit to contributing the feature outlined here.
+      options:
+        - label: I commit to contributing this feature as a PR and working with the GSF to merge this feature into the Carbon Aware SDK.
+          required: true
+          
