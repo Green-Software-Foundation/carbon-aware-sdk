@@ -1,11 +1,20 @@
 if [ -z "$1" ]
 then
-    echo "You must provide the first parameter as the host name of the service to generate the clients for (ex. localhost:5073)."
+    echo "You must provide the first parameter as the host name of the service to generate the clients for (ex. host.docker.internal:5073)."
     exit 1
 fi
 
-# java
+# remove previous folders
 rm -r ./java
+rm -r ./python
+rm -r ./javascript
+rm -r ./csharp
+rm -r ./golang
+
+# quit on error
+set -e
+
+# java
 docker run --rm \
   -v ${PWD}:/local \
   openapitools/openapi-generator-cli generate \
@@ -14,7 +23,6 @@ docker run --rm \
   -o /local/java
 
 # python
-rm -r ./python
 docker run --rm \
   -v ${PWD}:/local \
   openapitools/openapi-generator-cli generate \
@@ -23,7 +31,6 @@ docker run --rm \
   -o /local/python
 
 # javascript
-rm -r ./javascript
 docker run --rm \
   -v ${PWD}:/local \
   openapitools/openapi-generator-cli generate \
@@ -32,7 +39,6 @@ docker run --rm \
   -o /local/javascript
 
 # csharp
-rm -r ./csharp
 docker run --rm \
   -v ${PWD}:/local \
   openapitools/openapi-generator-cli generate \
@@ -42,7 +48,6 @@ docker run --rm \
   --additional-properties=targetFramework=net6.0
 
 # golang
-rm -r ./golang
 docker run --rm \
   -v ${PWD}:/local \
   openapitools/openapi-generator-cli generate \
