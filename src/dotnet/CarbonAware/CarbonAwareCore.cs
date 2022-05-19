@@ -19,18 +19,33 @@ public class CarbonAwareCore : ICarbonAwareBase
         //Console.WriteLine($"\tURL: '{plugin.URL}'");
     }
 
-    public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+    public List<EmissionsData> GetEmissionsDataForLocationByTime(string location, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
     {
         return _plugin.GetEmissionsDataForLocationByTime(location, time, toTime, durationMinutes);
     }
 
-    public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+    public List<EmissionsData> GetEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
     {
         return _plugin.GetEmissionsDataForLocationsByTime(locations, time, toTime, durationMinutes);
     }
 
-    public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime time, DateTime? toTime = null, int durationMinutes = 0)
+    public List<EmissionsData> GetBestEmissionsDataForLocationsByTime(List<string> locations, DateTime? time, DateTime? toTime = null, int durationMinutes = 0)
     {
         return _plugin.GetBestEmissionsDataForLocationsByTime(locations, time, toTime, durationMinutes);
+    }
+
+    void ICarbonAwareBase.RecordSCIBaseData(SCIBaseData data)
+    {
+        throw new NotImplementedException();
+    }
+
+    SCIBaseData ICarbonAwareBase.GetSCIBaseDataByGuid(Guid guid)
+    {
+        throw new NotImplementedException();
+    }
+
+    List<SCIBaseData> ICarbonAwareBase.GetSCIBaseDataByDateTime(DateTime from, DateTime? to)
+    {
+        throw new NotImplementedException();
     }
 }
