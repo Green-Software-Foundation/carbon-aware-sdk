@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 if [ -z "$1" ]
 then
     echo "You must provide the first parameter as the host name of the service to generate the clients for (ex. host.docker.internal:5073)."

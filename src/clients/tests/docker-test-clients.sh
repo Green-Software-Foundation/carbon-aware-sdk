@@ -1,3 +1,5 @@
+#!/bin/zsh
+
 if [ -z "$1" ]
 then
     echo "You must provide the first parameter as the host name of the service being tested (ex. host.docker.internal). The ports will be read from the .env file."
