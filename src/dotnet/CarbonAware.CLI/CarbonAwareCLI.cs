@@ -1,91 +1,88 @@
-﻿namespace CarbonAwareCLI;
+﻿
+using CarbonAware.CLI.Options;
+using CommandLine;
+using CommandLine.Text;
+
+namespace CarbonAware.CLI;
+
+using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Interfaces;
+using Microsoft.Extensions.Logging;
 
 public class CarbonAwareCLI
 {
-
-
-    private CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
-    private CarbonAwareCore _carbonAwareCore;
-    private ServiceManager _serviceManager;
-    private IConfigManager _configManager;
+    public CarbonAwareCLIState _state { get; set; } = new CarbonAwareCLIState();
+    
     /// <summary>
     /// Indicates if the command line arguments have been parsed successfully 
     /// </summary>
     public bool Parsed { get; private set; } = false;
+    ICarbonAwareAggregator _aggregator {get; set;}
 
-    public CarbonAwareCLI(string[] args)
+    private readonly ILogger<CarbonAwareCLI> _logger;
+
+    public CarbonAwareCLI(string[] args, ICarbonAwareAggregator aggregator, ILogger<CarbonAwareCLI> logger)
     {
+        this._aggregator = aggregator;
+        this._logger = logger;
+        
         var parseResult = Parser.Default.ParseArguments<CLIOptions>(args);
-
         try
         {
             // Parse command line parameters
             parseResult.WithParsed(ValidateCommandLineArguments);
-            parseResult.WithNotParsed(ThrowOnParseError);
-
-            // Configure the services
-
-            _configManager = new ConfigManager(_state.ConfigPath);
-            _serviceManager = new ServiceManager(_configManager);
-
-            var plugin = _serviceManager.ServiceProvider.GetService<ICarbonAwarePlugin>();
-
-            // Create the new core using the plugin
-            _carbonAwareCore = new CarbonAwareCore(plugin);
-
+            parseResult.WithNotParsed(errors => ThrowOnParseError(errors, parseResult));
             Parsed = true;
         }
-        catch (ArgumentException e)
+        catch (AggregateException e)
         {
-            Console.WriteLine("Error:");
-            Console.WriteLine(e.Message);
+            _logger.LogError("Error: {message}", e.Message);
         }
     }
 
 
 
     /// <summary>
-    /// Handles missing messages.  Currently reports the message tag as an argument exception.
+    /// Handles missing messages.  Currently reports the message tag as an aggregate exception.
     /// This method needs updating to add detailed "Missing parameter" messages
     /// </summary>
     /// <param name="errors"></param>
-    /// <exception cref="ArgumentException"></exception>
-    private void ThrowOnParseError(IEnumerable<Error> errors)
+    /// <exception cref="AggregateException"></exception>
+    private void ThrowOnParseError(IEnumerable<Error> errors, ParserResult<CLIOptions> parseResult)
     {
-        var enumerator = errors.GetEnumerator();
-
-        if (enumerator.MoveNext())
+        var builder = SentenceBuilder.Create();
+        var errorMessages = HelpText.RenderParsingErrorsTextAsLines(parseResult, builder.FormatError, builder.FormatMutuallyExclusiveSetErrors, 1);
+        var excList = errorMessages.Select(msg => new ArgumentException(msg)).ToList();
+        if (excList.Any())
         {
-            throw new ArgumentException(enumerator.Current.Tag.ToString());
+            throw new AggregateException(excList);
         }
-
-        // TODO: add error message builder such as
-        //var builder = SentenceBuilder.Create();
-        //var errorMessages = HelpText.RenderParsingErrorsTextAsLines(result, builder.FormatError, builder.FormatMutuallyExclusiveSetErrors, 1);
-        //var excList = errorMessages.Select(msg => new ArgumentException(msg)).ToList();
-        //if (excList.Any())
-        //    throw new AggregateException(excList);
     }
 
-    public List<EmissionsData> GetEmissions()
+    public async Task<IEnumerable<EmissionsData>> GetEmissions()
     {
-        List<EmissionsData> foundEmissions = new List<EmissionsData>();
-
-        if (_state.Lowest)
-        {
-            foundEmissions = _carbonAwareCore.GetBestEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
-        }
-        else
-        {
-            foundEmissions = _carbonAwareCore.GetEmissionsDataForLocationsByTime(_state.Locations, _state.Time, _state.ToTime);
-        }
-
-        return foundEmissions;
+        IEnumerable<Location> locations = _state.Locations.Select(loc => new Location(){ RegionName = loc });
+        var props = new Dictionary<string, object>() {
+            { CarbonAwareConstants.Locations, locations },
+            { CarbonAwareConstants.Start, _state.Time },
+            { CarbonAwareConstants.End, _state.ToTime },
+            { CarbonAwareConstants.Best, true }
+        };
+        return await GetEmissionsDataAsync(props);
     }
 
-    public void OutputEmissionsData(List<EmissionsData> emissions)
+    private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
-        Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
+        IEnumerable<EmissionsData> e = await _aggregator.GetEmissionsDataAsync(props);
+
+        return await _aggregator.GetEmissionsDataAsync(props);
+    }
+
+    public void OutputEmissionsData(IEnumerable<EmissionsData> emissions)
+    {
+        var outputData = $"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}";
+        _logger.LogCritical(outputData);
+        Console.WriteLine(outputData);
     }
 
     private void ValidateCommandLineArguments(CLIOptions o)
@@ -110,6 +107,7 @@ public class CarbonAwareCLI
 
     private void ParseLocations(CLIOptions o)
     {
+
         _state.Locations.AddRange(o.Location);
     }
 
@@ -168,7 +166,7 @@ public class CarbonAwareCLI
             catch
             {
                 throw new ArgumentException(
-                    $"Date and time needs to be in the format 'xxxxx'.  Date and time provided was '{o.Time}'.");
+                    $"Date and time needs to be in the format 'xxxx-xx-xx'.  Date and time provided was '{o.Time}'.");
             }
         }
     }

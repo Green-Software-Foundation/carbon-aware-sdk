@@ -6,7 +6,7 @@
         "implementation": "CarbonAware.Plugins.BasicJsonPlugin.CarbonAwareStaticJsonDataService, CarbonAware.Plugins.BasicJsonPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
       },
       {
-        "service": "CarbonAware.ICarbonAwarePlugin, CarbonAware, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+        "service": "CarbonAware.Interfaces.ICarbonAwarePlugin, CarbonAware, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
         "implemXentation": "CarbonAware.Plugins.BasicJsonPlugin.CarbonAwareBasicDataPlugin, CarbonAware.Plugins.BasicJsonPlugin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
       }
     ]

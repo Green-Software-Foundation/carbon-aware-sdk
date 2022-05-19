@@ -11,3 +11,10 @@ out
 obj
 build
 TestResults
+
+# Include ONLY launch/task files in .vscode
+!.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+.DS_Store

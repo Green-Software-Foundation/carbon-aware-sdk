@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  description: 'Carbon Aware REST API'
+  version: 0.1.0
+  title: Carbon Aware REST API
+
+paths:
+  '/sci-scores':
+    post:
+      summary: Calculate the SCI score using the configured data sources
+      description: ''
+      operationId: calculateSciScore
+      requestBody:
+        '$ref': '#/components/requestBodies/MarginalCarbonIntensityCalculation'
+        examples: 
+          sci-score-calculation:
+            '$ref': '#/components/examples/sci-score-calc-example'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/SciScore'
+              examples: 
+                sci-score-response:
+                  '$ref': '#/components/examples/sci-score-response-example'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/CarbonAwareError'
+  '/sci-scores/marginal-carbon-intensity':
+    post:
+      summary: Calculate the average marginal carbon intensity for a given location and time duration.
+      description: ''
+      operationId: calculateMarginalCarbonIntensity
+      requestBody:
+        '$ref': '#/components/requestBodies/MarginalCarbonIntensityCalculation'
+        examples: 
+          carbon-intensity-score-calculation-cloudprovider:
+            '$ref': '#/components/examples/marginal-carbon-intensity-calc-cloudprovider-example'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/SciScore'
+              examples: 
+                carbon-intensity-score-response:
+                  '$ref': '#/components/examples/marginal-carbon-intensity-response-example'
+        '400':
+          description: bad request
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/CarbonAwareError'
+components:
+  requestBodies:
+    SciScoreCalculation:
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/MarginalCarbonIntensityCalculation'
+      description: Sci Score calculation component payload for configured data sources
+      required: true
+    MarginalCarbonIntensityCalculation:
+      content:
+        application/json:
+          schema:
+            '$ref': '#/components/schemas/MarginalCarbonIntensityCalculation'
+      description: Marginal Carbon Intensity Calculation
+      required: true
+  schemas:
+    SciScore:
+      type: object
+      properties:
+        sciScore:
+          type: number
+          format: float
+        energyValue:
+          type: number
+          format: float
+        marginalCarbonIntensityValue:
+          type: number
+          format: float
+        embodiedEmissions:
+          type: number
+          format: float
+        functionalUnit:
+          type: integer
+          format: int64
+
+    MarginalCarbonIntensityCalculation:
+      type: object
+      properties:
+        location:
+          type: object
+          description: JSON object that contains a locationType ("Geoposition" or "CloudProvider") and either latitude and longitude or the cloud provider and region
+          properties:
+            locationType:
+              type: string
+              enum:
+                - Geoposition
+                - CloudProvider
+            latitude:
+              type: number
+              format: float
+              example: 34.123
+            longitude:
+              type: number
+              format: float
+              example: 122.123
+            providerName:
+              type: string
+              example: Azure
+            regionName:
+              type: string
+              example: eastus
+        timeInterval:
+          type: string
+          description: ISO8601 formatted [time interval](https://en.wikipedia.org/wiki/ISO_8601#Time_intervals).  This value should be supplied in the UTC (Z) timezone.
+          example: 2007-03-01T13:00:00Z/2007-03-01T15:30:00Z
+
+    CarbonAwareError:
+      type: object
+      properties:
+        message:
+          type: string
+    
+  examples:
+    sci-score-response-example:
+      summary: An example response from an SCI score calculation request
+      value: {
+        "sciScore": 750.0,
+        "energyValue": 1.0,
+        "marginalCarbonIntensityValue": 750.0,
+        "embodiedEmissionsValue": 0.0,
+        "functionalUnitValue": 1 
+      }
+
+    marginal-carbon-intensity-response-example:
+      summary: An example response from Marginal Carbon Intensity calculation request.
+      value: {
+        "sciScore": null,
+        "energyValue": null,
+        "marginalCarbonIntensityValue": 750.0,
+        "embodiedEmissionsValue": null,
+        "functionalUnitValue": null 
+      }

@@ -6,19 +6,41 @@
     {
       "label": "build",
       "command": "dotnet",
-      "type": "shell",
+      "type": "process",
       "args": [
-        "build",
-        // Ask dotnet build to generate full paths for file names.
-        "src/dotnet/CarbonAware.WebApi/",
-        // Do not generate summary otherwise it leads to duplicate errors in Problems panel
-        "/consoleloggerparameters:NoSummary"
+          "build",
+          "${workspaceFolder}/src/dotnet/CarbonAware.WebApi/CarbonAware.WebApi.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
       ],
-      "group": "build",
-      "presentation": {
-        "reveal": "silent"
-      },
       "problemMatcher": "$msCompile"
+    },
+    { 
+      "label": ".NET Core Test with debugger", 
+      "type": "process", 
+      "isBackground": true, 
+      "command": "dotnet", 
+      "args": [ 
+        "test",
+        "CarbonAwareSDK.sln"
+      ], 
+      "options": 
+          { 
+              "cwd": "${workspaceFolder}/src/dotnet/", 
+              "env": 
+              { 
+                  "VSTEST_HOST_DEBUG": "1" 
+              }, 
+          }, 
+      "group": "test", 
+      "presentation": 
+          { 
+              "echo": true,
+              "reveal": "always",
+              "focus": false,
+              "panel": "shared"
+          },
+      "problemMatcher": [] 
     }
   ]
 }

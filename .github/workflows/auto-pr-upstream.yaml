@@ -1,0 +1,42 @@
+name: Auto PR from Upstream
+
+on:
+  schedule:
+    - cron: '59 3 * * Tue' # Every 11:59 PM ET Monday / 3:59 AM UTC Tuesday
+
+env:
+  OWNER: "microsoft"
+  REPO: "carbon-aware-sdk"
+  BASE: "dev"
+  UPSTREAM: "Green-Software-Foundation/carbon-aware-sdk"
+  PR_BRANCH: "auto-pr-${{github.run_id}}"
+
+
+jobs:
+  check-for-merge:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Run Auto-Merge Script
+      id: auto-merge
+      run: |
+        ./ms-internal/git-merge.sh "${PR_BRANCH}" "${BASE}" "${UPSTREAM}"
+        echo ::set-output name=exit_code::$?
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Open PR against in Repo Branch      
+      uses: octokit/request-action@v2.x
+      if: steps.auto-merge.outputs.exit-code==0
+      with:
+        route: POST /repos/{owner}/{repo}/pulls
+        owner: ${{ env.OWNER }}
+        repo: ${{ env.REPO }}
+        title: "Automated Merge Upstream Repository into ${{ env.BASE }}"
+        head: ${{ env.PR_BRANCH }}
+        base: ${{ env.BASE }}
+        body: "Automatically triggered PR from GSF to MSFT Repository"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

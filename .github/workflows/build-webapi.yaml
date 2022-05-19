@@ -1,35 +1,54 @@
-name: WEB API BUILD ON DOTNET
+name: Docker Web API Build
 
 on:
   push:
-    paths:
-      - 'src/dotnet/**'
-      - '.github/workflows/**'
+    branches: [ dev, main ]
   pull_request:
     branches: [ dev, main ]
     paths:
       - 'src/dotnet/**'
+      - '.github/workflows/**'
+
+env:
+  DOCKERFILE_PATH: "CarbonAware.WebApi/Dockerfile"
+  HEALTH_ENDPOINT: "0.0.0.0:8080/health"
+  DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
 
 jobs:
-  build:
+  container-unit-test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./src/dotnet/CarbonAware.WebApi
     steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    
+    - name: Docker Target Build
+      run: docker build --target=build . -f ${DOCKERFILE_PATH} -t ca-api-build
+      working-directory: ./src/dotnet
 
-    - uses: actions/checkout@v2
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
+    - name: Docker Unit Test
+      run: docker run -w //src/ ca-api-build dotnet test
+      working-directory: ./src/dotnet
 
-    - name: Restore dependencies
-      run: dotnet restore
+  container-validation:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Build
-      run: dotnet build --no-restore
+      - name: Docker Target Final
+        run: docker build . -f ${DOCKERFILE_PATH} -t ca-api
+        working-directory: ./src/dotnet
+        
+      - name: Docker Run Container
+        run: |
+          docker run -d --name runnable-container -p 8080:80 ca-api
+          docker container ls
 
-    - name: Unit Tests
-      run: dotnet test --no-build --verbosity normal
-      
+      - name: Docker WGET Health Endpoint
+        run: |
+          wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
+
+      - name: Docker WGET Data Endpoint
+        run: |
+          wget -t 5 --waitretry=5 ${DATA_ENDPOINT}
+

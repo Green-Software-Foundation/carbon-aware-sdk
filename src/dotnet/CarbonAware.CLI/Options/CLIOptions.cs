@@ -1,4 +1,4 @@
-﻿namespace CarbonAwareCLI.Options;
+﻿namespace CarbonAware.CLI.Options;
 
 public class CLIOptions
 {

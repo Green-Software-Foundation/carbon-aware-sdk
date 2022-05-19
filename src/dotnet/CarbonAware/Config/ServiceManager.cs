@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using CarbonAware.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace CarbonAware.Config;
 
@@ -12,13 +14,16 @@ public class ServiceManager
     private CompositionContainer _container;
     private IConfigManager _configManager;
 
+    private readonly ILogger<ServiceManager> _logger;
+
     public ServiceProvider ServiceProvider
     {
         get { return _serviceProvider; }
     }
 
-    public ServiceManager(IConfigManager configManager)
+    public ServiceManager(ILogger<ServiceManager> logger, IConfigManager configManager)
     {
+        this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _configManager = configManager;
         Initialize();
     }
@@ -74,9 +79,12 @@ public class ServiceManager
         // Adds all the parts found in the same assembly as the Program class.
         //catalog.Catalogs.Add(new AssemblyCatalog(typeof(Program).Assembly));
         var pluginsFolder = AppDomain.CurrentDomain.BaseDirectory + PLUGINS_FOLDER;
-
+        _logger.LogInformation("plugins folder>" + pluginsFolder);
         // If there is no plugins folder, simply return
-        if (!Directory.Exists(pluginsFolder)) return;
+        if (!Directory.Exists(pluginsFolder)){
+            _logger.LogError("Directory doesn't exist");
+            return;
+        } 
 
         // Add all the parts found in the "plugins" folder
         catalog.Catalogs.Add(new DirectoryCatalog(pluginsFolder));

@@ -1,4 +1,7 @@
 ﻿namespace CarbonAware.Tests;
+using CarbonAware;
+using Microsoft.Extensions.Logging;
+using Moq;
 
 public class CarbonAwareCoreTests
 {
@@ -21,7 +24,8 @@ public class CarbonAwareCoreTests
         Assert.Greater(staticDataService.EmissionsFile.Emissions.Count, 0);
 
         var plugin = new MockLogicPlugin(staticDataService);
-        var carbonAware = new CarbonAwareCore(plugin);
+        var logger = Mock.Of<ILogger<CarbonAwareCore>>();
+        var carbonAware = new CarbonAwareCore(logger, plugin);
 
         // This is NOT a logic test, the carbon aware core
         // is a pass through that adds logging and consistency
