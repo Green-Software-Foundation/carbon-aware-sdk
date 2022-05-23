@@ -38,19 +38,6 @@ public class SciScoreController : ControllerBase
     public Task<IActionResult> CreateAsync(SciScoreInput input)
     {
         _logger.LogDebug("calculate sciscore with input: {input}", input);
-        if (input.Location == null)
-        {
-            var error = new CarbonAwareWebApiError() { Message = "Location is required" };
-            _logger.LogDebug("calculation failed with error: {error}", error);
-            return Task.FromResult<IActionResult>(BadRequest(error));
-        }
-
-        if (String.IsNullOrEmpty(input.TimeInterval))
-        {
-            var error = new CarbonAwareWebApiError() { Message = "TimeInterval is required" };
-            _logger.LogDebug("calculation failed with error: {error}", error);
-            return Task.FromResult<IActionResult>(BadRequest(error));
-        }
 
         var score = new SciScore
         {
@@ -77,39 +64,14 @@ public class SciScoreController : ControllerBase
         {
             _logger.LogDebug("calling to aggregator to calculate the average carbon intensity with input: {input}", input);
 
-            // check that there is some location passed in
-            if (input.Location == null)
-            {
-                var error = new CarbonAwareWebApiError() { Message = "Location is required" };
-                _logger.LogDebug("get carbon intensity failed with error: {error}  with input {input}", error, input);
-                return BadRequest(error);
-            }
+            var carbonIntensity = await _aggregator.CalculateAverageCarbonIntensityAsync(GetLocation(input.Location), input.TimeInterval);
 
-            // check that there is a time interval passed in
-            if (String.IsNullOrEmpty(input.TimeInterval))
+            SciScore score = new SciScore
             {
-                var error = new CarbonAwareWebApiError() { Message = "TimeInterval is required" };
-                _logger.LogDebug("get carbon intensity failed with error: {error} with input {input}", error, input);
-                return BadRequest(error);
-            }
-            try
-            {
-                var carbonIntensity = await _aggregator.CalculateAverageCarbonIntensityAsync(GetLocation(input.Location), input.TimeInterval);
-
-                SciScore score = new SciScore
-                {
-                    MarginalCarbonIntensityValue = carbonIntensity,
-                };
-                _logger.LogDebug("calculated marginal carbon intensity: {score}", score);
-                return Ok(score);
-            }
-            //for invalid inputs and broadly 3rd Party dependency exceptions
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Exception occured during marginal calculation execution of input :{input}", input);
-                var error = new CarbonAwareWebApiError() { Message = ex.ToString() };
-                return BadRequest(error);
-            }
+                MarginalCarbonIntensityValue = carbonIntensity,
+            };
+            _logger.LogDebug("calculated marginal carbon intensity: {score}", score);
+            return Ok(score);
         }
     }
 

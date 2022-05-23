@@ -84,15 +84,8 @@ public class CarbonAwareController : ControllerBase
     {
         // NOTE: Any auth information would need to be redacted from logging
         _logger.LogInformation("Calling plugin GetEmissionsDataAsync with paylod {@props}", props);
-        try
-        {
-            var response = await _aggregator.GetEmissionsDataAsync(props);
-            return response.Any() ? Ok(response) : NoContent();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError("Exception occured during plugin execution", ex);
-            return BadRequest(ex.ToString());
-        }
+
+        var response = await _aggregator.GetEmissionsDataAsync(props);
+        return response.Any() ? Ok(response) : NoContent();
     }
 }

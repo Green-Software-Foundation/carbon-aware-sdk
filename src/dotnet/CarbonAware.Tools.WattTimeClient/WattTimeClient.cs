@@ -152,7 +152,7 @@ public class WattTimeClient : IWattTimeClient
         var balancingAuthority = JsonSerializer.Deserialize<BalancingAuthority>(result, options);
         if (balancingAuthority == null) 
         {
-            throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}", new HttpResponseMessage(HttpStatusCode.InternalServerError));
+            throw new WattTimeClientHttpException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}", new HttpResponseMessage(HttpStatusCode.InternalServerError));
         }
         return balancingAuthority;
     }
@@ -211,7 +211,7 @@ public class WattTimeClient : IWattTimeClient
         {
             Log.LogError("Error getting data from WattTime.  StatusCode: {statusCode}. Response: {response}", response.StatusCode, response);
 
-            throw new WattTimeClientException($"Error getting data from WattTime: {response.StatusCode}", response);
+            throw new WattTimeClientHttpException($"Error requesting {uriPath}", response);
         }
 
         return response;
@@ -262,7 +262,7 @@ public class WattTimeClient : IWattTimeClient
             if (data == null)
             {
                 Log.LogError("Login failed for user {username}.  Response: {response}", this.Configuration.Username, response);
-                throw new WattTimeClientException("Login failed.", response);
+                throw new WattTimeClientHttpException($"Login failed for user: '{this.Configuration.Username}'", response);
             }
 
             this.SetBearerAuthenticationHeader(data.Token);

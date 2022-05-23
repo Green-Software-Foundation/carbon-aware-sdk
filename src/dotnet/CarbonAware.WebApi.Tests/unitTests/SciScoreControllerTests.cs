@@ -47,69 +47,10 @@ public class SciScoreControllerTests : TestsBase
     }
 
     /// <summary>
-    /// Tests that invalid time inputs respond with a badRequest error
-    /// </summary> 
-    [Test]
-    public async Task InvalidTimeIntervalReturnsBadRequest_MarginalCarbonIntensity()
-    {
-        // Arrange
-        var data = 0.7;
-        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object, this.ActivitySource);
-
-        LocationInput locationInput = new LocationInput()
-        {
-            LocationType = LocationType.Geoposition.ToString()
-        };
-
-        string timeInterval = "";
-
-        SciScoreInput input = new SciScoreInput()
-        {
-            Location = locationInput,
-            TimeInterval = timeInterval
-        };
-
-        // Act
-        var carbonIntensityOutput = (await controller.GetCarbonIntensityAsync(input)) as ObjectResult;
-
-        // Assert
-        TestHelpers.AssertStatusCode(carbonIntensityOutput, HttpStatusCode.BadRequest);
-        var expectedContent = new CarbonAwareWebApiError() { Message = "TimeInterval is required" };
-        var actualContent = (carbonIntensityOutput == null) ? string.Empty : carbonIntensityOutput.Value;
-        Assert.AreEqual(expectedContent, actualContent);
-    }
-
-    /// <summary>
-    /// Tests that invalid location inputs respond with a badRequest error
-    /// </summary> 
-    [Test]
-    public async Task NullLocationReturnsBadRequest_MarginalCarbonIntensity()
-    {
-        // Arrange
-        var data = 0.7;
-        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object, this.ActivitySource);
-
-        string timeInterval = "2007-03-01T13:00:00Z/2007-03-01T15:30:00Z";
-
-        SciScoreInput input = new SciScoreInput()
-        {
-            TimeInterval = timeInterval
-        };
-
-        // Act
-        var carbonIntensityOutput = (await controller.GetCarbonIntensityAsync(input)) as ObjectResult;
-
-        // Assert
-        TestHelpers.AssertStatusCode(carbonIntensityOutput, HttpStatusCode.BadRequest);
-        var expectedContent = new CarbonAwareWebApiError() { Message = "Location is required" };
-        var actualContent = (carbonIntensityOutput == null) ? string.Empty : carbonIntensityOutput.Value;
-        Assert.AreEqual(expectedContent, actualContent);
-    }
-
-    /// <summary>
     /// Tests that invalid locationType inputs respond with a badRequest error
-    /// </summary> 
-    public async Task InvalidLocationTypeReturnsBadRequest_MarginalCarbonIntensity()
+    /// </summary>
+    [Test]
+    public void InvalidLocationTypeReturnsBadRequest_MarginalCarbonIntensity()
     {
         // Arrange
         var data = 0.7;
@@ -128,14 +69,8 @@ public class SciScoreControllerTests : TestsBase
             TimeInterval = timeInterval
         };
 
-        // Act
-        var carbonIntensityOutput = (await controller.GetCarbonIntensityAsync(input)) as ObjectResult;
-
-        // Assert
-        TestHelpers.AssertStatusCode(carbonIntensityOutput, HttpStatusCode.BadRequest);
-        var expectedContent = new CarbonAwareWebApiError() { Message = "locationType 'InvalidType' is invalid" };
-        var actualContent = (carbonIntensityOutput == null) ? string.Empty : carbonIntensityOutput.Value;
-        Assert.AreEqual(expectedContent, actualContent);
+        // Act/Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetCarbonIntensityAsync(input));
     }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

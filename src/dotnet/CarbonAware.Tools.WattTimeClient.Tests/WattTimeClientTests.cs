@@ -67,12 +67,12 @@ public class WattTimeClientTests
         this.BasicAuthValue = "invalid";
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
         
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync("ba"));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastByDateAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAbbreviationAsync("lat", "long"));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetHistoricalDataAsync("ba"));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetCurrentForecastAsync("ba"));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetForecastByDateAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetBalancingAuthorityAbbreviationAsync("lat", "long"));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetHistoricalDataAsync("ba"));
     }
 
     [Test]

@@ -127,8 +127,16 @@ components:
     CarbonAwareError:
       type: object
       properties:
-        message:
+        type:
           type: string
+        title:
+          type: string
+        status:
+          type: int
+        traceId:
+          type: string
+        errors:
+          type: object
     
   examples:
     sci-score-response-example:

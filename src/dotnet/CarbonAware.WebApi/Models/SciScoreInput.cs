@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CarbonAware.WebApi.Models;
 
@@ -6,9 +7,11 @@ namespace CarbonAware.WebApi.Models;
 public record SciScoreInput
 {
     [JsonPropertyName("location")]
-    public LocationInput? Location { get; set; }
+    [Required()]
+    public LocationInput Location { get; set; } = new LocationInput();
 
     [JsonPropertyName("timeInterval")]
+    [Required()]
     public string TimeInterval { get; set; } = string.Empty;
 }
 
@@ -16,7 +19,8 @@ public record SciScoreInput
 public record LocationInput
 {
     [JsonPropertyName("locationType")]
-    public string LocationType { get; set; } = string.Empty;
+    [Required()]
+    public string? LocationType { get; set; }
 
     [JsonPropertyName("latitude")]
     public decimal? Latitude { get; set; }
