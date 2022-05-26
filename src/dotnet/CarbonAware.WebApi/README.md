@@ -1,3 +1,5 @@
+The Carbon Aware SDK provides an API to get the marginal carbon intensity for a given location and time period. The values reported in the Green Software Foundation's specification for marginal carbon intensity (Grams per Kilowatt Hour). In order to use the API, the environment needs to be prepared with a set of configuration parameters. Instructions on setting up the environment could be found here - https://github.com/microsoft/carbon-aware-sdk/blob/dev/GettingStarted.md
+
 # Carbon Aware REST API
 
 
@@ -77,6 +79,78 @@ EG
   "embodiedEmissionsValue": null,
   "functionalUnitValue": null
 }
+```
+
+### GET emissions/bylocation
+
+This endpoint calculates the observed emission data by location for a specified time period.
+
+Location is a required parameter and is name of the data region for the configured Cloud provider.
+If time period is not provided, it retrieves available data until the current time.
+
+EG
+```
+https://<server_name>/emissions/bylocation?location=useast&time=2022-01-01&toTime=2022-05-17
+```
+
+The response is an array of EmissionsData objects that contains the location, time and the rating in g/kWh
+EG
+```
+[
+ {
+  "location":"eastus",
+  "time":"2022-05-17T20:45:11.5092741+00:00",
+  "rating":70
+ }
+]
+```
+
+### GET emissions/bylocations
+
+This endpoint calculates the observed emission data by list of locations for a specified time period
+
+Location is a required parameter and is name of the data region for the configured Cloud provider.
+If time period is not provided, it retrieves all the data until the current time.
+
+EG
+```
+https://<server_name>/emissions/bylocations?locations=eastus&locations=westus&time=2022-01-01&toTime=2022-05-17
+```
+
+The response is an array of EmissionsData objects that contains the location, time and the rating in g/kWh.
+EG
+```
+[
+  {
+    "location":"eastus"
+    "time":"2022-05-17T20:45:11.5092741+00:00",
+    "rating":70
+  }
+]
+```
+
+### GET emissions/bylocations/best
+
+This endpoint calculates the best observed emission data by list of locations for a specified time period
+
+Location is a required parameter and is name of the data region for the configured Cloud provider.
+If time period is not provided, it retrieves all the data until the current time.
+
+EG
+```
+https://<server_name>/emissions/bylocations/best?locations=eastus&locations=westus&time=2022-01-01&toTime=2022-05-17
+```
+
+The response is an array of EmissionsData objects that contains the location, time and the rating in g/kWh.
+EG
+```
+[
+  {
+    "location":"eastus"
+    "time":"2022-05-17T20:45:11.5092741+00:00",
+    "rating":70
+  }
+]
 ```
 
 
