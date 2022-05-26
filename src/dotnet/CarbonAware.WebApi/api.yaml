@@ -5,6 +5,60 @@ info:
   title: Carbon Aware REST API
 
 paths:
+  '/emissions/forecasts/current':
+    get:
+      summary: Get the current forecasted marginal carbon intensity for a given set of locations.
+      description: Gets the most recent marginal carbon intensity forecast and returns the optimal start time for a window of a given duration.
+      operationId: getCurrentMarginalCarbonIntensityForecast
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  '$ref': '#/components/schemas/EmissionsForecast'
+              examples: 
+                carbon-intensity-forecast-response:
+                  '$ref': '#/components/examples/marginal-carbon-intensity-forecast-example'
+        '501':
+          description: Not Implemented
+          content:
+            application/json:
+              schema:
+                '$ref': '#/components/schemas/CarbonAwareError'
+    parameters:
+    - name: locations
+      in: query
+      description: 'Comma-separated list of names of the locations to be forecasted'
+      required: true
+      schema:
+        type: string
+      example: eastus
+    - name: windowSize
+      in: query
+      description: 'The size/granularity (in minutes) of the rolling average window to report the forecasted average carbon intensity.'
+      required: false
+      schema:
+        type: integer
+      example: 60
+    - name: startTime
+      in: query
+      description: 'Start the rolling window average at the specified start time or first datapoint thereafter.'
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: '2022-05-23T00:00:00Z'
+    - name: endTime
+      in: query
+      description: 'Stop the rolling window average when it reaches the specified end time or the last datapoint before that.'
+      required: false
+      schema:
+        type: string
+        format: date-time
+      example: '2022-05-23T02:30:00Z'
   '/sci-scores':
     post:
       summary: Calculate the SCI score using the configured data sources
@@ -12,9 +66,6 @@ paths:
       operationId: calculateSciScore
       requestBody:
         '$ref': '#/components/requestBodies/MarginalCarbonIntensityCalculation'
-        examples: 
-          sci-score-calculation:
-            '$ref': '#/components/examples/sci-score-calc-example'
       responses:
         '200':
           description: successful operation
@@ -38,9 +89,6 @@ paths:
       operationId: calculateMarginalCarbonIntensity
       requestBody:
         '$ref': '#/components/requestBodies/MarginalCarbonIntensityCalculation'
-        examples: 
-          carbon-intensity-score-calculation-cloudprovider:
-            '$ref': '#/components/examples/marginal-carbon-intensity-calc-cloudprovider-example'
       responses:
         '200':
           description: successful operation
@@ -74,6 +122,43 @@ components:
       description: Marginal Carbon Intensity Calculation
       required: true
   schemas:
+    EmissionsForecast:
+      type: object
+      properties:
+        generatedAt:
+          type: string
+          format: date-time
+        location:
+          type: string
+        startTime:
+          type: string
+          format: date-time
+        endTime:
+          type: string
+          format: date-time
+        windowSize:
+          type: integer
+        optimalDataPoint:
+          '$ref': '#/components/schemas/EmissionsData'
+        forecastData:
+          type: array
+          items:
+            '$ref': '#/components/schemas/EmissionsData'
+
+    EmissionsData:
+      type: object
+      properties:
+        location:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        duration:
+          type: integer
+        value:
+          type: number
+          format: float
+
     SciScore:
       type: object
       properties:
@@ -132,7 +217,7 @@ components:
         title:
           type: string
         status:
-          type: int
+          type: integer
         traceId:
           type: string
         errors:
@@ -158,3 +243,41 @@ components:
         "embodiedEmissionsValue": null,
         "functionalUnitValue": null 
       }
+    
+    marginal-carbon-intensity-forecast-example:
+      summary: An example response from an emissions forecast request.
+      value: [
+        {
+          "generatedAt": "2022-05-23T00:00:00Z",
+          "optimalDataPoint": {
+            "location": "eastus",
+            "time": "2022-05-23T00:10:00Z",
+            "rating": 173.3
+          },
+          "location": "eastus",
+          "notBefore": "2022-05-23T00:00:00Z",
+          "notAfter": "2022-05-23T00:21:00Z",
+          "forecastData": [
+            {
+              "location": "eastus",
+              "time": "2022-05-23T00:05:00Z",
+              "rating": 195.2
+            },
+            {
+              "location": "eastus",
+              "time": "2022-05-23T00:10:00Z",
+              "rating": 173.3
+            },
+            {
+              "location": "eastus",
+              "time": "2022-05-23T00:15:00Z",
+              "rating": 222.4
+            },
+            {
+              "location": "eastus",
+              "time": "2022-05-23T00:20:00Z",
+              "rating": 200.1
+            },
+          ]
+        }
+      ]
