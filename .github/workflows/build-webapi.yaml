@@ -13,21 +13,31 @@ env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/Dockerfile"
   HEALTH_ENDPOINT: "0.0.0.0:8080/health"
   DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
+  DOTNET_SRC_DIR: "./src/dotnet"
 
 jobs:
-  container-unit-test:
+  container-dotnet-build:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-    
-    - name: Docker Target Build
-      run: docker build --target=build . -f ${DOCKERFILE_PATH} -t ca-api-build
-      working-directory: ./src/dotnet
-
-    - name: Docker Unit Test
-      run: docker run -w //src/ ca-api-build dotnet test
-      working-directory: ./src/dotnet
+      - uses: actions/checkout@v3
+      - name: Setup .NET Core SDK 6
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: false
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      - name: Test + Code Coverage
+        run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      - name: Codecov
+        uses: codecov/codecov-action@v1
 
   container-validation:
       runs-on: ubuntu-latest
