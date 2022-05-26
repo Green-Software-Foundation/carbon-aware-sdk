@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using System.Net;
 
@@ -33,11 +34,15 @@ public static class ServiceCollectionExtensions
             {
                 throw new ConfigurationException("Url is missing.");
             }
+            LogProxyConfiguration(configuration, configVars);
             services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedClient)
                 .ConfigurePrimaryHttpMessageHandler(() => 
                     new HttpClientHandler() {
-                        Proxy = new WebProxy(configVars.Proxy.Url, true),
-                        Credentials = new NetworkCredential(configVars.Proxy.Username, configVars.Proxy.Password)
+                        Proxy = new WebProxy {
+                            Address = new Uri(configVars.Proxy.Url),
+                            Credentials = new NetworkCredential(configVars.Proxy.Username, configVars.Proxy.Password),
+                            BypassProxyOnLocal = true
+                        }
                     });
         }
         else
@@ -49,5 +54,15 @@ public static class ServiceCollectionExtensions
         services.TryAddSingleton<ActivitySource>(source);
 
         return services;
+    }
+
+    private static void LogProxyConfiguration(IConfiguration config, CarbonAwareVariablesConfiguration caVars)
+    {
+        ILoggerFactory factory = LoggerFactory.Create(b => {
+            b.AddConfiguration(config.GetSection("Logging"));
+            b.AddConsole();
+        });
+        var logger = factory.CreateLogger<IServiceCollection>();
+        logger.LogInformation($"Proxy configured to Url {caVars?.Proxy?.Url} with username {caVars?.Proxy?.Username}");
     }
 }

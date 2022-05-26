@@ -16,7 +16,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
 builder.Services.AddCarbonAwareEmissionServices(builder.Configuration);
-builder.Services.AddCarbonAwareSciScoreServices(builder.Configuration);
 CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration();
 
 builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
