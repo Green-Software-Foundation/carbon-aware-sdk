@@ -2,9 +2,9 @@
 
 This SDK has several entry points:
 
-- You can run the application using the [CLI](./src/dotnet//CarbonAware.CLI).
+- You can run the application using the [CLI](./src/CarbonAware.CLI).
 
-- You can build a container containing the [WebAPI](./src/dotnet/CarbonAware.WebApi) and connect via REST requests.
+- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi) and connect via REST requests.
 
 - (Future) You can install the Nuget package and make requests directly.
 
@@ -63,7 +63,7 @@ If set to `WattTime`, WattTime configuration must also be supplied.
 
 `None` is the default, and if this value is supplied, an exception will be thrown at startup.
 
-`JSON` will result in the data being loaded from a [json file](./src/dotnet/CarbonAware.DataSources.Json/test-data-azure-emissions.json) compiled into the project.  You should not use these values in production, since they are static and don't represent carbon intensity accurately.
+`JSON` will result in the data being loaded from a [json file](./src/CarbonAware.DataSources.Json/test-data-azure-emissions.json) compiled into the project.  You should not use these values in production, since they are static and don't represent carbon intensity accurately.
 
 ##### webApiRoutePrefix
 

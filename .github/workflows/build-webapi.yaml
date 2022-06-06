@@ -6,14 +6,14 @@ on:
   pull_request:
     branches: [ dev, main ]
     paths:
-      - 'src/dotnet/**'
+      - 'src/**'
       - '.github/workflows/**'
 
 env:
-  DOCKERFILE_PATH: "CarbonAware.WebApi/Dockerfile"
+  DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"
   HEALTH_ENDPOINT: "0.0.0.0:8080/health"
   DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
-  DOTNET_SRC_DIR: "./src/dotnet"
+  DOTNET_SRC_DIR: "./src"
 
 jobs:
   container-dotnet-build:
@@ -47,7 +47,7 @@ jobs:
 
       - name: Docker Target Final
         run: docker build . -f ${DOCKERFILE_PATH} -t ca-api
-        working-directory: ./src/dotnet
+        working-directory: ./src
         
       - name: Docker Run Container
         run: |
