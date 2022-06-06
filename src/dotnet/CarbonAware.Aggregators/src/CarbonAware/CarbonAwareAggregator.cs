@@ -2,28 +2,73 @@ using CarbonAware.Model;
 using CarbonAware.Interfaces;
 using Microsoft.Extensions.Logging;
 using System.Collections;
+using System.Diagnostics;
 
 namespace CarbonAware.Aggregators.CarbonAware;
 
 public class CarbonAwareAggregator : ICarbonAwareAggregator
 {
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareAggregator));
     private readonly ILogger<CarbonAwareAggregator> _logger;
-
     private readonly ICarbonIntensityDataSource _dataSource;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="CarbonAwareAggregator"/> class.
+    /// </summary>
+    /// <param name="logger">The logger for the aggregator</param>
+    /// <param name="dataSource">An <see cref="ICarbonIntensityDataSource"> data source.</param>
     public CarbonAwareAggregator(ILogger<CarbonAwareAggregator> logger, ICarbonIntensityDataSource dataSource)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._dataSource = dataSource;
     }
 
+    /// <inheritdoc />
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
-        DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now);
-        DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
-        _logger.LogInformation("Aggregator getting carbon intensity from data source");
-        return await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
+        using (var activity = Activity.StartActivity())
+        {
+            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now);
+            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
+            _logger.LogInformation("Aggregator getting carbon intensity from data source");
+            return await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
+        }
+    }
 
+    /// <inheritdoc />
+    public async Task<IEnumerable<EmissionsForecast>> GetCurrentForecastDataAsync(IDictionary props)
+    {
+        using (var activity = Activity.StartActivity())
+        {
+            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.Now);
+            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End,  start.AddDays(1));
+            _logger.LogInformation("Aggregator getting carbon intensity forecast from data source");
+
+            var forecasts = new List<EmissionsForecast>();
+            foreach(var location in GetLocationOrThrow(props))
+            {
+                var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
+                forecast.StartTime = start;
+                forecast.EndTime = end;
+                forecast.ForecastData = FilterByDate(forecast.ForecastData, start, end);
+                if(forecast.ForecastData.Any())
+                {
+                    forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
+                }
+                forecasts.Add(forecast);
+            }
+
+            return forecasts;
+        }
+    }
+
+    private IEnumerable<EmissionsData> FilterByDate(IEnumerable<EmissionsData> data, DateTimeOffset start, DateTimeOffset end)
+    {
+        return data.Where(ed => ed.Time >= start && ed.Time < end);
+    }
+    private EmissionsData GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
+    {
+        return emissionsData.Aggregate((minData, nextData) => minData.Rating < nextData.Rating ? minData : nextData);
     }
 
     /// <summary>

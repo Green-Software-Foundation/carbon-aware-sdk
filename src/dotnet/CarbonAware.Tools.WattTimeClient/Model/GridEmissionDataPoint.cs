@@ -36,7 +36,7 @@ public record GridEmissionDataPoint
     /// DateTime indicating when this data became valid.
     /// </summary>
     [JsonPropertyName("point_time")]
-    public DateTime PointTime { get; set; }
+    public DateTimeOffset PointTime { get; set; }
 
     /// <summary>
     /// Number value of data (corresponding to datatype).

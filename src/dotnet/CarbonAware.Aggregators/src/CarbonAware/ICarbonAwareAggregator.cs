@@ -25,4 +25,12 @@ public interface ICarbonAwareAggregator : IAggregator
     /// <see cref="CarbonAwareConstants"/>
     /// <returns>Emissions Rating average.</returns>
     Task<double> CalcEmissionsAverageAsync(IDictionary props);
+
+    /// <summary>
+    /// Get forecasted emissions data.
+    /// </summary>
+    /// <param name="props">IDictionary with properties required by concrete classes.</param>
+    /// <see cref="CarbonAwareConstants"/>
+    /// <returns>List of current emissions forecasts by location.</returns>
+    Task<IEnumerable<EmissionsForecast>> GetCurrentForecastDataAsync(IDictionary props);
 }

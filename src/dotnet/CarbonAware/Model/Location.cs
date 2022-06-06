@@ -35,6 +35,22 @@ public class Location
     #nullable enable
     public string? RegionName { get; set; }
     #nullable disable
+
+    /// <summary>
+    /// Gets the display name based on LocationType.
+    /// </summary>
+    public string DisplayName {
+        get {
+            if (LocationType == LocationType.Geoposition) {
+                return $"{Latitude}, {Longitude}";
+            } else if (LocationType == LocationType.CloudProvider) {
+                return $"{RegionName}";
+            } else {
+                return "Not Provided";
+            }
+        }
+    }
+
     /// <inheritdoc />
     public override string ToString()
     {

@@ -14,15 +14,15 @@ namespace CarbonAware.DataSources.Json.Tests;
 public class JsonDataSourceTests
 {
     [Test]
-    public async Task TestDataByLocation_WhenMultipleLocationsProvided()
+    public async Task GetCarbonIntensityAsync_ByLocationMultiple()
     {
         var mockDataSource = SetupMockDataSource();
 
         var location1 = new Location() { RegionName = "eastus"};
         var location2 = new Location() { RegionName = "westus"};
         IEnumerable<Location> locations = new List<Location>() { location1, location2 };
-        var start = new DateTimeOffset(new DateTime(2021,8,9));
-        var end = new DateTimeOffset(new DateTime(2022,4,9));
+        var start = new DateTimeOffset(2021,8,9,0,0,0,TimeSpan.Zero);
+        var end = new DateTimeOffset(2022,4,9,0,0,0,TimeSpan.Zero);
         var dataSource = mockDataSource.Object;
         var result = await dataSource.GetCarbonIntensityAsync(locations, start, end);
         Assert.AreEqual(3, result.Count());
@@ -33,13 +33,13 @@ public class JsonDataSourceTests
     }
 
     [Test]
-    public async Task TestDataByLocationAndTimePeriod()
+    public async Task GetCarbonIntensityAsync_ByLocationAndTimePeriod()
     {
         var mockDataSource = SetupMockDataSource();
         
         var location = new Location {RegionName = "eastus"};
-        var start = new DateTimeOffset(new DateTime(2021,8,9));
-        var end = new DateTimeOffset(new DateTime(2021,12,9));
+        var start = new DateTimeOffset(2021,8,9,0,0,0,TimeSpan.Zero);
+        var end = new DateTimeOffset(2021,12,9,0,0,0,TimeSpan.Zero);
 
         var dataSource = mockDataSource.Object;
         var result = await dataSource.GetCarbonIntensityAsync(new List<Location>() { location }, start, end);
@@ -49,18 +49,28 @@ public class JsonDataSourceTests
     }
 
     [Test]
-    public async Task TestData_WhenNoMatchedCriteria()
+    public async Task GetCarbonIntensityAsync_NoMatchedCriteria()
     {
         var mockDataSource = SetupMockDataSource();
         
         var location = new Location {RegionName = "paris"};
-        var start = new DateTimeOffset(new DateTime(2021,8,9));
-        var end = new DateTimeOffset(new DateTime(2021,12,9));
+        var start = new DateTimeOffset(2021,8,9,0,0,0,TimeSpan.Zero);
+        var end = new DateTimeOffset(2021,12,9,0,0,0,TimeSpan.Zero);
         
         var dataSource = mockDataSource.Object;
         var result = await dataSource.GetCarbonIntensityAsync(new List<Location>() { location }, start, end);
         
         Assert.AreEqual(0, result.Count());
+    }
+
+    [Test]
+    public void GetCurrentCarbonIntensityForecastAsync_NotImplemented()
+    {
+        var mockDataSource = SetupMockDataSource();
+        var dataSource = mockDataSource.Object;
+        var location = new Location {RegionName = "paris"};
+        Assert.ThrowsAsync<NotImplementedException>(async () => await  dataSource.GetCurrentCarbonIntensityForecastAsync(location));
+
     }
 
     private Mock<JsonDataSource> SetupMockDataSource() {

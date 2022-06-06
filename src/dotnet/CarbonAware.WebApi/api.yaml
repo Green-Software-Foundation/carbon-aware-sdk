@@ -251,32 +251,37 @@ components:
           "generatedAt": "2022-05-23T00:00:00Z",
           "optimalDataPoint": {
             "location": "eastus",
-            "time": "2022-05-23T00:10:00Z",
-            "rating": 173.3
+            "timestamp": "2022-05-23T00:10:00Z",
+            "duration": 5,
+            "value": 173.3
           },
           "location": "eastus",
-          "notBefore": "2022-05-23T00:00:00Z",
-          "notAfter": "2022-05-23T00:21:00Z",
+          "startTime": "2022-05-23T00:00:00Z",
+          "endTime": "2022-05-23T00:21:00Z",
           "forecastData": [
             {
               "location": "eastus",
-              "time": "2022-05-23T00:05:00Z",
-              "rating": 195.2
+              "timestamp": "2022-05-23T00:05:00Z",
+              "duration": 5,
+              "value": 195.2
             },
             {
               "location": "eastus",
-              "time": "2022-05-23T00:10:00Z",
-              "rating": 173.3
+              "timestamp": "2022-05-23T00:10:00Z",
+              "duration": 5,
+              "value": 173.3
             },
             {
               "location": "eastus",
-              "time": "2022-05-23T00:15:00Z",
-              "rating": 222.4
+              "timestamp": "2022-05-23T00:15:00Z",
+              "duration": 5,
+              "value" 222.4
             },
             {
               "location": "eastus",
-              "time": "2022-05-23T00:20:00Z",
-              "rating": 200.1
+              "timestamp": "2022-05-23T00:20:00Z",
+              "duration": 5,
+              "value" 200.1
             },
           ]
         }

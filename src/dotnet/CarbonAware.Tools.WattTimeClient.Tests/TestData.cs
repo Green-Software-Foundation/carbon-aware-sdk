@@ -15,7 +15,7 @@ public static class TestData
               ["datatype"] = "dt",
               ["frequency"] = 300,
               ["market"] = "mkt",
-              ["point_time"] = new DateTime(2099, 1, 1),
+              ["point_time"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
               ["value"] = 999.99,
               ["version"] = "1.0"
           }
@@ -29,13 +29,13 @@ public static class TestData
 
         var json = new JsonObject
         {
-            ["generated_at"] = new DateTime(2099, 1, 1),
+            ["generated_at"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
             ["forecast"] = new JsonArray
             {
                 new JsonObject
                 {
                     ["ba"] = "ba",
-                    ["point_time"] = new DateTime(2099, 1, 1),
+                    ["point_time"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
                     ["value"] = 999.99,
                     ["version"] = "1.0"
                 }
@@ -51,13 +51,13 @@ public static class TestData
         {
             new JsonObject
             {
-                ["generated_at"] = new DateTime(2099, 1, 1),
+                ["generated_at"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
                 ["forecast"] = new JsonArray
                 {
                     new JsonObject
                     {
                         ["ba"] = "ba",
-                        ["point_time"] = new DateTime(2099, 1, 1),
+                        ["point_time"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
                         ["value"] = 999.99,
                         ["version"] = "1.0"
                     }

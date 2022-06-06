@@ -35,7 +35,7 @@ public interface IWattTimeClient
     /// <param name="balancingAuthorityAbbreviation">Balancing authority abbreviation</param>
     /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<Forecast?> GetCurrentForecastAsync(string balancingAuthorityAbbreviation);
+    public Task<Forecast> GetCurrentForecastAsync(string balancingAuthorityAbbreviation);
 
     /// <summary>
     /// Async method to get the most recent 24 hour forecasted emission data for a given balancing authority.
@@ -43,7 +43,7 @@ public interface IWattTimeClient
     /// <param name="balancingAuthority">Balancing authority</param>
     /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    public Task<Forecast?> GetCurrentForecastAsync(BalancingAuthority balancingAuthority);
+    public Task<Forecast> GetCurrentForecastAsync(BalancingAuthority balancingAuthority);
 
     /// <summary>
     /// Async method to get all generated forecasts in the given period and balancing authority.

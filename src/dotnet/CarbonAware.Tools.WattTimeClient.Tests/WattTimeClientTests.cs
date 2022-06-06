@@ -1,4 +1,5 @@
 ﻿using CarbonAware.Tools.WattTimeClient.Configuration;
+using CarbonAware.Tools.WattTimeClient.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -113,7 +114,7 @@ public class WattTimeClientTests
         Assert.AreEqual("dt", gridDataPoint.Datatype);
         Assert.AreEqual(300, gridDataPoint.Frequency);
         Assert.AreEqual("mkt", gridDataPoint.Market);
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), gridDataPoint.PointTime);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), gridDataPoint.PointTime);
         Assert.AreEqual("999.99", gridDataPoint.Value.ToString("0.00")); //Format float to avoid precision issues
         Assert.AreEqual("1.0", gridDataPoint.Version);
     }
@@ -166,10 +167,30 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
+
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync("balauth"));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba));
+    }
+
+    [Test]
+    public void GetCurrentForecastAsync_ThrowsWhenNull()
+    {
+        this.CreateHttpClient(m =>
+        {
+            var response = this.MockWattTimeAuthResponse(m, new StringContent("null"));
+            return Task.FromResult(response);
+        });
+
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
+        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
+
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba));
     }
 
     [Test]
@@ -186,13 +207,19 @@ public class WattTimeClientTests
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-        var forecast = await client.GetCurrentForecastAsync("balauth");
+        var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
+
+        var forecast = await client.GetCurrentForecastAsync(ba.Abbreviation);
+        var overloadedForecast = await client.GetCurrentForecastAsync(ba);
+
+        Assert.AreEqual(forecast.GeneratedAt, overloadedForecast.GeneratedAt);
+        Assert.AreEqual(forecast.ForecastData.First(), overloadedForecast.ForecastData.First());
 
         Assert.IsNotNull(forecast);
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecast?.GeneratedAt);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast?.GeneratedAt);
         var forecastDataPoint = forecast?.ForecastData.First();
         Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecastDataPoint?.PointTime);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint?.PointTime);
         Assert.AreEqual("999.99", forecastDataPoint?.Value.ToString("0.00")); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint?.Version);
     }
@@ -213,7 +240,7 @@ public class WattTimeClientTests
         var forecast = await client.GetCurrentForecastAsync("balauth");
 
         Assert.IsNotNull(forecast);
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecast?.GeneratedAt);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast?.GeneratedAt);
         var forecastDataPoint = forecast?.ForecastData.First();
         Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
     }
@@ -235,7 +262,7 @@ public class WattTimeClientTests
         var forecast = await client.GetCurrentForecastAsync("balauth");
 
         Assert.IsNotNull(forecast);
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecast?.GeneratedAt);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast?.GeneratedAt);
         var forecastDataPoint = forecast?.ForecastData.First();
         Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
     }
@@ -251,8 +278,27 @@ public class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastByDateAsync("balauth", new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastByDateAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastByDateAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
+    }
+
+    [Test]
+    public void GetForecastByDateAsync_ThrowsWhenNull()
+    {
+        this.CreateHttpClient(m =>
+        {
+            var response = this.MockWattTimeAuthResponse(m, new StringContent("null"));
+            return Task.FromResult(response);
+        });
+
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
+        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
+
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastByDateAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastByDateAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
     }
 
     [Test]
@@ -268,15 +314,22 @@ public class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
-        var forecasts = await client.GetForecastByDateAsync("balauth", new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var forecasts = await client.GetForecastByDateAsync(ba.Abbreviation, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var overloadedForecasts = await client.GetForecastByDateAsync(ba, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
 
         Assert.IsTrue(forecasts.Count() > 0);
         var forecast = forecasts.ToList().First();
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecast.GeneratedAt);
+        var overloadedForecast = overloadedForecasts.ToList().First();
+
+        Assert.AreEqual(forecast.GeneratedAt, overloadedForecast.GeneratedAt);
+        Assert.AreEqual(forecast.ForecastData.First(), overloadedForecast.ForecastData.First());
+
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
         var forecastDataPoint = forecast.ForecastData.ToList().First();
         Assert.AreEqual("ba", forecastDataPoint.BalancingAuthorityAbbreviation);
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecastDataPoint.PointTime);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint.PointTime);
         Assert.AreEqual("999.99", forecastDataPoint.Value.ToString("0.00")); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint.Version);
     }
@@ -298,7 +351,7 @@ public class WattTimeClientTests
 
         Assert.IsTrue(forecasts.Count() > 0);
         var forecast = forecasts.ToList().First();
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecast.GeneratedAt);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
     }
 
     [Test]
@@ -319,7 +372,7 @@ public class WattTimeClientTests
         
         Assert.IsTrue(forecasts.Count() > 0);
         var forecast = forecasts.ToList().First();
-        Assert.AreEqual(new DateTime(2099, 1, 1, 0, 0, 0, DateTimeKind.Utc), forecast.GeneratedAt);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
     }
 
     [Test]
@@ -335,6 +388,21 @@ public class WattTimeClientTests
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
+    }
+
+    [Test]
+    public void GetBalancingAuthorityAsync_ThrowsWhenNull()
+    {
+        this.CreateHttpClient(m =>
+        {
+            var response = this.MockWattTimeAuthResponse(m, new StringContent("null"));
+            return Task.FromResult(response);
+        });
+
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.ActivitySource);
+        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
     }
 
     [Test]

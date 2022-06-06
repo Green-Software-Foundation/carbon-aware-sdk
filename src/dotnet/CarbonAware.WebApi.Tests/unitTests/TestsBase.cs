@@ -23,7 +23,7 @@ public abstract class TestsBase
         this.ActivitySource = new ActivitySource("test activity source");
     }
 
-    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithData(List<EmissionsData> data)
+    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithEmissionsData(List<EmissionsData> data)
     {
         var aggregator = new Mock<ICarbonAwareAggregator>();
         aggregator.Setup(x =>
@@ -32,12 +32,16 @@ public abstract class TestsBase
         return aggregator;
     }
 
-    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithException()
+    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithForecastData(List<EmissionsData> data)
     {
+        var forecasts = new List<EmissionsForecast>()
+        {
+            new EmissionsForecast(){ ForecastData = data }
+        };
         var aggregator = new Mock<ICarbonAwareAggregator>();
         aggregator.Setup(x =>
-            x.GetEmissionsDataAsync(
-                It.IsAny<Dictionary<string, object>>())).Throws<Exception>();
+            x.GetCurrentForecastDataAsync(
+                It.IsAny<Dictionary<string, object>>())).ReturnsAsync(forecasts);
         return aggregator;
     }
 
