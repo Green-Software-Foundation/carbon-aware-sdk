@@ -1,13 +1,10 @@
 ﻿
 using CarbonAware.CLI.Options;
-using CommandLine;
 using CommandLine.Text;
+using Microsoft.Extensions.Logging;
+using CarbonAware.Aggregators.CarbonAware;
 
 namespace CarbonAware.CLI;
-
-using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Interfaces;
-using Microsoft.Extensions.Logging;
 
 public class CarbonAwareCLI
 {
