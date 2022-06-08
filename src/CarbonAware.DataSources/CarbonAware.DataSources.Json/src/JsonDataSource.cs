@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
@@ -20,9 +19,13 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
     public string Version => "0.0.1";
 
+    public double MinSamplingWindow => 1440;  // 24 hrs
+
     private List<EmissionsData>? emissionsData;
 
     private readonly ILogger<JsonDataSource> _logger;
+
+    private const double DURATION = 8; // 8 hrs
 
 
     /// <summary>
@@ -63,13 +66,17 @@ public class JsonDataSource : ICarbonIntensityDataSource
         throw new NotImplementedException();
     }
 
-    private IEnumerable<EmissionsData> FilterByDateRange(IEnumerable<EmissionsData> data, DateTimeOffset startDate, object endDate)
+    private IEnumerable<EmissionsData> FilterByDateRange(IEnumerable<EmissionsData> data, DateTimeOffset startTime, DateTimeOffset endTime)
     {
-        DateTimeOffset end;
-        DateTimeOffset.TryParse(endDate.ToString(), out end);
-        data = data.Where(ed => ed.TimeBetween(startDate, end));  
+        var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(startTime, endTime, MinSamplingWindow);
+        var windowData = data.Where(ed => ed.TimeBetween(newStartTime, newEndTime));
+        var filteredData = IntervalHelper.FilterByDuration(windowData, startTime, endTime, TimeSpan.FromHours(DURATION));
 
-        return data;
+        if (!filteredData.Any())
+        {
+            _logger.LogInformation($"Not enough data with {MinSamplingWindow} window");
+        }
+        return filteredData;
     }
 
     private IEnumerable<EmissionsData> FilterByLocation(IEnumerable<EmissionsData> data, IEnumerable<string?> locations)

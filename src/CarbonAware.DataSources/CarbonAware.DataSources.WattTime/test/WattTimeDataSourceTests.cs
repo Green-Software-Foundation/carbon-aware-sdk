@@ -3,21 +3,19 @@ using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using CarbonAware.Tools.WattTimeClient;
 using CarbonAware.Tools.WattTimeClient.Model;
-using Castle.Core.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CarbonAware.DataSources.WattTime.Tests;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+[TestFixture]
 public class WattTimeDataSourceTests
 {
     private Mock<ILogger<WattTimeDataSource>> Logger { get; set; }
@@ -73,8 +71,8 @@ public class WattTimeDataSourceTests
 
         this.WattTimeClient.Setup(w => w.GetDataAsync(
             balancingAuthority,
-            startDate,
-            endDate)
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>())
         ).ReturnsAsync(() => emissionData);
 
         SetupBalancingAuthority(balancingAuthority, location);

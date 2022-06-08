@@ -31,6 +31,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
 
     const double MWH_TO_KWH_CONVERSION_FACTOR = 1000.0;
     const double LBS_TO_GRAMS_CONVERSION_FACTOR = 453.59237;
+    public double MinSamplingWindow => 120; // 2hrs of data
 
 
     /// <summary>
@@ -89,36 +90,43 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
     }
     private async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
-        this.Logger.LogInformation("Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.", location, periodStartTime, periodEndTime);
+        Logger.LogInformation($"Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.");
 
         using (var activity = ActivitySource.StartActivity())
         {
-            BalancingAuthority balancingAuthority = await this.GetBalancingAuthority(location, activity);
-            var data = (await this.WattTimeClient.GetDataAsync(balancingAuthority, periodStartTime, periodEndTime)).ToList();
-
-            Logger.LogDebug("Found {count} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.", data.Count, location, periodStartTime, periodEndTime);
-
-            // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
-            var result = data.Select(e => new EmissionsData() 
-            { 
-                Location = e.BalancingAuthorityAbbreviation, 
-                Rating = ConvertMoerToGramsPerKilowattHour(e.Value), 
-                Time = e.PointTime,
-                Duration = FrequencyToTimeSpan(e.Frequency)
-            });
-
+            var balancingAuthority = await this.GetBalancingAuthority(location, activity);
+            var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(periodStartTime, periodEndTime, MinSamplingWindow);
+            var data = await this.WattTimeClient.GetDataAsync(balancingAuthority, newStartTime, newEndTime);
             if (Logger.IsEnabled(LogLevel.Debug))
             {
-                Logger.LogDebug("Found {count} total emissions data records for location {location} for period {periodStartTime} to {periodEndTime}.", result.ToList().Count, location, periodStartTime, periodEndTime);
+                Logger.LogDebug($"Found {data.Count()} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.");
             }
+            var windowData = ConvertToEmissionsData(data);
+            var filteredData = IntervalHelper.FilterByDuration(windowData, periodStartTime, periodEndTime);
 
-            return result;
+            if (!filteredData.Any())
+            {
+                Logger.LogInformation($"Not enough data with {MinSamplingWindow} window");
+            }
+            return filteredData;
         }
     }
 
     internal double ConvertMoerToGramsPerKilowattHour(double value)
     {
         return value * LBS_TO_GRAMS_CONVERSION_FACTOR / MWH_TO_KWH_CONVERSION_FACTOR;
+    }
+
+    private IEnumerable<EmissionsData> ConvertToEmissionsData(IEnumerable<GridEmissionDataPoint> data)
+    {
+        // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
+        return data.Select(e => new EmissionsData() 
+                    { 
+                        Location = e.BalancingAuthorityAbbreviation, 
+                        Rating = ConvertMoerToGramsPerKilowattHour(e.Value), 
+                        Time = e.PointTime,
+                        Duration = FrequencyToTimeSpan(e.Frequency)
+                    });
     }
 
     private TimeSpan FrequencyToTimeSpan(int? frequency)

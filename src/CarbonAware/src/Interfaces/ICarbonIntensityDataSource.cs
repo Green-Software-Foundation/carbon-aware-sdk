@@ -11,6 +11,11 @@ public interface ICarbonIntensityDataSource
     string Version { get; }
 
     /// <summary>
+    /// Minimum sampling window for data, in minutes
+    /// </summary>
+    double MinSamplingWindow { get; }
+
+    /// <summary>
     /// Gets the carbon intensity for a location and start and end time
     /// </summary>
     /// <param name="locations">The locations that should be used for getting emissions data.</param>
