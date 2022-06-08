@@ -1,7 +1,8 @@
-using CarbonAware.Model;
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using CarbonAware.Model;
 
 namespace CarbonAware.WebApi.Controllers;
 
@@ -18,10 +19,14 @@ public class CarbonAwareController : ControllerBase
         _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
+    /// <summary>
+    /// Calculate the best emission data by location for a specified time period.
+    /// </summary>
+    /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime(string locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
@@ -39,10 +44,14 @@ public class CarbonAwareController : ControllerBase
         return await GetEmissionsDataAsync(props);
     }
 
+    /// <summary>
+    /// Calculate the observed emission data by list of locations for a specified time period.
+    /// </summary>
+    /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime(string locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
@@ -58,13 +67,17 @@ public class CarbonAwareController : ControllerBase
         return await GetEmissionsDataAsync(props);
     }
 
+    /// <summary>
+    /// Calculate the best emission data by location for a specified time period.
+    /// </summary>
+    /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocation")]
-    public async Task<IActionResult> GetEmissionsDataForLocationByTime(string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
-    {;
+    public async Task<IActionResult> GetEmissionsDataForLocationByTime([FromQuery, BindRequired] string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    {
         var locations = new List<Location>() { new Location() { RegionName = location, LocationType=LocationType.CloudProvider } };
         var props = new Dictionary<string, object?>() {
             { CarbonAwareConstants.Locations, locations },

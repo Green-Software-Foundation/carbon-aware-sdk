@@ -26,15 +26,14 @@ public class SciScoreController : ControllerBase
         _activitySource = activitySource;
     }
 
-    [HttpPost]
-    [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-
     /// <summary> Gets sci-score value, currently dummy function to keep consistency </summary>
     /// <param name="input"> input from JSON request converted to input object with location and time interval </param>
     /// <returns>Result of the call to the aggregator that calculates the sci score</returns>
-
+    /// <response code="200">successful operation</response>
+    [HttpPost]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(SciScore), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public Task<IActionResult> CreateAsync(SciScoreInput input)
     {
         _logger.LogDebug("calculate sciscore with input: {input}", input);
@@ -51,13 +50,14 @@ public class SciScoreController : ControllerBase
         return Task.FromResult<IActionResult>(Ok(score));
     }
 
-    [HttpPost("marginal-carbon-intensity")]
-    [Consumes(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     /// <summary> Gets the marginal carbon intensity value </summary>
     /// <param name="input"> input from JSON request converted to input object with location and time interval </param>
     /// <returns>Result of the call to the aggregator to retrieve carbon intenstiy</returns>
+    
+    [HttpPost("marginal-carbon-intensity")]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> GetCarbonIntensityAsync(SciScoreInput input)
     {
         using (var activity = _activitySource.StartActivity(nameof(SciScoreController)))

@@ -13,6 +13,7 @@ env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"
   HEALTH_ENDPOINT: "0.0.0.0:8080/health"
   DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
+  DLL_FILE_PATH: "./bin/Release/net6.0/CarbonAware.WebApi.dll"
   DOTNET_SRC_DIR: "./src"
 
 jobs:
@@ -30,6 +31,9 @@ jobs:
       - name: Install dependencies
         run: dotnet restore
         working-directory: ${{ env.DOTNET_SRC_DIR }}
+      - name: Install tools
+        run: dotnet tool restore 
+        working-directory: ${{ env.DOTNET_SRC_DIR }}/CarbonAware.WebApi/src
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ${{ env.DOTNET_SRC_DIR }}
@@ -38,7 +42,15 @@ jobs:
         working-directory: ${{ env.DOTNET_SRC_DIR }}
       - name: Codecov
         uses: codecov/codecov-action@v1
-
+      - name: Generate Open API
+        run: dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1  
+        working-directory: ./src/CarbonAware.WebApi/src 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: pr-swagger.yaml
+          path: src/CarbonAware.WebApi/src/api/v1/swagger.yaml
+      
   container-validation:
       runs-on: ubuntu-latest
       steps:

@@ -18,19 +18,24 @@ public record SciScoreInput
 [Serializable]
 public record LocationInput
 {
+    /// <example>Cloud Provider</example>
     [JsonPropertyName("locationType")]
     [Required()]
     public string? LocationType { get; set; }
 
+    /// <example>153.23</example>
     [JsonPropertyName("latitude")]
     public decimal? Latitude { get; set; }
 
+    /// <example>72.23</example>
     [JsonPropertyName("longitude")]
     public decimal? Longitude { get; set; }
 
+    /// <example>Azure</example>
     [JsonPropertyName("cloudProvider")]
     public string? CloudProvider { get; set; }
 
+    /// <example>useast</example>
     [JsonPropertyName("regionName")]
     public string? RegionName { get; set; }
 }

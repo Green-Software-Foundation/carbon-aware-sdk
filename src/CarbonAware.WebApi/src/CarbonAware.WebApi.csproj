@@ -7,6 +7,11 @@
     <UserSecretsId>8d822819-8a1f-45e4-95fb-d4a9c3a9439f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PublishDocumentationFile>true</PublishDocumentationFile>
+
+    <DocumentationFile>$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +41,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+      <Folder Include="api\v1" />
+  </ItemGroup>  
+
 
 	<Target Name="CopyDataFiles" AfterTargets="Build">
 		<ItemGroup>
