@@ -84,8 +84,14 @@ public class CarbonAwareCLI
     }
 
     public void OutputEmissionsData(List<EmissionsData> emissions)
-    {
-        Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
+    { if (_state.Lowest)
+        {
+            Console.WriteLine($"{JsonConvert.SerializeObject(emissions[0], Formatting.Indented)}");
+        }
+        else
+        {
+            Console.WriteLine($"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}");
+        }
     }
 
     private void ValidateCommandLineArguments(CLIOptions o)
