@@ -20,6 +20,12 @@
 	// Comment out the next line to run as root
 	// "remoteUser": "vscode",
 
+	// Uncomment the line below to mount your local usersecrets into the devcontainer from a Windows OS
+	// "mounts": [ "source=${localEnv:APPDATA}/Microsoft/UserSecrets,target=/root/.microsoft/usersecrets,type=bind" ],
+
+	// Uncomment the line below to mount your local usersecrets into the devcontainer from a Mac/Linux OS
+	// "mounts": [ "source=${localEnv:HOME}/.microsoft/usersecrets,target=/root/.microsoft/usersecrets,type=bind" ],
+	
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"extensions": [
 		"ms-dotnettools.csharp"	
