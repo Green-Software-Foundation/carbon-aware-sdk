@@ -46,30 +46,35 @@ public static class TestData
         };
     }
 
-    public static EmissionsForecast GetForecast(int duration = 5)
+    public static EmissionsForecast GetForecast(int durationMinutes = 5)
     {
         var startTime = DateTimeOffset.Parse("2022-01-01T00:00:00Z");
+        var duration = TimeSpan.FromMinutes(durationMinutes);
         var forecastData = new List<EmissionsData>()
         {
             new EmissionsData {
                 Location = "westus",
                 Time = startTime,
-                Rating = 10
+                Rating = 10,
+                Duration = duration
             },
             new EmissionsData {
                 Location = "westus",
-                Time = startTime.AddMinutes(duration),
-                Rating = 20
+                Time = startTime.AddMinutes(durationMinutes),
+                Rating = 20,
+                Duration = duration
             },
             new EmissionsData {
                 Location = "westus",
-                Time = startTime.AddMinutes(duration*2),
-                Rating = 30
+                Time = startTime.AddMinutes(durationMinutes*2),
+                Rating = 30,
+                Duration = duration
             },
             new EmissionsData {
                 Location = "westus",
-                Time = startTime.AddMinutes(duration*3),
-                Rating = 40
+                Time = startTime.AddMinutes(durationMinutes*3),
+                Rating = 40,
+                Duration = duration
             }
         };
 

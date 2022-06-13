@@ -133,8 +133,8 @@ public class CarbonAwareAggregatorTests
 
     [TestCase("2021-12-31T23:00:00Z", "2022-01-01T01:00:00Z", ExpectedResult = 4)] // Full data set
     [TestCase("2022-01-01T00:00:00Z", "2022-01-01T01:00:00Z", ExpectedResult = 4)] // Start time exact match
-    [TestCase("2021-12-31T23:00:00Z", "2022-01-01T00:15:00Z", ExpectedResult = 3)] // End time exact match
-    [TestCase("2022-01-01T00:02:00Z", "2022-01-01T00:12:00Z", ExpectedResult = 2)] // Start and end midway through a datapoint
+    [TestCase("2021-12-31T23:00:00Z", "2022-01-01T00:15:00Z", ExpectedResult = 4)] // End time exact match
+    [TestCase("2022-01-01T00:02:00Z", "2022-01-01T00:12:00Z", ExpectedResult = 3)] // Start and end midway through a datapoint
     public async Task<int> TestGetCurrentForecastDataAsync_FiltersDate(string start, string end)
     {
         this.CarbonIntensityDataSource.Setup(x => x.GetCurrentCarbonIntensityForecastAsync(It.IsAny<Location>()))
@@ -171,5 +171,71 @@ public class CarbonAwareAggregatorTests
         var optimalDataPoint = forecast.OptimalDataPoint;
 
         Assert.AreEqual(firstDataPoint, optimalDataPoint);
+    }
+
+    [Test]
+    public async Task TestGetCurrentForecastDataAsync_RollingAverageWithSpecifiedWindow()
+    {
+        // Arrange
+        var windowSize = 10;
+        var dataTickSize = 5.0;
+        var dataDuration = windowSize;
+        var dataStartTime = new DateTimeOffset(2022,1,1,0,0,0,TimeSpan.Zero);
+        this.CarbonIntensityDataSource.Setup(x => x.GetCurrentCarbonIntensityForecastAsync(It.IsAny<Location>()))
+            .ReturnsAsync(TestData.GetForecast());
+        var locationName = "westus";
+        var props = new Dictionary<string, object>()
+        {
+            { CarbonAwareConstants.Locations, new List<Location>() { new Location() { RegionName = "westus" } } },
+            { CarbonAwareConstants.Start, "2022-01-01T00:00:00Z" },
+            { CarbonAwareConstants.End, "2022-01-01T01:00:00Z" },
+            { CarbonAwareConstants.Duration, windowSize }
+        };
+
+        var expectedData = new List<EmissionsData>();
+        var expectedRatings = new double[] { 15.0, 25.0, 35.0 };
+        for(var i = 0; i < expectedRatings.Count(); i++)
+        {
+            expectedData.Add(new EmissionsData() { Time = dataStartTime + i * TimeSpan.FromMinutes(dataTickSize), Location = locationName, Rating = expectedRatings[i], Duration = TimeSpan.FromMinutes(dataDuration) });
+        }
+
+        // Act
+        var results = await this.Aggregator.GetCurrentForecastDataAsync(props);
+        var forecast = results.First();
+
+        // Assert
+        Assert.AreEqual(expectedData, forecast.ForecastData);
+    }
+
+    [Test]
+    public async Task TestGetCurrentForecastDataAsync_RollingAverageWithNoSpecifiedWindow()
+    {
+        // Arrange
+        var dataTickSize = 5.0;
+        var dataDuration = 5;
+        var dataStartTime = new DateTimeOffset(2022,1,1,0,0,0,TimeSpan.Zero);
+        this.CarbonIntensityDataSource.Setup(x => x.GetCurrentCarbonIntensityForecastAsync(It.IsAny<Location>()))
+            .ReturnsAsync(TestData.GetForecast());
+        var locationName = "westus";
+        var props = new Dictionary<string, object>()
+        {
+            { CarbonAwareConstants.Locations, new List<Location>() { new Location() { RegionName = "westus" } } },
+            { CarbonAwareConstants.Start, "2022-01-01T00:00:00Z" },
+            { CarbonAwareConstants.End, "2022-01-01T01:00:00Z" },
+        };
+
+        var expectedData = new List<EmissionsData>();
+        var expectedRatings = new double[] { 10.0, 20.0, 30.0, 40.0 };
+        for(var i = 0; i < expectedRatings.Count(); i++)
+        {
+            expectedData.Add(new EmissionsData() { Time = dataStartTime + i * TimeSpan.FromMinutes(dataTickSize), Location = locationName, Rating = expectedRatings[i], Duration = TimeSpan.FromMinutes(dataDuration) });
+        }
+
+        // Act
+        var results = await this.Aggregator.GetCurrentForecastDataAsync(props);
+        var forecast = results.First();
+
+        // Assert
+        Assert.AreEqual(expectedData, forecast.ForecastData);
     }
 }

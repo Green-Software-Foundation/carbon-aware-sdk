@@ -1,5 +1,6 @@
 using CarbonAware.Model;
 using CarbonAware.Interfaces;
+using CarbonAware.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 using System.Diagnostics;
@@ -42,6 +43,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         {
             DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.Now);
             DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End,  start.AddDays(1));
+            TimeSpan windowSize = GetDurationOrDefault(props);
             _logger.LogInformation("Aggregator getting carbon intensity forecast from data source");
 
             var forecasts = new List<EmissionsForecast>();
@@ -50,10 +52,12 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
                 var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
                 forecast.StartTime = start;
                 forecast.EndTime = end;
-                forecast.ForecastData = FilterByDate(forecast.ForecastData, start, end);
+                forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, start, end);
+                forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize);
                 if(forecast.ForecastData.Any())
                 {
                     forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
+                    forecast.WindowSize = forecast.ForecastData.First().Duration;
                 }
                 forecasts.Add(forecast);
             }
@@ -62,10 +66,6 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
     }
 
-    private IEnumerable<EmissionsData> FilterByDate(IEnumerable<EmissionsData> data, DateTimeOffset start, DateTimeOffset end)
-    {
-        return data.Where(ed => ed.Time >= start && ed.Time < end);
-    }
     private EmissionsData GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
     {
         return emissionsData.Aggregate((minData, nextData) => minData.Rating < nextData.Rating ? minData : nextData);
@@ -101,6 +101,15 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
         _logger.LogError("argument exception", ex);
         throw ex;
+    }
+
+    private TimeSpan GetDurationOrDefault(IDictionary props, TimeSpan defaultValue = default)
+    {
+        if (props[CarbonAwareConstants.Duration] is int duration)
+        {
+            return TimeSpan.FromMinutes(duration);
+        }
+        return defaultValue;
     }
 
     public async Task<double> CalcEmissionsAverageAsync(IDictionary props)

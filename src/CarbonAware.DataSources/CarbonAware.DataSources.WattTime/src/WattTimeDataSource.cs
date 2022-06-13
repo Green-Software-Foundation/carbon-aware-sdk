@@ -72,12 +72,15 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
             BalancingAuthority balancingAuthority = await this.GetBalancingAuthority(location, activity);
             var data = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority);
 
+            var duration = GetDurationFromGridEmissionDataPoints(data.ForecastData.FirstOrDefault(), data.ForecastData.Skip(1)?.FirstOrDefault());
+            
             // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
             var forecastData = data.ForecastData.Select(e => new EmissionsData() 
             { 
                 Location = e.BalancingAuthorityAbbreviation, 
                 Rating = ConvertMoerToGramsPerKilowattHour(e.Value), 
-                Time = e.PointTime 
+                Time = e.PointTime,
+                Duration = duration
             });
 
             return new EmissionsForecast()
@@ -127,6 +130,14 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
                         Time = e.PointTime,
                         Duration = FrequencyToTimeSpan(e.Frequency)
                     });
+    }
+
+    private TimeSpan GetDurationFromGridEmissionDataPoints(GridEmissionDataPoint? firstPoint, GridEmissionDataPoint? secondPoint)
+    {
+        var first = firstPoint ?? throw new WattTimeClientException("Too few data points returned"); 
+        var second = secondPoint ?? throw new WattTimeClientException("Too few data points returned");
+
+        return second.PointTime - first.PointTime;
     }
 
     private TimeSpan FrequencyToTimeSpan(int? frequency)
