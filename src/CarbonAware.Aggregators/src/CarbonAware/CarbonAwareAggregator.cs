@@ -4,6 +4,7 @@ using CarbonAware.Extensions;
 using Microsoft.Extensions.Logging;
 using System.Collections;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace CarbonAware.Aggregators.CarbonAware;
 
@@ -29,7 +30,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     {
         using (var activity = Activity.StartActivity())
         {
-            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now);
+            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now.ToUniversalTime());
             DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
             _logger.LogInformation("Aggregator getting carbon intensity from data source");
             return await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
@@ -41,7 +42,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     {
         using (var activity = Activity.StartActivity())
         {
-            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.Now);
+            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.Now.ToUniversalTime());
             DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End,  start.AddDays(1));
             TimeSpan windowSize = GetDurationOrDefault(props);
             _logger.LogInformation("Aggregator getting carbon intensity forecast from data source");
@@ -83,7 +84,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         var dateTimeOffset = props[field] ?? defaultValue;
 
         // If fail to parse property, throw error
-        if (!DateTimeOffset.TryParse(dateTimeOffset.ToString(), out defaultValue))
+        if (!DateTimeOffset.TryParse(dateTimeOffset.ToString(), null, DateTimeStyles.AssumeUniversal, out defaultValue))
         {
             Exception ex = new ArgumentException("Failed to parse" + field + "field. Must be a valid DateTimeOffset");
             _logger.LogError("argument exception", ex);

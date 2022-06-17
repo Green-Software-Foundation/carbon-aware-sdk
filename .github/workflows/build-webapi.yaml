@@ -23,28 +23,42 @@ jobs:
       image: mcr.microsoft.com/dotnet/sdk:6.0
     steps:
       - uses: actions/checkout@v3
+      
       - name: Setup .NET Core SDK 6
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
           include-prerelease: false
+          
       - name: Install dependencies
         run: dotnet restore
         working-directory: ${{ env.DOTNET_SRC_DIR }}
+        
       - name: Install tools
         run: dotnet tool restore 
         working-directory: ${{ env.DOTNET_SRC_DIR }}/CarbonAware.WebApi/src
+        
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ${{ env.DOTNET_SRC_DIR }}
-      - name: Test + Code Coverage
-        run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      
+      - name: Unit Test + Code Coverage
+        run: dotnet test --filter TestCategory=Unit --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=json        
         working-directory: ${{ env.DOTNET_SRC_DIR }}
+      
+      - name: Integration Test + Code Coverage
+        run: dotnet test --filter TestCategory=Integration --no-restore --verbosity normal /p:CollectCoverage=true /p:MergeWith=\"./coverage.json\" /p:CoverletOutputFormat=\"json,opencover\"     
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      
       - name: Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v2
+        with:
+          directory: ${{ env.DOTNET_SRC_DIR }}
+      
       - name: Generate Open API
         run: dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1  
         working-directory: ./src/CarbonAware.WebApi/src 
+      
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:

@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.Tests", "CarbonAware.CLI\test\CarbonAware.CLI.Tests.csproj", "{45366BC0-B982-4140-AFF2-54CF40583FDE}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.IntegrationTests", "CarbonAware.WebApi\test\integrationTests\CarbonAware.WebApi.IntegrationTests.csproj", "{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

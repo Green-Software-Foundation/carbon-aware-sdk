@@ -63,4 +63,8 @@
 		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PublishDir)\data-files\" SkipUnchangedFiles="true" />
 	</Target>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
+  </ItemGroup>
+
 </Project>
