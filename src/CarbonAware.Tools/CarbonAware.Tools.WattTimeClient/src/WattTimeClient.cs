@@ -6,9 +6,7 @@ using CarbonAware.Tools.WattTimeClient.Model;
 using System.Web;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
-using System.Security.Authentication;
 using System.Net.Mime;
-using System.Runtime.CompilerServices;
 using System.Net;
 using CarbonAware.Tools.WattTimeClient.Configuration;
 using CarbonAware.Tools.WattTimeClient.Constants;
@@ -32,15 +30,14 @@ public class WattTimeClient : IWattTimeClient
 
     private WattTimeClientConfiguration Configuration => this.ConfigurationMonitor.CurrentValue;
 
-    private ActivitySource ActivitySource { get; }
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(WattTimeClient));
 
     private ILogger<WattTimeClient> Log { get; }
 
-    public WattTimeClient(IHttpClientFactory factory, IOptionsMonitor<WattTimeClientConfiguration> configurationMonitor, ILogger<WattTimeClient> log, ActivitySource source)
+    public WattTimeClient(IHttpClientFactory factory, IOptionsMonitor<WattTimeClientConfiguration> configurationMonitor, ILogger<WattTimeClient> log)
     {
         this.client = factory.CreateClient(IWattTimeClient.NamedClient);
         this.ConfigurationMonitor = configurationMonitor;
-        this.ActivitySource = source;
         this.Log = log;
         this.client.BaseAddress = new Uri(this.Configuration.BaseUrl);
         this.client.DefaultRequestHeaders.Accept.Clear();
@@ -174,7 +171,7 @@ public class WattTimeClient : IWattTimeClient
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
         };
 
-        using (var activity = ActivitySource.StartActivity(nameof(WattTimeClient)))
+        using (var activity = Activity.StartActivity())
         {
             var url = BuildUrlWithQueryString(Paths.Historical, parameters);
 
@@ -242,7 +239,7 @@ public class WattTimeClient : IWattTimeClient
 
     private async Task UpdateAuthTokenAsync()
     {
-        using (var activity = ActivitySource.StartActivity())
+        using (var activity = Activity.StartActivity())
         {
             activity?.SetTag(QueryStrings.Username, this.Configuration.Username);
 
@@ -283,7 +280,7 @@ public class WattTimeClient : IWattTimeClient
 
     private async Task<string> MakeRequestAsync(string path, Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
     {
-        using (var activity = ActivitySource.StartActivity(nameof(WattTimeClient)))
+        using (var activity = Activity.StartActivity())
         {
             var url = BuildUrlWithQueryString(path, parameters);
 

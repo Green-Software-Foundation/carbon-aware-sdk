@@ -2,8 +2,8 @@ using System.Reflection;
 using CarbonAware;
 using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Filters;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using CarbonAware.WebApi.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +31,8 @@ CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration
 builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
 
 builder.Services.AddHealthChecks();
+
+builder.Services.AddMonitoringAndTelemetry(builder.Configuration);
 
 var app = builder.Build();
 

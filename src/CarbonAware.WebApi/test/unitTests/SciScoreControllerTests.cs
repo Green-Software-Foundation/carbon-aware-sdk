@@ -27,7 +27,7 @@ public class SciScoreControllerTests : TestsBase
     {
         // Arrange
         double data = 0.7;
-        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object, this.ActivitySource);
+        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object);
         var location = new LocationInput() { LocationType = LocationType.Geoposition.ToString(), Latitude = (decimal)1.0, Longitude = (decimal)2.0 };
         string timeInterval = "2007-03-01T13:00:00Z/2007-03-01T15:30:00Z";
         SciScoreInput input = new SciScoreInput()
@@ -54,7 +54,7 @@ public class SciScoreControllerTests : TestsBase
     {
         // Arrange
         var data = 0.7;
-        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object, this.ActivitySource);
+        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object);
 
         LocationInput locationInput = new LocationInput()
         {

@@ -125,6 +125,19 @@ In normal use, you shouldn't need to set this value, but this value can be used 
 
 This project is using standard [Microsoft.Extensions.Logging](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line).  To configure different log levels, please see the documentation at this link.
 
+### Tracing and Monitoring Configuration
+Application monitoring and tracing can be configured using the `TELEMETRY_PROVIDER` variable in the application configuration
+
+```bash
+TELEMETRY_PROVIDER= "ApplicationInsights"
+```
+This application is integrated with Application Insights for monitoring purposes. The telemetry collected in the app is pushed to AppInsights and can be tracked for logs, exceptions, traces and more. To connect to your Application Insights instance, configure the `APPLICATIONINSIGHTS_CONNECTION_STRING` variable
+
+```bash
+APPLICATIONINSIGHTS_CONNECTION_STRING= "AppInsightsConnectionString"
+```
+
+
 ### Sample Environment Variable Configuration Using WattTime
 
 ```bash

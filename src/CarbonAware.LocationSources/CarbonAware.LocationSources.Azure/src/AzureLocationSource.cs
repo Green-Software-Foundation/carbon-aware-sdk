@@ -59,7 +59,7 @@ public class AzureLocationSource : ILocationSource
     {
         LoadRegionsFromFileIfNotPresentAsync();
         
-        NamedGeoposition geopositionLocation = namedGeopositions![location.RegionName!];    
+        NamedGeoposition? geopositionLocation = namedGeopositions!.ContainsKey(location.RegionName!)? namedGeopositions![location.RegionName!]: null;    
         if (geopositionLocation == null || !geopositionLocation.IsValidGeopositionLocation())  
         {
             throw new LocationConversionException($"Lat/long cannot be retrieved for region '{ location.RegionName }'");

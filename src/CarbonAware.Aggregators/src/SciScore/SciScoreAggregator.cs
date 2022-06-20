@@ -3,6 +3,7 @@ using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace CarbonAware.Aggregators.SciScore;
 
@@ -12,8 +13,8 @@ namespace CarbonAware.Aggregators.SciScore;
 public class SciScoreAggregator : ISciScoreAggregator
 {
     private readonly ILogger<SciScoreAggregator> _logger;
-
     private readonly ICarbonIntensityDataSource _carbonIntensityDataSource;
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(SciScoreAggregator));
 
     /// <summary>
     /// Creates a new instance of the <see cref="SciScoreAggregator"/> class.
@@ -30,13 +31,15 @@ public class SciScoreAggregator : ISciScoreAggregator
     /// <inheritdoc />
     public async Task<double> CalculateAverageCarbonIntensityAsync(Location location, string timeInterval)
     {
-        (DateTimeOffset start, DateTimeOffset end) = this.ParseTimeInterval(timeInterval);
-        var emissionData = await this._carbonIntensityDataSource.GetCarbonIntensityAsync(new List<Location>() { location }, start, end);
+        using (var activity = Activity.StartActivity())
+        {
+            (DateTimeOffset start, DateTimeOffset end) = this.ParseTimeInterval(timeInterval);
+            var emissionData = await this._carbonIntensityDataSource.GetCarbonIntensityAsync(new List<Location>() { location }, start, end);
+            var value = emissionData.AverageOverPeriod(start, end);
+            _logger.LogInformation($"Carbon Intensity Average: {value}");
 
-        var value = emissionData.AverageOverPeriod(start, end);
-        _logger.LogInformation($"Carbon Intensity Average: {value}");
-
-        return value;
+            return value;
+        }
     }
 
     // Validate and parse time interval string into a tuple of (start, end) DateTimeOffsets.

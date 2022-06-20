@@ -22,8 +22,6 @@ public class WattTimeDataSourceTests
 
     private Mock<IWattTimeClient> WattTimeClient { get; set; }
 
-    private ActivitySource ActivitySource { get; set; }
-
     private WattTimeDataSource DataSource { get; set; }
 
     private Mock<ILocationSource> LocationSource { get; set; }
@@ -39,13 +37,11 @@ public class WattTimeDataSourceTests
     [SetUp]
     public void Setup()
     {
-        this.ActivitySource = new ActivitySource("WattTimeDataSourceTests");
-
         this.Logger = new Mock<ILogger<WattTimeDataSource>>();
         this.WattTimeClient = new Mock<IWattTimeClient>();
         this.LocationSource = new Mock<ILocationSource>();
 
-        this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.ActivitySource, this.LocationSource.Object);
+        this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
     }
 
     [Test]

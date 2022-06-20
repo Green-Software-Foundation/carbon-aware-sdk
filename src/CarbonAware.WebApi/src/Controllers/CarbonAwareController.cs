@@ -3,6 +3,7 @@ using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using CarbonAware.Model;
+using System.Diagnostics;
 
 namespace CarbonAware.WebApi.Controllers;
 
@@ -12,6 +13,7 @@ public class CarbonAwareController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
     private readonly ICarbonAwareAggregator _aggregator;
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareController));
 
     public CarbonAwareController(ILogger<CarbonAwareController> logger, ICarbonAwareAggregator aggregator)
     {
@@ -30,19 +32,23 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime(string locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        //The LocationType is hardcoded for now. Ideally this should be received from the request or configuration 
-        var locationNames = locations.Split(',');
-        IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
-        var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, locationEnumerable },
-            { CarbonAwareConstants.Start, time},
-            { CarbonAwareConstants.End, toTime },
-            { CarbonAwareConstants.Duration, durationMinutes },
-            { CarbonAwareConstants.Best, true }
-        };
+        using (var activity = Activity.StartActivity())
+        {
+            //The LocationType is hardcoded for now. Ideally this should be received from the request or configuration 
+            var locationNames = locations.Split(',');
+            IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
+            var props = new Dictionary<string, object?>() {
+                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.Start, time},
+                { CarbonAwareConstants.End, toTime },
+                { CarbonAwareConstants.Duration, durationMinutes },
+                { CarbonAwareConstants.Best, true }
+            };
 
-        return await GetEmissionsDataAsync(props);
+            return await GetEmissionsDataAsync(props);
+        }
     }
+
 
     /// <summary>
     /// Calculate the observed emission data by list of locations for a specified time period.
@@ -55,16 +61,19 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime(string locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var locationNames = locations.Split(',');
-        IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
-        var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, locationEnumerable },
-            { CarbonAwareConstants.Start, time },
-            { CarbonAwareConstants.End, toTime},
-            { CarbonAwareConstants.Duration, durationMinutes },
-        };
-        
-        return await GetEmissionsDataAsync(props);
+        using (var activity = Activity.StartActivity())
+        {
+            var locationNames = locations.Split(',');
+            IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
+            var props = new Dictionary<string, object?>() {
+                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.Start, time },
+                { CarbonAwareConstants.End, toTime},
+                { CarbonAwareConstants.Duration, durationMinutes },
+            };
+            
+            return await GetEmissionsDataAsync(props);
+        }
     }
 
     /// <summary>
@@ -78,15 +87,18 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime([FromQuery, BindRequired] string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
-        var locations = new List<Location>() { new Location() { RegionName = location, LocationType=LocationType.CloudProvider } };
-        var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, locations },
-            { CarbonAwareConstants.Start, time },
-            { CarbonAwareConstants.End, toTime },
-            { CarbonAwareConstants.Duration, durationMinutes },
-        };
-        
-        return await GetEmissionsDataAsync(props);
+        using (var activity = Activity.StartActivity())
+        {
+            var locations = new List<Location>() { new Location() { RegionName = location, LocationType=LocationType.CloudProvider } };
+            var props = new Dictionary<string, object?>() {
+                { CarbonAwareConstants.Locations, locations },
+                { CarbonAwareConstants.Start, time },
+                { CarbonAwareConstants.End, toTime },
+                { CarbonAwareConstants.Duration, durationMinutes },
+            };
+            
+            return await GetEmissionsDataAsync(props);
+        }
     }
 
     /// <summary>
@@ -105,18 +117,21 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("forecasts/current")]
     public async Task<IActionResult> GetCurrentForecastData(string locations, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, int? windowSize = null)
     {
-        var locationNames = locations.Split(',');
-        IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
-        var props = new Dictionary<string, object?>() {
-            { CarbonAwareConstants.Locations, locationEnumerable },
-            { CarbonAwareConstants.Start, startTime },
-            { CarbonAwareConstants.End, endTime },
-            { CarbonAwareConstants.Duration, windowSize },
-        };
+        using (var activity = Activity.StartActivity())
+        {
+            var locationNames = locations.Split(',');
+            IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
+            var props = new Dictionary<string, object?>() {
+                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.Start, startTime },
+                { CarbonAwareConstants.End, endTime },
+                { CarbonAwareConstants.Duration, windowSize },
+            };
 
-        var forecasts = await _aggregator.GetCurrentForecastDataAsync(props);
-        var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
-        return Ok(results);
+            var forecasts = await _aggregator.GetCurrentForecastDataAsync(props);
+            var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
+            return Ok(results);
+        }
     }
 
     /// <summary>

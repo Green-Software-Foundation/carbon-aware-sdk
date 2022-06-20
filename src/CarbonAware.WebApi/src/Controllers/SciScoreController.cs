@@ -17,13 +17,12 @@ public class SciScoreController : ControllerBase
     private readonly ILogger<SciScoreController> _logger;
     private readonly ISciScoreAggregator _aggregator;
 
-    private readonly ActivitySource _activitySource;
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(SciScoreController));
 
-    public SciScoreController(ILogger<SciScoreController> logger, ISciScoreAggregator aggregator, ActivitySource activitySource)
+    public SciScoreController(ILogger<SciScoreController> logger, ISciScoreAggregator aggregator)
     {
         _logger = logger;
         _aggregator = aggregator;
-        _activitySource = activitySource;
     }
 
     /// <summary> Gets sci-score value, currently dummy function to keep consistency </summary>
@@ -60,7 +59,7 @@ public class SciScoreController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     public async Task<IActionResult> GetCarbonIntensityAsync(SciScoreInput input)
     {
-        using (var activity = _activitySource.StartActivity(nameof(SciScoreController)))
+        using (var activity = Activity.StartActivity())
         {
             _logger.LogDebug("calling to aggregator to calculate the average carbon intensity with input: {input}", input);
 

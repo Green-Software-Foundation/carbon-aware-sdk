@@ -15,12 +15,10 @@ public abstract class TestsBase
 {
     protected Mock<ILogger<CarbonAwareController>> MockCarbonAwareLogger { get; }
     protected Mock<ILogger<SciScoreController>> MockSciScoreLogger { get; }
-    protected ActivitySource ActivitySource { get; }
     protected TestsBase()
     {
         this.MockCarbonAwareLogger = new Mock<ILogger<CarbonAwareController>>();
         this.MockSciScoreLogger = new Mock<ILogger<SciScoreController>>();
-        this.ActivitySource = new ActivitySource("test activity source");
     }
 
     protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithEmissionsData(List<EmissionsData> data)

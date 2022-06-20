@@ -30,6 +30,7 @@
       <TreatAsUsed>true</TreatAsUsed>
     </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -45,7 +46,6 @@
   <ItemGroup>
       <Folder Include="api\v1" />
   </ItemGroup>  
-
 
 	<Target Name="CopyDataFiles" AfterTargets="Build">
 		<ItemGroup>

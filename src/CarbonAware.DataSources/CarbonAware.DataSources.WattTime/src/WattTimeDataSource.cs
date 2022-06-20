@@ -25,7 +25,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
 
     private IWattTimeClient WattTimeClient { get; }
 
-    private ActivitySource ActivitySource { get; }
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(WattTimeDataSource));
 
     private ILocationSource LocationSource { get; }
 
@@ -39,13 +39,11 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
     /// </summary>
     /// <param name="logger">The logger for the datasource</param>
     /// <param name="client">The WattTime Client</param>
-    /// <param name="activitySource">The activity source for telemetry.</param>
     /// <param name="locationSource">The location source to be used to convert a location to BA's.</param>
-    public WattTimeDataSource(ILogger<WattTimeDataSource> logger, IWattTimeClient client, ActivitySource activitySource, ILocationSource locationSource)
+    public WattTimeDataSource(ILogger<WattTimeDataSource> logger, IWattTimeClient client, ILocationSource locationSource)
     {
         this.Logger = logger;
         this.WattTimeClient = client;
-        this.ActivitySource = activitySource;
         this.LocationSource = locationSource;
     }
 
@@ -67,7 +65,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location}");
 
-        using (var activity = ActivitySource.StartActivity())
+        using (var activity = Activity.StartActivity())
         {
             BalancingAuthority balancingAuthority = await this.GetBalancingAuthority(location, activity);
             var data = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority);
@@ -95,7 +93,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
     {
         Logger.LogInformation($"Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.");
 
-        using (var activity = ActivitySource.StartActivity())
+        using (var activity = Activity.StartActivity())
         {
             var balancingAuthority = await this.GetBalancingAuthority(location, activity);
             var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(periodStartTime, periodEndTime, MinSamplingWindow);

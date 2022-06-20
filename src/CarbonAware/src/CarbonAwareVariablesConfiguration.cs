@@ -29,4 +29,6 @@ public class CarbonAwareVariablesConfiguration
     public WebProxyConfiguration? Proxy { get; set; }
     #nullable disable
 
+    public string TelemetryProvider { get; set; }
+
 }
