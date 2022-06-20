@@ -37,6 +37,12 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
     }
 
+    public async Task<EmissionsData> GetBestEmissionsDataAsync(IDictionary props)
+    {
+        var results = await GetEmissionsDataAsync(props);
+        return GetOptimalEmissions(results);
+    }
+
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsForecast>> GetCurrentForecastDataAsync(IDictionary props)
     {

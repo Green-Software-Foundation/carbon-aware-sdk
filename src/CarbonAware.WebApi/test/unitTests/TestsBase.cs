@@ -30,6 +30,15 @@ public abstract class TestsBase
         return aggregator;
     }
 
+    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithBestEmissionsData(EmissionsData data)
+    {
+        var aggregator = new Mock<ICarbonAwareAggregator>();
+        aggregator.Setup(x =>
+            x.GetBestEmissionsDataAsync(
+                It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
+        return aggregator;
+    }
+
     protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithForecastData(List<EmissionsData> data)
     {
         var forecasts = new List<EmissionsForecast>()
