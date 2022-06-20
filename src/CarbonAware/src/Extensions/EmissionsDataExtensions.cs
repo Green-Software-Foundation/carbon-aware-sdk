@@ -31,6 +31,7 @@ public static class EmissionsDataExtensions
     /// <param name="windowSize">The duration of the window to be averaged.</param>
     /// <param name="tickSize">The duration the windows slides forward before calculating the next average.</param>
     /// <returns>An enumerable of emissions data objects, each representing a single average window.</returns>
+    /// <exception cref="InvalidOperationException">Can be thrown if the emissions data is not a continuous, chronological time-series.</exception>
     public static IEnumerable<EmissionsData> RollingAverage(this IEnumerable<EmissionsData> data, TimeSpan windowSize = default, TimeSpan tickSize = default)
     {
         if (data.Count() == 0){ yield break; }
@@ -49,7 +50,7 @@ public static class EmissionsDataExtensions
 
         if (tickSize == default)
         {
-            tickSize = (current.Duration > TimeSpan.Zero) ? current.Duration : throw new Exception("RollingAverage tickSize must be > 0");
+            tickSize = (current.Duration > TimeSpan.Zero) ? current.Duration : throw new InvalidOperationException("RollingAverage tickSize must be > 0");
         }
 
         // Set initial rolling average window
@@ -70,7 +71,13 @@ public static class EmissionsDataExtensions
             // Calculate average for everything in the queue if we enqueued enough data points to cover the window
             if (last != null && last.Time + last.Duration >= windowEndTime)
             {
-                yield return AverageOverPeriod(q, windowStartTime, windowEndTime);
+                yield return new EmissionsData()
+                {
+                    Time = windowStartTime,
+                    Duration = windowEndTime - windowStartTime,
+                    Location = last.Location,
+                    Rating = AverageOverPeriod(q, windowStartTime, windowEndTime)
+                };
             }
 
             // Set bounds for the next window
@@ -87,25 +94,53 @@ public static class EmissionsDataExtensions
         }
     }
 
-    private static EmissionsData AverageOverPeriod(this IEnumerable<EmissionsData> data, DateTimeOffset startTime, DateTimeOffset endTime)
+    /// <summary>
+    /// Finds the average rating of a continuous, chronological set of EmissionsData objects for a given period. 
+    /// </summary>
+    /// <remarks>
+    ///     <para>
+    ///         This method takes into account fractional data points and weights the average accordingly.
+    ///         Take the following (HH:MM, rating) hour-long data points for example: (01:00, 30), (02:00, 100), (03:00, 50)
+    ///     </para>
+    ///     <para>
+    ///         To calculate the average over the time period 01:30 - 03:30, the proportion each point contributes
+    ///         to the whole period must be taken into account.  This proportion is calculated as (utilized time / total duration)
+    ///         For the 2 hour period (01:30-03:30) the proportions would be:
+    ///         (30 * (30m/120m)) + (100 * (60m/120m)) + (50 * (30m/120m)); which simplifies to 
+    ///         (30 * (1/4)) + (100 * (1/2)) + (50 * (1/4)); or
+    ///         (30/4) + (100/2) + (50/4)
+    ///     </para>
+    ///     <para>
+    ///         This method works just as well for simple averages typically calculated as the sum of the values divided by the number of values.
+    ///         (30 + 100 + 50)/3;  We can use the equation above to average the three points over their full 3 hour duration.
+    ///         (30 * (60m/180m)) + (100 * (60m/180m)) + (50 * (60m/180m)); which simplifies to
+    ///         (30 * (1/3)) + (100 * (1/3)) + (50 * (1/3)); or
+    ///         (30/3) + (100/3) + (50/3); or further
+    ///         (30 + 100 + 50)/3 
+    ///     </para>
+    /// </remarks>
+    /// <param name="data">The IEnumerable<EmissionsData> being operated on.</param>
+    /// <param name="startTime">The start time of the data to be averaged.</param>
+    /// <param name="endTime">The end time of the data to be averaged.</param>
+    /// <returns>The average rating of the data for the specified time period</returns>
+    /// <exception cref="InvalidOperationException">Can be thrown if the emissions data is not a continuous, chronological time-series.</exception>
+    public static double AverageOverPeriod(this IEnumerable<EmissionsData> data, DateTimeOffset startTime, DateTimeOffset endTime)
     {
-        EmissionsData newDataPoint = new EmissionsData()
-        {
-            Time = startTime,
-            Duration = (endTime - startTime),
-            Rating = 0.0,
-            Location = data.First().Location
-        };
+        double rating = 0.0;
+        TimeSpan totalDuration = endTime - startTime;
+        DateTimeOffset? lastEndTime = null;
         foreach (var current in data)
         {
-            if (current.Time + current.Duration > startTime && current.Time < endTime)
+            lastEndTime = (lastEndTime == null || current.Time == lastEndTime) ? current.Time + current.Duration : throw new InvalidOperationException($"AverageOverPeriod requires continuous chronological data. Previous point covered through {lastEndTime}; Current point starts at {current.Time}."); ;
+
+            if (lastEndTime > startTime && current.Time < endTime)
             {
                 var lowerBound = (startTime >= current.Time) ? startTime : current.Time;
                 var upperBound = (endTime < current.Time + current.Duration) ? endTime : current.Time + current.Duration;
-                newDataPoint.Rating += current.Rating * (upperBound - lowerBound) / newDataPoint.Duration;
+                rating += current.Rating * (upperBound - lowerBound) / totalDuration;
             }
         }
 
-        return newDataPoint;
+        return rating;
     }
 }

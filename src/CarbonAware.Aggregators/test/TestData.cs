@@ -7,7 +7,7 @@ namespace CarbonAware.Aggregators.Tests;
 
 public static class TestData
 {
-  public static IEnumerable<EmissionsData> GetFilteredEmissionDataList(string location, string startTime, string endTime)
+    public static IEnumerable<EmissionsData> GetFilteredEmissionDataList(string location, string startTime, string endTime)
     {
         DateTimeOffset start = DateTimeOffset.Parse(startTime);
         DateTimeOffset end = DateTimeOffset.Parse(endTime);
@@ -16,32 +16,37 @@ public static class TestData
 
   public static IEnumerable<EmissionsData> GetAllEmissionDataList()
   {
-     return  new List<EmissionsData>()
+        return new List<EmissionsData>()
         {
             new EmissionsData {
                 Location = "westus",
-                Time = DateTimeOffset.Parse("2021-11-17"),
-                Rating = 10
+                Time = new DateTimeOffset(2021,11,17,0,0,0,TimeSpan.Zero),
+                Rating = 10,
+                Duration = TimeSpan.FromHours(8)
             },
             new EmissionsData {
                 Location = "westus",
-                Time = DateTimeOffset.Parse("2021-11-17"),
-                Rating = 20
+                Time = new DateTimeOffset(2021,11,17,8,0,0,TimeSpan.Zero),
+                Rating = 20,
+                Duration = TimeSpan.FromHours(8)
             },
             new EmissionsData {
                 Location = "westus",
-                Time = DateTimeOffset.Parse("2021-11-17"),
-                Rating = 30
+                Time = new DateTimeOffset(2021,11,17,16,0,0,TimeSpan.Zero),
+                Rating = 30,
+                Duration = TimeSpan.FromHours(8)
             },
             new EmissionsData {
                 Location = "westus",
-                Time = DateTimeOffset.Parse("2021-11-19"),
-                Rating = 40
+                Time = new DateTimeOffset(2021,11,19,0,0,0,TimeSpan.Zero),
+                Rating = 40,
+                Duration = TimeSpan.FromHours(8)
             },
             new EmissionsData {
                 Location = "eastus",
-                Time = DateTimeOffset.Parse("2021-11-18"),
-                Rating = 60
+                Time = new DateTimeOffset(2021,11,18,0,0,0,TimeSpan.Zero),
+                Rating = 60,
+                Duration = TimeSpan.FromHours(8)
             }
         };
     }
@@ -87,5 +92,4 @@ public static class TestData
             ForecastData = forecastData
         };
     }
-
 }

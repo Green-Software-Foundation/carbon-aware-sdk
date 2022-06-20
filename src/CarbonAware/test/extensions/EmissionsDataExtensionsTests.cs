@@ -107,6 +107,71 @@ public class EmissionsDataExtensionsTests
         var result = zeroDurationData.RollingAverage(TimeSpan.FromMinutes(5));
 
         // Assert
-        Assert.Throws<Exception>(() => result.ToList());
+        Assert.Throws<InvalidOperationException>(() => result.ToList());
+    }
+
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:00Z", ExpectedResult=25.00, TestName = "Full dataset")]
+    [TestCase("2020-01-01T00:04:00Z", "2020-01-01T00:20:00Z", ExpectedResult=28.75, TestName = "Partial first data point")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:16:00Z", ExpectedResult=21.25, TestName = "Partial last data point")]
+    [TestCase("2020-01-01T00:02:30Z", "2020-01-01T00:17:30Z", ExpectedResult=25.00, TestName = "Partial first and last data point")]
+    [TestCase("2020-01-01T00:02:00Z", "2020-01-01T00:03:00Z", ExpectedResult=10.00, TestName = "Partial single data point")]
+    public decimal AverageOverPeriod_ReturnsExpectedAverages(string start, string end)
+    {
+        // Arrange
+        var startPeriod = DateTimeOffset.Parse(start);
+        var endPeriod = DateTimeOffset.Parse(end);
+
+        // Act
+        var result = this.data.AverageOverPeriod(startPeriod, endPeriod);
+
+        // Assert
+        // Use decimal precision for assertion
+        return Math.Round((decimal)result, 2);
+    }
+
+    [Test]
+    public void AverageOverPeriod_EmptyListReturnsZero()
+    {
+        // Arrange
+        var emptyList = new List<EmissionsData>();
+        var startPeriod = new DateTimeOffset(2022, 1, 1, 0, 5, 0, TimeSpan.Zero);
+        var endPeriod = new DateTimeOffset(2022, 1, 1, 0, 15, 0, TimeSpan.Zero);
+
+        // Act
+        var result = emptyList.AverageOverPeriod(startPeriod, endPeriod);
+
+        // Assert
+        Assert.AreEqual(0.0, result);
+    }
+
+    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:10:00Z", TestName = "Discontinuous data points")]
+    [TestCase("2022-01-01T00:10:00Z", "2022-01-01T00:05:00Z", TestName = "Unordered data points")]
+    public void AverageOverPeriod_ThrowsForDiscontinuousData(string firstStart, string secondStart)
+    {
+        // Arrange
+        var firstTime = DateTimeOffset.Parse(firstStart);
+        var secondTime = DateTimeOffset.Parse(secondStart);
+        var duration = TimeSpan.FromMinutes(5);
+        var discontinuousData = new List<EmissionsData>()
+        {
+            new EmissionsData() {
+                Time = firstTime,
+                Rating = 50,
+                Duration = duration
+            },
+            new EmissionsData() {
+                Time = secondTime,
+                Rating = 50,
+                Duration = duration
+            }
+        };
+        var startPeriod = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var endPeriod = new DateTimeOffset(2022, 1, 1, 0, 15, 0, TimeSpan.Zero);
+        var expectedErrorMessage = $"Previous point covered through {firstTime+duration}; Current point starts at {secondTime}.";
+        
+        // Act & Assert
+        InvalidOperationException? ex = Assert.Throws<InvalidOperationException>(() => discontinuousData.AverageOverPeriod(startPeriod, endPeriod));
+        var message = ex?.Message;
+        StringAssert.Contains(expectedErrorMessage, message);
     }
 }

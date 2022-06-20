@@ -1,5 +1,6 @@
-using CarbonAware.Model;
+using CarbonAware.Extensions;
 using CarbonAware.Interfaces;
+using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 
@@ -32,8 +33,7 @@ public class SciScoreAggregator : ISciScoreAggregator
         (DateTimeOffset start, DateTimeOffset end) = this.ParseTimeInterval(timeInterval);
         var emissionData = await this._carbonIntensityDataSource.GetCarbonIntensityAsync(new List<Location>() { location }, start, end);
 
-        // check whether the emissionData list is empty, if not, return Rating's average, otherwise 0.
-        var value = emissionData.Any() ? emissionData.Select(x => x.Rating).Average() : 0;
+        var value = emissionData.AverageOverPeriod(start, end);
         _logger.LogInformation($"Carbon Intensity Average: {value}");
 
         return value;
