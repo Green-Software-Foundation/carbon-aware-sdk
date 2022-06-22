@@ -22,11 +22,13 @@ public class SciScoreControllerTests : IntegrationTestingBase
 
 
     [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", HttpStatusCode.OK)]
-    [TestCase("2021-1-1", "2022-1-2", "westus", HttpStatusCode.OK)]
-    public async Task SCI_AcceptsValidData_ReturnsContent(DateTimeOffset start, DateTimeOffset end, string location, HttpStatusCode expectedCode)
+    [TestCase("2021-11-18", "2022-1-2", "westus", HttpStatusCode.OK)]
+    public async Task SCI_AcceptsValidData_ReturnsContent(string start, string end, string location, HttpStatusCode expectedCode)
     {
-        _dataSourceMocker.SetupDataMock(start, end, location);
-        string timeInterval = start.ToUniversalTime().ToString("O") + "/" + end.ToUniversalTime().ToString("O");
+        var startTime = DateTimeOffset.Parse(start);
+        var endTime = DateTimeOffset.Parse(end);
+        _dataSourceMocker.SetupDataMock(startTime, endTime, location);
+        string timeInterval = $"{start}/{end}";
 
         object body = new
         {

@@ -20,11 +20,29 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
 
     public void SetupDataMock(DateTimeOffset start, DateTimeOffset end, string location)
     {
+        var data = new List<GridEmissionDataPoint>();
+        DateTimeOffset pointTime = start;
+        TimeSpan duration = TimeSpan.FromSeconds(300);
         GridEmissionDataPoint newDataPoint = WattTimeServerMocks.GetDefaultEmissionsDataPoint();
-        newDataPoint.PointTime = start;
+        newDataPoint.PointTime = pointTime;
         newDataPoint.BalancingAuthorityAbbreviation = location;
+        newDataPoint.Frequency = (int)duration.TotalSeconds;
 
-        WattTimeServerMocks.SetupDataMock(_server, new List<GridEmissionDataPoint> { newDataPoint });
+        data.Add(newDataPoint);
+        pointTime = newDataPoint.PointTime + duration;
+
+        while (pointTime < end)
+        {
+            newDataPoint = WattTimeServerMocks.GetDefaultEmissionsDataPoint();
+            newDataPoint.PointTime = pointTime;
+            newDataPoint.BalancingAuthorityAbbreviation = location;
+            newDataPoint.Frequency = (int)duration.TotalSeconds;
+
+            data.Add(newDataPoint);
+            pointTime = newDataPoint.PointTime + duration;
+        }
+
+        WattTimeServerMocks.SetupDataMock(_server, data);
     }
 
     public WebApplicationFactory<Program> OverrideWebAppFactory(WebApplicationFactory<Program> factory)

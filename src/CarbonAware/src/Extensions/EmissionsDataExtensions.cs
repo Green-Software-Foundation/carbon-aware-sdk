@@ -128,19 +128,73 @@ public static class EmissionsDataExtensions
     {
         double rating = 0.0;
         TimeSpan totalDuration = endTime - startTime;
-        DateTimeOffset? lastEndTime = null;
+        EmissionsData previous = null;
+        (bool reverseChronology, bool emptyEnumerable) = GetChronologyDetails(data);
+        bool startTimeCoverage = false;
+        bool endTimeCoverage = false;
+
+        if (emptyEnumerable)
+        {
+            return rating;
+        }
+
         foreach (var current in data)
         {
-            lastEndTime = (lastEndTime == null || current.Time == lastEndTime) ? current.Time + current.Duration : throw new InvalidOperationException($"AverageOverPeriod requires continuous chronological data. Previous point covered through {lastEndTime}; Current point starts at {current.Time}."); ;
+            var currentEndTime = current.Time + current.Duration;
 
-            if (lastEndTime > startTime && current.Time < endTime)
+            if (previous != null && !IsContinuousChronological(current, previous, reverseChronology))
+            {
+                var previousEndTime = previous.Time + previous.Duration;
+                throw new InvalidOperationException($"AverageOverPeriod requires continuous chronological data. Previous point covered {previous.Time} through {previousEndTime}; Current point covers {current.Time} through {currentEndTime}.");
+            }
+
+            if (currentEndTime > startTime && current.Time < endTime)
             {
                 var lowerBound = (startTime >= current.Time) ? startTime : current.Time;
-                var upperBound = (endTime < current.Time + current.Duration) ? endTime : current.Time + current.Duration;
+                var upperBound = (endTime < currentEndTime) ? endTime : currentEndTime;
                 rating += current.Rating * (upperBound - lowerBound) / totalDuration;
             }
+
+            startTimeCoverage = startTimeCoverage ? startTimeCoverage : (startTime >= current.Time && startTime < currentEndTime);
+            endTimeCoverage = endTimeCoverage ? endTimeCoverage : (endTime <= currentEndTime && endTime > current.Time);
+            previous = current;
+        }
+
+        if (!startTimeCoverage || !endTimeCoverage)
+        {
+            throw new ArgumentException($"Period out of range. Data points did not cover the requested average period: {startTime} through {endTime}");
         }
 
         return rating;
+    }
+
+    private static (bool reverseChronology, bool emptyEnumerable) GetChronologyDetails(IEnumerable<EmissionsData> data)
+    {
+        EmissionsData current = null;
+        EmissionsData next = null;
+        var _data = data.GetEnumerator();
+
+        if (_data.MoveNext())
+        {
+            current = _data.Current;
+        }
+        if (_data.MoveNext())
+        {
+            next = _data.Current;
+        }
+
+        var reverseChronology = (current != null && next != null && current.Time > next.Time);
+        var emptyEnumerable = (current == null);
+
+        return (reverseChronology, emptyEnumerable);
+    }
+
+    private static bool IsContinuousChronological(EmissionsData current, EmissionsData previous, bool reverse)
+    {
+        if (reverse){
+            return (previous.Time == current.Time + current.Duration);
+        } else {
+            return (current.Time == previous.Time + previous.Duration);
+        }
     }
 }
