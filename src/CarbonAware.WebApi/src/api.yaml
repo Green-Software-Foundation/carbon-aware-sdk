@@ -31,10 +31,10 @@ paths:
     parameters:
     - name: locations
       in: query
-      description: 'Comma-separated list of names of the locations to be forecasted'
+      description: 'Array of names of the locations to be forecasted'
       required: true
       schema:
-        type: string
+        type: array
       example: eastus
     - name: windowSize
       in: query

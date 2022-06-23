@@ -34,7 +34,7 @@ public class CarbonAwareControllerTests : TestsBase
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithEmissionsData(data).Object);
 
         IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
-        IActionResult ar2 = await controller.GetEmissionsDataForLocationsByTime(location);
+        IActionResult ar2 = await controller.GetEmissionsDataForLocationsByTime(new string[] { location });
 
         TestHelpers.AssertStatusCode(ar1, HttpStatusCode.OK);
         TestHelpers.AssertStatusCode(ar2, HttpStatusCode.OK);
@@ -57,7 +57,7 @@ public class CarbonAwareControllerTests : TestsBase
 
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithBestEmissionsData(data).Object);
 
-        var ar = await controller.GetBestEmissionsDataForLocationsByTime(location);
+        var ar = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { location });
 
         TestHelpers.AssertStatusCode(ar, HttpStatusCode.OK);
     }
@@ -81,7 +81,7 @@ public class CarbonAwareControllerTests : TestsBase
         var aggregator = CreateAggregatorWithForecastData(data);
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, aggregator.Object);
 
-        IActionResult result = await controller.GetCurrentForecastData(location);
+        IActionResult result = await controller.GetCurrentForecastData(new string[] { location });
 
         TestHelpers.AssertStatusCode(result, HttpStatusCode.OK);
         aggregator.Verify(a => a.GetCurrentForecastDataAsync(It.IsAny<Dictionary<string, object>>()), Times.Once);
@@ -97,8 +97,8 @@ public class CarbonAwareControllerTests : TestsBase
 
         string location = "Sydney";
         IActionResult ar1 = await controller.GetEmissionsDataForLocationByTime(location);
-        IActionResult ar2 = await controller.GetBestEmissionsDataForLocationsByTime(location);
-        IActionResult ar3 = await controller.GetEmissionsDataForLocationsByTime(location);
+        IActionResult ar2 = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { location });
+        IActionResult ar3 = await controller.GetEmissionsDataForLocationsByTime(new string[] { location });
 
         //Assert
         TestHelpers.AssertStatusCode(ar1, HttpStatusCode.NoContent);
@@ -114,8 +114,7 @@ public class CarbonAwareControllerTests : TestsBase
     {
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithEmissionsData(new List<EmissionsData>()).Object);
 
-        string location = "Sydney";
-        IActionResult ar = await controller.GetBestEmissionsDataForLocationsByTime(location);
+        IActionResult ar = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { "Sydney" });
 
         //Assert
         TestHelpers.AssertStatusCode(ar, HttpStatusCode.NoContent);

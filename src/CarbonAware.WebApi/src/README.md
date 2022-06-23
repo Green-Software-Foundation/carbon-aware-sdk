@@ -107,9 +107,9 @@ EG
 
 ### GET emissions/bylocations
 
-This endpoint calculates the observed emission data by list of locations for a specified time period
+This endpoint calculates the observed emission data by an array of locations for a specified time period
 
-Location is a required parameter and is name of the data region for the configured Cloud provider.
+Location is a required parameter and is an array of the names of the data region for the configured Cloud provider.
 If time period is not provided, it retrieves all the data until the current time.
 
 EG
@@ -131,9 +131,9 @@ EG
 
 ### GET emissions/bylocations/best
 
-This endpoint calculates the best observed emission data by list of locations for a specified time period
+This endpoint calculates the best observed emission data by an array of locations for a specified time period
 
-Location is a required parameter and is name of the data region for the configured Cloud provider.
+Location is a required parameter and is an array of the names of the data region for the configured Cloud provider.
 If time period is not provided, it retrieves all the data until the current time.
 
 EG

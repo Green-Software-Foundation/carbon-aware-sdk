@@ -24,19 +24,22 @@ public class CarbonAwareController : ControllerBase
     /// <summary>
     /// Calculate the best emission data by location for a specified time period.
     /// </summary>
+    /// <param name="locations"> String array of named locations.</param>
+    /// <param name="time"> [Optional] Start time for the data query.</param>
+    /// <param name="toTime"> [Optional] End time for the data query.</param>
+    /// <param name="durationMinutes"> [Optional] Duration for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmissionsData))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocations/best")]
-    public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime(string locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery(Name = "location")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
         using (var activity = Activity.StartActivity())
         {
             //The LocationType is hardcoded for now. Ideally this should be received from the request or configuration 
-            var locationNames = locations.Split(',');
-            IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location() { RegionName = location, LocationType = LocationType.CloudProvider });
+            IEnumerable<Location> locationEnumerable = locations.Select(location => new Location() { RegionName = location, LocationType = LocationType.CloudProvider });
             var props = new Dictionary<string, object?>() {
                 { CarbonAwareConstants.Locations, locationEnumerable },
                 { CarbonAwareConstants.Start, time},
@@ -56,18 +59,21 @@ public class CarbonAwareController : ControllerBase
     /// <summary>
     /// Calculate the observed emission data by list of locations for a specified time period.
     /// </summary>
+    /// <param name="locations"> String array of named locations.</param>
+    /// <param name="time"> [Optional] Start time for the data query.</param>
+    /// <param name="toTime"> [Optional] End time for the data query.</param>
+    /// <param name="durationMinutes"> [Optional] Duration for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocations")]
-    public async Task<IActionResult> GetEmissionsDataForLocationsByTime(string locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "location")] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
     {
         using (var activity = Activity.StartActivity())
         {
-            var locationNames = locations.Split(',');
-            IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
+            IEnumerable<Location> locationEnumerable = locations.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
             var props = new Dictionary<string, object?>() {
                 { CarbonAwareConstants.Locations, locationEnumerable },
                 { CarbonAwareConstants.Start, time },
@@ -82,6 +88,10 @@ public class CarbonAwareController : ControllerBase
     /// <summary>
     /// Calculate the best emission data by location for a specified time period.
     /// </summary>
+    /// <param name="location"> String named location.</param>
+    /// <param name="time"> [Optional] Start time for the data query.</param>
+    /// <param name="toTime"> [Optional] End time for the data query.</param>
+    /// <param name="durationMinutes"> [Optional] Duration for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
@@ -107,7 +117,7 @@ public class CarbonAwareController : ControllerBase
     /// <summary>
     /// Maps user input query parameters to props dictionary for use with the data sources current forecast method.
     /// </summary>
-    /// <param name="locations"> Comma-separated string of named locations.</param>
+    /// <param name="locations"> String array of named locations.</param>
     /// <param name="startTime"> Start time of forecast period.</param>
     /// <param name="endTime"> End time of forecast period.</param>
     /// <param name="windowSize"> Size of rolling average window in minutes.</param>
@@ -118,12 +128,11 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status501NotImplemented, Type = typeof(ValidationProblemDetails))]
     [HttpGet("forecasts/current")]
-    public async Task<IActionResult> GetCurrentForecastData(string locations, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, int? windowSize = null)
+    public async Task<IActionResult> GetCurrentForecastData([FromQuery(Name = "location")] string[] locations, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, int? windowSize = null)
     {
         using (var activity = Activity.StartActivity())
         {
-            var locationNames = locations.Split(',');
-            IEnumerable<Location> locationEnumerable = locationNames.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
+            IEnumerable<Location> locationEnumerable = locations.Select(location => new Location(){ RegionName = location, LocationType=LocationType.CloudProvider});
             var props = new Dictionary<string, object?>() {
                 { CarbonAwareConstants.Locations, locationEnumerable },
                 { CarbonAwareConstants.Start, startTime },
