@@ -46,12 +46,11 @@ public class HttpResponseExceptionFilter : IExceptionFilter
             }
             var isVerboseApi = _options.CurrentValue.VerboseApi;
        
-            if (statusCode == (int)HttpStatusCode.InternalServerError && isVerboseApi == false)
+            if (statusCode == (int)HttpStatusCode.InternalServerError && !isVerboseApi)
             {
                  response = new HttpValidationProblemDetails() {
                                 Title = HttpStatusCode.InternalServerError.ToString(),
                                 Status = statusCode,
-                                Detail = context.Exception.Message
                     };
             }
             else
@@ -61,7 +60,7 @@ public class HttpResponseExceptionFilter : IExceptionFilter
                             Status = statusCode,
                             Detail = context.Exception.Message
                 };
-                if (isVerboseApi == true) {
+                if (isVerboseApi) {
                     response.Errors["stackTrace"] = new string[] { context.Exception.StackTrace! };
                 }
             }

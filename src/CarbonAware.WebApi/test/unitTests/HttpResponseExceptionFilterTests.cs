@@ -149,7 +149,7 @@ public class HttpResponseExceptionFilterTests
         Assert.AreEqual((int)HttpStatusCode.InternalServerError, result!.StatusCode);
         Assert.AreEqual((int)HttpStatusCode.InternalServerError, content!.Status);
         Assert.AreEqual(HttpStatusCode.InternalServerError.ToString(), content.Title);
-        Assert.AreEqual("My validation error", content.Detail);
+        Assert.IsNull(content.Detail);
     }
 
     [Test]
@@ -213,7 +213,7 @@ public class HttpResponseExceptionFilterTests
         Assert.IsTrue(exceptionContext.ExceptionHandled);
         Assert.AreEqual((int)HttpStatusCode.InternalServerError, result!.StatusCode);
         Assert.AreEqual(HttpStatusCode.InternalServerError.ToString(), content!.Title);
-        Assert.AreEqual("My validation error", content.Detail);
+        Assert.IsNull(content.Detail);
     }
 
     private (ObjectResult?, HttpValidationProblemDetails?) GetExceptionContextDetails(ExceptionContext context)
