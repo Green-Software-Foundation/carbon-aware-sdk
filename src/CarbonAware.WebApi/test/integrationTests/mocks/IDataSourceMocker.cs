@@ -29,6 +29,8 @@ public interface IDataSourceMocker
     /// <param name="location">Which location the server is looking at.</param>
     public abstract void SetupDataMock(DateTimeOffset start, DateTimeOffset end, string location);
 
+    public abstract void SetupForecastMock();
+
     /// <summary>
     /// Initializes the DataSourceMocker with clean setup
     /// </summary>

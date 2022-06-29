@@ -45,11 +45,6 @@ public class SciScoreControllerTests : IntegrationTestingBase
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result!.StatusCode, Is.EqualTo(expectedCode));
-
-        var resultContent = JsonSerializer.Deserialize<SciScore>(await result.Content.ReadAsStringAsync(), options)!;
-        Assert.That(resultContent, Is.Not.Null);
-        Assert.That(resultContent.MarginalCarbonIntensityValue, Is.Not.Null);
-        Assert.That(resultContent.MarginalCarbonIntensityValue, Is.GreaterThanOrEqualTo(0));
     }
 
     [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", HttpStatusCode.BadRequest)]
@@ -74,5 +69,4 @@ public class SciScoreControllerTests : IntegrationTestingBase
         Assert.That(resultContent.MarginalCarbonIntensityValue, Is.Null);
     }
 
-    
 }

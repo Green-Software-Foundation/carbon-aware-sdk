@@ -36,17 +36,35 @@ public class AzureLocationSourceTest
     }
 
     // <summary>
-    // If an Azure Location with invalid RegionName is passed, should fail.
+    // If an Azure Location with no LocationType is passed, should fail.
     // </summary>
     [Test]
-    public void TestToGeopositionLocation_InvalidLocation()
+    public void TestToGeopositionLocation_LocationTypeNotProvided_ThrowsException()
     {
         var mockLocationSource = SetupMockLocationSource().Object;
         Location invalidLocation = new Location()
         {
-            RegionName = "invalid location"
+            RegionName = "eastus"
         };
         Assert.ThrowsAsync<LocationConversionException>(async() =>
+        {
+            await mockLocationSource.ToGeopositionLocationAsync(invalidLocation);
+        });
+    }
+
+    // <summary>
+    // If an Azure Location with invalid region name is passed, should fail.
+    // </summary>
+    [Test]
+    public void TestToGeopositionLocation_InvalidRegionName_ThrowsException()
+    {
+        var mockLocationSource = SetupMockLocationSource().Object;
+        Location invalidLocation = new Location()
+        {
+            RegionName = "invalid location",
+            LocationType = LocationType.CloudProvider,
+        };
+        Assert.ThrowsAsync<ArgumentException>(async () =>
         {
             await mockLocationSource.ToGeopositionLocationAsync(invalidLocation);
         });

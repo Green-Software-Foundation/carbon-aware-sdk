@@ -37,7 +37,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
     }
 
-    public async Task<EmissionsData> GetBestEmissionsDataAsync(IDictionary props)
+    public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
     {
         var results = await GetEmissionsDataAsync(props);
         return GetOptimalEmissions(results);
@@ -48,8 +48,8 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     {
         using (var activity = Activity.StartActivity())
         {
-            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.Now.ToUniversalTime());
-            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End,  start.AddDays(1));
+            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.MinValue);
+            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.MaxValue);
             TimeSpan windowSize = GetDurationOrDefault(props);
             _logger.LogInformation("Aggregator getting carbon intensity forecast from data source");
 
@@ -61,9 +61,9 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
                 forecast.EndTime = end;
                 forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, start, end);
                 forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize);
+                forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
                 if(forecast.ForecastData.Any())
                 {
-                    forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
                     forecast.WindowSize = forecast.ForecastData.First().Duration;
                 }
                 forecasts.Add(forecast);
@@ -73,8 +73,12 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
     }
 
-    private EmissionsData GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
+    private EmissionsData? GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
     {
+        if (!emissionsData.Any())
+        {
+            return null;
+        }
         return emissionsData.Aggregate((minData, nextData) => minData.Rating < nextData.Rating ? minData : nextData);
     }
 

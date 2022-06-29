@@ -16,8 +16,8 @@ public interface ICarbonAwareAggregator : IAggregator
     /// Returns best emissions data record.
     /// </summary>
     /// <param name="props">IDictionary with properties required by concrete classes</param>
-    /// <returns>The best EmissionsData object from the requested dataset.</returns>
-    Task<EmissionsData> GetBestEmissionsDataAsync(IDictionary props);
+    /// <returns>The best EmissionsData object from the requested dataset or null if no dataset was found.</returns>
+    Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props);
 
 
     /// <summary>

@@ -58,11 +58,17 @@ public class AzureLocationSource : ILocationSource
     private Task<Location> GetGeoPositionLocationOrThrowAsync(Location location)
     {
         LoadRegionsFromFileIfNotPresentAsync();
-        
-        NamedGeoposition? geopositionLocation = namedGeopositions!.ContainsKey(location.RegionName!)? namedGeopositions![location.RegionName!]: null;    
-        if (geopositionLocation == null || !geopositionLocation.IsValidGeopositionLocation())  
+
+        var regionName = location.RegionName ?? string.Empty;
+        if (! namedGeopositions!.ContainsKey(regionName))
         {
-            throw new LocationConversionException($"Lat/long cannot be retrieved for region '{ location.RegionName }'");
+            throw new ArgumentException($"Unknown region: Region name '{regionName}' not found");
+        }
+
+        NamedGeoposition geopositionLocation = namedGeopositions![regionName];    
+        if (!geopositionLocation.IsValidGeopositionLocation())  
+        {
+            throw new LocationConversionException($"Lat/long cannot be retrieved for region '{regionName}'");
         }
         if (_logger.IsEnabled(LogLevel.Debug))
         {
