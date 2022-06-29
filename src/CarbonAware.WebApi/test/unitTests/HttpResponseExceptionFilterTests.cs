@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using System.Diagnostics;
 using System.Net;
+using Microsoft.Extensions.Options;
 
 namespace CarbonAware.WepApi.UnitTests;
 
@@ -20,6 +20,7 @@ public class HttpResponseExceptionFilterTests
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private ActionContext _actionContext;
     private Mock<ILogger<HttpResponseExceptionFilter>> _logger;
+
     #pragma warning restore CS8618
 
     [SetUp]
@@ -38,23 +39,23 @@ public class HttpResponseExceptionFilterTests
     public void TestOnException_IHttpResponseException()
     {
         // Arrange
-        var ex = new dummyHttpResponseException();
+        var ex = new DummyHttpResponseException();
         var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
         {
             Exception = ex
         };
-
-        var filter = new HttpResponseExceptionFilter(this._logger.Object);
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
 
         // Act
         filter.OnException(exceptionContext);
-        var result = exceptionContext.Result as ObjectResult ?? throw new Exception();
-        var content = result.Value as HttpValidationProblemDetails ?? throw new Exception();
+
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
 
         // Assert
         Assert.IsTrue(exceptionContext.ExceptionHandled);
-        Assert.AreEqual(ex.Status, result.StatusCode);
-        Assert.AreEqual(ex.Status, content.Status);
+        Assert.AreEqual(ex.Status, result!.StatusCode);
+        Assert.AreEqual(ex.Status, content!.Status);
         Assert.AreEqual(ex.Title, content.Title);
         Assert.AreEqual(ex.Detail, content.Detail);
     }
@@ -68,19 +69,24 @@ public class HttpResponseExceptionFilterTests
         {
             Exception = ex
         };
+        CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration()
+        {
+            VerboseApi = false
+        };
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        mockIOption.Setup(ap => ap.CurrentValue).Returns(config);
 
-        var filter = new HttpResponseExceptionFilter(this._logger.Object);
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
 
         // Act
         filter.OnException(exceptionContext);
 
         // Assert
-        var result = exceptionContext.Result as ObjectResult ?? throw new Exception();
-        var content = result.Value as HttpValidationProblemDetails ?? throw new Exception();
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
 
         Assert.IsTrue(exceptionContext.ExceptionHandled);
-        Assert.AreEqual((int)HttpStatusCode.BadRequest, result.StatusCode);
-        Assert.AreEqual((int)HttpStatusCode.BadRequest, content.Status);
+        Assert.AreEqual((int)HttpStatusCode.BadRequest, result!.StatusCode);
+        Assert.AreEqual((int)HttpStatusCode.BadRequest, content!.Status);
         Assert.AreEqual("ArgumentException", content.Title);
         Assert.AreEqual("My validation error", content.Detail);
     }
@@ -94,19 +100,23 @@ public class HttpResponseExceptionFilterTests
         {
             Exception = ex
         };
-
-        var filter = new HttpResponseExceptionFilter(this._logger.Object);
+        CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration()
+        {
+            VerboseApi = false
+        };
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        mockIOption.Setup(ap => ap.CurrentValue).Returns(config);
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
 
         // Act
         filter.OnException(exceptionContext);
 
         // Assert
-        var result = exceptionContext.Result as ObjectResult ?? throw new Exception();
-        var content = result.Value as HttpValidationProblemDetails ?? throw new Exception();
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
 
         Assert.IsTrue(exceptionContext.ExceptionHandled);
-        Assert.AreEqual((int)HttpStatusCode.NotImplemented, result.StatusCode);
-        Assert.AreEqual((int)HttpStatusCode.NotImplemented, content.Status);
+        Assert.AreEqual((int)HttpStatusCode.NotImplemented, result!.StatusCode);
+        Assert.AreEqual((int)HttpStatusCode.NotImplemented, content!.Status);
         Assert.AreEqual("NotImplementedException", content.Title);
         Assert.AreEqual("My validation error", content.Detail);
     }
@@ -120,25 +130,103 @@ public class HttpResponseExceptionFilterTests
         {
             Exception = ex
         };
+         CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration()
+        {
+            VerboseApi = false
+        };
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        mockIOption.Setup(ap => ap.CurrentValue).Returns(config);
 
-        var filter = new HttpResponseExceptionFilter(this._logger.Object);
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
 
         // Act
         filter.OnException(exceptionContext);
 
         // Assert
-        var result = exceptionContext.Result as ObjectResult ?? throw new Exception();
-        var content = result.Value as HttpValidationProblemDetails ?? throw new Exception();
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
 
         Assert.IsTrue(exceptionContext.ExceptionHandled);
-        Assert.AreEqual((int)HttpStatusCode.InternalServerError, result.StatusCode);
-        Assert.AreEqual((int)HttpStatusCode.InternalServerError, content.Status);
-        Assert.AreEqual("Exception", content.Title);
+        Assert.AreEqual((int)HttpStatusCode.InternalServerError, result!.StatusCode);
+        Assert.AreEqual((int)HttpStatusCode.InternalServerError, content!.Status);
+        Assert.AreEqual(HttpStatusCode.InternalServerError.ToString(), content.Title);
         Assert.AreEqual("My validation error", content.Detail);
+    }
+
+    [Test]
+    public void TestOnException_GenericException_WithVerboseTrue()
+    {
+        CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration()
+        {
+            VerboseApi = true
+        };
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        mockIOption.Setup(ap => ap.CurrentValue).Returns(config);
+
+        // Arrange
+        var ex = new Exception("My validation error");
+        var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
+        {
+            Exception = ex
+        };
+        
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
+
+        // Act
+        filter.OnException(exceptionContext);
+
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
+
+        // Assert
+        Assert.IsTrue(exceptionContext.ExceptionHandled);
+        Assert.AreEqual((int)HttpStatusCode.InternalServerError, result!.StatusCode);
+        Assert.AreEqual(ex.GetType().Name, content!.Title);
+        Assert.AreEqual("My validation error", content.Detail);
+        Assert.IsTrue(content.Errors.ContainsKey("stackTrace"));
+        Assert.IsNotEmpty(content.Errors["stackTrace"]);
+    }
+
+    [Test]
+    public void TestOnException_GenericException_WithVerboseFalse()
+    {
+        CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration()
+        {
+            VerboseApi = false
+        };
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        mockIOption.Setup(ap => ap.CurrentValue).Returns(config);
+
+        // Arrange
+        var ex = new Exception("My validation error");
+        var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
+        {
+            Exception = ex
+        };
+        
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
+
+        // Act
+        filter.OnException(exceptionContext);
+
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
+
+        // Assert
+        Assert.IsTrue(exceptionContext.ExceptionHandled);
+        Assert.AreEqual((int)HttpStatusCode.InternalServerError, result!.StatusCode);
+        Assert.AreEqual(HttpStatusCode.InternalServerError.ToString(), content!.Title);
+        Assert.AreEqual("My validation error", content.Detail);
+    }
+
+    private (ObjectResult?, HttpValidationProblemDetails?) GetExceptionContextDetails(ExceptionContext context)
+    {
+        var result = context.Result as ObjectResult;
+        Assert.IsNotNull(result);
+        var content = result!.Value as HttpValidationProblemDetails;
+        Assert.IsNotNull(content);
+        return (result, content);
     }
 }
 
-public class dummyHttpResponseException : Exception, IHttpResponseException
+public class DummyHttpResponseException : Exception, IHttpResponseException
 {
     public string? Title => "Dummy Title";
     public string? Detail => "Dummy Details";

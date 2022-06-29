@@ -31,4 +31,6 @@ public class CarbonAwareVariablesConfiguration
 
     public string TelemetryProvider { get; set; }
 
+    public Boolean VerboseApi {get; set;}
+
 }
