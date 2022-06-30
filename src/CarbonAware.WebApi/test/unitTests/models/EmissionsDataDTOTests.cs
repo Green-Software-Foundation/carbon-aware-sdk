@@ -23,9 +23,9 @@ public class EmissionsDataDTOTests
 
         var emissionsDataDTO = EmissionsDataDTO.FromEmissionsData(emissionsData);
 
-        Assert.AreEqual(expectedLocationName, emissionsDataDTO.Location);
-        Assert.AreEqual(expectedTimestamp, emissionsDataDTO.Timestamp);
-        Assert.AreEqual(expectedDuration, emissionsDataDTO.Duration);
-        Assert.AreEqual(expectedValue, emissionsDataDTO.Value);
+        Assert.AreEqual(expectedLocationName, emissionsDataDTO?.Location);
+        Assert.AreEqual(expectedTimestamp, emissionsDataDTO?.Timestamp);
+        Assert.AreEqual(expectedDuration, emissionsDataDTO?.Duration);
+        Assert.AreEqual(expectedValue, emissionsDataDTO?.Value);
     }
 }
