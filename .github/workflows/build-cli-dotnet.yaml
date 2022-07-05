@@ -32,11 +32,3 @@ jobs:
 
     - name: Unit Tests
       run: dotnet test --no-build --verbosity normal
-      
-    - name: Regression Tests 'Get Emission Data for AZure Region EastUs'
-      run: ./bin/Debug/net6.0/CarbonAwareCLI -l eastus -d ./bin/Debug/net6.0/data-files/dummy-data-azure-emissions.json
-      working-directory: './src/CarbonAware.CLI/'
-
-    - name: Regression Tests 'Get lowest Emission for several Regions eastus,francecentral,brazil,ukwest'
-      run: ./bin/Debug/net6.0/CarbonAwareCLI -l eastus,francecentral,brazil,ukwest  -d ./bin/Debug/net6.0/data-files/dummy-data-azure-emissions.json --lowest
-      working-directory: './src/CarbonAware.CLI/'
