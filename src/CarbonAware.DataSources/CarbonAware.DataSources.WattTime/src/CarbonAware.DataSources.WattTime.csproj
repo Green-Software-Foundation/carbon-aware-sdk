@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CarbonAware.Tools\CarbonAware.Tools.WattTimeClient\src\CarbonAware.Tools.WattTimeClient.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.LocationSources\CarbonAware.LocationSources.Azure\src\CarbonAware.LocationSources.Azure.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
+  </ItemGroup>
+
+</Project>

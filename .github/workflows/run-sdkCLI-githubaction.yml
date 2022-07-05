@@ -3,12 +3,12 @@ name: using CarboneAware Github action in sample pipeline
 on:
   push:
     paths:
-      - 'src/dotnet/**'
+      - 'src/**'
       - '.github/workflows/**'
   pull_request:
     branches: [ dev, main ]
     paths:
-      - 'src/dotnet/**'
+      - 'src/**'
 
 
 jobs:
