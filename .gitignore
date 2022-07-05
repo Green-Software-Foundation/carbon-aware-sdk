@@ -12,6 +12,9 @@ obj
 build
 TestResults
 
+# Build-gen'd OpenAPI Spec
+src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
+
 # Include ONLY launch/task files in .vscode
 !.vscode/
 .vscode/*

@@ -8,8 +8,8 @@ The dotnet SDK is built in .NET 6.0.  It supports devcontainers, and can be buit
 <pre>$ git clone command here</pre>
 2. Open the root folder of the project in Visual Studio Code
 3. Bring up the console with ctrl-` 
-4. Change to the src/dotnet/build directory by typing the following in the console
-<pre>$ cd src/dotnet/build</pre>
+4. Change to the src/build directory by typing the following in the console
+<pre>$ cd src/build</pre>
 5. Publish the build
 <pre>$ dotnet publish .. -o .</pre>
 6. Run with the hello world test data set

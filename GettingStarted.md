@@ -2,9 +2,9 @@
 
 This SDK has several entry points:
 
-- You can run the application using the [CLI](./src/dotnet//CarbonAware.CLI).
+- You can run the application using the [CLI](./src/CarbonAware.CLI).
 
-- You can build a container containing the [WebAPI](./src/dotnet/CarbonAware.WebApi) and connect via REST requests.
+- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi) and connect via REST requests.
 
 - (Future) You can install the Nuget package and make requests directly.
 
@@ -63,7 +63,7 @@ If set to `WattTime`, WattTime configuration must also be supplied.
 
 `None` is the default, and if this value is supplied, an exception will be thrown at startup.
 
-`JSON` will result in the data being loaded from a [json file](./src/dotnet/CarbonAware.DataSources.Json/test-data-azure-emissions.json) compiled into the project.  You should not use these values in production, since they are static and don't represent carbon intensity accurately.
+`JSON` will result in the data being loaded from a [json file](./src/CarbonAware.DataSources.Json/test-data-azure-emissions.json) compiled into the project.  You should not use these values in production, since they are static and don't represent carbon intensity accurately.
 
 ##### webApiRoutePrefix
 
@@ -124,6 +124,19 @@ In normal use, you shouldn't need to set this value, but this value can be used 
 ### Logging Configuration
 
 This project is using standard [Microsoft.Extensions.Logging](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging?tabs=command-line).  To configure different log levels, please see the documentation at this link.
+
+### Tracing and Monitoring Configuration
+Application monitoring and tracing can be configured using the `TELEMETRY_PROVIDER` variable in the application configuration
+
+```bash
+TELEMETRY_PROVIDER= "ApplicationInsights"
+```
+This application is integrated with Application Insights for monitoring purposes. The telemetry collected in the app is pushed to AppInsights and can be tracked for logs, exceptions, traces and more. To connect to your Application Insights instance, configure the `APPLICATIONINSIGHTS_CONNECTION_STRING` variable
+
+```bash
+APPLICATIONINSIGHTS_CONNECTION_STRING= "AppInsightsConnectionString"
+```
+
 
 ### Sample Environment Variable Configuration Using WattTime
 
