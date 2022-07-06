@@ -60,21 +60,9 @@ public class electricityMapDataSource : ICarbonIntensityDataSource
         return result;
     }
 
-    private async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset? periodStartTime, DateTimeOffset? periodEndTime)
-    {
-        this.Logger.LogInformation("Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.", location, periodStartTime, periodEndTime);
+    // TODO: Need implemention such as Converter from Location to Zone like Watttime
+    private Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset? periodStartTime, DateTimeOffset? periodEndTime) => throw new NotImplementedException();
 
-        using (var activity = ActivitySource.StartActivity())
-        {
-            Zone zone;
-            activity?.AddTag("location", location);
-            // TODO: Need Converter from Location to Zone like Watttime
-            // TODO: For personal, only GetCurrentForecastAsync is available like below
-            // var data = (await this.electricityMapClient.GetCurrentForecastAsync(zone));
-
-            return null;
-        }
-    }
 
     Task<EmissionsForecast> ICarbonIntensityDataSource.GetCurrentCarbonIntensityForecastAsync(Location location)
     {
