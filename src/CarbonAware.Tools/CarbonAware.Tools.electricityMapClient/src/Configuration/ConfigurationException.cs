@@ -1,7 +1,7 @@
 ﻿namespace CarbonAware.Tools.electricityMapClient.Configuration;
 
 /// <summary>
-/// An exception class thrown when the WattTime client is misconfigured.
+/// An exception class thrown when the electricityMap client is misconfigured.
 /// </summary>
 public class ConfigurationException : Exception
 {

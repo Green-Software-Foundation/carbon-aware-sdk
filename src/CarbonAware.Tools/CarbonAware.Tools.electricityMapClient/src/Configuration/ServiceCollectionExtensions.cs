@@ -9,7 +9,7 @@ namespace CarbonAware.Tools.electricityMapClient.Configuration;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
-    /// Method to configure and add the WattTime client to the service collection.
+    /// Method to configure and add the electricityMap client to the service collection.
     /// <param name="services">The service collection to add the client to.</param>
     /// <param name="configuration">The configuration to use to configure the client.</param>
     /// <returns>The service collection with the configured client added.</returns>

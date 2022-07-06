@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace CarbonAware.DataSources.electricityMap;
 
 /// <summary>
-/// Reprsents a wattime data source.
+/// Reprsents a electricityMap data source.
 /// </summary>
 public class electricityMapDataSource : ICarbonIntensityDataSource
 {
@@ -28,6 +28,8 @@ public class electricityMapDataSource : ICarbonIntensityDataSource
     private ActivitySource ActivitySource { get; }
 
     private ILocationSource LocationSource { get; }
+
+    double ICarbonIntensityDataSource.MinSamplingWindow => throw new NotImplementedException();
 
     /// <summary>
     /// Creates a new instance of the <see cref=electricityMapDataSource"/> class.
@@ -66,30 +68,16 @@ public class electricityMapDataSource : ICarbonIntensityDataSource
         {
             Zone zone;
             activity?.AddTag("location", location);
-            // TODO: Need Converter from Location to Zone
-            zone = location
+            // TODO: Need Converter from Location to Zone like Watttime
+            // TODO: For personal, only GetCurrentForecastAsync is available like below
+            // var data = (await this.electricityMapClient.GetCurrentForecastAsync(zone));
 
-            // TODO: For personal, only GetCurrentForecastAsync is available
-            var data = (await this.electricityMapClient.GetCurrentForecastAsync(zone)).ToList();
-
-            Logger.LogDebug("Found {count} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.", data.Count, location, periodStartTime, periodEndTime);
-
-            // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
-            // TODO: Need to get data property from nested json structure for electricityMap
-            var result = data.Select(e => new EmissionsData() 
-            { 
-                Location = e.countryCodeAbbreviation, 
-                Rating = e.data, 
-                Time = e.data 
-            });
-
-            if (Logger.IsEnabled(LogLevel.Debug))
-            {
-                Logger.LogDebug("Found {count} total emissions data records for location {location} for period {periodStartTime} to {periodEndTime}.", result.ToList().Count, location, periodStartTime, periodEndTime);
-            }
-
-            return result;
+            return null;
         }
     }
 
+    Task<EmissionsForecast> ICarbonIntensityDataSource.GetCurrentCarbonIntensityForecastAsync(Location location)
+    {
+        throw new NotImplementedException();
+    }
 }

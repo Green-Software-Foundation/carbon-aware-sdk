@@ -3,7 +3,7 @@
 namespace CarbonAware.Tools.electricityMapClient.Model;
 
 /// <summary>
-/// Serializable object describing the WattTime login response object.
+/// Serializable object describing the electricityMap login response object.
 /// </summary>
 [Serializable]
 public record LoginResult

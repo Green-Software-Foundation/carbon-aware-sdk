@@ -3,29 +3,25 @@
 namespace CarbonAware.Tools.electricityMapClient;
 
 /// <summary>
-/// An interface for interacting with the WattTime API.
+/// An interface for interacting with the electricityMap API.
 /// </summary>
 public interface IelectricityMapClient
 {
     public const string NamedClient = "electricityMapClient";
-    
+
     /// <summary>
-    /// Async method to get the most recent 24 hour forecasted emission data for a given balancing authority.
+    /// Async method to get the latest emission data for a given zone
     /// </summary>
-    /// <param name="balancingAuthorityAbbreviation">Balancing authority abbreviation</param>
-    /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points.</returns>
-    /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
     public Task<Forecast?> GetCurrentForecastAsync(string countryCodeAbbreviation);
 
     /// <summary>
-    /// Async method to get the most recent 24 hour forecasted emission data for a given balancing authority.
+    /// Async method to get the latest emission data for a given zone
     /// </summary>
-    /// <param name="balancingAuthority">Balancing authority</param>
-    /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points.</returns>
-    /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
     public Task<Forecast?> GetCurrentForecastAsync(Zone zone);
 
-    // TODO: For Commercial methods not implemented yet
+    // TODO: Need GetCurrentForecastAsync by latitude and longtitude 
+
+    // TODO: For Commercial Version methods not implemented yet
     //public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string countryCodeAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);
     //public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(Zone zone, DateTimeOffset startTime, DateTimeOffset endTime);
     //public Task<IEnumerable<Forecast>> GetForecastByDateAsync(string countryCodeAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);

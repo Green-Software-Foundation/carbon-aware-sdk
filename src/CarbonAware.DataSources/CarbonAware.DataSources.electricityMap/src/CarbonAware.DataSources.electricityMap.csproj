@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CarbonAware.Tools.electricityMapClient\CarbonAware.Tools.electricityMapClient.csproj" />
-    <ProjectReference Include="..\..\CarbonAware.LocationSources.Azure\src\CarbonAware.LocationSources.Azure.csproj" />
-    <ProjectReference Include="..\..\CarbonAware\CarbonAware.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.LocationSources\CarbonAware.LocationSources.Azure\src\CarbonAware.LocationSources.Azure.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.Tools\CarbonAware.Tools.electricityMapClient\src\CarbonAware.Tools.electricityMapClient.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 
 </Project>
