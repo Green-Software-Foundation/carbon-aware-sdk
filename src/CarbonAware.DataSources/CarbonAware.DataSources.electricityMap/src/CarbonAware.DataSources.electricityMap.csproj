@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\CarbonAware.Tools.electricityMapClient\CarbonAware.Tools.electricityMapClient.csproj" />
+    <ProjectReference Include="..\..\CarbonAware.LocationSources.Azure\src\CarbonAware.LocationSources.Azure.csproj" />
+    <ProjectReference Include="..\..\CarbonAware\CarbonAware.csproj" />
+  </ItemGroup>
+
+</Project>
