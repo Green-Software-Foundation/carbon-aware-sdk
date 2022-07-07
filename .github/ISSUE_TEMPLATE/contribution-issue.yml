@@ -2,6 +2,8 @@ name: Feature Contribution
 description: Contribute a Feature
 title: "[Feature Contribution]: "
 labels: ["feature", "triage"]
+assignees:
+  - vaughanknight
 body:
   - type: markdown
     attributes:
