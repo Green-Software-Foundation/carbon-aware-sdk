@@ -165,3 +165,20 @@ Controllers are responsible for managing the "Success" responses.  If an error o
 The .Net framework will automatically respond to validation errors with a [ValidationProblemDetails](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-6.0) object.  Using the Exception Filter class enables the WebAPI to consistently respond with the `ValidationProblemDetails` error schema in all error cases and take advantage of error handling automatically provided by the framework.
 
 ![WebAPI Error Handling Flow Chart](docs/images/web-api-error-handling-flow.png)
+
+## Autogenerate WebAPI
+
+Using the following steps, it is possible to get the CarbonAware WebApi OpenAPI specification
+
+1. Make sure the current directory is `<path to project root>/src/`
+
+    ```sh
+    dotnet restore
+    cd CarbonAware.WebApi/src
+    dotnet tool restore
+    dotnet build --configuration Release --no-restore
+    dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
+    ```
+
+1. The `CarbonAware.WebApi/src/api/v1/swagger.yaml` file contains the supported OpenApi specification.
+1. Use for instance [swagger editor](https://editor.swagger.io) to see and try the endpoint routes.
