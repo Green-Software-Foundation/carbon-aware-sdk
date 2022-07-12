@@ -80,7 +80,7 @@ public class CarbonAwareController : ControllerBase
                 { CarbonAwareConstants.End, toTime},
                 { CarbonAwareConstants.Duration, durationMinutes },
             };
-            
+
             return await GetEmissionsDataAsync(props);
         }
     }
@@ -102,14 +102,14 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            var locations = new List<Location>() { new Location() { RegionName = location, LocationType=LocationType.CloudProvider } };
+            var locations = new List<Location>() { new Location() { RegionName = location, LocationType = LocationType.CloudProvider } };
             var props = new Dictionary<string, object?>() {
                 { CarbonAwareConstants.Locations, locations },
                 { CarbonAwareConstants.Start, time },
                 { CarbonAwareConstants.End, toTime },
                 { CarbonAwareConstants.Duration, durationMinutes },
             };
-            
+
             return await GetEmissionsDataAsync(props);
         }
     }
@@ -145,6 +145,42 @@ public class CarbonAwareController : ControllerBase
             return Ok(results);
         }
     }
+
+    /// <summary>
+    /// Given an array of requested historical forecasts, retrieve the forecasted data and calculate the optimal
+    /// marginal carbon intensity window. 
+    /// </summary>
+    /// <remarks>
+    /// This endpoint takes a batch of requests for historical forecast data, fetches them, and calculates the optimal 
+    /// marginal carbon intensity windows for each using the same parameters available to the '/emissions/forecasts/current'
+    /// endpoint.
+    ///
+    /// The forecast data represents what the data source predicted future marginal carbon intesity values to be at that 
+    /// time, not the measured emissions data that actually occured.
+    ///
+    /// This endpoint is useful for back-testing what one might have done in the past, if they had access to the 
+    /// current forecast at the time.
+    /// </remarks>
+    /// <param name="requestedForecasts"> Array of requested forecasts.</param>
+    /// <returns>An array of forecasts with their optimal marginal carbon intensity window.</returns>
+    /// <response code="200">Returns the requested forecast objects</response>
+    /// <response code="400">Returned if any of the requested items are invalid</response>
+    /// <response code="500">Internal server error</response>
+    /// <response code="501">Returned if the underlying data source does not support forecasting</response>
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsForecastDTO>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status501NotImplemented, Type = typeof(ValidationProblemDetails))]
+    [HttpPost("forecasts/batch")]
+    public IActionResult BatchForecastData(IEnumerable<EmissionsForecastBatchDTO> requestedForecasts)
+    {
+        // Dummy result.
+        // TODO: implement this controller method after spec is approved.
+        var result = new List<EmissionsForecastDTO>();
+        return Ok(result);
+    }
+
 
     /// <summary>
     /// Given a dictionary of properties, handles call to GetEmissionsDataAsync including logging and response handling.

@@ -4,26 +4,57 @@ using CarbonAware.Model;
 using System.Text.Json.Serialization;
 
 [Serializable]
-public record EmissionsForecastDTO
+public record EmissionsForecastDTO : EmissionsForecastBaseDTO
 {
+    /// <summary>
+    /// Timestamp when the forecast was generated.
+    /// </summary>
+    /// <example>2022-06-01T00:00:00Z</example>
     [JsonPropertyName("generatedAt")]
     public DateTimeOffset GeneratedAt { get; set; }
 
-    [JsonPropertyName("location")]
-    public string Location { get; set; } = string.Empty;
-    
-    [JsonPropertyName("startTime")]
-    public DateTimeOffset StartTime { get; set; }
-
-    [JsonPropertyName("endTime")]
-    public DateTimeOffset EndTime { get; set; }
-
-    [JsonPropertyName("windowSize")]
-    public int WindowSize { get; set; }
-
+    /// <summary>
+    /// The optimal forecasted data point within the 'forecastData' array.
+    /// Null if 'forecastData' array is empty.
+    /// </summary>
+    /// <example>
+    /// {
+    ///   "location": "eastus",
+    ///   "timestamp": "2022-06-01T14:45:00Z",
+    ///   "duration": 30,
+    ///   "value": 359.23
+    /// }
+    /// </example>
     [JsonPropertyName("optimalDataPoint")]
     public EmissionsDataDTO? OptimalDataPoint { get; set; }
 
+    /// <summary>
+    /// The forecasted data points transformed and filtered to reflect the specified time and window parameters.
+    /// Points are ordered chronologically; Empty array if all data points were filtered out.
+    /// E.G. startTime and endTime outside the forecast period; windowSize greater than total duration of forecast data;
+    /// </summary>
+    /// <example>
+    /// [
+    ///   {
+    ///     "location": "eastus",
+    ///     "timestamp": "2022-06-01T14:40:00Z",
+    ///     "duration": 30,
+    ///     "value": 380.99
+    ///   },
+    ///   {
+    ///     "location": "eastus",
+    ///     "timestamp": "2022-06-01T14:45:00Z",
+    ///     "duration": 30,
+    ///     "value": 359.23
+    ///   },
+    ///   {
+    ///     "location": "eastus",
+    ///     "timestamp": "2022-06-01T14:50:00Z",
+    ///     "duration": 30,
+    ///     "value": 375.12
+    ///   }
+    /// ]
+    /// </example>
     [JsonPropertyName("forecastData")]
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 

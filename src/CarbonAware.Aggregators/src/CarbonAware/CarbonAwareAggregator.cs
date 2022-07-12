@@ -54,7 +54,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             _logger.LogInformation("Aggregator getting carbon intensity forecast from data source");
 
             var forecasts = new List<EmissionsForecast>();
-            foreach(var location in GetLocationOrThrow(props))
+            foreach (var location in GetLocationOrThrow(props))
             {
                 var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
                 forecast.StartTime = start;
@@ -62,7 +62,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
                 forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, start, end);
                 forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize);
                 forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
-                if(forecast.ForecastData.Any())
+                if (forecast.ForecastData.Any())
                 {
                     forecast.WindowSize = forecast.ForecastData.First().Duration;
                 }
@@ -88,7 +88,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     /// <param name="props"></param>
     /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
     /// <exception cref="ArgumentException">Throws exception if prop isn't a valid DateTimeOffset. </exception>
-    private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultValue) 
+    private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultValue)
     {
         // Default if null
         var dateTimeOffset = props[field] ?? defaultValue;
@@ -104,7 +104,8 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         return defaultValue;
     }
 
-    private IEnumerable<Location> GetLocationOrThrow(IDictionary props) {
+    private IEnumerable<Location> GetLocationOrThrow(IDictionary props)
+    {
         if (props[CarbonAwareConstants.Locations] is IEnumerable<Location> locations)
         {
             return locations;
