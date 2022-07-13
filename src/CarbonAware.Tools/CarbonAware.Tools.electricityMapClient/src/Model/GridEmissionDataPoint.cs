@@ -8,15 +8,9 @@ namespace CarbonAware.Tools.electricityMapClient.Model;
 [Serializable]
 public record GridEmissionDataPoint
 {
-    /// <summary>
-    /// countryCode
-    /// </summary>
     [JsonPropertyName("countryCode")]
     public string countryCodeAbbreviation { get; set; } = string.Empty;
 
-    /// <summary>
-    /// Market type, only useful for grid data other than MOERs.
-    /// </summary>
     [JsonPropertyName("status")]
     public string? Status { get; set; }
 

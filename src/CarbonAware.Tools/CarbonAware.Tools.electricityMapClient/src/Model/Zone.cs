@@ -15,13 +15,13 @@ public record Zone
     public string countryCode { get; set; } = string.Empty;
 
     /// <summary>
-    /// countryName such as Australia
+    /// CountryName such as Australia
     /// </summary>
     [JsonPropertyName("countryName")]
     public string? countryName { get; set; } = string.Empty;
 
     /// <summary>
-    /// zoneName such as New South Wales
+    /// ZoneName such as New South Wales
     /// </summary>
     [JsonPropertyName("zoneName")]
     public string zoneName { get; set; } = string.Empty;

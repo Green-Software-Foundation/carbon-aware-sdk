@@ -19,7 +19,7 @@ public interface IelectricityMapClient
     /// </summary>
     public Task<Forecast?> GetCurrentForecastAsync(Zone zone);
 
-    // TODO: Need GetCurrentForecastAsync by latitude and longtitude 
+    // TODO: Need GetCurrentForecastAsync (Get Carbon Intensity by latitude and longtitude)
 
     // TODO: For Commercial Version methods not implemented yet
     //public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string countryCodeAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);
