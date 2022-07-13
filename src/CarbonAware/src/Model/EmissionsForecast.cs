@@ -1,5 +1,7 @@
 namespace CarbonAware.Model;
 
+using System.ComponentModel.DataAnnotations;
+
 public record EmissionsForecast
 {
     /// <summary>
@@ -36,4 +38,48 @@ public record EmissionsForecast
     /// Gets or sets the optimal data point within the ForecastData set.
     /// </summary>
     public EmissionsData OptimalDataPoint { get; set; }
+
+
+    public void Validate()
+    {
+        var errors = new Dictionary<string, List<string>>();
+        var firstDataPoint = ForecastData.First();
+        var lastDataPoint = ForecastData.Last();
+        var minTime = firstDataPoint.Time;
+        var maxTime = lastDataPoint.Time + lastDataPoint.Duration;
+
+        if (StartTime >= EndTime)
+        {
+            AddErrorMessage(errors, "startTime", "startTime must be earlier than endTime");
+        }
+
+        if (StartTime < minTime || StartTime > maxTime)
+        {
+            AddErrorMessage(errors, "startTime", $"startTime must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
+        }
+
+        if (EndTime < minTime || EndTime > maxTime)
+        {
+            AddErrorMessage(errors, "endTime", $"endTime must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
+        }
+
+        if (errors.Keys.Count > 0)
+        {
+            ArgumentException error = new ArgumentException("Invalid EmissionsForecast");
+            foreach (KeyValuePair<string, List<string>> message in errors)
+            {
+                error.Data[message.Key] = message.Value.ToArray();
+            }
+            throw error;
+        }
+    }
+
+    private void AddErrorMessage(Dictionary<string, List<string>> errors, string key, string message)
+    {
+        if (!errors.ContainsKey(key))
+        {
+            errors[key] = new List<string>();
+        }
+        errors[key].Add(message);
+    }
 }

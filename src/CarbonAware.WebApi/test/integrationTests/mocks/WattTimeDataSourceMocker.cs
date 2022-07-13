@@ -60,7 +60,10 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
 
     public void SetupForecastMock()
     {
-        var start = DateTimeOffset.Now.ToUniversalTime();
+        var curr = DateTimeOffset.UtcNow;
+        var d = TimeSpan.FromMinutes(5);
+        // Calculate nearest 5 minute increment from now to match expected WattTime data points.
+        var start = new DateTimeOffset(((curr.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks, TimeSpan.Zero);
         var end = start + TimeSpan.FromDays(1.0);
         var pointTime = start;
         var ForecastData = new List<GridEmissionDataPoint>();

@@ -17,11 +17,11 @@ namespace CarbonAware.WepApi.UnitTests;
 public class HttpResponseExceptionFilterTests
 {
     // Not relevant for tests which populate this field via the [SetUp] attribute.
-    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     private ActionContext _actionContext;
     private Mock<ILogger<HttpResponseExceptionFilter>> _logger;
 
-    #pragma warning restore CS8618
+#pragma warning restore CS8618
 
     [SetUp]
     public void Setup()
@@ -60,11 +60,21 @@ public class HttpResponseExceptionFilterTests
         Assert.AreEqual(ex.Detail, content.Detail);
     }
 
-    [Test]
-    public void TestOnException_ArgumentException()
+    [TestCase("key1", null, new string[] { "message one" }, TestName = "single key, single message")]
+    [TestCase("key1", null, new string[] { "message one", "message two" }, TestName = "single key, multiple messages")]
+    [TestCase("key1", "key2", new string[] { "message one" }, TestName = "multiple keys, single message")]
+    [TestCase("key1", "key2", new string[] { "message one", "message two" }, TestName = "multiple keys, multiple messages")]
+    public void TestOnException_ArgumentException_ValidErrorDataInResponse(string firstKey, string secondKey, params string[] values)
     {
         // Arrange
         var ex = new ArgumentException("My validation error");
+        ex.Data[firstKey] = values;
+        if (secondKey != null) { ex.Data[secondKey] = values; }
+
+        var expectedErrorMessage = new Dictionary<string, string[]>();
+        expectedErrorMessage.Add(firstKey, values);
+        if (secondKey != null) { expectedErrorMessage.Add(secondKey, values); }
+
         var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
         {
             Exception = ex
@@ -89,6 +99,46 @@ public class HttpResponseExceptionFilterTests
         Assert.AreEqual((int)HttpStatusCode.BadRequest, content!.Status);
         Assert.AreEqual("ArgumentException", content.Title);
         Assert.AreEqual("My validation error", content.Detail);
+        Assert.AreEqual(expectedErrorMessage, content.Errors);
+    }
+
+    [Test]
+    public void TestOnException_ArgumentException_InvalidErrorDataOmittedInResponse()
+    {
+        // Arrange
+        var ex = new ArgumentException("My validation error");
+        ex.Data["objectValue"]      = new Object();
+        ex.Data["stringValue"]      = "myString";
+        ex.Data["listValue"]        = new List<string>() { "myListString" };
+        ex.Data[1]                  = new string[] { "validValue, invalidKey" };
+        ex.Data[new Object()]       = new string[] { "validValue, invalidKey" };
+        ex.Data[new List<string>()] = new string[] { "validValue, invalidKey" };
+
+        var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
+        {
+            Exception = ex
+        };
+        CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration()
+        {
+            VerboseApi = false
+        };
+        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
+        mockIOption.Setup(ap => ap.CurrentValue).Returns(config);
+
+        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
+
+        // Act
+        filter.OnException(exceptionContext);
+
+        // Assert
+        (var result, var content) = GetExceptionContextDetails(exceptionContext);
+
+        Assert.IsTrue(exceptionContext.ExceptionHandled);
+        Assert.AreEqual((int)HttpStatusCode.BadRequest, result!.StatusCode);
+        Assert.AreEqual((int)HttpStatusCode.BadRequest, content!.Status);
+        Assert.AreEqual("ArgumentException", content.Title);
+        Assert.AreEqual("My validation error", content.Detail);
+        Assert.AreEqual(0, content.Errors.Keys.Count);
     }
 
     [Test]

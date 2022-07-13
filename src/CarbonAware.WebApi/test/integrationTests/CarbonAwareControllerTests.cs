@@ -114,7 +114,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     }
 
     [Test]
-    public async Task EmissionsForecastsCurrent_StartAndEndOutsideWindow_ReturnsEmptyForecast()
+    public async Task EmissionsForecastsCurrent_StartAndEndOutsideWindow_ReturnsBadRequest()
     {
         IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
 
@@ -131,7 +131,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
 
         var result = await _client.GetAsync(endpointURI);
         Assert.That(result, Is.Not.Null);
-        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
     [TestCase("location", "", TestName = "empty location query string")]
