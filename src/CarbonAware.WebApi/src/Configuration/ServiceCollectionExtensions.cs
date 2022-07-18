@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+
 namespace CarbonAware.WebApi.Configuration;
 
 public static class ServiceCollectionExtensions
@@ -7,13 +9,17 @@ public static class ServiceCollectionExtensions
         
         var envVars = configuration?.GetSection(CarbonAwareVariablesConfiguration.Key).Get<CarbonAwareVariablesConfiguration>();
         var telemetryProvider = GetTelemetryProviderFromValue(envVars?.TelemetryProvider);
-
+        var logger = CreateConsoleLogger(configuration);
         switch (telemetryProvider) {
             case TelemetryProviderType.ApplicationInsights:
             {
-                if (!String.IsNullOrEmpty(configuration?["ApplicationInsights_Connection_String"]))
+                if (IsAppInsightsConfigured(configuration, logger)) 
                 {
                     services.AddApplicationInsightsTelemetry();
+                }
+                else 
+                {
+                    logger.LogWarning("Application Insights configuration not provided or incorrect.");
                 }
                 break;   
             }
@@ -26,6 +32,37 @@ public static class ServiceCollectionExtensions
 
     }
 
+    private static bool IsAppInsightsConfigured(IConfiguration? configuration, ILogger logger)
+    {
+        string? instrumentationKey = configuration?["AppInsights_InstrumentationKey"];
+        string? connectionStr = configuration?["ApplicationInsights_Connection_String"];
+
+        bool isAppInsightsConfigured = true;              
+        if (!String.IsNullOrEmpty(connectionStr)) 
+        {
+            logger.LogInformation("Application Insights connection string found");
+        } 
+        else if (!String.IsNullOrEmpty(instrumentationKey)) 
+        {
+            logger.LogInformation("Application Insights Instrumentation Key found");
+        }
+        else 
+        {
+            isAppInsightsConfigured = false;   
+        } 
+
+        return isAppInsightsConfigured;
+
+    }
+
+    public static ILogger CreateConsoleLogger(IConfiguration? config)
+    {
+        var factory = LoggerFactory.Create(b => {
+            b.AddConfiguration(config?.GetSection("Logging"));
+            b.AddConsole();
+        });
+        return factory.CreateLogger<IServiceCollection>();
+    }
     private static TelemetryProviderType GetTelemetryProviderFromValue(string? srcVal)
     {
         TelemetryProviderType result;

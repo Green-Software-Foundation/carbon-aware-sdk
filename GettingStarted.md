@@ -131,10 +131,16 @@ Application monitoring and tracing can be configured using the `TelemetryProvide
 ```bash
 CarbonAwareVars__TelemetryProvider="ApplicationInsights"
 ```
-This application is integrated with Application Insights for monitoring purposes. The telemetry collected in the app is pushed to AppInsights and can be tracked for logs, exceptions, traces and more. To connect to your Application Insights instance, configure the `ApplicationInsights_Connection_String` variable
+This application is integrated with Application Insights for monitoring purposes. The telemetry collected in the app is pushed to AppInsights and can be tracked for logs, exceptions, traces and more. To connect to your Application Insights instance, configure the `ApplicationInsights_Connection_String` variable.
 
 ```bash
 ApplicationInsights_Connection_String="AppInsightsConnectionString"
+```
+
+You can alternatively configure using Instrumentation Key by setting the `AppInsights_InstrumentationKey` variable. However, Microsoft is ending technical support for instrumentation key–based configuration of the Application Insights feature soon. ConnectionString-based configuration should be used over InstrumentationKey. For more details, please refer to https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net. 
+
+```bash
+AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
 ```
 
 ### Verbosity 
