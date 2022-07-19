@@ -9,7 +9,7 @@ The Carbon Aware SDK provides an API to get the marginal carbon intensity for a 
     - [GET emissions/bylocation](#get-emissionsbylocation)
     - [GET emissions/bylocations](#get-emissionsbylocations)
     - [GET emissions/bylocations/best](#get-emissionsbylocationsbest)
-    - [GET forecasts/current](#get-forecastscurrent)
+    - [GET emissions/forecasts/current](#get-forecastscurrent)
   - [Error Handling](#error-handling)
   - [Autogenerate WebAPI](#autogenerate-webapi)
   
@@ -159,7 +159,7 @@ EG
 ```
 
 
-### GET forecasts/current
+### GET emissions/forecasts/current
 
 This endpoint fetches the most recent forecast for all provided locations and calculates the optimal marginal carbon intensity windows (per the specified windowSize) for each, within the start and end time boundaries. 
 If no start or end time boundaries are provided, all forecasted data points are used. 
@@ -176,32 +176,32 @@ If time period is not provided, it retrieves all the data until the current time
 
 EG
 ```
-https://<server_name>/forecasts/current?location=northeurope&startTime=2022-07-19 14:00&endTime=2022-07-20&windowSize=10
+https://<server_name>/emissions/forecasts/current?location=northeurope&startTime=2022-07-19T14:00:00.000Z&endTime=2022-07-20T04:38:00.000Z&windowSize=10
 ```
 The response is an array of forecasts (one per requested location) with their optimal marginal carbon intensity windows.
 EG
 ```
 [
   {
-    "generatedAt": "2022-07-19T13:10:00+00:00",
+    "generatedAt": "2022-07-19T13:35:00+00:00",
     "optimalDataPoint": {
       "location": "IE",
-      "timestamp": "2022-07-19T13:55:00+00:00",
+      "timestamp": "2022-07-19T18:45:00+00:00",
       "duration": 10,
-      "value": 411.27979312816666
+      "value": 448.4451043375
     },
     "forecastData": [
       {
         "location": "IE",
         "timestamp": "2022-07-19T13:55:00+00:00",
         "duration": 10,
-        "value": 411.27979312816666
+        "value": 532.02293146
       },
       {
         "location": "IE",
         "timestamp": "2022-07-19T14:00:00+00:00",
         "duration": 10,
-        "value": 425.2569247386666
+        "value": 535.7318741001667
       },
       ..
     ]
