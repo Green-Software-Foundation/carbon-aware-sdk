@@ -6,9 +6,16 @@ This SDK has several entry points:
 
 - You can build a container containing the [WebAPI](./src/CarbonAware.WebApi) and connect via REST requests.
 
-- (Future) You can install the Nuget package and make requests directly.
+- (Future) You can install the Nuget package and make requests directly. ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
 Each of these has configuration requirements which are detailed below.
+
+## Pre-requisites
+
+Make sure you have installed the following pre-requisites:
+
+- dotnet core SDK [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
+- python for registering to WattTime [see here](#watttime-configuration)
 
 ## Data Sources
 
@@ -106,6 +113,7 @@ If using the WattTime datasource, WattTime configuration is required.
     }
 }
 ```
+> **Sign up for a test account:** To create an account, follow these steps : https://www.watttime.org/api-documentation/#best-practices-for-api-usage
 
 #### username
 
