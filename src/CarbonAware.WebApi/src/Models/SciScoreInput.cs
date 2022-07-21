@@ -6,10 +6,18 @@ namespace CarbonAware.WebApi.Models;
 [Serializable]
 public record SciScoreInput
 {
+    /// <example> 
+    /// {
+    ///     "locationType": "CloudProvider",
+    ///     "cloudProvider": "Azure",
+    ///     "regionName": "eastus"
+    /// }
+    /// </example>
     [JsonPropertyName("location")]
     [Required()]
     public LocationInput Location { get; set; } = new LocationInput();
 
+    /// <example> "2007-03-01T13:00:00Z/2007-03-01T15:30:00Z" </example>
     [JsonPropertyName("timeInterval")]
     [Required()]
     public string TimeInterval { get; set; } = string.Empty;
@@ -18,7 +26,7 @@ public record SciScoreInput
 [Serializable]
 public record LocationInput
 {
-    /// <example>Cloud Provider</example>
+    /// <example>CloudProvider</example>
     [JsonPropertyName("locationType")]
     [Required()]
     public string? LocationType { get; set; }
@@ -35,7 +43,7 @@ public record LocationInput
     [JsonPropertyName("cloudProvider")]
     public string? CloudProvider { get; set; }
 
-    /// <example>useast</example>
+    /// <example>eastus</example>
     [JsonPropertyName("regionName")]
     public string? RegionName { get; set; }
 }

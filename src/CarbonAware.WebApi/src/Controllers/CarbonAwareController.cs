@@ -204,6 +204,58 @@ public class CarbonAwareController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Retrieves the measured carbon intensity data between the time boundaries and calculates the average carbon intensity during that period. 
+    /// </summary>
+    /// <remarks>
+    ///  This endpoint is useful for reporting the measured carbon intensity for a specific time period in a specific location.
+    /// </remarks>
+    /// <param name="location">The location name of the region that we are measuring carbon usage in. </param>
+    /// <param name="startTime">The time at which the workload and corresponding carbon usage begins.</param>
+    /// <param name="endTime">The time at which the workload and corresponding carbon usage ends. </param>
+    /// <returns>A single object that contains the location, time boundaries and average carbon intensity value.</returns>
+    /// <response code="200">Returns a single object that contains the information about the request and the average marginal carbon intensity</response>
+    /// <response code="400">Returned if any of the requested items are invalid</response>
+    /// <response code="500">Internal server error</response>
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarbonIntensityDTO))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
+    [HttpGet("average-carbon-intensity")]
+    public IActionResult GetAverageCarbonIntensity(string location, DateTimeOffset startTime, DateTimeOffset endTime)
+    {
+        // Dummy result.
+        // TODO: implement this controller method after spec is approved.
+        var result = new CarbonIntensityDTO();
+        return Ok(result);
+    }
+
+
+    /// <summary>
+    /// Given an array of request objects, each with their own location and time boundaries, calculate the average carbon intensity for that location and time period 
+    /// and return an array of carbon intensity objects.
+    /// </summary>
+    /// <remarks>
+    /// The application only supports batching across a single location with different time boundaries. If multiple locations are provided, an error is returned.
+    /// For each item in the request array, the application returns a corresponding object containing the location, time boundaries, and average marginal carbon intensity. 
+    /// </remarks>
+    /// <param name="requestedCarbonIntensities"> Array of inputs where each contains a "location", "startDate", and "endDate" for which to calculate average marginal carbon intensity. </param>
+    /// <returns>An array of CarbonIntensityDTO objects which each have a location, start time, end time, and the average marginal carbon intensity over that time period.</returns>
+    /// <response code="200">Returns an array of objects where each contains location, time boundaries and the corresponding average marginal carbon intensity</response>
+    /// <response code="400">Returned if any of the requested items are invalid</response>
+    /// <response code="500">Internal server error</response>
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CarbonIntensityBatchDTO>))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
+    [HttpPost("average-carbon-intensity/batch")]
+    public IActionResult GetAverageCarbonIntensityBatch(IEnumerable<CarbonIntensityBatchDTO> requestedCarbonIntensities)
+    {
+        // Dummy result.
+        // TODO: implement this controller method after spec is approved.
+        var result = new List<CarbonIntensityDTO>();
+        return Ok(result);
+    }
 
     /// <summary>
     /// Given a dictionary of properties, handles call to GetEmissionsDataAsync including logging and response handling.
