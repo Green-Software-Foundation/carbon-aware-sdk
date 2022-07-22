@@ -12,7 +12,7 @@ public record Forecast
     /// DateTime indicating when the forecast was generated.
     /// </summary>
     [JsonPropertyName("generated_at")]
-    public DateTime GeneratedAt { get; set; }
+    public DateTimeOffset GeneratedAt { get; set; }
 
     /// <summary>
     /// List of GridEmissionDataPoints representing the predicted values for those points in time.

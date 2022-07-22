@@ -32,15 +32,14 @@ public class electricityMapClient : IelectricityMapClient
 
     private electricityMapClientConfiguration Configuration => this.ConfigurationMonitor.CurrentValue;
 
-    private ActivitySource ActivitySource { get; }
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(electricityMapClient));
 
     private ILogger<electricityMapClient> Log { get; }
 
-    public electricityMapClient(IHttpClientFactory factory, IOptionsMonitor<electricityMapClientConfiguration> configurationMonitor, ILogger<electricityMapClient> log, ActivitySource source)
+    public electricityMapClient(IHttpClientFactory factory, IOptionsMonitor<electricityMapClientConfiguration> configurationMonitor, ILogger<electricityMapClient> log)
     {
         this.client = factory.CreateClient(IelectricityMapClient.NamedClient);
         this.ConfigurationMonitor = configurationMonitor;
-        this.ActivitySource = source;
         this.Log = log;
         this.client.BaseAddress = new Uri(this.Configuration.BaseUrl);
         this.client.DefaultRequestHeaders.Accept.Clear();
@@ -51,7 +50,7 @@ public class electricityMapClient : IelectricityMapClient
     public async Task<Forecast?> GetCurrentForecastAsync(string countryCodeAbbreviation)
     {
 
-        Log.LogInformation("Requesting current forecast from balancing authority {countryCode}", countryCodeAbbreviation);
+        Log.LogInformation("Requesting current forecast from zone {countryCode}", countryCodeAbbreviation);
 
         var parameters = new Dictionary<string, string>()
         {
@@ -60,12 +59,14 @@ public class electricityMapClient : IelectricityMapClient
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.countryCodeAbbreviation,countryCodeAbbreviation }
+            { QueryStrings.countryCodeAbbreviation, countryCodeAbbreviation }
         };
 
-        var result = await this.MakeRequestAsync(Paths.Forecast, parameters, tags);
+        var result = await this.MakeRequestAsync(parameters, tags);
 
-        return JsonSerializer.Deserialize<Forecast?>(result, options);
+        var forecast = JsonSerializer.Deserialize<Forecast?>(result, options) ?? throw new electricityMapClientException($"Error getting forecast for  {countryCodeAbbreviation}");
+
+        return forecast;
     }
 
     /// <inheritdoc/>
@@ -76,23 +77,19 @@ public class electricityMapClient : IelectricityMapClient
 
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
     {
-        // await this.EnsureTokenAsync();
-
         var response = await this.client.GetAsync(uriPath);
 
         if (RetriableStatusCodes.Contains(response.StatusCode))
         {
             Log.LogDebug("Failed to get url {url} with status code {statusCode}.  Attempting to log in again.", uriPath, response.StatusCode);
-            // await this.UpdateAuthTokenAsync();
-            // TODO: Need UpdateAuthTokenAsync for electricityMap by token
             response = await this.client.GetAsync(uriPath);
         }
 
         if (!response.IsSuccessStatusCode)
         {
-            Log.LogError("Error getting data from WattTime.  StatusCode: {statusCode}. Response: {response}", response.StatusCode, response);
+            Log.LogError("Error getting data from electricityMap.  StatusCode: {statusCode}. Response: {response}", response.StatusCode, response);
 
-            throw new electricityMapClientException($"Error getting data from WattTime: {response.StatusCode}", response);
+            throw new electricityMapClientHttpException($"Error getting data from electricityMap: {response.StatusCode}", response);
         }
 
         return response;
@@ -113,12 +110,63 @@ public class electricityMapClient : IelectricityMapClient
 
     internal void SetBearerAuthenticationHeader(string token)
     {
-        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Bearer, token);
+        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Token, token);
+    }
+
+
+    // Overload method for electricity Map Personal 
+    private async Task<string> MakeRequestAsync(Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
+    {
+        using (var activity = Activity.StartActivity())
+        {
+            var url = BuildUrlWithQueryString(parameters);
+
+            Log.LogInformation("Requesting data using url {url}", url);
+
+            if (tags != null)
+            {
+                foreach (var kvp in tags)
+                {
+                    activity?.AddTag(kvp.Key, kvp.Value);
+                }
+            }
+
+            var result = await this.GetAsyncStringWithAuthRetry(url);
+
+            Log.LogDebug("For query {url}, received data {result}", url, result);
+
+            return result;
+        }
+    }
+
+    private string BuildUrlWithQueryString(IDictionary<string, string> queryStringParams)
+    {
+        if (Log.IsEnabled(LogLevel.Debug))
+        {
+            Log.LogDebug("Attempting to build a url using query string parameters {parameters}", string.Join(";", queryStringParams.Select(k => $"\"{k.Key}\":\"{k.Value}\"")));
+        }
+
+        // this will get a specialized namevalue collection for formatting query strings.
+        var query = HttpUtility.ParseQueryString(string.Empty);
+
+        foreach (var kvp in queryStringParams)
+        {
+            query[kvp.Key] = kvp.Value;
+        }
+
+        var result = $"?{query}";
+
+        if (Log.IsEnabled(LogLevel.Debug))
+        {
+            Log.LogDebug("Built url {result} from query string parameters {parameters}", result, string.Join(";", queryStringParams.Select(k => $"\"{k.Key}\":\"{k.Value}\"")));
+        }
+
+        return result;
     }
 
     private async Task<string> MakeRequestAsync(string path, Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
     {
-        using (var activity = ActivitySource.StartActivity(nameof(electricityMapClient)))
+        using (var activity = Activity.StartActivity())
         {
             var url = BuildUrlWithQueryString(path, parameters);
 
@@ -150,7 +198,7 @@ public class electricityMapClient : IelectricityMapClient
         // this will get a specialized namevalue collection for formatting query strings.
         var query = HttpUtility.ParseQueryString(string.Empty);
 
-        foreach(var kvp in queryStringParams)
+        foreach (var kvp in queryStringParams)
         {
             query[kvp.Key] = kvp.Value;
         }

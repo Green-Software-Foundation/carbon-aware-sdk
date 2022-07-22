@@ -8,16 +8,32 @@ namespace CarbonAware.Tools.electricityMapClient.Model;
 [Serializable]
 public record GridEmissionDataPoint
 {
-    [JsonPropertyName("countryCode")]
-    public string countryCodeAbbreviation { get; set; } = string.Empty;
+
+    [JsonPropertyName("_disclaimer")]
+    public string? Disclaimer { get; set; }
 
     [JsonPropertyName("status")]
     public string? Status { get; set; }
 
-    /// <summary>
-    /// TODO: need deserialize or access to a property in a nested object(data)
-    /// </summary>
-    [JsonPropertyName("data")]
-    public string[]? data { get; set; }
+    [JsonPropertyName("countryCode")]
+    public string CountryCodeAbbreviation { get; set; } = string.Empty;
 
+    [JsonPropertyName("data")]
+    public Data? Data { get; set; }
+
+    [JsonPropertyName("units")]
+    public Units? Units { get; set; }
+
+}
+
+public record Data
+{
+    public DateTimeOffset Datetime { get; set; }
+    public float CarbonIntensity { get; set; }
+    public float FossilFuelPercentage { get; set; }
+}
+
+public record Units
+{
+    public string? CarbonIntensity { get; set; }
 }

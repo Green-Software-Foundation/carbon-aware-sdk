@@ -7,7 +7,7 @@ public class electricityMapClientConfiguration
 
     public string? token { get; set; }
 
-    public string BaseUrl { get; set; } = "https://api.co2signal.com/v1/latest/";
+    public string BaseUrl { get; set; } = "https://api.co2signal.com/v1/latest";
 
     public void Validate()
     {

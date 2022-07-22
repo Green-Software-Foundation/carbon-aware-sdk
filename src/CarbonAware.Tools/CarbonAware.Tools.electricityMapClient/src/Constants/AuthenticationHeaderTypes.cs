@@ -3,6 +3,6 @@
 // TODO: need change for electricityMap Authorization
 internal class AuthenticationHeaderTypes
 {
-    public const string Basic = "Basic";
-    public const string Bearer = "Bearer";
+    // public const string Basic = "Basic";
+    public const string Token = "auth-token";
 }
