@@ -118,11 +118,11 @@ public class CarbonAwareController : ControllerBase
     ///   Retrieves the most recent forecasted data and calculates the optimal marginal carbon intensity window.
     /// </summary>
     /// <param name="locations"> String array of named locations.</param>
-    /// <param name="startTime">
+    /// <param name="dataStartAt">
     ///   Start time boundary of forecasted data points. Ignores current forecast data points before this time.
     ///   Defaults to the earliest time in the forecast data.
     /// </param>
-    /// <param name="endTime">
+    /// <param name="dataEndAt">
     ///   End time boundary of forecasted data points. Ignores current forecast data points after this time.
     ///   Defaults to the latest time in the forecast data.
     /// </param>
@@ -131,9 +131,10 @@ public class CarbonAwareController : ControllerBase
     ///   Defaults to the duration of a single forecast data point.
     /// </param>
     /// <remarks>
-    ///   This endpoint fetches the most recent forecast for all provided locations and calculates the optimal 
-    ///   marginal carbon intensity windows (per the specified windowSize) for each, within the start and end time boundaries.
-    ///   If no start or end time boundaries are provided, all forecasted data points are used. 
+    ///   This endpoint fetches only the most recently generated forecast for all provided locations.  It uses the "dataStartAt" and 
+    ///   "dataEndAt" parameters to scope the forecasted data points (if available for those times). If no start or end time 
+    ///   boundaries are provided, the entire forecast dataset is used. The scoped data points are used to calculate average marginal 
+    ///   carbon intensities of the specified "windowSize" and the optimal marginal carbon intensity window is identified.
     ///
     ///   The forecast data represents what the data source predicts future marginal carbon intesity values to be, 
     ///   not actual measured emissions data (as future values cannot be known).
@@ -151,15 +152,15 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status501NotImplemented, Type = typeof(ValidationProblemDetails))]
     [HttpGet("forecasts/current")]
-    public async Task<IActionResult> GetCurrentForecastData([FromQuery(Name = "location"), BindRequired] string[] locations, DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, int? windowSize = null)
+    public async Task<IActionResult> GetCurrentForecastData([FromQuery(Name = "location"), BindRequired] string[] locations, DateTimeOffset? dataStartAt = null, DateTimeOffset? dataEndAt = null, int? windowSize = null)
     {
         using (var activity = Activity.StartActivity())
         {
             IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(locations);
             var props = new Dictionary<string, object?>() {
                 { CarbonAwareConstants.Locations, locationEnumerable },
-                { CarbonAwareConstants.Start, startTime },
-                { CarbonAwareConstants.End, endTime },
+                { CarbonAwareConstants.Start, dataStartAt },
+                { CarbonAwareConstants.End, dataEndAt },
                 { CarbonAwareConstants.Duration, windowSize },
             };
 

@@ -57,10 +57,10 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
                 var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
                 var firstDataPoint = forecast.ForecastData.First();
                 var lastDataPoint = forecast.ForecastData.Last();
-                forecast.StartTime = GetOffsetOrDefault(props, CarbonAwareConstants.Start, firstDataPoint.Time);
-                forecast.EndTime = GetOffsetOrDefault(props, CarbonAwareConstants.End, lastDataPoint.Time + lastDataPoint.Duration);
+                forecast.DataStartAt = GetOffsetOrDefault(props, CarbonAwareConstants.Start, firstDataPoint.Time);
+                forecast.DataEndAt = GetOffsetOrDefault(props, CarbonAwareConstants.End, lastDataPoint.Time + lastDataPoint.Duration);
                 forecast.Validate();
-                forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.StartTime, forecast.EndTime);
+                forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
                 forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize);
                 forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
                 if (forecast.ForecastData.Any())

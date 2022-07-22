@@ -17,12 +17,12 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the start time of the forecast data points.
     /// </summary>
-    public DateTimeOffset StartTime { get; set; }
+    public DateTimeOffset DataStartAt { get; set; }
 
     /// <summary>
     /// Gets or sets the end time of the forecast data points.
     /// </summary>
-    public DateTimeOffset EndTime { get; set; }
+    public DateTimeOffset DataEndAt { get; set; }
 
     /// <summary>
     /// Gets or sets rolling average window duration.
@@ -48,19 +48,19 @@ public record EmissionsForecast
         var minTime = firstDataPoint.Time;
         var maxTime = lastDataPoint.Time + lastDataPoint.Duration;
 
-        if (StartTime >= EndTime)
+        if (DataStartAt >= DataEndAt)
         {
-            AddErrorMessage(errors, "startTime", "startTime must be earlier than endTime");
+            AddErrorMessage(errors, "dataStartAt", "dataStartAt must be earlier than dataEndAt");
         }
 
-        if (StartTime < minTime || StartTime > maxTime)
+        if (DataStartAt < minTime || DataStartAt > maxTime)
         {
-            AddErrorMessage(errors, "startTime", $"startTime must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
+            AddErrorMessage(errors, "dataStartAt", $"dataStartAt must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
         }
 
-        if (EndTime < minTime || EndTime > maxTime)
+        if (DataEndAt < minTime || DataEndAt > maxTime)
         {
-            AddErrorMessage(errors, "endTime", $"endTime must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
+            AddErrorMessage(errors, "dataEndAt", $"dataEndAt must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
         }
 
         if (errors.Keys.Count > 0)

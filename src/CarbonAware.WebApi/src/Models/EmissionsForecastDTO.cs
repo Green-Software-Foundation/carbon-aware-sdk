@@ -31,7 +31,7 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
     /// <summary>
     /// The forecasted data points transformed and filtered to reflect the specified time and window parameters.
     /// Points are ordered chronologically; Empty array if all data points were filtered out.
-    /// E.G. startTime and endTime outside the forecast period; windowSize greater than total duration of forecast data;
+    /// E.G. dataStartAt and dataEndAt times outside the forecast period; windowSize greater than total duration of forecast data;
     /// </summary>
     /// <example>
     /// [
@@ -64,8 +64,8 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
         {
             GeneratedAt = emissionsForecast.GeneratedAt,
             Location = emissionsForecast.Location.DisplayName,
-            StartTime = emissionsForecast.StartTime,
-            EndTime = emissionsForecast.EndTime,
+            DataStartAt = emissionsForecast.DataStartAt,
+            DataEndAt = emissionsForecast.DataEndAt,
             WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
             OptimalDataPoint = EmissionsDataDTO.FromEmissionsData(emissionsForecast.OptimalDataPoint),
             ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!

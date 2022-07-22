@@ -124,8 +124,8 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
         // A valid region name is required: 'location' is not specifically under test.
         queryStrings["location"] = "westus";
         // Mock data setup is set to current date.  This date will always be in the past.
-        queryStrings["startTime"] = "1999-01-01T00:00:00Z";
-        queryStrings["endTime"] = "1999-01-02T00:00:00Z";
+        queryStrings["dataStartAt"] = "1999-01-01T00:00:00Z";
+        queryStrings["dataEndAt"] = "1999-01-02T00:00:00Z";
 
         var endpointURI = ConstructUriWithQueryString(currentForecastURI, queryStrings);
 
