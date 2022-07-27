@@ -13,13 +13,13 @@ public record EmissionsForecastBaseDTO
     /// </summary>
     /// <example>2022-06-01T00:03:30Z</example>
     [JsonPropertyName("requestedAt")]
-    [Required()]
+    [Required]
     public DateTimeOffset RequestedAt { get; set; } = DateTimeOffset.UtcNow;
 
     /// <summary>The location of the forecast</summary>
     /// <example>eastus</example>
     [JsonPropertyName("location")]
-    [Required()]
+    [Required]
     public string Location { get; set; } = string.Empty;
 
     /// <summary>

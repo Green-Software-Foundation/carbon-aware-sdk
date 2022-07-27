@@ -2,12 +2,12 @@ namespace CarbonAware.WepApi.UnitTests;
 
 using CarbonAware.Model;
 using CarbonAware.WebApi.Controllers;
+using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
-using WireMock.Models;
 
 /// <summary>
 /// Tests that the Web API controller handles and packages various responses from a plugin properly 
@@ -155,5 +155,26 @@ public class CarbonAwareControllerTests : TestsBase
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetBestEmissionsDataForLocationsByTime(locations));
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetEmissionsDataForLocationsByTime(locations));
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetCurrentForecastData(locations));
+    }
+
+    /// <summary>
+    /// Tests empty location arrays throw ArgumentException.
+    /// </summary>
+    [Test]
+    public void BatchForecast_NoLocations_ThrowsException()
+    {
+        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithEmissionsData(new List<EmissionsData>()).Object);
+        var forecastData = new List<EmissionsForecastBatchDTO>()
+        {
+            new EmissionsForecastBatchDTO
+            {
+                DataStartAt = new DateTimeOffset(2021,9,1,8,30,0, TimeSpan.Zero),
+                DataEndAt = new DateTimeOffset(2021,9,2,8,30,0, TimeSpan.Zero),
+                RequestedAt = new DateTimeOffset(2021,9,1,8,30,0, TimeSpan.Zero)
+            }
+        };
+        Assert.ThrowsAsync<ArgumentException>(async () => {
+            await foreach(var _ in controller.BatchForecastDataAsync(forecastData));
+        });
     }
 }

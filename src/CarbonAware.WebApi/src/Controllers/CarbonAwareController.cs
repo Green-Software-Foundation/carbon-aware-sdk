@@ -171,16 +171,13 @@ public class CarbonAwareController : ControllerBase
     }
 
     /// <summary>
-    /// Given an array of requested historical forecasts, retrieve the forecasted data and calculate the optimal
-    /// marginal carbon intensity window. 
+    /// Given an array of historical forecasts, retrieves the data that contains
+    /// forecasts metadata, the optimal forecast and a range of forecasts filtered by the attributes [start...end] if provided.
     /// </summary>
     /// <remarks>
     /// This endpoint takes a batch of requests for historical forecast data, fetches them, and calculates the optimal 
     /// marginal carbon intensity windows for each using the same parameters available to the '/emissions/forecasts/current'
     /// endpoint.
-    ///
-    /// The forecast data represents what the data source predicted future marginal carbon intesity values to be at that 
-    /// time, not the measured emissions data that actually occured.
     ///
     /// This endpoint is useful for back-testing what one might have done in the past, if they had access to the 
     /// current forecast at the time.
@@ -188,21 +185,35 @@ public class CarbonAwareController : ControllerBase
     /// <param name="requestedForecasts"> Array of requested forecasts.</param>
     /// <returns>An array of forecasts with their optimal marginal carbon intensity window.</returns>
     /// <response code="200">Returns the requested forecast objects</response>
-    /// <response code="400">Returned if any of the requested items are invalid</response>
+    /// <response code="400">Returned if any of the input parameters are invalid</response>
     /// <response code="500">Internal server error</response>
     /// <response code="501">Returned if the underlying data source does not support forecasting</response>
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsForecastDTO>))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
-    [ProducesResponseType(StatusCodes.Status501NotImplemented, Type = typeof(ValidationProblemDetails))]
     [HttpPost("forecasts/batch")]
-    public IActionResult BatchForecastData(IEnumerable<EmissionsForecastBatchDTO> requestedForecasts)
+    public async IAsyncEnumerable<EmissionsForecastDTO> BatchForecastDataAsync(IEnumerable<EmissionsForecastBatchDTO> requestedForecasts)
     {
-        // Dummy result.
-        // TODO: implement this controller method after spec is approved.
-        var result = new List<EmissionsForecastDTO>();
-        return Ok(result);
+        using (var activity = Activity.StartActivity())
+        {
+            foreach (var forecastBatchDTO in requestedForecasts)
+            {
+                IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(new string[] { forecastBatchDTO.Location! });
+                var props = new Dictionary<string, object?>() {
+                    { CarbonAwareConstants.Locations, locationEnumerable },
+                    { CarbonAwareConstants.Start, forecastBatchDTO.DataStartAt },
+                    { CarbonAwareConstants.End, forecastBatchDTO.DataEndAt },
+                    { CarbonAwareConstants.Duration, forecastBatchDTO.WindowSize },
+                    { CarbonAwareConstants.ForecastRequestedAt, forecastBatchDTO.RequestedAt },
+                };
+                // NOTE: Current Error Handling done by HttpResponseExceptionFilter can't handle exceptions
+                // thrown by the underline framework for this method, therefore all exceptions are handled as 500.
+                // Refactoring with a middleware exception handler should cover this use case too.
+                var forecast = await _aggregator.GetForecastDataAsync(props);
+                yield return EmissionsForecastDTO.FromEmissionsForecast(forecast);
+            }
+        }
     }
 
     /// <summary>

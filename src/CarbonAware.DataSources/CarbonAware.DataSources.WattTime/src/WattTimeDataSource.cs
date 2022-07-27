@@ -59,36 +59,57 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
         }
         return result;
     }
-    
+
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location}");
-
         using (var activity = Activity.StartActivity())
         {
-            BalancingAuthority balancingAuthority = await this.GetBalancingAuthority(location, activity);
-            var data = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority);
+            var balancingAuthority = await this.GetBalancingAuthority(location, activity);
+                var forecast = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority); 
+                return ForecastToEmissionsForecast(forecast, location);
+        } 
+    }
 
-            var duration = GetDurationFromGridEmissionDataPoints(data.ForecastData.FirstOrDefault(), data.ForecastData.Skip(1)?.FirstOrDefault());
-            
-            // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
-            var forecastData = data.ForecastData.Select(e => new EmissionsData() 
-            { 
-                Location = e.BalancingAuthorityAbbreviation, 
-                Rating = ConvertMoerToGramsPerKilowattHour(e.Value), 
-                Time = e.PointTime,
-                Duration = duration
-            });
-
-            return new EmissionsForecast()
+    /// <inheritdoc />
+    public async Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
+    {
+        this.Logger.LogInformation($"Getting carbon intensity forecast for location {location} requested at {requestedAt}");
+        using (var activity = Activity.StartActivity())
+        {
+            var balancingAuthority = await this.GetBalancingAuthority(location, activity);
+            var forecast = await this.WattTimeClient.GetForecastOnDateAsync(balancingAuthority, TimeToLowestIncrement(requestedAt));
+            if (forecast == null)
             {
-                GeneratedAt = data.GeneratedAt,
-                Location = location,
-                ForecastData = forecastData,
-            };
+                Exception ex = new ArgumentException($"No forecast was generated at the requested time {requestedAt}");
+                activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+                Logger.LogError(ex, ex.Message);
+                throw ex;
+            }
+            return ForecastToEmissionsForecast(forecast, location); 
         }
     }
+
+    private EmissionsForecast ForecastToEmissionsForecast(Forecast forecast, Location location) 
+    {
+        var duration = GetDurationFromGridEmissionDataPoints(forecast.ForecastData.FirstOrDefault(), forecast.ForecastData.Skip(1)?.FirstOrDefault());
+        var forecastData = forecast.ForecastData.Select(e => new EmissionsData()
+        {
+            Location = e.BalancingAuthorityAbbreviation,
+            Rating = ConvertMoerToGramsPerKilowattHour(e.Value),
+            Time = e.PointTime,
+            Duration = duration
+        });
+        var emissionsForecast = new EmissionsForecast()
+        {
+            GeneratedAt = forecast.GeneratedAt,
+            Location = location,
+            ForecastData = forecastData
+        };
+        return emissionsForecast;
+    }
+
     private async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
         Logger.LogInformation($"Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.");
@@ -164,5 +185,11 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
         Logger.LogDebug("Converted location {location} to balancing authority {balancingAuthorityAbbreviation}", location, balancingAuthority.Abbreviation);
 
         return balancingAuthority;
+    }
+
+    private DateTimeOffset TimeToLowestIncrement(DateTimeOffset date, int minutes = 5)
+    {
+        var d = TimeSpan.FromMinutes(minutes);
+        return new DateTimeOffset((date.Ticks / d.Ticks) * d.Ticks, date.Offset);
     }
 }

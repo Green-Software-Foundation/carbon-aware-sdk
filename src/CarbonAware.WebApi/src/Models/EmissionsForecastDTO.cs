@@ -68,7 +68,8 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
             DataEndAt = emissionsForecast.DataEndAt,
             WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
             OptimalDataPoint = EmissionsDataDTO.FromEmissionsData(emissionsForecast.OptimalDataPoint),
-            ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!
+            ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
+            RequestedAt = emissionsForecast.RequestedAt
         };
     }
 }

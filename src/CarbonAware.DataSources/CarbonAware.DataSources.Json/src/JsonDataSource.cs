@@ -66,6 +66,11 @@ public class JsonDataSource : ICarbonIntensityDataSource
         throw new NotImplementedException();
     }
 
+    public Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset generatedAt)
+    {
+        throw new NotImplementedException();
+    }
+
     private IEnumerable<EmissionsData> FilterByDateRange(IEnumerable<EmissionsData> data, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(startTime, endTime, MinSamplingWindow);

@@ -2,7 +2,6 @@
 
 using CarbonAware.Model;
 using CarbonAware.WebApi.Models;
-using Moq;
 using NUnit.Framework;
 
 public class EmissionsForecastDTOTests

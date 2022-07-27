@@ -1,9 +1,11 @@
 namespace CarbonAware.Model;
 
-using System.ComponentModel.DataAnnotations;
-
 public record EmissionsForecast
 {
+    /// <summary>
+    /// Gets the time when the request was made
+    /// </summary>
+    public DateTimeOffset RequestedAt { get; set; }
     /// <summary>
     /// Gets or sets the time that the forecast was generated.
     /// </summary>

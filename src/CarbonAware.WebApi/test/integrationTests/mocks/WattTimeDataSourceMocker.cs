@@ -96,6 +96,42 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
         SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecast));
     }
 
+    public void SetupBatchForecastMock()
+    {
+        var start = new DateTimeOffset(2021, 9, 1, 8, 30, 0, TimeSpan.Zero);
+        var end = start + TimeSpan.FromDays(1.0);
+        var pointTime = start;
+        var ForecastData = new List<GridEmissionDataPoint>();
+        var currValue = 200.0F;
+        while (pointTime < end)
+        {
+            var newForecastPoint = new GridEmissionDataPoint()
+            {
+                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
+                Datatype = "dt",
+                Frequency = 300,
+                Market = "mkt",
+                PointTime = start,
+                Value = currValue,
+                Version = "1.0"
+            };
+            newForecastPoint.PointTime = pointTime;
+            newForecastPoint.Value = currValue;
+            ForecastData.Add(newForecastPoint);
+            pointTime = pointTime + TimeSpan.FromMinutes(5);
+            currValue = currValue + 5.0F;
+        }
+
+        var forecastData = new List<Forecast> {
+            new Forecast()
+            {
+                ForecastData = ForecastData,
+                GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
+            }
+        };
+        SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastData));
+    }
+
     public WebApplicationFactory<Program> OverrideWebAppFactory(WebApplicationFactory<Program> factory)
     {
         return factory.WithWebHostBuilder(builder =>
@@ -137,7 +173,6 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
                     .WithBody(body)
         );
     }
-
     private void SetupBaMock(BalancingAuthority? content = null) =>
         SetupResponseGivenGetRequest(Paths.BalancingAuthorityFromLocation, JsonSerializer.Serialize(content ?? defaultBalancingAuthority));
 
