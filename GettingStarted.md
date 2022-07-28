@@ -72,7 +72,7 @@ Used to add a prefix to all routes in the WebApi project.  Must start with a `/`
 By default, all controllers are off of the root path.  For example:
 
 ```bash
-http://localhost/sci-scores
+http://localhost/emissions
 ```
 
 If this prefix is set, it will allow calls to controllers using the prefix, which can be helpful for cross cluster calls, or when proxies strip out information from headers.  For example, if this value is set to:
@@ -84,7 +84,7 @@ If this prefix is set, it will allow calls to controllers using the prefix, whic
 Then calls can be made that look like this:
 
 ```bash
-http://localhost/mydepartment/myapp/sci-scores
+http://localhost/mydepartment/myapp/emissions
 ```
 
 Note that the controllers still respond off of the root path.
