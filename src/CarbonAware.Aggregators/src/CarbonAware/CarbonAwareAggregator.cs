@@ -107,7 +107,6 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         var lastDataPoint = forecast.ForecastData.Last();
         forecast.DataStartAt = GetOffsetOrDefault(props, CarbonAwareConstants.Start, firstDataPoint.Time);
         forecast.DataEndAt = GetOffsetOrDefault(props, CarbonAwareConstants.End, lastDataPoint.Time + lastDataPoint.Duration);
-        forecast.RequestedAt = GetOffsetOrDefault(props, CarbonAwareConstants.ForecastRequestedAt, DateTimeOffset.UtcNow);
         forecast.Validate();
         forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
         forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, forecast.DataStartAt, forecast.DataEndAt);

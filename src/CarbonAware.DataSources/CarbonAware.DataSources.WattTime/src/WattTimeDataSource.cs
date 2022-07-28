@@ -68,7 +68,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
         {
             var balancingAuthority = await this.GetBalancingAuthority(location, activity);
                 var forecast = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority); 
-                return ForecastToEmissionsForecast(forecast, location);
+                return ForecastToEmissionsForecast(forecast, location, DateTimeOffset.UtcNow);
         } 
     }
 
@@ -79,19 +79,21 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
         using (var activity = Activity.StartActivity())
         {
             var balancingAuthority = await this.GetBalancingAuthority(location, activity);
-            var forecast = await this.WattTimeClient.GetForecastOnDateAsync(balancingAuthority, TimeToLowestIncrement(requestedAt));
+            var roundedRequestedAt = TimeToLowestIncrement(requestedAt);
+            var forecast = await this.WattTimeClient.GetForecastOnDateAsync(balancingAuthority, roundedRequestedAt);
             if (forecast == null)
             {
-                Exception ex = new ArgumentException($"No forecast was generated at the requested time {requestedAt}");
+                var ex = new ArgumentException($"No forecast was generated at the requested time {roundedRequestedAt}");
                 activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
                 Logger.LogError(ex, ex.Message);
                 throw ex;
             }
-            return ForecastToEmissionsForecast(forecast, location); 
+            // keep input from the user.
+            return ForecastToEmissionsForecast(forecast, location, requestedAt); 
         }
     }
 
-    private EmissionsForecast ForecastToEmissionsForecast(Forecast forecast, Location location) 
+    private EmissionsForecast ForecastToEmissionsForecast(Forecast forecast, Location location, DateTimeOffset requestedAt) 
     {
         var duration = GetDurationFromGridEmissionDataPoints(forecast.ForecastData.FirstOrDefault(), forecast.ForecastData.Skip(1)?.FirstOrDefault());
         var forecastData = forecast.ForecastData.Select(e => new EmissionsData()
@@ -107,6 +109,7 @@ public class WattTimeDataSource : ICarbonIntensityDataSource
             Location = location,
             ForecastData = forecastData
         };
+        emissionsForecast.RequestedAt = requestedAt;
         return emissionsForecast;
     }
 

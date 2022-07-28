@@ -298,6 +298,5 @@ public class CarbonAwareAggregatorTests
         Assert.AreEqual(forecast.Location.RegionName, reg);
         Assert.AreEqual(forecast.DataStartAt, props[CarbonAwareConstants.Start]);
         Assert.AreEqual(forecast.DataEndAt, props[CarbonAwareConstants.End]);
-        Assert.AreEqual(forecast.RequestedAt, props[CarbonAwareConstants.ForecastRequestedAt]);
     }
 }
