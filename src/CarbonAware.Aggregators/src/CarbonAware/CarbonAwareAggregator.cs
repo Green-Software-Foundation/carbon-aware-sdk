@@ -37,6 +37,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
     }
 
+    /// <inheritdoc />
     public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
     {
         var results = await GetEmissionsDataAsync(props);
@@ -63,13 +64,28 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     }
 
     /// <inheritdoc />
+    public async Task<double> CalculateAverageCarbonIntensityAsync(IDictionary props)
+    {
+        using (var activity = Activity.StartActivity())
+        {
+            var start = GetOffsetOrThrow(props, CarbonAwareConstants.Start);
+            var end = GetOffsetOrThrow(props, CarbonAwareConstants.End);
+            _logger.LogInformation("Aggregator getting average carbon intensity from data source");
+            var emissionData = await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
+            var value = emissionData.AverageOverPeriod(start, end);
+            _logger.LogInformation($"Carbon Intensity Average: {value}");
+
+            return value;
+        }
+    }
+
     public async Task<EmissionsForecast> GetForecastDataAsync(IDictionary props)
     {
         EmissionsForecast forecast;
         using (var activity = Activity.StartActivity())
         {
             ValidateInput(props);
-          
+
             var locations = (IEnumerable<Location>) props[CarbonAwareConstants.Locations]!;
             var forecastRequestedAt = GetOffsetOrDefault(props, CarbonAwareConstants.ForecastRequestedAt, default);
             _logger.LogDebug($"Aggregator getting carbon intensity forecast from data source for location {locations.First()} and requestedAt {forecastRequestedAt}");
@@ -78,7 +94,6 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             var emissionsForecast = ProcessAndValidateForecast(forecast, props);
             return emissionsForecast;
         }
-  
     }
     private void ValidateInput(IDictionary props)
     {
@@ -100,6 +115,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             throw error;
         }
     }
+
     private EmissionsForecast ProcessAndValidateForecast(EmissionsForecast forecast, IDictionary props)
     {
         var windowSize = GetDurationOrDefault(props);
@@ -158,6 +174,24 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             return locations;
         }
         Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
+        _logger.LogError("argument exception", ex);
+        throw ex;
+    }
+
+    /// <summary>
+    /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, throws
+    /// </summary>
+    /// <param name="props"></param>
+    /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
+    /// <exception cref="ArgumentException">Throws exception if prop isn't found or isn't a valid DateTimeOffset. </exception>
+    private DateTimeOffset GetOffsetOrThrow(IDictionary props, string field)
+    {
+        if (props[field] != null)
+        {
+            return GetOffsetOrDefault(props, field, DateTimeOffset.MinValue);
+        }
+
+        Exception ex = new ArgumentException("Failed to find" + field + "field. Must be a valid DateTimeOffset");
         _logger.LogError("argument exception", ex);
         throw ex;
     }

@@ -52,7 +52,16 @@ public abstract class TestsBase
         return aggregator;
     }
 
+    protected static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
+    {
+        var aggregator = new Mock<ICarbonAwareAggregator>();
+        aggregator.Setup(x =>
+            x.CalculateAverageCarbonIntensityAsync(It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
+        return aggregator;
+    }
+
     // Mocks for SciScoreAggregator
+    [ObsoleteAttribute("This method is obsolete. Use CarbonAwareAggregator equivalent method instead.", false)]
     protected static Mock<ISciScoreAggregator> CreateSciScoreAggregator(double data)
     {
         var aggregator = new Mock<ISciScoreAggregator>();

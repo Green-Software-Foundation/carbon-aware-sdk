@@ -1,3 +1,4 @@
+using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.SciScore;
 using CarbonAware.WebApi.Models;
 using CarbonAware.Model;
@@ -15,11 +16,13 @@ namespace CarbonAware.WebApi.Controllers;
 public class SciScoreController : ControllerBase
 {
     private readonly ILogger<SciScoreController> _logger;
-    private readonly ISciScoreAggregator _aggregator;
+
+    // NOTE: Changed to `ICarbonAwareAggregator` to help the deprecation-path
+    private readonly ICarbonAwareAggregator _aggregator;
 
     private static readonly ActivitySource Activity = new ActivitySource(nameof(SciScoreController));
 
-    public SciScoreController(ILogger<SciScoreController> logger, ISciScoreAggregator aggregator)
+    public SciScoreController(ILogger<SciScoreController> logger, ICarbonAwareAggregator aggregator)
     {
         _logger = logger;
         _aggregator = aggregator;
@@ -33,6 +36,7 @@ public class SciScoreController : ControllerBase
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(SciScore), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ObsoleteAttribute("This method is obsolete. It was never fully implemented.", false)]
     public Task<IActionResult> CreateAsync(SciScoreInput input)
     {
         _logger.LogDebug("calculate sciscore with input: {input}", input);
@@ -52,18 +56,27 @@ public class SciScoreController : ControllerBase
     /// <summary> Gets the marginal carbon intensity value </summary>
     /// <param name="input"> input from JSON request converted to input object with location and time interval </param>
     /// <returns>Result of the call to the aggregator to retrieve carbon intenstiy</returns>
-    
     [HttpPost("marginal-carbon-intensity")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
+    [ObsoleteAttribute("This method is obsolete. Use CarbonAwareController equivalent method instead.", false)]
     public async Task<IActionResult> GetCarbonIntensityAsync(SciScoreInput input)
     {
         using (var activity = Activity.StartActivity())
         {
             _logger.LogDebug("calling to aggregator to calculate the average carbon intensity with input: {input}", input);
 
-            var carbonIntensity = await _aggregator.CalculateAverageCarbonIntensityAsync(GetLocation(input.Location), input.TimeInterval);
+            IEnumerable<Location> locationEnumerable = new List<Location>(){ GetLocation(input.Location) };
+            (DateTimeOffset start, DateTimeOffset end) = SciScoreAggregator.ParseTimeInterval(input.TimeInterval);
+
+            var props = new Dictionary<string, object?>() {
+                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.Start, start },
+                { CarbonAwareConstants.End, end },
+            };
+
+            var carbonIntensity = await _aggregator.CalculateAverageCarbonIntensityAsync(props);
 
             SciScore score = new SciScore
             {

@@ -9,6 +9,8 @@ using NUnit.Framework;
 
 namespace CarbonAware.WepApi.UnitTests;
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+// Test class still tests some Obsolete methods, that are on the 'deprecation-path'.
+#pragma warning disable CS0618 // 'SciScoreController.GetCarbonIntensityAsync(SciScoreInput)' is obsolete: 'This method is obsolete. Use CarbonAwareController equivalent method instead.'
 
 /// <summary>
 /// Tests that the Web API controller handles and packages various responses from a plugin properly 
@@ -27,7 +29,7 @@ public class SciScoreControllerTests : TestsBase
     {
         // Arrange
         double data = 0.7;
-        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object);
+        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
         var location = new LocationInput() { LocationType = LocationType.Geoposition.ToString(), Latitude = (decimal)1.0, Longitude = (decimal)2.0 };
         string timeInterval = "2007-03-01T13:00:00Z/2007-03-01T15:30:00Z";
         SciScoreInput input = new SciScoreInput()
@@ -54,7 +56,7 @@ public class SciScoreControllerTests : TestsBase
     {
         // Arrange
         var data = 0.7;
-        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateSciScoreAggregator(data).Object);
+        var controller = new SciScoreController(this.MockSciScoreLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
 
         LocationInput locationInput = new LocationInput()
         {
@@ -73,4 +75,5 @@ public class SciScoreControllerTests : TestsBase
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetCarbonIntensityAsync(input));
     }
 }
+#pragma warning restore CS0618 // 'SciScoreController.GetCarbonIntensityAsync(SciScoreInput)' is obsolete: 'This method is obsolete. Use CarbonAwareController equivalent method instead.'
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

@@ -4,6 +4,10 @@ using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using System.Globalization;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
+// NOTE: Added `InternalsVisibleTo` only to help the deprecation-path
+[assembly:InternalsVisibleTo("CarbonAware.WebApi")]
 
 namespace CarbonAware.Aggregators.SciScore;
 
@@ -29,11 +33,12 @@ public class SciScoreAggregator : ISciScoreAggregator
     }
 
     /// <inheritdoc />
+    [ObsoleteAttribute("This method is obsolete. Use ICarbonAwareAggregator equivalent method instead.", false)]
     public async Task<double> CalculateAverageCarbonIntensityAsync(Location location, string timeInterval)
     {
         using (var activity = Activity.StartActivity())
         {
-            (DateTimeOffset start, DateTimeOffset end) = this.ParseTimeInterval(timeInterval);
+            (DateTimeOffset start, DateTimeOffset end) = SciScoreAggregator.ParseTimeInterval(timeInterval);
             var emissionData = await this._carbonIntensityDataSource.GetCarbonIntensityAsync(new List<Location>() { location }, start, end);
             var value = emissionData.AverageOverPeriod(start, end);
             _logger.LogInformation($"Carbon Intensity Average: {value}");
@@ -44,7 +49,8 @@ public class SciScoreAggregator : ISciScoreAggregator
 
     // Validate and parse time interval string into a tuple of (start, end) DateTimeOffsets.
     // Throws ArgumentException for invalid input.
-    private (DateTimeOffset start, DateTimeOffset end) ParseTimeInterval(string timeInterval)
+    // NOTE: Changed to `internal static` to help the deprecation-path
+    internal static (DateTimeOffset start, DateTimeOffset end) ParseTimeInterval(string timeInterval)
     {
         DateTimeOffset start;
         DateTimeOffset end;

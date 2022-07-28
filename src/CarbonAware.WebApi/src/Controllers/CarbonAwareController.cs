@@ -234,12 +234,29 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [HttpGet("average-carbon-intensity")]
-    public IActionResult GetAverageCarbonIntensity(string location, DateTimeOffset startTime, DateTimeOffset endTime)
+    public async Task<IActionResult> GetAverageCarbonIntensity([FromQuery, BindRequired] string location, [FromQuery, BindRequired] DateTimeOffset startTime, [FromQuery, BindRequired] DateTimeOffset endTime)
     {
-        // Dummy result.
-        // TODO: implement this controller method after spec is approved.
-        var result = new CarbonIntensityDTO();
-        return Ok(result);
+        using (var activity = Activity.StartActivity())
+        {
+            IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(new string[] { location });
+            var props = new Dictionary<string, object?>() {
+                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.Start, startTime },
+                { CarbonAwareConstants.End, endTime },
+            };
+
+            var result = await this._aggregator.CalculateAverageCarbonIntensityAsync(props);
+
+            CarbonIntensityDTO carbonIntensity = new CarbonIntensityDTO
+            {
+                Location = location,
+                StartTime = startTime,
+                EndTime = endTime,
+                CarbonIntensity = result,
+            };
+            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", carbonIntensity);
+            return Ok(carbonIntensity);
+        }
     }
 
 
