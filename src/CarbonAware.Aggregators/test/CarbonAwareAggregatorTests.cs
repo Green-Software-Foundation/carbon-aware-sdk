@@ -136,7 +136,7 @@ public class CarbonAwareAggregatorTests
         };
 
         var expectedData = new List<EmissionsData>();
-        var expectedRatings = new double[] { 15.0, 25.0, 35.0 };
+        var expectedRatings = new double[] { 15.0, 25.0 };
         for(var i = 0; i < expectedRatings.Count(); i++)
         {
             expectedData.Add(new EmissionsData() { Time = dataStartTime + i * TimeSpan.FromMinutes(dataTickSize), Location = locationName, Rating = expectedRatings[i], Duration = TimeSpan.FromMinutes(dataDuration) });
