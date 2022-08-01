@@ -70,8 +70,10 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         {
             var start = GetOffsetOrThrow(props, CarbonAwareConstants.Start);
             var end = GetOffsetOrThrow(props, CarbonAwareConstants.End);
+            var location = GetLocationOrThrow(props);
+            ValidateDateInput(start, end);
             _logger.LogInformation("Aggregator getting average carbon intensity from data source");
-            var emissionData = await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
+            var emissionData = await this._dataSource.GetCarbonIntensityAsync(location, start, end);
             var value = emissionData.AverageOverPeriod(start, end);
             _logger.LogInformation($"Carbon Intensity Average: {value}");
 
@@ -86,7 +88,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         {
             ValidateInput(props);
 
-            var locations = (IEnumerable<Location>) props[CarbonAwareConstants.Locations]!;
+            var locations = (IEnumerable<Location>)props[CarbonAwareConstants.Locations]!;
             var forecastRequestedAt = GetOffsetOrDefault(props, CarbonAwareConstants.ForecastRequestedAt, default);
             _logger.LogDebug($"Aggregator getting carbon intensity forecast from data source for location {locations.First()} and requestedAt {forecastRequestedAt}");
 
@@ -165,6 +167,14 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
 
         return outValue;
+    }
+
+    private void ValidateDateInput(DateTimeOffset start, DateTimeOffset end)
+    {
+        if (start >= end)
+        {
+            throw new ArgumentException($"Invalid start and end. Start time must come before end time. start is {start}, end is {end}");
+        }
     }
 
     private IEnumerable<Location> GetLocationOrThrow(IDictionary props)
