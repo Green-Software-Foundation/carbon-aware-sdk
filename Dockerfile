@@ -2,11 +2,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:6.0 as build-env
 
 # Copy everything and publish the release (publish implicitly restores and builds)
-COPY ./src/dotnet/ ./
+COPY ./src/ ./
 COPY ./entrypoint.sh ./
 
 
-#WORKDIR /src/dotnet
+#WORKDIR /src/
 
 RUN dotnet publish  ./CarbonAware.CLI/CarbonAware.CLI.csproj -c Release -o out --no-self-contained
 RUN cp ./CarbonAware.CLI/carbon-aware.json out
