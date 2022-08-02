@@ -9,6 +9,8 @@ The Carbon Aware SDK provides an API to get the marginal carbon intensity for a 
     - [GET emissions/bylocations/best](#get-emissionsbylocationsbest)
     - [GET emissions/forecasts/current](#get-emissionsforecastscurrent)
     - [POST emissions/forecasts/batch](#post-emissionsforecastsbatch)
+    - [GET emissions/average-carbon-intensity](#get-emissionsaverage-carbon-intensity)
+    - [POST emissions/average-carbon-intensity/batch](#post-emissionsaverage-carbon-intensitybatch)
   - [Error Handling](#error-handling)
   - [Autogenerate WebAPI](#autogenerate-webapi)
   
@@ -217,8 +219,92 @@ EG
   }
 ]
 ```
-  
 
+### GET emissions/average-carbon-intensity
+
+This endpoint retrieves the measured carbon intensity data between the time boundaries and calculates the average carbon intensity during that period. Location is a required parameter and is the name of the data region for the configured Cloud provider.
+
+This endpoint is useful for reporting the measured carbon intensity for a specific time period in a specific location.
+
+Parameters:
+1. `location`: This is a required parameter and is the string name of the data region for the configured Cloud provider.
+2. `startTime`: The time at which the workload and corresponding carbon usage begins.
+3. `endTime`: The time at which the workload and corresponding carbon usage ends.
+
+EG
+```
+https://<server_name>/emissions/average-carbon-intensity?location=eastus&startTime=2022-07-19T14:00:00Z&endTime=2022-07-19T18:00:00Z
+```
+The response is a single object that contains the information about the request and the average marginal carbon intensity
+
+EG
+```
+{
+  "location": "eastus",
+  "startTime": "2022-07-19T14:00:00Z",
+  "endTime": "2022-07-19T18:00:00Z",
+  "carbonIntensity": 345.434
+}
+```
+
+### POST emissions/average-carbon-intensity/batch
+This endpoint takes an array of request objects, each with their own location and time boundaries, and calculates the average carbon intensity for that location and time period.
+
+This endpoint only supports batching across a single location with different time boundaries. If multiple locations are provided, an error is returned. For each item in the request array, the application returns a corresponding object containing the location, time boundaries, and average marginal carbon intensity. 
+
+Parameters:
+1. requestedCarbonIntensities: Array of requested carbon intensities. Each requested carbon intensity contains
+    * `location`: This is a required parameter and is the name of the data region for the configured Cloud provider.
+    * `startTime`: The time at which the workflow we are requesting carbon intensity for started.
+    * `endTime`: The time at which the workflow we are requesting carbon intensity for ended.
+
+EG
+```
+[
+  {
+    "location": "eastus",
+    "startTime": "2022-05-01T14:00:00",
+    "endTime": "2022-05-01T18:00:00"
+  },
+  {
+    "location": "eastus",
+    "startTime": "2022-06-01T14:00:00",
+    "endTime": "2022-06-01T18:00:00"
+  },
+  {
+    "location": "eastus",
+    "startTime": "2022-07-01T14:00:00",
+    "endTime": "2022-07-01T18:00:00"
+  }
+]
+
+```
+The response is an array of CarbonIntensityDTO objects which each have a location, start time, end time, and the average marginal carbon intensity over that time period.
+
+EG
+```
+[
+  {
+    "carbonIntensity": 32.935208333333335,
+    "location": "eastus",
+    "startTime": "2022-05-01T14:00:00-04:00",
+    "endTime": "2022-05-01T18:00:00-04:00"
+  },
+  {
+    "carbonIntensity": 89.18215277777779,
+    "location": "eastus",
+    "startTime": "2022-06-01T14:00:00-04:00",
+    "endTime": "2022-06-01T18:00:00-04:00"
+  },
+  {
+    "carbonIntensity": 10.416875,
+    "location": "eastus",
+    "startTime": "2022-07-01T14:00:00-04:00",
+    "endTime": "2022-07-01T18:00:00-04:00"
+  }
+]
+```
+  
 ## Error Handling
 
 The WebAPI leveraged the [.Net controller filter pipeline](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-6.0) to ensure that all requests respond with a consistent JSON schema.
