@@ -29,10 +29,12 @@ public static class EmissionsDataExtensions
     /// </remarks>
     /// <param name="data">The IEnumerable<EmissionsData> being operated on.</param>
     /// <param name="windowSize">The duration of the window to be averaged.</param>
-    /// <param name="tickSize">The duration the windows slides forward before calculating the next average.</param>
+    /// <param name="dataStartAt">The timestamp before which any data points will be filtered out. Defaults to the start time of the first data point.</param>
+    /// <param name="dataEndAt">The timestamp after which any data points will be filtered out. Defaults to the end time of the last data point.</param>
+    /// <param name="tickSize">The duration the window slides forward before calculating the next average.</param>
     /// <returns>An enumerable of emissions data objects, each representing a single average window.</returns>
     /// <exception cref="InvalidOperationException">Can be thrown if the emissions data is not a continuous, chronological time-series.</exception>
-    public static IEnumerable<EmissionsData> RollingAverage(this IEnumerable<EmissionsData> data, TimeSpan windowSize = default, TimeSpan tickSize = default)
+    public static IEnumerable<EmissionsData> RollingAverage(this IEnumerable<EmissionsData> data, TimeSpan windowSize = default, DateTimeOffset dataStartAt = default, DateTimeOffset dataEndAt = default, TimeSpan tickSize = default)
     {
         if (data.Count() == 0){ yield break; }
 
@@ -53,8 +55,20 @@ public static class EmissionsDataExtensions
             tickSize = (current.Duration > TimeSpan.Zero) ? current.Duration : throw new InvalidOperationException("RollingAverage tickSize must be > 0");
         }
 
+        if (dataStartAt < current.Time)
+        {
+            dataStartAt = current.Time;
+        }
+
+        // Ideally we would use DateTimeOffset.MaxValue as the default value of this parameter;
+        // we cannot because it is not available at compile-time, so we initialize it here instead.
+        if (dataEndAt == default)
+        {
+            dataEndAt = DateTimeOffset.MaxValue;
+        }
+
         // Set initial rolling average window
-        DateTimeOffset windowStartTime = current.Time;
+        DateTimeOffset windowStartTime = dataStartAt;
         DateTimeOffset windowEndTime = windowStartTime + windowSize;
 
         while (current != null)
@@ -62,7 +76,10 @@ public static class EmissionsDataExtensions
             // Enqueue data points relevant to current rolling average window
             while (current != null && windowEndTime > current.Time)
             {
-                q.Enqueue(current);
+                if (windowStartTime <= current.Time + current.Duration)
+                {
+                    q.Enqueue(current);
+                }
                 last = current;
                 _data.MoveNext();
                 current = _data.Current;
@@ -83,6 +100,12 @@ public static class EmissionsDataExtensions
             // Set bounds for the next window
             windowStartTime = windowStartTime + tickSize;
             windowEndTime = windowStartTime + windowSize;
+
+            // Ensure we stop at the user-specified boundary.
+            if (windowEndTime > dataEndAt)
+            {
+                yield break;
+            }
 
             // Dequeue items not needed for next window average
             var peek = q.Peek();
