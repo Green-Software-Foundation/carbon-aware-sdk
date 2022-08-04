@@ -39,16 +39,14 @@ public class CarbonAwareController : ControllerBase
         using (var activity = Activity.StartActivity())
         {
             //The LocationType is hardcoded for now. Ideally this should be received from the request or configuration 
-            IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(locations);
+            IEnumerable<Location> locationEnumerable = CreateMultipleLocationsFromStrings(locations);
             var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.MultipleLocations, locationEnumerable },
                 { CarbonAwareConstants.Start, time},
                 { CarbonAwareConstants.End, toTime },
                 { CarbonAwareConstants.Duration, durationMinutes },
                 { CarbonAwareConstants.Best, true }
             };
-
-            _logger.LogInformation("Calling aggregator GetBestEmissionsDataAsync with payload {@props}", props);
 
             var response = await _aggregator.GetBestEmissionsDataAsync(props);
             return response != null ? Ok(response) : NoContent();
@@ -73,15 +71,16 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(locations);
+            IEnumerable<Location> locationEnumerable = CreateMultipleLocationsFromStrings(locations);
             var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.MultipleLocations, locationEnumerable },
                 { CarbonAwareConstants.Start, time },
                 { CarbonAwareConstants.End, toTime},
                 { CarbonAwareConstants.Duration, durationMinutes },
             };
 
-            return await GetEmissionsDataAsync(props);
+            var response = await _aggregator.GetEmissionsDataAsync(props);
+            return response.Any() ? Ok(response) : NoContent();
         }
     }
 
@@ -102,15 +101,7 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            var locations = new List<Location>() { new Location() { RegionName = location, LocationType = LocationType.CloudProvider } };
-            var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.Locations, locations },
-                { CarbonAwareConstants.Start, time },
-                { CarbonAwareConstants.End, toTime },
-                { CarbonAwareConstants.Duration, durationMinutes },
-            };
-
-            return await GetEmissionsDataAsync(props);
+            return await GetEmissionsDataForLocationsByTime(new string[]{ location }, time, toTime, durationMinutes);
         }
     }
 
@@ -156,9 +147,9 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(locations);
+            IEnumerable<Location> locationEnumerable = CreateMultipleLocationsFromStrings(locations);
             var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.MultipleLocations, locationEnumerable },
                 { CarbonAwareConstants.Start, dataStartAt },
                 { CarbonAwareConstants.End, dataEndAt },
                 { CarbonAwareConstants.Duration, windowSize },
@@ -199,9 +190,8 @@ public class CarbonAwareController : ControllerBase
         {
             foreach (var forecastBatchDTO in requestedForecasts)
             {
-                IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(new string[] { forecastBatchDTO.Location! });
                 var props = new Dictionary<string, object?>() {
-                    { CarbonAwareConstants.Locations, locationEnumerable },
+                    { CarbonAwareConstants.SingleLocation, CreateSingleLocationFromString(forecastBatchDTO.Location!) },
                     { CarbonAwareConstants.Start, forecastBatchDTO.DataStartAt },
                     { CarbonAwareConstants.End, forecastBatchDTO.DataEndAt },
                     { CarbonAwareConstants.Duration, forecastBatchDTO.WindowSize },
@@ -238,9 +228,8 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(new string[] { location });
             var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.Locations, locationEnumerable },
+                { CarbonAwareConstants.SingleLocation, CreateSingleLocationFromString(location) },
                 { CarbonAwareConstants.Start, startTime },
                 { CarbonAwareConstants.End, endTime },
             };
@@ -258,7 +247,6 @@ public class CarbonAwareController : ControllerBase
             return Ok(carbonIntensity);
         }
     }
-
 
     /// <summary>
     /// Given an array of request objects, each with their own location and time boundaries, calculate the average carbon intensity for that location and time period 
@@ -284,9 +272,8 @@ public class CarbonAwareController : ControllerBase
         {
             foreach (var carbonIntensityBatchDTO in requestedCarbonIntensities)
             {
-                IEnumerable<Location> locationEnumerable = CreateLocationsFromQueryString(new string[] { carbonIntensityBatchDTO.Location! });
                 var props = new Dictionary<string, object?>() {
-                    { CarbonAwareConstants.Locations, locationEnumerable },
+                    { CarbonAwareConstants.SingleLocation, CreateSingleLocationFromString(carbonIntensityBatchDTO.Location!) },
                     { CarbonAwareConstants.Start, carbonIntensityBatchDTO.StartTime },
                     { CarbonAwareConstants.End, carbonIntensityBatchDTO.EndTime }
                 };
@@ -306,27 +293,17 @@ public class CarbonAwareController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Given a dictionary of properties, handles call to GetEmissionsDataAsync including logging and response handling.
-    /// </summary>
-    /// <param name="props"> Dictionary of properties to call plugin. </param>
-    /// <returns>Result of the plugin call or resulting status response</returns>
-    private async Task<IActionResult> GetEmissionsDataAsync(Dictionary<string, object?> props)
+    private IEnumerable<Location> CreateMultipleLocationsFromStrings(string[] stringLocations)
     {
-        // NOTE: Any auth information would need to be redacted from logging
-        _logger.LogInformation("Calling aggregator GetEmissionsDataAsync with payload {@props}", props);
-
-        var response = await _aggregator.GetEmissionsDataAsync(props);
-        return response.Any() ? Ok(response) : NoContent();
-    }
-
-    private IEnumerable<Location> CreateLocationsFromQueryString(string[] queryStringLocations)
-    {
-        var locations = queryStringLocations
+        var locations = stringLocations
             .Where(location => !String.IsNullOrEmpty(location))
             .Select(location => new Location() { RegionName = location, LocationType = LocationType.CloudProvider });
-
         return locations.Any() ? locations : throw new ArgumentException("Required field: A value for 'location' must be provided.");
     }
 
+    private Location CreateSingleLocationFromString(string stringLocation)
+    {
+        if (String.IsNullOrEmpty(stringLocation)) throw new ArgumentException("Required field: A value for 'location' must be provided.");
+        return new Location() { RegionName = stringLocation, LocationType = LocationType.CloudProvider };
+    }
 }

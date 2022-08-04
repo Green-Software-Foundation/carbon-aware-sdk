@@ -5,7 +5,8 @@
 /// </summary>
 public class CarbonAwareConstants
 {
-    public const string Locations = "locations";
+    public const string MultipleLocations = "locations";
+    public const string SingleLocation = "location";
     public const string Start = "start";
     public const string End = "end";
     public const string Duration = "duration";

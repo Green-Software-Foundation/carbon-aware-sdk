@@ -19,7 +19,6 @@ public interface ICarbonAwareAggregator : IAggregator
     /// <returns>The best EmissionsData object from the requested dataset or null if no dataset was found.</returns>
     Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props);
 
-
     /// <summary>
     /// Get current forecasted emissions data.
     /// </summary>
