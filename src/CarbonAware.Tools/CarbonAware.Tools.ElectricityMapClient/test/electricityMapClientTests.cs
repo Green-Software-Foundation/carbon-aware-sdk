@@ -39,7 +39,7 @@ public class ElectricityMapClientTests
     [SetUp]
     public void Initialize()
     {
-        this.Configuration = new ElectricityMapClientConfiguration() { Token = "sxpwRT5KXxe4XvI2rdDT9CAW3yrXEqi2" };
+        this.Configuration = new ElectricityMapClientConfiguration() { Token = Environment.GetEnvironmentVariable("electricityMapClient__token") };
 
         this.Options = new Mock<IOptionsMonitor<ElectricityMapClientConfiguration>>();
         this.Log = new Mock<ILogger<ElectricityMapClient>>();
