@@ -9,8 +9,8 @@ namespace CarbonAware.Tools.ElectricityMapClient.Model;
 public record LoginResult
 {
     /// <summary>
-    /// The Bearer token used to authenticate future requests.
+    /// The Bearer Token used to authenticate future requests.
     /// </summary>
-    [JsonPropertyName("token")]
+    [JsonPropertyName("Token")]
     public string Token { get; set; } = string.Empty;
 }

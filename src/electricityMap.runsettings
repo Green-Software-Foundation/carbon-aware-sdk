@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <EnvironmentVariables>
+      <electricityMapClient__token>REPLACE_ME!!</electricityMapClient__token>
+    </EnvironmentVariables>
+  </RunConfiguration>
+</RunSettings>
