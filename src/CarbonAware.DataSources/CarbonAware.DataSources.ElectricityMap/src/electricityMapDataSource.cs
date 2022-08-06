@@ -66,6 +66,6 @@ public class ElectricityMapDataSource : ICarbonIntensityDataSource
 
     Task<EmissionsForecast> ICarbonIntensityDataSource.GetCurrentCarbonIntensityForecastAsync(Location location)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("Forecast data is not supported on personal license.");
     }
 }
