@@ -47,11 +47,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.Tests", "Ca
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.IntegrationTests", "CarbonAware.WebApi\test\integrationTests\CarbonAware.WebApi.IntegrationTests.csproj", "{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.electricityMapClient", "CarbonAware.Tools\CarbonAware.Tools.electricityMapClient\src\CarbonAware.Tools.electricityMapClient.csproj", "{1022480B-5FCA-4D6A-BB8C-E018B920E34C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.ElectricityMapClient", "CarbonAware.Tools\CarbonAware.Tools.ElectricityMapClient\src\CarbonAware.Tools.ElectricityMapClient.csproj", "{1022480B-5FCA-4D6A-BB8C-E018B920E34C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.electricityMap", "CarbonAware.DataSources\CarbonAware.DataSources.electricityMap\src\CarbonAware.DataSources.electricityMap.csproj", "{BF8E6FC3-E134-4CE3-A2D9-D84161503692}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.ElectricityMap", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMap\src\CarbonAware.DataSources.ElectricityMap.csproj", "{BF8E6FC3-E134-4CE3-A2D9-D84161503692}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.Tools.electricityMapClient.Tests", "CarbonAware.Tools\CarbonAware.Tools.electricityMapClient\test\CarbonAware.Tools.electricityMapClient.Tests.csproj", "{ACD3960B-A691-445F-BA10-00AE95E45A57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Tools.ElectricityMapClient.Tests", "CarbonAware.Tools\CarbonAware.Tools.ElectricityMapClient\test\CarbonAware.Tools.ElectricityMapClient.Tests.csproj", "{ACD3960B-A691-445F-BA10-00AE95E45A57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
