@@ -102,15 +102,15 @@ public class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<Forecast>> GetForecastByDateAsync(string balancingAuthorityAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime)
+    public async Task<Forecast?> GetForecastOnDateAsync(string balancingAuthorityAbbreviation, DateTimeOffset requestedAt)
     {
-        Log.LogInformation($"Requesting forecast from balancingAuthority {balancingAuthorityAbbreviation} using start time {startTime} and endTime {endTime}");
+        Log.LogInformation($"Requesting forecast from balancingAuthority {balancingAuthorityAbbreviation} generated at {requestedAt}.");
 
         var parameters = new Dictionary<string, string>()
         {
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation },
-            { QueryStrings.StartTime, startTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
-            { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
+            { QueryStrings.StartTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
+            { QueryStrings.EndTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
         };
 
         var tags = new Dictionary<string, string>()
@@ -120,15 +120,14 @@ public class WattTimeClient : IWattTimeClient
 
         var result = await this.MakeRequestAsync(Paths.Forecast, parameters, tags);
 
-        var forecasts = JsonSerializer.Deserialize<List<Forecast>>(result, options) ?? throw new WattTimeClientException($"Error getting forecasts for  {balancingAuthorityAbbreviation}");
-
-        return forecasts;
+        var forecasts = JsonSerializer.Deserialize<List<Forecast>>(result, options) ?? throw new WattTimeClientException($"Error getting forecasts for {balancingAuthorityAbbreviation}");
+        return forecasts.FirstOrDefault();
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<Forecast>> GetForecastByDateAsync(BalancingAuthority balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime)
+    public Task<Forecast?> GetForecastOnDateAsync(BalancingAuthority balancingAuthority, DateTimeOffset requestedAt)
     {
-        return this.GetForecastByDateAsync(balancingAuthority.Abbreviation, startTime, endTime);
+        return this.GetForecastOnDateAsync(balancingAuthority.Abbreviation, requestedAt);
     }
 
     /// <inheritdoc/>

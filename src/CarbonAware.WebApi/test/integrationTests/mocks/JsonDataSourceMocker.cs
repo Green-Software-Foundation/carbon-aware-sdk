@@ -15,4 +15,9 @@ public class JsonDataSourceMocker : IDataSourceMocker
     public void Initialize() { }
     public void Reset() { }
     public void Dispose() { }
+
+    public void SetupBatchForecastMock()
+    {
+        throw new NotImplementedException();
+    }
 }

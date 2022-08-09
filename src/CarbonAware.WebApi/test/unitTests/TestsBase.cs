@@ -48,4 +48,12 @@ public abstract class TestsBase
                 It.IsAny<Dictionary<string, object>>())).ReturnsAsync(forecasts);
         return aggregator;
     }
+
+    protected static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
+    {
+        var aggregator = new Mock<ICarbonAwareAggregator>();
+        aggregator.Setup(x =>
+            x.CalculateAverageCarbonIntensityAsync(It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
+        return aggregator;
+    }
 }
