@@ -2,12 +2,13 @@ namespace CarbonAware.WepApi.UnitTests;
 
 using CarbonAware.Model;
 using CarbonAware.WebApi.Controllers;
+using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
-using WireMock.Models;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Tests that the Web API controller handles and packages various responses from a plugin properly 
@@ -112,6 +113,82 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
+    /// Tests that successfull call to the aggregator with any data returned results in action with OK status.
+    /// </summary>
+    [TestCase("Sydney", "2022-03-07T01:00:00", "2022-03-07T03:30:00", TestName = "GetAverageCarbonIntensity Success ReturnsOk")]
+    public async Task GetAverageCarbonIntensity_SuccessfulCallReturnsOk(string location, DateTimeOffset start, DateTimeOffset end)
+    {
+        // Arrange
+        double data = 0.7;
+        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
+
+        // Act
+        var carbonIntensityOutput = (await controller.GetAverageCarbonIntensity(location, start, end)) as ObjectResult;
+
+        // Assert
+        TestHelpers.AssertStatusCode(carbonIntensityOutput, HttpStatusCode.OK);
+        var expectedContent = new CarbonIntensityDTO { Location = location, StartTime = start, EndTime = end, CarbonIntensity = data };
+        var actualContent = (carbonIntensityOutput == null) ? string.Empty : carbonIntensityOutput.Value;
+        Assert.AreEqual(expectedContent, actualContent);
+    }
+
+    /// <summary>
+    /// Tests that successfull call the average carbon intensity for a batch of requests on valid input
+    /// </summary>
+    [Test]
+    public async Task CalculateAverageCarbonIntensityBatch_ValidInput()
+    {
+        // Arrange
+        string location = "Sydney";
+        var start1 = new DateTimeOffset(2022, 3, 1, 0, 0, 0, TimeSpan.Zero);
+        var end1 = new DateTimeOffset(2022, 3, 1, 1, 0, 0, TimeSpan.Zero);
+
+        var start2 = new DateTimeOffset(2022, 3, 2, 0, 0, 0, TimeSpan.Zero);
+        var end2 = new DateTimeOffset(2022, 3, 2, 1, 0, 0, TimeSpan.Zero);
+        double data = 0.7;
+        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
+
+        var request1 = new CarbonIntensityBatchDTO { Location = location, StartTime = start1, EndTime = end1 };
+        var request2 = new CarbonIntensityBatchDTO { Location = location, StartTime = start2, EndTime = end2 };
+        var requestList = new List<CarbonIntensityBatchDTO> { request1, request2 };
+        // Act
+        var actualContent = new List<CarbonIntensityDTO> { };
+        await foreach (var item in controller.GetAverageCarbonIntensityBatch(requestList))
+        {
+            actualContent.Add(item);
+        }
+
+        // Assert
+        var expectedContent1 = new CarbonIntensityDTO { Location = location, StartTime = start1, EndTime = end1, CarbonIntensity = data };
+        var expectedContent2 = new CarbonIntensityDTO { Location = location, StartTime = start2, EndTime = end2, CarbonIntensity = data };
+        var expectedContent = new List<CarbonIntensityDTO> { expectedContent1, expectedContent2 };
+        CollectionAssert.AreEqual(expectedContent, actualContent);
+    }
+
+    /// <summary>
+    /// Tests that are missing a location and thus throw an ArgumentException error
+    /// </summary>
+    [Test]
+    public void CalculateAverageCarbonIntensityBatch_NoLocations_ThrowsException()
+    {
+        //Arrange
+        var batchRequestData = new List<CarbonIntensityBatchDTO>()
+        {
+            new CarbonIntensityBatchDTO
+            {
+                StartTime = new DateTimeOffset(2021,9,1,8,30,0, TimeSpan.Zero),
+                EndTime = new DateTimeOffset(2021,9,2,8,30,0, TimeSpan.Zero)
+            }
+        };
+        var data = 0.7d;
+        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+        {
+            await foreach (var _ in controller.GetAverageCarbonIntensityBatch(batchRequestData)) ;
+        });
+    }
+
+    /// <summary>
     /// Tests that a success call to aggregator with no data returned results in action with No Content status.
     /// </summary>
     [Test]
@@ -155,5 +232,27 @@ public class CarbonAwareControllerTests : TestsBase
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetBestEmissionsDataForLocationsByTime(locations));
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetEmissionsDataForLocationsByTime(locations));
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetCurrentForecastData(locations));
+    }
+
+    /// <summary>
+    /// Tests empty location arrays throw ArgumentException.
+    /// </summary>
+    [Test]
+    public void BatchForecast_NoLocations_ThrowsException()
+    {
+        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithEmissionsData(new List<EmissionsData>()).Object);
+        var forecastData = new List<EmissionsForecastBatchDTO>()
+        {
+            new EmissionsForecastBatchDTO
+            {
+                DataStartAt = new DateTimeOffset(2021,9,1,8,30,0, TimeSpan.Zero),
+                DataEndAt = new DateTimeOffset(2021,9,2,8,30,0, TimeSpan.Zero),
+                RequestedAt = new DateTimeOffset(2021,9,1,8,30,0, TimeSpan.Zero)
+            }
+        };
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+        {
+            await foreach (var _ in controller.BatchForecastDataAsync(forecastData)) ;
+        });
     }
 }

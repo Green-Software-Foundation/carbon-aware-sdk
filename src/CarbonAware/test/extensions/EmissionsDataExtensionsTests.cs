@@ -34,16 +34,16 @@ public class EmissionsDataExtensionsTests
     }
 
 
-    [TestCase(5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName="window == data granularity, tick == data granularity")]
-    [TestCase(10, 5, new[] { 15.0, 25.0, 35.0 }, TestName="window > data granularity, tick == data granularity")]
-    [TestCase(2, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName="window < data granularity, tick == data granularity")]
-    [TestCase(5, 4, new[] { 10.0, 18.0, 26.0, 34.0 }, TestName="window == data granularity, tick < data granularity")]
-    [TestCase(10, 4, new[] { 15.0, 23.0, 31.0 }, TestName="window > data granularity, tick < data granularity")]
-    [TestCase(2, 4, new[] { 10.0, 15.0, 20.0, 30.0, 40.0 }, TestName="window < data granularity, tick < data granularity")]
-    [TestCase(5, 7, new[] { 10.0, 24.0, 38.0 }, TestName="window == data granularity, tick > data granularity")]
-    [TestCase(10, 7, new[] { 15.0, 29.0 }, TestName="window > data granularity, tick > data granularity")]
-    [TestCase(2, 7, new[] { 10.0, 20.0, 35.0 }, TestName="window < data granularity, tick > data granularity")]
-    public void RollingAverage_ReturnsExpectedAverages(int windowSize, int tickSize, double[] expectedRatings)
+    [TestCase(5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName="RollingAverage, Expected with Default Time: window == data granularity, tick == data granularity")]
+    [TestCase(10, 5, new[] { 15.0, 25.0, 35.0 }, TestName= "RollingAverage, Expected with Default Time: window > data granularity, tick == data granularity")]
+    [TestCase(2, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName= "RollingAverage, Expected with Default Time: window < data granularity, tick == data granularity")]
+    [TestCase(5, 4, new[] { 10.0, 18.0, 26.0, 34.0 }, TestName= "RollingAverage, Expected with Default Time: window == data granularity, tick < data granularity")]
+    [TestCase(10, 4, new[] { 15.0, 23.0, 31.0 }, TestName= "RollingAverage, Expected with Default Time: window > data granularity, tick < data granularity")]
+    [TestCase(2, 4, new[] { 10.0, 15.0, 20.0, 30.0, 40.0 }, TestName= "RollingAverage, Expected with Default Time: window < data granularity, tick < data granularity")]
+    [TestCase(5, 7, new[] { 10.0, 24.0, 38.0 }, TestName= "RollingAverage, Expected with Default Time: window == data granularity, tick > data granularity")]
+    [TestCase(10, 7, new[] { 15.0, 29.0 }, TestName= "RollingAverage, Expected with Default Time: window > data granularity, tick > data granularity")]
+    [TestCase(2, 7, new[] { 10.0, 20.0, 35.0 }, TestName= "RollingAverage, Expected with Default Time: window < data granularity, tick > data granularity")]
+    public void RollingAverage_ReturnsExpectedAveragesWithDefaultTimes(int windowSize, int tickSize, double[] expectedRatings)
     {
         // Arrange
         var expectedData = new List<EmissionsData>();
@@ -53,18 +53,18 @@ public class EmissionsDataExtensionsTests
         }
 
         // Act
-        var result = this.data.RollingAverage(TimeSpan.FromMinutes(windowSize), TimeSpan.FromMinutes(tickSize));
+        var result = this.data.RollingAverage(TimeSpan.FromMinutes(windowSize), tickSize: TimeSpan.FromMinutes(tickSize));
 
         // Assert
-        Assert.AreEqual(expectedData, result);
+        Assert.AreEqual(expectedData, result.ToList());
     }
 
-    [TestCase(0, 5, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "window == 0, tick == data granularity, returns original")]
-    [TestCase(0, 4, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "window == 0, tick < data granularity, returns original")]
-    [TestCase(0, 7, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "window == 0, tick > data granularity, returns original")]
-    [TestCase(5, 0, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "window == data granularity, tick == 0, uses data granularity")]
-    [TestCase(10, 0, 10, 5, new[] { 15.0, 25.0, 35.0 }, TestName = "window > data granularity, tick == 0, uses data granularity")]
-    [TestCase(2, 0, 2, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "window < data granularity, tick == 0, uses data granularity")]
+    [TestCase(0, 5, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage, Expected Zero Case: window == 0, tick == data granularity, returns original")]
+    [TestCase(0, 4, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage, Expected Zero Case: window == 0, tick < data granularity, returns original")]
+    [TestCase(0, 7, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage, Expected Zero Case: window == 0, tick > data granularity, returns original")]
+    [TestCase(5, 0, 5, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage, Expected Zero Case: window == data granularity, tick == 0, uses data granularity")]
+    [TestCase(10, 0, 10, 5, new[] { 15.0, 25.0, 35.0 }, TestName = "RollingAverage, Expected Zero Case: window > data granularity, tick == 0, uses data granularity")]
+    [TestCase(2, 0, 2, 5, new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage, Expected Zero Case: window < data granularity, tick == 0, uses data granularity")]
     public void RollingAverage_ReturnsExpectedZeroCases(int windowSize, int tickSize, int expectedWindowSize, int expectedTickSize, double[] expectedRatings)
     {
         // Arrange
@@ -75,7 +75,7 @@ public class EmissionsDataExtensionsTests
         }
 
         // Act
-        var result = this.data.RollingAverage(TimeSpan.FromMinutes(windowSize), TimeSpan.FromMinutes(tickSize));
+        var result = this.data.RollingAverage(TimeSpan.FromMinutes(windowSize), tickSize: TimeSpan.FromMinutes(tickSize));
 
         // Assert
         Assert.AreEqual(expectedData, result);
@@ -88,7 +88,7 @@ public class EmissionsDataExtensionsTests
         var emptyList = new List<EmissionsData>();
 
         // Act
-        var result = emptyList.RollingAverage(TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
+        var result = emptyList.RollingAverage(TimeSpan.FromMinutes(5), default, default, TimeSpan.FromMinutes(5));
 
         // Assert
         Assert.AreEqual(Enumerable.Empty<EmissionsData>(), result);
@@ -110,11 +110,43 @@ public class EmissionsDataExtensionsTests
         Assert.Throws<InvalidOperationException>(() => result.ToList());
     }
 
-    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:00Z", 25.00, TestName = "Full dataset")]
-    [TestCase("2020-01-01T00:04:00Z", "2020-01-01T00:20:00Z", 28.75, TestName = "Partial first data point")]
-    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:16:00Z", 21.25, TestName = "Partial last data point")]
-    [TestCase("2020-01-01T00:02:30Z", "2020-01-01T00:17:30Z", 25.00, TestName = "Partial first and last data point")]
-    [TestCase("2020-01-01T00:02:00Z", "2020-01-01T00:03:00Z", 10.00, TestName = "Partial single data point")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): Both at Data Bounds")]
+    [TestCase("2019-12-31T00:00:00Z", "2020-02-01T00:20:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): Both Out of Data Bounds")]
+    [TestCase("2020-01-01T00:05:00Z", "2020-01-01T00:15:00Z", "2020-01-01T00:05:00Z", new[] { 20.0, 30.0 }, TestName = "RollingAverage (Start, End): Both Between Data Bounds")]
+    [TestCase("2019-12-31T00:00:00Z", "2020-01-01T00:20:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): Start before Data")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): Start at Data")]
+    [TestCase("2020-01-01T00:05:00Z", "2020-01-01T00:20:00Z", "2020-01-01T00:05:00Z", new[] { 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): Start after Data")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:15:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0 }, TestName = "RollingAverage (Start, End): End Before Data")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): End At Data")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-02-01T00:20:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0, 40.0 }, TestName = "RollingAverage (Start, End): End After Data")]
+    [TestCase("2020-01-01T00:02:00Z", "2020-01-01T00:20:00Z", "2020-01-01T00:02:00Z", new[] { 14.0, 24.0, 34.0 }, TestName = "RollingAverage (Start, End): Starting in middle of data window")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:18:00Z", "2020-01-01T00:00:00Z", new[] { 10.0, 20.0, 30.0 }, TestName = "RollingAverage (Start, End): Ending in middle of data window")]
+    [TestCase("2020-01-01T00:02:00Z", "2020-01-01T00:18:00Z", "2020-01-01T00:02:00Z", new[] { 14.0, 24.0, 34.0 }, TestName = "RollingAverage (Start, End): Both in middle of data window")]
+    public void RollingAverage_ReturnsExpectedAveragesWithDefaultWindows(DateTimeOffset start, DateTimeOffset end, DateTimeOffset expectedResultStartTime, double[] expectedRatings)
+    {
+        // Arrange
+
+        var defaultWindowSize = this.dataDuration;
+        var expectedData = new List<EmissionsData>();
+
+        for (var i = 0; i < expectedRatings.Count(); i++)
+        {
+            expectedData.Add(new EmissionsData() { Time = expectedResultStartTime + i * defaultWindowSize, Location = this.dataLocation, Rating = expectedRatings[i], Duration = defaultWindowSize });
+        }
+
+        // Act
+        var result = this.data.RollingAverage(defaultWindowSize, start, end);
+        result.ToList();
+
+        // Assert
+        Assert.AreEqual(expectedData, result);
+    }
+
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:00Z", 25.00, TestName = "AverageOverPeriod, Expected: Full dataset")]
+    [TestCase("2020-01-01T00:04:00Z", "2020-01-01T00:20:00Z", 28.75, TestName = "AverageOverPeriod, Expected: Partial first data point")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:16:00Z", 21.25, TestName = "AverageOverPeriod, Expected: Partial last data point")]
+    [TestCase("2020-01-01T00:02:30Z", "2020-01-01T00:17:30Z", 25.00, TestName = "AverageOverPeriod, Expected: Partial first and last data point")]
+    [TestCase("2020-01-01T00:02:00Z", "2020-01-01T00:03:00Z", 10.00, TestName = "AverageOverPeriod, Expected: Partial single data point")]
     public void AverageOverPeriod_ReturnsExpectedAverages(string start, string end, double expectedAverage)
     {
         // Arrange
@@ -169,10 +201,10 @@ public class EmissionsDataExtensionsTests
         Assert.AreEqual(50.0, result);
     }
 
-    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:10:00Z", "2022-01-01T00:20:00Z", TestName = "Discontinuous data points")]
-    [TestCase("2022-01-01T00:10:00Z", "2022-01-01T00:00:00Z", "2022-01-01T00:05:00Z", TestName = "Unordered data points")]
-    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:02:00Z", "2022-01-01T00:04:00Z", TestName = "Overlapping data points")]
-    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:00:00Z", "2022-01-01T00:00:00Z", TestName = "Matching data points")]
+    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:10:00Z", "2022-01-01T00:20:00Z", TestName = "AverageOverPeriod, Throws For: Discontinuous data points")]
+    [TestCase("2022-01-01T00:10:00Z", "2022-01-01T00:00:00Z", "2022-01-01T00:05:00Z", TestName = "AverageOverPeriod, Throws For: Unordered data points")]
+    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:02:00Z", "2022-01-01T00:04:00Z", TestName = "AverageOverPeriod, Throws For: Overlapping data points")]
+    [TestCase("2022-01-01T00:00:00Z", "2022-01-01T00:00:00Z", "2022-01-01T00:00:00Z", TestName = "AverageOverPeriod, Throws For: Matching data points")]
     public void AverageOverPeriod_ThrowsForDiscontinuousData(string firstStart, string secondStart, string thirdStart)
     {
         // Arrange
@@ -208,9 +240,9 @@ public class EmissionsDataExtensionsTests
         StringAssert.Contains(expectedErrorMessage, message);
     }
 
-    [TestCase("2019-12-31T23:59:59Z", "2020-01-01T00:20:00Z", TestName = "Start out of range")]
-    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:01Z", TestName = "End out of range")]
-    [TestCase("2019-12-31T23:59:59Z", "2020-01-01T00:20:01Z", TestName = "Both out of range")]
+    [TestCase("2019-12-31T23:59:59Z", "2020-01-01T00:20:00Z", TestName = "AverageOverPeriod, Throws For: Start out of range")]
+    [TestCase("2020-01-01T00:00:00Z", "2020-01-01T00:20:01Z", TestName = "AverageOverPeriod, Throws For: End out of range")]
+    [TestCase("2019-12-31T23:59:59Z", "2020-01-01T00:20:01Z", TestName = "AverageOverPeriod, Throws For: Both out of range")]
     public void AverageOverPeriod_ThrowsForOutOfRangeData(string start, string end)
     {
         // Arrange

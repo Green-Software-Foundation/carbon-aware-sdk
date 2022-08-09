@@ -2,7 +2,6 @@
 
 using CarbonAware.Model;
 using CarbonAware.WebApi.Models;
-using Moq;
 using NUnit.Framework;
 
 public class EmissionsForecastDTOTests
@@ -22,8 +21,8 @@ public class EmissionsForecastDTOTests
         {
             GeneratedAt = expectedGeneratedAt,
             Location = new Location(){ LocationType = LocationType.CloudProvider, RegionName = expectedLocationName },
-            StartTime =  expectedStartTime,
-            EndTime =  expectedEndTime,
+            DataStartAt =  expectedStartTime,
+            DataEndAt =  expectedEndTime,
             WindowSize = TimeSpan.FromMinutes(expectedWindowSize),
             ForecastData = new List<EmissionsData>(){ new EmissionsData(){ Rating = expectedDataPointValue } },
             OptimalDataPoint = new EmissionsData(){ Rating = expectedOptimalValue }
@@ -34,8 +33,8 @@ public class EmissionsForecastDTOTests
 
         Assert.AreEqual(expectedGeneratedAt, emissionsForecastDTO.GeneratedAt);
         Assert.AreEqual(expectedLocationName, emissionsForecastDTO.Location);
-        Assert.AreEqual(expectedStartTime, emissionsForecastDTO.StartTime);
-        Assert.AreEqual(expectedEndTime, emissionsForecastDTO.EndTime);
+        Assert.AreEqual(expectedStartTime, emissionsForecastDTO.DataStartAt);
+        Assert.AreEqual(expectedEndTime, emissionsForecastDTO.DataEndAt);
         Assert.AreEqual(expectedWindowSize, emissionsForecastDTO.WindowSize);
         Assert.AreEqual(expectedOptimalValue, emissionsForecastDTO.OptimalDataPoint?.Value);
         Assert.AreEqual(1, emissionsDataDTO?.Count());
