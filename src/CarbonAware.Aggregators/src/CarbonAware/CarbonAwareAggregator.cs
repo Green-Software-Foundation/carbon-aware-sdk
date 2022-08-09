@@ -33,10 +33,11 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now.ToUniversalTime());
             DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
             _logger.LogInformation("Aggregator getting carbon intensity from data source");
-            return await this._dataSource.GetCarbonIntensityAsync(GetLocationOrThrow(props), start, end);
+            return await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
         }
     }
 
+    /// <inheritdoc />
     public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
     {
         var results = await GetEmissionsDataAsync(props);
@@ -48,29 +49,90 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     {
         using (var activity = Activity.StartActivity())
         {
-            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.MinValue);
-            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.MaxValue);
-            TimeSpan windowSize = GetDurationOrDefault(props);
             _logger.LogInformation("Aggregator getting carbon intensity forecast from data source");
 
             var forecasts = new List<EmissionsForecast>();
-            foreach(var location in GetLocationOrThrow(props))
+            foreach (var location in GetMutlipleLocationsOrThrow(props))
             {
                 var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
-                forecast.StartTime = start;
-                forecast.EndTime = end;
-                forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, start, end);
-                forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize);
-                forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
-                if(forecast.ForecastData.Any())
-                {
-                    forecast.WindowSize = forecast.ForecastData.First().Duration;
-                }
-                forecasts.Add(forecast);
+                var emissionsForecast = ProcessAndValidateForecast(forecast, props);
+                forecasts.Add(emissionsForecast);
             }
 
             return forecasts;
         }
+    }
+
+    /// <inheritdoc />
+    public async Task<double> CalculateAverageCarbonIntensityAsync(IDictionary props)
+    {
+        using (var activity = Activity.StartActivity())
+        {
+            var start = GetOffsetOrThrow(props, CarbonAwareConstants.Start);
+            var end = GetOffsetOrThrow(props, CarbonAwareConstants.End);
+            var location = GetSingleLocationOrThrow(props);
+            ValidateDateInput(start, end);
+            _logger.LogInformation("Aggregator getting average carbon intensity from data source");
+            var emissionData = await this._dataSource.GetCarbonIntensityAsync(location, start, end);
+            var value = emissionData.AverageOverPeriod(start, end);
+            _logger.LogInformation($"Carbon Intensity Average: {value}");
+
+            return value;
+        }
+    }
+
+    public async Task<EmissionsForecast> GetForecastDataAsync(IDictionary props)
+    {
+        EmissionsForecast forecast;
+        using (var activity = Activity.StartActivity())
+        {
+            (var location, var forecastRequestedAt) = GetAndValidateForecastInput(props);
+            _logger.LogDebug($"Aggregator getting carbon intensity forecast from data source for location {location} and requestedAt {forecastRequestedAt}");
+
+            forecast = await this._dataSource.GetCarbonIntensityForecastAsync(location, forecastRequestedAt);
+            var emissionsForecast = ProcessAndValidateForecast(forecast, props);
+            return emissionsForecast;
+        }
+    }
+    private (Location, DateTimeOffset) GetAndValidateForecastInput(IDictionary props)
+    {
+        var error = new ArgumentException("Invalid EmissionsForecast request");
+        Location location = new ();
+        DateTimeOffset requestedAt = new ();
+        try {
+            location = GetSingleLocationOrThrow(props);
+        } catch (ArgumentException e) {
+            error.Data["location"] = e.Message;
+        }
+        try {
+            requestedAt = GetOffsetOrThrow(props, CarbonAwareConstants.ForecastRequestedAt);
+        } 
+        catch (ArgumentException e) {
+            error.Data["requestedAt"] = e.Message;
+        }
+        if (error.Data.Count > 0)
+        {
+            throw error;
+        }
+        return (location, requestedAt);
+    }
+
+    private EmissionsForecast ProcessAndValidateForecast(EmissionsForecast forecast, IDictionary props)
+    {
+        var windowSize = GetDurationOrDefault(props);
+        var firstDataPoint = forecast.ForecastData.First();
+        var lastDataPoint = forecast.ForecastData.Last();
+        forecast.DataStartAt = GetOffsetOrDefault(props, CarbonAwareConstants.Start, firstDataPoint.Time);
+        forecast.DataEndAt = GetOffsetOrDefault(props, CarbonAwareConstants.End, lastDataPoint.Time + lastDataPoint.Duration);
+        forecast.Validate();
+        forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
+        forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, forecast.DataStartAt, forecast.DataEndAt);
+        forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
+        if (forecast.ForecastData.Any())
+        {
+            forecast.WindowSize = forecast.ForecastData.First().Duration;
+        }
+        return forecast;
     }
 
     private EmissionsData? GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
@@ -79,8 +141,10 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         {
             return null;
         }
-        return emissionsData.Aggregate((minData, nextData) => minData.Rating < nextData.Rating ? minData : nextData);
+        return emissionsData.MinBy(x => x.Rating);
     }
+
+
 
     /// <summary>
     /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, defaults to provided default
@@ -88,28 +152,66 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     /// <param name="props"></param>
     /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
     /// <exception cref="ArgumentException">Throws exception if prop isn't a valid DateTimeOffset. </exception>
-    private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultValue) 
+    private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultValue)
     {
         // Default if null
         var dateTimeOffset = props[field] ?? defaultValue;
-
+        DateTimeOffset outValue;
         // If fail to parse property, throw error
-        if (!DateTimeOffset.TryParse(dateTimeOffset.ToString(), null, DateTimeStyles.AssumeUniversal, out defaultValue))
+        if (!DateTimeOffset.TryParse(dateTimeOffset.ToString(), null, DateTimeStyles.AssumeUniversal, out outValue))
         {
             Exception ex = new ArgumentException("Failed to parse" + field + "field. Must be a valid DateTimeOffset");
             _logger.LogError("argument exception", ex);
             throw ex;
         }
 
-        return defaultValue;
+        return outValue;
     }
 
-    private IEnumerable<Location> GetLocationOrThrow(IDictionary props) {
-        if (props[CarbonAwareConstants.Locations] is IEnumerable<Location> locations)
+    /// <summary>
+    /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, throws
+    /// </summary>
+    /// <param name="props"></param>
+    /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
+    /// <exception cref="ArgumentException">Throws exception if prop isn't found or isn't a valid DateTimeOffset. </exception>
+    private DateTimeOffset GetOffsetOrThrow(IDictionary props, string field)
+    {
+        if (props[field] != null)
+        {
+            return GetOffsetOrDefault(props, field, DateTimeOffset.MinValue);
+        }
+
+        Exception ex = new ArgumentException("Failed to find" + field + "field. Must be a valid DateTimeOffset");
+        _logger.LogError("argument exception", ex);
+        throw ex;
+    }
+
+    private void ValidateDateInput(DateTimeOffset start, DateTimeOffset end)
+    {
+        if (start >= end)
+        {
+            throw new ArgumentException($"Invalid start and end. Start time must come before end time. start is {start}, end is {end}");
+        }
+    }
+
+    private IEnumerable<Location> GetMutlipleLocationsOrThrow(IDictionary props)
+    {
+        if (props[CarbonAwareConstants.MultipleLocations] is IEnumerable<Location> locations)
         {
             return locations;
         }
         Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
+        _logger.LogError("argument exception", ex);
+        throw ex;
+    }
+
+    private Location GetSingleLocationOrThrow(IDictionary props)
+    {        
+        if (props[CarbonAwareConstants.SingleLocation] is Location location)
+        {
+            return location;
+        }
+        Exception ex = new ArgumentException("location parameter must be provided");
         _logger.LogError("argument exception", ex);
         throw ex;
     }

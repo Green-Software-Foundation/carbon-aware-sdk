@@ -66,7 +66,7 @@ public class WattTimeClientTests
         
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetCurrentForecastAsync("ba"));
-        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetForecastByDateAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetForecastOnDateAsync("ba", new DateTimeOffset()));
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetBalancingAuthorityAbbreviationAsync("lat", "long"));
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetHistoricalDataAsync("ba"));
@@ -264,7 +264,7 @@ public class WattTimeClientTests
     }
 
     [Test]
-    public void GetForecastByDateAsync_ThrowsWhenBadJsonIsReturned()
+    public void GetForecastOnDateAsync_ThrowsWhenBadJsonIsReturned()
     {
         this.CreateHttpClient(m =>
         {
@@ -276,12 +276,12 @@ public class WattTimeClientTests
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastByDateAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastByDateAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
     }
 
     [Test]
-    public void GetForecastByDateAsync_ThrowsWhenNull()
+    public void GetForecastOnDateAsync_ThrowsWhenNull()
     {
         this.CreateHttpClient(m =>
         {
@@ -293,12 +293,12 @@ public class WattTimeClientTests
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastByDateAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastByDateAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
     }
 
     [Test]
-    public async Task GetForecastByDateAsync_DeserializesExpectedResponse()
+    public async Task GetForecastOnDateAsync_DeserializesExpectedResponse()
     {
         this.CreateHttpClient(m =>
         {
@@ -312,14 +312,10 @@ public class WattTimeClientTests
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
-        var forecasts = await client.GetForecastByDateAsync(ba.Abbreviation, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
-        var overloadedForecasts = await client.GetForecastByDateAsync(ba, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var forecast = await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var overloadedForecast = await client.GetForecastOnDateAsync(ba, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
 
-        Assert.IsTrue(forecasts.Count() > 0);
-        var forecast = forecasts.ToList().First();
-        var overloadedForecast = overloadedForecasts.ToList().First();
-
-        Assert.AreEqual(forecast.GeneratedAt, overloadedForecast.GeneratedAt);
+        Assert.AreEqual(forecast!.GeneratedAt, overloadedForecast!.GeneratedAt);
         Assert.AreEqual(forecast.ForecastData.First(), overloadedForecast.ForecastData.First());
 
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
@@ -331,7 +327,7 @@ public class WattTimeClientTests
     }
 
     [Test]
-    public async Task GetForecastByDateAsync_RefreshesTokenWhenExpired()
+    public async Task GetForecastOnDateAsync_RefreshesTokenWhenExpired()
     {
         this.CreateHttpClient(m =>
         {
@@ -343,15 +339,12 @@ public class WattTimeClientTests
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-        var forecasts = await client.GetForecastByDateAsync("balauth", new DateTimeOffset(), new DateTimeOffset());
-
-        Assert.IsTrue(forecasts.Count() > 0);
-        var forecast = forecasts.ToList().First();
-        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
+        var forecast = await client.GetForecastOnDateAsync("balauth", new DateTimeOffset());
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast!.GeneratedAt);
     }
 
     [Test]
-    public async Task GetForecastByDateAsync_RefreshesTokenWhenNoneSet()
+    public async Task GetForecastOnDateAsync_RefreshesTokenWhenNoneSet()
     {
         this.CreateHttpClient(m =>
         {
@@ -364,11 +357,9 @@ public class WattTimeClientTests
 
         this.HttpClient.DefaultRequestHeaders.Authorization = null;
 
-        var forecasts = await client.GetForecastByDateAsync("balauth", new DateTimeOffset(), new DateTimeOffset());
+        var forecast = await client.GetForecastOnDateAsync("balauth", new DateTimeOffset());
         
-        Assert.IsTrue(forecasts.Count() > 0);
-        var forecast = forecasts.ToList().First();
-        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
+        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast!.GeneratedAt);
     }
 
     [Test]
