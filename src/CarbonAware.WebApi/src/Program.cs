@@ -4,6 +4,7 @@ using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using CarbonAware.WebApi.Configuration;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,10 @@ builder.Services.AddHealthChecks();
 
 builder.Services.AddMonitoringAndTelemetry(builder.Configuration);
 
+builder.Services.AddSwaggerGen(c => {
+        c.MapType<TimeSpan>(() => new OpenApiSchema { Type = "string", Format = "time-span" });
+    });
+
 var app = builder.Build();
 
 if (config.WebApiRoutePrefix != null)
@@ -45,8 +50,10 @@ if (config.WebApiRoutePrefix != null)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI();   
 }
+
+    
 
 app.UseHttpsRedirection();
 
