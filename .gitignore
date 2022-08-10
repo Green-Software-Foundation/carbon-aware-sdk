@@ -12,6 +12,8 @@ obj
 build
 TestResults
 
+src/clients/generated
+
 # Build-gen'd OpenAPI Spec
 src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
 
