@@ -2,7 +2,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Aggregators.SciScore;
 using CarbonAware.DataSources.Configuration;
 
 namespace CarbonAware.Aggregators.Configuration;
@@ -16,6 +15,5 @@ public static class ServiceCollectionExtensions
     {
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<ICarbonAwareAggregator, CarbonAwareAggregator>();
-        services.TryAddSingleton<ISciScoreAggregator, SciScoreAggregator>();
     }
 }

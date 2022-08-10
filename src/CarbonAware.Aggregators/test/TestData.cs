@@ -51,9 +51,9 @@ public static class TestData
         };
     }
 
-    public static EmissionsForecast GetForecast(int durationMinutes = 5)
+    public static EmissionsForecast GetForecast(string start, int durationMinutes = 5)
     {
-        var startTime = DateTimeOffset.Parse("2022-01-01T00:00:00Z");
+        var startTime = DateTimeOffset.Parse(start);
         var duration = TimeSpan.FromMinutes(durationMinutes);
         var forecastData = new List<EmissionsData>()
         {
