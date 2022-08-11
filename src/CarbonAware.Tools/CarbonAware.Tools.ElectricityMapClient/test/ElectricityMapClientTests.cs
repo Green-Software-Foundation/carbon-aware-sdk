@@ -1,5 +1,5 @@
-using CarbonAware.Tools.electricityMapClient.Configuration;
-using CarbonAware.Tools.electricityMapClient.Model;
+using CarbonAware.Tools.ElectricityMapClient.Configuration;
+using CarbonAware.Tools.ElectricityMapClient.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -41,7 +41,7 @@ public class ElectricityMapClientTests
     [SetUp]
     public void Initialize()
     {
-        this.Configuration = new electricityMapClientConfiguration() { token = "myDefaultToken123" };
+        this.Configuration = new ElectricityMapClientConfiguration() { token = "myDefaultToken123" };
 
         this.Options = new Mock<IOptionsMonitor<ElectricityMapClientConfiguration>>();
         this.Log = new Mock<ILogger<ElectricityMapClient>>();
@@ -106,12 +106,12 @@ public class ElectricityMapClientTests
     {
         this.CreateHttpClient(m =>
         {
-            var response = this.MockelectricityMapAuthResponse(m, new StringContent("This is bad json."));
+            var response = this.MockElectricityMapAuthResponse(m, new StringContent("This is bad json."));
             return Task.FromResult(response);
         });
 
 
-        var client = new electricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
@@ -124,16 +124,16 @@ public class ElectricityMapClientTests
     {
         this.CreateHttpClient(m =>
         {
-            var response = this.MockelectricityMapAuthResponse(m, new StringContent("null"));
+            var response = this.MockElectricityMapAuthResponse(m, new StringContent("null"));
             return Task.FromResult(response);
         });
 
-        var client = new electricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
-        Assert.ThrowsAsync<electricityMapClientException>(async () => await client.GetCurrentForecastAsync(zone.countryCode));
-        Assert.ThrowsAsync<electricityMapClientException>(async () => await client.GetCurrentForecastAsync(zone));
+        Assert.ThrowsAsync<ElectricityMapClientException>(async () => await client.GetCurrentForecastAsync(zone.countryCode));
+        Assert.ThrowsAsync<ElectricityMapClientException>(async () => await client.GetCurrentForecastAsync(zone));
     }
 
     [Test]
@@ -181,7 +181,7 @@ public class ElectricityMapClientTests
 
     // Need Change to electricityMap Authentication
 
-    private HttpResponseMessage MockelectricityMapAuthResponse(HttpRequestMessage request, HttpContent reponseContent, string? validToken = null)
+    private HttpResponseMessage MockElectricityMapAuthResponse(HttpRequestMessage request, HttpContent reponseContent, string? validToken = null)
     {
         if (validToken == null)
         {
