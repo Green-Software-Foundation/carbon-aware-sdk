@@ -1,8 +1,9 @@
-﻿using CarbonAware.Exceptions;
+﻿using CarbonAware.DataSources.ElectricityMap;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
-using CarbonAware.Tools.WattTimeClient;
-using CarbonAware.Tools.WattTimeClient.Model;
+using CarbonAware.Tools.ElectricityMapClient;
+using CarbonAware.Tools.ElectricityMapClient.Model;
 using Castle.Core.Logging;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -15,18 +16,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarbonAware.DataSources.WattTime.Tests;
+namespace CarbonAware.DataSources.ElectricityMap.Tests;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-public class WattTimeDataSourceTests
+public class ElectricityMapDataSourceTests
 {
-    private Mock<ILogger<WattTimeDataSource>> Logger { get; set; }
+    private Mock<ILogger<ElectricityMapDataSource>> Logger { get; set; }
 
-    private Mock<IWattTimeClient> WattTimeClient { get; set; }
+    private Mock<IElectricityMapClient> ElectricityMapClient { get; set; }
 
     private ActivitySource ActivitySource { get; set; }
 
-    private WattTimeDataSource DataSource { get; set; }
+    private ElectricityMapDataSource DataSource { get; set; }
 
     private Mock<ILocationSource> LocationSource { get; set; }
 
@@ -41,19 +42,20 @@ public class WattTimeDataSourceTests
     [SetUp]
     public void Setup()
     {
-        this.ActivitySource = new ActivitySource("WattTimeDataSourceTests");
+        this.ActivitySource = new ActivitySource("ElectricityMapDataSourceTests");
 
-        this.Logger = new Mock<ILogger<WattTimeDataSource>>();
-        this.WattTimeClient = new Mock<IWattTimeClient>();
+        this.Logger = new Mock<ILogger<ElectricityMapDataSource>>();
+        this.ElectricityMapClient = new Mock<IElectricityMapClient>();
         this.LocationSource = new Mock<ILocationSource>();
 
-        this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.ActivitySource, this.LocationSource.Object);
+        this.DataSource = new ElectricityMapDataSource(this.Logger.Object, this.ElectricityMapClient.Object, this.ActivitySource, this.LocationSource.Object);
     }
 
     [Test]
     [DefaultFloatingPointTolerance(FLOATING_POINT_TOLERANCE)]
     public async Task GetCarbonIntensity_ReturnsResultsWhenRecordsFound()
     {
+        /* TODO
         var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
         var balancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
@@ -71,7 +73,7 @@ public class WattTimeDataSourceTests
             }
         };
 
-        this.WattTimeClient.Setup(w => w.GetDataAsync(
+        this.ElectricityMapClient.Setup(w => w.GetDataAsync(
             balancingAuthority,
             startDate,
             endDate)
@@ -90,17 +92,19 @@ public class WattTimeDataSourceTests
         Assert.AreEqual(startDate.DateTime, first.Time);
 
         this.LocationSource.Verify(r => r.ToGeopositionLocationAsync(location));
+        */
     }
 
     [Test]
     public async Task GetCarbonIntensity_ReturnsEmptyListWhenNoRecordsFound()
     {
+        /* TODO
         var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
         var balancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         var endDate = new DateTimeOffset(2022, 4, 18, 12, 33, 42, TimeSpan.FromHours(-6));
 
-        this.WattTimeClient.Setup(w => w.GetDataAsync(
+        this.ElectricityMapClient.Setup(w => w.GetDataAsync(
             balancingAuthority,
             startDate,
             endDate)
@@ -112,8 +116,10 @@ public class WattTimeDataSourceTests
 
         Assert.IsNotNull(result);
         Assert.AreEqual(0, result.Count());
+        */
     }
 
+    /* TODO: Need to implement location conversion.
     [Test]
     public void GetCarbonIntensity_ThrowsWhenRegionNotFound()
     {
@@ -125,6 +131,7 @@ public class WattTimeDataSourceTests
 
         Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { location }, startDate, endDate));
     }
+    */
 
     [DatapointSource]
     public float[] moerValues = new float[] { 0.0F, 10.0F, 100.0F, 1000.0F, 596.1367F};
@@ -132,23 +139,27 @@ public class WattTimeDataSourceTests
     [Theory]
     public void GetCarbonIntensity_ConvertsMoerToGramsPerKwh(float lbsPerMwhEmissions)
     {
+        /* TODO
         Assume.That(lbsPerMwhEmissions >= 0.0);
 
         var result = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
 
         Assert.That(result >= 0.0);
         Assert.That(result * GRAMS_TO_POUNDS / KWH_TO_MWH, Is.EqualTo(lbsPerMwhEmissions).Within(FLOATING_POINT_TOLERANCE));
+        */
     }
 
+    /* TODO
     private void SetupBalancingAuthority(BalancingAuthority balancingAuthority, Location location)
     {
         this.LocationSource.Setup(r => r.ToGeopositionLocationAsync(location)).Returns(Task.FromResult(location));
         var latitude = location.Latitude.ToString() ?? throw new ArgumentNullException(String.Format("Could not find location"));
         var longitude = location.Longitude.ToString() ?? throw new ArgumentNullException(String.Format("Could not find location"));
 
-        this.WattTimeClient.Setup(w => w.GetBalancingAuthorityAsync(latitude, longitude)
+        this.ElectricityMapClient.Setup(w => w.GetBalancingAuthorityAsync(latitude, longitude)
         ).ReturnsAsync(() => balancingAuthority);
 
     }
+    */
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
