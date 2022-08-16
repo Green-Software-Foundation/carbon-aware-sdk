@@ -4,5 +4,5 @@
 internal class AuthenticationHeaderTypes
 {
     // public const string Basic = "Basic";
-    public const string Token = "auth-Token";
+    public const string Token = "auth-token";
 }

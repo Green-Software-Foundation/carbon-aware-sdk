@@ -173,7 +173,7 @@ public class ElectricityMapClientTests
         this.HttpClient = new HttpClient(this.MessageHandler);
         this.HttpClientFactory = Mock.Of<IHttpClientFactory>();
         Mock.Get(this.HttpClientFactory).Setup(h => h.CreateClient(IElectricityMapClient.NamedClient)).Returns(this.HttpClient);
-        this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("auth-Token", Configuration.Token);
+        this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("auth-token", Configuration.Token);
     }
 
 
@@ -198,7 +198,7 @@ public class ElectricityMapClientTests
         {
             response.Content = new StringContent("{\"Token\":\"" + validToken + "\"}");
         }
-        else if (authHeader == $"auth-Token {validToken}")
+        else if (authHeader == $"auth-token {validToken}")
         {
             response.Content = reponseContent;
         }
