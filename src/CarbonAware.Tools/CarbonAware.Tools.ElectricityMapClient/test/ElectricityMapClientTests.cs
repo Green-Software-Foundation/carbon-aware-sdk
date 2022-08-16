@@ -36,19 +36,17 @@ public class ElectricityMapClientTests
 
     private string BasicAuthValue { get; set; }
 
-    private readonly string DefaultTokenValue = "myDefaultToken123";
-
     [SetUp]
     public void Initialize()
     {
-        this.Configuration = new ElectricityMapClientConfiguration() { token = "myDefaultToken123" };
+        this.Configuration = new ElectricityMapClientConfiguration() { Token = Environment.GetEnvironmentVariable("electricityMapClient__token") };
 
         this.Options = new Mock<IOptionsMonitor<ElectricityMapClientConfiguration>>();
         this.Log = new Mock<ILogger<ElectricityMapClient>>();
 
         this.Options.Setup(o => o.CurrentValue).Returns(() => this.Configuration);
 
-        this.BasicAuthValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{this.Configuration.token}"));
+        this.BasicAuthValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{this.Configuration.Token}"));
     }
 
     [Test]
@@ -57,7 +55,7 @@ public class ElectricityMapClientTests
         Debug.WriteLine("This is Test");
         this.CreateHttpClient(m =>
         {
-            var response = this.MockElectricityMapAuthResponse(m, new StringContent(""), "token");
+            var response = this.MockElectricityMapAuthResponse(m, new StringContent(""), "Token");
             return Task.FromResult(response);
         });
 
@@ -77,7 +75,7 @@ public class ElectricityMapClientTests
 
 
         var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        client.SetBearerAuthenticationHeader(Configuration.Token);
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(zone.countryCode));
@@ -94,7 +92,7 @@ public class ElectricityMapClientTests
         });
 
         var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        client.SetBearerAuthenticationHeader(Configuration.Token);
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
         Assert.ThrowsAsync<ElectricityMapClientException>(async () => await client.GetCurrentForecastAsync(zone.countryCode));
@@ -148,7 +146,7 @@ public class ElectricityMapClientTests
         });
 
         var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        client.SetBearerAuthenticationHeader(Configuration.Token);
 
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
@@ -175,7 +173,7 @@ public class ElectricityMapClientTests
         this.HttpClient = new HttpClient(this.MessageHandler);
         this.HttpClientFactory = Mock.Of<IHttpClientFactory>();
         Mock.Get(this.HttpClientFactory).Setup(h => h.CreateClient(IElectricityMapClient.NamedClient)).Returns(this.HttpClient);
-        this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("auth-token", this.DefaultTokenValue);
+        this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("auth-token", Configuration.Token);
     }
 
 
@@ -185,7 +183,7 @@ public class ElectricityMapClientTests
     {
         if (validToken == null)
         {
-            validToken = this.DefaultTokenValue;
+            validToken = Configuration.Token;
         }
         var auth = this.HttpClient.DefaultRequestHeaders.Authorization;
         if (auth == null)
@@ -198,7 +196,7 @@ public class ElectricityMapClientTests
 
         if ((request.RequestUri == new Uri("https://api.co2signal.com/v1/latest/") && ($"Basic {this.BasicAuthValue}".Equals(authHeader))))
         {
-            response.Content = new StringContent("{\"token\":\"" + validToken + "\"}");
+            response.Content = new StringContent("{\"Token\":\"" + validToken + "\"}");
         }
         else if (authHeader == $"auth-token {validToken}")
         {
