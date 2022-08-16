@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
+using PropertyName = CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters.PropertyName;
 
 namespace CarbonAware.Aggregators.CarbonAware;
 
@@ -38,9 +39,16 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     }
 
     /// <inheritdoc />
-    public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
+    public async Task<EmissionsData?> GetBestEmissionsDataAsync(CarbonAwareParameters parameters)
     {
-        var results = await GetEmissionsDataAsync(props);
+        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+        parameters.Validate();
+
+        var locations = parameters.MultipleLocations;
+        var end = parameters.GetEndOrDefault(DateTimeOffset.UtcNow);
+        var start = parameters.GetStartOrDefault(end.AddDays(-7));
+
+        var results = await this._dataSource.GetCarbonIntensityAsync(locations, start, end);
         return GetOptimalEmissions(results);
     }
 

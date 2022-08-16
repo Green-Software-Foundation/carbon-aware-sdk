@@ -1,5 +1,6 @@
 namespace CarbonAware.WepApi.UnitTests;
 
+using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Model;
 using CarbonAware.WebApi.Controllers;
 using CarbonAware.WebApi.Models;
@@ -78,10 +79,11 @@ public class CarbonAwareControllerTests : TestsBase
             Rating = 0.9,
             Time = DateTime.Now
         };
+        var input = new EmissionsDataForLocationsParametersDTO(){ MultipleLocations = locations };
 
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithBestEmissionsData(data).Object);
 
-        var result = await controller.GetBestEmissionsDataForLocationsByTime(locations);
+        var result = await controller.GetBestEmissionsDataForLocationsByTime(input);
 
         TestHelpers.AssertStatusCode(result, HttpStatusCode.OK);
     }
@@ -212,8 +214,9 @@ public class CarbonAwareControllerTests : TestsBase
     public async Task GetBestEmissions_EmptyResultReturnsNoContent()
     {
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithEmissionsData(new List<EmissionsData>()).Object);
+        var input = new EmissionsDataForLocationsParametersDTO() { MultipleLocations = new string[] { "Sydney" } };
 
-        IActionResult result = await controller.GetBestEmissionsDataForLocationsByTime(new string[] { "Sydney" });
+        IActionResult result = await controller.GetBestEmissionsDataForLocationsByTime(input);
 
         //Assert
         TestHelpers.AssertStatusCode(result, HttpStatusCode.NoContent);
@@ -229,7 +232,6 @@ public class CarbonAwareControllerTests : TestsBase
     {
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateAggregatorWithEmissionsData(new List<EmissionsData>()).Object);
 
-        Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetBestEmissionsDataForLocationsByTime(locations));
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetEmissionsDataForLocationsByTime(locations));
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetCurrentForecastData(locations));
     }

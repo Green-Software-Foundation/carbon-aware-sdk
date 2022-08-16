@@ -32,7 +32,7 @@ public abstract class TestsBase
         var aggregator = new Mock<ICarbonAwareAggregator>();
         aggregator.Setup(x =>
             x.GetBestEmissionsDataAsync(
-                It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
+                It.IsAny<CarbonAwareParameters>())).ReturnsAsync(data);
         return aggregator;
     }
 

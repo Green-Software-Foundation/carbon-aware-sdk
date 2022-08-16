@@ -384,4 +384,93 @@ public class CarbonAwareAggregatorTests
         // Assert
         this.CarbonIntensityDataSource.Verify(r => r.GetCarbonIntensityAsync(location, start, end), Times.Once);
     }
+
+    [Test]
+    public async Task GetBestEmissionsDataAsync_ReturnsExpected()
+    {
+        // Arrange
+        var parameters = new CarbonAwareParameters(){ MultipleLocations = new List<Location>() { new Location() } };
+        var optimalDataPoint = new EmissionsData(){ Rating = 10 };
+        var mockData = new List<EmissionsData>() { 
+            optimalDataPoint,
+            new EmissionsData(){ Rating = 20 },
+            new EmissionsData(){ Rating = 30 }
+        };
+
+        this.CarbonIntensityDataSource.Setup(x => x.GetCarbonIntensityAsync(
+            It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .ReturnsAsync(mockData);
+
+        // Act
+        var results = await this.Aggregator.GetBestEmissionsDataAsync(parameters);
+
+        // Assert
+        Assert.AreEqual(optimalDataPoint, results);
+    }
+
+    [TestCase("2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", 0, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: start & end")]
+    [TestCase(null, "2000-01-02T00:00:00Z", 0, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: only end")]
+    [TestCase("2000-01-01T00:00:00Z", null, 1000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: only start")]
+    [TestCase(null, null, 1000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: no start or end")]
+    public async Task GetBestEmissionsDataAsync_CallsWithExpectedDates(DateTimeOffset? start, DateTimeOffset? end, long tickTolerance)
+    {
+        // Arrange
+        // Default to a random time that will always be wrong for these test cases.
+        DateTimeOffset actualStart = DateTimeOffset.Parse("1984-06-06Z");
+        DateTimeOffset actualEnd = DateTimeOffset.Parse("1984-06-06Z");
+        this.CarbonIntensityDataSource.Setup(x => x.GetCarbonIntensityAsync(
+            It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .Callback((IEnumerable<Location> _, DateTimeOffset _start, DateTimeOffset _end) =>
+            {
+                actualStart = _start;
+                actualEnd = _end;
+            });
+
+        var parameters = new CarbonAwareParameters() { MultipleLocations = new List<Location>() { new Location() } };
+        DateTimeOffset expectedEnd;
+        DateTimeOffset expectedStart;
+
+        if (end.HasValue)
+        {
+            expectedEnd = parameters.End = end.Value;
+        }
+        else
+        {
+            expectedEnd = DateTimeOffset.UtcNow;
+        }
+
+        if (start.HasValue) {
+            expectedStart = parameters.Start = start.Value;
+        } else {
+            expectedStart = expectedEnd.AddDays(-7);
+        }
+
+        // Because this method uses DateTimeOffset.UtcNow as a default, we cannot precisely check our date expectations
+        // so instead, we test that the dates are within a tolerable range using DateTimeOffset Ticks.
+        // 1 Second == 10,000,000 Ticks
+        // 1000 Ticks == 0.1 Milliseconds
+        var minAllowableStartTicks = expectedStart.Ticks - tickTolerance;
+        var maxAllowableStartTicks = expectedStart.Ticks + tickTolerance;
+        var minAllowableEndTicks = expectedEnd.Ticks - tickTolerance;
+        var maxAllowableEndTicks = expectedEnd.Ticks + tickTolerance;
+
+        // Act
+        await this.Aggregator.GetBestEmissionsDataAsync(parameters);
+
+        // Assert
+        Assert.That(actualStart.Ticks, Is.InRange(minAllowableStartTicks, maxAllowableStartTicks));
+        Assert.That(actualEnd.Ticks, Is.InRange(minAllowableEndTicks, maxAllowableEndTicks));
+    }
+
+    [Test]
+    public void GetBestEmissionsDataAsync_ThrowsWhenNoLocations()
+    {
+        // Arrange
+        var emptyListAssigned = new CarbonAwareParameters() { MultipleLocations = new List<Location>() };
+        var noLocationsAssigned = new CarbonAwareParameters();
+
+        // Act & Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await this.Aggregator.GetBestEmissionsDataAsync(emptyListAssigned));
+        Assert.ThrowsAsync<ArgumentException>(async () => await this.Aggregator.GetBestEmissionsDataAsync(noLocationsAssigned));
+    }
 }
