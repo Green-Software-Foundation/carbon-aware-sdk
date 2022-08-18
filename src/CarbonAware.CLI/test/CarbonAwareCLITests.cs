@@ -4,11 +4,8 @@ using System;
 using System.IO;
 using CarbonAware.Aggregators.CarbonAware;
 using Microsoft.Extensions.Logging;
-using System.Threading.Tasks;
-using System.Collections;
 using CarbonAware.Model;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace CarbonAware.CLI.Tests;
 
