@@ -25,7 +25,7 @@ public class ElectricityMapDataSource : ICarbonIntensityDataSource
 
     private IElectricityMapClient ElectricityMapClient { get; }
 
-    private ActivitySource ActivitySource { get; }
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(ElectricityMapDataSource));
 
     private ILocationSource LocationSource { get; }
 
@@ -38,34 +38,56 @@ public class ElectricityMapDataSource : ICarbonIntensityDataSource
     /// <param name="client">The ElectricityMap Client</param>
     /// <param name="activitySource">The activity source for telemetry.</param>
     /// <param name="locationSource">The location source to be used to convert a location to BA's.</param>
-    public ElectricityMapDataSource(ILogger<ElectricityMapDataSource> logger, IElectricityMapClient client, ActivitySource activitySource, ILocationSource locationSource)
+    public ElectricityMapDataSource(ILogger<ElectricityMapDataSource> logger, IElectricityMapClient client, ILocationSource locationSource)
     {
         this.Logger = logger;
         this.ElectricityMapClient = client;
-        this.ActivitySource = activitySource;
         this.LocationSource = locationSource;
     }
 
     /// <inheritdoc />
     /// TODO: For ElectricityMap no need Datetime to get latest Carbon Intensity
-    public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
+    //public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
+    //{
+    //    this.Logger.LogInformation("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
+    //    List<EmissionsData> result = new ();
+    //    foreach (var location in locations)
+    //    {
+    //        IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
+    //        result.AddRange(interimResult);
+    //    }
+    //    return result;
+    //}
+
+    // TODO: Need implemention for Electricity Map commercial version
+    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime) => throw new NotImplementedException();
+
+    /// <inheritdoc />
+    public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
     {
-        this.Logger.LogInformation("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
-        List<EmissionsData> result = new ();
-        foreach (var location in locations)
+        this.Logger.LogInformation($"Getting carbon intensity forecast for location {location}");
+
+        using(var activity = Activity.StartActivity())
         {
-            IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
-            result.AddRange(interimResult);
+            // direct mapping location to zone
+            var data = await this.ElectricityMapClient.GetCurrentForecastAsync(location.ToString());
+
+            // ElectricityMap trial only provide latest data so no need duration
+
+            // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
+            var forecastData = data.ForecastData.Select(e => new EmissionsData()
+            {
+                Location = e.CountryCodeAbbreviation,
+                Rating = e.Data.CarbonIntensity,
+                Time = e.Data.Datetime
+            });
+
+            return new EmissionsForecast()
+            {
+                GeneratedAt = data.GeneratedAt,
+                Location = location,
+                ForecastData = forecastData,
+            };
         }
-        return result;
-    }
-
-    // TODO: Need implemention such as Converter from Location to Zone like Watttime
-    private Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset? periodStartTime, DateTimeOffset? periodEndTime) => throw new NotImplementedException();
-
-
-    Task<EmissionsForecast> ICarbonIntensityDataSource.GetCurrentCarbonIntensityForecastAsync(Location location)
-    {
-        throw new NotImplementedException("Forecast data is not supported on personal license.");
     }
 }
