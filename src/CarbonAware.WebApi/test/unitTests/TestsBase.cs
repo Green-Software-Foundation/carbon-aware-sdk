@@ -1,11 +1,11 @@
-namespace CarbonAware.WepApi.UnitTests;
-
 using CarbonAware.Model;
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.WebApi.Controllers;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Diagnostics;
+using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
+
+namespace CarbonAware.WepApi.UnitTests;
 
 /// <summary>
 /// TestsBase for all WebAPI specific tests.
@@ -21,18 +21,26 @@ public abstract class TestsBase
     protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithEmissionsData(List<EmissionsData> data)
     {
         var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x =>
-            x.GetEmissionsDataAsync(
-                It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
+        aggregator.Setup(x => x.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+            .Callback((CarbonAwareParameters parameters) =>
+            {
+                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+                parameters.Validate();
+            })
+            .ReturnsAsync(data);
         return aggregator;
     }
 
     protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithBestEmissionsData(EmissionsData data)
     {
         var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x =>
-            x.GetBestEmissionsDataAsync(
-                It.IsAny<CarbonAwareParameters>())).ReturnsAsync(data);
+        aggregator.Setup(x => x.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+            .Callback((CarbonAwareParameters parameters) =>
+            {
+                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+                parameters.Validate();
+            })
+            .ReturnsAsync(data);
         return aggregator;
     }
 
@@ -43,17 +51,27 @@ public abstract class TestsBase
             new EmissionsForecast(){ ForecastData = data }
         };
         var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x =>
-            x.GetCurrentForecastDataAsync(
-                It.IsAny<Dictionary<string, object>>())).ReturnsAsync(forecasts);
+        aggregator.Setup(x => x.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
+            .Callback((CarbonAwareParameters parameters) =>
+            {
+                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+                parameters.Validate();
+            })
+            .ReturnsAsync(forecasts);
         return aggregator;
     }
 
     protected static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
     {
         var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x =>
-            x.CalculateAverageCarbonIntensityAsync(It.IsAny<Dictionary<string, object>>())).ReturnsAsync(data);
+        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()))
+            .Callback((CarbonAwareParameters parameters) =>
+            {
+                parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
+                parameters.Validate();
+            })
+            .ReturnsAsync(data);
+
         return aggregator;
     }
 }

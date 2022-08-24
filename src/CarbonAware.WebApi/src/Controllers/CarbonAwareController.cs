@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using CarbonAware.Model;
 using System.Diagnostics;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CarbonAware.WebApi.Controllers;
 
@@ -44,29 +45,18 @@ public class CarbonAwareController : ControllerBase
     /// <summary>
     /// Calculate the observed emission data by list of locations for a specified time period.
     /// </summary>
-    /// <param name="locations"> String array of named locations.</param>
-    /// <param name="time"> [Optional] Start time for the data query.</param>
-    /// <param name="toTime"> [Optional] End time for the data query.</param>
-    /// <param name="durationMinutes"> [Optional] Duration for the data query.</param>
+    /// <param name="parameters">The request object <see cref="EmissionsDataForLocationsParametersDTO"/></param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocations")]
-    public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery(Name = "location"), BindRequired] string[] locations, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery] EmissionsDataForLocationsParametersDTO parameters)
     {
         using (var activity = Activity.StartActivity())
         {
-            IEnumerable<Location> locationEnumerable = CreateMultipleLocationsFromStrings(locations);
-            var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.MultipleLocations, locationEnumerable },
-                { CarbonAwareConstants.Start, time },
-                { CarbonAwareConstants.End, toTime},
-                { CarbonAwareConstants.Duration, durationMinutes },
-            };
-
-            var response = await _aggregator.GetEmissionsDataAsync(props);
+            var response = await _aggregator.GetEmissionsDataAsync(parameters);
             return response.Any() ? Ok(response) : NoContent();
         }
     }
@@ -77,37 +67,30 @@ public class CarbonAwareController : ControllerBase
     /// <param name="location"> String named location.</param>
     /// <param name="time"> [Optional] Start time for the data query.</param>
     /// <param name="toTime"> [Optional] End time for the data query.</param>
-    /// <param name="durationMinutes"> [Optional] Duration for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocation")]
-    public async Task<IActionResult> GetEmissionsDataForLocationByTime([FromQuery, BindRequired] string location, DateTime? time = null, DateTime? toTime = null, int durationMinutes = 0)
+    public async Task<IActionResult> GetEmissionsDataForLocationByTime([FromQuery, SwaggerParameter(Required = true)] string location, DateTimeOffset? time = null, DateTimeOffset? toTime = null)
     {
         using (var activity = Activity.StartActivity())
         {
-            return await GetEmissionsDataForLocationsByTime(new string[]{ location }, time, toTime, durationMinutes);
+            var parameters = new EmissionsDataForLocationsParametersDTO
+            {
+                MultipleLocations = new string[]{ location },
+                Start = time,
+                End = toTime
+            };
+            return await GetEmissionsDataForLocationsByTime(parameters);
         }
     }
 
     /// <summary>
     ///   Retrieves the most recent forecasted data and calculates the optimal marginal carbon intensity window.
     /// </summary>
-    /// <param name="locations"> String array of named locations.</param>
-    /// <param name="dataStartAt">
-    ///   Start time boundary of forecasted data points. Ignores current forecast data points before this time.
-    ///   Defaults to the earliest time in the forecast data.
-    /// </param>
-    /// <param name="dataEndAt">
-    ///   End time boundary of forecasted data points. Ignores current forecast data points after this time.
-    ///   Defaults to the latest time in the forecast data.
-    /// </param>
-    /// <param name="windowSize">
-    ///   The estimated duration (in minutes) of the workload.
-    ///   Defaults to the duration of a single forecast data point.
-    /// </param>
+    /// <param name="parameters">The request object <see cref="EmissionsForecastCurrentParametersDTO"/></param>
     /// <remarks>
     ///   This endpoint fetches only the most recently generated forecast for all provided locations.  It uses the "dataStartAt" and 
     ///   "dataEndAt" parameters to scope the forecasted data points (if available for those times). If no start or end time 
@@ -130,19 +113,11 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status501NotImplemented, Type = typeof(ValidationProblemDetails))]
     [HttpGet("forecasts/current")]
-    public async Task<IActionResult> GetCurrentForecastData([FromQuery(Name = "location"), BindRequired] string[] locations, DateTimeOffset? dataStartAt = null, DateTimeOffset? dataEndAt = null, int? windowSize = null)
+    public async Task<IActionResult> GetCurrentForecastData([FromQuery] EmissionsForecastCurrentParametersDTO parameters)
     {
         using (var activity = Activity.StartActivity())
         {
-            IEnumerable<Location> locationEnumerable = CreateMultipleLocationsFromStrings(locations);
-            var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.MultipleLocations, locationEnumerable },
-                { CarbonAwareConstants.Start, dataStartAt },
-                { CarbonAwareConstants.End, dataEndAt },
-                { CarbonAwareConstants.Duration, windowSize },
-            };
-
-            var forecasts = await _aggregator.GetCurrentForecastDataAsync(props);
+            var forecasts = await _aggregator.GetCurrentForecastDataAsync(parameters);
             var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
             return Ok(results);
         }
@@ -167,29 +142,22 @@ public class CarbonAwareController : ControllerBase
     /// <response code="500">Internal server error</response>
     /// <response code="501">Returned if the underlying data source does not support forecasting</response>
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsForecastDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [HttpPost("forecasts/batch")]
-    public async IAsyncEnumerable<EmissionsForecastDTO> BatchForecastDataAsync(IEnumerable<EmissionsForecastBatchDTO> requestedForecasts)
+    public async Task<IActionResult> BatchForecastDataAsync([FromBody] IEnumerable<EmissionsForecastBatchParametersDTO> requestedForecasts)
     {
         using (var activity = Activity.StartActivity())
         {
-            foreach (var forecastBatchDTO in requestedForecasts)
+            var result = new List<EmissionsForecastDTO>();
+            foreach ( var forecastParameters in requestedForecasts)
             {
-                var props = new Dictionary<string, object?>() {
-                    { CarbonAwareConstants.SingleLocation, CreateSingleLocationFromString(forecastBatchDTO.Location!) },
-                    { CarbonAwareConstants.Start, forecastBatchDTO.DataStartAt },
-                    { CarbonAwareConstants.End, forecastBatchDTO.DataEndAt },
-                    { CarbonAwareConstants.Duration, forecastBatchDTO.WindowSize },
-                    { CarbonAwareConstants.ForecastRequestedAt, forecastBatchDTO.RequestedAt },
-                };
-                // NOTE: Current Error Handling done by HttpResponseExceptionFilter can't handle exceptions
-                // thrown by the underline framework for this method, therefore all exceptions are handled as 500.
-                // Refactoring with a middleware exception handler should cover this use case too.
-                var forecast = await _aggregator.GetForecastDataAsync(props);
-                yield return EmissionsForecastDTO.FromEmissionsForecast(forecast);
-            }
+                var forecast = await _aggregator.GetForecastDataAsync(forecastParameters);
+                result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast));
+            };
+
+            return Ok(result);
         }
     }
 
@@ -199,9 +167,7 @@ public class CarbonAwareController : ControllerBase
     /// <remarks>
     ///  This endpoint is useful for reporting the measured carbon intensity for a specific time period in a specific location.
     /// </remarks>
-    /// <param name="location">The location name of the region that we are measuring carbon usage in. </param>
-    /// <param name="startTime">The time at which the workload and corresponding carbon usage begins.</param>
-    /// <param name="endTime">The time at which the workload and corresponding carbon usage ends. </param>
+    /// <param name="parameters">The request object <see cref="CarbonIntensityParametersDTO"/></param>
     /// <returns>A single object that contains the location, time boundaries and average carbon intensity value.</returns>
     /// <response code="200">Returns a single object that contains the information about the request and the average marginal carbon intensity</response>
     /// <response code="400">Returned if any of the requested items are invalid</response>
@@ -211,23 +177,17 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [HttpGet("average-carbon-intensity")]
-    public async Task<IActionResult> GetAverageCarbonIntensity([FromQuery, BindRequired] string location, [FromQuery, BindRequired] DateTimeOffset startTime, [FromQuery, BindRequired] DateTimeOffset endTime)
+    public async Task<IActionResult> GetAverageCarbonIntensity([FromQuery] CarbonIntensityParametersDTO parameters)
     {
         using (var activity = Activity.StartActivity())
         {
-            var props = new Dictionary<string, object?>() {
-                { CarbonAwareConstants.SingleLocation, CreateSingleLocationFromString(location) },
-                { CarbonAwareConstants.Start, startTime },
-                { CarbonAwareConstants.End, endTime },
-            };
-
-            var result = await this._aggregator.CalculateAverageCarbonIntensityAsync(props);
+            var result = await this._aggregator.CalculateAverageCarbonIntensityAsync(parameters);
 
             CarbonIntensityDTO carbonIntensity = new CarbonIntensityDTO
             {
-                Location = location,
-                StartTime = startTime,
-                EndTime = endTime,
+                Location = parameters.SingleLocation,
+                StartTime = parameters.Start,
+                EndTime = parameters.End,
                 CarbonIntensity = result,
             };
             _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", carbonIntensity);
@@ -249,34 +209,29 @@ public class CarbonAwareController : ControllerBase
     /// <response code="400">Returned if any of the requested items are invalid</response>
     /// <response code="500">Internal server error</response>
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CarbonIntensityDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
     [HttpPost("average-carbon-intensity/batch")]
-    public async IAsyncEnumerable<CarbonIntensityDTO> GetAverageCarbonIntensityBatch(IEnumerable<CarbonIntensityBatchDTO> requestedCarbonIntensities)
+    public async Task<IActionResult> GetAverageCarbonIntensityBatch([FromBody] IEnumerable<CarbonIntensityBatchParametersDTO> requestedCarbonIntensities)
     {
         using (var activity = Activity.StartActivity())
         {
-            foreach (var carbonIntensityBatchDTO in requestedCarbonIntensities)
+            var result = new List<CarbonIntensityDTO>();
+            foreach ( var carbonIntensityBatchDTO in requestedCarbonIntensities)
             {
-                var props = new Dictionary<string, object?>() {
-                    { CarbonAwareConstants.SingleLocation, CreateSingleLocationFromString(carbonIntensityBatchDTO.Location!) },
-                    { CarbonAwareConstants.Start, carbonIntensityBatchDTO.StartTime },
-                    { CarbonAwareConstants.End, carbonIntensityBatchDTO.EndTime }
-                };
-                // NOTE: Current Error Handling done by HttpResponseExceptionFilter can't handle exceptions
-                // thrown by the underline framework for this method, therefore all exceptions are handled as 500.
-                // Refactoring with a middleware exception handler should cover this use case too.
-                var carbonIntensity = await this._aggregator.CalculateAverageCarbonIntensityAsync(props);
-                CarbonIntensityDTO carbonIntensityDTO = new CarbonIntensityDTO
+                var carbonIntensityValue = await this._aggregator.CalculateAverageCarbonIntensityAsync(carbonIntensityBatchDTO);
+                var carbonIntensityDTO = new CarbonIntensityDTO()
                 {
-                    Location = carbonIntensityBatchDTO.Location,
-                    StartTime = carbonIntensityBatchDTO.StartTime,
-                    EndTime = carbonIntensityBatchDTO.EndTime,
-                    CarbonIntensity = carbonIntensity,
+                    Location = carbonIntensityBatchDTO.SingleLocation,
+                    StartTime = carbonIntensityBatchDTO.Start,
+                    EndTime = carbonIntensityBatchDTO.End,
+                    CarbonIntensity = carbonIntensityValue,
                 };
-                yield return carbonIntensityDTO;
+                result.Add(carbonIntensityDTO);
             }
+
+            return Ok(result);
         }
     }
 

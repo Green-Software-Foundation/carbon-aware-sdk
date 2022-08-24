@@ -8,11 +8,16 @@ public class EmissionsDataForLocationsParametersDTO : CarbonAwareParametersBaseD
 {
     /// <summary>String array of named locations</summary>
     /// <example>eastus</example>
-    [FromQuery(Name = "location"), SwaggerParameter(Required = true)] public override string[]? MultipleLocations { get; set; }
+    [FromQuery(Name = "location"), SwaggerParameter(Required = true)]
+    public override string[]? MultipleLocations { get; set; }
+
     /// <summary>[Optional] Start time for the data query.</summary>
     /// <example>2022-03-01T15:30:00Z</example>
-    [FromQuery(Name = "time")] override public DateTimeOffset? Start { get; set; }
+    [FromQuery(Name = "time")]
+    public override DateTimeOffset? Start { get; set; }
+
     /// <summary>[Optional] End time for the data query.</summary>
     /// <example>2022-03-01T18:30:00Z</example>
-    [FromQuery(Name = "toTime")] override public DateTimeOffset? End { get; set; }
+    [FromQuery(Name = "toTime")]
+    public override DateTimeOffset? End { get; set; }
 }

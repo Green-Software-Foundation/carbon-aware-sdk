@@ -6,6 +6,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using PropertyName = CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters.PropertyName;
 
 namespace CarbonAware.Aggregators.Tests;
@@ -19,11 +20,11 @@ public class CarbonAwareParametersTests
     public const string RENAMED_UNINHERITED_PROPERTY = "myCustomProperty";
     public class TestDerivedDto : CarbonAwareParametersBaseDTO
     {
-        [BindProperty(Name = RENAMED_MULTIPLE_LOCATIONS_PROPERTY)] override public string[]? MultipleLocations { get; set; }
-        [BindProperty(Name = RENAMED_START_PROPERTY)] override public DateTimeOffset? Start { get; set; }
-        [BindProperty(Name = RENAMED_END_PROPERTY)] override public DateTimeOffset? End { get; set; }
+        [FromQuery(Name = RENAMED_MULTIPLE_LOCATIONS_PROPERTY)] public override string[]? MultipleLocations { get; set; }
+        [FromQuery(Name = RENAMED_START_PROPERTY)] public override DateTimeOffset? Start { get; set; }
+        [JsonPropertyName(RENAMED_END_PROPERTY)] public override DateTimeOffset? End { get; set; }
 
-        [BindProperty(Name = RENAMED_UNINHERITED_PROPERTY)]
+        [JsonPropertyName(RENAMED_UNINHERITED_PROPERTY)]
         public string? UninheritedBoundProp { get; set; }
         public string? UnboundProp { get; set; }
     }

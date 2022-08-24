@@ -59,20 +59,20 @@ public class CarbonAwareCLI
     public async Task<IEnumerable<EmissionsData>> GetEmissions()
     {
         IEnumerable<Location> locations = _state.Locations.Select(loc => new Location(){ RegionName = loc, LocationType = LocationType.CloudProvider });
-        var props = new Dictionary<string, object>() {
-            { CarbonAwareConstants.MultipleLocations, locations },
-            { CarbonAwareConstants.Start, _state.Time },
-            { CarbonAwareConstants.End, _state.ToTime },
-            { CarbonAwareConstants.Best, true }
-        };
-        return await GetEmissionsDataAsync(props);
+
+        var parameters = new CarbonAwareParameters(){ MultipleLocations = locations };
+        if (_state.Time.HasValue)
+            parameters.Start = _state.Time.Value;
+
+        if (_state.ToTime.HasValue)
+            parameters.End = _state.ToTime.Value;
+
+        return await GetEmissionsDataAsync(parameters);
     }
 
-    private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
+    private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(CarbonAwareParameters parameters)
     {
-        IEnumerable<EmissionsData> e = await _aggregator.GetEmissionsDataAsync(props);
-
-        return await _aggregator.GetEmissionsDataAsync(props);
+        return await _aggregator.GetEmissionsDataAsync(parameters);
     }
 
     public void OutputEmissionsData(IEnumerable<EmissionsData> emissions)

@@ -1,23 +1,34 @@
 using CarbonAware.Model;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
 
 namespace CarbonAware.Aggregators.CarbonAware;
 
 public class CarbonAwareParametersBaseDTO
 {
     virtual public string[]? MultipleLocations { get; set; }
+    virtual public string? SingleLocation { get; set; }
     virtual public DateTimeOffset? Start { get; set; }
     virtual public DateTimeOffset? End { get; set; }
+    virtual public int? Duration { get; set; }
+    virtual public DateTimeOffset? Requested { get; set; }
 
     public Dictionary<string, string> GetDisplayNameMap()
     {
         var mapping = new Dictionary<string, string>();
         foreach (var DTOproperty in this.GetType().GetProperties())
         {
-            BindPropertyAttribute? customAttribute = (BindPropertyAttribute?) Attribute.GetCustomAttribute(DTOproperty, typeof(BindPropertyAttribute));
-            if (customAttribute != null && customAttribute.Name != null)
+            var customAttributes = Attribute.GetCustomAttributes(DTOproperty, true);
+            foreach (var customAttribute in customAttributes)
             {
-                mapping.Add(DTOproperty.Name, customAttribute.Name);
+                string? displayName = null; 
+                if (customAttribute is JsonPropertyNameAttribute jsonPropertyName){ displayName = jsonPropertyName.Name; }
+                if (customAttribute is FromQueryAttribute fromQuery){ displayName = fromQuery.Name; }
+
+                if(!string.IsNullOrWhiteSpace(displayName))
+                {
+                    mapping.Add(DTOproperty.Name, displayName);
+                }
             }
         }
         return mapping;
@@ -27,10 +38,13 @@ public class CarbonAwareParametersBaseDTO
 public class CarbonAwareParameters
 {
     private IEnumerable<Location> _mulitpleLocations = new List<Location>();
+    private Location _singleLocation = new Location();
     private DateTimeOffset _start = DateTimeOffset.MinValue;
     private DateTimeOffset _end = DateTimeOffset.MaxValue;
+    private TimeSpan _duration = TimeSpan.Zero;
+    private DateTimeOffset _requested = DateTimeOffset.UtcNow;
 
-    public enum PropertyName { MultipleLocations, Start, End };
+    public enum PropertyName { MultipleLocations, SingleLocation, Start, End, Duration, Requested };
     public IEnumerable<Location> MultipleLocations {
         get { return _mulitpleLocations; }
         set { 
@@ -40,7 +54,11 @@ public class CarbonAwareParameters
                 _props[PropertyName.MultipleLocations].IsSet = true;
             }
         }
-            
+    }
+    public Location SingleLocation
+    {
+        get { return _singleLocation; }
+        set { _singleLocation = value; _props[PropertyName.SingleLocation].IsSet = true; }
     }
     public DateTimeOffset Start {
         get { return _start; }
@@ -49,6 +67,16 @@ public class CarbonAwareParameters
     public DateTimeOffset End {
         get { return _end; }
         set { _end = value; _props[PropertyName.End].IsSet = true; }
+    }
+    public TimeSpan Duration
+    {
+        get { return _duration; }
+        set { _duration = value; _props[PropertyName.Duration].IsSet = true; }
+    }
+    public DateTimeOffset Requested
+    {
+        get { return _requested; }
+        set { _requested = value; _props[PropertyName.Requested].IsSet = true; }
     }
 
     public class Property
@@ -141,11 +169,15 @@ public class CarbonAwareParameters
     {
         var parameters = new CarbonAwareParameters(p.GetDisplayNameMap());
 
-        var locations = ToLocations(p.MultipleLocations);
+        var multipleLocations = MultipleLocationsFromStrings(p.MultipleLocations);
+        var singleLocation = SingleLocationFromString(p.SingleLocation);
 
-        if (locations is not null) { parameters.MultipleLocations = locations; }
+        if (multipleLocations is not null) { parameters.MultipleLocations = multipleLocations; }
+        if (singleLocation is not null) { parameters.SingleLocation = singleLocation; }
         if (p.Start.HasValue) { parameters.Start = p.Start.Value; }
         if (p.End.HasValue) { parameters.End = p.End.Value; }
+        if (p.Duration.HasValue) { parameters.Duration = TimeSpan.FromMinutes(p.Duration.Value); }
+        if (p.Requested.HasValue) { parameters.Requested = p.Requested.Value; }
 
         return parameters;
     }
@@ -155,10 +187,21 @@ public class CarbonAwareParameters
     /// </summary>
     /// <param name="locations">Array of string locations.</param>
     /// <remarks>Skips conversion for any values that are empty/null.</remarks>
-    private static IEnumerable<Location>? ToLocations(string[]? locations)
+    private static IEnumerable<Location>? MultipleLocationsFromStrings(string[]? locations)
     {
         if (locations is null) { return null; }
         return locations.Where(location => !String.IsNullOrEmpty(location)).Select(location => new Location() { RegionName = location, LocationType = LocationType.CloudProvider });
+    }
+
+    /// <summary>
+    /// Converts a string location into a Location object. 
+    /// </summary>
+    /// <param name="locations">String location.</param>
+    /// <remarks>Skips conversion for empty/null strings.</remarks>
+    private static Location? SingleLocationFromString(string? location)
+    {
+        if (String.IsNullOrEmpty(location)) { return null; }
+        return new Location() { RegionName = location, LocationType = LocationType.CloudProvider };
     }
 
     /// <summary>

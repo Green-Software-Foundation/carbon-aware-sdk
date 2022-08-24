@@ -27,7 +27,7 @@ public class CarbonAwareCLITests
         var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>(), Mock.Of<ILogger<CarbonAwareCLI>>());
         
         Assert.AreEqual("test", cli._state.Locations[0]); 
-        Assert.AreEqual(DateTime.Parse("2021-11-11"), cli._state.Time); 
+        Assert.AreEqual(DateTimeOffset.Parse("2021-11-11"), cli._state.Time); 
     }
 
     [Test]
@@ -38,8 +38,8 @@ public class CarbonAwareCLITests
         var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>(), Mock.Of<ILogger<CarbonAwareCLI>>());
 
         Assert.AreEqual("test", cli._state.Locations[0]); 
-        Assert.AreEqual(DateTime.Parse("2021-11-11"), cli._state.Time); 
-        Assert.AreEqual(DateTime.Parse("2021-12-12"), cli._state.ToTime); 
+        Assert.AreEqual(DateTimeOffset.Parse("2021-11-11"), cli._state.Time); 
+        Assert.AreEqual(DateTimeOffset.Parse("2021-12-12"), cli._state.ToTime); 
     }
 
     [Ignore("Ignore for now due to swallowed error")]
