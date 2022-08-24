@@ -63,16 +63,22 @@ public class CarbonAwareCLI
             { CarbonAwareConstants.MultipleLocations, locations },
             { CarbonAwareConstants.Start, _state.Time },
             { CarbonAwareConstants.End, _state.ToTime },
-            { CarbonAwareConstants.Best, true }
+            { CarbonAwareConstants.Best, _state.Lowest }
         };
         return await GetEmissionsDataAsync(props);
     }
 
     private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
-        IEnumerable<EmissionsData> e = await _aggregator.GetEmissionsDataAsync(props);
+        if ((bool)props[CarbonAwareConstants.Best])
+        {
+            return new EmissionsData[] {await _aggregator.GetBestEmissionsDataAsync(props)};
+        }
+        else
+        {
+            return await _aggregator.GetEmissionsDataAsync(props);
+        }
 
-        return await _aggregator.GetEmissionsDataAsync(props);
     }
 
     public void OutputEmissionsData(IEnumerable<EmissionsData> emissions)
