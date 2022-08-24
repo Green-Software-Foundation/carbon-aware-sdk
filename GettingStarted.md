@@ -157,6 +157,12 @@ You can configure the verbosity of the application error messages by setting the
 CarbonAwareVars__VerboseApi="true"
 ```
 
+### WattTimeClient Caching BalancingAuthority
+To improve performance communicating with the WattTime API service, the client caches the data mapping location coordinates to balancing authorities.  By default, this data is stored in an in-memory cache for `86400` seconds, but expiration can be configured using the setting `BalancingAuthorityCacheTTL` (Set to "0" to not use cache).  The regional boundaries of a balancing authority tend to be stable, but as they can change, the [WattTime documentation](https://www.watttime.org/api-documentation/#determine-grid-region) recommends not caching for longer than 1 month.
+```bash
+WattTimeClient__BalancingAuthorityCacheTTL="90"
+```
+
 ### Sample Environment Variable Configuration Using WattTime
 
 ```bash
