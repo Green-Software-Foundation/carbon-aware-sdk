@@ -8,7 +8,7 @@ This SDK has several entry points:
 
 - (Future) You can install the Nuget package and make requests directly. ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
-Each of these has configuration requirements which are detailed below.
+Each of these has configuration requirements which are detailed below. You can also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step process for running the CLI locally, deploying the Web API locally, polling the API via HTTP requests or generating and using client libraries (Python example).
 
 ## Pre-requisites
 
