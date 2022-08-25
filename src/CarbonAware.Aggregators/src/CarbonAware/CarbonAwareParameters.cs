@@ -183,6 +183,14 @@ public class CarbonAwareParameters
     }
 
     /// <summary>
+    /// Get an enumerable of all the PropertyNames defined in the CarbonAwareParameters class
+    /// </summary>
+    public static IEnumerable<PropertyName> GetPropertyNames()
+    {
+        return Enum.GetValues<PropertyName>().Cast<PropertyName>();
+    }
+
+    /// <summary>
     /// Convert an array of string locations into an enumerable of Location objects. 
     /// </summary>
     /// <param name="locations">Array of string locations.</param>
@@ -231,15 +239,6 @@ public class CarbonAwareParameters
         foreach (PropertyName name in GetPropertyNames())
         {
             properties[name] = new Property(name);
-        }
-        return properties;
-    }
-
-    private static IEnumerable<PropertyName> GetPropertyNames() {
-        var properties = new List<PropertyName>();
-        foreach (string name in Enum.GetNames<PropertyName>())
-        {
-            properties.Add(Enum.Parse<PropertyName>(name));
         }
         return properties;
     }

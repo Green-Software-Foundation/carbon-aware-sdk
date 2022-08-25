@@ -182,8 +182,7 @@ public class CarbonAwareController : ControllerBase
         using (var activity = Activity.StartActivity())
         {
             var result = await this._aggregator.CalculateAverageCarbonIntensityAsync(parameters);
-
-            CarbonIntensityDTO carbonIntensity = new CarbonIntensityDTO
+            var carbonIntensity = new CarbonIntensityDTO
             {
                 Location = parameters.SingleLocation,
                 StartTime = parameters.Start,
@@ -233,19 +232,5 @@ public class CarbonAwareController : ControllerBase
 
             return Ok(result);
         }
-    }
-
-    private IEnumerable<Location> CreateMultipleLocationsFromStrings(string[] stringLocations)
-    {
-        var locations = stringLocations
-            .Where(location => !String.IsNullOrEmpty(location))
-            .Select(location => new Location() { RegionName = location, LocationType = LocationType.CloudProvider });
-        return locations.Any() ? locations : throw new ArgumentException("Required field: A value for 'location' must be provided.");
-    }
-
-    private Location CreateSingleLocationFromString(string stringLocation)
-    {
-        if (String.IsNullOrEmpty(stringLocation)) throw new ArgumentException("Required field: A value for 'location' must be provided.");
-        return new Location() { RegionName = stringLocation, LocationType = LocationType.CloudProvider };
     }
 }

@@ -1,6 +1,5 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Model;
-using DevLab.JmesPath.Functions;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System;
@@ -39,9 +38,8 @@ public class CarbonAwareParametersTests
         parameters.SetRequiredProperties(Array.Empty<PropertyName>());
 
         // Assert
-        foreach (string name in Enum.GetNames<PropertyName>())
+        foreach (var propertyName in CarbonAwareParameters.GetPropertyNames())
         {
-            var propertyName = Enum.Parse<PropertyName>(name);
             Assert.IsFalse(parameters._props[propertyName].IsRequired);
         }
     }

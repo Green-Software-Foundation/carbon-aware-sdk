@@ -108,30 +108,8 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             return emissionsForecast;
         }
     }
-    private (Location, DateTimeOffset) GetAndValidateForecastInput(IDictionary props)
-    {
-        var error = new ArgumentException("Invalid EmissionsForecast request");
-        Location location = new ();
-        DateTimeOffset requestedAt = new ();
-        try {
-            location = GetSingleLocationOrThrow(props);
-        } catch (ArgumentException e) {
-            error.Data["location"] = e.Message;
-        }
-        try {
-            requestedAt = GetOffsetOrThrow(props, CarbonAwareConstants.ForecastRequestedAt);
-        } 
-        catch (ArgumentException e) {
-            error.Data["requestedAt"] = e.Message;
-        }
-        if (error.Data.Count > 0)
-        {
-            throw error;
-        }
-        return (location, requestedAt);
-    }
 
-    private EmissionsForecast ProcessAndValidateForecast(EmissionsForecast forecast, CarbonAwareParameters parameters)
+    private static EmissionsForecast ProcessAndValidateForecast(EmissionsForecast forecast, CarbonAwareParameters parameters)
     {
         var windowSize = parameters.Duration;
         var firstDataPoint = forecast.ForecastData.First();
@@ -149,93 +127,12 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         return forecast;
     }
 
-    private EmissionsData? GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
+    private static EmissionsData? GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
     {
         if (!emissionsData.Any())
         {
             return null;
         }
         return emissionsData.MinBy(x => x.Rating);
-    }
-
-
-
-    /// <summary>
-    /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, defaults to provided default
-    /// </summary>
-    /// <param name="props"></param>
-    /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
-    /// <exception cref="ArgumentException">Throws exception if prop isn't a valid DateTimeOffset. </exception>
-    private DateTimeOffset GetOffsetOrDefault(IDictionary props, string field, DateTimeOffset defaultValue)
-    {
-        // Default if null
-        var dateTimeOffset = props[field] ?? defaultValue;
-        DateTimeOffset outValue;
-        // If fail to parse property, throw error
-        if (!DateTimeOffset.TryParse(dateTimeOffset.ToString(), null, DateTimeStyles.AssumeUniversal, out outValue))
-        {
-            Exception ex = new ArgumentException("Failed to parse" + field + "field. Must be a valid DateTimeOffset");
-            _logger.LogError("argument exception", ex);
-            throw ex;
-        }
-
-        return outValue;
-    }
-
-    /// <summary>
-    /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, throws
-    /// </summary>
-    /// <param name="props"></param>
-    /// <returns>DateTimeOffset representing end period of carbon aware data search. </returns>
-    /// <exception cref="ArgumentException">Throws exception if prop isn't found or isn't a valid DateTimeOffset. </exception>
-    private DateTimeOffset GetOffsetOrThrow(IDictionary props, string field)
-    {
-        if (props[field] != null)
-        {
-            return GetOffsetOrDefault(props, field, DateTimeOffset.MinValue);
-        }
-
-        Exception ex = new ArgumentException("Failed to find" + field + "field. Must be a valid DateTimeOffset");
-        _logger.LogError("argument exception", ex);
-        throw ex;
-    }
-
-    private void ValidateDateInput(DateTimeOffset start, DateTimeOffset end)
-    {
-        if (start >= end)
-        {
-            throw new ArgumentException($"Invalid start and end. Start time must come before end time. start is {start}, end is {end}");
-        }
-    }
-
-    private IEnumerable<Location> GetMutlipleLocationsOrThrow(IDictionary props)
-    {
-        if (props[CarbonAwareConstants.MultipleLocations] is IEnumerable<Location> locations)
-        {
-            return locations;
-        }
-        Exception ex = new ArgumentException("locations parameter must be provided and be non empty");
-        _logger.LogError("argument exception", ex);
-        throw ex;
-    }
-
-    private Location GetSingleLocationOrThrow(IDictionary props)
-    {        
-        if (props[CarbonAwareConstants.SingleLocation] is Location location)
-        {
-            return location;
-        }
-        Exception ex = new ArgumentException("location parameter must be provided");
-        _logger.LogError("argument exception", ex);
-        throw ex;
-    }
-
-    private TimeSpan GetDurationOrDefault(IDictionary props, TimeSpan defaultValue = default)
-    {
-        if (props[CarbonAwareConstants.Duration] is int duration)
-        {
-            return TimeSpan.FromMinutes(duration);
-        }
-        return defaultValue;
     }
 }
