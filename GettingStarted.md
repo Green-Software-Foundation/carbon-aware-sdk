@@ -15,7 +15,7 @@ Each of these has configuration requirements which are detailed below.
 Make sure you have installed the following pre-requisites:
 
 - dotnet core SDK [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
-- python for registering to WattTime [see here](#watttime-configuration)
+- WattTime account - See [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user) for details.
 
 ## Data Sources
 
