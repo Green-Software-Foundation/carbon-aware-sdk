@@ -21,3 +21,5 @@ src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
 !.vscode/launch.json
 !.vscode/tasks.json
 .DS_Store
+
+samples/watttime-registration/settings.py
