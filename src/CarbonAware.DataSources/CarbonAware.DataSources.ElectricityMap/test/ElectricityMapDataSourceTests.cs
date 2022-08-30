@@ -75,7 +75,7 @@ public class ElectricityMapDataSourceTests
             ForecastData = emissionData
         };
 
-        this.ElectricityMapClient.Setup(w => w.GetCurrentForecastAsync(zone)
+        this.ElectricityMapClient.Setup(w => w.GetCurrentForecastAsync(zone.countryCode)
             ).ReturnsAsync(() => forecast);
 
         // Act
