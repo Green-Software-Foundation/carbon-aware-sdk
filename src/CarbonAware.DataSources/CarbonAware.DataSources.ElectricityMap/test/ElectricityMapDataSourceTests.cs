@@ -49,8 +49,9 @@ public class ElectricityMapDataSourceTests
     [Test]
     public async Task GetCurrentCarbonIntensityForecastAsync_ReturnsResultsWhenRecordsFound()
     {
-        var location = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
-        var zone = new Zone() { countryCode = "ZONE" };
+        // Need converter for electricity map from cloud, local region to electricity map region
+        var location = new Location() { RegionName = "AUS-NSW", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
+        var zone = new Zone() { countryCode = "AUS-NSW" };
         var generatedAt = new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
         var data = new Data()
         {

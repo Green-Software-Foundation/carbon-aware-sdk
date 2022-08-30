@@ -46,7 +46,7 @@ public class ElectricityMapDataSource : ICarbonIntensityDataSource
     }
 
     /// <inheritdoc />
-    /// TODO: For ElectricityMap no need Datetime to get latest Carbon Intensity
+    /// TODO: For traial version of ElectricityMap historical datas are not avaialbe
     //public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     //{
     //    this.Logger.LogInformation("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
@@ -69,12 +69,13 @@ public class ElectricityMapDataSource : ICarbonIntensityDataSource
 
         using(var activity = Activity.StartActivity())
         {
-            // direct mapping location to zone
-            var data = await this.ElectricityMapClient.GetCurrentForecastAsync(location.ToString());
+            // TODO: Watttime api use mapper from cloud region to watttime region (Balanceing Authority)
+            // BalancingAuthority balancingAuthority = await this.GetBalancingAuthority(location, activity);
 
-            // ElectricityMap trial only provide latest data so no need duration
+            // No mapper for electricity map yet, so use region data directly
+            var data = await this.ElectricityMapClient.GetCurrentForecastAsync(location.RegionName);
 
-            // Linq statement to convert WattTime forecast data into EmissionsData for the CarbonAware SDK.
+            // Link statement to convert Electricity Map forecast data into EmissionsData for the CarbonAware SDK.
             var forecastData = data.ForecastData.Select(e => new EmissionsData()
             {
                 Location = e.CountryCodeAbbreviation,
