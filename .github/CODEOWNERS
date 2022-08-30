@@ -3,5 +3,5 @@
 
 # Setting build up so that license changes and CODEOWNERS changes 
 # require admin approval.
-
-*       @vaughanknight
+/carbon-aware-sdk/license.md @microsoft/csefsi-admins
+.github/CODEOWNERS @microsoft/csefsi-admins
