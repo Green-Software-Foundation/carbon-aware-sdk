@@ -13,11 +13,13 @@ public interface ICarbonAwareAggregator : IAggregator
     Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props);
 
     /// <summary>
-    /// Returns best emissions data record.
+    /// Returns best emissions data record(s). Multiple "best" records are returned in case
+    /// of a tie, as callers of the SDK might have different buisness logic (i.e. if there's a tie
+    /// in two locations, then one might be a lot more preferable due to proximty)
     /// </summary>
     /// <param name="props">IDictionary with properties required by concrete classes</param>
-    /// <returns>The best EmissionsData object from the requested dataset or null if no dataset was found.</returns>
-    Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props);
+    /// <returns>The best EmissionsData object(s) from the requested dataset or null if no dataset was found.</returns>
+    Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(IDictionary props);
 
     /// <summary>
     /// Get current forecasted emissions data.

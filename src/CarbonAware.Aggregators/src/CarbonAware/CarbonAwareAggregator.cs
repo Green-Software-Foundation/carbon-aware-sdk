@@ -38,7 +38,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     }
 
     /// <inheritdoc />
-    public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
+    public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(IDictionary props)
     {
         var results = await GetEmissionsDataAsync(props);
         return GetOptimalEmissions(results);
@@ -127,7 +127,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         forecast.Validate();
         forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
         forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, forecast.DataStartAt, forecast.DataEndAt);
-        forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
+        forecast.OptimalDataPoint = GetOptimalEmission(forecast.ForecastData);
         if (forecast.ForecastData.Any())
         {
             forecast.WindowSize = forecast.ForecastData.First().Duration;
@@ -135,7 +135,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         return forecast;
     }
 
-    private EmissionsData? GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
+    private EmissionsData? GetOptimalEmission(IEnumerable<EmissionsData> emissionsData)
     {
         if (!emissionsData.Any())
         {
@@ -144,7 +144,18 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         return emissionsData.MinBy(x => x.Rating);
     }
 
+    private IEnumerable<EmissionsData> GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
+    {
+        if (!emissionsData.Any())
+        {
+            return Array.Empty<EmissionsData>();
+        }
 
+        var bestResult = emissionsData.MinBy(x => x.Rating);
+        return (bestResult != null) ?
+            emissionsData.Where(x => x.Rating == bestResult.Rating):
+            Array.Empty<EmissionsData>();
+    }
 
     /// <summary>
     /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, defaults to provided default

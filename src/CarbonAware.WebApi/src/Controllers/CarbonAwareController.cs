@@ -48,8 +48,9 @@ public class CarbonAwareController : ControllerBase
                 { CarbonAwareConstants.Best, true }
             };
 
-            var response = await _aggregator.GetBestEmissionsDataAsync(props);
-            return response != null ? Ok(response) : NoContent();
+            IEnumerable<EmissionsData> response = await _aggregator.GetBestEmissionsDataAsync(props);
+
+            return response.Any() ? Ok(response) : NoContent();
         }
     }
 

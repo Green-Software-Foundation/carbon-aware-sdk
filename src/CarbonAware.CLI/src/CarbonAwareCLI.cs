@@ -70,9 +70,14 @@ public class CarbonAwareCLI
 
     private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
     {
-        IEnumerable<EmissionsData> e = await _aggregator.GetEmissionsDataAsync(props);
-
-        return await _aggregator.GetEmissionsDataAsync(props);
+        if ((bool)props[CarbonAwareConstants.Best])
+        {
+            return await _aggregator.GetBestEmissionsDataAsync(props);
+        }
+        else
+        {
+            return await _aggregator.GetEmissionsDataAsync(props);
+        }
     }
 
     public void OutputEmissionsData(IEnumerable<EmissionsData> emissions)
