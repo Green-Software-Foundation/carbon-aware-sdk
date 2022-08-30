@@ -1,0 +1,39 @@
+trigger:
+  branches:
+    include:
+    - dev
+    - main
+
+pr:
+  branches:
+    include:
+    - dev
+    - main
+
+schedules:
+- cron: "0 */6 * * *"
+  displayName: Every-6-hours governance build
+  branches:
+    include:
+    - dev
+    - main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: './src/CarbonAware.WebApi/src/Dockerfile'
+    buildContext: './src'
+    tags: 'ca-api'
+
+- task: ComponentGovernanceComponentDetection@0
+  inputs:
+    scanType: 'Register'
+    verbosity: 'Verbose'
+    dockerImagesToScan: 'ca-api'
+    alertWarningLevel: 'High'
+    failOnAlert: true
+
