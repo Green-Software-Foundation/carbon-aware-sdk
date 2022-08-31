@@ -1,13 +1,16 @@
 ﻿using System.Reflection;
+using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace CarbonAware.DataSources.Json;
 
 /// <summary>
-/// Reprsents a JSON data source.
+/// Represents a JSON data source.
 /// </summary>
 public class JsonDataSource : ICarbonIntensityDataSource
 {
@@ -23,18 +26,24 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
     private List<EmissionsData>? emissionsData;
 
-    private readonly ILogger<JsonDataSource> _logger;
+    private readonly ILogger<JsonDataSource> Logger;
 
     private const double DURATION = 8; // 8 hrs
+
+    private IOptionsMonitor<JsonDataConfiguration> ConfigurationMonitor { get; }
+
+    private JsonDataConfiguration Configuration => ConfigurationMonitor.CurrentValue;
+
 
 
     /// <summary>
     /// Creates a new instance of the <see cref="JsonDataSource"/> class.
     /// </summary>
     /// <param name="logger">The logger for the datasource</param>
-    public JsonDataSource(ILogger<JsonDataSource> logger )
+    public JsonDataSource(ILogger<JsonDataSource> logger, IOptionsMonitor<JsonDataConfiguration> monitor)
     {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        Logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        ConfigurationMonitor = monitor ?? throw new ArgumentNullException(nameof(monitor));
     }
 
     /// <inheritdoc />
@@ -44,27 +53,27 @@ public class JsonDataSource : ICarbonIntensityDataSource
     }
 
     /// <inheritdoc />
-    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
+    public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
-        _logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
+        Logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
 
-        IEnumerable<EmissionsData>? emissionsData = GetSampleJson();
+        IEnumerable<EmissionsData>? emissionsData = await GetSampleJson();
         if (emissionsData == null) {
-            _logger.LogDebug("Emission data list is empty");
-            return Task.FromResult(Enumerable.Empty<EmissionsData>());
+            Logger.LogDebug("Emission data list is empty");
+            return Enumerable.Empty<EmissionsData>();
         }
-        _logger.LogDebug($"Total emission records retrieved {emissionsData.Count()}");
+        Logger.LogDebug($"Total emission records retrieved {emissionsData.Count()}");
         var stringLocations = locations.Select(loc => loc.RegionName);
             
         emissionsData = FilterByLocation(emissionsData, stringLocations);
         emissionsData = FilterByDateRange(emissionsData, periodStartTime, periodEndTime);
 
-        if (_logger.IsEnabled(LogLevel.Debug))
+        if (Logger.IsEnabled(LogLevel.Debug))
         {
-            _logger.LogDebug("Found {count} total emissions data records for locations {stringLocations} for period {periodStartTime} to {periodEndTime}.", emissionsData.Count(), stringLocations, periodStartTime, periodEndTime);
+            Logger.LogDebug("Found {count} total emissions data records for locations {stringLocations} for period {periodStartTime} to {periodEndTime}.", emissionsData.Count(), stringLocations, periodStartTime, periodEndTime);
         }
 
-        return Task.FromResult(emissionsData); 
+        return emissionsData;
     }
 
     public Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
@@ -85,7 +94,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
         if (!filteredData.Any())
         {
-            _logger.LogInformation($"Not enough data with {MinSamplingWindow} window");
+            Logger.LogInformation($"Not enough data with {MinSamplingWindow} window");
         }
         return filteredData;
     }
@@ -100,21 +109,31 @@ public class JsonDataSource : ICarbonIntensityDataSource
         return data;
     }
 
-    private string ReadFromResource(string key)
+    private Stream GetStreamFromResource(string key)
     {
         var assembly = Assembly.GetExecutingAssembly();
-        using Stream streamMetaData = assembly.GetManifestResourceStream(key) ?? throw new NullReferenceException("StreamMedataData is null");
-        using StreamReader readerMetaData = new StreamReader(streamMetaData);
-        return readerMetaData.ReadToEnd();
+        return assembly.GetManifestResourceStream(key)!;
     }
 
-    protected virtual List<EmissionsData>? GetSampleJson()
+    protected virtual async Task<List<EmissionsData>?> GetSampleJson()
     {
-        var data = ReadFromResource("CarbonAware.DataSources.Json.test-data-azure-emissions.json");
-        var jsonObject = JsonConvert.DeserializeObject<EmissionsJsonFile>(data);
-        if(emissionsData == null || !emissionsData.Any()) {
-           emissionsData = jsonObject.Emissions;
+        if (emissionsData is not null)
+        {
+            return emissionsData;
+        }
+        using Stream stream = String.IsNullOrEmpty(Configuration.DataFileLocation) ?
+            GetStreamFromResource("CarbonAware.DataSources.Json.test-data-azure-emissions.json") :
+            GetStreamFromFileLocation(Configuration.DataFileLocation);
+        var jsonObject = await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
+        if (emissionsData == null || !emissionsData.Any()) {
+           emissionsData = jsonObject?.Emissions;
         }
         return emissionsData;
+    }
+
+    private Stream GetStreamFromFileLocation(string? fileLocation)
+    {
+        Logger.LogInformation($"Reading Json data from {fileLocation}");
+        return File.OpenRead(fileLocation!);
     }
 }

@@ -17,8 +17,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureWattTimeClient(this IServiceCollection services, IConfiguration configuration)
     {
 
-        WattTimeClientConfiguration config = new WattTimeClientConfiguration();
-
         // configuring dependency injection to have config.
         services.Configure<WattTimeClientConfiguration>(c =>
         {
