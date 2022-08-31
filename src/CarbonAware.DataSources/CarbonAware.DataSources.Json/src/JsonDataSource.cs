@@ -109,21 +109,13 @@ public class JsonDataSource : ICarbonIntensityDataSource
         return data;
     }
 
-    private Stream GetStreamFromResource(string key)
-    {
-        var assembly = Assembly.GetExecutingAssembly();
-        return assembly.GetManifestResourceStream(key)!;
-    }
-
     protected virtual async Task<List<EmissionsData>?> GetSampleJson()
     {
         if (emissionsData is not null)
         {
             return emissionsData;
         }
-        using Stream stream = String.IsNullOrEmpty(Configuration.DataFileLocation) ?
-            GetStreamFromResource("CarbonAware.DataSources.Json.test-data-azure-emissions.json") :
-            GetStreamFromFileLocation(Configuration.DataFileLocation);
+        using Stream stream = GetStreamFromFileLocation(Configuration.DataFileLocation);
         var jsonObject = await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
         if (emissionsData == null || !emissionsData.Any()) {
            emissionsData = jsonObject?.Emissions;

@@ -13,11 +13,9 @@
   
   <ItemGroup>
     <None Remove="sample-emissions-data.json" />
-    <None Remove="test-data-azure-emissions.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="..\..\..\data\data-files\sample-emissions-data.json" />
-    <EmbeddedResource Include="..\..\..\data\data-files\test-data-azure-emissions.json" />
   </ItemGroup>
 </Project>
