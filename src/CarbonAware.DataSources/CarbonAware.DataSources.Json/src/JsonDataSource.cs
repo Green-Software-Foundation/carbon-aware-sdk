@@ -1,11 +1,9 @@
-﻿using System.Reflection;
-using CarbonAware.DataSources.Json.Configuration;
+﻿using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace CarbonAware.DataSources.Json;
 
@@ -57,7 +55,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
     {
         Logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
 
-        IEnumerable<EmissionsData>? emissionsData = await GetSampleJson();
+        IEnumerable<EmissionsData>? emissionsData = await GetSampleJsonAssync();
         if (emissionsData == null) {
             Logger.LogDebug("Emission data list is empty");
             return Enumerable.Empty<EmissionsData>();
@@ -109,23 +107,23 @@ public class JsonDataSource : ICarbonIntensityDataSource
         return data;
     }
 
-    protected virtual async Task<List<EmissionsData>?> GetSampleJson()
+    protected virtual async Task<List<EmissionsData>?> GetSampleJsonAssync()
     {
         if (emissionsData is not null)
         {
             return emissionsData;
         }
-        using Stream stream = GetStreamFromFileLocation(Configuration.DataFileLocation);
+        using Stream stream = GetStreamFromFileLocation();
         var jsonObject = await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
-        if (emissionsData == null || !emissionsData.Any()) {
-           emissionsData = jsonObject?.Emissions;
+        if (emissionsData is null || !emissionsData.Any()) {
+            emissionsData = jsonObject?.Emissions;
         }
         return emissionsData;
     }
 
-    private Stream GetStreamFromFileLocation(string? fileLocation)
+    private Stream GetStreamFromFileLocation()
     {
-        Logger.LogInformation($"Reading Json data from {fileLocation}");
-        return File.OpenRead(fileLocation!);
+        Logger.LogInformation($"Reading Json data from {Configuration.DataFileLocation}");
+        return File.OpenRead(Configuration.DataFileLocation!);
     }
 }

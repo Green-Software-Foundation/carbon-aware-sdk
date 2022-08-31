@@ -14,14 +14,9 @@ public class JsonDataConfiguration
     /// <summary>
     /// Json data file location
     /// </summary>
-    public string? DataFileLocation
+    public string DataFileLocation
     {
         get => dataFileLocation;
-        set
-        {
-            if (value is null)
-                throw new ArgumentException("Value is null");
-            dataFileLocation = Path.Combine(BaseDir, value);
-        }
+        set => dataFileLocation = Path.Combine(BaseDir, value);
     }
 }
