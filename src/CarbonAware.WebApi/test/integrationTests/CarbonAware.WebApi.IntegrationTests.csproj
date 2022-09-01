@@ -27,5 +27,13 @@
     <ProjectReference Include="..\..\..\CarbonAware.Tools\CarbonAware.Tools.WattTimeClient\src\CarbonAware.Tools.WattTimeClient.csproj" />
     <ProjectReference Include="..\..\src\CarbonAware.WebApi.csproj" />
   </ItemGroup>
+  
+  <Target Name="CopyDataFiles" AfterTargets="Build">
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)..\..\..\data\data-files\test-data-azure-emissions.json" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files" SkipUnchangedFiles="true" />
+	</Target>
 
 </Project>
