@@ -43,22 +43,22 @@
 
   <ItemGroup>
       <Folder Include="api\v1" />
-  </ItemGroup>  
+  </ItemGroup>
 
-	<Target Name="CopyDataFiles" AfterTargets="Build">
-		<ItemGroup>
-			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
-		</ItemGroup>
+  <Target Name="CopyDataFiles" AfterTargets="Build">
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)..\..\data\data-files\**\*.*" />
+    </ItemGroup>
 
-		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files\" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files\%(RecursiveDir)" SkipUnchangedFiles="true" />
 	</Target>
 
 	<Target Name="CopyDataFilesForPublish" AfterTargets="AfterPublish">
-		<ItemGroup>
-			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
-		</ItemGroup>
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)..\..\data\data-files\**\*.*" />
+    </ItemGroup>
 
-		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PublishDir)\data-files\" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PublishDir)\data-files\%(RecursiveDir)" SkipUnchangedFiles="true" />
 	</Target>
 
   <ItemGroup>
