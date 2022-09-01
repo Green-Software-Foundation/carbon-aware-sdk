@@ -55,7 +55,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
     {
         Logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
 
-        IEnumerable<EmissionsData>? emissionsData = await GetSampleJsonAssync();
+        IEnumerable<EmissionsData>? emissionsData = await GetSampleJsonAsync();
         if (emissionsData == null) {
             Logger.LogDebug("Emission data list is empty");
             return Enumerable.Empty<EmissionsData>();
@@ -107,7 +107,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
         return data;
     }
 
-    protected virtual async Task<List<EmissionsData>?> GetSampleJsonAssync()
+    protected virtual async Task<List<EmissionsData>?> GetSampleJsonAsync()
     {
         if (emissionsData is not null)
         {
