@@ -4,5 +4,6 @@ public enum DataSourceType
 {
     None,
     WattTime,
+    ElectricityMap,
     JSON
 }

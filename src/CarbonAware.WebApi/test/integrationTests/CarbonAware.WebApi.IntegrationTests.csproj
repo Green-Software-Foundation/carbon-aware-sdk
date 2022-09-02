@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\CarbonAware.Tools\CarbonAware.Tools.WattTimeClient\src\CarbonAware.Tools.WattTimeClient.csproj" />
     <ProjectReference Include="..\..\src\CarbonAware.WebApi.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.Tools\CarbonAware.Tools.ElectricityMapClient\src\CarbonAware.Tools.ElectricityMapClient.csproj" />
   </ItemGroup>
 
 </Project>
