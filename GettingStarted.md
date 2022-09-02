@@ -163,6 +163,9 @@ To improve performance communicating with the WattTime API service, the client c
 WattTimeClient__BalancingAuthorityCacheTTL="90"
 ```
 
+### JsonDataConfiguration data file location
+By setting `JsonData__DataFileLocation=newdataset.json` property when `CarbonAwareVars__CarbonIntensityDataSource=JSON` is set or there is not data source defined (`JSON` is by default), the user can specify a file that can contains custom `EmissionsData` sets. The file should be located under the `data-files` directory that is part of the repository. (i.e. <user's repo>/src/data/data-files). At build time, all the data files are copied over the `data-files` directory that is part of the `CarbonAware.WebApi` assembly.
+
 ### Sample Environment Variable Configuration Using WattTime
 
 ```bash

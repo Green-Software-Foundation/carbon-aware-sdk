@@ -36,16 +36,8 @@ public class JsonDataConfigurationTests
     [TestCase("~/newfile.json", TestName = "setting user's home dir")]
     public void SetDataFileLocation_ThrowsArgumentException(string filePath)
     {
-        try
-        {
-            Config.DataFileLocation = filePath;
-        }
-        catch (ArgumentException ex)
-        {
-            Assert.That(ex.Message, Contains.Substring("invalid characters"));
-            return;
-        }
-        Assert.Fail();
+        var ex = Assert.Throws<ArgumentException>(() => Config.DataFileLocation = filePath);
+        Assert.That(ex!.Message, Contains.Substring("invalid characters"));
     }
 
     [TestCase("newfile.json", TestName = "same location as basedir")]
