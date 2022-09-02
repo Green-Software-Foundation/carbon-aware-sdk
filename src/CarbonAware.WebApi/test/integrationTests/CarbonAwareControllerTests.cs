@@ -223,8 +223,6 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-12-25", "2021-12-26", "westus", TestName = "EmissionsMarginalCarbonIntensity expects OK date only, no time")]
     public async Task EmissionsMarginalCarbonIntensity_ReturnsOk(string start, string end, string location)
     {
-        // Getting InvalidOperationException. Need to fix
-        IgnoreTestForDataSource("data source does not implement 'EmissionsMarginalCarbonIntensity_ReturnsOk'", DataSourceType.JSON);
 
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
@@ -289,8 +287,6 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-12-25", "2021-12-26", "westus", 3, TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for multiple element batch")]
     public async Task EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk(string start, string end, string location, int nelems)
     {
-        // Getting InvalidOperationException. Need to fix
-        IgnoreTestForDataSource("data source does not implement 'EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk'", DataSourceType.JSON);
 
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
