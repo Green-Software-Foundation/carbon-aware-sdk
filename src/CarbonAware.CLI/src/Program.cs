@@ -19,7 +19,8 @@ class Program
              
         var configurationBuilder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables();
+                .AddEnvironmentVariables()
+                .AddJsonFile("appsettings.local.json", optional:true);// Optional and would locally set variables override environment variables
         var config = configurationBuilder.Build();
         var services = new ServiceCollection();
         services.Configure<CarbonAwareVariablesConfiguration>(config.GetSection(CarbonAwareVariablesConfiguration.Key));
