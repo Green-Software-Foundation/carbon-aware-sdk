@@ -21,3 +21,6 @@ src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
 !.vscode/launch.json
 !.vscode/tasks.json
 .DS_Store
+
+# exclude local settings to easily set up your repo from the appsettings.local.json.temlpate
+appsettings.local.json

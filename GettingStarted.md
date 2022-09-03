@@ -27,8 +27,11 @@ This project uses standard [Microsoft.Extensions.Configuration](https://docs.mic
 
 The WebAPI project uses standard configuration sources provided by [ASPNetCore](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/).  Please review this link to understand how configuration is loaded and the priority of that configuration.
 
-Please note that configuration is heirarchical.  The last configuration source loaded that contains a configuration value will be the value that's used.  This means that if the same configuration value is found in both appsettings.json and as an environment variable, the value from the environment variable will be the value that's applied.
+Please note that configuration is hierarchical.  The last configuration source loaded that contains a configuration value will be the value that's used.  This means that if the same configuration value is found in both appsettings.json and as an environment variable, the value from the environment variable will be the value that's applied.
 
+### Configuration options
+
+#### Environment variables
 When adding values via environment variables, we recommend that you use the double underscore form, rather than the colon form.  Colons won't work in non-windows environment.  For example:
 
 ```bash
@@ -40,6 +43,13 @@ Note that double underscores are used to represent dotted notation or child elem
 ```bash
   CarbonAwareVars__Proxy__UseProxy
 ```
+
+#### Local project settings
+
+You have the possibility to use an untracked local settings file to override the project settings (that is loaded after the environement variables and will therefore superseed any variables of the same name).
+
+Todo so, rename a copy of the local template called `appsettings.local.json.template` to `appsettings.local.json`.
+Remove the first line of (invalid comments) and update the variables accordingly.
 
 ### CarbonAwareSDK Specific Configuration
 
