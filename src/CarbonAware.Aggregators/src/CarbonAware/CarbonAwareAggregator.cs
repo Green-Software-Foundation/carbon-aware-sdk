@@ -29,13 +29,18 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(IDictionary props)
     {
         using (var activity = Activity.StartActivity())
-        {
-            DateTimeOffset end = GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.Now.ToUniversalTime());
-            DateTimeOffset start = GetOffsetOrDefault(props, CarbonAwareConstants.Start, end.AddDays(-7));
-            _logger.LogInformation("Aggregator getting carbon intensity from data source");
-            return await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
+        { 
+            var (start, end, returnAllResults) = this.GetAndValidateLocationTimeWindow(props);
+            var results = await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
+            return (returnAllResults) ? results : this.EnsureSingleResult(results);
         }
     }
+
+    public (DateTimeOffset, DateTimeOffset, Boolean) GetAndValidateLocationTimeWindow2(IDictionary props)
+    {
+        return (DateTimeOffset.Now, DateTimeOffset.Now, true);
+    }
+
 
     /// <inheritdoc />
     public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
@@ -94,6 +99,56 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             return emissionsForecast;
         }
     }
+
+    /// <summary>
+    /// Parses provided start and end times for missing and invalid results. 
+    /// </summary>
+    /// <param name="props"></param>
+    /// <returns>A start and end DateTimeOffset validated based on potential missing user input on start and end values.
+    /// Also returns flag if either or both start and end times are missing.
+    /// </returns>
+    private (DateTimeOffset, DateTimeOffset, Boolean) GetAndValidateLocationTimeWindow(IDictionary props)
+    {
+        var startProp = props[CarbonAwareConstants.Start];
+        var endProp = props[CarbonAwareConstants.End];
+
+        DateTimeOffset windowStart;
+        DateTimeOffset windowEnd;
+        bool returnAllResults = false;
+
+        if(endProp is null)
+        {
+            windowEnd = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
+            windowStart = windowEnd.AddMinutes(-5);
+        } 
+        else
+        {
+            if (startProp is null)
+            {
+                Exception ex = new ArgumentException("'time is requed if 'toTime' is passed");
+                _logger.LogError("argument exception", ex);
+                throw ex;
+            }
+
+            windowStart = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
+            windowEnd = this.GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.UtcNow);
+            returnAllResults = true;
+        }
+
+        return (windowStart, windowEnd, returnAllResults);
+    }
+
+    /// <summary>
+    /// Limits results set to 1 element when only time or toTime or neither are passed.
+    /// </summary>
+    /// <param name="emissionsData"></param>
+    /// <returns>New List with only the lastest element returned by Time</returns>
+    private IEnumerable<EmissionsData> EnsureSingleResult(IEnumerable<EmissionsData> emissionsData)
+    {
+        if (emissionsData.Count() == 0) return new List<EmissionsData>();
+        return new List<EmissionsData>() { emissionsData.OrderByDescending(x => x.Time).First() };
+    } 
+
     private (Location, DateTimeOffset) GetAndValidateForecastInput(IDictionary props)
     {
         var error = new ArgumentException("Invalid EmissionsForecast request");
@@ -143,8 +198,6 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         }
         return emissionsData.MinBy(x => x.Rating);
     }
-
-
 
     /// <summary>
     /// Extracts the given offset prop and converts to DateTimeOffset. If prop is not defined, defaults to provided default
