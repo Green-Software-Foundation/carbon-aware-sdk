@@ -77,9 +77,13 @@ public class CarbonAwareCLI
 
     public void OutputEmissionsData(IEnumerable<EmissionsData> emissions)
     {
-        var outputData = $"{JsonConvert.SerializeObject(emissions, Formatting.Indented)}";
-        _logger.LogCritical(outputData);
-        Console.WriteLine(outputData);
+        var emissionsData = new Dictionary<string, IEnumerable<EmissionsData>>() {
+            { "emissionsData", emissions }
+        };
+
+        var outputJson = JsonConvert.SerializeObject(emissionsData, Formatting.Indented);
+        _logger.LogCritical(outputJson);
+        Console.WriteLine(outputJson);
     }
 
     private void ValidateCommandLineArguments(CLIOptions o)
