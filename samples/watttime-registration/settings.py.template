@@ -1,0 +1,4 @@
+wt_username = "gsf_<set your username here>"
+wt_password = "your password here"
+wt_email = "myemail @ email provide .com" # your email
+wt_org = "CarbonAwareSDK" #your organisation

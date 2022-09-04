@@ -22,5 +22,7 @@ src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
 !.vscode/tasks.json
 .DS_Store
 
+samples/watttime-registration/settings.py
+
 # exclude local settings to easily set up your repo from the appsettings.local.json.temlpate
 appsettings.local.json
