@@ -30,6 +30,99 @@ public class CarbonAwareAggregatorTests
         this.Aggregator = new CarbonAwareAggregator(this.Logger.Object, this.CarbonIntensityDataSource.Object);
     }
 
+    [Test]
+    public async Task TestGetEmissionsDataAsync_LocationMissing()
+    {
+        //Arange
+
+        var props = new Dictionary<string, object?>();
+
+        this.CarbonIntensityDataSource
+            .Setup(x => x.GetCarbonIntensityAsync(It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .ReturnsAsync(TestData.GetAllEmissionDataList());
+
+        //Act and assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await this.Aggregator.GetEmissionsDataAsync(props));
+    }
+
+    [Test]
+    public async Task TestGetEmissionsDataAsync_StartProvidedAndEndMissing()
+    {
+        //Arange
+        var emmisionsData = TestData.GetAllEmissionDataList();
+        var end = new DateTimeOffset(2021,11,17,0,0,0,TimeSpan.Zero).ToString();
+        var start = new DateTimeOffset(2021,11,16,0,55,0,TimeSpan.Zero).ToString();
+        var expectedTimeValue = new DateTimeOffset(2021,11,17,0,0,0,TimeSpan.Zero);
+
+        var props = new Dictionary<string, object?>()
+        {
+            { CarbonAwareConstants.MultipleLocations, new List<Location>() { new Location() { RegionName = "westus" } } },
+            { CarbonAwareConstants.Start, start }
+        };
+
+        this.CarbonIntensityDataSource
+            .Setup(x => x.GetCarbonIntensityAsync(It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .ReturnsAsync(TestData.GetFilteredEmissionDataList("westus", start, end));
+
+        //Act
+        var results = (await this.Aggregator.GetEmissionsDataAsync(props)).ToList();
+
+        //Assert   
+        Assert.AreEqual(results.Count(), 1);
+        Assert.AreEqual(results.First().Time, expectedTimeValue);
+    }
+   
+
+    [Test]
+    public async Task TestGetEmissionsDataAsync_EndProvidedButStartMissing()
+    {
+        //Arange
+        var emmisionsData = TestData.GetAllEmissionDataList();
+        var end = new DateTimeOffset(2021,11,17,0,0,0,TimeSpan.Zero).ToString();
+        var start = new DateTimeOffset(2021,11,16,0,55,0,TimeSpan.Zero).ToString();
+
+        var props = new Dictionary<string, object?>()
+        {
+            { CarbonAwareConstants.MultipleLocations, new List<Location>() { new Location() { RegionName = "westus" } } },
+            { CarbonAwareConstants.End, end }
+        };
+
+        this.CarbonIntensityDataSource
+            .Setup(x => x.GetCarbonIntensityAsync(It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .ReturnsAsync(TestData.GetFilteredEmissionDataList("westus", start, end));
+
+        //Act and Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await this.Aggregator.GetEmissionsDataAsync(props));
+    }
+
+    [Test]
+    public async Task TestGetEmissionsDataAsync_FullTimeWindow()
+    {
+        //Arange
+        var emmisionsData = TestData.GetAllEmissionDataList();
+        var start = new DateTimeOffset(2021,11,17,0,0,0,TimeSpan.Zero).ToString();
+        var end = new DateTimeOffset(2021,11,19,0,0,0,TimeSpan.Zero).ToString();
+
+        var props = new Dictionary<string, object?>()
+        {
+            { CarbonAwareConstants.MultipleLocations, new List<Location>() { new Location() { RegionName = "westus" } } },
+            { CarbonAwareConstants.Start, start },
+            { CarbonAwareConstants.End, end}
+        };
+
+        this.CarbonIntensityDataSource
+            .Setup(x => x.GetCarbonIntensityAsync(It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .ReturnsAsync(TestData.GetFilteredEmissionDataList("westus", start, end));
+
+        //Act
+        var results = (await this.Aggregator.GetEmissionsDataAsync(props)).ToList();
+
+        //Assert   
+        Assert.AreEqual(results.Count(), 4);
+        Assert.AreEqual(results.First().Time.ToString(), start);
+        Assert.AreEqual(results.Last().Time.ToString(), end);
+    }
+
     [TestCase(null, null, TestName = "no start param, no end param")]
     [TestCase("2022-01-01T00:05:00Z", null, TestName = "start param, no end param")]
     [TestCase(null, "2022-01-01T00:15:00Z", TestName = "no start param, end param")]

@@ -1,0 +1,18 @@
+//copy this file as "appsettings.local.json",  remove this comment and update the settings below accordingly
+{
+  "carbonAwareVars": {
+    "carbonIntensityDataSource": "WattTime",
+    "webApiRoutePrefix": "/microsoft/cse/fsi",
+    "proxy": {
+      "useProxy": false,
+      "url": "http://10.10.10.1",
+      "username": "proxyUsername",
+      "password": "proxyPassword"
+    }
+  },
+  "wattTimeClient": {
+    "username": "watttimeusername",
+    "password": "watttimepassword"
+  }
+}
+  
