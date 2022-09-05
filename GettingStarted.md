@@ -200,3 +200,46 @@ WattTimeClient__Password="wattTimePassword"
     }
 }
 ```
+
+## Publish WebAPI with container
+
+You can publish Web API for Carbon Aware SDK with container. This instruction shows how to build / run container image with [Podman](https://podman.io/).
+
+### Build container image
+
+Following commands build the container which named to `carbon-aware-sdk-webapi` from sources.
+
+```bash
+$ cd src
+$ podman build -t carbon-aware-sdk-webapi -f CarbonAware.WebApi/src/Dockerfile .
+```
+
+### Run Web API container
+
+Carbon Aware SDK Web API publishes the service on Port 80, so you need to map it to local port. Following commands maps it to Port 8080.
+
+You also need to configure the SDK with environment variables. They are minimum set when you use WattTime as a data source.
+
+```bash
+$ podman run -it --rm -p 8080:80 \
+    -e CarbonAwareVars__CarbonIntensityDataSource="WattTime" \
+    -e WattTimeClient__Username="wattTimeUsername" \
+    -e WattTimeClient__Password="wattTimePassword" \
+  carbon-aware-sdk-webapi
+```
+
+When you success to run the container, you can access it via HTTP client.
+
+```bash
+$ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | jq
+[
+  {
+    "generatedAt": "2022-08-10T14:10:00+00:00",
+    "optimalDataPoint": {
+      "location": "GCPD",
+      "timestamp": "2022-08-10T20:40:00+00:00",
+      "duration": 5,
+      "value": 440.4361702590741
+    },
+            :
+```
