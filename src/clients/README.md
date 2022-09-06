@@ -2,7 +2,7 @@
 
 While the web endpoints for the Grid API can be used consumed directly via REST, the GSF is also providing a number of SDKs.
 
-There are several supported SDKs that are tested with each release. Those include:
+There are several example SDKs that are generated using the scripts currently. Those include:
 
 -   **Java**: _link to the latest package_
 -   **Python**: _link to the latest package_
@@ -10,13 +10,15 @@ There are several supported SDKs that are tested with each release. Those includ
 -   **C#**: _link to the latest package_
 -   **Golang**: _link to the latest package_
 
+*Note:* The generated clients may have imcompatibility at times due to external factors, such as a new language version being used.  If you note any incompatibilities, please raise an issue on github and we'll look to rectify as soon as possible via a fix or additioanl  guidance where required.
+
 The SDKs are generated based on the OpenAPI specification provided by the Grid API service using the [Open API Generator](https://openapi-generator.tech/). This same generator can be used to generate other clients. For example, to build a Rust client, you could execute...
 
 ```bash
 openapi-generator generate -i http://localhost:5073/swagger/v1/swagger.json -g rust -o ./rust
 ```
 
-Some additional clients that could be generated, but are not supported by the GSF, include:
+Some additional clients that could be generated, and include:
 
 -   Android
 -   C/C++
