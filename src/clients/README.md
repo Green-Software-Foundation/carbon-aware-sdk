@@ -4,11 +4,11 @@ While the web endpoints for the Grid API can be used consumed directly via REST,
 
 There are several example SDKs that are generated using the scripts currently. Those include:
 
--   **Java**: _link to the latest package_
--   **Python**: _link to the latest package_
--   **JavaScript**: _link to the latest package_
--   **C#**: _link to the latest package_
--   **Golang**: _link to the latest package_
+-   Java
+-   Python
+-   JavaScript
+-   C#
+-   Golang
 
 *Note:* The generated clients may have imcompatibility at times due to external factors, such as a new language version being used.  If you note any incompatibilities, please raise an issue on github and we'll look to rectify as soon as possible via a fix or additioanl  guidance where required.
 
