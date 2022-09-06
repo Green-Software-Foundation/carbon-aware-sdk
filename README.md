@@ -24,7 +24,7 @@ The CLI tends to be handy for legacy integration and non-cloud deployments, wher
 
 # Who Is Using the Carbon Aware SDK?
 
-The Carbon Aware SDK is being used by large and small companies around the world. Some of the world’s biggest enterpises and software companies, through to start-ups.
+The Carbon Aware SDK is being used by large and small companies around the world. Some of the world’s biggest enterprises and software companies, through to start-ups.
 
 Machine Learning (ML) workloads are a great example of long running compute intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be reduced even further, at times by up to 50% or more.
 
