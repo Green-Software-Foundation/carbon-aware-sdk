@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "21d4deac-174d-4e46-a864-9ffe5b760a7b",
+		"name": "Integration Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetEmissionsByLocation: eastus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     pm.response.to.be.ok;",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"must have at least 1 return\", function() {",
+							"    const resp = pm.response.json();",
+							"    pm.expect(resp.length).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"each response has the proper keys\", function() {",
+							"    const resp = pm.response.json();",
+							"    for (j = 0; j < resp.length; j++) {",
+							"        pm.expect(resp[j]).to.have.all.keys('location', 'time', 'rating');",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"each response is in east us\", function() {",
+							"    const resp = pm.response.json();",
+							"    for (j = 0; j < resp.length; j++) {",
+							"        pm.expect(resp[j].location).to.eql('eastus');",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/emissions/byLocation?location=eastus",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"emissions",
+						"byLocation"
+					],
+					"query": [
+						{
+							"key": "location",
+							"value": "eastus"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetEmissionsByLocation: eastus, time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"response must be valid and have a body\", function () {",
+							"     pm.response.to.be.ok;",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"must have at least 1 return\", function() {",
+							"    const resp = pm.response.json();",
+							"    pm.expect(resp.length).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"each response has the proper keys\", function() {",
+							"    const resp = pm.response.json();",
+							"    for (j = 0; j < resp.length; j++) {",
+							"        pm.expect(resp[j]).to.have.all.keys('location', 'time', 'rating');",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"each response is in east us\", function() {",
+							"    const resp = pm.response.json();",
+							"    for (j = 0; j < resp.length; j++) {",
+							"        pm.expect(resp[j].location).to.eql('eastus');",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"each response is in the range\", function() {",
+							"    const resp = pm.response.json();",
+							"    var start = new Date(\"2022-05-10T00:00:00.000Z\").getTime();",
+							"    var end = new Date(\"2022-05-11T00:00:00.000Z\").getTime();",
+							"    for (j = 0; j < resp.length; j++) {",
+							"        var time = new Date(resp[j].time).getTime();",
+							"        pm.expect(time >= start).to.be.true;",
+							"        pm.expect(time <= end).to.be.true;",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{base_url}}/emissions/byLocation?location=eastus&time=2022-05-10T00:00:00.000Z&toTime=2022-05-11T00:00:00.000Z",
+					"protocol": "http",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"emissions",
+						"byLocation"
+					],
+					"query": [
+						{
+							"key": "location",
+							"value": "eastus"
+						},
+						{
+							"key": "time",
+							"value": "2022-05-10T00:00:00.000Z"
+						},
+						{
+							"key": "toTime",
+							"value": "2022-05-11T00:00:00.000Z"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
