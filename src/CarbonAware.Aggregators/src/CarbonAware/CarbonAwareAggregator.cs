@@ -206,10 +206,16 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             return Array.Empty<EmissionsData>();
         }
 
-        var bestResult = emissionsData.MinBy(x => x.Rating);
-        return (bestResult != null) ?
-            emissionsData.Where(x => x.Rating == bestResult.Rating):
-            Array.Empty<EmissionsData>();
+        var bestResults = emissionsData.MinBy(x => x.Rating);
+
+        IEnumerable<EmissionsData> results = Array.Empty<EmissionsData>();
+
+        if(bestResults != null)
+        {
+            results = emissionsData.Where(x => x.Rating == bestResults.Rating);
+        }
+
+        return results;
     }
 
     /// <summary>

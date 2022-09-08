@@ -65,12 +65,8 @@ public class CarbonAwareCLI
             { CarbonAwareConstants.End, _state.ToTime },
             { CarbonAwareConstants.Best, true }
         };
-        return await GetEmissionsDataAsync(props);
-    }
 
-    private async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(Dictionary<string, object> props)
-    {
-        if ((bool)props[CarbonAwareConstants.Best])
+        if (_state.Lowest)
         {
             return await _aggregator.GetBestEmissionsDataAsync(props);
         }
