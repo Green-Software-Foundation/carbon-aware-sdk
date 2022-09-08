@@ -14,8 +14,8 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
     public DateTimeOffset GeneratedAt { get; set; }
 
     /// <summary>
-    /// The optimal forecasted data point within the 'forecastData' array.
-    /// Null if 'forecastData' array is empty.
+    /// The optimal forecasted data points within the 'forecastData' array.
+    /// Returns empty array if 'forecastData' array is empty.
     /// </summary>
     /// <example>
     /// {
@@ -26,7 +26,7 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
     /// }
     /// </example>
     [JsonPropertyName("optimalDataPoint")]
-    public EmissionsDataDTO? OptimalDataPoint { get; set; }
+    public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
 
     /// <summary>
     /// The forecasted data points transformed and filtered to reflect the specified time and window parameters.
@@ -67,9 +67,30 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
             DataStartAt = emissionsForecast.DataStartAt,
             DataEndAt = emissionsForecast.DataEndAt,
             WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
-            OptimalDataPoint = EmissionsDataDTO.FromEmissionsData(emissionsForecast.OptimalDataPoint),
+            OptimalDataPoints = GetOptimalDataPointsDTO(emissionsForecast.OptimalDataPoints),
             ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
             RequestedAt = emissionsForecast.RequestedAt
         };
+    }
+
+    private static IEnumerable<EmissionsDataDTO> GetOptimalDataPointsDTO(IEnumerable<EmissionsData> optimalDataPoints)
+    {
+        if (optimalDataPoints == null)
+        {
+            return Array.Empty<EmissionsDataDTO>();
+        }
+
+        var results = new List<EmissionsDataDTO>();
+
+        foreach (EmissionsData optimalPoint in optimalDataPoints)
+        {
+            var optimalPointDTO = EmissionsDataDTO.FromEmissionsData(optimalPoint);
+            if(optimalPointDTO != null)
+            {
+                results.Add(optimalPointDTO);
+            }
+        }
+
+        return results;
     }
 }

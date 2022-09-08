@@ -204,7 +204,7 @@ public class CarbonAwareAggregatorTests
         var results = await this.Aggregator.GetCurrentForecastDataAsync(props);
         var forecast = results.First();
         var firstDataPoint = forecast.ForecastData.First();
-        var optimalDataPoint = forecast.OptimalDataPoint;
+        var optimalDataPoint = forecast.OptimalDataPoints.First();
 
         Assert.AreEqual(firstDataPoint, optimalDataPoint);
     }
@@ -367,7 +367,7 @@ public class CarbonAwareAggregatorTests
 
         var forecast = await this.Aggregator.GetForecastDataAsync(props);
         var firstDataPoint = forecast.ForecastData.First();
-        var optimalDataPoint = forecast.OptimalDataPoint;
+        var optimalDataPoint = forecast.OptimalDataPoints.First();
 
         Assert.AreEqual(firstDataPoint, optimalDataPoint);
     }

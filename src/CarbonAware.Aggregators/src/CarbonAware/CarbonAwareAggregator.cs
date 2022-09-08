@@ -182,21 +182,12 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         forecast.Validate();
         forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
         forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, forecast.DataStartAt, forecast.DataEndAt);
-        forecast.OptimalDataPoint = GetOptimalEmission(forecast.ForecastData);
+        forecast.OptimalDataPoints = GetOptimalEmissions(forecast.ForecastData);
         if (forecast.ForecastData.Any())
         {
             forecast.WindowSize = forecast.ForecastData.First().Duration;
         }
         return forecast;
-    }
-
-    private EmissionsData? GetOptimalEmission(IEnumerable<EmissionsData> emissionsData)
-    {
-        if (!emissionsData.Any())
-        {
-            return null;
-        }
-        return emissionsData.MinBy(x => x.Rating);
     }
 
     private IEnumerable<EmissionsData> GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
@@ -206,13 +197,13 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             return Array.Empty<EmissionsData>();
         }
 
-        var bestResults = emissionsData.MinBy(x => x.Rating);
+        var bestResult = emissionsData.MinBy(x => x.Rating);
 
         IEnumerable<EmissionsData> results = Array.Empty<EmissionsData>();
 
-        if(bestResults != null)
+        if(bestResult != null)
         {
-            results = emissionsData.Where(x => x.Rating == bestResults.Rating);
+            results = emissionsData.Where(x => x.Rating == bestResult.Rating);
         }
 
         return results;
