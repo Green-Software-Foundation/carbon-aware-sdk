@@ -41,8 +41,8 @@ public class ElectricityMapClientTests
     [SetUp]
     public void Initialize()
     {
-        this.Configuration = new ElectricityMapClientConfiguration() { Token = Environment.GetEnvironmentVariable("electricityMapClient__token") };
-
+        //this.Configuration = new ElectricityMapClientConfiguration() { Token = Environment.GetEnvironmentVariable("electricityMapClient__token") };
+        this.Configuration = new ElectricityMapClientConfiguration() { Token = "myDefaultToken123" };
         this.Options = new Mock<IOptionsMonitor<ElectricityMapClientConfiguration>>();
         this.Log = new Mock<ILogger<ElectricityMapClient>>();
 
@@ -77,7 +77,7 @@ public class ElectricityMapClientTests
 
 
         var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-        client.SetBearerAuthenticationHeader(Configuration.Token);
+        client.SetAuthTokenAuthenticationHeader(Configuration.Token);
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(zone.countryCode));
@@ -94,7 +94,7 @@ public class ElectricityMapClientTests
         });
 
         var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-        client.SetBearerAuthenticationHeader(Configuration.Token);
+        client.SetAuthTokenAuthenticationHeader(Configuration.Token);
         var zone = new Zone() { countryCode = "AUS-NSW" };
 
         Assert.ThrowsAsync<ElectricityMapClientException>(async () => await client.GetCurrentForecastAsync(zone.countryCode));
@@ -113,7 +113,7 @@ public class ElectricityMapClientTests
         });
 
         var client = new ElectricityMapClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-        client.SetBearerAuthenticationHeader(Configuration.Token);
+        client.SetAuthTokenAuthenticationHeader(Configuration.Token);
 
         var zone = new Zone() { countryCode = "AUS-NSW" };
 

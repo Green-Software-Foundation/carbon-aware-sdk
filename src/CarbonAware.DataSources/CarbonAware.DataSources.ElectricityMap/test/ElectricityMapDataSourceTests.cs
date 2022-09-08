@@ -95,8 +95,6 @@ public class ElectricityMapDataSourceTests
         Assert.IsNotNull(lastDataPoint);
         Assert.AreEqual(data.CarbonIntensity, lastDataPoint.Rating);
         Assert.AreEqual(zone.countryCode, lastDataPoint.Location);
-
-        this.LocationSource.Verify(r => r.ToGeopositionLocationAsync(location));
     }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

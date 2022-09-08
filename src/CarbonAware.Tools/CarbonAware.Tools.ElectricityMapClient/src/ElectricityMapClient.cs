@@ -63,8 +63,16 @@ public class ElectricityMapClient : IElectricityMapClient
         };
 
         var result = await this.MakeRequestAsync(parameters, tags);
+ 
+        var emission_data = JsonSerializer.Deserialize<GridEmissionDataPoint?>(result, options) ?? throw new ElectricityMapClientException($"Error getting forecast for  {countryCodeAbbreviation}");
 
-        var forecast = JsonSerializer.Deserialize<Forecast?>(result, options) ?? throw new ElectricityMapClientException($"Error getting forecast for  {countryCodeAbbreviation}");
+        // convert from emissiondata to forecast
+        var forecastdata = new List<GridEmissionDataPoint>(){ emission_data };
+        var forecast = new Forecast()
+        {
+            GeneratedAt = emission_data.Data.Datetime,
+            ForecastData = forecastdata
+        };
 
         return forecast;
     }
@@ -77,21 +85,22 @@ public class ElectricityMapClient : IElectricityMapClient
 
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
     {
+        await this.EnsureTokenAsync();
+
         var response = await this.client.GetAsync(uriPath);
 
         if (RetriableStatusCodes.Contains(response.StatusCode))
         {
             Log.LogDebug("Failed to get url {url} with status code {statusCode}.  Attempting to log in again.", uriPath, response.StatusCode);
+            await this.UpdateAuthTokenAsync();
             response = await this.client.GetAsync(uriPath);
         }
 
         if (!response.IsSuccessStatusCode)
         {
             Log.LogError("Error getting data from electricityMap.  StatusCode: {statusCode}. Response: {response}", response.StatusCode, response);
-
             throw new ElectricityMapClientHttpException($"Error getting data from electricityMap: {response.StatusCode}", response);
         }
-
         return response;
     }
 
@@ -108,11 +117,27 @@ public class ElectricityMapClient : IElectricityMapClient
         return await response.Content.ReadAsStreamAsync();
     }
 
-    internal void SetBearerAuthenticationHeader(string token)
+    private async Task EnsureTokenAsync()
     {
-        this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Token, token);
+        if (!this.client.DefaultRequestHeaders.Contains("auth-token"))
+        {
+            await this.UpdateAuthTokenAsync();
+        }
     }
 
+    private async Task UpdateAuthTokenAsync()
+    {
+        using (var activity = Activity.StartActivity())
+        {
+            Log.LogInformation("Attempting to log using token {token}", this.Configuration.Token);
+            this.SetAuthTokenAuthenticationHeader(this.Configuration.Token);
+        }
+    }
+
+    internal void SetAuthTokenAuthenticationHeader(string token)
+    {
+        this.client.DefaultRequestHeaders.Add("auth-token", token);
+    }
 
     // Overload method for electricity Map Personal 
     private async Task<string> MakeRequestAsync(Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)

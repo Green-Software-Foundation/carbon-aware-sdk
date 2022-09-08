@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CarbonAware.DataSources.Json\src\CarbonAware.DataSources.Json.csproj" />
     <ProjectReference Include="..\CarbonAware.DataSources.WattTime\src\CarbonAware.DataSources.WattTime.csproj" />
+    <ProjectReference Include="..\CarbonAware.DataSources.ElectricityMap\src\CarbonAware.DataSources.ElectricityMap.csproj" />
   </ItemGroup>
 
 </Project>
