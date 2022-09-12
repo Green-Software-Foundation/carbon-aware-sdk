@@ -163,6 +163,20 @@ To improve performance communicating with the WattTime API service, the client c
 WattTimeClient__BalancingAuthorityCacheTTL="90"
 ```
 
+### JsonDataConfiguration data file location
+By setting `JsonDataSourceConfiguration__DataFileLocation=newdataset.json` property when `CarbonAwareVars__CarbonIntensityDataSource=JSON` is set or there is not data source defined (`JSON` is by default), the user can specify a file that can contains custom `EmissionsData` sets. The file should be located under the `<user's repo>/src/data/data-files` directory that is part of the repository. At build time, all the files under `<user's repo>/src/data`  are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publsh]/net6.0/data-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/data-sources/json`. This can be done before the application starts by setting `JsonDataSourceConfiguration__DataFileLocation` environment variable.
+```sh
+cp <mydir>/newdataset.json /app/data-sources/json
+export CarbonAwareVars__CarbonIntensityDataSource=JSON
+export JsonDataSourceConfiguration__DataFileLocation=newdataset.json
+dotnet /app/CarbonAware.WebApi.dll
+```
+As soon a first request is performed, a log entry shows:
+```sh
+info: CarbonAware.DataSources.Json.JsonDataSource[0]
+    Reading Json data from /app/data-sources/json/newdataset.json
+```
+
 ### Sample Environment Variable Configuration Using WattTime
 
 ```bash

@@ -10,18 +10,4 @@
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <None Remove="sample-emissions-data.json" />
-    <None Remove="test-data-azure-emissions.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="..\..\..\data\data-files\sample-emissions-data.json" />
-    <EmbeddedResource Include="..\..\..\data\data-files\test-data-azure-emissions.json" />
-  </ItemGroup>
 </Project>
