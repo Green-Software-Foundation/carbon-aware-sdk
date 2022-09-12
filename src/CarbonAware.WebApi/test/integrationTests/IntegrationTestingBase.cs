@@ -78,6 +78,8 @@ public abstract class IntegrationTestingBase
             case DataSourceType.JSON:
                 {
                     Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "JSON");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__VerboseApi", "true");
+                    Environment.SetEnvironmentVariable("JsonDataSourceConfiguration__DataFileLocation", "demo.json");
                     _dataSourceMocker = new JsonDataSourceMocker();
                     break;
                 }

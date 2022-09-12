@@ -28,4 +28,8 @@
     <ProjectReference Include="..\..\src\CarbonAware.WebApi.csproj" />
   </ItemGroup>
 
+  <Target Name="CopyDataFiles" AfterTargets="Build">
+    <Copy SourceFiles="$(ProjectDir)..\..\..\data\data-sources\test-data-azure-emissions.json" DestinationFiles="$(TargetDir)\data-sources\json\demo.json" SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>
