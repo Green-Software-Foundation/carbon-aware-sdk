@@ -11,7 +11,7 @@ Get started on creating sustainable software innovation for a greener future tod
 
 # Getting Started
 
-Head on over to the Getting Started guide to get up and running.
+Head on over to the [Getting Started Guide](./GettingStarted.md) to get up and running.
 
 # What is the Carbon Aware SDK?
 
@@ -33,7 +33,7 @@ Machine Learning (ML) workloads are a great example of long running compute inte
 
 # Contributing
 
-The Carbon Aware SDK is open for contribution! Want to contribute? Check out the contribution guide.
+The Carbon Aware SDK is open for contribution! Want to contribute? Check out the [contribution guide](./CONTRIBUTING.md).
 
 # Green Software Foundation Project Summary
 
