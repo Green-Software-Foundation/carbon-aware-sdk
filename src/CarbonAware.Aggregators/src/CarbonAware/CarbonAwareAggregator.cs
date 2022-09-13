@@ -30,9 +30,8 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     {
         using (var activity = Activity.StartActivity())
         { 
-            var (start, end, returnAllResults) = this.GetAndValidateLocationTimeWindow(props);
-            var results = await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
-            return results;
+            var (start, end) = this.GetAndValidateLocationTimeWindow(props);
+            return await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
         }
     }
 
@@ -107,19 +106,19 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     /// <returns>A start and end DateTimeOffset validated based on potential missing user input on start and end values.
     /// Also returns flag if either or both start and end times are missing.
     /// </returns>
-    private (DateTimeOffset, DateTimeOffset, Boolean) GetAndValidateLocationTimeWindow(IDictionary props)
+    private (DateTimeOffset, DateTimeOffset) GetAndValidateLocationTimeWindow(IDictionary props)
     {
         var startProp = props[CarbonAwareConstants.Start];
         var endProp = props[CarbonAwareConstants.End];
 
         DateTimeOffset windowStart;
         DateTimeOffset windowEnd;
-        bool returnAllResults = false;
 
+        windowStart = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
+            
         if(endProp is null)
         {
-            windowEnd = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
-            windowStart = windowEnd.AddMinutes(-5);
+            windowEnd = windowStart;
         } 
         else
         {
@@ -130,12 +129,10 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
                 throw ex;
             }
 
-            windowStart = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
             windowEnd = this.GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.UtcNow);
-            returnAllResults = true;
         }
 
-        return (windowStart, windowEnd, returnAllResults);
+        return (windowStart, windowEnd);
     }
 
     /// <summary>
