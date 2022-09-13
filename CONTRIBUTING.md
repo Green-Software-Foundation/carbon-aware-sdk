@@ -31,3 +31,12 @@ For the following:
 All contributions to the GSF are tracked through public issues. Please make a public issue and fill out details on the proposed feature contribution. The issue serves as a commitment by the contributor to developing the feature. 
 
 The Issue is **not** a feature request, but tracks expected feature work. Please do **not** open an issue to request features.
+
+## Collaborating With the WG
+
+1. Create a [new Issue](https://github.com/Green-Software-Foundation/standards_wg/issues/new)
+2. Discuss Issue with WG --> Create PR if required
+3. PR to be submitted against the **DEV feature branch**
+4. PR discussed with the WG. If agreed, the WG Chair will merge into **DEV Feature branch**
+![GSF Single-Trunk Based Branch Flow](/docs/images/single-trunk-branch.svg)
+5. See [The Way we Work](https://github.com/Green-Software-Foundation/standards_wg/blob/main/the_way_we_work.md) for futher details.
