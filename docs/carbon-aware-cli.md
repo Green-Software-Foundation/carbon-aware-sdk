@@ -1,6 +1,10 @@
-# Carbon Aware CLI Reference
+# Carbon Aware CLI
 
-The following is the documentation for the Carbon Aware CLI
+The CLI is best for use with systems you can not change the code in but can invoke command line.  For example - build pipelines.
+
+The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via command line and outputs the results as json to stdout.  
+
+> You can use the CLI via a docker image.
 
 ## Format
 
