@@ -2,97 +2,98 @@
 
 The following is the documentation for the Carbon Aware CLI
 
-## Format
+- [Carbon Aware CLI Reference](#carbon-aware-cli-reference)
+  - [Build and Install](#build-and-install)
+  - [Using the CLI](#using-the-cli)
+    - [emissions](#emissions)
+      - [Description](#description)
+      - [Usage](#usage)
+      - [Options](#options)
+      - [Examples](#examples)
+        - [Single Location Emissions](#single-location-emissions)
+        - [Multiple Location Emissions](#multiple-location-emissions)
+        - [Emissions with Start and End Times](#emissions-with-start-and-end-times)
 
-`$ CarbonAwareCLI -t <time> -l <location 1> <location 2> -d <path to data file>`
+## Build and Install
 
+Build the CLI using the `dotnet publish` command:
 
-## Parameters
+```bash
+dotnet publish ./src/CarbonAware.CLI/src/CarbonAware.CLI.csproj -c Release -o <your desired installation path>
+```
 
-| Short  | Long         | Required / Optional | Description | 
-|--------|--------------|---------------------|-------------|
-| -l     | --location   | Required            |  The location is a comma seperated list of named locations or regions specific to the emissions data provided.           |
-| -d     | --data-file  | Required            | Path to the emissions source data file | 
-| -t     | --fromTime   | Optional            |  The desired date and time to retrieve the emissions for.  Defaults to 'now'. |
-| -o     | --output     | Optional            | Output format.  Options: console, json.  Default is `json` | 
-| -v     | --verbose    | Optional            | Verbose output | 
-|        | --lowest     | Optional            | Only return the results with the lowest emissions.  |
+> By default this will build for your host operating system.  To build for a platform other than your host platform you can specify the target runtime like this, using any valid [Runtime ID](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog#using-rids) (EG `win-x64`, `linux-x64`, `osx-x64`):
+>
+> ```bash
+> dotnet publish .\src\CarbonAware.CLI\src\CarbonAware.CLI.csproj -c Release -r <RuntimeID> --self-contained -o <your desired installation path>
+> ```
 
-## Examples
+## Using the CLI
 
-### Example 1 - Get the current emissions data for a specified location
-`$ ./CarbonAwareCLI -l westus -d "azure-emissions-data.json"`
-#### Response
-<pre>
-[
-  {
-    "Location": "westus",
-    "Time": "2021-11-17T04:45:11.5104572+00:00",
-    "Rating": 31.0
-  }
-]
-</pre>
+To use the CLI for the first time, navigate to your installation directory and run the binary with the `-h` flag to see the help menu.
 
-### Example 2 - Get the current emissions for multiple locations
- `$ ./CarbonAwareCLI -l westus eastus -d "azure-emissions-data.json"`
-#### Response
-<pre>
-[
-  {
-    "Location": "westus",
-    "Time": "2021-11-17T04:45:11.5104572+00:00",
-    "Rating": 31.0
-  },
-  {
-    "Location": "eastus",
-    "Time": "2021-11-17T04:45:11.509182+00:00",
-    "Rating": 59.0
-  }
-]
-</pre>
+On Windows: `.\caw.exe -h`
+On MacOS/Linux: `.\caw -h`
 
+### emissions
 
-### Example 3 - Get the emissions for multiple locations at a specified time
-`$ ./CarbonAwareCLI -l westus eastus -t 2021-11-28 -d "azure-emissions-data.json"`
-#### Response
-<pre>
-[
-  {
-    "Location": "westus",
-    "Time": "2021-11-27T20:45:11.5104595+00:00",
-    "Rating": 14.0
-  },
-  {
-    "Location": "eastus",
-    "Time": "2021-11-27T20:45:11.5092264+00:00",
-    "Rating": 17.0
-  }
-]
-</pre>
+#### Description
 
-### Example 4 - Get the lowest emissions for multiple locations at a specified time 
-`$ ./CarbonAwareCLI -l westus eastus -t 2021-11-28 --lowest -d "azure-emissions-data.json"`
-#### Response
-<pre>
-[
-  {
-    "Location": "westus",
-    "Time": "2021-11-27T20:45:11.5104595+00:00",
-    "Rating": 14.0
-  }
-]
-</pre>
+Retrieve emissions data from specified locations and time periods.
 
-### Example 5 - Get the lowest emissions for multiple locations at a specified time window
-`$ ./CarbonAwareCLI -l westus eastus -t 2021-11-27 --toTime 2021-11-29 --lowest -d "azure-emissions-data.json"`
-#### Response
-<pre>
-[
-  {
-    "Location": "eastus",
-    "Time": "2021-11-27T12:45:11.5092264+00:00",
-    "Rating": 5.0
-  }
-]
-</pre>
+#### Usage
 
+`caw emissions [options]`
+
+#### Options
+
+```text
+  -l, --location <location> (REQUIRED)  A named location
+  -s, --start-time <startTime>          Start time of emissions data
+  -e, --end-time <endTime>              End time of emissions data
+  -?, -h, --help                        Show help and usage information
+```
+
+#### Examples
+
+##### Single Location Emissions
+
+command: `.\caw.exe emissions -l eastus`
+
+output:
+
+```text
+[{"Location":"eastus","Time":"2022-08-30T12:45:11+00:00","Rating":65,"Duration":"08:00:00"},
+{"Location":"eastus","Time":"2022-08-30T20:45:11+00:00","Rating":65,"Duration":"08:00:00"},
+// ...
+{"Location":"eastus","Time":"2022-09-06T04:45:11+00:00","Rating":73,"Duration":"08:00:00"},
+{"Location":"eastus","Time":"2022-09-06T12:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+```
+
+##### Multiple Location Emissions
+
+command: `.\caw emissions -l eastus -l westus`
+
+output:
+
+```text
+[{"Location":"eastus","Time":"2022-08-30T12:45:11+00:00","Rating":65,"Duration":"08:00:00"},
+{"Location":"eastus","Time":"2022-08-30T20:45:11+00:00","Rating":65,"Duration":"08:00:00"},
+// ...
+{"Location":"westus","Time":"2022-09-06T04:45:11+00:00","Rating":73,"Duration":"08:00:00"},
+{"Location":"westus","Time":"2022-09-06T12:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+```
+
+##### Emissions with Start and End Times
+
+command: `.\caw emissions -l eastus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best`
+
+output:
+
+```text
+[{"Location":"eastus","Time":"2022-07-01T04:45:11+00:00","Rating":65,"Duration":"08:00:00"},
+{"Location":"eastus","Time":"2022-07-01T12:45:11+00:00","Rating":65,"Duration":"08:00:00"},
+// ...
+{"Location":"eastus","Time":"2022-07-31T12:45:11+00:00","Rating":73,"Duration":"08:00:00"},
+{"Location":"eastus","Time":"2022-07-31T20:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+```

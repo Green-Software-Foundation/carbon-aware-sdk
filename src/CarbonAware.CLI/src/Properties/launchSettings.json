@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "CarbonAwareCLI": {
-      "commandName": "Project",
-      "commandLineArgs": "-l eastus westus australiaeast northeurope -t 2021-12-28 --toTime 2021-12-30 -v --lowest "
-    }
-  }
-}
