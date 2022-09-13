@@ -18,12 +18,15 @@ Head on over to the [Getting Started Guide](./GettingStarted.md) to get up and r
 At its core the Carbon Aware SDK is a WebApi and Command Line Interface (CLI) to assist in building carbon aware software. The functionality across the CLI and WebApi is identical by design.
 
 ## The WebApi
-
 The WebApi is the preferred deployment within large organisations to centralise management and increase control and auditability, especially in regulated environments. It can be deployed as a container for easy management, and can be deployed alongside an application within a cluster or separately.
+
+![WebApi Screenshot](./images/screenshot_web_api.png)
 
 ## The CLI
 
 The CLI tends to be handy for legacy integration and non-cloud deployments, where a command-line can be used. This tends to be common with legacy DevOps pipelines to drive deployment for integration testing where you can test your deployment in the greenest location.
+
+![WebApi Screenshot](./images/screenshot_cli.png)
 
 # Who Is Using the Carbon Aware SDK?
 

@@ -22,7 +22,7 @@ public class CarbonAwareController : ControllerBase
     }
 
     /// <summary>
-    /// Calculate the best emission data by location for a specified time period.
+    /// Calculate the best emission data by list of locations for a specified time period.
     /// </summary>
     /// <param name="locations"> String array of named locations.</param>
     /// <param name="time"> [Optional] Start time for the data query.</param>
