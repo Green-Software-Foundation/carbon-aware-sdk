@@ -63,7 +63,6 @@ public class CarbonAwareCLI
             { CarbonAwareConstants.MultipleLocations, locations },
             { CarbonAwareConstants.Start, _state.Time },
             { CarbonAwareConstants.End, _state.ToTime },
-            { CarbonAwareConstants.Best, true }
         };
 
         if (_state.Lowest)

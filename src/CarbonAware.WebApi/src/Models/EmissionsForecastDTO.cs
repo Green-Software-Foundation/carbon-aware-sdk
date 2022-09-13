@@ -25,7 +25,7 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
     ///   "value": 359.23
     /// }
     /// </example>
-    [JsonPropertyName("optimalDataPoint")]
+    [JsonPropertyName("optimalDataPoints")]
     public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
 
     /// <summary>
@@ -67,7 +67,7 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
             DataStartAt = emissionsForecast.DataStartAt,
             DataEndAt = emissionsForecast.DataEndAt,
             WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
-            OptimalDataPoints = GetOptimalDataPointsDTO(emissionsForecast.OptimalDataPoints),
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
             ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
             RequestedAt = emissionsForecast.RequestedAt
         };
