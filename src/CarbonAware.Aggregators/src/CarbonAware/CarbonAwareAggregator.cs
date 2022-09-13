@@ -32,7 +32,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         { 
             var (start, end, returnAllResults) = this.GetAndValidateLocationTimeWindow(props);
             var results = await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
-            return (returnAllResults) ? results : this.EnsureSingleResult(results);
+            return results;
         }
     }
 
@@ -125,7 +125,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         {
             if (startProp is null)
             {
-                Exception ex = new ArgumentException("'time is requed if 'toTime' is passed");
+                Exception ex = new ArgumentException("'time is required if 'toTime' is passed");
                 _logger.LogError("argument exception", ex);
                 throw ex;
             }
