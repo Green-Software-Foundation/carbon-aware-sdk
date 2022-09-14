@@ -1,9 +1,9 @@
 using CarbonAware.DataSources.Configuration;
 using CarbonAware.WebApi.IntegrationTests;
+using CarbonAware.WebApi.Models;
 using NUnit.Framework;
 using System.Net;
 using System.Text.Json;
-using CarbonAware.WebApi.Models;
 
 namespace CarbonAware.WepApi.IntegrationTests;
 
@@ -58,7 +58,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
         queryStrings["time"] = $"{start:O}";
         queryStrings["toTime"] = $"{end:O}";
 
-        var endpointURI = ConstructUriWithQueryString(bestLocationsURI,queryStrings);
+        var endpointURI = ConstructUriWithQueryString(bestLocationsURI, queryStrings);
 
         //Get response and response content
         var result = await _client.GetAsync(endpointURI);
@@ -166,7 +166,8 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
         IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/batch'", DataSourceType.JSON);
 
         _dataSourceMocker.SetupForecastMock();
-        var forecastData = Enumerable.Range(0, 1).Select(x => new {
+        var forecastData = Enumerable.Range(0, 1).Select(x => new
+        {
             location = location,
             requestedAt = requestedAt
         });
@@ -187,7 +188,8 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
         var expectedDataStartAt = DateTimeOffset.Parse(start);
         var expectedDataEndAt = DateTimeOffset.Parse(end);
         _dataSourceMocker.SetupBatchForecastMock();
-        var inputData = Enumerable.Range(0, nelems).Select(x => new {
+        var inputData = Enumerable.Range(0, nelems).Select(x => new
+        {
             requestedAt = reqAt,
             dataStartAt = start,
             dataEndAt = end,
@@ -271,7 +273,8 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("westus", "2022-3-1T15:30:00Z", "2022-3-1T18:00:00Z", TestName = "EmissionsMarginalCarbonIntensityBatch returns BadRequest for wrong date format")]
     public async Task EmissionsMarginalCarbonIntensityBatch_MissingRequiredParams_ReturnsBadRequest(string location, string startTime, string endTime)
     {
-        var intesityData = Enumerable.Range(0, 1).Select(x => new {
+        var intesityData = Enumerable.Range(0, 1).Select(x => new
+        {
             location = location,
             startTime = startTime,
             endTime = endTime
@@ -289,7 +292,8 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
         _dataSourceMocker.SetupDataMock(startDate, endDate, location);
-        var intesityData = Enumerable.Range(0, nelems).Select(x => new {
+        var intesityData = Enumerable.Range(0, nelems).Select(x => new
+        {
             location = location,
             startTime = start,
             endTime = end

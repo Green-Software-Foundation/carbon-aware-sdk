@@ -1,4 +1,7 @@
 ﻿using CarbonAware.DataSources.Configuration;
+using CarbonAware.DataSources.Json.Mocks;
+using CarbonAware.DataSources.Mocks;
+using CarbonAware.DataSources.WattTime.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NUnit.Framework;
 using System.Net.Http.Headers;
@@ -95,9 +98,7 @@ public abstract class IntegrationTestingBase
                 }
         }
 
-        //Setup the WebAppFactory with custom settings as required by the datasource
-        //For instance, overriding specific clients with new URLs.
-        _factory = _dataSourceMocker.OverrideWebAppFactory(_factory);
+        // After initializing and configuring the data source, we can now create the client from our factory
         _client = _factory.CreateClient();
     }
 
