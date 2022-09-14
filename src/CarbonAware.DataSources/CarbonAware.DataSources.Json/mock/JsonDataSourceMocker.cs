@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using CarbonAware.DataSources.Mocks;
 
-namespace CarbonAware.WebApi.IntegrationTests;
+namespace CarbonAware.DataSources.Json.Mocks;
 public class JsonDataSourceMocker : IDataSourceMocker
 {
-    internal JsonDataSourceMocker() { }
+    public JsonDataSourceMocker() { }
 
     public void SetupDataMock(DateTimeOffset start, DateTimeOffset end, string location) { }
-
-    public WebApplicationFactory<Program> OverrideWebAppFactory(WebApplicationFactory<Program> factory)
-    {
-        return factory;
-    }
     public void SetupForecastMock() { }
     public void Initialize() { }
     public void Reset() { }

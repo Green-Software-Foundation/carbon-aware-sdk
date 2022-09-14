@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarbonAware.WebApi.IntegrationTests;
+namespace CarbonAware.DataSources.Mocks;
 
 /// <summary>
 /// This interface is used by the Integration Tests to set up data for different data sources
@@ -13,14 +6,6 @@ namespace CarbonAware.WebApi.IntegrationTests;
 /// </summary>
 public interface IDataSourceMocker
 {
-    /// <summary>
-    /// This method overrides configuration, service and builder settings in a web app factory
-    /// Used to add singletons or change config settings as needed for the datasource
-    /// </summary>
-    /// <param name="factory">The WebAppFactory passed in that will be overriden/changed</param>
-    /// <returns></returns>
-    public WebApplicationFactory<Program> OverrideWebAppFactory(WebApplicationFactory<Program> factory);
-
     /// <summary>
     /// This sets up a data endpoint with certain parameters so that it can be pinged.
     /// </summary>
