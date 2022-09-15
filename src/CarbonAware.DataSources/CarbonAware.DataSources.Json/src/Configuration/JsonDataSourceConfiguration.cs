@@ -10,7 +10,7 @@ public class JsonDataSourceConfiguration
 {
     private const string BaseDirectory = "data-sources/json";
     private const string DefaultDataFile = "test-data-azure-emissions.json";
-    private const string DirectoryRegExPattern = @"^[-/a-zA-Z_\d ]*$";
+    private const string DirectoryRegExPattern = @"^[-\\/a-zA-Z_\d ]*$";
     private string assemblyDirectory;
     private string? dataFileLocation;
 

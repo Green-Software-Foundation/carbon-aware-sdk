@@ -43,8 +43,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Azure.Test", "CarbonAware.LocationSources\CarbonAware.LocationSources.Azure\test\CarbonAware.LocationSources.Azure.Test.csproj", "{F4BD1233-447F-4245-AE7B-A877427EB2D7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.Tests", "CarbonAware.CLI\test\CarbonAware.CLI.Tests.csproj", "{45366BC0-B982-4140-AFF2-54CF40583FDE}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.IntegrationTests", "CarbonAware.WebApi\test\integrationTests\CarbonAware.WebApi.IntegrationTests.csproj", "{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Mocks", "CarbonAware.DataSources\CarbonAware.DataSources.Mocks\mock\CarbonAware.DataSources.Mocks.csproj", "{A4928C64-8F2D-4AA9-8563-C36178CEAA1D}"
@@ -52,6 +50,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Json.Mocks", "CarbonAware.DataSources\CarbonAware.DataSources.Json\mock\CarbonAware.DataSources.Json.Mocks.csproj", "{BACD9DDF-2C7E-45E5-ADB8-539722A8645D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.WattTime.Mocks", "CarbonAware.DataSources\CarbonAware.DataSources.WattTime\mock\CarbonAware.DataSources.WattTime.Mocks.csproj", "{69DA1C7F-740E-406D-B62F-7E84175378B2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.IntegrationTests", "CarbonAware.CLI\test\integrationTests\CarbonAware.CLI.IntegrationTests.csproj", "{C0F13A86-0C5A-4108-A51A-14760BA22063}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -139,10 +139,6 @@ Global
 		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4BD1233-447F-4245-AE7B-A877427EB2D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45366BC0-B982-4140-AFF2-54CF40583FDE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,6 +155,10 @@ Global
 		{69DA1C7F-740E-406D-B62F-7E84175378B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69DA1C7F-740E-406D-B62F-7E84175378B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69DA1C7F-740E-406D-B62F-7E84175378B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
