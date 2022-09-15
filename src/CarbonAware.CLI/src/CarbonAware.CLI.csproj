@@ -52,11 +52,19 @@
   </ItemGroup>
 
  <Target Name="CopyDataFiles" AfterTargets="Build">
-		<ItemGroup>
-			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
-		</ItemGroup>
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)..\..\data\data-files\**\*.*" />
+    </ItemGroup>
 
-		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files\" SkipUnchangedFiles="true" />
-	</Target>
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-sources\json\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyDataFilesForPublish" AfterTargets="Publish">
+    <ItemGroup>
+      <DataFiles Include="$(ProjectDir)..\..\data\data-files\**\*.*" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(PublishDir)\data-sources\json\%(RecursiveDir)" SkipUnchangedFiles="true" />
+  </Target>
 	
 </Project>

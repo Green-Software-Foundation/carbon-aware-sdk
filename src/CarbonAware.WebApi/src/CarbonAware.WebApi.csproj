@@ -53,7 +53,7 @@
     <Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-sources\json\%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
-  <Target Name="CopyDataFilesForPublish" AfterTargets="AfterPublish">
+  <Target Name="CopyDataFilesForPublish" AfterTargets="Publish">
     <ItemGroup>
       <DataFiles Include="$(ProjectDir)..\..\data\data-files\**\*.*" />
     </ItemGroup>
