@@ -72,25 +72,4 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
             RequestedAt = emissionsForecast.RequestedAt
         };
     }
-
-    private static IEnumerable<EmissionsDataDTO> GetOptimalDataPointsDTO(IEnumerable<EmissionsData> optimalDataPoints)
-    {
-        if (optimalDataPoints == null)
-        {
-            return Array.Empty<EmissionsDataDTO>();
-        }
-
-        var results = new List<EmissionsDataDTO>();
-
-        foreach (EmissionsData optimalPoint in optimalDataPoints)
-        {
-            var optimalPointDTO = EmissionsDataDTO.FromEmissionsData(optimalPoint);
-            if(optimalPointDTO != null)
-            {
-                results.Add(optimalPointDTO);
-            }
-        }
-
-        return results;
-    }
 }
