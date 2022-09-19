@@ -61,6 +61,24 @@ namespace CarbonAware.CLI.Commands.Emissions {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Outputs the weighted average of all data points within the start and end time boundaries..
+        /// </summary>
+        internal static string AverageDescription {
+            get {
+                return ResourceManager.GetString("AverageDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter results down to the best (typically lowest) data point.
+        /// </summary>
+        internal static string BestDescription {
+            get {
+                return ResourceManager.GetString("BestDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Emissions command keyword to retrieve emissions data.
         /// </summary>
         internal static string EmissionsCommandDescription {

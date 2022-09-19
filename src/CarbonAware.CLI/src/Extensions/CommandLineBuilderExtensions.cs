@@ -28,11 +28,14 @@ public static class CommandLineBuilderExtensions
             context.Console.Error.Write($"{httpResponseException.Status}\n");
             context.Console.Error.Write($"{httpResponseException.Detail}\n");
             exitCode = ExitCode.DataSourceError;
-        } else if (exception is ArgumentException){
+        }
+        else if (exception is ArgumentException)
+        {
             context.Console.Error.Write($"{exception.Message}\n");
             foreach (DictionaryEntry entry in exception.Data)
             {
-                if (entry.Value is string[] messages && entry.Key is string key){
+                if (entry.Value is string[] messages && entry.Key is string key)
+                {
                     context.Console.Error.Write($"{key}: ");
                     foreach (var message in messages)
                     {
@@ -41,7 +44,9 @@ public static class CommandLineBuilderExtensions
                 }
             }
             exitCode = ExitCode.InvalidArguments;
-        } else {
+        }
+        else
+        {
             context.Console.Error.Write($"{exception.Message}\n");
         }
         context.ExitCode = (int)exitCode;

@@ -51,6 +51,8 @@ Retrieve emissions data from specified locations and time periods.
   -l, --location <location> (REQUIRED)  A named location
   -s, --start-time <startTime>          Start time of emissions data
   -e, --end-time <endTime>              End time of emissions data
+  -b, --best                            Filter results down to the best (typically lowest) data point.
+  -a, --average                         Outputs the weighted average of all data points within the start and end time boundaries.
   -?, -h, --help                        Show help and usage information
 ```
 
@@ -96,4 +98,26 @@ output:
 // ...
 {"Location":"eastus","Time":"2022-07-31T12:45:11+00:00","Rating":73,"Duration":"08:00:00"},
 {"Location":"eastus","Time":"2022-07-31T20:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+```
+
+
+##### Best Emissions
+
+command: `.\caw emissions -l eastus -l westus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best`
+
+output:
+
+```text
+[{"Location":"eastus","Time":"2022-07-08T04:45:11+00:00","Rating":48,"Duration":"08:00:00"}]
+```
+
+##### Average Emissions
+
+command: `.\caw emissions -l eastus -l westus --start-time 2022-07-09T00:00:00Z --end-time 2022-07-09T12:00:00Z --average`
+
+output:
+
+```text
+[{"Location":"eastus","Time":"2022-07-09T00:00:00+00:00","Rating":79.357,"Duration":"12:00:00"},
+{"Location":"westus","Time":"2022-07-09T00:00:00+00:00","Rating":86.91243,"Duration":"12:00:00"}]
 ```

@@ -83,4 +83,53 @@ public class EmissionsCommandTests : IntegrationTestingBase
         Assert.IsNotNull(firstResult["Rating"]);
         Assert.IsNotNull(firstResult["Duration"]);
     }
+
+    [Test]
+    public async Task Emissions_BestOption_ReturnsExpectedData()
+    {
+        // Arrange
+        var start = DateTimeOffset.Parse("2022-09-01T00:00:00Z");
+        var end = DateTimeOffset.Parse("2022-09-01T03:00:00Z");
+        var location = "eastus";
+        _dataSourceMocker.SetupDataMock(start, end, location);
+
+        // Act
+        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:01:00Z -e 2022-09-01T02:04:00Z -b");
+
+        // Assert
+        Assert.AreEqual(0, exitCode);
+
+        var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
+        var firstResult = jsonResults.First()!.AsObject();
+        Assert.AreEqual(1, jsonResults.Count);
+        Assert.IsNotNull(firstResult["Location"]);
+        Assert.IsNotNull(firstResult["Time"]);
+        Assert.IsNotNull(firstResult["Rating"]);
+        Assert.IsNotNull(firstResult["Duration"]);
+    }
+
+    [Test]
+    public async Task Emissions_AverageOption_ReturnsExpectedData()
+    {
+        // Arrange
+        var start = DateTimeOffset.Parse("2022-09-01T00:00:00Z");
+        var end = DateTimeOffset.Parse("2022-09-01T03:00:00Z");
+        var location = "eastus";
+        _dataSourceMocker.SetupDataMock(start, end, location);
+
+        // Act
+        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:01:00Z -e 2022-09-01T02:04:00Z -a");
+
+        // Assert
+        Assert.AreEqual(0, exitCode);
+
+        var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
+        var firstResult = jsonResults.First()!.AsObject();
+        Assert.AreEqual(1, jsonResults.Count);
+        Assert.IsNotNull(firstResult["Location"]);
+        Assert.IsNotNull(firstResult["Time"]);
+        Assert.IsNotNull(firstResult["Rating"]);
+        Assert.IsNotNull(firstResult["Duration"]);
+    }
+
 }
