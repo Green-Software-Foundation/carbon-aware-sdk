@@ -30,7 +30,7 @@ public class CarbonAwareController : ControllerBase
     /// <param name="durationMinutes"> [Optional] Duration for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EmissionsData))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocations/best")]
@@ -48,8 +48,9 @@ public class CarbonAwareController : ControllerBase
                 { CarbonAwareConstants.Best, true }
             };
 
-            var response = await _aggregator.GetBestEmissionsDataAsync(props);
-            return response != null ? Ok(response) : NoContent();
+            IEnumerable<EmissionsData> response = await _aggregator.GetBestEmissionsDataAsync(props);
+
+            return response.Any() ? Ok(response) : NoContent();
         }
     }
 

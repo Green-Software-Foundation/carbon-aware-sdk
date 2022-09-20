@@ -212,7 +212,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
                     Assert.That(forecast.DataEndAt, Is.EqualTo(expectedDataEndAt));
                     Assert.That(forecast.RequestedAt, Is.EqualTo(expectedRequestedAt));
                     Assert.That(forecast.GeneratedAt, Is.Not.Null);
-                    Assert.That(forecast.OptimalDataPoint, Is.Not.Null);
+                    Assert.That(forecast.OptimalDataPoints, Is.Not.Null);
                     Assert.That(forecast.ForecastData, Is.Not.Null);
                 }
             }

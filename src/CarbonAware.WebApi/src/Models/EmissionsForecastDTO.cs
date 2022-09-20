@@ -14,8 +14,8 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
     public DateTimeOffset GeneratedAt { get; set; }
 
     /// <summary>
-    /// The optimal forecasted data point within the 'forecastData' array.
-    /// Null if 'forecastData' array is empty.
+    /// The optimal forecasted data points within the 'forecastData' array.
+    /// Returns empty array if 'forecastData' array is empty.
     /// </summary>
     /// <example>
     /// {
@@ -25,8 +25,8 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
     ///   "value": 359.23
     /// }
     /// </example>
-    [JsonPropertyName("optimalDataPoint")]
-    public EmissionsDataDTO? OptimalDataPoint { get; set; }
+    [JsonPropertyName("optimalDataPoints")]
+    public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
 
     /// <summary>
     /// The forecasted data points transformed and filtered to reflect the specified time and window parameters.
@@ -67,7 +67,7 @@ public record EmissionsForecastDTO : EmissionsForecastBaseDTO
             DataStartAt = emissionsForecast.DataStartAt,
             DataEndAt = emissionsForecast.DataEndAt,
             WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
-            OptimalDataPoint = EmissionsDataDTO.FromEmissionsData(emissionsForecast.OptimalDataPoint),
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
             ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
             RequestedAt = emissionsForecast.RequestedAt
         };

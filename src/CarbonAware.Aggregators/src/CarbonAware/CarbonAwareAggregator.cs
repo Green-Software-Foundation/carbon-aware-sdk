@@ -30,9 +30,8 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     {
         using (var activity = Activity.StartActivity())
         { 
-            var (start, end, returnAllResults) = this.GetAndValidateLocationTimeWindow(props);
-            var results = await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
-            return (returnAllResults) ? results : this.EnsureSingleResult(results);
+            var (start, end) = this.GetAndValidateLocationTimeWindow(props);
+            return await this._dataSource.GetCarbonIntensityAsync(GetMutlipleLocationsOrThrow(props), start, end);
         }
     }
 
@@ -43,7 +42,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
 
 
     /// <inheritdoc />
-    public async Task<EmissionsData?> GetBestEmissionsDataAsync(IDictionary props)
+    public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(IDictionary props)
     {
         var results = await GetEmissionsDataAsync(props);
         return GetOptimalEmissions(results);
@@ -107,35 +106,33 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
     /// <returns>A start and end DateTimeOffset validated based on potential missing user input on start and end values.
     /// Also returns flag if either or both start and end times are missing.
     /// </returns>
-    private (DateTimeOffset, DateTimeOffset, Boolean) GetAndValidateLocationTimeWindow(IDictionary props)
+    private (DateTimeOffset, DateTimeOffset) GetAndValidateLocationTimeWindow(IDictionary props)
     {
         var startProp = props[CarbonAwareConstants.Start];
         var endProp = props[CarbonAwareConstants.End];
 
         DateTimeOffset windowStart;
         DateTimeOffset windowEnd;
-        bool returnAllResults = false;
 
+        windowStart = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
+            
         if(endProp is null)
         {
-            windowEnd = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
-            windowStart = windowEnd.AddMinutes(-5);
+            windowEnd = windowStart;
         } 
         else
         {
             if (startProp is null)
             {
-                Exception ex = new ArgumentException("'time is requed if 'toTime' is passed");
+                Exception ex = new ArgumentException("'time is required if 'toTime' is passed");
                 _logger.LogError("argument exception", ex);
                 throw ex;
             }
 
-            windowStart = this.GetOffsetOrDefault(props, CarbonAwareConstants.Start, DateTimeOffset.UtcNow);
             windowEnd = this.GetOffsetOrDefault(props, CarbonAwareConstants.End, DateTimeOffset.UtcNow);
-            returnAllResults = true;
         }
 
-        return (windowStart, windowEnd, returnAllResults);
+        return (windowStart, windowEnd);
     }
 
     /// <summary>
@@ -182,7 +179,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         forecast.Validate();
         forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
         forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, forecast.DataStartAt, forecast.DataEndAt);
-        forecast.OptimalDataPoint = GetOptimalEmissions(forecast.ForecastData);
+        forecast.OptimalDataPoints = GetOptimalEmissions(forecast.ForecastData);
         if (forecast.ForecastData.Any())
         {
             forecast.WindowSize = forecast.ForecastData.First().Duration;
@@ -190,13 +187,23 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
         return forecast;
     }
 
-    private EmissionsData? GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
+    private IEnumerable<EmissionsData> GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
     {
         if (!emissionsData.Any())
         {
-            return null;
+            return Array.Empty<EmissionsData>();
         }
-        return emissionsData.MinBy(x => x.Rating);
+
+        var bestResult = emissionsData.MinBy(x => x.Rating);
+
+        IEnumerable<EmissionsData> results = Array.Empty<EmissionsData>();
+
+        if(bestResult != null)
+        {
+            results = emissionsData.Where(x => x.Rating == bestResult.Rating);
+        }
+
+        return results;
     }
 
     /// <summary>

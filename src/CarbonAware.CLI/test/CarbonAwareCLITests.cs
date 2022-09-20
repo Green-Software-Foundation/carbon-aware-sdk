@@ -6,6 +6,10 @@ using CarbonAware.Aggregators.CarbonAware;
 using Microsoft.Extensions.Logging;
 using CarbonAware.Model;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Linq;
+using System.Text.Json.Nodes;
 
 namespace CarbonAware.CLI.Tests;
 
@@ -35,7 +39,7 @@ public class CarbonAwareCLITests
     [Test]
     public void ParseCommandLineArguments_ReturnsJsonWithArrayInside()
     {
-        string[] args = new string[] { "-l", "test", "-t", "2021-11-11", "--lowest" };
+        string[] args = new string[] { "-l", "test", "-t", "2021-11-11" };
 
         EmissionsData exampleEmissionsData = new EmissionsData()
         {
@@ -57,6 +61,89 @@ public class CarbonAwareCLITests
             // TODO: Expand out to full verification (other tests + helper methods)
             string jsonOutput = writer.ToString();
             Assert.IsTrue(jsonOutput.StartsWith("{"));
+        }
+    }
+
+    public void ParseCommandLineArguments_LowestReturnsSingleBest()
+    {
+        string[] args = new string[] { "-l", "test", "-t", "2021-11-11", "--lowest" };
+
+        EmissionsData exampleEmissionsData1 = new EmissionsData()
+        {
+            Time = DateTime.Now + TimeSpan.FromHours(-1),
+            Location = "US",
+            Rating = 100
+        };
+
+        EmissionsData exampleEmissionsData2 = new EmissionsData()
+        {
+            Time = DateTime.Now + TimeSpan.FromHours(-1),
+            Location = "NZ",
+            Rating = 99
+        };
+
+        var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>(), Mock.Of<ILogger<CarbonAwareCLI>>());
+
+        using (StringWriter writer = new StringWriter())
+        {
+            // Redirect Console.Out so we can verify what is written
+            Console.SetOut(writer);
+
+            cli.OutputEmissionsData(new List<EmissionsData> { exampleEmissionsData1, exampleEmissionsData2 });
+
+            // Verify that there is only a SINGLE return value.
+            EmissionsDataResponse? data = JsonSerializer.Deserialize<EmissionsDataResponse>(writer.ToString());
+            if (data != null && data.EmissionsData != null)
+            {
+                Assert.IsTrue(data.EmissionsData.Count() == 1);
+            }
+            else
+            {
+                // Fail if we get the null case (i.e. no return)
+                Assert.Fail();
+            }
+        }
+    }
+
+    [Test]
+    public void ParseCommandLineArguments_LowestReturnsMultipleTies()
+    {
+        string[] args = new string[] { "-l", "test", "-t", "2021-11-11", "--lowest" };
+
+        EmissionsData exampleEmissionsData1 = new EmissionsData()
+        {
+            Time = DateTime.Now + TimeSpan.FromHours(-1),
+            Location = "US",
+            Rating = 100
+        };
+
+        EmissionsData exampleEmissionsData2 = new EmissionsData()
+        {
+            Time = DateTime.Now + TimeSpan.FromHours(-1),
+            Location = "NZ",
+            Rating = 100
+        };
+
+        var cli = new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>(), Mock.Of<ILogger<CarbonAwareCLI>>());
+
+        using (StringWriter writer = new StringWriter())
+        {
+            // Redirect Console.Out so we can verify what is written
+            Console.SetOut(writer);
+
+            cli.OutputEmissionsData(new List<EmissionsData> { exampleEmissionsData1, exampleEmissionsData2 });
+
+            // Verify that there are MULTIPLE values returned, as a tie happened
+            EmissionsDataResponse? data = JsonSerializer.Deserialize<EmissionsDataResponse>(writer.ToString());
+            if (data != null && data.EmissionsData != null)
+            {
+                Assert.IsTrue(data.EmissionsData.Count() == 2);
+            }
+            else
+            {
+                // Fail if we get the null case (i.e. no return)
+                Assert.Fail();
+            }
         }
     }
 
@@ -93,5 +180,12 @@ public class CarbonAwareCLITests
         var ex = Assert.Throws<ArgumentException>(() => new CarbonAwareCLI(args, It.IsAny<ICarbonAwareAggregator>(), Mock.Of<ILogger<CarbonAwareCLI>>()));
 
         StringAssert.Contains("Date and time needs to be in the format", ex?.Message);
+    }
+
+    [Serializable]
+    public record EmissionsDataResponse
+    {
+        [JsonPropertyName("emissionsData")]
+        public IEnumerable<EmissionsData>? EmissionsData { get; set; }
     }
 }

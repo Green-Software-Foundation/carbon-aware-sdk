@@ -25,7 +25,7 @@ public class EmissionsForecastDTOTests
             DataEndAt =  expectedEndTime,
             WindowSize = TimeSpan.FromMinutes(expectedWindowSize),
             ForecastData = new List<EmissionsData>(){ new EmissionsData(){ Rating = expectedDataPointValue } },
-            OptimalDataPoint = new EmissionsData(){ Rating = expectedOptimalValue }
+            OptimalDataPoints = new List<EmissionsData>(){ new EmissionsData(){ Rating = expectedOptimalValue }  }
         };
 
         var emissionsForecastDTO = EmissionsForecastDTO.FromEmissionsForecast(emissionsForecast);
@@ -36,7 +36,7 @@ public class EmissionsForecastDTOTests
         Assert.AreEqual(expectedStartTime, emissionsForecastDTO.DataStartAt);
         Assert.AreEqual(expectedEndTime, emissionsForecastDTO.DataEndAt);
         Assert.AreEqual(expectedWindowSize, emissionsForecastDTO.WindowSize);
-        Assert.AreEqual(expectedOptimalValue, emissionsForecastDTO.OptimalDataPoint?.Value);
+        Assert.AreEqual(expectedOptimalValue, emissionsForecastDTO.OptimalDataPoints?.First().Value);
         Assert.AreEqual(1, emissionsDataDTO?.Count());
         Assert.AreEqual(expectedDataPointValue, emissionsDataDTO?.First().Value);
     }
