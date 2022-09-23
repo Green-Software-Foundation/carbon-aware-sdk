@@ -2,7 +2,7 @@ using CarbonAware.DataSources.Configuration;
 using NUnit.Framework;
 using System.Text.Json.Nodes;
 
-namespace CarbonAware.CLI.IntegrationTests;
+namespace CarbonAware.CLI.IntegrationTests.Commands.Emissions;
 
 /// <summary>
 /// Tests that the CLI handles and packages various responses from aggregators 
@@ -19,12 +19,12 @@ public class EmissionsCommandTests : IntegrationTestingBase
     {
         // Arrange
         var expectedAliases = new[]
-        { 
+        {
             "-l", "--location",
             "-s", "--start-time",
             "-e", "--end-time",
         };
-        
+
         // Act
         var exitCode = await InvokeCliAsync("emissions -h");
         var output = _console.Out.ToString()!;
@@ -51,7 +51,7 @@ public class EmissionsCommandTests : IntegrationTestingBase
 
         // Assert
         Assert.AreEqual(0, exitCode);
-        
+
         var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
         var firstResult = jsonResults.First()!;
         Assert.IsNotNull(firstResult["Location"]);

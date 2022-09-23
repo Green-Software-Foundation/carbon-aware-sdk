@@ -1,6 +1,7 @@
 ﻿using CarbonAware;
 using CarbonAware.Aggregators.Configuration;
 using CarbonAware.CLI.Commands.Emissions;
+using CarbonAware.CLI.Commands.EmissionsForecasts;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Extensions;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ var serviceProvider = new ServiceCollection()
 
 var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootCommandDescription);
 rootCommand.AddCommand(new EmissionsCommand());
+rootCommand.AddCommand(new EmissionsForecastsCommand());
 
 var parser = new CommandLineBuilder(rootCommand)
     .UseDefaults()

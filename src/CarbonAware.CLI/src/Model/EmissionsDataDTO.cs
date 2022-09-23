@@ -6,7 +6,7 @@ namespace CarbonAware.CLI.Model
     {
         ///<example> eastus </example>
         public string? Location { get; set; }
-        ///<example> 01-01-2022 </example>   
+        ///<example> 2022-09-19T17:30:00Z </example>   
         public DateTimeOffset? Time { get; set; }
         ///<example> 140.5 </example>
         public double Rating { get; set; }

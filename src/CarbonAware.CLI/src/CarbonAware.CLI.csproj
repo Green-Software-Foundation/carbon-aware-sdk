@@ -22,6 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Commands\EmissionsForecasts\LocalizableStrings.Designer.cs">
+      <DependentUpon>LocalizableStrings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
     <Compile Update="Commands\emissions\LocalizableStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -35,7 +40,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Commands\emissions\LocalizableStrings.resx">
+    <EmbeddedResource Update="Commands\EmissionsForecasts\LocalizableStrings.resx">
+      <LastGenOutput>LocalizableStrings.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Commands\Emissions\LocalizableStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizableStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
