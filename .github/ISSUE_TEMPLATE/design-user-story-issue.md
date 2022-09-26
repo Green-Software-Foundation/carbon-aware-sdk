@@ -11,7 +11,7 @@ labels: Design, Needs Triage
 # Acceptance criteria
 
 - [ ] This is something that can be verified to show that this user story is satisfied.
-- [ ] Decisions need to be documented in a decision log
+- [ ] Architectual Decisions documented in a decision log
 
 # Sprint Ready Checklist 
 1. - [ ] Acceptance criteria defined 
