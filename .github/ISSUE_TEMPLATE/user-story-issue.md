@@ -15,9 +15,9 @@ As a ..., I want to ..., so I can ...
 - [ ] Unit Tests are completed and code passes tests
 
 # Sprint Ready Checklist 
-1. - [ ] Acceptance criteria defined 
-2. - [ ] Team understands acceptance criteria 
-3. - [ ] Team has defined solution / steps to satisfy acceptance criteria 
-4. - [ ] Acceptance criteria is verifiable / testable 
-5. - [ ] External / 3rd Party dependencies identified
-6. - [ ] Is the user story small enough to be implemented in a short amount of time, but large enough to provide value?
+- [ ] Acceptance criteria defined 
+- [ ] Team understands acceptance criteria 
+- [ ] Team has defined solution / steps to satisfy acceptance criteria 
+- [ ] Acceptance criteria is verifiable / testable 
+- [ ] External / 3rd Party dependencies identified
+- [ ] Is the user story small enough to be implemented in a short amount of time, but large enough to provide value?

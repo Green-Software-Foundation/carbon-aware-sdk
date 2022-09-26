@@ -21,10 +21,10 @@ _Introduction_
 
 #### Engineering ⚙️
 
-- [ ] User Stories
+- [ ] <User Stories>
 
 #### Release planning
 
 - [ ] Demo the feature internally
 - [ ] GSF updates added to code
-- [ ] PR created for GSF
+- [ ] Pull Request created for GSF

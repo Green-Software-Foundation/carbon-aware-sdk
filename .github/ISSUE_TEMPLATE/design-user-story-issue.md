@@ -14,6 +14,6 @@ labels: Design, Needs Triage
 - [ ] Architectual Decisions documented in a decision log
 
 # Sprint Ready Checklist 
-1. - [ ] Acceptance criteria defined 
-2. - [ ] Team understands acceptance criteria 
-3. - [ ] External / 3rd Party dependencies identified
+- [ ] Acceptance criteria defined 
+- [ ] Team understands acceptance criteria 
+- [ ] External / 3rd Party dependencies identified
