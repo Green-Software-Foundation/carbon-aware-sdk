@@ -1,3 +1,10 @@
+---
+name: Epic
+about: This template provides a basic structure for an epic issues.
+title: '[Epic] <title>'
+labels: Epic
+---
+
 ### Goal
 
 _Introduction_
