@@ -1,0 +1,4 @@
+jupyterlab
+python-dotenv
+pandas
+matplotlib
