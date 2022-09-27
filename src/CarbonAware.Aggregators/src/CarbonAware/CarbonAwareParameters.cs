@@ -100,19 +100,37 @@ public class CarbonAwareParameters
 
     public class Validator
     {
+        private Func<bool> _predicate {get; init; }
+        private string _errorKey {get; init; }
+        private string _errorMessage {get; init; }
         public ValidationName Name {get; init;}
-        private Func<bool> Validate {get; init; }
-        private (string, string) ErrorsOnFailure {get; init; }
 
-        public Validator(ValidationName name, Func<bool> validate, (string, string) errorsOnFailure) {
+        // Contains a value if isValid() evaluates to false
+        public string? ErrorKey {get; private set; }
+
+        // Contains a value if isValid() evaluates to false
+        public string? ErrorMessage {get; private set; }
+
+        public Validator(ValidationName name, Func<bool> predicate, string errorKey, string errorMessage) {
             Name = name;
-            Validate = validate;
-            ErrorsOnFailure = errorsOnFailure;
+            _predicate = predicate;
+            _errorKey = errorKey;
+            _errorMessage = errorMessage;
         }
 
-        public (bool, (string, string)) IsValid() {
-            return (Validate(), ErrorsOnFailure);
-        } 
+        /// <summary>
+        /// Checks if the validator is valid
+        /// </summary>
+        /// <remarks> If result is false, will set ErrorKey and ErrorMessage property of the object. </remarks>
+        public bool IsValid()
+        {
+            var result = _predicate();
+            if (!result) {
+                ErrorKey = _errorKey;
+                ErrorMessage = _errorMessage;
+            }
+            return result;
+        }
     }
 
     internal List<Validator> _validations { get; init; }
@@ -121,7 +139,8 @@ public class CarbonAwareParameters
         return new Validator(
             ValidationName.StartBeforeEnd,
             () => Start < End,
-            (_props[PropertyName.Start].DisplayName, $"{_props[PropertyName.Start].DisplayName} must be before {_props[PropertyName.End].DisplayName}")
+            _props[PropertyName.Start].DisplayName, 
+            $"{_props[PropertyName.Start].DisplayName} must be before {_props[PropertyName.End].DisplayName}"
         );
     }
 
@@ -129,15 +148,16 @@ public class CarbonAwareParameters
         return new Validator(
             ValidationName.StartRequiredIfEnd,
             () => !(_props[PropertyName.End].IsSet && !_props[PropertyName.Start].IsSet),
-            (_props[PropertyName.Start].DisplayName, $"{_props[PropertyName.Start].DisplayName} must be defined if {_props[PropertyName.End].DisplayName} is defined")
+            _props[PropertyName.Start].DisplayName,
+            $"{_props[PropertyName.Start].DisplayName} must be defined if {_props[PropertyName.End].DisplayName} is defined"
         );
     }
     
     public CarbonAwareParameters(Dictionary<string, string>? displayNameMap = null)
     {
         _props = InitProperties();
-        _validations = new List<Validator>();
-        SetValidations(ValidationName.StartBeforeEnd);
+        // Initializing with common default validators
+        _validations = new List<Validator>() { StartBeforeEnd() };
         if (displayNameMap is not null) { _props.UpdateDisplayNames(displayNameMap); }
     }
 
@@ -165,8 +185,7 @@ public class CarbonAwareParameters
 
         // Check validations
         foreach (var validation in _validations) {
-            (var isValid, var validationError) = validation.IsValid();
-            if (!isValid) errors.AppendValue(validationError.Item1, validationError.Item2);
+            if (!validation.IsValid()) errors.AppendValue(validation.ErrorKey, validation.ErrorMessage);
         }
 
         // Assert no relationship validation errors. Throws if any errors.
@@ -186,7 +205,7 @@ public class CarbonAwareParameters
     /// <summary>
     /// Accepts any ValidationName as arguments and sets the associated validation to check.
     /// </summary>
-    /// <param name="requiredProperties"></param>
+    /// <param name="validationName"></param>
     public void SetValidations(params ValidationName[] validationNames) {
         foreach (var validationName in validationNames) {
             switch(validationName) {
