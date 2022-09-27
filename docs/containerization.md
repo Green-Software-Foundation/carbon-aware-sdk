@@ -1,4 +1,4 @@
-# Containerized CarbonAware WebApi
+# Containerized WebApi
 
 The goal of this readme is to show how to build a container WebApi image that can be used to deploy the application into a container registry and that can be used later to run the service.
 
