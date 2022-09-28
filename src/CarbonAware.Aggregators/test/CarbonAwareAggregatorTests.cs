@@ -31,7 +31,7 @@ public class CarbonAwareAggregatorTests
     }
 
     [Test]
-    public async Task TestGetEmissionsDataAsync_LocationMissing()
+    public void TestGetEmissionsDataAsync_LocationMissing()
     {
         //Arrange
         this.CarbonIntensityDataSource
@@ -43,7 +43,7 @@ public class CarbonAwareAggregatorTests
     }
 
     [Test]
-    public async Task TestGetEmissionsDataAsync_StartProvidedAndEndMissing()
+    public async void TestGetEmissionsDataAsync_StartProvidedAndEndMissing()
     {
         //Arrange
         var emmisionsData = TestData.GetAllEmissionDataList();
@@ -71,7 +71,7 @@ public class CarbonAwareAggregatorTests
    
 
     [Test]
-    public async Task TestGetEmissionsDataAsync_EndProvidedButStartMissing()
+    public void TestGetEmissionsDataAsync_EndProvidedButStartMissing()
     {
         //Arrange
         var emmisionsData = TestData.GetAllEmissionDataList();

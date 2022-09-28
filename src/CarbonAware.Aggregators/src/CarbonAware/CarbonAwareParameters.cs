@@ -37,7 +37,7 @@ public class CarbonAwareParametersBaseDTO
 
 public class CarbonAwareParameters
 {
-    private IEnumerable<Location> _mulitpleLocations = new List<Location>();
+    private IEnumerable<Location> _multipleLocations = new List<Location>();
     private Location _singleLocation = new Location();
     private DateTimeOffset _start = DateTimeOffset.MinValue;
     private DateTimeOffset _end = DateTimeOffset.MaxValue;
@@ -46,11 +46,11 @@ public class CarbonAwareParameters
 
     public enum PropertyName { MultipleLocations, SingleLocation, Start, End, Duration, Requested };
     public IEnumerable<Location> MultipleLocations {
-        get { return _mulitpleLocations; }
+        get { return _multipleLocations; }
         set { 
             if (value.Any()) // Only set if non-empty
             {
-                _mulitpleLocations = value; 
+                _multipleLocations = value; 
                 _props[PropertyName.MultipleLocations].IsSet = true;
             }
         }
@@ -185,7 +185,7 @@ public class CarbonAwareParameters
 
         // Check validations
         foreach (var validation in _validations) {
-            if (!validation.IsValid()) errors.AppendValue(validation.ErrorKey, validation.ErrorMessage);
+            if (!validation.IsValid()) errors.AppendValue(validation.ErrorKey!, validation.ErrorMessage!);
         }
 
         // Assert no relationship validation errors. Throws if any errors.
