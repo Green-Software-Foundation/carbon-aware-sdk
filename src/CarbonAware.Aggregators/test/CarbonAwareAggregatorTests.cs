@@ -43,7 +43,7 @@ public class CarbonAwareAggregatorTests
     }
 
     [Test]
-    public async void TestGetEmissionsDataAsync_StartProvidedAndEndMissing()
+    public async Task TestGetEmissionsDataAsync_StartProvidedAndEndMissing()
     {
         //Arrange
         var emmisionsData = TestData.GetAllEmissionDataList();
