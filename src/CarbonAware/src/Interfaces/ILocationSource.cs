@@ -5,9 +5,6 @@
 /// </summary>
 public interface ILocationSource
 {
-    string Name { get; }
-    string Description { get; }
-
     /// <summary>
     /// Converts given Location to a new Location with type Geoposition
     /// </summary>

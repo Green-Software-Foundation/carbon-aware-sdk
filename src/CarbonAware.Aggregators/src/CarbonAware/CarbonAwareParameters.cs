@@ -274,7 +274,7 @@ public class CarbonAwareParameters
     private static IEnumerable<Location>? MultipleLocationsFromStrings(string[]? locations)
     {
         if (locations is null) { return null; }
-        return locations.Where(location => !String.IsNullOrEmpty(location)).Select(location => new Location() { RegionName = location, LocationType = LocationType.CloudProvider });
+        return locations.Where(location => !String.IsNullOrEmpty(location)).Select(location => new Location() { Name = location });
     }
 
     /// <summary>
@@ -285,7 +285,7 @@ public class CarbonAwareParameters
     private static Location? SingleLocationFromString(string? location)
     {
         if (String.IsNullOrEmpty(location)) { return null; }
-        return new Location() { RegionName = location, LocationType = LocationType.CloudProvider };
+        return new Location() { Name = location };
     }
 
     /// <summary>
