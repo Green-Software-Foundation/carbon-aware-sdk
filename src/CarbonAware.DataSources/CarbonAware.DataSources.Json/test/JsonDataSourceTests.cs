@@ -74,6 +74,24 @@ public class JsonDataSourceTests
 
     }
 
+    [Test]
+    public async Task GetCarbonIntensityAsync_ReturnsSingleDataPoint_WhenStartParamExactlyMatchesDataStart()
+    {
+        var mockDataSource = SetupMockDataSource();
+
+        var location = new Location() { Name = "midwest" };
+        var locations = new List<Location>() { location };
+        var start = DateTimeOffset.Parse("2022-09-07T12:45:11+00:00");
+        var end = DateTimeOffset.Parse("2022-09-07T13:45:11+00:00");
+        var dataSource = mockDataSource.Object;
+        var result = await dataSource.GetCarbonIntensityAsync(locations, start, end);
+        Assert.AreEqual(1, result.Count());
+
+        foreach (var r in result)
+        {
+            Assert.IsTrue(locations.Where(loc => loc.Name == r.Location).Any());
+        }
+    }
     private Mock<JsonDataSource> SetupMockDataSource() {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
         var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
@@ -103,7 +121,18 @@ public class JsonDataSourceTests
                 },
                 new EmissionsData {
                     Location = "midwest",
-                    Time = DateTime.Parse("2021-05-01")
+                    Time = DateTime.Parse("2022-09-07T04:45:11+00:00"),
+                    Duration = TimeSpan.FromHours(8)
+                },
+                new EmissionsData {
+                    Location = "midwest",
+                    Time = DateTime.Parse("2022-09-07T12:45:11+00:00"),
+                    Duration = TimeSpan.FromHours(8)
+                },
+                new EmissionsData {
+                    Location = "midwest",
+                    Time = DateTime.Parse("2022-09-07T20:45:11+00:00"),
+                    Duration = TimeSpan.FromHours(8)
                 }
             };
     }

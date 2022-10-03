@@ -34,6 +34,14 @@ public class Location
     /// </summary>
     #nullable enable
     public string? RegionName { get; set; }
+
+    /// <summary>
+    /// Interim getters/setters until RegionName is fully replaced by Name.
+    /// </summary>
+    public string? Name {
+        get => RegionName;
+        set => RegionName = value;
+    }
     #nullable disable
 
     /// <summary>
