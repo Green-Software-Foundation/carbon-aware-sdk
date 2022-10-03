@@ -26,5 +26,5 @@ src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
 
 samples/watttime-registration/settings.py
 
-# exclude local settings to easily set up your repo from the appsettings.local.json.temlpate
-appsettings.local.json
+# exclude local settings to easily set up your repo from the appsettings.Development.json.template
+appsettings.Development.json

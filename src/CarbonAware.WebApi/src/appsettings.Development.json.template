@@ -1,4 +1,4 @@
-//copy this file as "appsettings.local.json",  remove this comment and update the settings below accordingly
+//copy this file as "appsettings.Development.json",  remove this comment and update the settings below accordingly
 {
   "carbonAwareVars": {
     "carbonIntensityDataSource": "WattTime",
