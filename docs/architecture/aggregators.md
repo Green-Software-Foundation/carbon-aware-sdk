@@ -20,6 +20,8 @@ The list of allowed parameters is defined in the class and includes
 ### Parameter Display Names
 The display name of each parameter can be overriden using the public setter. By default, each parameter display name is set to the variable name (ex: `Start = "start"`). The parameter display names are used when creating the validation error messages. Overriding them is useful in situations where the variables the user is using for input don't exactly match the default display name of the parameter (e.g. the user variable in the controller is `periodStartTime` instead of `startTime`). That way, when the error is thrown to the user, the parameter names will match the users' expectation
 
+To do the override, define a class that inherits from CarbonAwareParametersBaseDTO and uses the [FromQuery(Name = "myAwesomeDisplayName")] or [JsonPropertyName("myAwesomeDisplayName")] attribute. A second (less recommended) option is to pass the optional arg Dictionary<string, string>? displayNameMap when you are directly creating the object.  With either option, the SDK will handle updating references internally.
+
 ### Required Properties
 The first core check the parameters class does is validating that required parameters are defined. By default, all parameters are considered optional. Calling the `SetRequiredProperties(...)` function with the desired arguments sets the required parameters for the instance.
 ```csharp
