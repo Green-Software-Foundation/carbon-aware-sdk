@@ -23,11 +23,11 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
-        working-directory: src
+        working-directory: src/CarbonAware.WebApi/src
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        working-directory: src
+        working-directory: src/CarbonAware.WebApi/src
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
