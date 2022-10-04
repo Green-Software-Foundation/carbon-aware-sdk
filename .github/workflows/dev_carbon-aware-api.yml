@@ -23,15 +23,17 @@ jobs:
           include-prerelease: true
 
       - name: Build with dotnet
+        working-directory: src
         run: dotnet build --configuration Release
 
       - name: dotnet publish
+        working-directory: src
         run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: .net-app
+          name: CarbonAwareApi
           path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
@@ -45,7 +47,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v2
         with:
-          name: .net-app
+          name: CarbonAwareApi
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
