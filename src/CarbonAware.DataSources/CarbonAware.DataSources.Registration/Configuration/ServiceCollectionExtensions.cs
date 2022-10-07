@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
+using CarbonAware.DataSources.ElectricityMap.Configuration;
 using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.DataSources.Configuration;
@@ -23,6 +24,11 @@ public static class ServiceCollectionExtensions
             case DataSourceType.WattTime:
             {
                     services.AddWattTimeDataSourceService(configuration);
+                    break;
+            }
+            case DataSourceType.ElectricityMap:
+            {
+                    services.AddElectricityMapDataSourceService(configuration);
                     break;
             }
             case DataSourceType.None:

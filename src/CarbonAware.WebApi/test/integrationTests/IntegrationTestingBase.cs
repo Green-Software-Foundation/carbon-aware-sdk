@@ -87,6 +87,12 @@ public abstract class IntegrationTestingBase
                     _dataSourceMocker = new WattTimeDataSourceMocker();
                     break;
                 }
+            case DataSourceType.ElectricityMap:
+                {
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "ElectricityMap");
+                    _dataSourceMocker = new ElectricityMapDataSourceMocker();
+                    break;
+                }
             case DataSourceType.None:
                 {
                     throw new NotSupportedException($"DataSourceType {_dataSource.ToString()} not supported");
