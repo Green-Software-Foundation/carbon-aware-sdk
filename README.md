@@ -84,6 +84,9 @@ A feature we have in the roadmap is the ability aggregate data sources across mu
 
 Similarly, you may have your own data for your data centres that you would prefer to use for on premises workloads, which you can combine in aggregate with 3rd party data providers.
 
+# Is it possible to retrieve energy mix information from the SDK?
+Energy mix (the percentages that are from different energy soruces i.e. coal, nuclear, wind, gas, solar, tidal, hydro etc) is not provided in the API to date.  This may be a feature we will consider in the future.  The SDK provides emissions percentage information only at the moment.
+
 # Contributing
 
 The Carbon Aware SDK is open for contribution! Want to contribute? Check out the [contribution guide](./CONTRIBUTING.md).
