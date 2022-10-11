@@ -1,11 +1,11 @@
-# 0005. SDK as a Library
+# 0005. SDK as a C# Client Library
 
 ## Status
 
 Proposed
 
 ## Context
-Currently the SDK can only be used as a runtime (CLI/Web API) and we are exploring what it would take to turn it into a library. This involves determining what would be exposed as part of the library and how to call it. We also include any changes we believe should be made to the current state of the SDK to better support a library.  
+Currently the SDK can only be used as a runtime (CLI/Web API) and we are exploring what it would take to turn it into a C# client library. This involves determining what would be exposed as part of the library and how to call it. We also include any changes we believe should be made to the current state of the SDK to better support a library.  
 
 ## Decision
 In order to best support a library, we propose adding a new dotnet project that lives above the Aggregator to handle access to the core business logic and configuration management. Along with this, we have noted other issues that we believe should also be addressed.
