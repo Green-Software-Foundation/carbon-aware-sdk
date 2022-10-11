@@ -4,7 +4,7 @@
 
 Carbon Hack 22, the best carbon aware software solution built using the [Carbon Aware SDK and API](https://github.com/Green-Software-Foundation/carbon-aware-sdk) wins $40K with a total prize pool of $90K.
 
-We're running weekly webinars to talk abou the hackathon, demo the SDK and API, talk to hackathon participants and answer any questions. To register for the next one click this link 👉 https://grnsft.org/hack22/webinar
+We're running weekly webinars to talk about the hackathon, demo the SDK and API, talk to hackathon participants and answer any questions. To register for the next one click this link 👉 https://grnsft.org/hack22/webinar
 
 For the duration of the hackathon you can try a hosted version of the API with real-data, try it out here 👉 https://grnsft.org/hack22/api
 
