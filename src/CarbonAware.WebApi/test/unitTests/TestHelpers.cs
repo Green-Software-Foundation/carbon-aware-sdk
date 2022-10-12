@@ -23,11 +23,11 @@ public static class TestHelpers
         {
             var statusCodeResult = result as StatusCodeResult;
             Assert.IsNotNull(statusCodeResult);
-            Assert.AreEqual(statusCodeResult!.StatusCode, (int)code);
+            Assert.AreEqual((int)code, statusCodeResult!.StatusCode);
         }
         else
         {
-            Assert.AreEqual(obj.StatusCode, (int)code);
+            Assert.AreEqual((int)code, obj.StatusCode);
         }
     }
 }

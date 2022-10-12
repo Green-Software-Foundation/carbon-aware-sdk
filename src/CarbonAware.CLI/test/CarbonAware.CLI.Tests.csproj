@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -24,6 +24,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\CarbonAware.CLI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="integrationTests\" />
+    <Folder Include="unitTests\" />
   </ItemGroup>
 
 </Project>
