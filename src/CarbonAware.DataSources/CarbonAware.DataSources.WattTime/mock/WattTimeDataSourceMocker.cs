@@ -1,21 +1,17 @@
-﻿using CarbonAware.DataSources.Configuration;
-using CarbonAware.Tools.WattTimeClient.Configuration;
+﻿using CarbonAware.DataSources.Mocks;
 using CarbonAware.Tools.WattTimeClient.Constants;
 using CarbonAware.Tools.WattTimeClient.Model;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
-using WireMock.Server;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
+using WireMock.Server;
 
-namespace CarbonAware.WebApi.IntegrationTests;
+namespace CarbonAware.DataSources.WattTime.Mocks;
 public class WattTimeDataSourceMocker : IDataSourceMocker
 {
     protected WireMockServer _server;
-    private readonly object _dataSource = DataSourceType.WattTime;
 
     private static readonly BalancingAuthority defaultBalancingAuthority = new()
     {
@@ -26,9 +22,10 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
 
     private static readonly LoginResult defaultLoginResult = new() { Token = "myDefaultToken123" };
 
-    internal WattTimeDataSourceMocker()
+    public WattTimeDataSourceMocker()
     {
         _server = WireMockServer.Start();
+        Environment.SetEnvironmentVariable("WattTimeClient__BaseURL", _server.Url!);
         Initialize();
     }
 
@@ -130,20 +127,6 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
             }
         };
         SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastData));
-    }
-
-    public WebApplicationFactory<Program> OverrideWebAppFactory(WebApplicationFactory<Program> factory)
-    {
-        return factory.WithWebHostBuilder(builder =>
-        {
-            builder.ConfigureServices(services =>
-            {
-                services.Configure<WattTimeClientConfiguration>(configOpt =>
-                {
-                    configOpt.BaseUrl = _server.Url!;
-                });
-            });
-        });
     }
 
     public void Initialize()
