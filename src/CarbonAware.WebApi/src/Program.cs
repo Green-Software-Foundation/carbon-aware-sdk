@@ -9,7 +9,6 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<HttpResponseExceptionFilter>();
@@ -27,6 +26,7 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
+
 builder.Services.AddCarbonAwareEmissionServices(builder.Configuration);
 CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration();
 

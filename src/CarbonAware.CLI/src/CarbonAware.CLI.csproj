@@ -39,6 +39,7 @@
     <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
 </ItemGroup>
 
+
  <Target Name="CopyDataFiles" AfterTargets="Build">
 		<ItemGroup>
 			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
