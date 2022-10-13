@@ -1,0 +1,30 @@
+~$*
+*.tmp
+*.dll
+*.pdb
+*.suo
+.suo
+.vs
+
+bin
+out
+obj
+build
+TestResults
+
+/src/clients/generated
+
+# Build-gen'd OpenAPI Spec
+src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml
+
+# Include ONLY launch/task files in .vscode
+!.vscode/
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+.DS_Store
+
+samples/watttime-registration/settings.py
+
+# exclude local settings to easily set up your repo from the appsettings.local.json.temlpate
+appsettings.local.json

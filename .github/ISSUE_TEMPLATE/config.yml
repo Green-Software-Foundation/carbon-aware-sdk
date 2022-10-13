@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Green Software Foundation Membership Enquiries
+    url: https://greensoftware.foundation/join-us/
+    about: Join the Green Software Foundation
+  - name: Carbon Aware SDK Project Proposal
+    url: https://greensoftware.foundation/projects/carbon-aware-sdk
+    about: GSF Page on Carbon Aware SDK

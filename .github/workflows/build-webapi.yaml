@@ -1,0 +1,130 @@
+name: Docker Web API Build
+
+on:
+  push:
+    branches: [ dev, main ]
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+
+env:
+  DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"
+  HEALTH_ENDPOINT: "0.0.0.0:8080/health"
+  DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
+  DLL_FILE_PATH: "./bin/Release/net6.0/CarbonAware.WebApi.dll"
+  DOTNET_SRC_DIR: "./src"
+
+jobs:
+  container-dotnet-build:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET Core SDK 6
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: false
+          
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+        
+      - name: Install tools
+        run: dotnet tool restore 
+        working-directory: ${{ env.DOTNET_SRC_DIR }}/CarbonAware.WebApi/src
+        
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      
+      - name: Unit Test + Code Coverage
+        run: dotnet test --filter TestCategory=Unit --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=json        
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      
+      - name: Integration Test + Code Coverage
+        run: dotnet test --filter TestCategory=Integration --no-restore --verbosity normal /p:CollectCoverage=true /p:MergeWith=\"./coverage.json\" /p:CoverletOutputFormat=\"json,opencover\"     
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+      
+      - name: Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          directory: ${{ env.DOTNET_SRC_DIR }}
+      
+      - name: Generate Open API
+        run: dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1  
+        working-directory: ./src/CarbonAware.WebApi/src 
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: pr-swagger.yaml
+          path: src/CarbonAware.WebApi/src/api/v1/swagger.yaml
+      
+  container-validation:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Docker Target Final
+        run: docker build . -f ${DOCKERFILE_PATH} -t ca-api
+        working-directory: ./src
+        
+      - name: Docker Run Container
+        run: |
+          docker run -d --name runnable-container -p 8080:80 ca-api
+          docker container ls
+
+      - name: Docker WGET Health Endpoint
+        run: |
+          wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
+
+      - name: Docker WGET Data Endpoint
+        run: |
+          wget -t 5 --waitretry=5 ${DATA_ENDPOINT}
+
+  api-comparison:
+      needs: container-dotnet-build
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          working-directory: ./src/CarbonAware.WebApi/src
+      container:
+        image: mcr.microsoft.com/dotnet/sdk
+      steps:
+        - name: Checkout Dev Branch
+          uses: actions/checkout@v3
+          with:
+            ref: dev
+        - name: Setup .NET Core SDK 6
+          uses: actions/setup-dotnet@v2
+          with:
+            dotnet-version: '6.0.x'
+            include-prerelease: false
+        - name: Install dependencies
+          run: dotnet restore
+          working-directory: ${{ env.DOTNET_SRC_DIR }}
+        - name: Install tools
+          run: dotnet tool restore 
+        - name: Build
+          run: dotnet build --configuration Release --no-restore
+          working-directory: ${{ env.DOTNET_SRC_DIR }}
+        - name: Generate Open API
+          run: dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1  
+        - name: Upload dev artifact
+          uses: actions/upload-artifact@v1
+          with:
+            name: dev-swagger.yaml
+            path: src/CarbonAware.WebApi/src/api/v1/swagger.yaml
+        - uses: actions/download-artifact@v3
+          with:
+            name: pr-swagger.yaml
+            path: ./src/CarbonAware.WebApi/src/api/v1/pr-swagger.yaml
+        - name: API Diff Comparison
+          run: |
+            diff ./api/v1/pr-swagger.yaml ./api/v1/swagger.yaml && echo "No API Changes detected" || echo "::warning:: API Changed"
