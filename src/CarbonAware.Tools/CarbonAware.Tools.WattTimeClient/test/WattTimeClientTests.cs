@@ -1,5 +1,6 @@
 ﻿using CarbonAware.Tools.WattTimeClient.Configuration;
 using CarbonAware.Tools.WattTimeClient.Model;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,6 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -39,6 +39,8 @@ public class WattTimeClientTests
 
     private readonly string DefaultTokenValue = "myDefaultToken123";
 
+    private IMemoryCache MemoryCache { get; set; }
+
     [SetUp]
     public void Initialize()
     {
@@ -62,7 +64,7 @@ public class WattTimeClientTests
         });
 
         this.BasicAuthValue = "invalid";
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetCurrentForecastAsync("ba"));
@@ -81,7 +83,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
@@ -99,7 +101,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var data = await client.GetDataAsync("balauth", new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
@@ -125,7 +127,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var data = await client.GetDataAsync("balauth", new DateTimeOffset(), new DateTimeOffset());
@@ -145,7 +147,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
         var data = await client.GetDataAsync("balauth", new DateTimeOffset(), new DateTimeOffset());
 
@@ -164,7 +166,7 @@ public class WattTimeClientTests
         });
 
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
@@ -181,7 +183,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
@@ -200,7 +202,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
@@ -230,7 +232,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var forecast = await client.GetCurrentForecastAsync("balauth");
@@ -251,7 +253,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
         this.HttpClient.DefaultRequestHeaders.Authorization = null;
 
@@ -272,7 +274,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
@@ -289,7 +291,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
@@ -308,7 +310,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
         var ba = new BalancingAuthority(){ Abbreviation = "balauth" };
 
@@ -336,7 +338,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var forecast = await client.GetForecastOnDateAsync("balauth", new DateTimeOffset());
@@ -353,7 +355,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
         this.HttpClient.DefaultRequestHeaders.Authorization = null;
 
@@ -371,7 +373,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
@@ -386,7 +388,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
@@ -403,7 +405,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var ba = await client.GetBalancingAuthorityAsync("lat", "long");
@@ -424,7 +426,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
         var ba = await client.GetBalancingAuthorityAsync("lat", "long");
@@ -443,7 +445,7 @@ public class WattTimeClientTests
             return Task.FromResult(response);
         });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
         this.HttpClient.DefaultRequestHeaders.Authorization = null;
 
@@ -464,7 +466,7 @@ public class WattTimeClientTests
                 return Task.FromResult(response);
             });
 
-            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
             client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
             var result = await client.GetHistoricalDataAsync("ba");
@@ -487,7 +489,7 @@ public class WattTimeClientTests
             });
 
             this.HttpClient.DefaultRequestHeaders.Authorization = null;
-            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
             var result = await client.GetHistoricalDataAsync("ba");
             var sr = new StreamReader(result);
@@ -508,7 +510,7 @@ public class WattTimeClientTests
                 return Task.FromResult(response);
             });
 
-            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
             client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
             var result = await client.GetHistoricalDataAsync("ba");
@@ -533,6 +535,7 @@ public class WattTimeClientTests
             .Build();
         var serviceCollection = new ServiceCollection();
         serviceCollection.ConfigureWattTimeClient(configuration);
+        serviceCollection.AddMemoryCache();
         var serviceProvider = serviceCollection.BuildServiceProvider();
         var client = serviceProvider.GetRequiredService<IWattTimeClient>();
         Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
@@ -559,6 +562,7 @@ public class WattTimeClientTests
         this.HttpClientFactory = Mock.Of<IHttpClientFactory>();
         Mock.Get(this.HttpClientFactory).Setup(h => h.CreateClient(IWattTimeClient.NamedClient)).Returns(this.HttpClient);
         this.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", this.DefaultTokenValue);
+        this.MemoryCache = new MemoryCache(new MemoryCacheOptions());
     }
 
     private HttpResponseMessage MockWattTimeAuthResponse(HttpRequestMessage request, HttpContent reponseContent, string? validToken = null)
