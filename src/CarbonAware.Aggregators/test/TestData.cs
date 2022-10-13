@@ -7,10 +7,8 @@ namespace CarbonAware.Aggregators.Tests;
 
 public static class TestData
 {
-    public static IEnumerable<EmissionsData> GetFilteredEmissionDataList(string location, string startTime, string endTime)
+    public static IEnumerable<EmissionsData> GetFilteredEmissionDataList(string location, DateTimeOffset start, DateTimeOffset end)
     {
-        DateTimeOffset start = DateTimeOffset.Parse(startTime);
-        DateTimeOffset end = DateTimeOffset.Parse(endTime);
         return GetAllEmissionDataList().Where(x => x.Location == location && x.Time >= start && x.Time <= end);
     }
 

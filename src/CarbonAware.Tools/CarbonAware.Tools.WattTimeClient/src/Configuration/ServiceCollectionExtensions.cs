@@ -44,7 +44,7 @@ public static class ServiceCollectionExtensions
         {
             services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedClient);
         }
-
+        services.AddMemoryCache();
         services.TryAddSingleton<IWattTimeClient, WattTimeClient>();
 
         return services;

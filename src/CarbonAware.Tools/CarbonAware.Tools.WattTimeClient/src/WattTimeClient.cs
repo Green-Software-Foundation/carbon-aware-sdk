@@ -11,6 +11,7 @@ using System.Net;
 using CarbonAware.Tools.WattTimeClient.Configuration;
 using CarbonAware.Tools.WattTimeClient.Constants;
 using System.Globalization;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace CarbonAware.Tools.WattTimeClient;
 
@@ -34,7 +35,9 @@ public class WattTimeClient : IWattTimeClient
 
     private ILogger<WattTimeClient> Log { get; }
 
-    public WattTimeClient(IHttpClientFactory factory, IOptionsMonitor<WattTimeClientConfiguration> configurationMonitor, ILogger<WattTimeClient> log)
+    private IMemoryCache memoryCache { get; }
+
+    public WattTimeClient(IHttpClientFactory factory, IOptionsMonitor<WattTimeClientConfiguration> configurationMonitor, ILogger<WattTimeClient> log, IMemoryCache memoryCache)
     {
         this.client = factory.CreateClient(IWattTimeClient.NamedClient);
         this.ConfigurationMonitor = configurationMonitor;
@@ -42,6 +45,7 @@ public class WattTimeClient : IWattTimeClient
         this.client.BaseAddress = new Uri(this.Configuration.BaseUrl);
         this.client.DefaultRequestHeaders.Accept.Clear();
         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+        this.memoryCache = memoryCache;
     }
 
     /// <inheritdoc/>
@@ -61,9 +65,10 @@ public class WattTimeClient : IWattTimeClient
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
         };
 
-        var result = await this.MakeRequestAsync(Paths.Data, parameters, tags);
-
-        return JsonSerializer.Deserialize<List<GridEmissionDataPoint>>(result, options) ?? new List<GridEmissionDataPoint>();
+        using (var result = await this.MakeRequestGetStreamAsync(Paths.Data, parameters, tags))
+        {
+            return await JsonSerializer.DeserializeAsync<List<GridEmissionDataPoint>>(result, options) ?? throw new WattTimeClientException($"Error getting forecasts for {balancingAuthorityAbbreviation}");
+        }
     }
 
     /// <inheritdoc/>
@@ -88,9 +93,9 @@ public class WattTimeClient : IWattTimeClient
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
         };
 
-        var result = await this.MakeRequestAsync(Paths.Forecast, parameters, tags);
+        var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags);
 
-        var forecast = JsonSerializer.Deserialize<Forecast?>(result, options) ?? throw new WattTimeClientException($"Error getting forecast for  {balancingAuthorityAbbreviation}");
+        var forecast = await JsonSerializer.DeserializeAsync<Forecast?>(result, options) ?? throw new WattTimeClientException($"Error getting forecast for  {balancingAuthorityAbbreviation}");
 
         return forecast;
     }
@@ -117,11 +122,11 @@ public class WattTimeClient : IWattTimeClient
         {
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
         };
-
-        var result = await this.MakeRequestAsync(Paths.Forecast, parameters, tags);
-
-        var forecasts = JsonSerializer.Deserialize<List<Forecast>>(result, options) ?? throw new WattTimeClientException($"Error getting forecasts for {balancingAuthorityAbbreviation}");
-        return forecasts.FirstOrDefault();
+        using (var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags))
+        {
+            var forecasts = await JsonSerializer.DeserializeAsync<List<Forecast>>(result, options) ?? throw new WattTimeClientException($"Error getting forecasts for {balancingAuthorityAbbreviation}");
+            return forecasts.FirstOrDefault();
+        }
     }
 
     /// <inheritdoc/>
@@ -134,24 +139,7 @@ public class WattTimeClient : IWattTimeClient
     public async Task<BalancingAuthority> GetBalancingAuthorityAsync(string latitude, string longitude)
     {
         Log.LogInformation("Requesting balancing authority for lattitude {lattitude} and longitude {longitude}", latitude, longitude);
-
-        var parameters = new Dictionary<string, string>()
-        {
-            { QueryStrings.Latitude, latitude },
-            { QueryStrings.Longitude, longitude }
-        };
-
-        var tags = new Dictionary<string, string>()
-        {
-            { QueryStrings.Latitude, latitude },
-            { QueryStrings.Longitude, longitude }
-        };
-
-        var result = await this.MakeRequestAsync(Paths.BalancingAuthorityFromLocation, parameters, tags);
-        
-        var balancingAuthority = JsonSerializer.Deserialize<BalancingAuthority>(result, options) ?? throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}");
-
-        return balancingAuthority;
+        return await GetBalancingAuthorityFromCacheAsync(latitude, longitude);
     }
 
     /// <inheritdoc/>
@@ -177,7 +165,7 @@ public class WattTimeClient : IWattTimeClient
             Log.LogInformation("Requesting data using url {url}", url);
             activity?.AddTag(QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation);
 
-            var result = await this.GetAsyncStreamWithAuthRetry(url);
+            var result = await this.GetStreamWithAuthRetryAsync(url);
 
             Log.LogDebug("For query {url}, received data stream", url);
 
@@ -194,14 +182,13 @@ public class WattTimeClient : IWattTimeClient
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
     {
         await this.EnsureTokenAsync();
-
-        var response = await this.client.GetAsync(uriPath);
+        var response = await this.client.GetAsync(uriPath, HttpCompletionOption.ResponseHeadersRead);
 
         if (RetriableStatusCodes.Contains(response.StatusCode))
         {
             Log.LogDebug("Failed to get url {url} with status code {statusCode}.  Attempting to log in again.", uriPath, response.StatusCode);
             await this.UpdateAuthTokenAsync();
-            response = await this.client.GetAsync(uriPath);
+            response = await this.client.GetAsync(uriPath, HttpCompletionOption.ResponseHeadersRead);
         }
 
         if (!response.IsSuccessStatusCode)
@@ -214,14 +201,7 @@ public class WattTimeClient : IWattTimeClient
         return response;
     }
 
-    private async Task<string> GetAsyncStringWithAuthRetry(string uriPath)
-    {
-        var response = await this.GetAsyncWithAuthRetry(uriPath);
-        var data = await response.Content.ReadAsStringAsync();
-        return data ?? string.Empty;
-    }
-
-    private async Task<Stream> GetAsyncStreamWithAuthRetry(string uriPath)
+    private async Task<Stream> GetStreamWithAuthRetryAsync(string uriPath)
     {
         var response = await this.GetAsyncWithAuthRetry(uriPath);
         return await response.Content.ReadAsStreamAsync();
@@ -277,7 +257,7 @@ public class WattTimeClient : IWattTimeClient
         this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Bearer, token);
     }
 
-    private async Task<string> MakeRequestAsync(string path, Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
+    private async Task<Stream> MakeRequestGetStreamAsync(string path, Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
     {
         using (var activity = Activity.StartActivity())
         {
@@ -292,14 +272,14 @@ public class WattTimeClient : IWattTimeClient
                     activity?.AddTag(kvp.Key, kvp.Value);
                 }
             }
-
-            var result = await this.GetAsyncStringWithAuthRetry(url);
+            var result = await this.GetStreamWithAuthRetryAsync(url);
 
             Log.LogDebug("For query {url}, received data {result}", url, result);
 
             return result;
         }
     }
+
 
     private string BuildUrlWithQueryString(string url, IDictionary<string, string> queryStringParams)
     {
@@ -324,5 +304,30 @@ public class WattTimeClient : IWattTimeClient
         }
 
         return result;
+    }
+
+    private async Task<BalancingAuthority> GetBalancingAuthorityFromCacheAsync(string latitude, string longitude)
+    {
+        var key = new Tuple<string, string>( latitude, longitude );
+        var balancingAuthority = await this.memoryCache.GetOrCreateAsync(key, async entry =>
+        {
+            var parameters = new Dictionary<string, string>()
+            {
+                { QueryStrings.Latitude, latitude },
+                { QueryStrings.Longitude, longitude }
+            };
+
+            var tags = new Dictionary<string, string>()
+            {
+                { QueryStrings.Latitude, latitude },
+                { QueryStrings.Longitude, longitude }
+            };
+            var result = await this.MakeRequestGetStreamAsync(Paths.BalancingAuthorityFromLocation, parameters, tags);
+            var baValue = await JsonSerializer.DeserializeAsync<BalancingAuthority>(result, options) ?? throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}");
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(Configuration.BalancingAuthorityCacheTTL);
+            entry.Value = baValue;
+            return baValue;
+        });
+        return balancingAuthority;
     }
 }

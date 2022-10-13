@@ -31,6 +31,9 @@ builder.Services.AddSwaggerGen(c =>
        {
            return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
        });
+    c.EnableAnnotations();
+    c.OperationFilter<CarbonAwareParametersBaseDtoOperationFilter>();
+    c.SchemaFilter<CarbonAwareParametersBaseDtoSchemaFilter>();
 });
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(config2.GetSection(CarbonAwareVariablesConfiguration.Key));
