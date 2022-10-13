@@ -21,6 +21,9 @@
     <Content Include="carbon-aware.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="appsettings.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -36,14 +39,6 @@
     <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
 </ItemGroup>
 
- <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-   <None Update="appsettings.local.json">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-   </None>
-  </ItemGroup>
 
  <Target Name="CopyDataFiles" AfterTargets="Build">
 		<ItemGroup>

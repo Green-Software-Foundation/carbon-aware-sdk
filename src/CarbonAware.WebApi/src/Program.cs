@@ -7,10 +7,6 @@ using CarbonAware.WebApi.Configuration;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add order of precedence for configuration.
-builder.Configuration.AddJsonFile("appsettings.json")
-                            .AddEnvironmentVariables()
-                            .AddJsonFile("appsettings.local.json", optional:true);
 
 // Add services to the container.
 builder.Services.AddControllers(options =>
@@ -28,6 +24,8 @@ builder.Services.AddSwaggerGen(c =>
            return apiDesc.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
        });
 });
+
+builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
 
 builder.Services.AddCarbonAwareEmissionServices(builder.Configuration);
 CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration();

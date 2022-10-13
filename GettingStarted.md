@@ -46,10 +46,11 @@ Note that double underscores are used to represent dotted notation or child elem
 
 #### Local project settings
 
-You have the possibility to use an untracked local settings file to override the project settings (that is loaded after the environement variables and will therefore superseed any variables of the same name).
+For local-only settings you can use environment variables, [the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows#secret-manager), or an untracked Development appsettings file to override the default project settings.
 
-Todo so, rename a copy of the local template called `appsettings.local.json.template` to `appsettings.local.json`.
-Remove the first line of (invalid comments) and update the variables accordingly.
+To use the settings file, rename a copy of the template called `appsettings.Development.json.template` to `appsettings.Development.json` and remove the first line of (invalid) comments. Then update any settings according to your preferences.
+
+> Wherever possible, the projects leverage the [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#default-application-configuration-sources) expectations.  Thus, they can be configured using any file matching the format: `appsettings.<ENV>.json`. Where `<ENV>` is the value of the `ASPNETCORE_ENVIRONMENT` environment variable. By convention projects tend to use the provided HostEnvironment constants `Development`, `Staging`, and `Production`. 
 
 ### CarbonAwareSDK Specific Configuration
 
