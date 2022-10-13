@@ -7,7 +7,8 @@ using CarbonAware.Model;
 using System;
 using System.Linq;
 using Moq.Protected;
-using System.Diagnostics;
+using Microsoft.Extensions.Options;
+using CarbonAware.DataSources.Json.Configuration;
 
 namespace CarbonAware.DataSources.Json.Tests;
 
@@ -75,11 +76,12 @@ public class JsonDataSourceTests
 
     private Mock<JsonDataSource> SetupMockDataSource() {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
-        var mockDataSource = new Mock<JsonDataSource>(logger);
+        var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
+        var mockDataSource = new Mock<JsonDataSource>(logger, monitor);
         
         mockDataSource.Protected()
-            .Setup<List<EmissionsData>>("GetSampleJson")
-            .Returns(GetTestEmissionData())
+            .Setup<Task<List<EmissionsData>?>>("GetJsonDataAsync")
+            .ReturnsAsync(GetTestEmissionData)
             .Verifiable();
 
         return mockDataSource;

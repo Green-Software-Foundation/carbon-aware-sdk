@@ -167,6 +167,24 @@ You can configure the verbosity of the application error messages by setting the
 CarbonAwareVars__VerboseApi="true"
 ```
 
+### JsonDataConfiguration data file location
+
+By setting `JsonDataSourceConfiguration__DataFileLocation=newdataset.json` property when `CarbonAwareVars__CarbonIntensityDataSource=JSON` is set or there is not data source defined (`JSON` is by default), the user can specify a file that can contains custom `EmissionsData` sets. The file should be located under the `<user's repo>/src/data/data-sources/` directory that is part of the repository. At build time, all the JSON files under `<user's repo>/src/data/data-sources/`  are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/data-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/data-sources/json`. This can be done before the application starts by setting `JsonDataSourceConfiguration__DataFileLocation` environment variable.
+
+```sh
+cp <mydir>/newdataset.json /app/data-sources/json
+export CarbonAwareVars__CarbonIntensityDataSource=JSON
+export JsonDataSourceConfiguration__DataFileLocation=newdataset.json
+dotnet /app/CarbonAware.WebApi.dll
+```
+
+As soon a first request is performed, a log entry shows:
+
+```text
+info: CarbonAware.DataSources.Json.JsonDataSource[0]
+    Reading Json data from /app/data-sources/json/newdataset.json
+```
+
 ### WattTimeClient Caching BalancingAuthority
 To improve performance communicating with the WattTime API service, the client caches the data mapping location coordinates to balancing authorities.  By default, this data is stored in an in-memory cache for `86400` seconds, but expiration can be configured using the setting `BalancingAuthorityCacheTTL` (Set to "0" to not use cache).  The regional boundaries of a balancing authority tend to be stable, but as they can change, the [WattTime documentation](https://www.watttime.org/api-documentation/#determine-grid-region) recommends not caching for longer than 1 month.
 ```bash
