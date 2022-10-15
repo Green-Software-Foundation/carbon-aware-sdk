@@ -4,6 +4,7 @@ using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using CarbonAware.WebApi.Configuration;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -67,6 +68,13 @@ if (app.Environment.IsDevelopment())
     
 
 app.UseHttpsRedirection();
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".yaml"] = "application/x-yaml";
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider
+});
 
 app.UseRouting();
 
