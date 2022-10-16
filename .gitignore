@@ -28,3 +28,6 @@ samples/watttime-registration/settings.py
 
 # exclude local settings to easily set up your repo from the appsettings.local.json.temlpate
 appsettings.local.json
+
+# exclude artifacts on java-client example
+samples/java-client/target
