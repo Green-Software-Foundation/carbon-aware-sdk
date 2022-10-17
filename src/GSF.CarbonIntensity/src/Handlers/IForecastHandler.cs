@@ -1,6 +1,9 @@
-namespace GSF.CarbonIntensity.Handlers
+using GSF.CarbonIntensity.Model;
+
+namespace GSF.CarbonIntensity.Handlers;
+
+// TODO document methods
+public interface IForecastHandler
 {
-    public interface IForecastHandler
-    {
-    }
+    Task<ForecastData> GetCurrent();
 }
