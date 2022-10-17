@@ -2,6 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.DataSources.Configuration;
 public static class ServiceCollectionExtensions

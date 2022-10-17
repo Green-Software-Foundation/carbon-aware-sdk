@@ -1,4 +1,5 @@
 using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Aggregators.Emissions;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
 using Microsoft.AspNetCore.Http;
@@ -71,7 +72,7 @@ class EmissionsCommand : Command
     {
         // Get aggregator via DI.
         var serviceProvider = context.BindingContext.GetService(typeof(IServiceProvider)) as IServiceProvider ?? throw new NullReferenceException("ServiceProvider not found");
-        var aggregator = serviceProvider.GetService(typeof(ICarbonAwareAggregator)) as ICarbonAwareAggregator ?? throw new NullReferenceException("CarbonAwareAggregator not found");
+        var aggregator = serviceProvider.GetService(typeof(IEmissionsAggregator)) as IEmissionsAggregator ?? throw new NullReferenceException("IEmissionsAggregator not found");
 
         // Get the arguments and options to build the parameters.
         var locations = context.ParseResult.GetValueForOption<string[]>(_requiredLocation);

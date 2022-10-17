@@ -14,6 +14,8 @@ public static class ServiceCollectionExtensions
         {
             configuration.GetSection(JsonDataSourceConfiguration.Key).Bind(c);
         });
-        services.TryAddSingleton<ICarbonIntensityDataSource, JsonDataSource>();
+        services.TryAddSingleton<IForecastDataSource, JsonDataSource>();
+        services.TryAddSingleton<IEmissionsDataSource, JsonDataSource>();
+
     }
 }
