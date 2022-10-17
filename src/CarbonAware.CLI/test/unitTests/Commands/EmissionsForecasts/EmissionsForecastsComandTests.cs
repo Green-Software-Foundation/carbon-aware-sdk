@@ -22,7 +22,7 @@ public class EmissionsForecastsCommandTests : TestBase
         var expectedLocations = new List<string>() { longAliasLocation, shortAliasLocation };
         IEnumerable<string> actualLocations = Array.Empty<string>();
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockForecastAggregator.Setup(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters _parameters) =>
             {
                 actualLocations = _parameters.MultipleLocations.Select(l => l.Name!);
@@ -32,7 +32,7 @@ public class EmissionsForecastsCommandTests : TestBase
         await forecastCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockForecastAggregator.Verify(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
         CollectionAssert.AreEquivalent(expectedLocations, actualLocations);
     }
 
@@ -46,7 +46,7 @@ public class EmissionsForecastsCommandTests : TestBase
         var expectedStartTime = DateTimeOffset.Parse(optionValue);
         DateTimeOffset actualStartTime = default;
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockForecastAggregator.Setup(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters _parameters) =>
             {
                 actualStartTime = _parameters.Start;
@@ -55,7 +55,7 @@ public class EmissionsForecastsCommandTests : TestBase
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockForecastAggregator.Verify(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
         Assert.AreEqual(expectedStartTime, actualStartTime);
     }
 
@@ -69,7 +69,7 @@ public class EmissionsForecastsCommandTests : TestBase
         var expectedStartTime = DateTimeOffset.Parse(optionValue);
         DateTimeOffset actualEndTime = default;
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockForecastAggregator.Setup(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters _parameters) =>
             {
                 actualEndTime = _parameters.End;
@@ -78,7 +78,7 @@ public class EmissionsForecastsCommandTests : TestBase
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockForecastAggregator.Verify(agg => agg.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
         Assert.AreEqual(expectedStartTime, actualEndTime);
     }
 
@@ -103,13 +103,13 @@ public class EmissionsForecastsCommandTests : TestBase
             ForecastData = emissions,
             OptimalDataPoints = emissions
         };
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockForecastAggregator.Setup(agg => agg.GetForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
             .ReturnsAsync(expectedForecast);
 
         // Act
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockForecastAggregator.Verify(agg => agg.GetForecastDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
     }
 }

@@ -1,9 +1,14 @@
+﻿using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Model;
-using System.Collections;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CarbonAware.Aggregators.CarbonAware;
+namespace CarbonAware.Aggregators.Emissions;
 
-public interface ICarbonAwareAggregator : IAggregator
+public interface IEmissionsAggregator
 {
     /// <summary>
     /// Returns emissions data records.
@@ -25,23 +30,10 @@ public interface ICarbonAwareAggregator : IAggregator
     Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(CarbonAwareParameters parameters);
 
     /// <summary>
-    /// Get current forecasted emissions data.
-    /// </summary>
-    /// <param name="parameters"><see cref="CarbonAwareParameters"> with properties required by concrete classes</param>
-    /// <returns>List of current emissions forecasts by location.</returns>
-    Task<IEnumerable<EmissionsForecast>> GetCurrentForecastDataAsync(CarbonAwareParameters parameters);
-
-    /// <summary>
     /// Get the average carbon intensity.
     /// </summary>
     /// <param name="parameters"><see cref="CarbonAwareParameters"> with properties required by concrete classes</param>
     /// <returns>The the average carbon-intensity value by location for the time-interval.</returns>
     Task<double> CalculateAverageCarbonIntensityAsync(CarbonAwareParameters parameters);
 
-    /// <summary>
-    /// Get forecasted emissions data.
-    /// </summary>
-    /// <param name="parameters"><see cref="CarbonAwareParameters"> with properties required by concrete classes</param>
-    /// <returns>Single emissions forecast for a given location generated at the requested time given start and end periods.</returns>
-    Task<EmissionsForecast> GetForecastDataAsync(CarbonAwareParameters parameters);
 }

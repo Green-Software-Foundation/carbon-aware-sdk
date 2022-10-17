@@ -1,62 +1,29 @@
-using CarbonAware.Extensions;
-using CarbonAware.Interfaces;
+﻿
 using CarbonAware.Model;
-using Microsoft.Extensions.Logging;
+using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
 using System.Diagnostics;
-using PropertyName = CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters.PropertyName;
-using ValidationName = CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters.ValidationName;
+using CarbonAware.Interfaces;
+using Microsoft.Extensions.Logging;
+using CarbonAware.Extensions;
+using CarbonAware.Aggregators.CarbonAware;
 
-namespace CarbonAware.Aggregators.CarbonAware;
-
-public class CarbonAwareAggregator : ICarbonAwareAggregator
+namespace CarbonAware.Aggregators.Forecast;
+public class ForecastAggregator : IForecastAggregator
 {
-    private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareAggregator));
-    private readonly ILogger<CarbonAwareAggregator> _logger;
-    private readonly ICarbonIntensityDataSource _dataSource;
+    private static readonly ActivitySource Activity = new ActivitySource(nameof(ForecastAggregator));
+    private readonly ILogger<ForecastAggregator> _logger;
+    private readonly IForecastDataSource _dataSource;
 
     /// <summary>
-    /// Creates a new instance of the <see cref="CarbonAwareAggregator"/> class.
+    /// Creates a new instance of the <see cref="ForecastAggregator"/> class.
     /// </summary>
     /// <param name="logger">The logger for the aggregator</param>
-    /// <param name="dataSource">An <see cref="ICarbonIntensityDataSource"> data source.</param>
-    public CarbonAwareAggregator(ILogger<CarbonAwareAggregator> logger, ICarbonIntensityDataSource dataSource)
+    /// <param name="dataSource">An <see cref="IForecastDataSource"> data source.</param>
+    public ForecastAggregator(ILogger<ForecastAggregator> logger, IForecastDataSource dataSource)
     {
         this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
         this._dataSource = dataSource;
     }
-
-    /// <inheritdoc />
-    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(CarbonAwareParameters parameters)
-    {
-        using (var activity = Activity.StartActivity())
-        {         
-            parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-            parameters.SetValidations(ValidationName.StartRequiredIfEnd);
-            parameters.Validate();
-
-            var locations = parameters.MultipleLocations;
-            var start = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
-            var end = parameters.GetEndOrDefault(start);
-            
-            return await this._dataSource.GetCarbonIntensityAsync(locations, start, end);
-        }
-    }
-
-    /// <inheritdoc />
-    public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(CarbonAwareParameters parameters)
-    {
-        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-        parameters.SetValidations(ValidationName.StartRequiredIfEnd);
-        parameters.Validate();
-
-        var locations = parameters.MultipleLocations;
-        var start = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
-        var end = parameters.GetEndOrDefault(start);
-
-        var results = await this._dataSource.GetCarbonIntensityAsync(locations, start, end);
-        return GetOptimalEmissions(results);
-    }
-
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsForecast>> GetCurrentForecastDataAsync(CarbonAwareParameters parameters)
     {
@@ -73,26 +40,6 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
             }
 
             return forecasts;
-        }
-    }
-
-    /// <inheritdoc />
-    public async Task<double> CalculateAverageCarbonIntensityAsync(CarbonAwareParameters parameters)
-    {
-        using (var activity = Activity.StartActivity())
-        {
-            parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
-            parameters.Validate();
-
-            var end = parameters.End;
-            var start = parameters.Start;
-
-            _logger.LogInformation("Aggregator getting average carbon intensity from data source");
-            var emissionData = await this._dataSource.GetCarbonIntensityAsync(parameters.SingleLocation, start, end);
-            var value = emissionData.AverageOverPeriod(start, end);
-            _logger.LogInformation($"Carbon Intensity Average: {value}");
-
-            return value;
         }
     }
 
@@ -139,7 +86,7 @@ public class CarbonAwareAggregator : ICarbonAwareAggregator
 
         IEnumerable<EmissionsData> results = Array.Empty<EmissionsData>();
 
-        if(bestResult != null)
+        if (bestResult != null)
         {
             results = emissionsData.Where(x => x.Rating == bestResult.Rating);
         }
