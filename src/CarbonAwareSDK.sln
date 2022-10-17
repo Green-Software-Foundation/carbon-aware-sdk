@@ -55,6 +55,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.UnitTests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.IntegrationTests", "CarbonAware.CLI\test\integrationTests\CarbonAware.CLI.IntegrationTests.csproj", "{C0F13A86-0C5A-4108-A51A-14760BA22063}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonIntensity", "GSF.CarbonIntensity\src\GSF.CarbonIntensity.csproj", "{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonIntensity.Tests", "GSF.CarbonIntensity\test\GSF.CarbonIntensity.Tests.csproj", "{BCCD8C11-7413-4272-8922-417429CFF27A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +169,14 @@ Global
 		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0F13A86-0C5A-4108-A51A-14760BA22063}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCCD8C11-7413-4272-8922-417429CFF27A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCCD8C11-7413-4272-8922-417429CFF27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCCD8C11-7413-4272-8922-417429CFF27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCCD8C11-7413-4272-8922-417429CFF27A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
