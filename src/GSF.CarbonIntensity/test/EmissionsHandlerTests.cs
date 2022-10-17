@@ -1,6 +1,5 @@
 using CarbonAware.Aggregators.CarbonAware;
 using GSF.CarbonIntensity.Handlers;
-using GSF.CarbonIntensity.Models;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
@@ -18,7 +17,7 @@ public class EmissionsHandlerTests : TestsBase
     {
         // Arrange
         double data = 0.7;
-        var emissionsHandler = new EmissionsHandler(this.MockCarbonAwareLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
+        var emissionsHandler = new EmissionsHandler(MockEmissionsHandlerLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
 
         var parametersDTO = new CarbonAwareParametersBaseDTO
         {
@@ -28,11 +27,11 @@ public class EmissionsHandlerTests : TestsBase
         };
 
         // Act
-        var carbonIntensityOutput = await emissionsHandler.GetAverageCarbonIntensity(parametersDTO);
+        double? carbonIntensityOutput = await emissionsHandler.GetAverageCarbonIntensity(parametersDTO);
 
         // Assert
-        var expectedContent = new CarbonIntensityResult { Location = location, StartTime = start, EndTime = end, CarbonIntensity = data }.ToString();
-        var actualContent = (carbonIntensityOutput == null) ? string.Empty : carbonIntensityOutput.ToString();
+        var expectedContent = data;
+        var actualContent = (carbonIntensityOutput == null) ? 0 : carbonIntensityOutput;
         Assert.AreEqual(expectedContent, actualContent);
     }
 

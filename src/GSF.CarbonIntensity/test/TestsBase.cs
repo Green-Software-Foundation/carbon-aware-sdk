@@ -11,10 +11,11 @@ namespace GSF.CarbonIntensity.Tests;
 /// </summary>
 public abstract class TestsBase
 {
-    protected Mock<ILogger<EmissionsHandler>> MockCarbonAwareLogger { get; }
+    internal Mock<ILogger<EmissionsHandler>> MockEmissionsHandlerLogger { get; }
+
     protected TestsBase()
     {
-        this.MockCarbonAwareLogger = new Mock<ILogger<EmissionsHandler>>();
+        this.MockEmissionsHandlerLogger = new Mock<ILogger<EmissionsHandler>>();
     }
 
     protected static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)

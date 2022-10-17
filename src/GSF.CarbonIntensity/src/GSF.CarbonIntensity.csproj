@@ -11,5 +11,4 @@
 	    <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" />
 	    <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
     </ItemGroup>
-
 </Project>

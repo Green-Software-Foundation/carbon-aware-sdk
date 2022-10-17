@@ -1,5 +1,4 @@
 using CarbonAware.Aggregators.CarbonAware;
-using GSF.CarbonIntensity.Models;
 
 namespace GSF.CarbonIntensity.Handlers
 {
@@ -10,7 +9,7 @@ namespace GSF.CarbonIntensity.Handlers
         /// </summary>
         /// <remarks> This function is useful for reporting the measured carbon intensity for a specific time period in a specific location. </remarks>
         /// <param name="parameters">The request object <see cref="CarbonAwareParameters"/> with `Start`, `End` and `SingleLocation` fields set.</param>
-        /// <returns>A <see cref="CarbonIntensityResult"/> object that contains the location, time boundaries and average carbon intensity value.</returns>
-        Task<CarbonIntensityResult> GetAverageCarbonIntensity(CarbonAwareParameters parameters);
+        /// <returns>The average carbon intensity value.</returns>
+        Task<double> GetAverageCarbonIntensity(CarbonAwareParameters parameters);
     }
 }
