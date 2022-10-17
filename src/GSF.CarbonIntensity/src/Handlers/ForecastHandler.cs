@@ -1,6 +1,6 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Model;
-using GSF.CarbonIntensity.Model;
+using GSF.CarbonIntensity.Models;
 using Microsoft.Extensions.Logging;
 
 namespace GSF.CarbonIntensity.Handlers;
@@ -17,23 +17,22 @@ internal sealed class ForecastHandler : IForecastHandler
         _logger = logger;
     }
 
-    public async Task<ForecastData> GetCurrent()
+    public async Task<ForecastData> GetCurrent(CarbonAwareParameters parameters)
     {
-        // TODO How to pass params.
-        var param = new CarbonAwareParameters();
-        var results = await _aggregator.GetCurrentForecastDataAsync(param);
+        var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
         return CopyValues(results.First());
     }
 
     private ForecastData CopyValues(EmissionsForecast eForcast)
     {
-        var data = new ForecastData();
-        data.RequestedAt = eForcast.RequestedAt;
-        data.GeneratedAt = eForcast.GeneratedAt;
-        data.Location = eForcast.Location.ToString();
-        data.DataStartAt = eForcast.DataStartAt;
-        data.DataEndAt = eForcast.DataEndAt;
-        data.WindowSize = eForcast.WindowSize;
+        var data = new ForecastData {
+            RequestedAt = eForcast.RequestedAt,
+            GeneratedAt = eForcast.GeneratedAt,
+            Location = eForcast.Location.ToString(),
+            DataStartAt = eForcast.DataStartAt,
+            DataEndAt = eForcast.DataEndAt,
+            WindowSize = eForcast.WindowSize
+        };
         // TODO with the rest of properties. (Enumeration<EmissionsData>, Enumeration<OptimalData>)
         return data;
     }
