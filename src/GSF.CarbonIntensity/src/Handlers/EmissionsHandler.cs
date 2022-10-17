@@ -1,12 +1,11 @@
 using CarbonAware.Aggregators;
 using CarbonAware.Aggregators.CarbonAware;
-using GSF.CarbonIntensity.Models;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace GSF.CarbonIntensity.Handlers
 {
-    public class EmissionsHandler : IEmissionsHandler
+    internal sealed  class EmissionsHandler : IEmissionsHandler
     {
         private readonly ILogger<EmissionsHandler> _logger;
         private readonly ICarbonAwareAggregator _aggregator;
@@ -18,18 +17,11 @@ namespace GSF.CarbonIntensity.Handlers
         }
 
         /// <inheritdoc />
-        public async Task<CarbonIntensityResult> GetAverageCarbonIntensity(CarbonAwareParameters parameters)
+        public async Task<double> GetAverageCarbonIntensity(CarbonAwareParameters parameters)
         {
             var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
-            var carbonIntensity = new CarbonIntensityResult
-            {
-                Location = parameters.SingleLocation.DisplayName,
-                StartTime = parameters.Start,
-                EndTime = parameters.End,
-                CarbonIntensity = result,
-            };
-            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", carbonIntensity);
-            return carbonIntensity;
+            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
+            return result;
         }
     }
 }
