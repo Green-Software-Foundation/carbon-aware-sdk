@@ -15,6 +15,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddCarbonAwareEmissionServices(configuration);
         services.TryAddSingleton<IEmissionsHandler, EmissionsHandler>();
+        services.TryAddSingleton<IForecastHandler, ForecastHandler>();
         return services;
     }
 }
