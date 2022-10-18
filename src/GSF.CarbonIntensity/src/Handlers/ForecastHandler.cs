@@ -7,7 +7,6 @@ namespace GSF.CarbonIntensity.Handlers;
 
 internal sealed class ForecastHandler : IForecastHandler
 {
-
     private readonly ICarbonAwareAggregator _aggregator;
     private readonly ILogger<ForecastHandler> _logger;
 
@@ -20,21 +19,16 @@ internal sealed class ForecastHandler : IForecastHandler
     public async Task<ForecastData> GetCurrent(CarbonAwareParameters parameters)
     {
         var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
-        return CopyValues(results.First());
+        return ToForecastData(results.First());
     }
 
-    private ForecastData CopyValues(EmissionsForecast eForcast)
-    {
-        var data = new ForecastData {
-            RequestedAt = eForcast.RequestedAt,
-            GeneratedAt = eForcast.GeneratedAt,
-            Location = eForcast.Location.ToString(),
-            DataStartAt = eForcast.DataStartAt,
-            DataEndAt = eForcast.DataEndAt,
-            WindowSize = eForcast.WindowSize
+    private static ForecastData ToForecastData(EmissionsForecast emissionsForecast) {
+        return new ForecastData {
+            RequestedAt = emissionsForecast.RequestedAt,
+            GeneratedAt = emissionsForecast.GeneratedAt,
+            EmissionsData = emissionsForecast.ForecastData,
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints
         };
-        // TODO with the rest of properties. (Enumeration<EmissionsData>, Enumeration<OptimalData>)
-        return data;
     }
 }
 

@@ -1,14 +1,41 @@
 using CarbonAware.Aggregators.CarbonAware;
 using GSF.CarbonIntensity.Handlers;
+using Microsoft.Extensions.Logging;
+using Moq;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
 
 namespace GSF.CarbonIntensity.Tests;
 
 [TestFixture]
-public class EmissionsHandlerTests : TestsBase
+public class EmissionsHandlerTests
 {
+    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    private Mock<ILogger<EmissionsHandler>> Logger { get; set; }
+    #pragma warning restore CS8618
+
+    [SetUp]
+    public void SetUp()
+    {
+        Logger = new Mock<ILogger<EmissionsHandler>>();
+    }
+
+    private static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
+    {
+        var aggregator = new Mock<ICarbonAwareAggregator>();
+        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()))
+            .Callback((CarbonAwareParameters parameters) =>
+            {
+                parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
+                parameters.Validate();
+            })
+            .ReturnsAsync(data);
+
+        return aggregator;
+    }
+
     /// <summary>
     /// Tests that successfull call to the aggregator with any data returned results in expected format.
     /// </summary>
@@ -17,7 +44,7 @@ public class EmissionsHandlerTests : TestsBase
     {
         // Arrange
         double data = 0.7;
-        var emissionsHandler = new EmissionsHandler(MockEmissionsHandlerLogger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
+        var emissionsHandler = new EmissionsHandler(Logger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
 
         var parametersDTO = new CarbonAwareParametersBaseDTO
         {

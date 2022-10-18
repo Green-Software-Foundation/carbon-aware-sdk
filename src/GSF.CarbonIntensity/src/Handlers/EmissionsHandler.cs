@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 namespace GSF.CarbonIntensity.Handlers
 {
-    internal sealed  class EmissionsHandler : IEmissionsHandler
+    internal sealed class EmissionsHandler : IEmissionsHandler
     {
         private readonly ILogger<EmissionsHandler> _logger;
         private readonly ICarbonAwareAggregator _aggregator;
