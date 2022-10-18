@@ -12,8 +12,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <openapi.spec>http://localhost:8080/api/v1/swagger.yaml</openapi.spec>
-        <webapi.endpoint>http://localhost:8080</webapi.endpoint>
+        <openapi.spec>http://localhost/api/v1/swagger.yaml</openapi.spec>
+        <webapi.endpoint>http://localhost</webapi.endpoint>
         <mainClass>foundation.greensoftware.carbonawaresdk.samples.java.WebApiClient</mainClass>
 
         <!-- from OpenAPI generator -->
