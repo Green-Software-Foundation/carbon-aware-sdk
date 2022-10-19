@@ -18,9 +18,14 @@ public class CarbonAwareVariablesConfiguration
     public PathString WebApiRoutePrefix { get; set; }
 
     /// <summary>
-    /// Gets or sets the the carbon intensity data source to use.
+    /// Gets or sets the forecast data source to use.
     /// </summary>
-    public string CarbonIntensityDataSource { get; set; }
+    public string ForecastDataSource { get; set; }
+
+    /// <summary>
+    /// Gets or sets the emissions data source to use.
+    /// </summary>
+    public string EmissionsDataSource { get; set; }
 
     #nullable enable
     /// <summary>

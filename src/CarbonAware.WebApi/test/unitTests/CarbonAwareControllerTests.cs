@@ -1,6 +1,5 @@
 namespace CarbonAware.WepApi.UnitTests;
 
-using CarbonAware.Aggregators;
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Emissions;
 using CarbonAware.Aggregators.Forecast;
@@ -12,9 +11,7 @@ using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
-using System.Text.Json;
 using System.Threading.Tasks;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 /// <summary>
 /// Tests that the Web API controller handles and packages various responses from a plugin properly 
@@ -23,7 +20,7 @@ using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext
 [TestFixture]
 public class CarbonAwareControllerTests : TestsBase
 {
-    IForecastAggregator forecastAggregator = Mock.Of<IForecastAggregator>();
+    readonly IForecastAggregator forecastAggregator = Mock.Of<IForecastAggregator>();
     
     /// <summary>
     /// Tests that successful emissions call to an aggregator with any data returned results in action with OK status.

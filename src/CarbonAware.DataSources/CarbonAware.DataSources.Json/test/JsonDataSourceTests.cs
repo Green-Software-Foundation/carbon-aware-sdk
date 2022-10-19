@@ -65,16 +65,6 @@ public class JsonDataSourceTests
     }
 
     [Test]
-    public void GetCurrentCarbonIntensityForecastAsync_NotImplemented()
-    {
-        var mockDataSource = SetupMockDataSource();
-        var dataSource = mockDataSource.Object;
-        var location = new Location {Name = "paris"};
-        Assert.ThrowsAsync<NotImplementedException>(async () => await  dataSource.GetCurrentCarbonIntensityForecastAsync(location));
-
-    }
-
-    [Test]
     public async Task GetCarbonIntensityAsync_ReturnsSingleDataPoint_WhenStartParamExactlyMatchesDataStart()
     {
         var mockDataSource = SetupMockDataSource();

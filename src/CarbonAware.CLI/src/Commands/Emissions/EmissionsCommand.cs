@@ -2,7 +2,6 @@ using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Emissions;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
-using Microsoft.AspNetCore.Http;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
