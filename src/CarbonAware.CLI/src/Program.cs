@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 
 class Program
 {
+    public const string DevelopmentEnvironment = "Development";
+    public const string ProductionEnvironment = "Production";
+
     public static async Task Main(string[] args)
     {
         ServiceProvider serviceProvider = BootstrapServices();
@@ -16,11 +19,17 @@ class Program
     }
 
     private static ServiceProvider BootstrapServices() {
-             
+        string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? ProductionEnvironment;
         var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.local.json", optional:true);// Optional and would locally set variables override environment variables
+            .AddJsonFile("appsettings.json", optional: true)
+            .AddJsonFile($"appsettings.{env}.json", optional: true)
+            .AddJsonFile("carbon-aware.config", optional: true);
+        if(env.Equals(DevelopmentEnvironment, StringComparison.OrdinalIgnoreCase))
+        {
+            configurationBuilder.AddUserSecrets<Program>(optional: true);
+        }
+        configurationBuilder.AddEnvironmentVariables();
+
         var config = configurationBuilder.Build();
         var services = new ServiceCollection();
         services.Configure<CarbonAwareVariablesConfiguration>(config.GetSection(CarbonAwareVariablesConfiguration.Key));

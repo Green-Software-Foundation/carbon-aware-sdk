@@ -11,7 +11,7 @@
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/src/CarbonAware.WebApi/src/bin/Debug/net6.0/CarbonAware.WebApi.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src/CarbonAware.WebApi/",
+      "cwd": "${workspaceFolder}/src/CarbonAware.WebApi/src/",
       "stopAtEntry": false,
       "serverReadyAction": {
         "action": "openExternally",
