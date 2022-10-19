@@ -24,4 +24,6 @@ If yes, what workflow does this break?
 
 ## Anything else?
 Other comments, collaborators, etc.
+> Please follow [GitHub's suggested syntax](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword) to link Pull Requests to Issues via keywords
+
 This PR Closes #<issue_number>
