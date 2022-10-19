@@ -34,6 +34,8 @@ There is also no need for these data sources to have a shared aggregator as none
 - `EmissionsAggregator`
 - `ForecastAggregator`
 
+Each aggregator should have its own parameters class, however the appropriate way to split up the existing `CarbonAwareParameters` class is less straight-forward due to the large amount of shared code. How to split up this class should be the subject of its own ADR, and it should continue to be shared by both aggregators until an agreed upon design has been reached.
+
 #### Configuration
 
 Each data source type should be independently configurable. So an example config of
