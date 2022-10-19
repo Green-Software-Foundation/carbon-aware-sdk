@@ -18,7 +18,8 @@ namespace CarbonAware.WebApi.IntegrationTests;
 public abstract class IntegrationTestingBase
 {
     internal DataSourceType _dataSource;
-    internal string? _dataSourceEnv;
+    internal string? _emissionsDataSourceEnv;
+    internal string? _forecastDataSourceEnv;
     internal WebApplicationFactory<Program> _factory;
     protected HttpClient _client;
     protected IDataSourceMocker _dataSourceMocker;
@@ -29,7 +30,8 @@ public abstract class IntegrationTestingBase
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         _dataSource = dataSource;
-        _dataSourceEnv = null;
+        _emissionsDataSourceEnv = null;
+        _forecastDataSourceEnv = null;
         _factory = new WebApplicationFactory<Program>();
     }
 
@@ -72,7 +74,8 @@ public abstract class IntegrationTestingBase
     [OneTimeSetUp]
     public void Setup()
     {
-        _dataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource");
+        _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource");
+        _forecastDataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__ForecastDataSource");
 
         //Switch between different data sources as needed
         //Each datasource should have an accompanying DataSourceMocker that will perform setup activities
@@ -80,7 +83,7 @@ public abstract class IntegrationTestingBase
         {
             case DataSourceType.JSON:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "JSON");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", "JSON");
                     Environment.SetEnvironmentVariable("CarbonAwareVars__VerboseApi", "true");
                     Environment.SetEnvironmentVariable("JsonDataSourceConfiguration__DataFileLocation", "demo.json");
                     _dataSourceMocker = new JsonDataSourceMocker();
@@ -88,7 +91,8 @@ public abstract class IntegrationTestingBase
                 }
             case DataSourceType.WattTime:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__ForecastDataSource", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
                     break;
                 }
@@ -120,6 +124,7 @@ public abstract class IntegrationTestingBase
         _client.Dispose();
         _factory.Dispose();
         _dataSourceMocker.Dispose();
-        Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", _dataSourceEnv);
+        Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", _emissionsDataSourceEnv);
+        Environment.SetEnvironmentVariable("CarbonAwareVars__ForecastDataSource", _forecastDataSourceEnv);
     }
 }

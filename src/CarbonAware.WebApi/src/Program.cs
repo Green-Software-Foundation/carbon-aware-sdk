@@ -1,5 +1,6 @@
 using System.Reflection;
 using CarbonAware;
+using CarbonAware.Exceptions;
 using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -30,8 +31,10 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
 
-builder.Services.AddCarbonAwareEmissionServices(builder.Configuration);
-CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration();
+string? errorMessage;
+bool successfulEmissionServices = builder.Services.TryAddCarbonAwareEmissionServices(builder.Configuration, out errorMessage);
+
+CarbonAwareVariablesConfiguration config = new();
 
 builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
 
@@ -44,6 +47,12 @@ builder.Services.AddSwaggerGen(c => {
     });
 
 var app = builder.Build();
+
+if(!successfulEmissionServices)
+{
+    var _logger = app.Services.GetService<ILogger<Program>>();
+    _logger?.LogError(errorMessage);
+}
 
 if (config.WebApiRoutePrefix != null)
 {

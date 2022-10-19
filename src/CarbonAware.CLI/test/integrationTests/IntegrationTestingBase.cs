@@ -18,7 +18,8 @@ public abstract class IntegrationTestingBase
 {
     private string _executableName = "caw";
     internal DataSourceType _dataSource;
-    internal string? _dataSourceEnv;
+    internal string? _emissionsDataSourceEnv;
+    internal string? _forecastDataSourceEnv;
     protected IDataSourceMocker _dataSourceMocker;
     protected TestConsole _console = new();
 
@@ -28,7 +29,8 @@ public abstract class IntegrationTestingBase
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         _dataSource = dataSource;
-        _dataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource");
+        _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource");
+        _forecastDataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__ForecastDataSource");
     }
 
     protected async Task<int> InvokeCliAsync(string arguments)
@@ -90,13 +92,14 @@ public abstract class IntegrationTestingBase
         {
             case DataSourceType.JSON:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "JSON");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", "JSON");
                     _dataSourceMocker = new JsonDataSourceMocker();
                     break;
                 }
             case DataSourceType.WattTime:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("CarbonAwareVars__ForecastDataSource", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
                     break;
                 }
@@ -140,6 +143,7 @@ public abstract class IntegrationTestingBase
     public void TearDown()
     {
         _dataSourceMocker.Dispose();
-        Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", _dataSourceEnv);
+        Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", _emissionsDataSourceEnv);
+        Environment.SetEnvironmentVariable("CarbonAwareVars__ForecastDataSource", _forecastDataSourceEnv);
     }
 }

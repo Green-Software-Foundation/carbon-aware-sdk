@@ -66,7 +66,7 @@ public class EmissionsAggregatorTests
         var results = (await this.Aggregator.GetEmissionsDataAsync(parameters)).ToList();
 
         //Assert   
-        Assert.AreEqual(results.Count(), 1);
+        Assert.AreEqual(results.Count, 1);
         Assert.AreEqual(results.First().Time, expectedTimeValue);
     }
 

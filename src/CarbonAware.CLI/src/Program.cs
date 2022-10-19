@@ -1,4 +1,5 @@
 ﻿using CarbonAware;
+using CarbonAware.Exceptions;
 using CarbonAware.Aggregators.Configuration;
 using CarbonAware.CLI.Commands.Emissions;
 using CarbonAware.CLI.Commands.EmissionsForecasts;
@@ -15,13 +16,22 @@ var config = new ConfigurationBuilder()
     .UseCarbonAwareDefaults()
     .Build();
 
-var serviceProvider = new ServiceCollection()
+var builder = new ServiceCollection()
     .AddSingleton<IConfiguration>(config)
     .Configure<CarbonAwareVariablesConfiguration>(
         config.GetSection(CarbonAwareVariablesConfiguration.Key))
-    .AddCarbonAwareEmissionServices(config)
-    .AddLogging(builder => builder.AddDebug())
-    .BuildServiceProvider();
+    .AddLogging(builder => builder.AddDebug());
+
+string? errorMessage = "";
+bool successfulEmissionServices = builder.TryAddCarbonAwareEmissionServices(config, out errorMessage);
+
+var serviceProvider = builder.BuildServiceProvider();
+
+if(!successfulEmissionServices)
+{
+    var _logger = serviceProvider.GetService<ILogger<Program>>();
+    _logger?.LogError(errorMessage);
+}
 
 var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootCommandDescription);
 rootCommand.AddCommand(new EmissionsCommand());

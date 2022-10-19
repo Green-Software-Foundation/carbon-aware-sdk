@@ -1,11 +1,9 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.CLI.Commands.Emissions;
 using CarbonAware.Model;
-using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using System.Text.Json;
 
 namespace CarbonAware.CLI.UnitTests;
 

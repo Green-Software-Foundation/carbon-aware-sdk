@@ -35,7 +35,7 @@ Please note that configuration is hierarchical.  The last configuration source l
 When adding values via environment variables, we recommend that you use the double underscore form, rather than the colon form.  Colons won't work in non-windows environment.  For example:
 
 ```bash
-  CarbonAwareVars__CarbonIntensityDataSource="WattTime"
+  CarbonAwareVars__EmissionsDataSource="WattTime"
 ```
 
 Note that double underscores are used to represent dotted notation or child elements that you see in the JSON below.  For example, to set proxy information using environment variables, you'd do this:
@@ -61,7 +61,8 @@ Used to configure specific values that affect how the application gets data and 
 ```json
 {
     "carbonAwareVars": {
-        "carbonIntensityDataSource": "",
+        "ForecastDataSource": "WattTime",
+        "EmissionsDataSource": "JSON",
         "webApiRoutePrefix": "",
         "proxy": {
             "useProxy": false,
@@ -73,13 +74,13 @@ Used to configure specific values that affect how the application gets data and 
 }
 ```
 
-##### carbonIntensityDataSource
+##### DataSource
 
-Must be one of the following: `None, JSON, WattTime`.  
+Each data source interface is configured with an underlying datasource. 
+
+Must be one of the following: `JSON, WattTime`.  
 
 If set to `WattTime`, WattTime configuration must also be supplied.
-
-`None` is the default, and if this value is supplied, an exception will be thrown at startup.
 
 `JSON` will result in the data being loaded from a [json file](./src/CarbonAware.DataSources.Json/test-data-azure-emissions.json) compiled into the project.  You should not use these values in production, since they are static and don't represent carbon intensity accurately.
 
