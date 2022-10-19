@@ -26,8 +26,6 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
     private readonly ILogger<JsonDataSource> _logger;
 
-    private const double DURATION = 8; // 8 hrs
-
     private IOptionsMonitor<JsonDataSourceConfiguration> _configurationMonitor { get; }
 
     private JsonDataSourceConfiguration _configuration => _configurationMonitor.CurrentValue;
@@ -56,7 +54,8 @@ public class JsonDataSource : ICarbonIntensityDataSource
         _logger.LogInformation("JSON data source getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
 
         IEnumerable<EmissionsData>? emissionsData = await GetJsonDataAsync();
-        if (emissionsData == null || !emissionsData.Any()) {
+        if (emissionsData == null || !emissionsData.Any())
+        {
             _logger.LogDebug("Emission data list is empty");
             return Array.Empty<EmissionsData>();
         }
@@ -88,7 +87,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
     {
         var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(startTime, endTime, MinSamplingWindow);
         var windowData = data.Where(ed => ed.TimeBetween(newStartTime, newEndTime));
-        var filteredData = IntervalHelper.FilterByDuration(windowData, startTime, endTime, TimeSpan.FromHours(DURATION));
+        var filteredData = IntervalHelper.FilterByDuration(windowData, startTime, endTime);
 
         if (!filteredData.Any())
         {
@@ -99,7 +98,7 @@ public class JsonDataSource : ICarbonIntensityDataSource
 
     private IEnumerable<EmissionsData> FilterByLocation(IEnumerable<EmissionsData> data, IEnumerable<string?> locations)
     {
-        if (locations.Any()) 
+        if (locations.Any())
         {
             data = data.Where(ed => locations.Contains(ed.Location));
         }
@@ -115,7 +114,8 @@ public class JsonDataSource : ICarbonIntensityDataSource
         }
         using Stream stream = GetStreamFromFileLocation();
         var jsonObject = await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
-        if (_emissionsData is null || !_emissionsData.Any()) {
+        if (_emissionsData is null || !_emissionsData.Any())
+        {
             _emissionsData = jsonObject?.Emissions;
         }
         return _emissionsData;

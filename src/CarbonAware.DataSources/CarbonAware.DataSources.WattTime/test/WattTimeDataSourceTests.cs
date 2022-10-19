@@ -257,7 +257,7 @@ public class WattTimeDataSourceTests
     /// Tests that if 'frequency' is not provided in the WattTime response of emission data, it is calculated from the first 2 data points, or defaulted to 0 if fewer than 2 data points are returned 
     /// </summary>
     [TestCase(new double[] { 300, 300 }, 300, null, TestName = "GetCarbonIntensity - for multiple data points, frequency is null for one data point ")]
-    [TestCase(new double[] { 0 }, null, TestName = "GetCarbonIntensity - for less than 2 data points, frequency is null for one data point ")]
+    [TestCase(new double[] { }, null, TestName = "GetCarbonIntensity - for less than 2 data points, frequency is null for one data point ")]
     [TestCase(new double[] { 300, 300 }, null, null, TestName = "GetCarbonIntensity - for multiple data points, frequency is null for all data points")]
     [TestCase(new double[] { 500 }, 500, TestName = "GetCarbonIntensity - frequency is not null")]
     [TestCase(new double[] { }, TestName = "GetCarbonIntensity - for zero data points, returns empty enumerable")]
