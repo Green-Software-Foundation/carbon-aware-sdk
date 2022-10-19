@@ -24,4 +24,4 @@ If yes, what workflow does this break?
 
 ## Anything else?
 Other comments, collaborators, etc.
-This PR Closes Issue #
+This PR Closes #<issue_number>
