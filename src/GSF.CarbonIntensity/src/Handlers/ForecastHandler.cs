@@ -15,8 +15,14 @@ internal sealed class ForecastHandler : IForecastHandler
         _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
-    public async Task<EmissionsForecast> GetCurrent(CarbonAwareParameters parameters)
+    public async Task<EmissionsForecast> GetCurrent(string location, DateTimeOffset start, DateTimeOffset end, int duration)
     {
+        var parameters = new CarbonAwareParametersBaseDTO {
+            Start = start,
+            End = end,
+            SingleLocation = location,
+            Duration = duration
+        };
         var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
         return ToForecastData(results.First());
     }
