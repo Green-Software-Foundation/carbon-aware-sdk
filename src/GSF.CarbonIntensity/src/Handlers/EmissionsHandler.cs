@@ -14,17 +14,16 @@ internal sealed class EmissionsHandler : IEmissionsHandler
         _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
-        /// <inheritdoc />
-        public async Task<double> GetAverageCarbonIntensity(string location, DateTimeOffset start, DateTimeOffset end)
-        {
-            var parameters = new CarbonAwareParametersBaseDTO {
-                Start = start,
-                End = end,
-                SingleLocation = location
-            };
-            var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
-            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
-            return result;
-        }
+    /// <inheritdoc />
+    public async Task<double> GetAverageCarbonIntensity(string location, DateTimeOffset start, DateTimeOffset end)
+    {
+        var parameters = new CarbonAwareParametersBaseDTO {
+            Start = start,
+            End = end,
+            SingleLocation = location
+        };
+        var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
+        _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
+        return result;
     }
 }
