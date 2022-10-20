@@ -11,9 +11,10 @@ public static class ServiceCollectionExtensions
     /// <summary>
     /// Add services needed in order to pull data from a Carbon Intensity data source.
     /// </summary>
-    public static void AddCarbonAwareEmissionServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddCarbonAwareEmissionServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<ICarbonAwareAggregator, CarbonAwareAggregator>();
+        return services;
     }
 }
