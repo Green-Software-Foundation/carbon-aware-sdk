@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Model;
 using GSF.CarbonIntensity.Handlers;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -28,18 +27,20 @@ public class ForecastHandlerTests
     [Test]
     public async Task GetCurrent_Succeed_Call_MockAggregator()
     {
-        var data = new List<EmissionsForecast> {
-            new EmissionsForecast {
-                DataEndAt = DateTimeOffset.MaxValue,
-                DataStartAt = DateTimeOffset.MinValue
+        var data = new List<CarbonAware.Model.EmissionsForecast> {
+            new CarbonAware.Model.EmissionsForecast {
+                DataEndAt = DateTimeOffset.Parse("2022-03-01T18:30:00Z"),
+                DataStartAt = DateTimeOffset.Parse("2022-03-01T15:30:00Z"),
+                ForecastData = Array.Empty<CarbonAware.Model.EmissionsData>(),
+                OptimalDataPoints = Array.Empty<CarbonAware.Model.EmissionsData>(),
             }
         };
-        
+
         Aggregator
             .Setup(x => x.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
             .ReturnsAsync(data);
 
-        var handler = new ForecastHandler(Aggregator.Object, Logger.Object);
+        var handler = new ForecastHandler(Logger.Object, Aggregator.Object);
         var result = await handler.GetCurrent(It.IsAny<CarbonAwareParameters>());
         Assert.That(result, Is.Not.Null);
     }

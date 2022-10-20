@@ -1,5 +1,4 @@
 using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Model;
 using GSF.CarbonIntensity.Models;
 using Microsoft.Extensions.Logging;
 
@@ -10,25 +9,34 @@ internal sealed class ForecastHandler : IForecastHandler
     private readonly ICarbonAwareAggregator _aggregator;
     private readonly ILogger<ForecastHandler> _logger;
 
-    public ForecastHandler(ICarbonAwareAggregator aggregator, ILogger<ForecastHandler> logger)
+    public ForecastHandler(ILogger<ForecastHandler> logger, ICarbonAwareAggregator aggregator)
     {
-        _aggregator = aggregator;
-        _logger = logger;
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
-    public async Task<ForecastData> GetCurrent(CarbonAwareParameters parameters)
+    public async Task<EmissionsForecast> GetCurrent(CarbonAwareParameters parameters)
     {
         var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
         return ToForecastData(results.First());
     }
 
-    private static ForecastData ToForecastData(EmissionsForecast emissionsForecast) {
-        return new ForecastData {
+    private static EmissionsForecast ToForecastData(CarbonAware.Model.EmissionsForecast emissionsForecast) {
+        return new EmissionsForecast {
             RequestedAt = emissionsForecast.RequestedAt,
             GeneratedAt = emissionsForecast.GeneratedAt,
-            EmissionsData = emissionsForecast.ForecastData,
-            OptimalDataPoints = emissionsForecast.OptimalDataPoints
+            EmissionsData = emissionsForecast.ForecastData.Select(x => ToEmissionsData(x)),
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(x => ToEmissionsData(x))
+        };
+    }
+
+    private static EmissionsData ToEmissionsData(CarbonAware.Model.EmissionsData emissionsData)
+    {
+        return new EmissionsData {
+                Duration = emissionsData.Duration,
+                Location = emissionsData.Location,
+                Rating = emissionsData.Rating,
+                Time = emissionsData.Time
         };
     }
 }
-

@@ -6,5 +6,5 @@ namespace GSF.CarbonIntensity.Handlers;
 // TODO document methods
 public interface IForecastHandler
 {
-    Task<ForecastData> GetCurrent(CarbonAwareParameters parameters);
+    Task<EmissionsForecast> GetCurrent(CarbonAwareParameters parameters);
 }
