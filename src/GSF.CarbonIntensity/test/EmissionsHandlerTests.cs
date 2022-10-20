@@ -54,7 +54,7 @@ public class EmissionsHandlerTests
         };
 
         // Act
-        double? carbonIntensityOutput = await emissionsHandler.GetAverageCarbonIntensity(parametersDTO);
+        double? carbonIntensityOutput = await emissionsHandler.GetAverageCarbonIntensity(location, start,end);
 
         // Assert
         var expectedContent = data;
