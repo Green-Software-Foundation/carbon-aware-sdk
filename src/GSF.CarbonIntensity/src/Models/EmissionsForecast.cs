@@ -1,6 +1,5 @@
 namespace GSF.CarbonIntensity.Models;
 
-// TODO document props
 public record EmissionsForecast
 {
     public DateTimeOffset RequestedAt { get; init; }
