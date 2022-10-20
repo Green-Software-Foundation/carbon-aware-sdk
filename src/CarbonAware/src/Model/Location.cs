@@ -29,19 +29,11 @@ public class Location
     /// </summary>
     public CloudProvider? CloudProvider { get; set; }
 
-    /// <summary>
-    /// Gets or sets the region name to use.  When set to GeoPosition, this value should be null.
-    /// </summary>
     #nullable enable
-    public string? RegionName { get; set; }
-
     /// <summary>
-    /// Interim getters/setters until RegionName is fully replaced by Name.
+    /// Gets or sets the location Name.
     /// </summary>
-    public string? Name {
-        get => RegionName;
-        set => RegionName = value;
-    }
+    public string? Name { get; set; }
     #nullable disable
 
     /// <summary>
