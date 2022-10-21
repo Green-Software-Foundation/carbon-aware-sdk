@@ -41,7 +41,7 @@ public class ForecastHandlerTests
             .ReturnsAsync(data);
 
         var handler = new ForecastHandler(Logger.Object, Aggregator.Object);
-        var result = await handler.GetCurrent(It.IsAny<string>(),It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>());
+        var result = await handler.GetCurrentAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>());
         Assert.That(result, Is.Not.Null);
     }
 }
