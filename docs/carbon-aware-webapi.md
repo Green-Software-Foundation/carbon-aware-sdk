@@ -2,7 +2,7 @@
 
 The Carbon Aware SDK provides an API to get the marginal carbon intensity for a given location and time period. The values reported in the Green Software Foundation's specification for marginal carbon intensity (Grams per Kilowatt Hour).
 
-***Highly Recommended*** - This user interface is best for when you can change the code, and deploy separately.  This also allows you to manage the Carbon Aware logic independently of the system using it.
+**_Highly Recommended_** - This user interface is best for when you can change the code, and deploy separately. This also allows you to manage the Carbon Aware logic independently of the system using it.
 
 The WebApi replicates the CLI and SDK functionality, leveraging the same configuration and providing a REST end point with Swagger/OpenAPI definition for client generation
 
@@ -42,11 +42,11 @@ The response is an array of EmissionsData objects that contains the location, ti
 
 ```json
 [
- {
-  "location":"eastus",
-  "time":"2022-05-17T20:45:11.5092741+00:00",
-  "rating":70
- }
+  {
+    "location": "eastus",
+    "time": "2022-05-17T20:45:11.5092741+00:00",
+    "rating": 70
+  }
 ]
 ```
 
@@ -111,7 +111,7 @@ Parameters:
 1. `location`: This is a required parameter and is an array of the names of the data region for the configured Cloud provider.
 2. `dataStartAt`: Start time boundary of the current forecast data points. Ignores current forecast data points before this time. Must be within the forecast data point timestamps. Defaults to the earliest time in the forecast data.
 3. `dataEndAt`: End time boundary of the current forecast data points. Ignores current forecast data points after this time. Must be within the forecast data point timestamps. Defaults to the latest time in the forecast data.
-If neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data points are used in calculating the optimal marginal carbon intensity window.
+   If neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data points are used in calculating the optimal marginal carbon intensity window.
 4. `windowSize`: The estimated duration (in minutes) of the workload. Defaults to the duration of a single forecast data point.
 
 ```text
@@ -163,11 +163,11 @@ This endpoint is useful for back-testing what one might have done in the past, i
 Parameters:
 
 1. requestedForecasts: Array of requested forecasts. Each requested forecast contains
-    - `requestedAt`: This is a required parameter and is the historical time used to fetch the most recent forecast as of that time.
-    - `location`: This is a required parameter and is the name of the data region for the configured Cloud provider.
-    - `dataStartAt`: Start time boundary of the forecast data points. Ignores forecast data points before this time. Must be within the forecast data point timestamps. Defaults to the earliest time in the forecast data.
-    - `dataEndAt`: End time boundary of the forecast data points. Ignores forecast data points after this time. Must be within the forecast data point timestamps. Defaults to the latest time in the forecast data.
-    - `windowSize`: The estimated duration (in minutes) of the workload. Defaults to the duration of a single forecast data point
+   - `requestedAt`: This is a required parameter and is the historical time used to fetch the most recent forecast as of that time.
+   - `location`: This is a required parameter and is the name of the data region for the configured Cloud provider.
+   - `dataStartAt`: Start time boundary of the forecast data points. Ignores forecast data points before this time. Must be within the forecast data point timestamps. Defaults to the earliest time in the forecast data.
+   - `dataEndAt`: End time boundary of the forecast data points. Ignores forecast data points after this time. Must be within the forecast data point timestamps. Defaults to the latest time in the forecast data.
+   - `windowSize`: The estimated duration (in minutes) of the workload. Defaults to the duration of a single forecast data point
 
 If neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data points are used in calculating the optimal marginal carbon intensity window.
 
@@ -263,9 +263,9 @@ This endpoint only supports batching across a single location with different tim
 Parameters:
 
 1. requestedCarbonIntensities: Array of requested carbon intensities. Each requested carbon intensity contains
-    - `location`: This is a required parameter and is the name of the data region for the configured Cloud provider.
-    - `startTime`: The time at which the workflow we are requesting carbon intensity for started.
-    - `endTime`: The time at which the workflow we are requesting carbon intensity for ended.
+   - `location`: This is a required parameter and is the name of the data region for the configured Cloud provider.
+   - `startTime`: The time at which the workflow we are requesting carbon intensity for started.
+   - `endTime`: The time at which the workflow we are requesting carbon intensity for ended.
 
 ```json
 [
@@ -312,15 +312,47 @@ The response is an array of CarbonIntensityDTO objects which each have a locatio
 ]
 ```
 
+## List of Locations
+
+Supported location codes by the API. Locations marked with \* return 204 (NO DATA).
+
+| DisplayName            | Location           |
+| ---------------------- | ------------------ |
+| Central US             | centralus          |
+| East US                | eastus             |
+| East US 2              | eastus2            |
+| West US                | westus             |
+| North Central US       | northcentralus     |
+| South Central US       | southcentralus     |
+| North Europe\*         | northeurope        |
+| West Europe\*          | westeurope         |
+| Australia East         | australiaeast      |
+| Australia Southeast    | australiasoutheast |
+| Canada Central         | canadacentral      |
+| Canada East            | canadaeast         |
+| UK South               | uksouth            |
+| UK West                | ukwest             |
+| West Central US        | westcentralus      |
+| West US 2              | westus2            |
+| France Central\*       | francecentral      |
+| France South\*         | francesouth        |
+| Australia Central      | australiacentral   |
+| Australia Central 2    | australiacentral2  |
+| Germany North\*        | germanynorth       |
+| Germany West Central\* | germanywestcentral |
+| Norway West\*          | norwaywest         |
+| Norway East\*          | norwayeast         |
+| West US 3              | westus3            |
+
 ## Error Handling
 
 The WebAPI leveraged the [.Net controller filter pipeline](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-6.0) to ensure that all requests respond with a consistent JSON schema.
 
 ![.Net controller filter pipeline image](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters/_static/filter-pipeline-2.png?view=aspnetcore-6.0)
 
-Controllers are responsible for managing the "Success" responses.  If an error occurs in the WebAPI code and an unhandled exception is thrown, the [custom Exception Filter](./Filters/HttpResponseExceptionFilter.cs) will manage converting that exception into the appropriate JSON response.  NOTE: The Exception Filter is only used for unhandled exceptions.  If the exception is caught and handled by the WebAPI code, the controller will continue to manage the response.
+Controllers are responsible for managing the "Success" responses. If an error occurs in the WebAPI code and an unhandled exception is thrown, the [custom Exception Filter](./Filters/HttpResponseExceptionFilter.cs) will manage converting that exception into the appropriate JSON response. NOTE: The Exception Filter is only used for unhandled exceptions. If the exception is caught and handled by the WebAPI code, the controller will continue to manage the response.
 
-The .Net framework will automatically respond to validation errors with a [ValidationProblemDetails](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-6.0) object.  Using the Exception Filter class enables the WebAPI to consistently respond with the `ValidationProblemDetails` error schema in all error cases and take advantage of error handling automatically provided by the framework.
+The .Net framework will automatically respond to validation errors with a [ValidationProblemDetails](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-6.0) object. Using the Exception Filter class enables the WebAPI to consistently respond with the `ValidationProblemDetails` error schema in all error cases and take advantage of error handling automatically provided by the framework.
 
 ![WebAPI Error Handling Flow Chart](/docs/images/web-api-error-handling-flow.png)
 
@@ -330,13 +362,13 @@ Using the following steps, it is possible to get the CarbonAware WebApi OpenAPI 
 
 1. Make sure the current directory is `<path to project root>/src/`
 
-    ```sh
-    dotnet restore
-    cd CarbonAware.WebApi/src
-    dotnet tool restore
-    dotnet build --configuration Release --no-restore
-    dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
-    ```
+   ```sh
+   dotnet restore
+   cd CarbonAware.WebApi/src
+   dotnet tool restore
+   dotnet build --configuration Release --no-restore
+   dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
+   ```
 
 1. The `CarbonAware.WebApi/src/api/v1/swagger.yaml` file contains the supported OpenApi specification.
 1. Use for instance [swagger editor](https://editor.swagger.io) to see and try the endpoint routes.
@@ -355,4 +387,4 @@ Each WattTime emissions data point is associated with a particular named balanci
 
 #### Exception Handling
 
-If WattTime responds with a 4XX or 5XX status code the WattTime Data Source will forward the response code and message back to the caller.  Refer to the [current WattTime documentation](https://www.watttime.org/api-documentation/) for the most up-to-date information about possible error codes.
+If WattTime responds with a 4XX or 5XX status code the WattTime Data Source will forward the response code and message back to the caller. Refer to the [current WattTime documentation](https://www.watttime.org/api-documentation/) for the most up-to-date information about possible error codes.
