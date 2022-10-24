@@ -1,5 +1,6 @@
 using CarbonAware.Aggregators.CarbonAware;
 using GSF.CarbonIntensity.Handlers;
+using GSF.CarbonIntensity.Exceptions;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -60,6 +61,21 @@ public class EmissionsHandlerTests
         var expectedContent = data;
         var actualContent = (carbonIntensityOutput == null) ? 0 : carbonIntensityOutput;
         Assert.AreEqual(expectedContent, actualContent);
+    }
+
+    /// <summary>
+    /// Tests that when an error is thrown, it is caught and wrapped in the custom exception.
+    /// </summary>
+    [Test]
+    public void GetAverageCarbonIntensity_ErrorThrowsCustomException()
+    {
+        // Arrange
+        var aggregator = new Mock<ICarbonAwareAggregator>();
+        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>())).ThrowsAsync(new Exception());
+        var emissionsHandler = new EmissionsHandler(Logger.Object, aggregator.Object);
+
+        // Act/Assert
+        Assert.ThrowsAsync<CarbonIntensityException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", DateTimeOffset.Now, DateTimeOffset.Now));
     }
 
 }

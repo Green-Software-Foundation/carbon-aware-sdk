@@ -1,4 +1,5 @@
 using CarbonAware.Aggregators.CarbonAware;
+using GSF.CarbonIntensity.Exceptions;
 using GSF.CarbonIntensity.Models;
 using Microsoft.Extensions.Logging;
 
@@ -24,8 +25,13 @@ internal sealed class ForecastHandler : IForecastHandler
             MultipleLocations = new [] { location },
             Duration = duration
         };
-        var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
-        return !results.Any() ? null : ToForecastData(results.First());
+        try {
+            var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
+            return !results.Any() ? null : ToForecastData(results.First());
+        }
+        catch (Exception e) {
+            throw new CarbonIntensityException(e.Message, e);
+        }
     }
 
     private static EmissionsForecast ToForecastData(CarbonAware.Model.EmissionsForecast emissionsForecast) {

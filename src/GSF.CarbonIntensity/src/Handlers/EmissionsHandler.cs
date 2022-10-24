@@ -1,4 +1,5 @@
 using CarbonAware.Aggregators.CarbonAware;
+using GSF.CarbonIntensity.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace GSF.CarbonIntensity.Handlers;
@@ -22,8 +23,13 @@ internal sealed class EmissionsHandler : IEmissionsHandler
             End = end,
             SingleLocation = location
         };
-        var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
-        _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
-        return result;
+        try {
+            var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
+            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
+            return result;
+        } catch (Exception e) {
+            throw new CarbonIntensityException(e.Message, e);
+        }
+
     }
 }
