@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CarbonAware.Aggregators.CarbonAware;
+using GSF.CarbonIntensity.Exceptions;
 using GSF.CarbonIntensity.Handlers;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -49,6 +50,17 @@ public class ForecastHandlerTests
         var handler = new ForecastHandler(Logger.Object, aggregator.Object);
         var result = await handler.GetCurrentAsync("eastus", DateTimeOffset.Now, DateTimeOffset.Now + TimeSpan.FromHours(1), 30);
         Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void GetCurrentAsync_ThrowsException()
+    {
+        var aggregator = new Mock<ICarbonAwareAggregator>();
+        aggregator
+            .Setup(x => x.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
+            .ThrowsAsync(new Exception());
+        var handler = new ForecastHandler(Logger.Object, aggregator.Object);
+        Assert.ThrowsAsync<CarbonIntensityException>(async () => await handler.GetCurrentAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>()));
     }
 
     private static Mock<ICarbonAwareAggregator> SetupMockAggregator(IEnumerable<CarbonAware.Model.EmissionsForecast> data)
