@@ -15,16 +15,17 @@ internal sealed class ForecastHandler : IForecastHandler
         _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
-    public async Task<EmissionsForecast> GetCurrentAsync(string location, DateTimeOffset? start, DateTimeOffset? end, int? duration)
+    public async Task<EmissionsForecast?> GetCurrentAsync(string location, DateTimeOffset? start, DateTimeOffset? end, int? duration)
     {
-        var parameters = new CarbonAwareParametersBaseDTO {
+        var parameters = new CarbonAwareParametersBaseDTO
+        {
             Start = start,
             End = end,
             MultipleLocations = new [] { location },
             Duration = duration
         };
         var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
-        return ToForecastData(results.First());
+        return !results.Any() ? null : ToForecastData(results.First());
     }
 
     private static EmissionsForecast ToForecastData(CarbonAware.Model.EmissionsForecast emissionsForecast) {

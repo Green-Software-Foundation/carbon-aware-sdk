@@ -11,5 +11,5 @@ public interface IForecastHandler
     /// <param name="start">Start time boundary of forecasted data points. Ignores current forecast data points before this time (ex: 2022-03-01T15:30:00Z)</param>
     /// <param name="end">End time boundary of forecasted data points. Ignores current forecast data points after this time (ex: 2022-03-01T18:30:00Z)</param>
     /// <param name="duration">The estimated duration (in minutes) of the workload.</param>
-    Task<EmissionsForecast> GetCurrentAsync(string location, DateTimeOffset? start, DateTimeOffset? end, int? duration);
+    Task<EmissionsForecast?> GetCurrentAsync(string location, DateTimeOffset? start, DateTimeOffset? end, int? duration);
 }
