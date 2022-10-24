@@ -15,7 +15,7 @@ internal sealed class EmissionsHandler : IEmissionsHandler
     }
 
     /// <inheritdoc />
-    public async Task<double> GetAverageCarbonIntensity(string location, DateTimeOffset start, DateTimeOffset end)
+    public async Task<double> GetAverageCarbonIntensityAsync(string location, DateTimeOffset start, DateTimeOffset end)
     {
         var parameters = new CarbonAwareParametersBaseDTO {
             Start = start,
