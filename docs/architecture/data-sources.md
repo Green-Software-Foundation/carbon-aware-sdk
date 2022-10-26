@@ -32,14 +32,14 @@ dotnet add package Microsoft.Extensions.DependencyInjection
 ### Adding/Extending a Data Source Interface
 Each new data source should extend from a generic data source interface. A data source interface defines all the parameters and functions that any data source that falls under it's purview must define/implement. By defining the interface, it allows the SDK to switch between the set of data sources seamlessly because they all share the same input functions and output types. 
 
-Currently there is one data source interface defined -  `ICarbonIntensityDataSource` - which is the interface for all data sources that provide carbon intensity data. A new data source interface should be defined only when there is a new general area of calculation that is being introduced to the SDK.
+Currently there are 2 data source interfaces defined - `IEmissionsDataSource` and `IForecastDataSource` - which provides functionality for retrieving actual and forecasted carbon intensity data respectively. A new data source interface should be defined only when there is a new general area of calculation that is being introduced to the SDK.
 
 ```csharp
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 namespace CarbonAware.DataSources.MyNewDataSource;
-public class MyNewDataSource: ICarbonIntensityDataSource 
+public class MyNewDataSource: IEmissionsDataSource 
 {
     ...
 }
@@ -99,10 +99,11 @@ cd CarbonAware.DataSources/CarbonAware.DataSources.MyNewDataSource
 dotnet add test/CarbonAware.DataSources.MyNewDataSource.Tests.csproj reference src/CarbonAware.DataSources.MyNewDataSource.csproj
 ```
 ### Try it Out!
-You are now ready to try out your new data source!  If you added a new `ICarbonIntensityDataSource`, you can configure it using the `CarbonIntensityDataSource` setting:
+You are now ready to try out your new data source!  If you added a new `IEmissionsDataSource`, you can configure it using the `EmissionsDataSource` setting:
 
 ```bash
-  CarbonAwareVars__CarbonIntensityDataSource="MyNewDataSource"
+DataSources__EmissionsDataSource="MyNewDataSource"
+DataSources__Configurations__MyNewDataSource__Proxy__UseProxy=true
 ```
 
 Both the WebAPI and the CLI read the env variables in so once set, you can spin up either and send requests to get data from the new data source.

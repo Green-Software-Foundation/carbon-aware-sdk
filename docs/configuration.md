@@ -1,3 +1,24 @@
+
+- [Configuration](#configuration)
+  - [Logging](#logging)
+  - [DataSources](#datasources)
+    - [WattTime Configuration](#watttime-configuration)
+      - [username](#username)
+      - [password](#password)
+      - [baseUrl](#baseurl)
+      - [Proxy](#proxy)
+      - [WattTime Caching BalancingAuthority](#watttime-caching-balancingauthority)
+    - [Json Configuration](#json-configuration)
+  - [CarbonAwareVars](#carbonawarevars)
+    - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
+    - [Verbosity](#verbosity)
+    - [Web API Prefix](#web-api-prefix)
+  - [LocationDataSourcesConfiguration](#locationdatasourcesconfiguration)
+- [Sample Configurations](#sample-configurations)
+  - [Environment Variable Configuration for Emissions data Using WattTime](#environment-variable-configuration-for-emissions-data-using-watttime)
+  - [Configuration For Emissions data Using JSON](#configuration-for-emissions-data-using-json)
+  - [Json Configuration Using WattTime and Defined Location Source Files](#json-configuration-using-watttime-and-defined-location-source-files)
+
 # Configuration
 
 ## Logging
@@ -40,26 +61,276 @@ cd src/CarbonAware.WebApi
 Logging__LogLevel__Default="Debug" dotnet run
 ```
 
-## CarbonAware.LocationSources
+## DataSources
 
-The `LocationSource` converts named locations to their corresponding geoposition coordinates based on JSON files containing those values.
+The SDK supports multiple data sources for getting carbon data.  At this time, only a JSON file and [WattTime](https://www.watttime.org/) are supported.
+Each data source interface is configured with a specific data source implementation.  
 
-### Azure locations
+If set to `WattTime`, WattTime configuration must also be supplied.
 
-To generate a new version of the `src/data/location-sources/azure-regions.json` file, follow these steps:
+`JSON` will result in the data being loaded from the file specified in the `DataFileLocation` property
 
-1. [Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/).
-2. [Login to your Azure subscription](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
-3. Get a list of Azure regions metadata in the proper format:
+```json
+{
+"DataSources": {
+    "EmissionsDataSource": "Json",
+    "ForecastDataSource": "WattTime",
+    "Configurations": {
+      "WattTime": {
+        "Type": "WattTime",
+        "Username": "username",
+        "Password": "password",
+        "BaseURL": "https://api2.watttime.org/v2/",
+        "Proxy": {
+          "useProxy": true,
+          "url": "http://10.10.10.1",
+          "username": "proxyUsername",
+          "password": "proxyPassword"
+        }
+      },
+      "Json": {
+        "Type": "Json",
+        "DataFileLocation": "test-data-azure-emissions.json"
+      }
+    }
+  }
+}
+```
 
-    1. ```bash
-       az account list-locations --query "[?metadata.latitude != null].{RegionName:name,Latitude:metadata.latitude,Longitude:metadata.longitude }" >> azure-regions.json
-       ```
+### WattTime Configuration
 
-4. Copy the results and save it to `src/data/location-sources/`
+If using the WattTime data source, WattTime configuration is required.
 
-## Static Data Files
+```json
+{
+    "username": "",
+    "password": "",
+    "baseUrl": "https://api2.watttime.org/v2/"
+}
+```
 
-Data files are stored in the `src/data/data-files` directory.
+> **Sign up for a test account:** To create an account, follow these steps : https://www.watttime.org/api-documentation/#best-practices-for-api-usage
 
-All files placed in that directory will be copied into the user-interface project (CLI, WebApi, etc) at build time.
+#### username
+
+The username you receive from WattTime.  This value is required when using a WattTime data source.
+
+#### password
+
+The WattTime password for the username supplied.  This value is required when using a WattTime data source.
+
+#### baseUrl
+
+The url to use when connecting to WattTime.  Defaults to [https://api2.watttime.org/v2/](https://api2.watttime.org/v2/).
+
+In normal use, you shouldn't need to set this value, but this value can be used to enable integration testing scenarios or if the WattTime url should change in the future.
+
+#### Proxy
+
+This value is used to set proxy information in situations where internet egress requires a proxy.  For proxy values to be used `useProxy` must be set to `true`.  Other values should be set as needed for your environment.
+
+```bash
+  DataSources__Configurations__WattTime__UseProxy
+```
+
+#### WattTime Caching BalancingAuthority
+
+To improve performance communicating with the WattTime API service, the client caches the data mapping location coordinates to balancing authorities.  By default, this data is stored in an in-memory cache for `86400` seconds, but expiration can be configured using the setting `BalancingAuthorityCacheTTL` (Set to "0" to disable the caching feature).  The regional boundaries of a balancing authority tend to be stable, but as they can change, the [WattTime documentation](https://www.watttime.org/api-documentation/#determine-grid-region) recommends not caching for longer than 1 month.
+
+```bash
+DataSources__Configurations__WattTime__BalancingAuthorityCacheTTL="90"
+```
+
+### Json Configuration
+
+By setting `DataSources__Configurations__Json__DataFileLocation=mycustomfile.json` property when Data source is set to `Json`, the user can specify a file that can contains custom `EmissionsData` sets. The file should be located under the `<user's repo>/src/data/data-sources/` directory that is part of the repository. At build time, all the JSON files under `<user's repo>/src/data/data-sources/`  are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/data-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/data-sources/json`.
+
+```sh
+cp <mydir>/mycustomfile.json /app/data-sources/json
+export DataSources__Configurations=Json
+export DataSources__Configurations__JSON__Type=JSON
+export DataSources__Configurations__Json__DataFileLocation=mycustomfile.json
+dotnet /app/CarbonAware.WebApi.dll
+```
+
+As soon a first request is performed, a log entry shows:
+
+```text
+info: CarbonAware.DataSources.Json.JsonDataSource[0]
+    Reading Json data from /app/data-sources/json/mycustomfile.json
+```
+
+## CarbonAwareVars
+
+This section contains the global settings for the SDK. The configuration looks like this:
+
+```json
+{
+    "carbonAwareVars": {
+        "TelemetryProvider": "ApplicationInsights",
+        "VerboseApi": "true",
+        "webApiRoutePrefix": ""
+    }
+}
+```
+
+### Tracing and Monitoring Configuration
+
+Application monitoring and tracing can be configured using the `TelemetryProvider` variable in the application configuration.  
+
+```bash
+CarbonAwareVars__TelemetryProvider="ApplicationInsights"
+```
+
+This application is integrated with Application Insights for monitoring purposes. The telemetry collected in the app is pushed to AppInsights and can be tracked for logs, exceptions, traces and more. To connect to your Application Insights instance, configure the `ApplicationInsights_Connection_String` variable.
+
+```bash
+ApplicationInsights_Connection_String="AppInsightsConnectionString"
+```
+
+You can alternatively configure using Instrumentation Key by setting the `AppInsights_InstrumentationKey` variable. However, Microsoft is ending technical support for instrumentation key�based configuration of the Application Insights feature soon. ConnectionString-based configuration should be used over InstrumentationKey. For more details, please refer to https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net.
+
+```bash
+AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
+```
+
+### Verbosity
+
+You can configure the verbosity of the application error messages by setting the 'VerboseApi' environment variable. Typically, you would set this value to 'true' in the development or staging regions. When set to 'true', a detailed stack trace would be presented for any errors in the request.
+
+```bash
+CarbonAwareVars__VerboseApi="true"
+```
+
+### Web API Prefix
+
+Used to add a prefix to all routes in the WebApi project.  Must start with a `/`.  Invalid paths will cause an exception to be thrown at startup.
+
+By default, all controllers are off of the root path.  For example:
+
+```bash
+http://localhost/emissions
+```
+
+If `webApiRoutePrefix` is set, it will allow calls to controllers using the prefix, which can be helpful for cross cluster calls, or when proxies strip out information from headers.  For example, if this value is set to:
+
+```bash
+CarbonAwareVars__webApiRoutePrefix="/mydepartment/myapp"
+```
+
+```bash
+/mydepartment/myapp
+```
+
+Then calls can be made that look like this:
+
+```bash
+http://localhost/mydepartment/myapp/emissions
+```
+
+Note that the controllers still respond off of the root path.
+
+## LocationDataSourcesConfiguration
+
+By setting `LocationDataSourcesConfiguration` property with one or more location data sources, it is possible to load different `Location` data sets in order to have more than one location. For instance by setting two location regions, the property would be set as follow using [environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#naming-of-environment-variables) variables:
+
+```sh
+"LocationDataSourcesConfiguration__LocationSourceFiles__0__DataFileLocation": "azure-regions.json",
+"LocationDataSourcesConfiguration__LocationSourceFiles__0__Prefix": "az",
+"LocationDataSourcesConfiguration__LocationSourceFiles__0__Delimiter": "-",
+"LocationDataSourcesConfiguration__LocationSourceFiles__1__DataFileLocation": "custom-regions.json",
+"LocationDataSourcesConfiguration__LocationSourceFiles__1__Prefix": "custom",
+"LocationDataSourcesConfiguration__LocationSourceFiles__1__Delimiter": "_",
+```
+
+This way when the application starts, it open the files specified by `DataFileLocation` property that should located under `location-sources/json` directory. The format of these files is the same as the `Location` Model class. In order to differentiate between regions, a `Prefix` and `Delimiter` properties are used to allow the user to select the region when a request is performed. By settings the properties, the region should be made of **region**=`Prefix`+`Delimiter`+`RegionName`, so when the query is performed, it would be found. The following example shows how to perform an http request:
+
+```sh
+PREFIX=az
+DELIMITER='-'
+REGION=${PREFIX}${DELIMITER}eastus
+curl "http://${IP_HOST}:${PORT}/emissions/bylocations/best?location=${REGION}&time=2022-05-25&toTime=2022-05-26&durationMinutes=0"
+```
+
+At build time, all the JSON files under `<user's repo>/src/data/location-sources` are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/location-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `location-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/location-sources/json`.
+
+One can also specify these values in `appsettings.json` like this:
+
+```json
+{
+  "LocationDataSourcesConfiguration": {
+    "LocationSourceFiles": [
+      {
+        "DataFileLocation": "azure-regions.json",
+        "Prefix": "az",
+        "Delimiter": "-"
+      },
+      {
+        "DataFileLocation": "custom-regions.json",
+        "Prefix": "custom",
+        "Delimiter": "_"
+      }
+    ]
+  }
+}
+```
+
+# Sample Configurations
+
+## Environment Variable Configuration for Emissions data Using WattTime
+
+```bash
+DataSources__EmissionsDataSource="WattTime"
+CarbonAwareVars__WebApiRoutePrefix="/microsoft/cse/fsi"
+DataSources__Configurations__WattTime__Proxy__UseProxy=true
+DataSources__Configurations__WattTime__Proxy__Url="http://10.10.10.1"
+DataSources__Configurations__WattTime__Proxy__Username="proxyUsername"
+DataSources__Configurations__WattTime__Password="proxyPassword"
+DataSources__Configurations__WattTime__Username="wattTimeUsername"
+DataSources__Configurations__WattTime__Password="wattTimePassword"
+```
+
+## Configuration For Emissions data Using JSON
+
+```json
+{
+    "DataSources": {
+        "EmissionsDataSource": "Json",
+        "Configurations": {
+          "Json": {
+            "Type": "Json",
+            "DataFileLocation": "test-data-azure-emissions.json"
+          }
+        }
+}
+```
+
+## Json Configuration Using WattTime and Defined Location Source Files
+
+```json
+{
+    "DataSources": {
+        "EmissionsDataSource": "WattTime",
+        "Configurations": {
+          "WattTime": {
+            "Type": "WattTime",
+            "Username": "user",
+            "Password": "password"
+        }
+    },
+    "locationDataSourcesConfiguration": {
+        "locationSourceFiles": [
+            {
+                "prefix": "az",
+                "delimiter": "-",
+                "dataFileLocation": "azure-regions.json"
+            },
+            {
+                "prefix": "custom",
+                "delimiter": "_",
+                "dataFileLocation": "custom-regions.json"
+            }
+        ]
+    }
+}
+```

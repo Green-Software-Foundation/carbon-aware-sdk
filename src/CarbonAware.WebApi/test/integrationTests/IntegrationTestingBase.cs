@@ -74,8 +74,8 @@ public abstract class IntegrationTestingBase
     [OneTimeSetUp]
     public void Setup()
     {
-        _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource");
-        _forecastDataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__ForecastDataSource");
+        _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__EmissionsDataSource");
+        _forecastDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__ForecastDataSource");
 
         //Switch between different data sources as needed
         //Each datasource should have an accompanying DataSourceMocker that will perform setup activities
@@ -83,22 +83,26 @@ public abstract class IntegrationTestingBase
         {
             case DataSourceType.JSON:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", "JSON");
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__Type", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__DataFileLocation", "demo.json");
                     Environment.SetEnvironmentVariable("CarbonAwareVars__VerboseApi", "true");
-                    Environment.SetEnvironmentVariable("JsonDataSourceConfiguration__DataFileLocation", "demo.json");
                     _dataSourceMocker = new JsonDataSourceMocker();
                     break;
                 }
             case DataSourceType.WattTime:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", "WattTime");
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__ForecastDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Type", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:
                 {
-                    throw new NotSupportedException($"DataSourceType {_dataSource.ToString()} not supported");
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "");
+                    break;
                 }
         }
 
@@ -109,13 +113,13 @@ public abstract class IntegrationTestingBase
     [SetUp]
     public void SetupTests()
     {
-        _dataSourceMocker.Initialize();
+        _dataSourceMocker?.Initialize();
     }
 
     [TearDown]
     public void ResetTests()
     {
-        _dataSourceMocker.Reset();
+        _dataSourceMocker?.Reset();
     }
 
     [OneTimeTearDown]
@@ -123,8 +127,8 @@ public abstract class IntegrationTestingBase
     {
         _client.Dispose();
         _factory.Dispose();
-        _dataSourceMocker.Dispose();
-        Environment.SetEnvironmentVariable("CarbonAwareVars__EmissionsDataSource", _emissionsDataSourceEnv);
-        Environment.SetEnvironmentVariable("CarbonAwareVars__ForecastDataSource", _forecastDataSourceEnv);
+        _dataSourceMocker?.Dispose();
+        Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", _emissionsDataSourceEnv);
+        Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", _forecastDataSourceEnv);
     }
 }

@@ -20,9 +20,10 @@ Both consumers access the same components in the tiers below.
 The business logic tier functions as the processor, taking in the user input and figuring out how to fulfill it. It is comprised of a set of aggregators that know what type of data they need and how to calculate the result. 
 
 ### Aggregator
-Aggregators have knowledge of the different data source interfaces in the data tier. They can either aggregate multiple sources of data into a single response given a request (see example `SCI Score Aggregator` in diagram) or map to a single data source interface, handling all the operations needed by the user for that area of data (see the `Carbon Intensity Aggregator` in diagram).
+Aggregators have knowledge of the underlying data source interfaces in the data tier. An Aggregator takes in consumer requests, calls the specified data source, and performs any data aggregation required before returning the result to the consumer. Each Aggregator is responsible for handling requests specific to a functionality.
 
-For example, the `Carbon Intensity Aggregator` handles requests for various carbon emissions information. It can calculate the average carbon emissions over a time period, or the best carbon emissions given a set of locations. It can transform forecasted carbon emissions to suit particular use-cases. It can also just deliver the emissions data points in a standard schema without performing any calculations.
+Currently, the SDK provides 2 aggregators - `EmissionsAggregator` and `ForecastAgrgegator` to handle requests for actual carbon emissions and forecasted carbon emissions respectively. The `EmissionsAggregator` handles requests for various carbon emissions information. It can calculate the average carbon emissions over a time period, or the best carbon emissions given a set of locations. It can transform forecasted carbon emissions to suit particular use-cases. It can also just deliver the emissions data points in a standard schema without performing any calculations.
+The `ForecastAggregator` 
 
 See the [aggregators README](./aggregators.md) for more detailed information.
 
@@ -30,10 +31,10 @@ See the [aggregators README](./aggregators.md) for more detailed information.
 The data tier is responsible for ingesting data into the SDK. It is comprised of a set of data source interfaces representing the broad categories of data used by the SDK. 
 
 ### Data Source Interface
-A data source interface defines all the necessary parameters and functions needed to access that category of data. These definitions must be independent of specific data sources and use abstracted input/output parameters expected from the business logic tier. This abstraction enables multiple data sources to extend a single interface and be switched out and configured based on the needs of the operator.
+A data source interface defines all the necessary parameters and functions needed to access that category of data. These definitions must be independent of specific data sources and use abstracted input/output parameters expected from the business logic tier. This abstraction enables multiple data sources to extend a multiple interfaces and be switched out and configured based on the needs of the operator.
 
 ### Data Source Implementation
-A data source inherits from a data source interface and does the work of accessing a specific data provider. Each data source the information specific to the data provider it is accessing, including any authentication needs, the format of the request and response, etc. It is also responsible for converting the request from the business logic tier into the required provider request, and similarly, converting the provider response back into the expected result.
+A data source inherits from a single or multiple data source interfaces and does the work of accessing a specific data provider. Each data source the information specific to the data provider it is accessing, including any authentication needs, the format of the request and response, etc. It is also responsible for converting the request from the business logic tier into the required provider request, and similarly, converting the provider response back into the expected result.
 
 See the [data source README](./data-sources.md) for more detailed information.
 
