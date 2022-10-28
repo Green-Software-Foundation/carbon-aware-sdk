@@ -15,7 +15,7 @@
         "emissions",
         "--location", "${input:caw_location}"
       ],
-      "cwd": "${workspaceFolder}/src/CarbonAware.CLI/",
+      "cwd": "${workspaceFolder}/src/CarbonAware.CLI/src/",
       "stopAtEntry": true,
       "console": "integratedTerminal",
       "env": {
