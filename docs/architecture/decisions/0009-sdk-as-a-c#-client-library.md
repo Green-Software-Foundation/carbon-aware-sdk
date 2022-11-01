@@ -2,7 +2,11 @@
 
 ## Status
 
-Proposed
+Accepted
+
+## Date 
+
+2022-11-1
 
 ## Context
 Currently the SDK can only be used as a runtime (CLI/Web API) and we are exploring what it would take to turn it into a C# client library. This involves determining what would be exposed as part of the library and how to call it. We also include any changes we believe should be made to the current state of the SDK to better support a library.  
