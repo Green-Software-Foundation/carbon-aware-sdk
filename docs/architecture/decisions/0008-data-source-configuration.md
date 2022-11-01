@@ -2,7 +2,11 @@
 
 ## Status
 
-Proposed
+Accepted
+
+## Date
+
+2022-11-1
 
 ## Context
 
