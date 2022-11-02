@@ -51,7 +51,7 @@ public class WattTimeClientTests
 
         this.Options.Setup(o => o.CurrentValue).Returns(() => this.Configuration);
 
-        this.BasicAuthValue = Convert.ToBase64String(Encoding.ASCII.GetBytes($"{this.Configuration.Username}:{this.Configuration.Password}"));
+        this.BasicAuthValue = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{this.Configuration.Username}:{this.Configuration.Password}"));
     }
 
     [Test]
