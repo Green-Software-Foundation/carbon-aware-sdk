@@ -55,9 +55,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.UnitTests",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI.IntegrationTests", "CarbonAware.CLI\test\integrationTests\CarbonAware.CLI.IntegrationTests.csproj", "{C0F13A86-0C5A-4108-A51A-14760BA22063}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonIntensity", "GSF.CarbonIntensity\src\GSF.CarbonIntensity.csproj", "{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonAware", "GSF.CarbonAware\src\GSF.CarbonAware.csproj", "{66BFF3BC-F15B-4A56-B8E4-6CE68EAF54CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonIntensity.Tests", "GSF.CarbonIntensity\test\GSF.CarbonIntensity.Tests.csproj", "{BCCD8C11-7413-4272-8922-417429CFF27A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonAware.Tests", "GSF.CarbonAware\test\GSF.CarbonAware.Tests.csproj", "{BCCD8C11-7413-4272-8922-417429CFF27A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

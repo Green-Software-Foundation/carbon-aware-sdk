@@ -1,18 +1,18 @@
 using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Aggregators.Emissions;
 using CarbonAware.Exceptions;
 using CarbonAware.Tools.WattTimeClient;
-using CarbonAware.Tools.WattTimeClient.Configuration;
-using GSF.CarbonIntensity.Exceptions;
+using GSF.CarbonAware.Exceptions;
 using Microsoft.Extensions.Logging;
 
-namespace GSF.CarbonIntensity.Handlers;
+namespace GSF.CarbonAware.Handlers;
 
 internal sealed class EmissionsHandler : IEmissionsHandler
 {
     private readonly ILogger<EmissionsHandler> _logger;
-    private readonly ICarbonAwareAggregator _aggregator;
+    private readonly IEmissionsAggregator _aggregator;
 
-    public EmissionsHandler(ILogger<EmissionsHandler> logger, ICarbonAwareAggregator aggregator)
+    public EmissionsHandler(ILogger<EmissionsHandler> logger, IEmissionsAggregator aggregator)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
@@ -31,7 +31,7 @@ internal sealed class EmissionsHandler : IEmissionsHandler
             _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
             return result;
         }
-        catch (Exception ex) when (ex is WattTimeClientException || ex is WattTimeClientHttpException || ex is LocationConversionException || ex is ConfigurationException)
+        catch (Exception ex) when (ex is WattTimeClientException || ex is WattTimeClientHttpException || ex is LocationConversionException || ex is global::CarbonAware.Tools.WattTimeClient.Configuration.ConfigurationException)
         {
             throw new CarbonIntensityException(ex.Message, ex);
         }

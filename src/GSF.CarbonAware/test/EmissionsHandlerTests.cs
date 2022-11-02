@@ -1,15 +1,16 @@
 using CarbonAware.Aggregators.CarbonAware;
-using GSF.CarbonIntensity.Handlers;
-using GSF.CarbonIntensity.Exceptions;
+using CarbonAware.Tools.WattTimeClient;
+using GSF.CarbonAware.Exceptions;
+using GSF.CarbonAware.Handlers;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Threading.Tasks;
+using System;
 using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
-using CarbonAware.Tools.WattTimeClient;
+using CarbonAware.Aggregators.Emissions;
 
-namespace GSF.CarbonIntensity.Tests;
+namespace GSF.CarbonAware.Tests;
 
 [TestFixture]
 public class EmissionsHandlerTests
@@ -24,9 +25,9 @@ public class EmissionsHandlerTests
         Logger = new Mock<ILogger<EmissionsHandler>>();
     }
 
-    private static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
+    private static Mock<IEmissionsAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
     {
-        var aggregator = new Mock<ICarbonAwareAggregator>();
+        var aggregator = new Mock<IEmissionsAggregator>();
         aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters parameters) =>
             {
@@ -41,7 +42,7 @@ public class EmissionsHandlerTests
     /// <summary>
     /// Tests that successfull call to the aggregator with any data returned results in expected format.
     /// </summary>
-    [TestCase("Sydney", "2022-03-07T01:00:00", "2022-03-07T03:30:00", TestName = "Library GetAverageCarbonIntensity Success")]
+    [TestCase("Sydney", "2022-03-07T01:00:00", "2022-03-07T03:30:00", TestName = "GetAverageCarbonIntensity calls aggregator successfully")]
     public async Task GetAverageCarbonIntensity_SuccessfulCallReturnsOk(string location, DateTimeOffset start, DateTimeOffset end)
     {
         // Arrange
@@ -71,7 +72,7 @@ public class EmissionsHandlerTests
     public void GetAverageCarbonIntensity_ErrorThrowsCustomException()
     {
         // Arrange
-        var aggregator = new Mock<ICarbonAwareAggregator>();
+        var aggregator = new Mock<IEmissionsAggregator>();
         aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>())).ThrowsAsync(new WattTimeClientException(""));
         var emissionsHandler = new EmissionsHandler(Logger.Object, aggregator.Object);
 

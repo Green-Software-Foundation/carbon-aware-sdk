@@ -1,4 +1,4 @@
-namespace GSF.CarbonIntensity.Handlers
+namespace GSF.CarbonAware.Handlers
 {
     public interface IEmissionsHandler
     {

@@ -1,10 +1,10 @@
 using CarbonAware.Aggregators.Configuration;
-using GSF.CarbonIntensity.Handlers;
+using GSF.CarbonAware.Handlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace GSF.CarbonIntensity.Configuration;
+namespace GSF.CarbonAware.Configuration;
 
 public static class ServiceCollectionExtensions
 {

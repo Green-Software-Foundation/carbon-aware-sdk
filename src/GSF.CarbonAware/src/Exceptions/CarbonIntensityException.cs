@@ -1,4 +1,4 @@
-namespace GSF.CarbonIntensity.Exceptions;
+namespace GSF.CarbonAware.Exceptions;
 
 public class CarbonIntensityException : Exception
 {

@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\GSF.CarbonIntensity.csproj" />
+    <ProjectReference Include="..\src\GSF.CarbonAware.csproj" />
   </ItemGroup>
 
 </Project>
