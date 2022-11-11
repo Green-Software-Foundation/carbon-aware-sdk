@@ -14,7 +14,7 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the location the forecast is for.
     /// </summary>
-    public Location Location { get; set; } = new Location(){ LocationType = LocationType.NotProvided };
+    public Location Location { get; set; } = new();
    
     /// <summary>
     /// Gets or sets the start time of the forecast data points.

@@ -39,9 +39,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Aggregator.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Registration", "CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj", "{5CFC4F4D-7E8D-4682-A659-35050C637FF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Azure", "CarbonAware.LocationSources\CarbonAware.LocationSources.Azure\src\CarbonAware.LocationSources.Azure.csproj", "{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources", "CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj", "{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Azure.Test", "CarbonAware.LocationSources\CarbonAware.LocationSources.Azure\test\CarbonAware.LocationSources.Azure.Test.csproj", "{F4BD1233-447F-4245-AE7B-A877427EB2D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Test", "CarbonAware.LocationSources\test\CarbonAware.LocationSources.Test.csproj", "{F4BD1233-447F-4245-AE7B-A877427EB2D7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi.IntegrationTests", "CarbonAware.WebApi\test\integrationTests\CarbonAware.WebApi.IntegrationTests.csproj", "{E8DA93FD-C439-4BCD-899A-7FD7D90951A9}"
 EndProject

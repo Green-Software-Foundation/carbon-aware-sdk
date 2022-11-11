@@ -84,8 +84,7 @@ public static class TestData
         return new EmissionsForecast(){
             GeneratedAt = DateTimeOffset.Parse("2022-01-01T00:00:00Z"),
             Location = new Location() {
-                RegionName = "westus",
-                CloudProvider = CloudProvider.Azure
+                Name = "westus"
             },
             ForecastData = forecastData
         };
