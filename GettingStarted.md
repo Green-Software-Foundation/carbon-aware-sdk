@@ -192,6 +192,29 @@ To improve performance communicating with the WattTime API service, the client c
 WattTimeClient__BalancingAuthorityCacheTTL="90"
 ```
 
+### LocationDataSourcesConfiguration property for location data files
+By setting `LocationDataSourcesConfiguration` property with one or more location data sources, it is possible to load different `Location` data sets in order to have more than one location. For instance by setting two location regions, the property would be set as follow using [environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#naming-of-environment-variables) variables:
+```sh
+"CarbonAwareVars__CarbonIntensityDataSource": "WattTime",
+"WattTimeClient__Username": "wattTimeUsername",
+"WattTimeClient__Password": "wattTimePassword",
+"LocationDataSourcesConfiguration__LocationSourceFiles__0__DataFileLocation": "azure-regions.json",
+"LocationDataSourcesConfiguration__LocationSourceFiles__0__Prefix": "az",
+"LocationDataSourcesConfiguration__LocationSourceFiles__0__Delimiter": "-",
+"LocationDataSourcesConfiguration__LocationSourceFiles__1__DataFileLocation": "custom-regions.json",
+"LocationDataSourcesConfiguration__LocationSourceFiles__1__Prefix": "custom",
+"LocationDataSourcesConfiguration__LocationSourceFiles__1__Delimiter": "_",
+```
+This way when the application starts, it open the files specified by `DataFileLocation` property that should located under `location-sources/json` directory. The format of these files is the same as the `Location` Model class. In order to differentiate between regions, a `Prefix` and `Delimiter` properties are used to allow the user to select the region when a request is performed. By settings the properties, the region should be made of **region**=`Prefix`+`Delimiter`+`RegionName`, so when the query is performed, it would be found. The following example shows how to perform an http request:
+```sh
+PREFIX=az
+DELIMITER='-'
+REGION=${PREFIX}${DELIMITER}eastus
+curl "http://${IP_HOST}:${PORT}/emissions/bylocations/best?location=${REGION}&time=2022-05-25&toTime=2022-05-26&durationMinutes=0"
+```
+
+At build time, all the JSON files under `<user's repo>/src/data/location-sources` are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/location-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `location-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/location-sources/json`.
+
 ### Sample Environment Variable Configuration Using WattTime
 
 ```bash
@@ -222,6 +245,34 @@ WattTimeClient__Password="wattTimePassword"
     "wattTimeClient":{
         "username": "wattTimeUsername",
         "password": "wattTimePassword",
+    }
+}
+```
+
+### Sample Json Configuration Using WattTime and Defined Location Source Files
+
+```json
+{
+    "carbonAwareVars": {
+        "carbonIntensityDataSource": "WattTime",
+    },
+    "wattTimeClient": {
+        "username": "wattTimeUsername",
+        "password": "wattTimePassword"
+    },
+    "locationDataSourcesConfiguration": {
+        "locationSourceFiles": [
+            {
+                "prefix": "az",
+                "delimiter": "-",
+                "dataFileLocation": "azure-regions.json"
+            },
+            {
+                "prefix": "custom",
+                "delimiter": "_",
+                "dataFileLocation": "custom-regions.json"
+            }
+        ]
     }
 }
 ```

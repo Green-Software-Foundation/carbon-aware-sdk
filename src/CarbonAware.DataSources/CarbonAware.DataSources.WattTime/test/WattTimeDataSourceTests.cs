@@ -45,7 +45,7 @@ public class WattTimeDataSourceTests
 
         this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
 
-        this.DefaultLocation = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
+        this.DefaultLocation = new Location() { Name = "eastus" };
         this.DefaultBalancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         MockBalancingAuthorityLocationMapping();

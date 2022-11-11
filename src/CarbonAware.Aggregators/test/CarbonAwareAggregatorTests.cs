@@ -360,7 +360,7 @@ public class CarbonAwareAggregatorTests
         };
 
         var forecast = await this.Aggregator.GetForecastDataAsync(parameters);
-        Assert.AreEqual(region, forecast.Location.RegionName);
+        Assert.AreEqual(region, forecast.Location.Name);
         Assert.AreEqual(start, forecast.DataStartAt);
         Assert.AreEqual(end, forecast.DataEndAt);
     }
@@ -374,9 +374,7 @@ public class CarbonAwareAggregatorTests
         // Arrange
         var location = new Location()
         {
-            LocationType = LocationType.CloudProvider,
-            CloudProvider = CloudProvider.Azure,
-            RegionName = regionName
+            Name = regionName
         };
 
         var start = DateTimeOffset.Parse(startString);
@@ -390,7 +388,7 @@ public class CarbonAwareAggregatorTests
 
         this.CarbonIntensityDataSource.Setup(x => x.GetCarbonIntensityAsync(It.IsAny<Location>(),
             It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
-            .ReturnsAsync(TestData.GetFilteredEmissionDataList(location.RegionName, start, end));
+            .ReturnsAsync(TestData.GetFilteredEmissionDataList(location.Name, start, end));
 
         // Act
         var result = await this.Aggregator.CalculateAverageCarbonIntensityAsync(parameters);
@@ -411,7 +409,7 @@ public class CarbonAwareAggregatorTests
             .ReturnsAsync(TestData.GetAllEmissionDataList());
 
         var parameters = new CarbonAwareParameters() { 
-            SingleLocation = new Location() { RegionName = "westus" }, 
+            SingleLocation = new Location() { Name = "westus" }, 
         };
         if (start!=null) parameters.Start = DateTimeOffset.Parse(start);
         if (end != null) parameters.End = DateTimeOffset.Parse(end);
@@ -425,7 +423,6 @@ public class CarbonAwareAggregatorTests
         // Arrange
         var location = new Location()
         {
-            LocationType = LocationType.Geoposition,
             Latitude = (decimal)1.0,
             Longitude = (decimal)2.0
         };

@@ -58,7 +58,7 @@ public class CarbonAwareCLI
 
     public async Task<IEnumerable<EmissionsData>> GetEmissions()
     {
-        IEnumerable<Location> locations = _state.Locations.Select(loc => new Location(){ RegionName = loc, LocationType = LocationType.CloudProvider });
+        IEnumerable<Location> locations = _state.Locations.Select(loc => new Location(){ Name = loc });
 
         var parameters = new CarbonAwareParameters(){ MultipleLocations = locations };
         if (_state.Time.HasValue)
