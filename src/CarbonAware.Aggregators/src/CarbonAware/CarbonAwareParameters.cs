@@ -13,9 +13,19 @@ public class CarbonAwareParametersBaseDTO
     virtual public int? Duration { get; set; }
     virtual public DateTimeOffset? Requested { get; set; }
 
+    private readonly Dictionary<string, string> _displayNameMap;
+
+    public CarbonAwareParametersBaseDTO(Dictionary<string, string>? displayNameMap = null)
+    {
+        _displayNameMap = displayNameMap ?? new Dictionary<string, string>();
+    }
+
     public Dictionary<string, string> GetDisplayNameMap()
     {
-        var mapping = new Dictionary<string, string>();
+        if (_displayNameMap.Keys.Count > 0)
+        {
+            return _displayNameMap;
+        }
         foreach (var DTOproperty in this.GetType().GetProperties())
         {
             var customAttributes = Attribute.GetCustomAttributes(DTOproperty, true);
@@ -27,11 +37,11 @@ public class CarbonAwareParametersBaseDTO
 
                 if(!string.IsNullOrWhiteSpace(displayName))
                 {
-                    mapping.Add(DTOproperty.Name, displayName);
+                    _displayNameMap.Add(DTOproperty.Name, displayName);
                 }
             }
         }
-        return mapping;
+        return _displayNameMap;
     }
 }
 
@@ -156,9 +166,9 @@ public class CarbonAwareParameters
     public CarbonAwareParameters(Dictionary<string, string>? displayNameMap = null)
     {
         _props = InitProperties();
+        if (displayNameMap is not null) { _props.UpdateDisplayNames(displayNameMap); }
         // Initializing with common default validators
         _validations = new List<Validator>() { StartBeforeEnd() };
-        if (displayNameMap is not null) { _props.UpdateDisplayNames(displayNameMap); }
     }
 
     /// <summary>

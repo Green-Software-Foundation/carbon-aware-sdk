@@ -1,55 +1,41 @@
-﻿namespace CarbonAware.CLI;
-
-using CarbonAware.Aggregators.CarbonAware;
+﻿using CarbonAware;
 using CarbonAware.Aggregators.Configuration;
+using CarbonAware.CLI.Commands.Emissions;
+using CarbonAware.CLI.Commands.EmissionsForecasts;
+using CarbonAware.CLI.Common;
+using CarbonAware.CLI.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
 
-class Program
-{
-    public const string DevelopmentEnvironment = "Development";
-    public const string ProductionEnvironment = "Production";
+var config = new ConfigurationBuilder()
+    .UseCarbonAwareDefaults()
+    .Build();
 
-    public static async Task Main(string[] args)
-    {
-        ServiceProvider serviceProvider = BootstrapServices();
+var serviceProvider = new ServiceCollection()
+    .AddSingleton<IConfiguration>(config)
+    .Configure<CarbonAwareVariablesConfiguration>(
+        config.GetSection(CarbonAwareVariablesConfiguration.Key))
+    .AddCarbonAwareEmissionServices(config)
+    .AddLogging(builder => builder.AddDebug())
+    .BuildServiceProvider();
 
-        await GetEmissionsAsync(args, serviceProvider.GetRequiredService<ICarbonAwareAggregator>(), serviceProvider.GetService<ILogger<CarbonAwareCLI>>());
-    }
+var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootCommandDescription);
+rootCommand.AddCommand(new EmissionsCommand());
+rootCommand.AddCommand(new EmissionsForecastsCommand());
 
-    private static ServiceProvider BootstrapServices() {
-        string env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? ProductionEnvironment;
-        var configurationBuilder = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: true)
-            .AddJsonFile($"appsettings.{env}.json", optional: true)
-            .AddJsonFile("carbon-aware.config", optional: true);
-        if(env.Equals(DevelopmentEnvironment, StringComparison.OrdinalIgnoreCase))
+var parser = new CommandLineBuilder(rootCommand)
+    .UseDefaults()
+    .UseCarbonAwareExceptionHandler()
+    .AddMiddleware(async (context, next) =>
         {
-            configurationBuilder.AddUserSecrets<Program>(optional: true);
+            context.BindingContext.AddService<IServiceProvider>(_ => serviceProvider);
+            await next(context);
         }
-        configurationBuilder.AddEnvironmentVariables();
+    )
+    .Build();
 
-        var config = configurationBuilder.Build();
-        var services = new ServiceCollection();
-        services.Configure<CarbonAwareVariablesConfiguration>(config.GetSection(CarbonAwareVariablesConfiguration.Key));
-        services.AddSingleton<IConfiguration>(config);
-        services.AddCarbonAwareEmissionServices(config);
-
-        services.AddLogging(configure => configure.AddConsole());
-
-        var serviceProvider = services.BuildServiceProvider();
-
-        return serviceProvider;
-    }
-
-    private static async Task GetEmissionsAsync(string[] args, ICarbonAwareAggregator aggregator, ILogger<CarbonAwareCLI> logger) {
-        var cli = new CarbonAwareCLI(args, aggregator, logger);
-
-        if (cli.Parsed)
-        {
-            var emissions = await cli.GetEmissions();
-            cli.OutputEmissionsData(emissions);
-        }    
-    }
-}
+return await parser.InvokeAsync(args);

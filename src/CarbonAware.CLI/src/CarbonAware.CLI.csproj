@@ -1,47 +1,63 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <AssemblyName>caw</AssemblyName>
+    <RuntimeIdentifiers>win-x64;osx-x64;linux-x64</RuntimeIdentifiers>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <AssemblyName>CarbonAware.CLI</AssemblyName>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UserSecretsId>34d82203-20b1-4fcd-9bd4-3b247f13bad7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="build\**" />
-    <EmbeddedResource Remove="build\**" />
-    <None Remove="build\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="carbon-aware.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="carbon-aware.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="appsettings.*">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" />
     <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
-</ItemGroup>
+  </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Commands\EmissionsForecasts\LocalizableStrings.Designer.cs">
+      <DependentUpon>LocalizableStrings.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Commands\emissions\LocalizableStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalizableStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Common\CommonLocalizableStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CommonLocalizableStrings.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
 
- <Target Name="CopyDataFiles" AfterTargets="Build">
-		<ItemGroup>
-			<DataFiles Include="$(ProjectDir)..\data\data-files\*.*" />
-		</ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Commands\EmissionsForecasts\LocalizableStrings.resx">
+      <LastGenOutput>LocalizableStrings.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Commands\Emissions\LocalizableStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizableStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Common\CommonLocalizableStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonLocalizableStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 
-		<Copy SourceFiles="@(DataFiles)" DestinationFolder="$(TargetDir)\data-files\" SkipUnchangedFiles="true" />
-	</Target>
+  <ItemGroup>
+    <None Update="appsettings.*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 	
 </Project>
