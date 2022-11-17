@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware.DataSources.Mocks\mock\CarbonAware.DataSources.Mocks.csproj" />
+    <ProjectReference Include="..\src\CarbonAware.DataSources.Json.csproj" />
   </ItemGroup>
 
 </Project>
