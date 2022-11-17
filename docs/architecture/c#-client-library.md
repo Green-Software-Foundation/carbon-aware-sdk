@@ -58,7 +58,7 @@ public record EmissionsForecast
 {
     DateTimeOffset RequestedAt
     DateTimeOffset GeneratedAt
-    IEnumerable<EmissionsData> EmissionsData
+    IEnumerable<EmissionsData> EmissionsDataPoints
     IEnumerable<EmissionsData> OptimalDataPoints
 }
 ```
@@ -68,10 +68,10 @@ The user can expect to either have a primitive type (such as an int) or one of t
 ### Handlers
 
 There will be two handlers for each of the data types returned:
-- EmissionsHandler
-- ForecastHandler
+- `EmissionsHandler`
+- `ForecastHandler`
 
-Each is responsible for interacting on its own domain. For instance, EmissionsHandler can have a method GetAverageCarbonAware() to pull EmissionsData data from a configured data source and calculate the average carbon intensity. ForecastHandler can have a method GetCurrent(), that will return a EmissionsForecast instance.
+Each is responsible for interacting on its own domain. For instance, EmissionsHandler can have a method `GetAverageCarbonIntensityAsync()` to pull EmissionsData data from a configured data source and calculate the average carbon intensity. ForecastHandler can have a method `GetCurrentAsync()`, that will return a EmissionsForecast instance.
 (**Note**: The current core implementation is using async/await paradigm, which would be the default for library too).
 
 ### Parameters

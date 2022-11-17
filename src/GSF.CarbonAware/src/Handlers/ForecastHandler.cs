@@ -2,7 +2,6 @@ using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Forecast;
 using CarbonAware.Exceptions;
 using CarbonAware.Tools.WattTimeClient;
-using GSF.CarbonAware.Exceptions;
 using GSF.CarbonAware.Models;
 using Microsoft.Extensions.Logging;
 
@@ -13,6 +12,11 @@ internal sealed class ForecastHandler : IForecastHandler
     private readonly IForecastAggregator _aggregator;
     private readonly ILogger<ForecastHandler> _logger;
 
+    /// <summary>
+    /// Creates a new instance of the <see cref="ForecastHandler"/> class.
+    /// </summary>
+    /// <param name="logger">The logger for the handler</param>
+    /// <param name="aggregator">An <see cref="IForecastAggregator"> aggregator.</param>
     public ForecastHandler(ILogger<ForecastHandler> logger, IForecastAggregator aggregator)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -20,7 +24,7 @@ internal sealed class ForecastHandler : IForecastHandler
     }
 
     /// <inheritdoc />
-    public async Task<IEnumerable<EmissionsForecast>> GetCurrentAsync(string[] locations, DateTimeOffset? start = null, DateTimeOffset? end = null, int? duration = null)
+    public async Task<IEnumerable<EmissionsForecast>> GetCurrentForecastAsync(string[] locations, DateTimeOffset? start = null, DateTimeOffset? end = null, int? duration = null)
     {
         var parameters = new CarbonAwareParametersBaseDTO
         {
@@ -30,12 +34,14 @@ internal sealed class ForecastHandler : IForecastHandler
             Duration = duration
         };
         try {
-            var results = await _aggregator.GetCurrentForecastDataAsync(parameters);
-            return results.Select(f => (EmissionsForecast) f);
+            var forecasts = await _aggregator.GetCurrentForecastDataAsync(parameters);
+            var result = forecasts.Select(f => (EmissionsForecast)f);
+            _logger.LogDebug("Current forecast: {result}", result);
+            return result;
         }
         catch (Exception ex) when (ex is WattTimeClientException || ex is WattTimeClientHttpException || ex is LocationConversionException || ex is global::CarbonAware.Tools.WattTimeClient.Configuration.ConfigurationException)
         {
-            throw new CarbonIntensityException(ex.Message, ex);
+            throw new Exceptions.CarbonAwareException(ex.Message, ex);
         }
     }
 }

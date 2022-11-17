@@ -12,5 +12,5 @@ public interface IForecastHandler
     /// <param name="dataEndAt">End time boundary of forecasted data points. Ignores current forecast data points after this time (ex: 2022-03-01T18:30:00Z)</param>
     /// <param name="windowSize">The estimated duration (in minutes) of the workload.</param>
     /// <returns>List of current emissions forecasts by location.</returns>
-    Task<IEnumerable<EmissionsForecast>> GetCurrentAsync(string[] locations, DateTimeOffset? dataStartAt = null, DateTimeOffset? dataEndAt = null, int? windowSize = null);
+    Task<IEnumerable<EmissionsForecast>> GetCurrentForecastAsync(string[] locations, DateTimeOffset? dataStartAt = null, DateTimeOffset? dataEndAt = null, int? windowSize = null);
 }

@@ -17,9 +17,7 @@ namespace GSF.CarbonAware.Tests;
 [TestFixture]
 public class ForecastHandlerTests
 {
-    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private Mock<ILogger<ForecastHandler>> Logger { get; set; }
-    #pragma warning restore CS8618
+    private Mock<ILogger<ForecastHandler>>? Logger { get; set; }
 
     [SetUp]
     public void SetUp()
@@ -41,9 +39,9 @@ public class ForecastHandlerTests
         };
 
         var aggregator = SetupMockAggregator(data);
-        var handler = new ForecastHandler(Logger.Object, aggregator.Object);
+        var handler = new ForecastHandler(Logger!.Object, aggregator.Object);
         var locations = location2 != null ? new string[] { location1, location2 } : new string[] { location1 };
-        var result = await handler.GetCurrentAsync(locations, start, end, duration);
+        var result = await handler.GetCurrentForecastAsync(locations, start, end, duration);
         Assert.That(result, Is.Not.Empty);
     }
 
@@ -51,8 +49,8 @@ public class ForecastHandlerTests
     public async Task GetCurrentAsync_Succeed_Call_MockAggregator_WithoutOutputData()
     {
         var aggregator = SetupMockAggregator(Array.Empty<global::CarbonAware.Model.EmissionsForecast>().ToList());
-        var handler = new ForecastHandler(Logger.Object, aggregator.Object);
-        var result = await handler.GetCurrentAsync(new string[] { "eastus" }, DateTimeOffset.Now, DateTimeOffset.Now + TimeSpan.FromHours(1), 30);
+        var handler = new ForecastHandler(Logger!.Object, aggregator.Object);
+        var result = await handler.GetCurrentForecastAsync(new string[] { "eastus" }, DateTimeOffset.Now, DateTimeOffset.Now + TimeSpan.FromHours(1), 30);
         Assert.That(result, Is.Empty);
     }
 
@@ -63,8 +61,8 @@ public class ForecastHandlerTests
         aggregator
             .Setup(x => x.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
             .ThrowsAsync(new WattTimeClientException(""));
-        var handler = new ForecastHandler(Logger.Object, aggregator.Object);
-        Assert.ThrowsAsync<CarbonIntensityException>(async () => await handler.GetCurrentAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>()));
+        var handler = new ForecastHandler(Logger!.Object, aggregator.Object);
+        Assert.ThrowsAsync<CarbonAwareException>(async () => await handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>()));
     }
 
     private static Mock<IForecastAggregator> SetupMockAggregator(IEnumerable<global::CarbonAware.Model.EmissionsForecast> data)

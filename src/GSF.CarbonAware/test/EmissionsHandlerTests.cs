@@ -15,9 +15,8 @@ namespace GSF.CarbonAware.Tests;
 [TestFixture]
 public class EmissionsHandlerTests
 {
-    #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    private Mock<ILogger<EmissionsHandler>> Logger { get; set; }
-    #pragma warning restore CS8618
+
+    private Mock<ILogger<EmissionsHandler>>? Logger { get; set; }
 
     [SetUp]
     public void SetUp()
@@ -47,7 +46,7 @@ public class EmissionsHandlerTests
     {
         // Arrange
         double data = 0.7;
-        var emissionsHandler = new EmissionsHandler(Logger.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateCarbonAwareAggregatorWithAverageCI(data).Object);
 
         var parametersDTO = new CarbonAwareParametersBaseDTO
         {
@@ -74,10 +73,10 @@ public class EmissionsHandlerTests
         // Arrange
         var aggregator = new Mock<IEmissionsAggregator>();
         aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>())).ThrowsAsync(new WattTimeClientException(""));
-        var emissionsHandler = new EmissionsHandler(Logger.Object, aggregator.Object);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, aggregator.Object);
 
         // Act/Assert
-        Assert.ThrowsAsync<CarbonIntensityException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", DateTimeOffset.Now, DateTimeOffset.Now));
+        Assert.ThrowsAsync<CarbonAwareException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", DateTimeOffset.Now, DateTimeOffset.Now));
     }
 
 }
