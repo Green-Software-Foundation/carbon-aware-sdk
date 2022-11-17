@@ -5,6 +5,7 @@ using CarbonAware.LocationSources.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using System.Globalization;
 using System.Text.Json;
 
 namespace CarbonAware.LocationSources;
@@ -53,8 +54,8 @@ public class LocationSource : ILocationSource
         }
         return new Location
         {
-            Latitude = Convert.ToDecimal(geopositionLocation.Latitude),
-            Longitude = Convert.ToDecimal(geopositionLocation.Longitude)
+            Latitude = Convert.ToDecimal(geopositionLocation.Latitude, CultureInfo.InvariantCulture),
+            Longitude = Convert.ToDecimal(geopositionLocation.Longitude, CultureInfo.InvariantCulture)
         };
     }
 
