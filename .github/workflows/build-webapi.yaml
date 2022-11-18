@@ -8,6 +8,7 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/**'
+  workflow_dispatch:
 
 env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"

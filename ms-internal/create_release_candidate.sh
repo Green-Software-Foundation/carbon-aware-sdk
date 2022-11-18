@@ -25,11 +25,12 @@ git checkout gsf/dev
 git checkout -b release
 
 # Cherry-pick our required, but unmerged commits onto the branch
-git cherry-pick 4d4a2ef6172754899e9040b7f9e3cf272989e0b3 # issue #161 - new data source interfaces
-git cherry-pick 357b52b262f01bbad45332173eab91b0ef4e7620 # issue #161 - data source interfaces in config
-git cherry-pick 6408d2928224bc68d5167b429c502fa7cac560da # issue #160 - C# library
-git cherry-pick b814a2d1e0c23caeb388ec71ffc6e39ab8f69f76 # issue #166 - SDK library tooling
-git cherry-pick d47f7da5ccba45f1bbf22f0dbd0daa1c02346e91 # issue #164 - New DataSource Config Schema
+git cherry-pick e104b556835391cb8a4aaf4a0d0bf23d021871c9 # issue #195 - Bug fix for location string localization + bug fix for JSON integration test
+git cherry-pick c031ddffd1a3281123ec4fd4df6004a16b6bb591 # issue #161 - new data source interfaces
+git cherry-pick 229990b68b7eb1776bc803194d2eb7fb0a82498e # issue #161 - data source interfaces in config
+git cherry-pick fcac60c507dc90447a42678347501cbb25a86963 # issue #160 - C# library
+git cherry-pick ef154b9f9d254d2b3eee2beb5542d634668ab5c6 # issue #166 - SDK library tooling
+git cherry-pick b0e7c8598dc56168c2f932f72a1fd39f5d7598c1 # issue #164 - New DataSource Config Schema
 
 ####### Adding/updating features with this script:
 ####### 1) switch to your feature branch
