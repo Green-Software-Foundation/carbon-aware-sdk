@@ -56,7 +56,7 @@ The Carbon Aware SDK is being used by large and small companies around the world
 
 Machine Learning (ML) workloads are a great example of long running compute intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be reduced even further, at times by up to 50% or more.
 
-# What does the SDK/API provide that 3rd party data providers such as WattTime or ElectricityMap do not?
+# What does the SDK/API provide that 3rd party data providers such as WattTime or ElectricityMaps do not?
 Many of the benefits tend to relate to removing the tight coupling of an application from the 3rd party data source it is using, and allow the application to focus on the sustainability impact it is looking to drive.  This abstraction allows for changing of data providers, data provider aggregation, centralised management, auditability and traceability, and more.
 
 ## Collaborative Effort

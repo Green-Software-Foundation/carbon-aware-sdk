@@ -1,7 +1,9 @@
 ﻿using GSF.CarbonAware.Configuration;
+using GSF.CarbonAware.Models;
 using GSF.CarbonAware.Handlers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 Console.WriteLine("Hello, ConsoleApp Emissions Sample!");
 
@@ -20,7 +22,22 @@ const string startDate = "2022-03-01T15:30:00Z";
 const string endDate = "2022-03-01T18:30:00Z";
 const string location = "eastus";
 
-var average = await handlerEmissions.GetAverageCarbonIntensityAsync(location, DateTimeOffset.Parse(startDate), DateTimeOffset.Parse(endDate));
+var parsedStart = DateTimeOffset.Parse(startDate);
+var parsedEnd = DateTimeOffset.Parse(endDate);
+
+// EmissionsData
+var emissionsDataResult = await handlerEmissions.GetEmissionsDataAsync(location, parsedStart, parsedEnd);
+var rating = emissionsDataResult.First().Rating;
+Console.WriteLine($"For location {location} Starting at: {startDate} Ending at: {endDate} the Emissions Rating is: {rating}.");
+
+// BestEmissionsData
+var bestEmissionsDataResult = await handlerEmissions.GetBestEmissionsDataAsync(new string[]{location}, parsedStart, parsedEnd);
+var bestRating = bestEmissionsDataResult.First().Rating;
+Console.WriteLine($"For location {location} Starting at: {startDate} Ending at: {endDate} the best Emissions Rating is: {bestRating}.");
+
+// Average Carbon Intensity
+var averageCarbonIntensityResult = await handlerEmissions.GetAverageCarbonIntensityAsync(location, new TimeRange(parsedStart, parsedEnd));
+var average = averageCarbonIntensityResult.CarbonIntensityDataPoints.First().Value;
 Console.WriteLine($"For location {location} Starting at: {startDate} Ending at: {endDate} the Average Emissions Rating is: {average}.");
 
 try

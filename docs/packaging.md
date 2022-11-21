@@ -43,6 +43,15 @@ Alternatively you can run in your local environment using the [.NET Core 6.0 SDK
 
 The configuration needed to connect to WattTime or Json data sources can be managed using environment variables or appsettings.
 
+### ElectricityMaps
+
+Below are the environment variables (i.e. bash shell) needed to set up the **WattTime** data source.
+
+* `export DataSources__ForecastDataSource=ElectricityMaps`
+* `export DataSources__Configurations__ElectricityMaps__Type=ElectricityMaps`
+* `export DataSources__Configurations__ElectricityMaps__APITokenHeader=[ElectricityMaps APITokenHeader]`
+* `export DataSources__Configurations__ElectricityMaps__APIToken=[ElectricityMaps APIToken]`
+
 ### WattTime
 
 Below are the environment variables (i.e. bash shell) needed to set up the **WattTime** data source.
