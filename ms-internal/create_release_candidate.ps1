@@ -28,6 +28,7 @@ git cherry-pick 229990b68b7eb1776bc803194d2eb7fb0a82498e # issue #161 - data sou
 git cherry-pick fcac60c507dc90447a42678347501cbb25a86963 # issue #160 - C# library
 git cherry-pick ef154b9f9d254d2b3eee2beb5542d634668ab5c6 # issue #166 - SDK library tooling
 git cherry-pick b0e7c8598dc56168c2f932f72a1fd39f5d7598c1 # issue #164 - New DataSource Config Schema
+git cherry-pick eebc9202cbc509fcaca137d3930b902b046240a6 # issue #167 - ElectricityMaps Data Source - Forecasts
 
 ####### Adding/updating features with this script:
 ####### 1) switch to your feature branch
@@ -74,5 +75,5 @@ git cherry-pick b0e7c8598dc56168c2f932f72a1fd39f5d7598c1 # issue #164 - New Data
 #######
 ####### 8) Push and PR into `dev`
 ####### Dont worry about filling out the template.
-####### Assign PR to the current Release Master
+####### Assign PR to the current Release Branch Owner
 ####### Tag the rest of the team for review
