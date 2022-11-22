@@ -27,8 +27,8 @@ git cherry-pick c031ddffd1a3281123ec4fd4df6004a16b6bb591 # issue #161 - new data
 git cherry-pick 229990b68b7eb1776bc803194d2eb7fb0a82498e # issue #161 - data source interfaces in config
 git cherry-pick fcac60c507dc90447a42678347501cbb25a86963 # issue #160 - C# library
 git cherry-pick ef154b9f9d254d2b3eee2beb5542d634668ab5c6 # issue #166 - SDK library tooling
-git cherry-pick b0e7c8598dc56168c2f932f72a1fd39f5d7598c1 # issue #164 - New DataSource Config Schema
-git cherry-pick eebc9202cbc509fcaca137d3930b902b046240a6 # issue #167 - ElectricityMaps Data Source - Forecasts
+git cherry-pick f5b5747ca8ee0c8a10ecba8df28b8ebf8e576b80 # issue #164 - New DataSource Config Schema
+git cherry-pick 6fa19289b6b55d65036593808fae96ea75f55861 # issue #167 - ElectricityMaps Data Source - Forecasts
 
 ####### Adding/updating features with this script:
 ####### 1) switch to your feature branch
