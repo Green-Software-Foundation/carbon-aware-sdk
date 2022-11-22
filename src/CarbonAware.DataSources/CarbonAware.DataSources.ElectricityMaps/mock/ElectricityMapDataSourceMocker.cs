@@ -26,19 +26,19 @@ public class ElectricityMapsDataSourceMocker : IDataSourceMocker
 
     public void SetupHistoryMock(decimal latitude, decimal longitude)
     {
-        var data = new List<HistoryCarbonIntensity>();
+        var data = new List<CarbonIntensity>();
         DateTimeOffset now = DateTimeOffset.UtcNow;
         DateTimeOffset past24 = now.AddHours(-24);
 
         while (past24 < now)
         {
-            var newDataPoint = new HistoryCarbonIntensity()
+            var newDataPoint = new CarbonIntensity()
             {
-                CarbonIntensity = 999,
+                Value = 999,
                 DateTime = past24,
                 UpdatedAt = now,
                 CreatedAt = now,
-                EmissionFactorType = EmissionsFactor.Lifecycle,
+                EmissionFactorType = "lifecycle",
                 IsEstimated = false,
                 EstimationMethod = null
             };
@@ -101,21 +101,41 @@ public class ElectricityMapsDataSourceMocker : IDataSourceMocker
         SetupResponseGivenGetRequest(Paths.Zones, result);
     }
 
-    public void Initialize() => SetupZonesMock();
-
-    public void Reset() => _server.Reset();
-
-    public void Dispose() => _server.Dispose();
-
     public void SetupDataMock(DateTimeOffset start, DateTimeOffset end, string location)
     {
-        throw new NotImplementedException();
+        var data = new List<CarbonIntensity>();
+        DateTimeOffset pointTime = start;
+        TimeSpan duration = TimeSpan.FromHours(1);
+
+        while (pointTime < end)
+        {
+            var newDataPoint = new CarbonIntensity()
+            {
+                Value = 100,
+                DateTime = pointTime,
+            };
+
+            data.Add(newDataPoint);
+            pointTime = newDataPoint.DateTime + duration;
+        }
+
+        HistoryCarbonIntensityData history = new() { HistoryData = data };
+        PastRangeData pastRange = new() { HistoryData = data };
+
+        SetupResponseGivenGetRequest(Paths.History, history);
+        SetupResponseGivenGetRequest(Paths.PastRange, pastRange);
     }
 
     public void SetupBatchForecastMock()
     {
         throw new NotImplementedException();
     }
+
+    public void Initialize() => SetupZonesMock();
+
+    public void Reset() => _server.Reset();
+
+    public void Dispose() => _server.Dispose();
 
     private void SetupResponseGivenGetRequest(string path, object body)
     {
