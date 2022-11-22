@@ -53,8 +53,8 @@ public class ElectricityMapsClientTests
         CreateBasicClient(TestData.GetZonesAllowedJsonString(), "{}");
         this.Configuration = new ElectricityMapsClientConfiguration()
         {
-            APITokenHeader = null,
-            APIToken = null,
+            APITokenHeader = "",
+            APIToken = "",
             BaseUrl = baseUrl,
         };
 
@@ -254,8 +254,8 @@ public class ElectricityMapsClientTests
             Assert.That(dataPoint?.DateTime, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
             Assert.That(dataPoint?.UpdatedAt, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
             Assert.That(dataPoint?.CreatedAt, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-            Assert.That(dataPoint?.CarbonIntensity, Is.EqualTo(999));
-            Assert.That(dataPoint?.EmissionFactorType, Is.EqualTo(EmissionsFactor.Lifecycle));
+            Assert.That(dataPoint?.Value, Is.EqualTo(999));
+            Assert.That(dataPoint?.EmissionFactorType, Is.EqualTo("lifecycle"));
             Assert.That(dataPoint?.IsEstimated, Is.False);
             Assert.That(dataPoint?.EstimationMethod, Is.Null);
         });
