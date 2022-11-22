@@ -63,7 +63,7 @@ public static class TestData
                     ["updatedAt"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
                     ["createdAt"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
                     ["carbonIntensity"] = 999,
-                    ["emissionFactorType"] = "Lifecycle",
+                    ["emissionFactorType"] = "lifecycle",
                     ["isEstimated"] = false,
                     ["estimatedMethod"] = null,
                 }

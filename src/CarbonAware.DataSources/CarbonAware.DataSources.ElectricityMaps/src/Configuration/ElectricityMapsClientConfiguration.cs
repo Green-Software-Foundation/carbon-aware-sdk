@@ -1,5 +1,6 @@
 using CarbonAware.Exceptions;
 using CarbonAware.DataSources.ElectricityMaps.Constants;
+using CarbonAware.DataSources.ElectricityMaps.Model;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Configuration;
 
@@ -22,6 +23,22 @@ public class ElectricityMapsClientConfiguration
     /// Gets or sets the base url to use when connecting to ElectricityMaps
     /// </summary>
     public string BaseUrl { get; set; } = BaseUrls.TokenBaseUrl;
+
+    /// <summary>
+    /// Gets or sets the optional emissionFactorType parameter used in API requests  
+    /// </summary>
+    /// <remarks>
+    /// See https://static.electricitymaps.com/api/docs/index.html#emission-factors for valid types
+    /// </remarks>
+    public string? EmissionFactorType  { get; set; }
+
+    /// <summary>
+    /// Gets or sets the optional disableEstimations parameter used in API requests  
+    /// </summary>
+    /// <remarks>
+    /// See https://static.electricitymaps.com/api/docs/index.html#estimations for details
+    /// </remarks>
+    public bool? DisableEstimations  { get; set; }
 
     /// <summary>
     /// Validate that this object is properly configured.

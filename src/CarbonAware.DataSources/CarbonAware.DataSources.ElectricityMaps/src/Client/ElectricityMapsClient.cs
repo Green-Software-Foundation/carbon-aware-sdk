@@ -3,6 +3,7 @@ using CarbonAware.DataSources.ElectricityMaps.Constants;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text.Json;
@@ -17,7 +18,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
     private readonly IOptionsMonitor<ElectricityMapsClientConfiguration> _configurationMonitor;
     private ElectricityMapsClientConfiguration _configuration => this._configurationMonitor.CurrentValue;
     private readonly ILogger<ElectricityMapsClient> _log;
-    private Lazy<Task<Dictionary<string, ZoneData>>> _zonesAllowed;
+    private readonly Lazy<Task<Dictionary<string, ZoneData>>> _zonesAllowed;
 
     public ElectricityMapsClient(IHttpClientFactory factory, IOptionsMonitor<ElectricityMapsClientConfiguration> monitor, ILogger<ElectricityMapsClient> log)
     {
@@ -64,16 +65,6 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         return await GetHistoryCarbonIntensityDataAsync(parameters);
     }
 
-    // Internal call to check for allowed zones and then make GET request to History endpoint
-    private async Task<HistoryCarbonIntensityData> GetHistoryCarbonIntensityDataAsync(Dictionary<string, string> parameters)
-    {
-        await CheckZonesAllowedForPath(Paths.History, parameters);
-        using (var result = await this.MakeRequestGetStreamAsync(Paths.History, parameters))
-        {
-            return await JsonSerializer.DeserializeAsync<HistoryCarbonIntensityData>(result, _options) ?? throw new ElectricityMapsClientException($"Error getting history carbon intensity data");
-        }
-    }
-
     /// <inheritdoc/>
     public async Task<ForecastedCarbonIntensityData> GetForecastedCarbonIntensityAsync (string zoneName)
     {
@@ -103,14 +94,92 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         return await GetCurrentForecastAsync(parameters);
     }
 
-    // Internal call to check for allowed zones and then make GET request to Forecast endpoint
+    /// <inheritdoc/>
+    public async Task<PastRangeData> GetPastRangeDataAsync(string latitude, string longitude, DateTimeOffset startTime, DateTimeOffset endTime)
+    {
+        _log.LogDebug("Requesting carbon intensity using latitude {latitude} longitude {longitude}",
+           latitude, longitude);
+
+        var parameters = new Dictionary<string, string>()
+        {
+            { QueryStrings.Latitude, latitude },
+            { QueryStrings.Longitude, longitude },
+            { QueryStrings.StartTime, DateTimeToString(startTime) },
+            { QueryStrings.EndTime, DateTimeToString(endTime) },
+        };
+
+        return await GetPastRangeDataAsync(parameters);
+    }
+
+    /// <inheritdoc/>
+    public async Task<PastRangeData> GetPastRangeDataAsync(string zone, DateTimeOffset startTime, DateTimeOffset endTime)
+    {
+        _log.LogDebug("Requesting carbon intensity using zone {zone}",
+           zone);
+
+        var parameters = new Dictionary<string, string>()
+        {
+            { QueryStrings.ZoneName, zone },
+            { QueryStrings.StartTime, DateTimeToString(startTime) },
+            { QueryStrings.EndTime, DateTimeToString(endTime) },
+        };
+
+        return await GetPastRangeDataAsync(parameters);
+    }
+    
+    // The ElectricityMaps API has strict checks about datetime formatting.
+    // This helper method ensures that all DateTimeOffsets are properly formatted.
+    private static string DateTimeToString(DateTimeOffset dateTime)
+    {
+        return dateTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
+    }
+    
+    /// <summary>
+    /// Async method to check for allowed zones and then make GET request to History endpoint
+    /// </summary>
+    /// <param name="parameters">List of query params</param>
+    /// <returns>A <see cref="Task{HistoryCarbonIntensityData}"/> which contains all emissions data points in the 24 hour period.</returns>
+    /// <exception cref="ElectricityMapsClientException">Can be thrown when errors occur connecting to ElectricityMaps client.  See the ElectricityMapsClientException class for documentation of expected status codes.</exception>
+    private async Task<HistoryCarbonIntensityData> GetHistoryCarbonIntensityDataAsync(Dictionary<string, string> parameters)
+    {
+        await CheckZonesAllowedForPathAsync(Paths.History, parameters);
+        AddOptionalParameters(parameters);
+
+        using Stream result = await this.MakeRequestGetStreamAsync(Paths.History, parameters);
+        return await JsonSerializer.DeserializeAsync<HistoryCarbonIntensityData>(result, _options) ?? throw new ElectricityMapsClientException($"Error getting history carbon intensity data");
+    }
+
+    private void AddOptionalParameters(Dictionary<string, string> parameters)
+    {
+        if (_configuration.EmissionFactorType != null)
+        {
+            parameters.Add(QueryStrings.EmissionFactorType, _configuration.EmissionFactorType);
+        }
+        if (_configuration.DisableEstimations != null)
+        {
+            parameters.Add(QueryStrings.DisableEstimations, _configuration.DisableEstimations.ToString()!.ToLowerInvariant());
+        }   
+    }
+    
+    private async Task<PastRangeData> GetPastRangeDataAsync(Dictionary<string, string> parameters)
+    {
+        await CheckZonesAllowedForPathAsync(Paths.PastRange, parameters);
+        AddOptionalParameters(parameters);
+        using Stream result = await this.MakeRequestGetStreamAsync(Paths.PastRange, parameters);
+        return await JsonSerializer.DeserializeAsync<PastRangeData>(result, _options) ?? throw new ElectricityMapsClientException($"Error getting emissions data");
+    }
+
+    /// <summary>
+    /// Async method to check for allowed zones and then make GET request to Forecast endpoint
+    /// </summary>
+    /// <param name="parameters">List of query params</param>
+    /// <returns>A <see cref="Task{ForecastedCarbonIntensityData}"/> which contains all emissions data points in the 24 hour period.</returns>
+    /// <exception cref="ElectricityMapsClientException">Can be thrown when errors occur connecting to ElectricityMaps client.  See the ElectricityMapsClientException class for documentation of expected status codes.</exception>
     private async Task<ForecastedCarbonIntensityData> GetCurrentForecastAsync(Dictionary<string, string> parameters)
     {
-        await CheckZonesAllowedForPath(Paths.Forecast, parameters);
-        using (var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters))
-        {
-            return await JsonSerializer.DeserializeAsync<ForecastedCarbonIntensityData>(result, _options) ?? throw new ElectricityMapsClientException($"Error getting forecasted data");
-        }
+        await CheckZonesAllowedForPathAsync(Paths.Forecast, parameters);
+        using Stream result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters);
+        return await JsonSerializer.DeserializeAsync<ForecastedCarbonIntensityData>(result, _options) ?? throw new ElectricityMapsClientException($"Error getting forecasted data");
     }
 
     private async Task<HttpResponseMessage> GetResponseAsync(string uriPath)
@@ -157,7 +226,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
     }
 
     // Checks the current supported client's endpoint paths.
-    private async Task CheckZonesAllowedForPath(string path, Dictionary<string, string> parameters)
+    private async Task CheckZonesAllowedForPathAsync(string path, Dictionary<string, string> parameters)
     {
         // Parameters don't contain a ZoneName to check, exit
         if (!parameters.ContainsKey(QueryStrings.ZoneName)) return;
