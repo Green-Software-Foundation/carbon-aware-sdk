@@ -10,7 +10,7 @@ namespace CarbonAware.DataSources.Json;
 /// <summary>
 /// Represents a JSON data source.
 /// </summary>
-public class JsonDataSource : ICarbonIntensityDataSource
+public class JsonDataSource : IEmissionsDataSource, IForecastDataSource
 {
     public string Name => "JsonDataSource";
 

@@ -27,7 +27,7 @@ public class EmissionsCommandTests : TestBase
             Rating = 100.7
         };
       
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockEmissionsAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
             .ReturnsAsync(new List<EmissionsData>() { expectedEmissions });
 
         // Act
@@ -41,7 +41,7 @@ public class EmissionsCommandTests : TestBase
         StringAssert.Contains(expectedEmissions.Duration.ToString(), consoleOutput);
        
 
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockEmissionsAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class EmissionsCommandTests : TestBase
         var expectedLocations = new List<string>() { longAliasLocation, shortAliasLocation };
         IEnumerable<string> actualLocations = Array.Empty<string>();
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockEmissionsAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters _parameters) => {
                 actualLocations = _parameters.MultipleLocations.Select(l => l.Name!);
              });
@@ -64,7 +64,7 @@ public class EmissionsCommandTests : TestBase
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockEmissionsAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
         CollectionAssert.AreEquivalent(expectedLocations, actualLocations);
     }
 
@@ -78,7 +78,7 @@ public class EmissionsCommandTests : TestBase
         var expectedStartTime = DateTimeOffset.Parse(optionValue);
         DateTimeOffset actualStartTime = default;
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockEmissionsAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters _parameters) => {
                 actualStartTime = _parameters.Start;
             });
@@ -87,7 +87,7 @@ public class EmissionsCommandTests : TestBase
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockEmissionsAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
         Assert.AreEqual(expectedStartTime, actualStartTime);
     }
 
@@ -101,7 +101,7 @@ public class EmissionsCommandTests : TestBase
         var expectedEndTime = DateTimeOffset.Parse(optionValue);
         DateTimeOffset actualEndTime = default;
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockEmissionsAggregator.Setup(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
             .Callback((CarbonAwareParameters _parameters) => {
                 actualEndTime = _parameters.End;
             });
@@ -110,7 +110,7 @@ public class EmissionsCommandTests : TestBase
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockEmissionsAggregator.Verify(agg => agg.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
         Assert.AreEqual(expectedEndTime, actualEndTime);
     }
 
@@ -122,14 +122,14 @@ public class EmissionsCommandTests : TestBase
         var emissionsCommand = new EmissionsCommand();
         var invocationContext = SetupInvocationContext(emissionsCommand, $"emissions {alias}");
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
+        _mockEmissionsAggregator.Setup(agg => agg.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
             .ReturnsAsync( new List<EmissionsData>() { new EmissionsData() } ); ;
 
         // Act
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
+        _mockEmissionsAggregator.Verify(agg => agg.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()), Times.Once);
     }
 
     [TestCase("--average", 1, TestName = "EmissionsCommandTests.Run AverageOption: long alias, single location")]
@@ -143,13 +143,13 @@ public class EmissionsCommandTests : TestBase
         string locationArgs = string.Join(" ", testLocations.Take(locationCount));
         var invocationContext = SetupInvocationContext(emissionsCommand, $"emissions {locationArgs} {alias}");
 
-        _mockCarbonAwareAggregator.Setup(agg => agg.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()));
+        _mockEmissionsAggregator.Setup(agg => agg.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()));
 
         // Act
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockCarbonAwareAggregator.Verify(agg => agg.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()), Times.Exactly(locationCount));
+        _mockEmissionsAggregator.Verify(agg => agg.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()), Times.Exactly(locationCount));
     }
 
     [TestCase("--best --average", TestName = "EmissionsCommandTests.Run MutuallyExclusiveOptions: --best --average")]

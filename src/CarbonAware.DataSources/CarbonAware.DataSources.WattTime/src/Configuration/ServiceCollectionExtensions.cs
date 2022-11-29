@@ -14,7 +14,8 @@ public static class ServiceCollectionExtensions
     {
         _ = configuration ?? throw new ConfigurationException("WattTime configuration required.");
         services.ConfigureWattTimeClient(configuration);
-        services.TryAddSingleton<ICarbonIntensityDataSource, WattTimeDataSource>();
+        services.TryAddSingleton<IEmissionsDataSource, WattTimeDataSource>();
+        services.TryAddSingleton<IForecastDataSource, WattTimeDataSource>();
         // configuring dependency injection to have config.
         services.Configure<LocationDataSourcesConfiguration>(c =>
         {

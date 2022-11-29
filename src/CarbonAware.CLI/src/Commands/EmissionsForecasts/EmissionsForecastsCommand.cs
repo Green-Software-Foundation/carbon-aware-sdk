@@ -1,4 +1,5 @@
 ﻿using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Aggregators.Forecast;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
 using System.CommandLine;
@@ -61,7 +62,7 @@ class EmissionsForecastsCommand : Command
     {
         // Get aggregator via DI.
         var serviceProvider = context.BindingContext.GetService(typeof(IServiceProvider)) as IServiceProvider ?? throw new NullReferenceException(nameof(IServiceProvider)); 
-        var aggregator = serviceProvider.GetService(typeof(ICarbonAwareAggregator)) as ICarbonAwareAggregator ?? throw new NullReferenceException(nameof(ICarbonAwareAggregator));
+        var aggregator = serviceProvider.GetService(typeof(IForecastAggregator)) as IForecastAggregator ?? throw new NullReferenceException(nameof(IForecastAggregator));
 
         // Get the arguments and options to build the parameters.
         var locations = context.ParseResult.GetValueForOption<string[]>(_requiredLocation);

@@ -4,6 +4,8 @@ using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.CommandLine.IO;
+using CarbonAware.Aggregators.Forecast;
+using CarbonAware.Aggregators.Emissions;
 
 namespace CarbonAware.CLI.UnitTests;
 
@@ -12,21 +14,27 @@ namespace CarbonAware.CLI.UnitTests;
 /// </summary>
 public abstract class TestBase
 {
-    protected Mock<ICarbonAwareAggregator> _mockCarbonAwareAggregator = new Mock<ICarbonAwareAggregator>();
+    protected Mock<IForecastAggregator> _mockForecastAggregator = new Mock<IForecastAggregator>();
+    protected Mock<IEmissionsAggregator> _mockEmissionsAggregator = new Mock<IEmissionsAggregator>();
+
     protected readonly TestConsole _console = new();
 
     protected InvocationContext SetupInvocationContext(Command command, string stringCommand)
     {
-        _mockCarbonAwareAggregator = new Mock<ICarbonAwareAggregator>();
+        _mockEmissionsAggregator = new Mock<IEmissionsAggregator>();
+        _mockForecastAggregator = new Mock<IForecastAggregator>();
 
         var parser = new Parser(command);
         var parseResult = parser.Parse(stringCommand);
         var invocationContext = new InvocationContext(parseResult, _console);
         var mockServiceProvider = new Mock<IServiceProvider>();
 
-        mockServiceProvider.Setup(x => x.GetService(typeof(ICarbonAwareAggregator)))
-            .Returns(_mockCarbonAwareAggregator.Object);
-        
+        mockServiceProvider.Setup(x => x.GetService(typeof(IEmissionsAggregator)))
+            .Returns(_mockEmissionsAggregator.Object);
+
+        mockServiceProvider.Setup(x => x.GetService(typeof(IForecastAggregator)))
+            .Returns(_mockForecastAggregator.Object);
+
         invocationContext.BindingContext.AddService<IServiceProvider>(_ => mockServiceProvider.Object);
 
         return invocationContext;
