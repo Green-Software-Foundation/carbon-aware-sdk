@@ -43,4 +43,29 @@ internal sealed class ForecastHandler : IForecastHandler
             throw new Exceptions.CarbonAwareException(ex.Message, ex);
         }
     }
+
+    /// <inheritdoc />
+    public async Task<EmissionsForecast> GetForecastByDateAsync(string location, DateTimeOffset? start = null, DateTimeOffset? end = null, DateTimeOffset? requestedAt = null, int? duration = null)
+    {
+        var parameters = new CarbonAwareParametersBaseDTO
+        {
+            Start = start,
+            End = end,
+            SingleLocation = location,
+            Requested = requestedAt,
+            Duration = duration
+        };
+        try
+        {
+            var forecast = await _aggregator.GetForecastDataAsync(parameters);
+            var result = (EmissionsForecast)forecast;
+
+            _logger.LogDebug("Forecast: {result}", result);
+            return result;
+        }
+        catch (CarbonAwareException ex)
+        {
+            throw new Exceptions.CarbonAwareException(ex.Message, ex);
+        }
+    }
 }

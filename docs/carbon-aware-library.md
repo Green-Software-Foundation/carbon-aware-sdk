@@ -16,6 +16,7 @@ The library replicates the Web Api, CLI and SDK functionality, leveraging the sa
     - [GetAverageCarbonIntensityAsync](#getaveragecarbonintensityasync)
   - [ForecastHandler Functions](#forecasthandler-functions)
       - [GetCurrentForecastAsync](#getcurrentforecastasync)
+      - [GetForecastByDateAsync](#getforecastbydateasync)
   - [Data Sources](#data-sources)
     - [WattTime](#watttime)
       - [Locations](#locations)
@@ -241,8 +242,9 @@ Response:
 
 ## ForecastHandler Functions
 
-The `ForecastHandler` is responsible for all the functions that query the SDK for `EmissionsForecast`. There is currently 1 function managed by this handler: 
+The `ForecastHandler` is responsible for all the functions that query the SDK for `EmissionsForecast`. There are currently 2 functions managed by this handler: 
 1. [GetCurrentForecastAsync](#getcurrentforecastasync)
+2. [GetForecastByDateAsync](#getforecastbydateasync)
 
 ### GetCurrentForecastAsync
 
@@ -307,6 +309,66 @@ The response is an array of `EmissionsForecast` objects (one per requested locat
     ]
   }
 ]
+```
+
+### GetForecastByDateAsync
+
+This function takes a requests for historical forecast data, fetches it, and calculates the optimal marginal carbon intensity window. This endpoint is useful for back-testing what one might have done in the past, if they had access to the current forecast at the time.
+
+Parameters:
+
+1. `location`: This is a required parameter and is the name of the data region for the configured Cloud provider.
+2. `dataStartAt`: Start time boundary of the forecast data points. Ignores forecast data points before this time. Must be within the forecast data point timestamps. Defaults to the earliest time in the forecast data.
+3. `dataEndAt`: End time boundary of the forecast data points. Ignores forecast data points after this time. Must be within the forecast data point timestamps. Defaults to the latest time in the forecast data.
+4. `requestedAt`: This is a required parameter and is the historical time used to fetch the most recent forecast as of that time.
+5. `windowSize`: The estimated duration (in minutes) of the workload. Defaults to the duration of a single forecast data point
+
+If neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data points are used in calculating the optimal marginal carbon intensity window.
+
+```csharp
+var data = await this._forecastHandler.GetForecastByDateAsync(
+  "northeurope", 
+  DateTimeOffset(2022,7,19,14,0,0,TimeSpan.Zero), 
+  DateTimeOffset(2022,7,20,4,38,0,TimeSpan.Zero),
+  DateTimeOffset(2022,7,19,13,30,0,TimeSpan.Zero),
+  10
+);
+```
+
+The response is an `EmissionsForecast` object with the optimal marginal carbon intensity window.
+
+```csharp
+EmissionsForecast()
+{
+  RequestedAt: DateTimeOffset("2022-07-19T13:30:00+00:00"),
+  GeneratedAt: DateTimeOffset("2022-07-19T13:35:00+00:00"),
+  OptimalDataPoints: [
+    EmissionsData()
+    {
+      Location: "IE",
+      Time: DateTimeOffset("2022-07-19T18:45:00+00:00"),
+      Duration: 10,
+      Rating: 448.4451043375
+    }
+  ],
+  EmissionsDataPoints: [
+    EmissionsData()
+    {
+      Location: "IE",
+      Time: DateTimeOffset("2022-07-19T14:00:00+00:00"),
+      Duration: 10,
+      Rating: 532.02293146
+    },
+    ...
+    EmissionsData()
+    {
+      Location: "IE",
+      Time: DateTimeOffset("2022-07-20T04:25:00+00:00"),
+      Duration: 10,
+      Rating: 535.7318741001667
+    }
+  ]
+}
 ```
 
 ## Data Sources
