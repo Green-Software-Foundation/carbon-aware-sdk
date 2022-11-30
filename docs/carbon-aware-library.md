@@ -31,7 +31,6 @@ The `EmissionsHandler` is responsible for all the functions that query the SDK f
 1. [GetEmissionsDataAsync](#getemissionsdataasync)
 2. [GetBestEmissionsDataAsync](#getbestemissionsdataasync)
 3. [GetAverageCarbonIntensityAsync](#getaveragecarbonintensityasync)
-4. [GetAverageCarbonIntensityBatchAsync](#getaveragecarbonintensitybatchasync)
 
 ### GetEmissionsDataAsync
 
@@ -109,19 +108,23 @@ Response:
 
 ### GetBestEmissionsDataAsync
 
-This function calculates the best observed emission data by an array of locations for a specified time period
+This function calculates the best observed emission data by an array of locations for a specified time period.
 
 Location is a required parameter and is an array of the names of the data region for the configured Cloud provider.
 If time period is not provided, it retrieves all the data until the current time.
 
+`GetBestEmissionsDataAsync` has two signatures: one which takes a single location and one which takes an array of locations. Both signatures return the same response: an array of `EmissionsData` objects that contains the location, time and the rating in g/kWh.
+
+_Signature 1: Single Location + Start + End_
+
 Parameters:
-1. `locations`: The string array of names of the data regions for the configured Cloud provider.
+1. `location`: The string name of the data regions for the configured Cloud provider.
 2. `startTime`: [Optional] The time at which the workload and corresponding carbon usage begins.
 3. `endTime`: [Optional] The time at which the workload and corresponding carbon usage ends.
 
 ```csharp
 var data =  await this._emissionsHandler.GetBestEmissionsDataAsync(
-  string[]{"eastus", "westus"}, 
+  "eastus", 
   DateTimeOffset(2022,1,2), 
   DateTimeOffset(2022,5,17)
 );
@@ -142,102 +145,58 @@ The response is an array of `EmissionsData` objects that contains the location, 
 ]
 ```
 
+_Signature 2: Multiple Locations + Start + End_
+
+Parameters:
+1. `locations`: The string array of names of the data regions for the configured Cloud provider.
+2. `startTime`: [Optional] The time at which the workload and corresponding carbon usage begins.
+3. `endTime`: [Optional] The time at which the workload and corresponding carbon usage ends.
+
+```csharp
+var data =  await this._emissionsHandler.GetBestEmissionsDataAsync(
+  string[]{"eastus", "westus"}, 
+  DateTimeOffset(2022,1,2), 
+  DateTimeOffset(2022,5,17)
+);
+```
+
+The response is an array of `EmissionsData` objects that contains the location, time and the rating in g/kWh.
+
+```csharp
+[
+  EmissionsData()
+    {
+      Location:"westus"
+      Time: DateTimeOffset("2022-05-17T20:45:11.5092741+00:00"),
+      Rating: 70,
+      Duration: 60,
+    },
+  ...
+]
+```
+
 ### GetAverageCarbonIntensity
 
 This function retrieves the measured carbon intensity data for a given location between the time boundaries and calculates the average carbon intensity during that period. Location is a required parameter and is the name of the data region for the configured Cloud provider. This function is useful for reporting the measured carbon intensity for a specific time period in a specific location.
 
-`GetAverageCarbonIntensity` has two signatures: one which takes in a `start` and `end`, and one which takes in an array of `TimeRange` objects.Both signatures return the same response: a CarbonIntensity object containing the requested location and a list of `CarbonIntensityData` points representing the calculated average marginal carbon intensity g/kWh for each requested time range
-
-_Signature 1 - Location + Single Time Range_
 Parameters:
 
 1. `location`: The string name of the data region for the configured Cloud provider.
-2. `requestedTimeRange`: A `TimeRange` object representing the requested range to measure carbon intensity for.
+2. `start`: The time at which the workflow we are measuring carbon intensity for started
+3. `end`: The time at which the workflow we are measuring carbon intensity for ended
 
 Request:
 ```csharp
 var data =  await this._emissionsHandler.GetAverageCarbonIntensityAsync(
   "eastus", 
-  TimeRange()
-    {
-      StartTime: DateTimeOffset(2022,7,19,14,0,0,Timespan.Zero), 
-      EndTime: DateTimeOffset(2022,7,19,18,0,0,Timespan.Zero)
-    }
+  DateTimeOffset(2022,7,19,14,0,0,Timespan.Zero), 
+  DateTimeOffset(2022,7,19,18,0,0,Timespan.Zero)
 );
 ```
 
-Response:
+The response is a single double value representing the calculated average marginal carbon intensity g/kWh.
 ```csharp
-{
-  Location: "eastus",
-  CarbonIntensityDataPoints: 
-  [
-      CarbonIntensityData()
-      {
-        Value: 345.434,
-        StartTime: DateTimeOffset("2022-07-19T14:00:00+00:00"),
-        EndTime: DateTimeOffset("2022-07-19T18:00:0000:00")
-      }
-  ]
-}
-```
-
-_Signature 2 - Location + Array of TimeRanges_
-Parameters:
-
-1. `location`: The string name of the data region for the configured Cloud provider.
-2. `requestedTimeRanges`: An array of `TimeRange` objects representing the requested ranges to measure carbon intensity for.
-
-Request:
-```csharp
-var data =  await this._emissionsHandler.GetAverageCarbonIntensityAsync(
-  "eastus", 
-  [
-    TimeRange()
-    {
-      StartTime: DateTimeOffset("2022-05-01T14:00:00"),
-      EndTime: DateTimeOffset("2022-05-01T18:00:00")
-    },
-    TimeRange()
-    {
-      StartTime: DateTimeOffset("2022-06-01T14:00:00"),
-      EndTime: DateTimeOffset("2022-06-01T18:00:00")
-    },
-    TimeRange()
-    {
-      StartTime: DateTimeOffset("2022-07-01T14:00:00"),
-      EndTime: DateTimeOffset("2022-07-01T18:00:00")
-    }
-  ]
-);
-```
-
-Response:
-```csharp
-{
-  Location: "eastus",
-  CarbonIntensityDataPoints:
-  [
-    CarbonIntensityData()
-    {
-      Value: 32.935208333333335,
-      StartTime: DateTimeOffset("2022-05-01T14:00:00+00:00"),
-      EndTime: DateTimeOffset("2022-05-01T18:00:00+00:00")
-    },
-    CarbonIntensityData()
-    {
-      Value: 89.18215277777779,
-      StartTime: DateTimeOffset("2022-06-01T14:00:00+00:00"),
-      EndTime: DateTimeOffset("2022-06-01T18:00:00+00:00")
-    },
-    CarbonIntensityData()
-    {
-      Value: 10.416875,
-      StartTime: DateTimeOffset("2022-07-01T14:00:00+00:00"),
-      EndTime: DateTimeOffset("2022-07-01T18:00:00+00:00")
-    }
-  ]
-}
+345.434
 ```
 
 ## ForecastHandler Functions

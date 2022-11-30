@@ -67,7 +67,7 @@ public class ForecastHandlerTests
         var aggregator = CreateForecastByDateAggregator(data);
         var handler = new ForecastHandler(Logger!.Object, aggregator.Object);
         var result = await handler.GetForecastByDateAsync(location, start, end, requestedAt, duration);
-        Assert.AreEqual(result.RequestedAt, requestedAt);
+        Assert.That(result.RequestedAt, Is.EqualTo(requestedAt));
     }
 
     [Test]

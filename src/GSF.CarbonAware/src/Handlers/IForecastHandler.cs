@@ -11,7 +11,7 @@ public interface IForecastHandler
     /// <param name="dataStartAt">Start time boundary of forecasted data points. Ignores current forecast data points before this time (ex: 2022-03-01T15:30:00Z)</param>
     /// <param name="dataEndAt">End time boundary of forecasted data points. Ignores current forecast data points after this time (ex: 2022-03-01T18:30:00Z)</param>
     /// <param name="windowSize">The estimated duration (in minutes) of the workload.</param>
-    /// <returns>List of current emissions forecasts by location.</returns>
+    /// <returns>List of current <see cref="EmissionsForecast"/> by location.</returns>
     Task<IEnumerable<EmissionsForecast>> GetCurrentForecastAsync(string[] locations, DateTimeOffset? dataStartAt = null, DateTimeOffset? dataEndAt = null, int? windowSize = null);
 
     /// <summary>
@@ -22,6 +22,6 @@ public interface IForecastHandler
     /// <param name="dataEndAt">End time boundary of forecasted data points. Ignores current forecast data points after this time (ex: 2022-03-01T18:30:00Z)</param> 
     /// <param name="requestedAt">The timestamp used to access the most recently generated forecast as of that time. (ex: 2022-03-01T18:30:00Z)</param>
     /// <param name="windowSize">The estimated duration (in minutes) of the workload.</param>
-    /// <returns>An emissions forecast with the optimal marginal carbon intensity window.</returns>
+    /// <returns>An <see cref="EmissionsForecast"/> with the optimal marginal carbon intensity window.</returns>
     Task<EmissionsForecast> GetForecastByDateAsync(string location, DateTimeOffset? dataStartAt = null, DateTimeOffset? dataEndAt = null, DateTimeOffset? requestedAt = null, int? windowSize = null);
 }

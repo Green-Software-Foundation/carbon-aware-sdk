@@ -50,6 +50,12 @@ internal sealed class EmissionsHandler : IEmissionsHandler
     }
 
     ///<inheritdoc/>
+    public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(string location, DateTimeOffset? start = null, DateTimeOffset? end = null)
+    {
+        return await GetBestEmissionsDataAsync(new string[] { location }, start, end);   
+    }
+
+    ///<inheritdoc/>
     public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(string[] locations, DateTimeOffset? start = null, DateTimeOffset? end = null)
     {
         var parameters = new CarbonAwareParametersBaseDTO
@@ -71,40 +77,22 @@ internal sealed class EmissionsHandler : IEmissionsHandler
     }
 
     /// <inheritdoc />
-    public async Task<CarbonIntensity> GetAverageCarbonIntensityAsync(string location, TimeRange requestedTimeRange)
+    public async Task<double> GetAverageCarbonIntensityAsync(string location, DateTimeOffset start, DateTimeOffset end)
     {
-        return await GetAverageCarbonIntensityAsync(location, new TimeRange[] { requestedTimeRange });
-    }
-    /// <inheritdoc />
-    public async Task<CarbonIntensity> GetAverageCarbonIntensityAsync(string location, TimeRange[] requestedTimeRanges)
-    {
-        var data = new List<CarbonIntensityData>();
-        foreach (var timeRange in requestedTimeRanges)
-        {
-            var start = timeRange.StartTime;
-            var end = timeRange.EndTime;
-            var parameters = new CarbonAwareParametersBaseDTO
-            {
-                Start = start,
-                End = end,
-                SingleLocation = location
-            };
-            try
-            {
-                var value = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
-                data.Add(new CarbonIntensityData(start, end, value));
-
-                _logger.LogDebug("calculated average carbon intensity is {value} for time range {start} - {end}", value, start, end);
-            }
-            catch (CarbonAwareException ex)
-            {
-                throw new Exceptions.CarbonAwareException(ex.Message, ex);
-            }
-        }
-        return new CarbonIntensity()
-        {
-            Location = location,
-            CarbonIntensityDataPoints = data
+        var parameters = new CarbonAwareParametersBaseDTO {
+            Start = start,
+            End = end,
+            SingleLocation = location
         };
+        
+        try {
+            var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
+            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
+            return result;
+        }
+        catch (CarbonAwareException ex)
+        {
+            throw new Exceptions.CarbonAwareException(ex.Message, ex);
+        }
     }
 }

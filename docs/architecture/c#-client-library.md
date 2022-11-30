@@ -36,11 +36,10 @@ The following namespaces are included:
 
 ### Models
 
-There are three main classes that represents the data fetched from the data sources (i.e `Static Json`, [WattTime](https://www.watttime.org) and [ElectricityMaps](https://www.electricitymaps.com)):
+There are two main classes that represents the data fetched from the data sources (i.e `Static Json`, [WattTime](https://www.watttime.org) and [ElectricityMap](https://www.electricitymaps.com)):
 
 - `EmissionsData`
 - `EmissionsForecast`
-- `CarbonIntensity`
 
 We will define records that are owned by the library for each of these data types.
 ```c#
@@ -61,17 +60,6 @@ public record EmissionsForecast
     DateTimeOffset GeneratedAt
     IEnumerable<EmissionsData> EmissionsDataPoints
     IEnumerable<EmissionsData> OptimalDataPoints
-}
-```
-
-```c#
-namespace GSF.CarbonAware.Models;
-public record CarbonIntensity
-{
-    string Location 
-    DateTimeOffset StartTime
-    DateTimeOffset EndTime
-    double Value
 }
 ```
 

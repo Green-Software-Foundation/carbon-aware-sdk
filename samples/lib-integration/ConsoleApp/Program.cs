@@ -36,9 +36,8 @@ var bestRating = bestEmissionsDataResult.First().Rating;
 Console.WriteLine($"For location {location} Starting at: {startDate} Ending at: {endDate} the best Emissions Rating is: {bestRating}.");
 
 // Average Carbon Intensity
-var averageCarbonIntensityResult = await handlerEmissions.GetAverageCarbonIntensityAsync(location, new TimeRange(parsedStart, parsedEnd));
-var average = averageCarbonIntensityResult.CarbonIntensityDataPoints.First().Value;
-Console.WriteLine($"For location {location} Starting at: {startDate} Ending at: {endDate} the Average Emissions Rating is: {average}.");
+var averageCarbonIntensityResult = await handlerEmissions.GetAverageCarbonIntensityAsync(location, parsedStart, parsedEnd);
+Console.WriteLine($"For location {location} Starting at: {startDate} Ending at: {endDate} the Average Emissions Rating is: {averageCarbonIntensityResult}.");
 
 try
 {

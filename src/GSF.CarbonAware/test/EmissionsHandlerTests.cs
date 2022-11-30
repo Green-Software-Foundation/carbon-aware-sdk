@@ -120,49 +120,18 @@ public class EmissionsHandlerTests
     /// GetAverageCarbonIntensity: Single time range, successfull call to the aggregator with any data returned results in expected format.
     /// </summary>
     [TestCase("Sydney", "2022-03-07T01:00:00", "2022-03-07T03:30:00", TestName = "GetAverageCarbonIntensity calls aggregator successfully")]
-    public async Task GetAverageCarbonIntensity_SingleTimeRange_SuccessfulCall(string location, DateTimeOffset start, DateTimeOffset end)
+    public async Task GetAverageCarbonIntensity_SuccessfulCall(string location, DateTimeOffset start, DateTimeOffset end)
     {
         // Arrange
         double data = 0.7;
         var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsAggregatorWithAverageCI(data).Object);
 
         // Act
-        CarbonIntensity carbonIntensityOutput = await emissionsHandler.GetAverageCarbonIntensityAsync(location, new TimeRange(start,end));
+        var value = await emissionsHandler.GetAverageCarbonIntensityAsync(location, start, end);
 
         // Assert
         var expectedContent = data;
-        var actualContent = (carbonIntensityOutput == null) ? 0 : carbonIntensityOutput.CarbonIntensityDataPoints.First().Value;
-        Assert.That(actualContent, Is.EqualTo(expectedContent));
-    }
-
-    /// <summary>
-    /// GetAverageCarbonIntensity: multiple time ranges, successfull call to the aggregator with any data returned results in expected format.
-    /// </summary>
-    [TestCase(0, TestName = "GetAverageCarbonIntensity: 0 time ranges")]
-    [TestCase(1, TestName = "GetAverageCarbonIntensity: 1 time ranges")]
-    [TestCase(5, TestName = "GetAverageCarbonIntensity: 5 time ranges")]
-    public async Task GetAverageCarbonIntensity_MultipleTimeRanges_SuccessfulCall(int numberOfRanges)
-    {
-        // Arrange
-        double data = 0.7;
-        var aggregator = CreateEmissionsAggregatorWithAverageCI(data);
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, aggregator.Object);
-
-        // Create 10 time ranges
-        var timeRanges = new TimeRange[numberOfRanges];
-        var start = new DateTimeOffset(2022, 3, 7, 1, 0, 0, TimeSpan.Zero);
-        var duration = 30;
-        foreach (int value in Enumerable.Range(0, numberOfRanges))
-        {
-            timeRanges[value] = new TimeRange(start, start.AddMinutes(duration));
-            start = start.AddMinutes(duration);
-        }
-
-        // Act
-        CarbonIntensity carbonIntensityOutput = await emissionsHandler.GetAverageCarbonIntensityAsync("Sydney", timeRanges);
-
-        // Assert
-        aggregator.Verify(a => a.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()), Times.Exactly(numberOfRanges));
+        Assert.That(value, Is.EqualTo(expectedContent));
     }
 
     /// <summary>
@@ -177,7 +146,7 @@ public class EmissionsHandlerTests
         var emissionsHandler = new EmissionsHandler(Logger!.Object, aggregator.Object);
 
         // Act/Assert
-        Assert.ThrowsAsync<CarbonAwareException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", new TimeRange(DateTimeOffset.Now, DateTimeOffset.Now)));
+        Assert.ThrowsAsync<CarbonAwareException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", DateTimeOffset.Now, DateTimeOffset.Now));
     }
 
     private static Mock<IEmissionsAggregator> CreateEmissionsAggregatorWithAverageCI(double data)
