@@ -1,16 +1,16 @@
 ﻿
-using CarbonAware.Model;
-using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
-using System.Diagnostics;
-using CarbonAware.Interfaces;
-using Microsoft.Extensions.Logging;
-using CarbonAware.Extensions;
 using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Extensions;
+using CarbonAware.Interfaces;
+using CarbonAware.Model;
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
 
 namespace CarbonAware.Aggregators.Forecast;
 public class ForecastAggregator : IForecastAggregator
 {
-    private static readonly ActivitySource Activity = new ActivitySource(nameof(ForecastAggregator));
+    private static readonly ActivitySource Activity = new(nameof(ForecastAggregator));
     private readonly ILogger<ForecastAggregator> _logger;
     private readonly IForecastDataSource _dataSource;
 

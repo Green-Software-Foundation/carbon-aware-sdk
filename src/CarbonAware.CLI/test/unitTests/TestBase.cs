@@ -14,8 +14,8 @@ namespace CarbonAware.CLI.UnitTests;
 /// </summary>
 public abstract class TestBase
 {
-    protected Mock<IForecastAggregator> _mockForecastAggregator = new Mock<IForecastAggregator>();
-    protected Mock<IEmissionsAggregator> _mockEmissionsAggregator = new Mock<IEmissionsAggregator>();
+    protected Mock<IForecastAggregator> _mockForecastAggregator = new();
+    protected Mock<IEmissionsAggregator> _mockEmissionsAggregator = new();
 
     protected readonly TestConsole _console = new();
 

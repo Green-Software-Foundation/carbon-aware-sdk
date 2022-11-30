@@ -1,5 +1,4 @@
 ﻿using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.CLI.Commands.Emissions;
 using CarbonAware.CLI.Commands.EmissionsForecasts;
 using CarbonAware.Model;
 using Moq;

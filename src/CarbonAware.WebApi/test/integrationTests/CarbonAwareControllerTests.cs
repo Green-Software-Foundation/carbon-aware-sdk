@@ -85,21 +85,6 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     }
 
     [Test]
-    public async Task EmissionsForecastsCurrent_UnsupportedDataSources_ReturnsNotImplemented()
-    {
-        IgnoreTestForDataSource("data source does implement '/emissions/forecasts/current'.", DataSourceType.WattTime);
-
-        var queryStrings = new Dictionary<string, string>();
-        queryStrings["location"] = "fakeLocation";
-
-        var endpointURI = ConstructUriWithQueryString(currentForecastURI, queryStrings);
-
-        var result = await _client.GetAsync(endpointURI);
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotImplemented));
-    }
-
-    [Test]
     public async Task EmissionsForecastsCurrent_SupportedDataSources_ReturnsOk()
     {
         IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);

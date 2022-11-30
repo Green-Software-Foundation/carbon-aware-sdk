@@ -10,7 +10,7 @@ namespace CarbonAware.DataSources.Json;
 /// <summary>
 /// Represents a JSON data source.
 /// </summary>
-public class JsonDataSource : IEmissionsDataSource, IForecastDataSource
+public class JsonDataSource : IEmissionsDataSource
 {
     public string Name => "JsonDataSource";
 
@@ -71,16 +71,6 @@ public class JsonDataSource : IEmissionsDataSource, IForecastDataSource
         }
 
         return emissionsData;
-    }
-
-    public Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset generatedAt)
-    {
-        throw new NotImplementedException();
     }
 
     private IEnumerable<EmissionsData> FilterByDateRange(IEnumerable<EmissionsData> data, DateTimeOffset startTime, DateTimeOffset endTime)

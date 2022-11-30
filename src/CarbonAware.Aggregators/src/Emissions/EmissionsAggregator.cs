@@ -3,19 +3,14 @@ using CarbonAware.Extensions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
 
 namespace CarbonAware.Aggregators.Emissions;
 
 public class EmissionsAggregator : IEmissionsAggregator
 {
-    private static readonly ActivitySource Activity = new ActivitySource(nameof(EmissionsAggregator));
+    private static readonly ActivitySource Activity = new(nameof(EmissionsAggregator));
     private readonly ILogger<EmissionsAggregator> _logger;
     private readonly IEmissionsDataSource _dataSource;
 
@@ -76,7 +71,7 @@ public class EmissionsAggregator : IEmissionsAggregator
             _logger.LogInformation("Aggregator getting average carbon intensity from data source");
             var emissionData = await _dataSource.GetCarbonIntensityAsync(parameters.SingleLocation, start, end);
             var value = emissionData.AverageOverPeriod(start, end);
-            _logger.LogInformation($"Carbon Intensity Average: {value}");
+            _logger.LogInformation("Carbon Intensity Average: {value}", value);
 
             return value;
         }

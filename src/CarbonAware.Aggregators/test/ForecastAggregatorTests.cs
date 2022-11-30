@@ -131,7 +131,7 @@ public class ForecastAggregatorTests
 
         var expectedData = new List<EmissionsData>();
         var expectedRatings = new double[] { 15.0, 25.0 };
-        for (var i = 0; i < expectedRatings.Count(); i++)
+        for (var i = 0; i < expectedRatings.Length; i++)
         {
             expectedData.Add(new EmissionsData() { Time = dataStartTime + i * TimeSpan.FromMinutes(dataTickSize), Location = locationName, Rating = expectedRatings[i], Duration = TimeSpan.FromMinutes(dataDuration) });
         }
@@ -165,7 +165,7 @@ public class ForecastAggregatorTests
 
         var expectedData = new List<EmissionsData>();
         var expectedRatings = new double[] { 10.0, 20.0, 30.0, 40.0 };
-        for (var i = 0; i < expectedRatings.Count(); i++)
+        for (var i = 0; i < expectedRatings.Length; i++)
         {
             expectedData.Add(new EmissionsData() { Time = dataStartTime + i * TimeSpan.FromMinutes(dataTickSize), Location = locationName, Rating = expectedRatings[i], Duration = TimeSpan.FromMinutes(dataDuration) });
         }
