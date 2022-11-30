@@ -1,7 +1,4 @@
-﻿using CarbonAware.Interfaces;
-using System;
-
-namespace CarbonAware.Tools.WattTimeClient;
+﻿namespace CarbonAware.Tools.WattTimeClient;
 
 public class WattTimeClientException : Exception
 {

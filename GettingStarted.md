@@ -76,7 +76,7 @@ Used to configure specific values that affect how the application gets data and 
 
 ##### DataSource
 
-Each data source interface is configured with an underlying datasource. 
+Each data source interface is configured with an underlying data provider.
 
 Must be one of the following: `JSON, WattTime`.  
 
