@@ -59,6 +59,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonAware", "GSF.Carb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GSF.CarbonAware.Tests", "GSF.CarbonAware\test\GSF.CarbonAware.Tests.csproj", "{BCCD8C11-7413-4272-8922-417429CFF27A}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.ElectricityMaps", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\src\CarbonAware.DataSources.ElectricityMaps.csproj", "{7479A601-EAED-4651-BF08-99520B0179CB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.ElectricityMaps.Tests", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\test\CarbonAware.DataSources.ElectricityMaps.Tests.csproj", "{09F16357-0DB3-4D54-9EBB-19CE1CB3CE31}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.ElectricityMaps.Mocks", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\mock\CarbonAware.DataSources.ElectricityMaps.Mocks.csproj", "{40155CED-4F39-485D-9AF8-4D267E236146}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -177,6 +183,18 @@ Global
 		{BCCD8C11-7413-4272-8922-417429CFF27A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCCD8C11-7413-4272-8922-417429CFF27A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCCD8C11-7413-4272-8922-417429CFF27A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7479A601-EAED-4651-BF08-99520B0179CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7479A601-EAED-4651-BF08-99520B0179CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7479A601-EAED-4651-BF08-99520B0179CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7479A601-EAED-4651-BF08-99520B0179CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09F16357-0DB3-4D54-9EBB-19CE1CB3CE31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09F16357-0DB3-4D54-9EBB-19CE1CB3CE31}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09F16357-0DB3-4D54-9EBB-19CE1CB3CE31}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09F16357-0DB3-4D54-9EBB-19CE1CB3CE31}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40155CED-4F39-485D-9AF8-4D267E236146}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40155CED-4F39-485D-9AF8-4D267E236146}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40155CED-4F39-485D-9AF8-4D267E236146}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40155CED-4F39-485D-9AF8-4D267E236146}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
