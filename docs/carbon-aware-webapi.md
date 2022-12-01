@@ -24,7 +24,10 @@ The WebApi replicates the CLI and SDK functionality, leveraging the same configu
     - [WattTime](#watttime)
       - [Locations](#locations)
       - [Exception Handling](#exception-handling)
-  - [Example Emissions Call Using WattTime](#example-emissions-call-using-watttime)
+      - [Example Emissions Call Using WattTime](#example-emissions-call-using-watttime)
+    - [ElectricityMaps](#electricityMaps)
+      - [Locations](#locations)
+      - [Exception Handling](#exception-handling)
 
 ## Endpoints
 
@@ -204,13 +207,13 @@ The response is an array of forecasts (one per requested location) with their op
       "value": 448.4451043375
     },
     "forecastData": [ ... ] // all relevant forecast data points
-    "requestedAt": "2022-06-01T12:01:00
+    "requestedAt": "2022-06-01T12:01:00"
     "location": "eastus",
     "dataStartAt": "2022-06-01T14:00:00Z",
     "dataEndAt": "2022-06-01T18:00:00Z",
     "windowSize": 30,
   },
-    {
+  {
     "generatedAt": "2022-06-13T06:05:00+00:00",
     "optimalDataPoint": {
       "location": "IE",
@@ -219,7 +222,7 @@ The response is an array of forecasts (one per requested location) with their op
       "value": 328.178478
     },
     "forecastData": [ ... ] // all relevant forecast data points
-    "requestedAt": "2022-06-13T06:05:00
+    "requestedAt": "2022-06-13T06:05:00"
     "location": "westus",
     "dataStartAt": "2022-06-13T08:00:00Z",
     "dataEndAt": "2022-06-13T10:00:00Z",
@@ -358,7 +361,17 @@ Each WattTime emissions data point is associated with a particular named balanci
 
 If WattTime responds with a 4XX or 5XX status code the WattTime Data Source will forward the response code and message back to the caller.  Refer to the [current WattTime documentation](https://www.watttime.org/api-documentation/) for the most up-to-date information about possible error codes.
 
-## Example Emissions Call Using WattTime
+#### Example Emissions Call Using WattTime
 The swimlanes diagram below follows an example request for emissions data using WattTime as the data source provider. In this diagram, the _Client_ is a user of the SDK and the _WattTimeService_ is the [WattTime](https://www.wattime.org) API.
 
 ![webapi to watttime flow diagram](./images/webapi-swimlanes.png)
+
+### ElectricityMaps
+
+#### Locations
+
+Each ElectricityMaps emissions data point is associated with a particular named zone. While the ElectricityMaps endpoint supports calling with lat/long geoposition as well, the result will always be a corresponding zone name. They provide a [route on their API](https://static.electricitymaps.com/api/docs/index.html#zones) which can be queried to list all the zone names you have access to given your token
+
+#### Exception Handling
+
+If ElectricityMaps responds with a 4XX or 5XX status code the ElectricityMaps Data Source will forward the response code and message back to the caller. Refer to the [ElectricityMapsHttpClientException](../src/CarbonAware.DataSources/CarbonAware.DataSources.ElectricityMaps/src/Client/ElectricityMapsClientHttpException.cs) class for documentation on expected error codes.
