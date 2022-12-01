@@ -22,10 +22,10 @@ git checkout gsf/dev
 git checkout -b release
 
 # Cherry-pick our required, but unmerged commits onto the branch
-git cherry-pick f0a55a1b7fdde58f7d56c8ffd23c5734c3dcbc71 # issue #166 - SDK library tooling
-git cherry-pick 74c09c3e9d5fecbb983ec57feb5cabfa3cdc8de2 # issue #164 - New DataSource Config Schema
-git cherry-pick 71a5410eff6e9ec211d55fae80dda20874ce0950 # issue #167 - ElectricityMaps Client
-git cherry-pick 84e3516b3bb9dccaf2f7e1a03d6c2a9dc607ecd6 # issue #167 - ElectricityMaps Data Source - Forecasts
+git cherry-pick da2cbc22bd14088586aa06191b84e3709e1c6e53 # issue #166 - SDK library tooling
+git cherry-pick 064f86499d0f0e016066169115dcf02ab8b41f34 # issue #164 - New DataSource Config Schema
+git cherry-pick c0a627fad3b2dc6f573c8e5afd1ff79534aeadd2 # issue #167 - ElectricityMaps Client
+git cherry-pick 8232451cd0dfd9d291c75c4353af0582843a11cf # issue #167 - ElectricityMaps Data Source - Forecasts
 
 ####### Adding/updating features with this script:
 ####### 1) switch to your feature branch
