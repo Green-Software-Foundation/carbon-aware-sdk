@@ -22,6 +22,7 @@ Currently there are seven (7) `dotnet` projects that can be set to be packaged w
 |--------------------|
 |CarbonAware|
 |CarbonAware.Aggregators|
+|CarbonAware.DataSources.ElectricityMaps|
 |CarbonAware.DataSources.Json|
 |CarbonAware.DataSources.Registration|
 |CarbonAware.DataSources.WattTime|

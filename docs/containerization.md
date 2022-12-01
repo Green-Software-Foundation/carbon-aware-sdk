@@ -26,11 +26,23 @@ carbon_aware   v1        6293e2528bf2   About an hour ago   230MB
 
     ```sh
     docker run --rm -p 8000:80 \
-    > -e CarbonAwareVars__CarbonIntensityDataSource="WattTime" \
-    > -e WattTimeClient__Username="username" \
-    > -e WattTimeClient__Password="userpwd" \
+    > -e DataSources__EmissionsDataSource="WattTime" \
+    > -e DataSources__ForecastDataSource="WattTime" \
+    > -e DataSources__Configurations__WattTime__Type="WattTime" \
+    > -e DataSources__Configurations__WattTime__password="username" \
     > carbon_aware:v1
     ```
+    or the [ElectricityMaps](https://www.electricitymaps.com) provider
+
+    ```sh
+    docker run --rm -p 8000:80 \
+    > -e DataSources__ForecastDataSource="ElectricityMaps" \
+    > -e DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps" \
+    > -e DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token" \
+    > -e DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>" \
+    > carbon_aware:v1
+    ```
+
 1. Verify that the WebApi is responding to requests using an HTTP client tool (e.g. `postman`, `curl`)
     ```sh
     curl -v -s -X 'POST' http://localhost:8000/emissions/forecasts/batch  -H 'accept: */*' -H 'Content-Type: application/json' -d '[

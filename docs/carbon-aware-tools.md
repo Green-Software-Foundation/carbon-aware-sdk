@@ -24,12 +24,44 @@ The `LocationSource` converts named locations to their corresponding geoposition
 
 To generate a new version of the `src/data/location-sources/azure-regions.json` file, follow these steps:
 
-1. [Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/).
+1. Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/) and [jq](https://stedolan.github.io/jq/download/).
+
 2. [Login to your Azure subscription](https://docs.microsoft.com/en-us/cli/azure/authenticate-azure-cli?view=azure-cli-latest).
+
 3. Get a list of Azure regions metadata in the proper format:
 
-    1. ```bash
-       az account list-locations --query "[?metadata.latitude != null].{RegionName:name,Latitude:metadata.latitude,Longitude:metadata.longitude }" >> azure-regions.json
-       ```
+    ```bash
+    az account list-locations --query '[?latitude != null].{Name:name,Latitude:latitude,Longitude:longitude}' | jq '[foreach .[] as $x ({}; . + ($x | {(.Name): { Latitude, Longitude, Name } }); .)] | last(.[])' >> azure-regions.json
+    ```
 
 4. Copy the results and save it to `src/data/location-sources/`
+
+### Converting v1.0.0 location source files to the latest format
+
+Use the following `jq` command to covert from the v1.0.0 location source JSON array format
+
+```json
+[
+    {
+        "RegionName": "myRegion",
+        "Latitude": 123.456,
+        "Longitude": 78.9
+    }
+]
+```
+
+to the new JSON object format
+
+```json
+{
+    "myRegion": {
+        "Name": "myLocationName",
+        "Latitude": 123.456,
+        "Longitude": 78.9
+    }
+}
+```
+
+```bash
+cat azure-regions.json | jq '[foreach $regions[] as $x ({}; . + ($x | {(.RegionName): { Latitude, Longitude, "Name": .RegionName } }); .)] | last(.[])'
+```

@@ -28,3 +28,5 @@ samples/watttime-registration/settings.py
 
 # exclude local settings to easily set up your repo from the appsettings.Development.json.template
 appsettings.Development.json
+# exclude custom zones to easily set up your repo from the custom-azure-zones.json.template
+src/data/location-sources/custom-azure-zones.json

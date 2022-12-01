@@ -15,11 +15,13 @@ Each of these has configuration requirements which are detailed below. You can a
 Make sure you have installed the following pre-requisites:
 
 - dotnet core SDK [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
-- WattTime account - See [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user) for details (or use our python samples as described [here](samples/watttime-registration/readme.md)).
+- Access to one (or all) of the supported external data APIs
+  - WattTime account - See [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user) for details (or use our python samples as described [here](samples/watttime-registration/readme.md)).
+  - ElectricityMaps account - See [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home) for details (or setup a [free trial](https://api-portal.electricitymaps.com)).
 
 ## Data Sources
 
-We intend to support multiple data sources for carbon data.  At this time, only a JSON file and [WattTime](https://www.watttime.org/) are supported.  To use WattTime data, you'll need to acquire a license from them and set the appropriate configuration information.
+We intend to support multiple data sources for carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/), and [ElectricityMaps](https://www.electricitymaps.com/) are supported.  To use WattTime data or Electricity Maps data, you'll need to acquire a license from them and set the appropriate configuration information.
 
 ## Configuration
 
@@ -71,13 +73,23 @@ $ podman build -t carbon-aware-sdk-webapi -f CarbonAware.WebApi/src/Dockerfile .
 
 Carbon Aware SDK Web API publishes the service on Port 80, so you need to map it to local port. Following commands maps it to Port 8080.
 
-You also need to configure the SDK with environment variables. They are minimum set when you use WattTime as a data source.
+You also need to configure the SDK with environment variables. They are minimum set when you use WattTime or ElectricityMaps as a data source.
 
 ```bash
 $ podman run -it --rm -p 8080:80 \
-    -e DataSources__EmissionsDataSource="WattTime" \
+    -e DataSources__ForecastDataSource="WattTime" \
     -e DataSources__Configurations__WattTime__Username="wattTimeUsername" \
     -e DataSources__Configurations__WattTime__Password="wattTimePassword" \
+  carbon-aware-sdk-webapi
+```
+
+or 
+
+```bash
+$ podman run -it --rm -p 8080:80 \
+    -e DataSources__ForecastDataSource="ElectricityMaps" \
+    -e DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token" \
+    -e DataSources__Configurations__ElectricityMaps__APIToken="electricityMapsToken" \
   carbon-aware-sdk-webapi
 ```
 

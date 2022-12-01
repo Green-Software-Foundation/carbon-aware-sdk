@@ -6,7 +6,7 @@ using NUnit.Framework;
 using System.CommandLine.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Threading;
+using CarbonAware.DataSources.ElectricityMaps.Mocks;
 
 namespace CarbonAware.CLI.IntegrationTests;
 
@@ -37,7 +37,6 @@ public abstract class IntegrationTestingBase
     {
         // Initialize process here
         using var proc = new Process();
-        
         proc.StartInfo.FileName = _executableName;
         // add arguments as whole string
         proc.StartInfo.Arguments = arguments;
@@ -60,9 +59,14 @@ public abstract class IntegrationTestingBase
         proc.Start();
 
         // get output to testing console.
-        Console.Out.WriteLine(proc.StandardOutput.ReadToEnd());
-        Console.Error.WriteLine(proc.StandardError.ReadToEnd());
-        
+        using var sOutput = proc.StandardOutput;
+        Console.Out.WriteLine(await sOutput.ReadToEndAsync());
+        await Console.Out.FlushAsync();
+
+        using var sError = proc.StandardError;
+        Console.Error.WriteLine(await sError.ReadToEndAsync());
+        await Console.Error.FlushAsync();
+
         await proc.WaitForExitAsync();
 
         // Kill the process if WaitForExitAsync times out or is cancelled.
@@ -76,6 +80,7 @@ public abstract class IntegrationTestingBase
         var standardError = new StreamWriter(Console.OpenStandardError());
         standardOutput.AutoFlush = true;
         standardError.AutoFlush = true;
+        
         Console.SetOut(standardOutput);
         Console.SetError(standardError);
 
@@ -103,6 +108,16 @@ public abstract class IntegrationTestingBase
                     Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "WattTime");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Type", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
+                    break;
+                }
+            case DataSourceType.ElectricityMaps:
+                {
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__Type", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APITokenHeader", "token");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APIToken", "test");
+
+                    _dataSourceMocker = new ElectricityMapsDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:

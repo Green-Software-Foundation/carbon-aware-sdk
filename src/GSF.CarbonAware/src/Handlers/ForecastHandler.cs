@@ -1,6 +1,8 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Forecast;
+using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.Exceptions;
+using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.Tools.WattTimeClient;
 using GSF.CarbonAware.Models;
 using Microsoft.Extensions.Logging;
@@ -39,7 +41,13 @@ internal sealed class ForecastHandler : IForecastHandler
             _logger.LogDebug("Current forecast: {result}", result);
             return result;
         }
-        catch (Exception ex) when (ex is WattTimeClientException || ex is WattTimeClientHttpException || ex is LocationConversionException || ex is global::CarbonAware.Tools.WattTimeClient.Configuration.ConfigurationException)
+        catch (Exception ex) when (
+        ex is WattTimeClientException || 
+        ex is WattTimeClientHttpException ||
+        ex is ElectricityMapsClientException ||
+        ex is ElectricityMapsClientHttpException ||
+        ex is LocationConversionException || 
+        ex is ConfigurationException)
         {
             throw new Exceptions.CarbonAwareException(ex.Message, ex);
         }

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarbonAware.DataSources.ElectricityMaps\src\CarbonAware.DataSources.ElectricityMaps.csproj" />
     <ProjectReference Include="..\CarbonAware.DataSources.Json\src\CarbonAware.DataSources.Json.csproj" />
     <ProjectReference Include="..\CarbonAware.DataSources.WattTime\src\CarbonAware.DataSources.WattTime.csproj" />
   </ItemGroup>

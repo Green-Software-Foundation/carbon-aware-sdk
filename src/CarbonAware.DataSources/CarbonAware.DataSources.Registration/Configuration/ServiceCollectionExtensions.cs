@@ -1,4 +1,5 @@
 using CarbonAware.Configuration;
+using CarbonAware.DataSources.ElectricityMaps.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.Exceptions;
@@ -12,9 +13,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataSourceService(this IServiceCollection services, IConfiguration configuration)
     {
-        var dataSources = configuration.GetSection(DataSourcesConfiguration.Key).Get<DataSourcesConfiguration>() ?? new DataSourcesConfiguration();
-        dataSources.ConfigurationSection = configuration.GetSection($"{DataSourcesConfiguration.Key}:Configurations");
-        dataSources.AssertValid();
+        var dataSources = configuration.DataSources();
 
         var emissionsDataSource = GetDataSourceTypeFromValue(dataSources.EmissionsConfigurationType());
         var forecastDataSource = GetDataSourceTypeFromValue(dataSources.ForecastConfigurationType());
@@ -30,6 +29,10 @@ public static class ServiceCollectionExtensions
             {
                 services.AddWattTimeEmissionsDataSource(dataSources);
                 break;
+            }
+            case DataSourceType.ElectricityMaps:
+            {
+                throw new ArgumentException("ElectricityMaps data source is not supported for emissions data");
             }
             case DataSourceType.None:
             {
@@ -47,6 +50,11 @@ public static class ServiceCollectionExtensions
             case DataSourceType.WattTime:
             {
                 services.AddWattTimeForecastDataSource(dataSources);
+                break;
+            }
+            case DataSourceType.ElectricityMaps:
+            {
+                services.AddElectricityMapsForecastDataSource(dataSources);
                 break;
             }
             case DataSourceType.None:

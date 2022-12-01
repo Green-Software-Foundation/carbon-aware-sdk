@@ -1,26 +1,51 @@
 //copy this file as "appsettings.Development.json",  remove this comment and update the settings below accordingly
 {
+  "LocationDataSourcesConfiguration": {
+    "LocationSourceFiles": [
+      {
+        "DataFileLocation": "azure-regions.json",
+      },
+      {
+        "DataFileLocation": "custom-azure-zones.json",
+        "Prefix": "zone",
+        "Delimiter": "."
+      }
+    ]
+  },
   "DataSources": {
-    "EmissionsDataSource": "test",
-    "ForecastDataSource": "WattTime",
+    "EmissionsDataSource": "",
+    "ForecastDataSource": "",
     "Configurations": {
-      "test": {
+      "test-json": {
         "Type": "JSON",
         "DataFileLocation": "test-data-azure-emissions.json"
       },
-      "WattTime": {
+      "wattTime_no-proxy": {
         "Type": "WattTime",
         "Username": "username",
         "Password": "password",
         "BaseURL": "https://api2.watttime.org/v2/",
         "Proxy": {
-          "UseProxy": false,
+          "UseProxy": false
+        }
+      },
+      "wattTime_proxy": {
+        "Type": "WattTime",
+        "Username": "username",
+        "Password": "password",
+        "BaseURL": "https://api2.watttime.org/v2/",
+        "Proxy": {
+          "UseProxy": true,
           "Url": "https://localhost:1234",
           "Username": "ProxyUser",
           "Password": "p@$$w0rD!"
         }
+      },
+      "em": {
+        "Type": "ElectricityMaps",
+        "APITokenHeader": "auth-token",
+        "APIToken": "myAwesomeToken"
       }
     }
   }
 }
-    

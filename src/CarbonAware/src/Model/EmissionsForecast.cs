@@ -1,3 +1,5 @@
+using CarbonAware.Exceptions;
+
 namespace CarbonAware.Model;
 
 public record EmissionsForecast
@@ -83,5 +85,18 @@ public record EmissionsForecast
             errors[key] = new List<string>();
         }
         errors[key].Add(message);
+    }
+
+    public TimeSpan GetDurationBetweenForecastDataPoints()
+    {
+        var firstPoint = ForecastData.FirstOrDefault();
+        var secondPoint = ForecastData.Skip(1)?.FirstOrDefault();
+
+        var first = firstPoint ?? throw new CarbonAwareException("First. Too few data points returned");
+        var second = secondPoint ?? throw new CarbonAwareException("Second. Too few data points returned");
+
+        // Handle chronological and reverse-chronological data by using `.Duration()` to get
+        // the absolute value of the TimeSpan between the two points.
+        return first.Time.Subtract(second.Time).Duration();
     }
 }
