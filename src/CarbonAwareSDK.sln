@@ -5,10 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware", "CarbonAware\src\CarbonAware.csproj", "{40FC1BA4-ABDB-4D9F-A53A-8F44F0AC67DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJsonPlugin", "CarbonAware.Plugins.BasicJsonPlugin\src\CarbonAware.Plugins.BasicJsonPlugin.csproj", "{7F8C741C-3101-44F9-A352-B5CBEC00FEFC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.Plugins.BasicJsonPlugin.Tests", "CarbonAware.Plugins.BasicJsonPlugin\test\CarbonAware.Plugins.BasicJsonPlugin.Tests.csproj", "{0B53454A-CB47-41D2-8A39-5C056E43695C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.CLI", "CarbonAware.CLI\src\CarbonAware.CLI.csproj", "{D057DD75-CFFA-496F-B493-171E122AC91D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.WebApi", "CarbonAware.WebApi\src\CarbonAware.WebApi.csproj", "{1A606EAE-C8BE-454F-B3F7-C649C9293B65}"
