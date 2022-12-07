@@ -1,0 +1,65 @@
+name: Build and Install GSF Packages on Sample Azure Functions
+
+on:
+  push:
+    branches: [ dev, main ]
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+      - 'samples/azure-function/**'
+
+env:
+  EMISSIONS_DOCKERFILE_PATH: samples/azure-function/emissions-azure-function/Dockerfile
+  FORECAST_DOCKERFILE_PATH: samples/azure-function/forecast-azure-function/Dockerfile
+  EM_CONTAINER_IMAGE_NAME: em-runnable-container
+  EM_CONTAINER_RUNTIME_NAME: em-az-func
+  FC_CONTAINER_IMAGE_NAME: fc-runnable-container
+  FC_CONTAINER_RUNTIME_NAME: fc-az-func
+
+jobs:
+  container_emissions_azure_function:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Docker RM container name
+        continue-on-error: true
+        run: docker rm -f ${{ env.EM_CONTAINER_RUNTIME_NAME }}
+
+      - name: Docker Target Final
+        run: |
+          docker build --no-cache . -f ${{ env.EMISSIONS_DOCKERFILE_PATH }} -t ${{ env.EM_CONTAINER_IMAGE_NAME }}
+          docker rmi -f $(docker images -f "dangling=true" -q)
+
+      - name: Docker Run Container
+        run: docker run -d --name ${{ env.EM_CONTAINER_RUNTIME_NAME }} -p 8080:80 ${{ env.EM_CONTAINER_IMAGE_NAME }}
+
+      # Request fails with authentication error. Expected
+      - name: Get Emissions
+        run: wget -t 5 --waitretry=5 "http://0.0.0.0:8080/api/GetAverageCarbonIntensity?startDate=2022-03-01T15:30:00Z&endDate=2022-03-01T18:30:00Z&location=eastus" || exit 0
+
+  container_forecast_azure_function:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Docker RM container name
+        continue-on-error: true
+        run: docker rm -f ${{ env.FC_CONTAINER_RUNTIME_NAME }}
+
+      - name: Docker Target Final
+        run: |
+          docker build --no-cache . -f ${{ env.FORECAST_DOCKERFILE_PATH }} -t ${{ env.FC_CONTAINER_IMAGE_NAME }}
+          docker rmi -f $(docker images -f "dangling=true" -q)
+
+      - name: Docker Run Container
+        run: docker run -d --name ${{ env.FC_CONTAINER_RUNTIME_NAME }} -p 8081:80 ${{ env.FC_CONTAINER_IMAGE_NAME }}
+
+      # Request fails with authentication error. Expected
+      - name: Get Current Forecast
+        run: |
+          wget -t 5 --waitretry=5 "http://0.0.0.0:8081/api/GetCurrentForecast" --header "Content-Type: application/json" --post-data '{"startDate":"2022-11-02T15:30:00Z","endDate":"2022-11-02T18:30:00Z","location":"eastus","duration":"15"}' || exit 0
