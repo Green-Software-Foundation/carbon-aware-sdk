@@ -22,10 +22,13 @@ git checkout gsf/dev
 git checkout -b release
 
 # Cherry-pick our required, but unmerged commits onto the branch
-git cherry-pick da2cbc22bd14088586aa06191b84e3709e1c6e53 # issue #166 - SDK library tooling
-git cherry-pick 064f86499d0f0e016066169115dcf02ab8b41f34 # issue #164 - New DataSource Config Schema
-git cherry-pick 2b0c230e84a6bf75b2911a9713ecc79b64596650 # issue #167 - ElectricityMaps Client
-git cherry-pick d7f868a1352ffd0de9388e2486d7e90459a10ad4 # issue #167 - ElectricityMaps Data Source - Forecasts
+git cherry-pick 707b09183f0e2cb52a2846ff14813e06963058f3 # issue #166 - SDK library tooling
+git cherry-pick 83f0d5f579f9be542a4a8a1a1b7b448f1cbba271 # issue #164 - New DataSource Config Schema
+git cherry-pick c1ca823366dc45eaeed96bb6b58ad43f68f54b7b # issue #167 - ElectricityMaps Client
+git cherry-pick 3592f9d8a823728605d04f8287a6036df17af247 # issue #167 - ElectricityMaps Data Source - Forecasts
+git cherry-pick cbb00885f1d86170b5ac99c0ba0f2671caefb081 # issue #193 - Emissions and Best Emissions Endpoint in Library
+git cherry-pick 346210fedff80079dfd24ee8335d63188e9cd93e # issue #192 - GetForecastByDate Endpoint in Library
+git cherry-pick a14e60b77eb271f1b253810dbc6b02f539ad6b25 # issue #174 - ElectricityMaps Data Source - Emissions
 
 ####### Adding/updating features with this script:
 ####### 1) switch to your feature branch
