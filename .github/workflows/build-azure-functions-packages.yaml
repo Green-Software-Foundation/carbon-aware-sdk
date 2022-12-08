@@ -39,7 +39,12 @@ jobs:
 
       # Request fails with authentication error. Expected
       - name: Get Emissions
-        run: wget -t 5 --waitretry=5 "http://0.0.0.0:8080/api/GetAverageCarbonIntensity?startDate=2022-03-01T15:30:00Z&endDate=2022-03-01T18:30:00Z&location=eastus" || exit 0
+        run: |
+          set +e
+          ret_code=$(wget -S -t 5 --waitretry=5 "http://0.0.0.0:8080/api/GetAverageCarbonIntensity?startDate=2022-03-01T15:30:00Z&endDate=2022-03-01T18:30:00Z&location=eastus" 2>&1 | grep "HTTP/" | awk '{print $2}')
+          set -e
+          [ "401" == $ret_code ]
+
 
   container_forecast_azure_function:
     runs-on: ubuntu-latest
@@ -62,4 +67,7 @@ jobs:
       # Request fails with authentication error. Expected
       - name: Get Current Forecast
         run: |
-          wget -t 5 --waitretry=5 "http://0.0.0.0:8081/api/GetCurrentForecast" --header "Content-Type: application/json" --post-data '{"startDate":"2022-11-02T15:30:00Z","endDate":"2022-11-02T18:30:00Z","location":"eastus","duration":"15"}' || exit 0
+          set +e
+          ret_code=$(wget -S -t 5 --waitretry=5 "http://0.0.0.0:8081/api/GetCurrentForecast" --header "Content-Type: application/json" --post-data '{"startDate":"2022-11-02T15:30:00Z","endDate":"2022-11-02T18:30:00Z","location":"eastus","duration":"15"}' 2>&1 | grep "HTTP/" | awk '{print $2}')
+          set -e
+          [ "401" == $ret_code ]
