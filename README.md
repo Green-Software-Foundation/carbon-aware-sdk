@@ -1,4 +1,4 @@
-[![Join #CarbonHack22](images/hackathon-banner.png)](https://grnsft.org/hack22)
+[![Complete #SOGS22 Survey](images/SOGS_banner1.png)](https://grnsft.org/sogs/survey)
 
 **Decarbonize Software. 40K Top Prize.**
 
