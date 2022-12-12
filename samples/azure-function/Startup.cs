@@ -1,8 +1,8 @@
-using System.IO;
 using GSF.CarbonAware.Configuration;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.IO;
 
 [assembly: FunctionsStartup(typeof(CarbonAwareFunctions.Startup))]
 
@@ -24,6 +24,7 @@ namespace CarbonAwareFunctions
         {
             var configuration = builder.GetContext().Configuration;
             builder.Services
+            .AddEmissionsServices(configuration)
             .AddForecastServices(configuration);
         }
     }

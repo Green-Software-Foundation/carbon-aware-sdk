@@ -13,7 +13,6 @@ build
 TestResults
 
 /src/clients/generated
-/packages
 
 # Build-gen'd OpenAPI Spec
 src/CarbonAware.WebApi/src/CarbonAware.WebApi.xml

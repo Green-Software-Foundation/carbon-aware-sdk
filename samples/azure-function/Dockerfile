@@ -11,12 +11,12 @@ COPY ["samples/", "data/samples/"]
 
 WORKDIR /data
 RUN scripts/package/create_packages.sh src/CarbonAwareSDK.sln /packages && \
-    dotnet restore "samples/azure-function/forecast-azure-function/function.csproj" && \
-    scripts/package/add_packages.sh samples/azure-function/forecast-azure-function/function.csproj /packages && \
-    dotnet build "samples/azure-function/forecast-azure-function/function.csproj" -c Release -o /app/build
+    dotnet restore "samples/azure-function/function.csproj" && \
+    scripts/package/add_packages.sh samples/azure-function/function.csproj /packages && \
+    dotnet build "samples/azure-function/function.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "samples/azure-function/forecast-azure-function/function.csproj" -c Release -o /app/publish
+RUN dotnet publish "samples/azure-function/function.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /home/site/wwwroot
