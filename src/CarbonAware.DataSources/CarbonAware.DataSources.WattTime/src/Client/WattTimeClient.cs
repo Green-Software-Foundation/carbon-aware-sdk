@@ -1,19 +1,19 @@
-﻿using Microsoft.Extensions.Options;
+﻿using CarbonAware.DataSources.WattTime.Configuration;
+using CarbonAware.DataSources.WattTime.Constants;
+using CarbonAware.DataSources.WattTime.Model;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using System.Diagnostics;
+using System.Globalization;
+using System.Net;
 using System.Net.Http.Headers;
+using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
-using CarbonAware.Tools.WattTimeClient.Model;
 using System.Web;
-using System.Diagnostics;
-using Microsoft.Extensions.Logging;
-using System.Net.Mime;
-using System.Net;
-using CarbonAware.Tools.WattTimeClient.Configuration;
-using CarbonAware.Tools.WattTimeClient.Constants;
-using System.Globalization;
-using Microsoft.Extensions.Caching.Memory;
 
-namespace CarbonAware.Tools.WattTimeClient;
+namespace CarbonAware.DataSources.WattTime.Client;
 
 public class WattTimeClient : IWattTimeClient
 {
@@ -21,7 +21,7 @@ public class WattTimeClient : IWattTimeClient
 
     private static readonly HttpStatusCode[] RetriableStatusCodes = new HttpStatusCode[]
     {
-        HttpStatusCode.Unauthorized, 
+        HttpStatusCode.Unauthorized,
         HttpStatusCode.Forbidden
     };
 
@@ -291,7 +291,7 @@ public class WattTimeClient : IWattTimeClient
         // this will get a specialized namevalue collection for formatting query strings.
         var query = HttpUtility.ParseQueryString(string.Empty);
 
-        foreach(var kvp in queryStringParams)
+        foreach (var kvp in queryStringParams)
         {
             query[kvp.Key] = kvp.Value;
         }
@@ -308,7 +308,7 @@ public class WattTimeClient : IWattTimeClient
 
     private async Task<BalancingAuthority> GetBalancingAuthorityFromCacheAsync(string latitude, string longitude)
     {
-        var key = new Tuple<string, string>( latitude, longitude );
+        var key = new Tuple<string, string>(latitude, longitude);
         var balancingAuthority = await this.memoryCache.GetOrCreateAsync(key, async entry =>
         {
             var parameters = new Dictionary<string, string>()

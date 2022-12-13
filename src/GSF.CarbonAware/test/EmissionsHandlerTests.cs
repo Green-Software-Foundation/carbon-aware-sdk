@@ -1,9 +1,8 @@
 using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Tools.WattTimeClient;
+using CarbonAware.Aggregators.Emissions;
 using EmissionsData = CarbonAware.Model.EmissionsData;
 using GSF.CarbonAware.Exceptions;
 using GSF.CarbonAware.Handlers;
-using GSF.CarbonAware.Models;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -11,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
-using CarbonAware.Aggregators.Emissions;
+
 
 namespace GSF.CarbonAware.Tests;
 
@@ -142,7 +141,7 @@ public class EmissionsHandlerTests
     {
         // Arrange
         var aggregator = new Mock<IEmissionsAggregator>();
-        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>())).ThrowsAsync(new WattTimeClientException(""));
+        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>())).ThrowsAsync(new CarbonAwareException(""));
         var emissionsHandler = new EmissionsHandler(Logger!.Object, aggregator.Object);
 
         // Act/Assert

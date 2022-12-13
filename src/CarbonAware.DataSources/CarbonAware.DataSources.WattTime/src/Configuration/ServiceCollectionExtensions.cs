@@ -1,8 +1,7 @@
 using CarbonAware.Configuration;
+using CarbonAware.DataSources.WattTime.Client;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
-using CarbonAware.Tools.WattTimeClient;
-using CarbonAware.Tools.WattTimeClient.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
