@@ -1,18 +1,26 @@
 //copy this file as "appsettings.Development.json",  remove this comment and update the settings below accordingly
 {
-  "carbonAwareVars": {
-    "carbonIntensityDataSource": "WattTime",
-    "webApiRoutePrefix": "/microsoft/cse/fsi",
-    "proxy": {
-      "useProxy": false,
-      "url": "http://10.10.10.1",
-      "username": "proxyUsername",
-      "password": "proxyPassword"
+  "DataSources": {
+    "EmissionsDataSource": "test",
+    "ForecastDataSource": "WattTime",
+    "Configurations": {
+      "test": {
+        "Type": "JSON",
+        "DataFileLocation": "test-data-azure-emissions.json"
+      },
+      "WattTime": {
+        "Type": "WattTime",
+        "Username": "username",
+        "Password": "password",
+        "BaseURL": "https://api2.watttime.org/v2/",
+        "Proxy": {
+          "UseProxy": false,
+          "Url": "https://localhost:1234",
+          "Username": "ProxyUser",
+          "Password": "p@$$w0rD!"
+        }
+      }
     }
-  },
-  "wattTimeClient": {
-    "username": "watttimeusername",
-    "password": "watttimepassword"
   }
 }
-  
+    

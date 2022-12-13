@@ -48,6 +48,7 @@ public static class CommandLineBuilderExtensions
         else
         {
             context.Console.Error.Write($"{exception.Message}\n");
+            context.Console.Error.Write($"{exception.InnerException?.Message}\n");
         }
         context.ExitCode = (int)exitCode;
     }

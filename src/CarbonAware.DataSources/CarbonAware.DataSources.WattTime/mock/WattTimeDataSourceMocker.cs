@@ -25,7 +25,7 @@ public class WattTimeDataSourceMocker : IDataSourceMocker
     public WattTimeDataSourceMocker()
     {
         _server = WireMockServer.Start();
-        Environment.SetEnvironmentVariable("WattTimeClient__BaseURL", _server.Url!);
+        Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__BaseURL", _server.Url!);
         Initialize();
     }
 
