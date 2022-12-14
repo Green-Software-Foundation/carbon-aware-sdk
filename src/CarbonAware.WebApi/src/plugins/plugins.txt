@@ -1,1 +1,0 @@
-﻿Place custom plugin dll's in this folder to be loaded at runtime
