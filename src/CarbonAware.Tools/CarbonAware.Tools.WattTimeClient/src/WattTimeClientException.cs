@@ -1,6 +1,8 @@
-﻿namespace CarbonAware.Tools.WattTimeClient;
+﻿using CarbonAware.Exceptions;
 
-public class WattTimeClientException : Exception
+namespace CarbonAware.Tools.WattTimeClient;
+
+public class WattTimeClientException : CarbonAwareException
 {
     public WattTimeClientException(string message) : base(message)
     {

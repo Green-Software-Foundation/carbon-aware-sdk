@@ -13,7 +13,7 @@
       <Title>Green Software Foundation SDK</Title>
       <RepositoryUrl>https://github.com/Green-Software-Foundation/carbon-aware-sdk.git</RepositoryUrl>
       <PackageLicenseExpression>MIT</PackageLicenseExpression>
-      <Description>Green Software Foundation SDK. Allows to retreive Carbon Emissions data from different data sources like WattTime or ElectricityMap or a static json file.</Description>
+      <Description>Green Software Foundation SDK. Allows to retreive Carbon Emissions data from different data sources like WattTime or ElectricityMaps or a static json file.</Description>
     </PropertyGroup>
 
     <ItemGroup>

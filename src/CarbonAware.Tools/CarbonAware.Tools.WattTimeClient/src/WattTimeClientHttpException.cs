@@ -1,9 +1,9 @@
-﻿using CarbonAware.Interfaces;
-using System;
+﻿using CarbonAware.Exceptions;
+using CarbonAware.Interfaces;
 
 namespace CarbonAware.Tools.WattTimeClient;
 
-public class WattTimeClientHttpException : Exception, IHttpResponseException
+public class WattTimeClientHttpException : CarbonAwareException, IHttpResponseException
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WattTimeClientHttpException"/> class.

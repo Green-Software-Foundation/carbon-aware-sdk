@@ -8,7 +8,8 @@ public record EmissionsData
     public TimeSpan Duration { get; set; }
 
     public static implicit operator EmissionsData(global::CarbonAware.Model.EmissionsData emissionsData) {
-        return new EmissionsData {
+        return new EmissionsData
+        {
             Duration = emissionsData.Duration,
             Location = emissionsData.Location,
             Rating = emissionsData.Rating,

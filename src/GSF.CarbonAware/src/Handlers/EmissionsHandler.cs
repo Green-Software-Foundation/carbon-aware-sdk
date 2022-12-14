@@ -2,8 +2,7 @@ using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Emissions;
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.Exceptions;
-using CarbonAware.LocationSources.Exceptions;
-using CarbonAware.Tools.WattTimeClient;
+using GSF.CarbonAware.Models;
 using Microsoft.Extensions.Logging;
 
 namespace GSF.CarbonAware.Handlers;
@@ -24,6 +23,60 @@ internal sealed class EmissionsHandler : IEmissionsHandler
         _aggregator = aggregator ?? throw new ArgumentNullException(nameof(aggregator));
     }
 
+    ///<inheritdoc/>
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(string location, DateTimeOffset? start = null, DateTimeOffset? end = null)
+    {
+        return await GetEmissionsDataAsync(new string[] { location }, start, end);
+    }
+
+    ///<inheritdoc/>
+    public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(string[] locations, DateTimeOffset? start = null, DateTimeOffset? end = null)
+    {
+        var parameters = new CarbonAwareParametersBaseDTO
+        {
+            Start = start,
+            End = end,
+            MultipleLocations = locations
+        };
+        try
+        {
+            var emissionsData = await _aggregator.GetEmissionsDataAsync(parameters);
+            var result = emissionsData.Select(e => (EmissionsData)e);
+            return result;
+        }
+        catch (CarbonAwareException ex)
+        {
+            throw new Exceptions.CarbonAwareException(ex.Message, ex);
+        }
+    }
+
+    ///<inheritdoc/>
+    public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(string location, DateTimeOffset? start = null, DateTimeOffset? end = null)
+    {
+        return await GetBestEmissionsDataAsync(new string[] { location }, start, end);   
+    }
+
+    ///<inheritdoc/>
+    public async Task<IEnumerable<EmissionsData>> GetBestEmissionsDataAsync(string[] locations, DateTimeOffset? start = null, DateTimeOffset? end = null)
+    {
+        var parameters = new CarbonAwareParametersBaseDTO
+        {
+            Start = start,
+            End = end,
+            MultipleLocations = locations
+        };
+        try
+        {
+            var emissionsData = await _aggregator.GetBestEmissionsDataAsync(parameters);
+            var result = emissionsData.Select(e => (EmissionsData)e);
+            return result;
+        }
+        catch (CarbonAwareException ex)
+        {
+            throw new Exceptions.CarbonAwareException(ex.Message, ex);
+        }
+    }
+
     /// <inheritdoc />
     public async Task<double> GetAverageCarbonIntensityAsync(string location, DateTimeOffset start, DateTimeOffset end)
     {
@@ -32,18 +85,13 @@ internal sealed class EmissionsHandler : IEmissionsHandler
             End = end,
             SingleLocation = location
         };
+        
         try {
             var result = await _aggregator.CalculateAverageCarbonIntensityAsync(parameters);
             _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
             return result;
         }
-        catch (Exception ex) when (
-        ex is WattTimeClientException || 
-        ex is WattTimeClientHttpException ||
-        ex is ElectricityMapsClientException ||
-        ex is ElectricityMapsClientHttpException ||
-        ex is LocationConversionException || 
-        ex is ConfigurationException)
+        catch (CarbonAwareException ex)
         {
             throw new Exceptions.CarbonAwareException(ex.Message, ex);
         }
