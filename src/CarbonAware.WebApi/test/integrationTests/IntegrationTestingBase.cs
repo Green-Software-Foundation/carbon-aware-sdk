@@ -1,6 +1,7 @@
 ﻿using CarbonAware.DataSources.Configuration;
 using CarbonAware.DataSources.Json.Mocks;
 using CarbonAware.DataSources.Mocks;
+using CarbonAware.DataSources.ElectricityMaps.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NUnit.Framework;
@@ -76,7 +77,6 @@ public abstract class IntegrationTestingBase
     {
         _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__EmissionsDataSource");
         _forecastDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__ForecastDataSource");
-
         //Switch between different data sources as needed
         //Each datasource should have an accompanying DataSourceMocker that will perform setup activities
         switch (_dataSource)
@@ -84,6 +84,7 @@ public abstract class IntegrationTestingBase
             case DataSourceType.JSON:
                 {
                     Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__Json__Type", "Json");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__Json__DataFileLocation", "demo.json");
                     Environment.SetEnvironmentVariable("CarbonAwareVars__VerboseApi", "true");
@@ -96,6 +97,16 @@ public abstract class IntegrationTestingBase
                     Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "WattTime");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Type", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
+                    break;
+                }
+            case DataSourceType.ElectricityMaps:
+                {
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__Type", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APITokenHeader", "token");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APIToken", "test");
+
+                    _dataSourceMocker = new ElectricityMapsDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:

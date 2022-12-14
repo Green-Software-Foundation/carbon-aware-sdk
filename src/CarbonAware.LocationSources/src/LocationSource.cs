@@ -2,6 +2,7 @@ using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using CarbonAware.LocationSources.Configuration;
+using CarbonAware.LocationSources.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Reflection;
@@ -44,19 +45,13 @@ public class LocationSource : ILocationSource
         var name = location.Name ?? string.Empty;
         if (!_namedGeopositions.ContainsKey(name))
         {
-            throw new ArgumentException($"Unknown region: Region name '{name}' not found");
+            throw new ArgumentException($"Unknown Location: '{name}' not found");
         }
 
         var geopositionLocation = _namedGeopositions[name];    
-        if (!geopositionLocation.IsValidGeopositionLocation())  
-        {
-            throw new LocationConversionException($"Lat/long cannot be retrieved for region '{name}'");
-        }
-        return new Location
-        {
-            Latitude = Convert.ToDecimal(geopositionLocation.Latitude, CultureInfo.InvariantCulture),
-            Longitude = Convert.ToDecimal(geopositionLocation.Longitude, CultureInfo.InvariantCulture)
-        };
+        geopositionLocation.AssertValid(name);
+
+        return (Location) geopositionLocation;
     }
 
     private async Task LoadLocationJsonFileAsync()
@@ -65,21 +60,18 @@ public class LocationSource : ILocationSource
         foreach (var source in sourceFiles)
         {
             using Stream stream = GetStreamFromFileLocation(source);
-            var regionList = await JsonSerializer.DeserializeAsync<List<NamedGeoposition>>(stream, _options);
-            foreach (var region in regionList!) 
+            var locationMapping = await JsonSerializer.DeserializeAsync<Dictionary<string, NamedGeoposition>>(stream, _options) ?? new Dictionary<string, NamedGeoposition>();
+            foreach (var locationName in locationMapping.Keys) 
             {
-                var key = BuildKeyFromRegion(source, region);
-                if (!_namedGeopositions.TryAdd(key, region))
-                {
-                    _logger.LogInformation($"Key {key} for region {region} from {source.DataFileLocation} not added since it already exists");
-                }
+                var key = BuildKey(source, locationName);
+                _namedGeopositions[key] = locationMapping[locationName];
             }
         }
     }
 
-    private String BuildKeyFromRegion(LocationSourceFile locationData, NamedGeoposition region)
+    private String BuildKey(LocationSourceFile locationData, string locationName)
     {
-        return $"{locationData.Prefix}{locationData.Delimiter}{region.RegionName}";
+        return $"{locationData.Prefix}{locationData.Delimiter}{locationName}";
     }
 
     private async Task LoadLocationFromFileIfNotPresentAsync()

@@ -9,6 +9,7 @@ namespace CarbonAware.CLI.IntegrationTests.Commands.EmissionsForecasts;
 /// and data sources properly, including empty responses and exceptions.
 /// </summary>
 [TestFixture(DataSourceType.WattTime)]
+[TestFixture(DataSourceType.ElectricityMaps)]
 public class EmissionsForecastsCommandTests : IntegrationTestingBase
 {
     public EmissionsForecastsCommandTests(DataSourceType dataSource) : base(dataSource) { }
@@ -31,7 +32,7 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
         var output = _console.Out.ToString()!;
 
         // Assert
-        Assert.AreEqual(0, exitCode);
+        Assert.AreEqual(0, exitCode, _console.Error.ToString());
         foreach (var expectedAlias in expectedAliases)
         {
             StringAssert.Contains(expectedAlias, output);
@@ -49,7 +50,7 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
         // Act
         var exitCode = await InvokeCliAsync($"emissions-forecasts -l {location}");
         // Assert
-        Assert.AreEqual(0, exitCode);
+        Assert.AreEqual(0, exitCode, _console.Error.ToString());
 
         var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
         var firstResult = jsonResults.First()!;
@@ -77,7 +78,7 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
         var exitCode = await InvokeCliAsync($"emissions-forecasts -l {location} -s {dataStartAt} -e {dataEndAt}");
 
         // Assert
-        Assert.AreEqual(0, exitCode);
+        Assert.AreEqual(0, exitCode, _console.Error.ToString());
      
         var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
         var firstResult = jsonResults.First()!.AsObject();
@@ -94,6 +95,8 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecasts_RequestedAtOptions_ReturnsExpectedData()
     {
+        IgnoreTestForDataSource("data source does not implement '--requested-at'", DataSourceType.ElectricityMaps);
+
         // Arrange
         _dataSourceMocker.SetupBatchForecastMock();
 
@@ -101,7 +104,7 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
         var exitCode = await InvokeCliAsync($"emissions-forecasts -l eastus -r 2022-09-01");
 
         // Assert
-        Assert.AreEqual(0, exitCode);
+        Assert.AreEqual(0, exitCode, _console.Error.ToString());
 
         var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
         var firstResult = jsonResults.First()!.AsObject();
@@ -113,5 +116,13 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
         Assert.IsNotNull(firstResult["RequestedAt"]);
         Assert.IsNotNull(firstResult["OptimalDataPoints"]);
         Assert.IsNotNull(firstResult["ForecastData"]);
+    }
+
+    private void IgnoreTestForDataSource(string reasonMessage, params DataSourceType[] ignoredDataSources)
+    {
+        if (ignoredDataSources.Contains(_dataSource))
+        {
+            Assert.Ignore($"Ignoring test: {reasonMessage}");
+        }
     }
 }

@@ -1,6 +1,8 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Emissions;
+using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.Exceptions;
+using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.Tools.WattTimeClient;
 using Microsoft.Extensions.Logging;
 
@@ -35,7 +37,13 @@ internal sealed class EmissionsHandler : IEmissionsHandler
             _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", result);
             return result;
         }
-        catch (Exception ex) when (ex is WattTimeClientException || ex is WattTimeClientHttpException || ex is LocationConversionException || ex is global::CarbonAware.Tools.WattTimeClient.Configuration.ConfigurationException)
+        catch (Exception ex) when (
+        ex is WattTimeClientException || 
+        ex is WattTimeClientHttpException ||
+        ex is ElectricityMapsClientException ||
+        ex is ElectricityMapsClientHttpException ||
+        ex is LocationConversionException || 
+        ex is ConfigurationException)
         {
             throw new Exceptions.CarbonAwareException(ex.Message, ex);
         }

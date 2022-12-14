@@ -1,12 +1,13 @@
-using CarbonAware.Model;
-using NUnit.Framework;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Microsoft.Extensions.Options;
 using CarbonAware.LocationSources.Configuration;
+using CarbonAware.LocationSources.Exceptions;
+using CarbonAware.LocationSources.Model;
+using CarbonAware.Model;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Moq;
+using NUnit.Framework;
 using System.Reflection;
 using System.Text.Json;
-using CarbonAware.Exceptions;
 
 namespace CarbonAware.LocationSources.Test;
 
@@ -22,18 +23,17 @@ public class LocationSourceTest
     [OneTimeSetUp]
     protected async Task CreateTestLocationFiles()
     {
-        var goodData = new List<NamedGeoposition>
+        var goodData = new Dictionary<string, NamedGeoposition>
         {
-            Constants.EastUsRegion,
-            Constants.NorthCentralRegion,
-            Constants.WestUsRegion
+            { Constants.EastUsRegion.Name, Constants.EastUsRegion },
+            { Constants.WestUsRegion.Name, Constants.WestUsRegion },
+            { Constants.NorthCentralRegion.Name, Constants.NorthCentralRegion },
         };
         _goodFile = await GenerateTestLocationFile(goodData);
-        var badData = new List<NamedGeoposition>
+        var badData = new Dictionary<string, NamedGeoposition>
         {
-            Constants.NorthCentralRegion,
-            Constants.NorthCentralRegion,
-            Constants.FakeRegion
+            { Constants.NorthCentralRegion.Name, Constants.NorthCentralRegion },
+            { Constants.FakeRegion.Name, Constants.FakeRegion },
         };
         _badFile = await GenerateTestLocationFile(badData, "bad");
     }
@@ -58,7 +58,7 @@ public class LocationSourceTest
     }
 
     [Test]
-    public void GeopositionLocation_InvalidLatLong_ThrowsException()
+    public void GeopositionLocation_InvalidNamedLocation_ThrowsException()
     {
         
         var logger = Mock.Of<ILogger<LocationSource>>();
@@ -229,7 +229,7 @@ public class LocationSourceTest
             Times.Once);
     }
 
-    private async Task<string> GenerateTestLocationFile(List<NamedGeoposition> data, string fileExt = "json")
+    private async Task<string> GenerateTestLocationFile(Dictionary<string, NamedGeoposition> data, string fileExt = "json")
     {
         var fileName = Path.ChangeExtension(Path.GetRandomFileName(), $".{fileExt}");
         var filePath = Path.Combine(_assemblyDirectory, LocationSourceFile.BaseDirectory, fileName);

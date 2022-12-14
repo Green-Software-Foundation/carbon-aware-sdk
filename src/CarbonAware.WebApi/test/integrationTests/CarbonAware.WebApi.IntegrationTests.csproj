@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.Json\mock\CarbonAware.DataSources.Json.Mocks.csproj" />
     <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.WattTime\mock\CarbonAware.DataSources.WattTime.Mocks.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\mock\CarbonAware.DataSources.ElectricityMaps.Mocks.csproj" />
     <ProjectReference Include="..\..\src\CarbonAware.WebApi.csproj" />
   </ItemGroup>
 

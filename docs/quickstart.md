@@ -13,11 +13,22 @@ The CLI can either be run locally with `dotnet` or in a container, e.g. using VS
 1. Make sure you have the repository cloned: https://github.com/Green-Software-Foundation/carbon-aware-sdk.git
 2. `git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git`
 3. Change directory to: `cd carbon-aware-sdk/src/CarbonAware.CLI/src`
-4. If you have a WattTime account registered (or other data source) - you will need to configure the application to use them. By default the SDK will use a pre-generated JSON file with random data. To configure the application, you will need to set up specific environment variables or modify `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory. Detailed information on configuration can be found in the `GettingStarted.md` file: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md. Otherwise, you can follow an example configuration below:
-		1. To Configure using WattTime, export these environment variables in the Terminal:
-		2.   `export CarbonAwareVars__CarbonIntensityDataSource="WattTime"`
-		3. `export wattTimeClient__username="<YOUR_WATTTIME_USERNAME>"` (Provide your actual WattTime Username)
-		4. `export wattTimeClient__password="<YOUR_WATTTIME_PASSWORD>"` (Provide your actual WattTime Password)
+4. If you have a WattTime account registered (or other data source) - you will need to configure the application to use them. By default the SDK will use a pre-generated JSON file with random data. To configure the application, you will need to set up specific environment variables or modify `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory. Detailed information on configuration can be found in the `GettingStarted.md` file: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md. Otherwise, you can follow an example configuration below (export these environment variables in the Terminal):
+    ```bash
+    export DataSources__EmissionsDataSource="WattTime"
+    export DataSources__ForecastDataSource="WattTime"
+    export DataSources__Configurations__WattTime__Type="WattTime"
+    export DataSources__Configurations__WattTime__username="<YOUR_WATTTIME_USERNAME>"
+    export DataSources__Configurations__WattTime__password="<YOUR_WATTTIME_PASSWORD>"
+    ```
+    or
+    ```bash
+    export DataSources__ForecastDataSource="ElectricityMaps"
+    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
+    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
+    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
+    ```
+
 5. Run the CLI using `dotnet run`
 
 The CLI will ask you to at minimum provide a `--location (-l)` parameter.
@@ -89,21 +100,32 @@ Prerequisites:
  - VSCode (it is recommended to work in a Dev Container)
  - Remote Containers extension for VSCode: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 
-1. First we need to set up the GitHub repository (https://github.com/Green-Software-Foundation/carbon-aware-sdk.git):
-	1. `git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git`
-	2. Change directory into the repository: `cd carbon-aware-sdk`
-	3. Open VSCode: `code .`
-	4. Open VSCode Command Palette: (Linux/Windows: `ctrl + shift + P`, MacOS: `cmd + shift + P`), and run the command:
-		1. `Remote-Containers: Open Folder in Container` 
-	5. If you have a WattTime account registered (or other data source) - you will need to configure the application to use them. By default the SDK will use a pre-generated JSON file with random data. To configure the application, you will need to set up specific environment variables or modify `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory. Detailed information on configuration can be found in the `GettingStarted.md` file: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md. Otherwise, you can follow an example configuration below:
-		1. To Configure using WattTime, export these environment variables in the VSCode (Container) Terminal:
-		2.   `export CarbonAwareVars__CarbonIntensityDataSource="WattTime"`
-		3. `export wattTimeClient__username="<YOUR_WATTTIME_USERNAME>"`
-		4. `export wattTimeClient__password="<YOUR_WATTTIME_PASSWORD>"`
-	6. In the VSCode Terminal:
-		1. Change directory to: `cd src/CarbonAware.WebApi/src`
-		2. And run the application using: `dotnet run`
-		3. By default, it will be hosted on `localhost:5073`
+First we need to set up the GitHub repository (https://github.com/Green-Software-Foundation/carbon-aware-sdk.git):
+
+1. `git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git`
+2. Change directory into the repository: `cd carbon-aware-sdk`
+3. Open VSCode: `code .`
+4. Open VSCode Command Palette: (Linux/Windows: `ctrl + shift + P`, MacOS: `cmd + shift + P`), and run the command:
+	- `Remote-Containers: Open Folder in Container` 
+5. If you have a WattTime account registered (or other data source) - you will need to configure the application to use them. By default the SDK will use a pre-generated JSON file with random data. To configure the application, you will need to set up specific environment variables or modify `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory. Detailed information on configuration can be found in the `GettingStarted.md` file: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md. Otherwise, you can follow an example configuration below (export these environment variables in the Terminal):
+    ```bash
+    export DataSources__EmissionsDataSource="WattTime"
+    export DataSources__ForecastDataSource="WattTime"
+    export DataSources__Configurations__WattTime__Type="WattTime"
+    export DataSources__Configurations__WattTime__username="<YOUR_WATTTIME_USERNAME>"
+    export DataSources__Configurations__WattTime__password="<YOUR_WATTTIME_PASSWORD>"
+    ```
+    or
+    ```bash
+    export DataSources__ForecastDataSource="ElectricityMaps"
+    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
+    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
+    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
+    ```
+6. In the VSCode Terminal:
+  1. Change directory to: `cd src/CarbonAware.WebApi/src`
+  2. And run the application using: `dotnet run`
+  3. By default, it will be hosted on `localhost:5073`
 
 ### Calling the Web API via command line
 Prerequisites:
@@ -113,11 +135,11 @@ Prerequisites:
 With the API running on `localhost:5073`, we can make HTTP requests to its endpoints, full endpoint description can be found here: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md
 
 #### Calling the `/emissions/bylocation` endpoint
-1. In console, we can run the below command, to request data for a single location (currently Azure region names supported) in a particular timeframe:
-	1.  `curl "http://localhost:5073/emissions/bylocation?location=westus&time=2022-08-23T14%3A00&toTime=2022-08-23T14%3A30" | jq`
-	2. You can omit the `| jq` to get the JSON data raw and unparsed.
-	3. This is a request for data in the `westus` region from the date `2022-08-23 at 14:00` to `2022-08-23 at 14:30`. (Note: semicolons `:` are encoded as `%3A` in URLs)
-	4. The sample data output should be:
+In console, we can run the below command, to request data for a single location (currently Azure region names supported) in a particular timeframe:
+1.  `curl "http://localhost:5073/emissions/bylocation?location=westus&time=2022-08-23T14%3A00&toTime=2022-08-23T14%3A30" | jq`
+2. You can omit the `| jq` to get the JSON data raw and unparsed.
+3. This is a request for data in the `westus` region from the date `2022-08-23 at 14:00` to `2022-08-23 at 14:30`. (Note: semicolons `:` are encoded as `%3A` in URLs)
+4. The sample data output should be:
 ```JSON
 [
   {
@@ -195,10 +217,11 @@ Prerequisites:
 - Docker
 - Web API running (locally or hosted online)
 - (Optionally) `openapi-generator-cli`
+
 The clients can be generated either by hand with the openapi-generator CLI, or by running shell scripts which also call these generators. The easiest way to generate them after using the Web API, is to do it Terminal **while** the Web API is running.
 1. In Terminal: Change into directory `carbon-aware-sdk/src/clients`
 2. Run the client generation script, passing the API URL (omitting the initial `http://`): `./docker-generate-clients.sh host.docker.internal:5073`
-	1. If your API is available at a different URL/Port, replace `host.docker.internal:5073` with that url.
+	- If your API is available at a different URL/Port, replace `host.docker.internal:5073` with that url.
 3. You should now see multiple generated clients in that directory (check with `ls`)
 
 There is an alternative script for generating the tests - `generate-clients.sh` which can be ran if you have the `openapi-generator-cli` installed locally.
