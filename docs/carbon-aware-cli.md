@@ -17,6 +17,7 @@ The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via com
         - [Single Location Emissions](#single-location-emissions)
         - [Multiple Location Emissions](#multiple-location-emissions)
         - [Emissions with Start and End Times](#emissions-with-start-and-end-times)
+        - [Emissions Locations](#emissions-locations)
 
 ## Build and Install
 
@@ -37,7 +38,7 @@ dotnet publish ./src/CarbonAware.CLI/src/CarbonAware.CLI.csproj -c Release -o <y
 To use the CLI for the first time, navigate to your installation directory and run the binary with the `-h` flag to see the help menu.
 
 On Windows: `.\caw.exe -h`
-On MacOS/Linux: `.\caw -h`
+On MacOS/Linux: `./caw -h`
 
 ### emissions
 
@@ -363,4 +364,27 @@ output:
     }
   ]
 }]
+```
+
+##### Emissions Locations
+
+command: `.\caw locations`
+
+output:
+
+```json
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  },
+  ...
+}
 ```
