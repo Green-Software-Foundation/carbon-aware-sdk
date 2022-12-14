@@ -1,5 +1,6 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Emissions;
+using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.Exceptions;
 using GSF.CarbonAware.Models;
 using Microsoft.Extensions.Logging;
