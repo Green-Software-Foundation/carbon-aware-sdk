@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" />
     <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
+    <ProjectReference Include="..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +30,11 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Update="Commands\emissions\LocalizableStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>LocalizableStrings.resx</DependentUpon>
+    </Compile>
+    <Compile Update="Commands\Location\LocalizableStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>LocalizableStrings.resx</DependentUpon>
@@ -46,6 +52,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Commands\Emissions\LocalizableStrings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizableStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Commands\Location\LocalizableStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizableStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>

@@ -18,6 +18,7 @@ The WebApi replicates the CLI and SDK functionality, leveraging the same configu
     - [POST emissions/forecasts/batch](#post-emissionsforecastsbatch)
     - [GET emissions/average-carbon-intensity](#get-emissionsaverage-carbon-intensity)
     - [POST emissions/average-carbon-intensity/batch](#post-emissionsaverage-carbon-intensitybatch)
+    - [GET emissions/locations](#get-emissionslocations)
   - [Error Handling](#error-handling)
   - [Autogenerate WebAPI](#autogenerate-webapi)
   - [Data Sources](#data-sources)
@@ -315,6 +316,49 @@ The response is an array of CarbonIntensityDTO objects which each have a locatio
   }
 ]
 ```
+
+### GET emissions/locations
+
+This endpoint lists all the supported locations that the datasources potentially can have access to. This information is coming from the `location-source/json` files, that contain dictionaries in the form of <A Location key name, GeoCoordinates>, for instance:
+
+```json
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  }
+}
+```
+
+`Emissions` and `Forecasts` endpoints would use the location's `key` name returned by the `emssions/locations` endpoint.
+
+**Note**: If there is ***a location key name*** collision while loading two or more location json files and there is no `LocationDataSourcesConfiguration` `Prefix` and/or `Delimiter` settings, the system would change the collision key name by appending an underscore character and a sequence number to it (i.e. `<key name>`***_seqnumber***). For instance two location json files having `swedencentral` as key, after loading, it would become:
+
+```json
+{
+  "swedencentral": {
+    "Latitude": 60.67488,
+    "Longitude": 17.14127,
+    "Name":"swedencentral"
+  },
+  ...
+  "swedencentral_1": { // key collision. key renamed.
+    "Latitude": null,
+    "Longitude": null,
+    "Name": "SE"
+  },
+  ...
+}
+```
+
+If there is a third file with the same key name, it would be `swedencentral_2` and so on. This information is not persisted, but now the user can make requests using `swedencentral` and/or `swedencentral_1`.
 
 ## Error Handling
 

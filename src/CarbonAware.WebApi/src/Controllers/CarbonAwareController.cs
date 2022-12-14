@@ -1,5 +1,6 @@
 using CarbonAware.Aggregators.Emissions;
 using CarbonAware.Aggregators.Forecast;
+using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +19,16 @@ public class CarbonAwareController : ControllerBase
 
     private readonly IEmissionsAggregator _emissionsAggregator;
 
+    private readonly ILocationSource _locationSource;
+
     private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareController));
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsAggregator emissionsAggregator, IForecastAggregator forecastAggregator)
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsAggregator emissionsAggregator, IForecastAggregator forecastAggregator, ILocationSource locationSouce)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _forecastAggregator = forecastAggregator ?? throw new ArgumentNullException(nameof(forecastAggregator));
         _emissionsAggregator = emissionsAggregator ?? throw new ArgumentNullException(nameof(emissionsAggregator));
+        _locationSource = locationSouce ?? throw new ArgumentNullException(nameof(locationSouce));
     }
 
     /// <summary>
@@ -236,5 +240,19 @@ public class CarbonAwareController : ControllerBase
 
             return Ok(result);
         }
+    }
+
+    /// <summary>
+    /// Get all locations
+    /// </summary>
+    /// <returns>Dictionary with the locations</returns>
+    [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDictionary<string, Location>))]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [HttpGet("locations")]
+    public async Task<IActionResult> GetAllLocations()
+    {
+        var response = await _locationSource.GetGeopositionLocationsAsync(); 
+        return response.Any() ? Ok(response) : NoContent();
     }
 }

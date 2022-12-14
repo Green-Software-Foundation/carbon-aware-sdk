@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
+    <ProjectReference Include="..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
   </ItemGroup>
 
   <ItemGroup>

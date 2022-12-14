@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using CarbonAware.CLI.Commands.Location;
 
 var config = new ConfigurationBuilder()
     .UseCarbonAwareDefaults()
@@ -36,6 +37,7 @@ if(!successfulEmissionServices)
 var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootCommandDescription);
 rootCommand.AddCommand(new EmissionsCommand());
 rootCommand.AddCommand(new EmissionsForecastsCommand());
+rootCommand.AddCommand(new LocationsCommand());
 
 var parser = new CommandLineBuilder(rootCommand)
     .UseDefaults()

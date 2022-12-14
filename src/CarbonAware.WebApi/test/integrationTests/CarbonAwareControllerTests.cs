@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Net;
 using System.Text.Json;
 
+
 namespace CarbonAware.WepApi.IntegrationTests;
 
 /// <summary>
@@ -23,6 +24,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     private readonly string batchForecastURI = "/emissions/forecasts/batch";
     private readonly string averageCarbonIntensityURI = "/emissions/average-carbon-intensity";
     private readonly string batchAverageCarbonIntensityURI = "/emissions/average-carbon-intensity/batch";
+    private readonly string locationsURI = "/emissions/locations";
 
     public CarbonAwareControllerTests(DataSourceType dataSource) : base(dataSource) { }
 
@@ -314,6 +316,21 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
                 }
             }
         }
+    }
+
+    [Test]
+    public async Task GetLocations_ReturnsOk()
+    {
+        var result = await _client.GetAsync(locationsURI);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(result.Content, Is.Not.Null);
+        using var stream = await result.Content.ReadAsStreamAsync();
+        Assert.That(stream, Is.Not.Null);
+        var data = await JsonSerializer.DeserializeAsync<IDictionary<string, dynamic>>(stream);
+        Assert.That(data, Is.Not.Null);
+        Assert.That(data!.ContainsKey("eastus"), Is.True);
+        Assert.That(data!.ContainsKey("northeurope"), Is.True);
     }
 
     private void IgnoreTestForDataSource(string reasonMessage, params DataSourceType[] ignoredDataSources)
