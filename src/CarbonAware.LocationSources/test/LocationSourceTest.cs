@@ -17,6 +17,7 @@ public class LocationSourceTest
 
     private string _goodFile { get; set; }
     private string _badFile { get; set; }
+    private string _dupFile { get; set; }
     private string _assemblyDirectory => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
 
@@ -36,6 +37,13 @@ public class LocationSourceTest
             { Constants.FakeRegion.Name, Constants.FakeRegion },
         };
         _badFile = await GenerateTestLocationFile(badData, "bad");
+
+        var dupData = new Dictionary<string, NamedGeoposition>
+        {
+            { Constants.EastUsRegion.Name, Constants.EastUsRegion },
+            { Constants.WestUsRegion.Name, Constants.WestUsRegion }
+        };
+        _dupFile = await GenerateTestLocationFile(dupData);
     }
 
     [Test]
@@ -195,12 +203,40 @@ public class LocationSourceTest
         });
     }
 
+    [Test]
+    public async Task GeopositionLocation_ValidLocation_DupLocationKey()
+    {
+        var options = new Mock<IOptionsMonitor<LocationDataSourcesConfiguration>>();
+        options.Setup(o => o.CurrentValue).Returns(() => new LocationDataSourcesConfiguration());
+        var mockLogger = new Mock<ILogger<LocationSource>>();
+        var locationSource = new LocationSource(mockLogger.Object, options.Object);
+
+        Location inputLocation = new Location {
+            Name = $"{Constants.EastUsRegion.Name}_1"
+        };
+        var result = await locationSource.ToGeopositionLocationAsync(inputLocation);
+        Assert.That(result?.Name, Is.EqualTo(Constants.EastUsRegion.Name));
+        inputLocation = new Location {
+            Name = $"{Constants.WestUsRegion.Name}_1"
+        };
+        result = await locationSource.ToGeopositionLocationAsync(inputLocation);
+        Assert.That(result?.Name, Is.EqualTo(Constants.WestUsRegion.Name));
+
+        inputLocation = new Location {
+            Name = $"{Constants.WestUsRegion.Name}_2"
+        };
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+        {
+            await locationSource.ToGeopositionLocationAsync(inputLocation);
+        });
+    }
+
     [OneTimeTearDown]
     protected void RemoveTestLocationFiles()
     {
         var fileList = new List<string> 
         {
-            _goodFile, _badFile
+            _goodFile, _badFile, _dupFile
         };
 
         fileList.ForEach(file =>
