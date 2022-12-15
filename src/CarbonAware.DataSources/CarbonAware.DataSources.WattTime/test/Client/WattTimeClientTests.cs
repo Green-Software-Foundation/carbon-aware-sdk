@@ -1,14 +1,11 @@
 ﻿using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.DataSources.WattTime.Model;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -106,7 +103,7 @@ public class WattTimeClientTests
 
         var data = await client.GetDataAsync("balauth", new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
 
-        Assert.IsTrue(data.Any());
+        Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
         Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
         Assert.AreEqual("dt", gridDataPoint.Datatype);
@@ -132,7 +129,7 @@ public class WattTimeClientTests
 
         var data = await client.GetDataAsync("balauth", new DateTimeOffset(), new DateTimeOffset());
         
-        Assert.IsTrue(data.Any());
+        Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
         Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
     }
@@ -151,7 +148,7 @@ public class WattTimeClientTests
 
         var data = await client.GetDataAsync("balauth", new DateTimeOffset(), new DateTimeOffset());
 
-        Assert.IsTrue(data.Any());
+        Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
         Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
     }
@@ -458,61 +455,67 @@ public class WattTimeClientTests
     [Test]
     public async Task GetHistoricalDataAsync_StreamsExpectedContent()
     {
-        using var testStream = new MemoryStream(Encoding.UTF8.GetBytes("myStreamResults"));
-        this.CreateHttpClient(m =>
+        using (var testStream = new MemoryStream(Encoding.UTF8.GetBytes("myStreamResults")))
         {
-            var response = this.MockWattTimeAuthResponse(m, new StreamContent(testStream));
-            return Task.FromResult(response);
-        });
+            this.CreateHttpClient(m =>
+            {
+                var response = this.MockWattTimeAuthResponse(m, new StreamContent(testStream));
+                return Task.FromResult(response);
+            });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
+            client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-        var result = await client.GetHistoricalDataAsync("ba");
-        var sr = new StreamReader(result);
-        string streamResult = sr.ReadToEnd();
+            var result = await client.GetHistoricalDataAsync("ba");
+            var sr = new StreamReader(result);
+            string streamResult = sr.ReadToEnd();
 
-        Assert.AreEqual("myStreamResults", streamResult);
+            Assert.AreEqual("myStreamResults", streamResult);
+        }
     }
 
     [Test]
     public async Task GetHistoricalDataAsync_RefreshesTokenWhenExpired()
     {
-        using var testStream = new MemoryStream(Encoding.UTF8.GetBytes("myStreamResults"));
-        this.CreateHttpClient(m =>
+        using (var testStream = new MemoryStream(Encoding.UTF8.GetBytes("myStreamResults")))
         {
-            var response = this.MockWattTimeAuthResponse(m, new StreamContent(testStream), "REFRESHTOKEN");
-            return Task.FromResult(response);
-        });
+            this.CreateHttpClient(m =>
+            {
+                var response = this.MockWattTimeAuthResponse(m, new StreamContent(testStream), "REFRESHTOKEN");
+                return Task.FromResult(response);
+            });
 
-        this.HttpClient.DefaultRequestHeaders.Authorization = null;
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
+            this.HttpClient.DefaultRequestHeaders.Authorization = null;
+            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
-        var result = await client.GetHistoricalDataAsync("ba");
-        var sr = new StreamReader(result);
-        string streamResult = sr.ReadToEnd();
+            var result = await client.GetHistoricalDataAsync("ba");
+            var sr = new StreamReader(result);
+            string streamResult = sr.ReadToEnd();
 
-        Assert.AreEqual("myStreamResults", streamResult);
+            Assert.AreEqual("myStreamResults", streamResult);
+        }
     }
 
     [Test]
     public async Task GetHistoricalDataAsync_RefreshesTokenWhenNoneSet()
     {
-        using var testStream = new MemoryStream(Encoding.UTF8.GetBytes("myStreamResults"));
-        this.CreateHttpClient(m =>
+        using (var testStream = new MemoryStream(Encoding.UTF8.GetBytes("myStreamResults")))
         {
-            var response = this.MockWattTimeAuthResponse(m, new StreamContent(testStream), "REFRESHTOKEN");
-            return Task.FromResult(response);
-        });
+            this.CreateHttpClient(m =>
+            {
+                var response = this.MockWattTimeAuthResponse(m, new StreamContent(testStream), "REFRESHTOKEN");
+                return Task.FromResult(response);
+            });
 
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+            var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
+            client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-        var result = await client.GetHistoricalDataAsync("ba");
-        var sr = new StreamReader(result);
-        string streamResult = sr.ReadToEnd();
+            var result = await client.GetHistoricalDataAsync("ba");
+            var sr = new StreamReader(result);
+            string streamResult = sr.ReadToEnd();
 
-        Assert.AreEqual("myStreamResults", streamResult);
+            Assert.AreEqual("myStreamResults", streamResult);
+        }
     }
 
     private void CreateHttpClient(Func<HttpRequestMessage, Task<HttpResponseMessage>> requestDelegate)
@@ -527,7 +530,10 @@ public class WattTimeClientTests
 
     private HttpResponseMessage MockWattTimeAuthResponse(HttpRequestMessage request, HttpContent reponseContent, string? validToken = null)
     {
-        validToken ??= this.DefaultTokenValue;
+        if (validToken == null)
+        {
+            validToken = this.DefaultTokenValue;
+        }
         var auth = this.HttpClient.DefaultRequestHeaders.Authorization;
         if (auth == null)
         {
@@ -567,4 +573,3 @@ public class WattTimeClientTests
     }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-
