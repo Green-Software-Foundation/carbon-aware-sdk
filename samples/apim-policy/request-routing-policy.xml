@@ -56,17 +56,7 @@
         <base />
     </backend>
     <outbound>
-        <choose>
-            <when condition="@(context.Response.StatusCode == 201)">
-                <set-header name="Content-Type" exists-action="override">
-                    <value>application/json</value>
-                </set-header>
-                <set-body>@{
-                    var json = new JObject() {{"Message", context.RequestId}};
-                    return json.ToString(Newtonsoft.Json.Formatting.None);     
-                }</set-body>
-            </when>
-        </choose>
+        <base />
     </outbound>
     <on-error>
         <base />
