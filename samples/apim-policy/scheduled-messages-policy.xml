@@ -1,0 +1,64 @@
+<!--
+    IMPORTANT:
+    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.
+    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.
+    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.
+    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.
+    - To remove a policy, delete the corresponding policy statement from the policy document.
+    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.
+    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.
+    - Policies are applied in the order of their appearance, from the top down.
+    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.
+-->
+<policies>
+    <inbound>
+        <base />
+        <send-request mode="new" response-variable-name="my-id" timeout="60" ignore-error="true">
+            <set-url>https://cabon-policy-poc-apim.azure-api.net/emissions/forecasts/current?location=eastus</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Ocp-Apim-Subscription-Key" exists-action="override">
+                <value>{{ocp-spim-subscription-key}}</value>
+            </set-header>
+        </send-request>
+        <set-header name="Content-Type" exists-action="override">
+            <value>vnd.microsoft.servicebus.yml</value>
+        </set-header>
+        <set-header name="Authorization" exists-action="override">
+            <value>{{orders-queue-key}}</value>
+        </set-header>
+        <set-header name="BrokerProperties" exists-action="override">
+            <value>@{
+                    var resp = ((IResponse)context.Variables["my-id"]).Body.As<string>();
+                    var json = "{ \"data\": " + resp + "}";
+                    var data = JObject.Parse(json);
+                    string optimalDate = (string) data.SelectToken("data[0].optimalDataPoints[0].timestamp");
+
+                    var msg = new JObject();
+                    msg.Add("MessageId", context.RequestId);
+                    msg.Add("Label", "New-Message");
+                    msg.Add("ScheduledEnqueueTimeUtc", optimalDate);
+                    return msg.ToString(Newtonsoft.Json.Formatting.None);                    
+                }</value>
+            </set-header>
+            <set-backend-service base-url="{{orders-sb-namespace}}" />
+        </inbound>
+        <backend>
+            <base />
+        </backend>
+        <outbound>
+            <choose>
+                <when condition="@(context.Response.StatusCode == 201)">
+                    <set-header name="Content-Type" exists-action="override">
+                        <value>application/json</value>
+                    </set-header>
+                    <set-body>@{
+                    var json = new JObject() {{"MessageId", context.RequestId}};
+                    return json.ToString(Newtonsoft.Json.Formatting.None);     
+                }</set-body>
+                </when>
+            </choose>
+        </outbound>
+        <on-error>
+            <base />
+        </on-error>
+    </policies>

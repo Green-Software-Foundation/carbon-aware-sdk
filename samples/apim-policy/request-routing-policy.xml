@@ -1,0 +1,74 @@
+<!--
+    IMPORTANT:
+    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.
+    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.
+    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.
+    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.
+    - To remove a policy, delete the corresponding policy statement from the policy document.
+    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.
+    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.
+    - Policies are applied in the order of their appearance, from the top down.
+    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.
+-->
+<policies>
+    <inbound>
+        <base />
+        <send-request mode="new" response-variable-name="forecast-east" timeout="60" ignore-error="true">
+            <set-url>https://carbonpolicyservice.azure-api.net/emissions/forecasts/current?location=eastus</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Ocp-Apim-Subscription-Key" exists-action="override">
+                <value>{{ocp-spim-subscription-key}}</value>
+            </set-header>
+        </send-request>
+        <send-request mode="new" response-variable-name="forecast-west" timeout="60" ignore-error="true">
+            <set-url>https://carbonpolicyservice.azure-api.net/emissions/forecasts/current?location=westus</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Ocp-Apim-Subscription-Key" exists-action="override">
+                <value>{{ocp-spim-subscription-key}}</value>
+            </set-header>
+        </send-request>
+        <set-header name="Content-Type" exists-action="override">
+            <value>vnd.microsoft.servicebus.yml</value>
+        </set-header>
+        <set-header name="Authorization" exists-action="override">
+            <value>{{orders-queue-key}}</value>
+        </set-header>
+        <set-backend-service base-url="@{
+            var eastResponse = ((IResponse)context.Variables["forecast-east"]).Body.As<string>();
+            var eastJson = "{ \"data\": " + eastResponse + "}";
+            var eastData = JObject.Parse(eastJson);
+            float eastValue = (float) eastData.SelectToken("data[0].forecastData[0].value");
+
+            var westResponse = ((IResponse)context.Variables["forecast-west"]).Body.As<string>();
+            var westJson = "{ \"data\": " + westResponse + "}";
+            var westData = JObject.Parse(westJson);
+            float westValue = (float) westData.SelectToken("data[0].forecastData[0].value");
+
+            if (eastValue < westValue) {
+                return "https://carbonpolicypoceastus.azurewebsites.net/api/TestTrigger";
+            }
+            else {
+                return "https://carbonpolicypocwestus.azurewebsites.net/api/TestTrigger";
+            }
+        }" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <choose>
+            <when condition="@(context.Response.StatusCode == 201)">
+                <set-header name="Content-Type" exists-action="override">
+                    <value>application/json</value>
+                </set-header>
+                <set-body>@{
+                    var json = new JObject() {{"Message", context.RequestId}};
+                    return json.ToString(Newtonsoft.Json.Formatting.None);     
+                }</set-body>
+            </when>
+        </choose>
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
