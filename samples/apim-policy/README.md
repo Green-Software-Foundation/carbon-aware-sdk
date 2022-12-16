@@ -25,7 +25,7 @@ uses to provide the forecast data.
 
 ## Request routing
 
-The request routing policy source can be found here - [request-routing-policy.xml](request-routing-policy.xml).
+The request routing policy sample source can be found here - [request-routing-policy.xml](request-routing-policy.xml).
 
 ### Overview
 
@@ -37,6 +37,8 @@ in the region with the lowest carbon intensity.
 This use case can be implemented in cases where requests are time
 sensitive and cannot take advantage of time shifting for optimal future
 carbon intensity usage.
+
+![Request Routing](images/request-routing.jpg "Request Routing")
 
 ### Dependencies
 
@@ -52,23 +54,22 @@ This sample policy is a simple implementation to demonstrate how
 the Carbon Aware SDK can be integrated into APIM. A few high
 level enhancements and considerations are outlined below.
 
-* Integration with hard coded regions is not ideal. This should
-be automated or an alternate approach for region configuration should
-be considered.
+* Integration with hard coded regions is for demonstration purposes
+only and should be automated or an alternate approach for region
+configuration should be considered.
 * It may be necessary to include other factors into the routing
-decision. This sample focuses purely on carbon intensity for
-demonstration purposes.
+decision. This sample focuses purely on carbon intensity.
 
 ## Scheduled message delivery
 
-The scheduled message delivery policy source can be found here - [request-routing-policy.xml](request-routing-policy.xml).
+The scheduled message delivery policy sample source can be found here - [request-routing-policy.xml](request-routing-policy.xml).
 
 ### Overview
 
-The `scheduled message delivery` use case involves an APIM policy that is
-carbon aware and adds messages to a service bus. Message delivery is
-scheduled based on the optimal future carbon intensity forecast.
-This use case is designed for non time-sensitive workloads that
+The `scheduled message delivery` use case involves a policy that is
+carbon aware and exposes a service bus queue through APIM. Message
+delivery is scheduled based on the optimal future carbon intensity
+forecast. This use case is designed for non time-sensitive workloads that
 can tolerate delayed processing.
 
 This implementation takes advantage of Azure Service Bus scheduled
@@ -76,6 +77,8 @@ messages where messages can be submitted to a queue or topic for
 delayed processing. Scheduled messages don't materialize in the
 queue until the defined enqueue time which is defined using the
 `ScheduledEnqueueTimeUtc` message property.
+
+![Schedule Message Delivery](images/schedule-message-delivery.jpg "Schedule Message Delivery")
 
 ### Dependencies
 
