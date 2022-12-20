@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 
 namespace CarbonAware.Model;
@@ -30,5 +31,15 @@ public class Location
     public override string ToString()
     {
         return JsonSerializer.Serialize(this, SerializerOptions);
+    }
+
+    public String LatitudeAsCultureInvariantString()
+    {
+        return Convert.ToString(this.Latitude, CultureInfo.InvariantCulture) ?? "";
+    }
+
+    public String LongitudeAsCultureInvariantString()
+    {
+        return Convert.ToString(this.Longitude, CultureInfo.InvariantCulture) ?? "";
     }
 }
