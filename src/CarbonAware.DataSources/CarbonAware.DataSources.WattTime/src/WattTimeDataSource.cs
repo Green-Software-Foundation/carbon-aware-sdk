@@ -197,8 +197,7 @@ public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         try
         {
             var geolocation = await this.LocationSource.ToGeopositionLocationAsync(location);
-            balancingAuthority = await WattTimeClient.GetBalancingAuthorityAsync(
-               Convert.ToString(geolocation.Latitude, CultureInfo.InvariantCulture) ?? "", Convert.ToString(geolocation.Longitude, CultureInfo.InvariantCulture) ?? "");
+            balancingAuthority = await WattTimeClient.GetBalancingAuthorityAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
         }
         catch(Exception ex) when (ex is LocationConversionException ||  ex is WattTimeClientHttpException)
         {

@@ -50,7 +50,7 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
             ForecastedCarbonIntensityData forecast;
             var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
             if (geolocation.Latitude != null && geolocation.Latitude != null)
-                forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Latitude.ToString() ?? "", geolocation.Longitude.ToString() ?? "");
+                forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
             else
             {
                 forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Name ?? "");
@@ -126,7 +126,7 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
     {
         PastRangeData data;
         if (geolocation.Latitude != null && geolocation.Latitude != null)
-            data = await this._electricityMapsClient.GetPastRangeDataAsync(geolocation.Latitude.ToString() ?? "", geolocation.Longitude.ToString() ?? "", periodStartTime, periodEndTime);
+            data = await this._electricityMapsClient.GetPastRangeDataAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString(), periodStartTime, periodEndTime);
         else
         {
             data = await this._electricityMapsClient.GetPastRangeDataAsync(geolocation.Name ?? "", periodStartTime, periodEndTime);
@@ -139,7 +139,7 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
     {
         HistoryCarbonIntensityData data;
         if (geolocation.Latitude != null && geolocation.Latitude != null)
-            data = await this._electricityMapsClient.GetRecentCarbonIntensityHistoryAsync(geolocation.Latitude.ToString() ?? "", geolocation.Longitude.ToString() ?? "");
+            data = await this._electricityMapsClient.GetRecentCarbonIntensityHistoryAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
         else
         {
             data = await this._electricityMapsClient.GetRecentCarbonIntensityHistoryAsync(geolocation.Name ?? "");
