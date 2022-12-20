@@ -2,18 +2,21 @@ name: Docker Web API Build
 
 on:
   push:
-    branches: [ dev, main ]
+    branches: [ dev, main, release ]
   pull_request:
-    branches: [ dev, main ]
+    branches: [ dev, main, release ]
     paths:
       - 'src/**'
       - '.github/workflows/**'
+  workflow_dispatch:
+    
 
 env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"
   HEALTH_ENDPOINT: "0.0.0.0:8080/health"
   DLL_FILE_PATH: "./bin/Release/net6.0/CarbonAware.WebApi.dll"
   DOTNET_SRC_DIR: "./src"
+  SAMPLES_SRC_DIR: "./samples/lib-integration/ConsoleApp"
 
 jobs:
   container-dotnet-build:
@@ -63,7 +66,28 @@ jobs:
         with:
           name: pr-swagger.yaml
           path: src/CarbonAware.WebApi/src/api/v1/swagger.yaml
-      
+  
+  build-samples:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/dotnet/sdk:6.0
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK 6
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: false
+          
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ${{ env.DOTNET_SRC_DIR }}
+
+      - name: Build
+        run: dotnet build --configuration Release
+        working-directory: ${{ env.SAMPLES_SRC_DIR }}
+
   container-validation:
       runs-on: ubuntu-latest
       steps:

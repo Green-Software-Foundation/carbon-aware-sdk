@@ -10,6 +10,8 @@ on:
       - '.github/workflows/**'
       - 'samples/lib-integration/ConsoleApp/**'
       - 'scripts/package/**'
+  workflow_dispatch:
+    
 
 env:
   DOTNET_SOLUTION: "src/CarbonAwareSDK.sln"
@@ -36,12 +38,6 @@ jobs:
 
       - name: Restore current packages for ConsoleApp
         run: dotnet restore ${{ env.CONSOLE_APP }}
-
-      - name: Add packages to ConsoleApp
-        run: ${{ env.ADD_PKGS }} ${{ env.CONSOLE_APP}} ${{ env.OUTPUT_DIR }}
-
-      - name: Cat ConsoleApp project file
-        run: cat ${{ env.CONSOLE_APP }}
 
       - name: Restore packages for ConsoleApp
         run: dotnet restore ${{ env.CONSOLE_APP }}
