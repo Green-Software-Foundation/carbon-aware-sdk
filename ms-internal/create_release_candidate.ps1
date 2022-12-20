@@ -23,6 +23,7 @@ git checkout -b release
 
 # Cherry-pick our required, but unmerged commits onto the branch
 git cherry-pick a14e60b77eb271f1b253810dbc6b02f539ad6b25 # issue #174 - ElectricityMaps Data Source - Emissions
+git cherry-pick 87b104ae7881aa02cbab57a03b58bd6b563f4b71 # issue 227 - Bug fix to allow regional settings for converting lat/long
 
 ####### Adding/updating features with this script:
 ####### 1) switch to your feature branch
