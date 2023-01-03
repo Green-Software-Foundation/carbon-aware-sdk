@@ -20,14 +20,14 @@ public class CarbonAwareVariablesConfiguration
     /// <summary>
     /// Gets or sets the forecast data source to use.
     /// </summary>
-    public string ForecastDataSource { get; set; }
+    public string ForecastDataSource { get; set; } = string.Empty;
 
     /// <summary>
     /// Gets or sets the emissions data source to use.
     /// </summary>
-    public string EmissionsDataSource { get; set; }
+    public string EmissionsDataSource { get; set; } = string.Empty;
 
-    #nullable enable
+#nullable enable
     /// <summary>
     /// Gets or sets proxy information for making calls to the internet.
     /// </summary>

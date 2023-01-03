@@ -4,7 +4,7 @@
 public record EmissionsData
 {
     ///<example> eastus </example>
-    public string Location { get; set; }
+    public string Location { get; set; } = string.Empty;
     ///<example> 01-01-2022 </example>   
     public DateTimeOffset Time { get; set; }
     ///<example> 140.5 </example>

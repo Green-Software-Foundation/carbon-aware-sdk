@@ -12,7 +12,7 @@ namespace CarbonAware.DataSources.ElectricityMaps.Mocks;
 
 public class ElectricityMapsDataSourceMocker : IDataSourceMocker
 {
-    private WireMockServer _server;
+    private readonly WireMockServer _server;
     private const string ZONE_NAME = "eastus";
     private const string ZONE_KEY = "US-NE-ISNE";
     private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
