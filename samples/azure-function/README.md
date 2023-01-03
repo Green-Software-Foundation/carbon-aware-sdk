@@ -2,7 +2,9 @@
 
 ## Overview
 
-The sample included showcase the Azure Functions tooling for the Carbon Aware SDK [C# Class Library](../../docs/architecture/c-sharp-client-library.md). It includes an implementation for `GetAverageCarbonIntensity` and for `GetCurrentForecast`. `GetAverageCarbonIntensity` uses the `EmissionsHandler` to return the carbon intensity rate of a location for a specific timespan. `GetCurrentForecast` uses the `ForecastHandler` to yield the optimal time of a specified location and duration. The functions can run locally for debugging or be deployed to Azure.
+The sample included showcase the Azure Functions tooling for the Carbon Aware SDK [C# Class Library](../../docs/architecture/c-sharp-client-library.md). It includes an implementation for `GetAverageCarbonIntensity` and for `GetCurrentForecast`. `GetAverageCarbonIntensity` uses the `EmissionsHandler` to return the carbon intensity rate of a location for a specific timespan. `GetCurrentForecast` uses the `ForecastHandler` to yield the optimal time of a specified location and duration.
+
+The functions can run locally for debugging or be deployed to Azure. See the [data source configuration docs](../../docs/configuration.md#datasources) for detailed information about configuring the data source(s) your Azure Function will use.
 
 ## Azure Function Dependency Injection
 
@@ -18,9 +20,11 @@ The Carbon Aware SDK is included in the function .csproj file by [creating and a
         }
 ```
 
+> Note as the in-process [Azure Function uses dependency injection](https://learn.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection) though via [Microsoft.Azure.Functions.Extensions](https://www.nuget.org/packages/Microsoft.Azure.Functions.Extensions/) there is a version conflict of [Microsoft.Extensions.Configuration](https://www.nuget.org/packages/Microsoft.Extensions.Configuration). It is fixed adding a version specific project dependency (in .csproj) to the same version as the Carbon Aware SDK. Microsoft.Extensions.Configuration is backwards compatible.
+
 ## Run Function Locally
 
-Both Azure Function apps can be run locally without needing an azure subscription. The process for running both is the same, as they use the same configuration, just call different paths within the SDK.
+Both Azure Function apps can be [run locally](https://learn.microsoft.com/azure/azure-functions/functions-develop-local) without needing an Azure subscription. The process for running both is the same, as they use the same configuration, just call different paths within the SDK.
 
 ### Prerequisites to Run
 
@@ -46,7 +50,7 @@ curl --location --request GET 'http://localhost:7071/api/GetAverageCarbonIntensi
 
 #### _Example call for Get Current Forecast function_
 
-The following example will call the Current Forecast route.  If an error is returned, update the start and end dates.  The request can use either the request body or query parameters.
+The following example will call the Current Forecast route. The request can use either the request body or query parameters.
 
 ```bash
 curl --location --request GET 'http://localhost:7071/api/GetCurrentForecast' \
@@ -59,9 +63,11 @@ curl --location --request GET 'http://localhost:7071/api/GetCurrentForecast' \
 }'
 ```
 
+> Note: startDate and endDate must be a valid interval within the future 24 hours from the time of calling.
+
 ## Deploy to Azure
 
-If you have an azure subscription, you can also deploy these functions to Azure.
+If you have an Azure subscription, you can also deploy these functions to Azure.
 
 ### Prerequisites to Deploy
 
@@ -107,7 +113,7 @@ Update the [appsettings.json](./appsettings.json) file to include the desired [c
 To publish the function code to a function app in Azure, use the publish command in the samples/azure-function folder:
 
 ```bash
-func Azure Functionapp publish $functionApp
+func azure functionapp publish $functionApp
 ```
 
 ## References
