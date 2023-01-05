@@ -61,7 +61,7 @@ namespace CarbonAware.CLI.Commands.Location {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Returns all the supported locations.
+        ///   Looks up a localized string similar to Returns all the supported locations .
         /// </summary>
         internal static string LocationsCommandDescription {
             get {
