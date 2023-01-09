@@ -5,8 +5,7 @@ using System.Text.Json;
 namespace CarbonAware.CLI.IntegrationTests.Commands.Location;
 
 /// <summary>
-/// Tests that the CLI handles and packages various responses from aggregators 
-/// and data sources properly, including empty responses and exceptions.
+/// Tests that the CLI handles responses from location sources.
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
@@ -25,7 +24,7 @@ public class LocationCommandTests : IntegrationTestingBase
     }
 
     [Test]
-    public async Task Locations_ReturnsExpectedData()
+    public async Task Locations_ReturnsKnownData()
     {
         // Act
         var exitCode = await InvokeCliAsync("locations");

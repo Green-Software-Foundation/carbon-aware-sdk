@@ -126,8 +126,8 @@ public class LocationSource : ILocationSource
         var counter = keyCounter[key];
         counter++;
         var newKey = $"{key}_{counter}";
-        _logger.LogDebug("New key {newKey} generated from {key}", newKey, key);
         _allLocations.Add(newKey, loc);
         keyCounter[key] = counter;
+        _logger.LogWarning("New key {newKey} generated from {key}", newKey, key);
     }
 }
