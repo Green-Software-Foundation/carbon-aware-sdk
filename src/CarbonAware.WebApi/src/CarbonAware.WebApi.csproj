@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" />
+    <ProjectReference Include="..\..\GSF.CarbonAware\src\GSF.CarbonAware.csproj" />
   </ItemGroup>
 
   <ItemGroup>

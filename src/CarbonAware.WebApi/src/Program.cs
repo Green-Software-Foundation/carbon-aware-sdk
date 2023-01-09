@@ -1,8 +1,8 @@
 using System.Reflection;
 using CarbonAware;
-using CarbonAware.Exceptions;
-using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Filters;
+using GSF.CarbonAware.Configuration;
+using GSF.CarbonAware.Exceptions;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using CarbonAware.WebApi.Configuration;
 using Microsoft.OpenApi.Models;
@@ -31,8 +31,27 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
 
-string? errorMessage;
-bool successfulEmissionServices = builder.Services.TryAddCarbonAwareEmissionServices(builder.Configuration, out errorMessage);
+bool successfulEmissionServices = true;
+string? errorMessageEmissionServices = null;
+try
+{
+    builder.Services.AddEmissionsServices(builder.Configuration);
+} catch(CarbonAwareException e) {
+    successfulEmissionServices = false;
+    errorMessageEmissionServices = e.Message;
+}
+
+bool successfulForecastServices = true;
+string? errorMessageForecastServices = null;
+try
+{
+    builder.Services.AddForecastServices(builder.Configuration);
+}
+catch (CarbonAwareException e)
+{
+    successfulForecastServices = false;
+    errorMessageForecastServices = e.Message;
+}
 
 CarbonAwareVariablesConfiguration config = new();
 
@@ -51,7 +70,13 @@ var app = builder.Build();
 if(!successfulEmissionServices)
 {
     var _logger = app.Services.GetService<ILogger<Program>>();
-    _logger?.LogError(errorMessage);
+    _logger?.LogError(errorMessageEmissionServices);
+}
+
+if (!successfulForecastServices)
+{
+    var _logger = app.Services.GetService<ILogger<Program>>();
+    _logger?.LogError(errorMessageForecastServices);
 }
 
 if (config.WebApiRoutePrefix != null)

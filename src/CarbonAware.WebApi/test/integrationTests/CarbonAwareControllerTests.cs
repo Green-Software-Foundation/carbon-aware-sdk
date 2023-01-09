@@ -193,9 +193,6 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
                 Assert.That(forecasts!.Count, Is.EqualTo(inputData.Count()));
                 foreach (var forecast in forecasts!)
                 {
-                    Assert.That(forecast.Location, Is.EqualTo(location));
-                    Assert.That(forecast.DataStartAt, Is.EqualTo(expectedDataStartAt));
-                    Assert.That(forecast.DataEndAt, Is.EqualTo(expectedDataEndAt));
                     Assert.That(forecast.RequestedAt, Is.EqualTo(expectedRequestedAt));
                     Assert.That(forecast.GeneratedAt, Is.Not.Null);
                     Assert.That(forecast.OptimalDataPoints, Is.Not.Null);

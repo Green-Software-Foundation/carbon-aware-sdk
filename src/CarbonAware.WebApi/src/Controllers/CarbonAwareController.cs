@@ -1,5 +1,4 @@
-using CarbonAware.Aggregators.Emissions;
-using CarbonAware.Aggregators.Forecast;
+using GSF.CarbonAware.Handlers;
 using CarbonAware.Model;
 using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,17 +13,17 @@ public class CarbonAwareController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
     
-    private readonly IForecastAggregator _forecastAggregator;
+    private readonly IEmissionsHandler _emissionsHandler;
 
-    private readonly IEmissionsAggregator _emissionsAggregator;
+    private readonly IForecastHandler _forecastHandler;
 
     private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareController));
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsAggregator emissionsAggregator, IForecastAggregator forecastAggregator)
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsHandler emissionsHandler, IForecastHandler forecastHandler)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _forecastAggregator = forecastAggregator ?? throw new ArgumentNullException(nameof(forecastAggregator));
-        _emissionsAggregator = emissionsAggregator ?? throw new ArgumentNullException(nameof(emissionsAggregator));
+        _forecastHandler = forecastHandler ?? throw new ArgumentNullException(nameof(forecastHandler));
+        _emissionsHandler = emissionsHandler ?? throw new ArgumentNullException(nameof(emissionsHandler));
     }
 
     /// <summary>
@@ -41,7 +40,7 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            var response = await _emissionsAggregator.GetBestEmissionsDataAsync(parameters);
+            var response = await _emissionsHandler.GetBestEmissionsDataAsync(parameters.MultipleLocations!, parameters.Start, parameters.End);
             return response.Any() ? Ok(response) : NoContent();
         }
     }
@@ -60,7 +59,7 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            var response = await _emissionsAggregator.GetEmissionsDataAsync(parameters);
+            var response = await _emissionsHandler.GetEmissionsDataAsync(parameters.MultipleLocations!, parameters.Start, parameters.End);
             return response.Any() ? Ok(response) : NoContent();
         }
     }
@@ -77,7 +76,10 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocation")]
-    public async Task<IActionResult> GetEmissionsDataForLocationByTime([FromQuery, SwaggerParameter(Required = true)] string location, DateTimeOffset? time = null, DateTimeOffset? toTime = null)
+    public async Task<IActionResult> GetEmissionsDataForLocationByTime(
+        [FromQuery, SwaggerParameter(Required = true)] string location, 
+        DateTimeOffset? time = null, 
+        DateTimeOffset? toTime = null)
     {
         using (var activity = Activity.StartActivity())
         {
@@ -121,7 +123,7 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            var forecasts = await _forecastAggregator.GetCurrentForecastDataAsync(parameters);
+            var forecasts = await _forecastHandler.GetCurrentForecastAsync(parameters.MultipleLocations!, parameters.Start, parameters.End, parameters.Duration);
             var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
             return Ok(results);
         }
@@ -157,7 +159,13 @@ public class CarbonAwareController : ControllerBase
             var result = new List<EmissionsForecastDTO>();
             foreach ( var forecastParameters in requestedForecasts)
             {
-                var forecast = await _forecastAggregator.GetForecastDataAsync(forecastParameters);
+                var forecast = await _forecastHandler.GetForecastByDateAsync(
+                    forecastParameters.SingleLocation!,
+                    forecastParameters.Start,
+                    forecastParameters.End,
+                    forecastParameters.Requested,
+                    forecastParameters.Duration
+                );
                 result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast));
             };
 
@@ -185,7 +193,12 @@ public class CarbonAwareController : ControllerBase
     {
         using (var activity = Activity.StartActivity())
         {
-            var result = await this._emissionsAggregator.CalculateAverageCarbonIntensityAsync(parameters);
+            var result = await this._emissionsHandler.GetAverageCarbonIntensityAsync(
+                parameters.SingleLocation!,
+                (DateTimeOffset)parameters.Start!,
+                (DateTimeOffset)parameters.End!
+            );
+            
             var carbonIntensity = new CarbonIntensityDTO
             {
                 Location = parameters.SingleLocation,
@@ -221,9 +234,14 @@ public class CarbonAwareController : ControllerBase
         using (var activity = Activity.StartActivity())
         {
             var result = new List<CarbonIntensityDTO>();
-            foreach ( var carbonIntensityBatchDTO in requestedCarbonIntensities)
+            foreach (var carbonIntensityBatchDTO in requestedCarbonIntensities)
             {
-                var carbonIntensityValue = await this._emissionsAggregator.CalculateAverageCarbonIntensityAsync(carbonIntensityBatchDTO);
+                var carbonIntensityValue = await this._emissionsHandler.GetAverageCarbonIntensityAsync(
+                    carbonIntensityBatchDTO.SingleLocation!,
+                    (DateTimeOffset)carbonIntensityBatchDTO.Start!,
+                    (DateTimeOffset)carbonIntensityBatchDTO.End!
+                );
+                
                 var carbonIntensityDTO = new CarbonIntensityDTO()
                 {
                     Location = carbonIntensityBatchDTO.SingleLocation,
