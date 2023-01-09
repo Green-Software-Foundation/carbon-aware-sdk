@@ -1,0 +1,27 @@
+name: "Linting"
+
+on:
+  push:
+    paths:
+      - './**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - './**'
+
+jobs:
+  linting:
+    name: "Markdown linting"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        name: Check out the code
+      - name: markdownlint-cli2-action
+        uses: DavidAnson/markdownlint-cli2-action@v9
+        continue-on-error: true
+        with:
+          command: config
+          globs: |
+            ./custom.markdownlint.jsonc
+            **/*.md
