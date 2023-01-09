@@ -84,7 +84,7 @@
     // Include code blocks
     "code_blocks": false,
     // Include tables
-    "tables": true,
+    "tables": false,
     // Include headings
     "headings": false,
     // Include headings
