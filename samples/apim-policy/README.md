@@ -46,7 +46,10 @@ This use case has the following dependencies:
 
 * Azure API Management
 * Carbon Aware SDK Web.Api
+  * represented as `my-apim-instance.azure-api.net/emissions/forecasts` in the sample code
 * A backend web API deployed in multiple regions
+  * represented as `my-app-eastus.azurewebsites.net` &
+    `my-app-westus.azurewebsites.net` in the sample code
 
 ### Enhancements & considerations
 
@@ -62,7 +65,7 @@ decision. This sample focuses purely on carbon intensity.
 
 ## Scheduled message delivery
 
-The scheduled message delivery policy sample source can be found here - [request-routing-policy.xml](request-routing-policy.xml).
+The scheduled message delivery policy sample source can be found here - [scheduled-message-delivery-policy.xml](scheduled-message-delivery-policy.xml).
 
 ### Overview
 
@@ -87,6 +90,7 @@ This sample uses the following services/components:
 * Azure API Management
 * Azure Service Bus
 * Carbon Aware SDK Web.Api
+  * represented as `my-apim-instance.azure-api.net/emissions/forecasts` in the sample code
 
 ### Enhancements & considerations
 
@@ -96,8 +100,8 @@ level enhancements and considerations are outlined below.
 
 * The specific message delivery time is based on the most optimal
 carbon intensity forecast value. To provide more control to the
-caller the request should include a time window that can be used to
-select the lowest carbon intensity value/time in the specified window.
-* This sample is using an API facade on top of service bus to
+caller the request can include a time window that can be used to
+select the lowest carbon intensity value in the specified window.
+* This sample is using an API facade on top of a service bus queue to
 incorporate carbon awareness. Additional response information would
 most likely be needed in a real world scenario.
