@@ -110,35 +110,47 @@ public class ElectricityMapsClientTests
     }
 
     [Test]
-    public void GetForecastedCarbonIntensityAsync_ThrowsWhenBadJsonIsReturned()
+    public void AllPublicMethods_ThrowsClientException_WhenNull()
     {
         // Arrange
         AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Contains(BaseUrls.TokenBaseUrl + Paths.Forecast) && r.Method == HttpMethod.Get;
-        }, System.Net.HttpStatusCode.OK, "This is bad json");
+            return r.RequestUri!.ToString().Contains(Paths.Forecast) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "null");
 
-        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-
-        // Act & Assert
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
-    }
-
-    [Test]
-    public void GetForecastedCarbonIntensityAsync_ThrowsWhenNull()
-    {
-        // Arrange
-        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Contains(BaseUrls.TokenBaseUrl + Paths.Forecast) && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Contains(Paths.History) && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, "null");
 
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
         // Act & Assert
         Assert.ThrowsAsync<ElectricityMapsClientException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
+        Assert.ThrowsAsync<ElectricityMapsClientException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
+    }
+
+    [Test]
+    public void AllPublicMethods_ThrowJsonException_WhenBadJsonIsReturned()
+    {
+        // Arrange
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
+        AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains(Paths.Forecast) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "This is bad json");
+
+        AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains(Paths.History) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "This is bad json");
+
+        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+
+        // Act & Assert
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
     }
 
     [Test]
@@ -188,22 +200,6 @@ public class ElectricityMapsClientTests
         Assert.That(forecast?.Zone, Is.EqualTo(TestZone));
         Assert.That(forecastDataPoint?.DateTime, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
         Assert.That(forecastDataPoint?.CarbonIntensity, Is.EqualTo(999));
-    }
-
-    [Test]
-    public void GetRecentCarbonIntensityHistoryAsync_ThrowsWhenBadJsonIsReturned()
-    {
-        // Arrange
-        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
-        AddHandler_RequestResponse(r =>
-        {
-            return r.RequestUri!.ToString().Contains(BaseUrls.TokenBaseUrl + Paths.History) && r.Method == HttpMethod.Get;
-        }, System.Net.HttpStatusCode.OK, "This is bad json");
-
-        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-
-        // Act & Assert
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
     }
 
     [Test]

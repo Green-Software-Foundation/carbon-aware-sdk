@@ -78,16 +78,40 @@ public class WattTimeClientTests
     }
 
     [Test]
-    public void GetDataAsync_ThrowsWhenBadJsonIsReturned()
+    public void AllPublicMethods_ThrowClientException_WhenNull()
     {
-        this.SetupBasicHandlers("This is bad json.");
+        this.SetupBasicHandlers("null");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
 
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
     }
 
+    [Test]
+    public void AllPublicMethods_ThrowJsonException_WhenBadJsonIsReturned()
+    {
+        this.SetupBasicHandlers("This is bad json");
+
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
+        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
+        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
+
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
+    }
 
     [Test]
     public async Task GetDataAsync_DeserializesExpectedResponse()
@@ -141,32 +165,6 @@ public class WattTimeClientTests
         Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
         Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
-    }
-
-    [Test]
-    public void GetCurrentForecastAsync_ThrowsWhenBadJsonIsReturned()
-    {
-        this.SetupBasicHandlers("This is bad json.");
-
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
-
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba));
-    }
-
-    [Test]
-    public void GetCurrentForecastAsync_ThrowsWhenNull()
-    {
-        this.SetupBasicHandlers("null");
-
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
-
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
-        // Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba));
     }
 
     [Test]
@@ -238,32 +236,6 @@ public class WattTimeClientTests
     }
 
     [Test]
-    public void GetForecastOnDateAsync_ThrowsWhenBadJsonIsReturned()
-    {
-        this.SetupBasicHandlers("This is bad json.");
-
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
-
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
-    }
-
-    [Test]
-    public void GetForecastOnDateAsync_ThrowsWhenNull()
-    {
-        this.SetupBasicHandlers("null");
-
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
-
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
-    }
-
-    [Test]
     public async Task GetForecastOnDateAsync_DeserializesExpectedResponse()
     {
         this.AddHandlers_Auth();
@@ -321,28 +293,6 @@ public class WattTimeClientTests
         var forecast = await client.GetForecastOnDateAsync("balauth", new DateTimeOffset());
 
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast!.GeneratedAt);
-    }
-
-    [Test]
-    public void GetBalancingAuthorityAsync_ThrowsWhenBadJsonIsReturned()
-    {
-        this.SetupBasicHandlers("This is bad json.");
-
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
-    }
-
-    [Test]
-    public void GetBalancingAuthorityAsync_ThrowsWhenNull()
-    {
-        this.SetupBasicHandlers("null");
-
-        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
-        client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
     }
 
     [Test]
