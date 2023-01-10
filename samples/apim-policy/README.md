@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD024 -->
 # Azure API Management Policy
 
-This folder contains a sample integration of the [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk) (CAS)
+This folder contains a sample integration of the [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk)
 with [Azure API Management](https://azure.microsoft.com/en-us/products/api-management/) (APIM)
 [policies](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-policies).
 
@@ -75,8 +75,9 @@ delivery is scheduled based on the optimal future carbon intensity
 forecast. This use case is designed for non time-sensitive workloads that
 can tolerate delayed processing.
 
-This implementation takes advantage of Azure Service Bus scheduled
-messages where messages can be submitted to a queue or topic for
+This implementation takes advantage of Azure Service Bus [scheduled
+messages](https://learn.microsoft.com/en-us/azure/service-bus-messaging/message-sequencing#scheduled-messages)
+where messages can be submitted to a queue or topic for
 delayed processing. Scheduled messages don't materialize in the
 queue until the defined enqueue time which is defined using the
 `ScheduledEnqueueTimeUtc` message property.
