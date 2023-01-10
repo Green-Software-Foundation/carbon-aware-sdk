@@ -41,7 +41,7 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the optimal data points within the ForecastData set.
     /// </summary>
-    public IEnumerable<EmissionsData> OptimalDataPoints { get; set; }
+    public IEnumerable<EmissionsData> OptimalDataPoints { get; set; } = new List<EmissionsData>();
 
 
     public void Validate()

@@ -53,8 +53,8 @@ public class ElectricityMapsClientTests
         CreateBasicClient(TestData.GetZonesAllowedJsonString(), "{}");
         this.Configuration = new ElectricityMapsClientConfiguration()
         {
-            APITokenHeader = "",
-            APIToken = "",
+            APITokenHeader = string.Empty,
+            APIToken = string.Empty,
             BaseUrl = baseUrl,
         };
 

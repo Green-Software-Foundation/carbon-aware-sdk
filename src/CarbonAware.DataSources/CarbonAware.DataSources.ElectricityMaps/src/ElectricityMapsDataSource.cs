@@ -69,7 +69,7 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
         emissionsForecast.RequestedAt = requestedAt;
         emissionsForecast.ForecastData = emissionsForecast.ForecastData.Select(d =>
         {
-            d.Location = location.Name;
+            d.Location = location.Name ?? string.Empty;
             d.Duration = duration;
             return d;
         });
