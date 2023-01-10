@@ -70,7 +70,8 @@ Logging__LogLevel__Default="Debug" dotnet run
 
 ## DataSources
 
-The SDK supports multiple data sources for getting carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/) and ElectricityMaps (https://www.electricitymaps.com/) are supported.
+The SDK supports multiple data sources for getting carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/) and [ElectricityMaps](https://www.electricitymaps.com/) are supported.
+
 Each data source interface is configured with a specific data source implementation.  
 
 If set to `WattTime` or `ElectricityMaps`, the configuration specific to that data provider must also be supplied.
