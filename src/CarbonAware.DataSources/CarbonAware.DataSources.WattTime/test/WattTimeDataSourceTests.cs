@@ -2,8 +2,8 @@
 using CarbonAware.Interfaces;
 using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.Model;
-using CarbonAware.Tools.WattTimeClient;
-using CarbonAware.Tools.WattTimeClient.Model;
+using CarbonAware.DataSources.WattTime.Client;
+using CarbonAware.DataSources.WattTime.Model;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;

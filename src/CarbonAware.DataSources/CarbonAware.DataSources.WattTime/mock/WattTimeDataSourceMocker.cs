@@ -1,6 +1,6 @@
 ﻿using CarbonAware.DataSources.Mocks;
-using CarbonAware.Tools.WattTimeClient.Constants;
-using CarbonAware.Tools.WattTimeClient.Model;
+using CarbonAware.DataSources.WattTime.Constants;
+using CarbonAware.DataSources.WattTime.Model;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;

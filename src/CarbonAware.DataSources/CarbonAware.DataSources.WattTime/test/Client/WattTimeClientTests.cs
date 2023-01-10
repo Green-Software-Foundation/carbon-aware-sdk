@@ -1,14 +1,11 @@
-﻿using CarbonAware.Tools.WattTimeClient.Configuration;
-using CarbonAware.Tools.WattTimeClient.Model;
+﻿using CarbonAware.DataSources.WattTime.Configuration;
+using CarbonAware.DataSources.WattTime.Model;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -18,7 +15,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CarbonAware.Tools.WattTimeClient.Tests;
+namespace CarbonAware.DataSources.WattTime.Client.Tests;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 public class WattTimeClientTests
@@ -521,40 +518,6 @@ public class WattTimeClientTests
         }
     }
 
-    [Test]
-    public void TestClient_With_Proxy_Failure()
-    {
-        var key1 = $"{CarbonAwareVariablesConfiguration.Key}:Proxy:UseProxy";
-        var key2 = $"{CarbonAwareVariablesConfiguration.Key}:Proxy:Url";
-        var settings = new Dictionary<string, string> {
-                {key1, "true"},
-                {key2, "http://fakeproxy:8080"},
-            };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(settings)
-            .Build();
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.ConfigureWattTimeClient(configuration);
-        serviceCollection.AddMemoryCache();
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        var client = serviceProvider.GetRequiredService<IWattTimeClient>();
-        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
-    }
-
-    [Test]
-    public void TestClient_With_Missing_Proxy_URL()
-    {
-        var key1 = $"{CarbonAwareVariablesConfiguration.Key}:Proxy:UseProxy";
-        var settings = new Dictionary<string, string> {
-                {key1, "true"},
-            };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(settings)
-            .Build();
-        var serviceCollection = new ServiceCollection();
-        Assert.Throws<ConfigurationException>(() => serviceCollection.ConfigureWattTimeClient(configuration));
-    }
-
     private void CreateHttpClient(Func<HttpRequestMessage, Task<HttpResponseMessage>> requestDelegate)
     {
         this.MessageHandler = new MockHttpMessageHandler(requestDelegate);
@@ -610,4 +573,3 @@ public class WattTimeClientTests
     }
 }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-

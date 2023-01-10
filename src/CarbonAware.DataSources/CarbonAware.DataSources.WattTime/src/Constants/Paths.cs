@@ -1,4 +1,4 @@
-﻿namespace CarbonAware.Tools.WattTimeClient.Constants;
+﻿namespace CarbonAware.DataSources.WattTime.Constants;
 
 internal class Paths
 {

@@ -1,7 +1,7 @@
 ﻿using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 
-namespace CarbonAware.Tools.WattTimeClient;
+namespace CarbonAware.DataSources.WattTime.Client;
 
 public class WattTimeClientHttpException : CarbonAwareException, IHttpResponseException
 {

@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace CarbonAware.Tools.WattTimeClient.Tests;
+namespace CarbonAware.DataSources.WattTime.Client.Tests;
 
 public static class TestData
 {

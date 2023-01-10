@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CarbonAware.Tools.WattTimeClient.Model;
+namespace CarbonAware.DataSources.WattTime.Model;
 
 /// <summary>
 /// An object describing the emissions for a given time period and balancing authority.
