@@ -249,6 +249,10 @@ This section contains the global settings for the SDK. The configuration looks l
 
 ### Tracing and Monitoring Configuration
 
+The application uses Opentelemetry to create traces locally in the console. In order to configure it to send the traces to a tracing app like Zipkin, Jaeger etc, please refer to the Open Telemetry [documentation] (https://opentelemetry.io/).  
+
+#### Configuring with Application Insights
+
 Application monitoring and tracing can be configured using the `TelemetryProvider` variable in the application configuration.  
 
 ```bash
