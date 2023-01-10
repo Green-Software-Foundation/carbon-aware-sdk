@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CarbonAware.Tools.WattTimeClient.Model;
+namespace CarbonAware.DataSources.WattTime.Model;
 
 /// <summary>
 /// Serializable object describing the WattTime login response object.

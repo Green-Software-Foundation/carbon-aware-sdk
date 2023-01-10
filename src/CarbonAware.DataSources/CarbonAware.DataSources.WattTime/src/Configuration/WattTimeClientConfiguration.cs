@@ -1,5 +1,7 @@
 
-namespace CarbonAware.Tools.WattTimeClient.Configuration;
+using CarbonAware.Exceptions;
+
+namespace CarbonAware.DataSources.WattTime.Configuration;
 
 /// <summary>
 /// A configuration class for holding WattTime client config values.

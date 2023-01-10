@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace CarbonAware.Tools.WattTimeClient.Model;
+namespace CarbonAware.DataSources.WattTime.Model;
 
 /// <summary>
 /// The details of the balancing authority (BA) serving a particular location.

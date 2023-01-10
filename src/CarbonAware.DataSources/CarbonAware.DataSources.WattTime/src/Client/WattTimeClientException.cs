@@ -1,6 +1,6 @@
 ﻿using CarbonAware.Exceptions;
 
-namespace CarbonAware.Tools.WattTimeClient;
+namespace CarbonAware.DataSources.WattTime;
 
 public class WattTimeClientException : CarbonAwareException
 {

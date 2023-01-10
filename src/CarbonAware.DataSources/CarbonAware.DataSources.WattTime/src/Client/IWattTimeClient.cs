@@ -1,6 +1,6 @@
-﻿using CarbonAware.Tools.WattTimeClient.Model;
+﻿using CarbonAware.DataSources.WattTime.Model;
 
-namespace CarbonAware.Tools.WattTimeClient;
+namespace CarbonAware.DataSources.WattTime.Client;
 
 /// <summary>
 /// An interface for interacting with the WattTime API.
@@ -8,7 +8,7 @@ namespace CarbonAware.Tools.WattTimeClient;
 public interface IWattTimeClient
 {
     public const string NamedClient = "WattTimeClient";
-    
+
     /// <summary>
     /// Async method to get observed emission data for a given balancing authority and time period.
     /// </summary>
