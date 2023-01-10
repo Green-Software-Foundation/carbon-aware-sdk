@@ -1,4 +1,3 @@
-
 - [Configuration](#configuration)
   - [Logging](#logging)
   - [DataSources](#datasources)
@@ -10,9 +9,11 @@
       - [WattTime Caching BalancingAuthority](#watttime-caching-balancingauthority)
     - [Json Configuration](#json-configuration)
     - [ElectricityMaps Configuration](#electricitymaps-configuration)
-      - [ApiTokenHeader](#api-token-header)
-      - [ApiToken](#api-token)
-      - [baseUrl](#baseurl)
+      - [API Token Header](#api-token-header)
+      - [API Token](#api-token)
+      - [BaseUrl](#baseurl-1)
+      - [Emission Factor Type](#emission-factor-type)
+      - [Disable Estimations](#disable-estimations)
   - [CarbonAwareVars](#carbonawarevars)
     - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
     - [Verbosity](#verbosity)
@@ -69,10 +70,10 @@ Logging__LogLevel__Default="Debug" dotnet run
 
 ## DataSources
 
-The SDK supports multiple data sources for getting carbon data.  At this time, only a JSON file and [WattTime](https://www.watttime.org/) are supported.
+The SDK supports multiple data sources for getting carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/) and ElectricityMaps (https://www.electricitymaps.com/) are supported.
 Each data source interface is configured with a specific data source implementation.  
 
-If set to `WattTime`, WattTime configuration must also be supplied.
+If set to `WattTime` or `ElectricityMaps`, the configuration specific to that data provider must also be supplied.
 
 `JSON` will result in the data being loaded from the file specified in the `DataFileLocation` property
 
@@ -93,6 +94,11 @@ If set to `WattTime`, WattTime configuration must also be supplied.
           "username": "proxyUsername",
           "password": "proxyPassword"
         }
+      },
+       "ElectricityMaps": {
+        "Type": "ElectricityMaps",
+        "APITokenHeader": "auth-token",
+        "APIToken": "myAwesomeToken"
       },
       "Json": {
         "Type": "Json",
@@ -115,7 +121,7 @@ If using the WattTime data source, WattTime configuration is required.
 }
 ```
 
-> **Sign up for a test account:** To create an account, follow these steps : https://www.watttime.org/api-documentation/#best-practices-for-api-usage
+> **Sign up for a test account:** To create an account, follow these steps [from the WattTime documentation](https://www.watttime.org/api-documentation/#best-practices-for-api-usage)
 
 #### username
 
@@ -170,7 +176,17 @@ info: CarbonAware.DataSources.Json.JsonDataSource[0]
 
 If using the ElectricityMaps data source, ElectricityMaps configuration is required.
 
-__With an account token:__
+> **NOTE**
+> The ElectricityMaps API does not currently support access to historical forecasts.
+> This means that functionality such as the CLI `emissions-forecasts` `--requested-at` flag
+> and the API `/forecasts/batch` `requestedAt` input will respond with a `NotImplemented` error.
+>
+> Depending on the goal, the historical measured `emissions` commands may be a reasonable workaround.
+> This would treat the measured emissions as a "perfect historical forecast" effectively.
+> Otherwise, use a data source that has support for historical forecasts, such as [WattTime](#watttime-configuration).
+
+**With an account token:**
+
 ```json
 {
     "APITokenHeader": "auth-token",
@@ -179,7 +195,8 @@ __With an account token:__
 }
 ```
 
-__With a free trial token:__
+**With a free trial token:**
+
 ```json
 {
     "APITokenHeader": "X-BLOBR-KEY",
@@ -188,19 +205,31 @@ __With a free trial token:__
 }
 ```
 
-> **Sign up for a free trial:** To get a free trial: https://api-portal.electricitymaps.com/
+> **Sign up for a free trial:** Select the free trial product from [the ElectricityMaps catalog](https://api-portal.electricitymaps.com/)
 
 #### API Token Header
 
-The API Token Header for ElectricityMaps. If you have a paid account, the header is "auth-token". If you're using the free trial, the header is "X-BLOB-KEY"
+The API Token Header for ElectricityMaps. If you have a paid account, the header is "auth-token". If you're using the free trial, the header is "X-BLOBR-KEY"
 
 #### API Token
 
 The ElectricityMaps token you receive with your account or free trial.
 
-#### baseUrl
+#### BaseUrl
 
 The url to use when connecting to ElectricityMaps. Defaults to "https://api.electricitymap.org/v3/" but can be overridden in the config if needed (such as for free-trial users or enable integration testing scenarios).
+
+#### Emission Factor Type
+
+String value for the optional `emissionFactorType` parameter to be sent on every ElectricityMaps API request that accepts this parameter.
+
+See the [ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#emission-factors) for more details and valid values.
+
+#### Disable Estimations
+
+Boolean value for the optional `disableEstimations` parameter to be sent on every ElectricityMaps API request that accepts this parameter.
+
+See the [ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#estimations) for more details.
 
 ## CarbonAwareVars
 
@@ -230,7 +259,7 @@ This application is integrated with Application Insights for monitoring purposes
 ApplicationInsights_Connection_String="AppInsightsConnectionString"
 ```
 
-You can alternatively configure using Instrumentation Key by setting the `AppInsights_InstrumentationKey` variable. However, Microsoft is ending technical support for instrumentation key�based configuration of the Application Insights feature soon. ConnectionString-based configuration should be used over InstrumentationKey. For more details, please refer to https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net.
+You can alternatively configure using Instrumentation Key by setting the `AppInsights_InstrumentationKey` variable. However, Microsoft is ending technical support for instrumentation key�based configuration of the Application Insights feature soon. ConnectionString-based configuration should be used over InstrumentationKey. For more details, please refer to [the documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net).
 
 ```bash
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
@@ -335,6 +364,7 @@ DataSources__Configurations__WattTime__Password="wattTimePassword"
 ```
 
 ## Configuration for Forecast data Using ElectricityMaps
+
 ```json
 {
   "DataSources": {
@@ -350,11 +380,12 @@ DataSources__Configurations__WattTime__Password="wattTimePassword"
 }
 ```
 
-## Configuration for Emissions data Using WattTime and Forecast data Using ElectricityMaps
+## Configuration for Emissions data using ElectricityMaps and Forecast data using WattTime
+
 ```json
   "DataSources": {
-    "EmissionsDataSource": "WattTime",
-    "ForecastDataSource": "ElectricityMaps",
+    "EmissionsDataSource": "ElectricityMaps",
+    "ForecastDataSource": "WattTime",
     "Configurations": {
       "WattTime": {
         "Type": "WattTime",
