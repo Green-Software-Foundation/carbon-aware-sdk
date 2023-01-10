@@ -241,18 +241,4 @@ public class CarbonAwareController : ControllerBase
             return Ok(result);
         }
     }
-
-    /// <summary>
-    /// Get all locations
-    /// </summary>
-    /// <returns>Dictionary with the locations</returns>
-    [Produces("application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDictionary<string, Location>))]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [HttpGet("locations")]
-    public async Task<IActionResult> GetAllLocations()
-    {
-        var response = await _locationSource.GetGeopositionLocationsAsync(); 
-        return response.Any() ? Ok(response) : NoContent();
-    }
 }

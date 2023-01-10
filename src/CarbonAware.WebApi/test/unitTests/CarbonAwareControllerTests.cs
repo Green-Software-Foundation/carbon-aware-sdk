@@ -238,32 +238,4 @@ public class CarbonAwareControllerTests : TestsBase
 
         Assert.ThrowsAsync<ArgumentException>(async () => await controller.GetEmissionsDataForLocationsByTime(parametersDTO));
     }
-
-    /// <summary>
-    /// Test result with content
-    /// </summary>
-    [Test]
-    public async Task GetLocations_ResultsOk()
-    {
-        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateEmissionsAggregator(new List<EmissionsData>()).Object, forecastAggregator, CreateLocations().Object);
-
-        IActionResult result = await controller.GetAllLocations();
-
-        //Assert
-        TestHelpers.AssertStatusCode(result, HttpStatusCode.OK);
-    }
-
-    /// <summary>
-    /// Test result without content
-    /// </summary>
-    [Test]
-    public async Task GetLocations_ResultsNoContent()
-    {
-        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateEmissionsAggregator(new List<EmissionsData>()).Object, forecastAggregator, CreateLocations(false).Object);
-
-        IActionResult result = await controller.GetAllLocations();
-
-        //Assert
-        TestHelpers.AssertStatusCode(result, HttpStatusCode.NoContent);
-    }
 }

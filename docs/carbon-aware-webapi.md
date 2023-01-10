@@ -18,7 +18,7 @@ The WebApi replicates the CLI and SDK functionality, leveraging the same configu
     - [POST emissions/forecasts/batch](#post-emissionsforecastsbatch)
     - [GET emissions/average-carbon-intensity](#get-emissionsaverage-carbon-intensity)
     - [POST emissions/average-carbon-intensity/batch](#post-emissionsaverage-carbon-intensitybatch)
-    - [GET emissions/locations](#get-emissionslocations)
+    - [GET /locations](#get-locations)
   - [Error Handling](#error-handling)
   - [Autogenerate WebAPI](#autogenerate-webapi)
   - [Data Sources](#data-sources)
@@ -317,7 +317,7 @@ The response is an array of CarbonIntensityDTO objects which each have a locatio
 ]
 ```
 
-### GET emissions/locations
+### GET /locations
 
 This endpoint lists all the supported locations that the datasources potentially can have access to. This information is coming from the `location-source/json` files, that contain dictionaries in the form of <A Location key name, GeoCoordinates>, for instance:
 
@@ -358,7 +358,14 @@ This endpoint lists all the supported locations that the datasources potentially
 }
 ```
 
-If there is a third file with the same key name, it would be `swedencentral_2` and so on. This information is not persisted, but now the user can make requests using `swedencentral` and/or `swedencentral_1`.
+If there is a third file with the same key name, it would be `swedencentral_2` and so on. This information is not persisted, but now the user can make requests using `swedencentral` and/or `swedencentral_1`. Also there are log ***warning*** entries when this scenerario occurs to help the user to understand what key renaming happened.
+
+```sh
+warn: Location key swedencentral from ... already exists. Creating new key.
+...
+warn: New key swedencentral_1 generated from swedencentral
+CarbonAware.LocationSources.LocationSource: Warning: New key swedencentral_1 generated from swedencentral
+```
 
 ## Error Handling
 

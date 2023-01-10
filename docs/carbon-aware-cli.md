@@ -17,7 +17,7 @@ The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via com
         - [Single Location Emissions](#single-location-emissions)
         - [Multiple Location Emissions](#multiple-location-emissions)
         - [Emissions with Start and End Times](#emissions-with-start-and-end-times)
-        - [Emissions Locations](#emissions-locations)
+        - [Locations](#locations)
 
 ## Build and Install
 
@@ -366,7 +366,7 @@ output:
 }]
 ```
 
-##### Emissions Locations
+##### Locations
 
 command: `.\caw locations`
 
