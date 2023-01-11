@@ -25,7 +25,7 @@ today!
 
 ## Getting Started
 
-Head on over to the [Getting Started Guide](./GettingStarted.md) to get up and
+Head on over to the [Getting Started Guide](./docs/GettingStarted.md) to get up and
 running.
 
 ## What is the Carbon Aware SDK?

@@ -5,6 +5,17 @@ SDK, we have also added [bash scripts](../scripts/package/) to package the
 library, and have included a sample [Console App](../samples/lib-integration/)
 showing how the package can be consumed.
 
+- [Packaging the Carbon Aware SDK](#packaging-the-carbon-aware-sdk)
+  - [Included Projects](#included-projects)
+  - [Included Scripts](#included-scripts)
+    - [Running the packaging scripts](#running-the-packaging-scripts)
+  - [SDK Configuration](#sdk-configuration)
+    - [ElectricityMaps](#electricitymaps)
+    - [WattTime](#watttime)
+    - [Json](#json)
+  - [Use Package with Dependency Injection](#use-package-with-dependency-injection)
+    - [Console App Sample](#console-app-sample)
+
 ## Included Projects
 
 The current package include 8 projects from the SDK:
@@ -93,6 +104,72 @@ export DataSources__Configurations__Json__Type=Json`
 export DataSources__Configurations__Json__DataFileLocation="test-data-azure-emissions.json"`
 ```
 
+## Use Package with Dependency Injection
+
+In order to get access to the
+[handlers](./architecture/c%23-client-library.md#handlers) in the library, a
+common practice with C# is through `Microsoft.Extensions.DependencyInjection`
+extensions. This way the whole life cycle of the handler instance is managed by
+the container’s framework, and it would help to isolate the concrete
+implementation from the user facing interface. For instance, a consumer would be
+able to call extensions as:
+
+```c#
+// Using DI Services (Emissions) to register GSF SDK library
+services.AddEmissionsServices(configuration);
+```
+
+```c#
+// An application Consumer construct should inject a GSF handler like the following example
+class ConsumerClass(IEmissionsHandler handler, ILogger<ConsumerClass> logger)
+{
+    ....
+    this._handler = handler;
+    this._logger = logger;
+    ....
+}
+```
+
+And the usage of a method for IEmissionsHandler
+
+```c#
+async Task<double> GetRating()
+{
+    ...
+    return await this._handler.GetAverageCarbonIntensity(…);
+}
+```
+
+Another functionality of the application could just do Forecast data. So, it
+would be a matter of following the same pattern:
+
+```c#
+// Using DI Services (Forecast) to register GSF SDK library
+services.AddForecastServices(configuration);
+```
+
+```c#
+class ForecastApp(IForecastHandler handler)
+{
+    ...
+    this._handler = handler;
+}
+```
+
+And the usage of a method for IForecastHandler:
+
+```c#
+async Task<EmissionsData> GetOptimal(…)
+{
+    ...
+    return await this._handler.GetCurrentAsync()...).OptimalDataPoints.First();
+}
+```
+
+This way it would fit within the same stack as the rest of the SDK is
+implemented. Also, it would be easier to integrate later when the current
+consumers (CLI/WebApi) should be moved to use the library.
+
 ## Console App Sample
 
 There is a sample console app in the [lib integration folder](../samples/lib-integration/ConsoleApp/) to demonstrate package creation and interaction with Carbon Aware SDK.
@@ -101,6 +178,6 @@ There is a sample console app in the [lib integration folder](../samples/lib-int
 In order to build and run the app, all the dependent packages need to be created first and then imported in the app. Follow the steps below to run the sample console app - 
 
 - Run the [script commands](#included-scripts) to create the packages and add
-  them into the app
+  them into the app.
 - Create the [environment variables](#sdk-configuration) to connect to the
-  WattTime or Json data sources
+  WattTime or Json data sources.

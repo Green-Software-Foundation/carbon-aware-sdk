@@ -2,16 +2,16 @@
 
 This SDK has several entry points:
 
-- You can run the application using the [CLI](./src/CarbonAware.CLI).
+- You can run the application using the [CLI](../src/CarbonAware.CLI).
 
-- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi)
+- You can build a container containing the [WebAPI](../src/CarbonAware.WebApi)
   and connect via REST requests.
 
 - (Future) You can install the Nuget package and make requests directly.
   ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
 Each of these has configuration requirements which are detailed below. You can
-also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step
+also visit the [quickstart.md](./quickstart.md) guide for a step-by-step
 process for running the CLI locally, deploying the Web API locally, polling the
 API via HTTP requests or generating and using client libraries (Python example).
 
@@ -25,7 +25,7 @@ Make sure you have installed the following pre-requisites:
   - WattTime account - See
     [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user)
     for details (or use our python samples as described
-    [here](samples/watttime-registration/readme.md)).
+    [here](../samples/watttime-registration/readme.md)).
   - ElectricityMaps account - See
     [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home)
     for details (or setup a
@@ -58,7 +58,7 @@ the value that's applied.
 
 ### Configuration options
 
-See [configuration.md](/docs/configuration.md) for details about how to
+See [configuration.md](./configuration.md) for details about how to
 configure specific components of the application.
 
 #### Environment variables
@@ -152,6 +152,7 @@ $ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | j
       "timestamp": "2022-08-10T20:40:00+00:00",
       "duration": 5,
       "value": 440.4361702590741
-    },
-            :
+    }
+  }
+]
 ```

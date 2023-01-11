@@ -11,12 +11,15 @@ on:
       - './**'
 
 jobs:
-  linting:
-    name: "Markdown linting"
+  # Non-blocking job that checks .md file locations and also lints them
+  markdown:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        name: Check out the code
+      - name: Check out the code
+        uses: actions/checkout@v2
+      - name: "Validate markdown file locations"
+        continue-on-error: true
+        run: "scripts/check-markdown-files.sh" 
       - name: markdownlint-cli2-action
         uses: DavidAnson/markdownlint-cli2-action@v9
         continue-on-error: true
@@ -25,3 +28,5 @@ jobs:
           globs: |
             ./custom.markdownlint.jsonc
             **/*.md
+
+  
