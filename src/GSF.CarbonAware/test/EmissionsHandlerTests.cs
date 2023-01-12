@@ -1,5 +1,4 @@
-using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Aggregators.Emissions;
+
 using EmissionsData = CarbonAware.Model.EmissionsData;
 using GSF.CarbonAware.Exceptions;
 using GSF.CarbonAware.Handlers;
@@ -9,8 +8,11 @@ using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
-using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
-
+using CarbonAware.Interfaces;
+using GSF.CarbonAware.Handlers.CarbonAware;
+using System.Collections;
+using CarbonAware.Model;
+using System.Collections.Generic;
 
 namespace GSF.CarbonAware.Tests;
 
@@ -36,14 +38,14 @@ public class EmissionsHandlerTests
     public void GetEmissionsData_NoLocations_ThrowsException(params string[] locations)
     {
         // Arrange
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsAggregator(EmptyTestData).Object);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
 
         //Act/Assert
         Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetEmissionsDataAsync(locations));
     }
 
     /// <summary>
-    /// GetEmissionsData: Tests that successful emissions call to aggregator with varied location input returns expected data.
+    /// GetEmissionsData: Tests that successful emissions call to datasource with varied location input returns expected data.
     /// </summary>
     [TestCase(new object?[] { null, "Sydney" }, TestName = "GetEmissions, successful: simulates 'location=&location=Sydney'")]
     [TestCase(new object?[] { "Sydney", null }, TestName = "GetEmissions, successful: simulates 'location=Sydney&location='")]
@@ -61,7 +63,7 @@ public class EmissionsHandlerTests
                 Time = DateTime.Now
             }
         };
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsAggregator(data).Object);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(data).Object);
 
         // Act
         var result = await emissionsHandler.GetEmissionsDataAsync(locations);
@@ -71,66 +73,187 @@ public class EmissionsHandlerTests
         Assert.That(result.First().Location, Is.EqualTo("Sydney"));
     }
 
-    /// <summary>
-    /// GetBestEmissionsData: Tests empty or null location arrays throw ArgumentException.
-    /// </summary>
-    [TestCase(new object?[] { null, null }, TestName = "GetBestEmissions, array of nulls, throws: simulates 'location=&location=' empty value input")]
-    [TestCase(new object?[] { null, }, TestName = "GetBestEmissions, array of nulls, throws: simulates 'location=' empty value input")]
-    [TestCase(new object?[] { }, TestName = "GetBestEmissions, empty array, throws: simulates no 'location' query string")]
-    public void GetBestEmissionsData_NoLocations_ThrowsException(params string[] locations)
+    [Test]
+    public void GetEmissionsDataAsync_LocationMissing()
     {
-        // Arrange
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsAggregatorWithBestEmissionsData(EmptyTestData).Object);
+        //Arrange
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
 
-        //Act/Assert
-        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetBestEmissionsDataAsync(locations));
+        //Act and assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetEmissionsDataAsync("", DateTimeOffset.Now, DateTimeOffset.Now + TimeSpan.FromHours(1)));
     }
 
-    /// <summary>
-    /// GetBestEmissionsData: Tests that successful emissions call to aggregator with varied location input returns expected data.
-    /// </summary>
-    [TestCase(new object?[] { null, "Sydney" }, TestName = "GetBestEmissions, successful: simulates 'location=&location=Sydney'")]
-    [TestCase(new object?[] { "Sydney", null }, TestName = "GetBestEmissions, successful: simulates 'location=Sydney&location='")]
-    [TestCase(new object?[] { "Sydney", "Melbourne" }, TestName = "GetBestEmissions, successful: simulates 'location=Sydney&location=Melbourne'")]
-    [TestCase(new object?[] { "Sydney" }, TestName = "GetBestEmissions, successful: simulates 'location=Sydney'")]
-    public async Task GetBestEmissionsData_VariedLocationsInput_SuccessfulCall(params string[] locations)
+    [Test]
+    public async Task GetEmissionsDataAsync_StartProvidedAndEndMissing()
+    {
+        //Arrange
+        var location = "westus";
+        var end = new DateTimeOffset(2021, 11, 17, 0, 0, 0, TimeSpan.Zero);
+        var start = new DateTimeOffset(2021, 11, 16, 0, 55, 0, TimeSpan.Zero);
+        var expectedTimeValue = new DateTimeOffset(2021, 11, 17, 0, 0, 0, TimeSpan.Zero);
+
+        var data = TestData.GetFilteredEmissionDataList(location, start, end);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(data).Object);
+
+
+        //Act
+        var results = await emissionsHandler.GetEmissionsDataAsync(location, start, null);
+
+        //Assert   
+        Assert.That(results.Count(), Is.EqualTo(1));
+        Assert.That(expectedTimeValue, Is.EqualTo(results.First().Time));
+    }
+
+    [Test]
+    public void GetEmissionsDataAsync_EndProvidedButStartMissing()
+    {
+        //Arrange
+        var emmisionsData = TestData.GetAllEmissionDataList();
+        var end = new DateTimeOffset(2021, 11, 17, 0, 0, 0, TimeSpan.Zero);
+        var start = new DateTimeOffset(2021, 11, 16, 0, 55, 0, TimeSpan.Zero);
+        var data = TestData.GetFilteredEmissionDataList("westus", start, end);
+
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(data).Object);
+
+        //Act and Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetEmissionsDataAsync("westus", null, end));
+    }
+
+    [Test]
+    public async Task TestGetEmissionsDataAsync_FullTimeWindow()
+    {
+        //Arrange
+        var start = new DateTimeOffset(2021, 11, 17, 0, 0, 0, TimeSpan.Zero);
+        var end = new DateTimeOffset(2021, 11, 19, 0, 0, 0, TimeSpan.Zero);
+
+        var data = TestData.GetFilteredEmissionDataList("westus", start, end);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(data).Object);
+
+        //Act
+        var results = await emissionsHandler.GetEmissionsDataAsync("westus", start, end);
+
+        //Assert   
+        Assert.That(results.Count(), Is.EqualTo(4));
+        Assert.That(start, Is.EqualTo(results.First().Time));
+        Assert.That(end, Is.EqualTo(results.Last().Time));
+    }
+
+    [Test]
+    public async Task GetBestEmissionsDataAsync_ReturnsExpected()
     {
         // Arrange
-        var data = new EmissionsData[]
-        {
-            new EmissionsData()
-            {
-                Location = "Sydney",
-                Rating = 0.9,
-                Time = DateTime.Now
-            }
+        var optimalDataPoint = new EmissionsData() { Rating = 10 };
+        var mockData = new List<EmissionsData>() {
+            optimalDataPoint,
+            new EmissionsData(){ Rating = 20 },
+            new EmissionsData(){ Rating = 30 }
         };
-        var emissionsHandler = new EmissionsHandler(Logger!.Object,CreateEmissionsAggregatorWithBestEmissionsData(data).Object);
+
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(mockData).Object);
 
         // Act
-        var result = await emissionsHandler.GetBestEmissionsDataAsync(locations);
+        var results = await emissionsHandler.GetBestEmissionsDataAsync("eastus");
 
         // Assert
-        Assert.That(result, Is.Not.Empty);
-        Assert.That(result.First().Location, Is.EqualTo("Sydney"));
+        Assert.That(results, Is.EqualTo(new List<Models.EmissionsData>() { optimalDataPoint }));
     }
 
-    /// <summary>
-    /// GetAverageCarbonIntensity: Single time range, successfull call to the aggregator with any data returned results in expected format.
-    /// </summary>
-    [TestCase("Sydney", "2022-03-07T01:00:00", "2022-03-07T03:30:00", TestName = "GetAverageCarbonIntensity calls aggregator successfully")]
-    public async Task GetAverageCarbonIntensity_SuccessfulCall(string location, DateTimeOffset start, DateTimeOffset end)
+    [TestCase("2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", 0, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: start & end")]
+    [TestCase("2000-01-01T00:00:00Z", null, 1000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: only start")]
+    [TestCase(null, null, 1000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: no start or end")]
+    public async Task GetBestEmissionsDataAsync_CallsWithExpectedDates(DateTimeOffset? start, DateTimeOffset? end, long tickTolerance)
     {
         // Arrange
-        double data = 0.7;
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsAggregatorWithAverageCI(data).Object);
+        // Default to a random time that will always be wrong for these test cases.
+        DateTimeOffset actualStart = DateTimeOffset.Parse("1984-06-06Z");
+        DateTimeOffset actualEnd = DateTimeOffset.Parse("1984-06-06Z");
+        var datasource = new Mock<IEmissionsDataSource>();
+        datasource.Setup(x => x.GetCarbonIntensityAsync(
+            It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .Callback((IEnumerable<Location> _, DateTimeOffset _start, DateTimeOffset _end) =>
+            {
+                actualStart = _start;
+                actualEnd = _end;
+            });
+
+        DateTimeOffset expectedEnd;
+        DateTimeOffset expectedStart;
+
+        if (start.HasValue)
+        {
+            expectedStart = start.Value;
+        }
+        else
+        {
+            expectedStart = DateTimeOffset.UtcNow;
+        }
+
+        if (end.HasValue)
+        {
+            expectedEnd = end.Value;
+        }
+        else
+        {
+            expectedEnd = expectedStart;
+        }
+
+        // Because this method uses DateTimeOffset.UtcNow as a default, we cannot precisely check our date expectations
+        // so instead, we test that the dates are within a tolerable range using DateTimeOffset Ticks.
+        // 1 Second == 10,000,000 Ticks
+        // 1000 Ticks == 0.1 Milliseconds
+        var minAllowableStartTicks = expectedStart.Ticks - tickTolerance;
+        var maxAllowableStartTicks = expectedStart.Ticks + tickTolerance;
+        var minAllowableEndTicks = expectedEnd.Ticks - tickTolerance;
+        var maxAllowableEndTicks = expectedEnd.Ticks + tickTolerance;
 
         // Act
-        var value = await emissionsHandler.GetAverageCarbonIntensityAsync(location, start, end);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
+
+        await emissionsHandler.GetBestEmissionsDataAsync("eastus", start, end);
 
         // Assert
-        var expectedContent = data;
-        Assert.That(value, Is.EqualTo(expectedContent));
+        Assert.That(actualStart.Ticks, Is.InRange(minAllowableStartTicks, maxAllowableStartTicks));
+        Assert.That(actualEnd.Ticks, Is.InRange(minAllowableEndTicks, maxAllowableEndTicks));
+    }
+
+    [Test]
+    public void GetBestEmissionsDataAsync_ThrowsWhenNoLocations()
+    {
+        // Arrange
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
+
+        // Act & Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetBestEmissionsDataAsync(""));
+    }
+
+    [Test]
+    public void GetBestEmissionsDataAsync_ThrowsWhenEndButNoStart()
+    {
+        // Arrange
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
+
+        // Act & Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetBestEmissionsDataAsync("eastus",null, DateTimeOffset.Now));
+    }
+
+    [TestCase("eastus", "2021-11-18T00:00:00Z", "2021-11-18T08:00:00Z", ExpectedResult = 60)]
+    [TestCase("westus", "2021-11-17T00:00:00Z", "2021-11-18T00:00:00Z", ExpectedResult = 20)]
+    [TestCase("eastus", "2021-11-19T00:00:00Z", "2021-12-30T00:00:00Z", ExpectedResult = 0)]
+    [TestCase("fakelocation", "2021-11-18T00:00:00Z", "2021-12-30T00:00:00Z", ExpectedResult = 0)]
+    public async Task<double> CalculateAverageCarbonIntensityAsync_ValidTimeInterval(string regionName, string startString, string endString)
+    {
+        // Arrange
+       
+        var start = DateTimeOffset.Parse(startString);
+        var end = DateTimeOffset.Parse(endString);
+        var data = TestData.GetFilteredEmissionDataList(regionName, start, end);
+        var dataSource = CreateEmissionsDataSource(data);
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, dataSource.Object);
+
+        // Act
+        var result = await emissionsHandler.GetAverageCarbonIntensityAsync(regionName, start, end);
+
+        return result;
     }
 
     /// <summary>
@@ -140,51 +263,82 @@ public class EmissionsHandlerTests
     public void GetAverageCarbonIntensity_ErrorThrowsCustomException()
     {
         // Arrange
-        var aggregator = new Mock<IEmissionsAggregator>();
-        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>())).ThrowsAsync(new CarbonAwareException(""));
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, aggregator.Object);
+        var datasource = new Mock<IEmissionsDataSource>();
+        datasource.Setup(x => x.GetCarbonIntensityAsync(It.IsAny<Location>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>())).ThrowsAsync(new CarbonAwareException(""));
+        
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
 
-        // Act/Assert
+        //Act Assert
         Assert.ThrowsAsync<CarbonAwareException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", DateTimeOffset.Now, DateTimeOffset.Now));
     }
 
-    private static Mock<IEmissionsAggregator> CreateEmissionsAggregatorWithAverageCI(double data)
+    [TestCase("2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", 0, TestName = "GetEmissionsDataAsync calls data source with expected dates: start & end")]
+    [TestCase("2000-01-01T00:00:00Z", null, 1000, TestName = "GetEmissionsDataAsync calls data source with expected dates: only start")]
+    [TestCase(null, null, 1000, TestName = "GetEmissionsDataAsync calls data source with expected dates: no start or end")]
+    public async Task GetEmissionsDataAsync_CallsWithExpectedDates(DateTimeOffset? start, DateTimeOffset? end, long tickTolerance)
     {
-        var aggregator = new Mock<IEmissionsAggregator>();
-        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
+        // Arrange
+        // Default to a random time that will always be wrong for these test cases.
+        DateTimeOffset actualStart = DateTimeOffset.Parse("1984-06-06Z");
+        DateTimeOffset actualEnd = DateTimeOffset.Parse("1984-06-06Z");
+        var datasource = new Mock<IEmissionsDataSource>();
+        datasource.Setup(x => x.GetCarbonIntensityAsync(
+            It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .Callback((IEnumerable<Location> _, DateTimeOffset _start, DateTimeOffset _end) =>
             {
-                parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
-                parameters.Validate();
-            })
-            .ReturnsAsync(data);
+                actualStart = _start;
+                actualEnd = _end;
+            });
 
-        return aggregator;
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
+
+        DateTimeOffset expectedEnd;
+        DateTimeOffset expectedStart;
+
+        if (start.HasValue)
+        {
+            expectedStart = start.Value;
+        }
+        else
+        {
+            expectedStart = DateTimeOffset.UtcNow;
+        }
+
+        if (end.HasValue)
+        {
+            expectedEnd = end.Value;
+        }
+        else
+        {
+            expectedEnd = expectedStart;
+        }
+
+        // Because this method uses DateTimeOffset.UtcNow as a default, we cannot precisely check our date expectations
+        // so instead, we test that the dates are within a tolerable range using DateTimeOffset Ticks.
+        // 1 Second == 10,000,000 Ticks
+        // 1000 Ticks == 0.1 Milliseconds
+        var minAllowableStartTicks = expectedStart.Ticks - tickTolerance;
+        var maxAllowableStartTicks = expectedStart.Ticks + tickTolerance;
+        var minAllowableEndTicks = expectedEnd.Ticks - tickTolerance;
+        var maxAllowableEndTicks = expectedEnd.Ticks + tickTolerance;
+
+        // Act
+        await emissionsHandler.GetEmissionsDataAsync("eastus", start, end);
+
+        // Assert
+        Assert.That(actualStart.Ticks, Is.InRange(minAllowableStartTicks, maxAllowableStartTicks));
+        Assert.That(actualEnd.Ticks, Is.InRange(minAllowableEndTicks, maxAllowableEndTicks));
     }
-
-    private static Mock<IEmissionsAggregator> CreateEmissionsAggregator(EmissionsData[] data)
+    
+    private static Mock<IEmissionsDataSource> CreateEmissionsDataSource(IEnumerable<EmissionsData> data)
     {
-        var aggregator = new Mock<IEmissionsAggregator>();
-        aggregator.Setup(x => x.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
-            {
-                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-                parameters.Validate();
-            })
+        var datasource = new Mock<IEmissionsDataSource>();
+        datasource
+            .Setup(x => x.GetCarbonIntensityAsync(It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
             .ReturnsAsync(data);
-        return aggregator;
-    }
-
-    private static Mock<IEmissionsAggregator> CreateEmissionsAggregatorWithBestEmissionsData(EmissionsData[] data)
-    {
-        var aggregator = new Mock<IEmissionsAggregator>();
-        aggregator.Setup(x => x.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
-            {
-                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-                parameters.Validate();
-            })
-            .ReturnsAsync(data);
-        return aggregator;
+        datasource
+           .Setup(x => x.GetCarbonIntensityAsync(It.IsAny<Location>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+           .ReturnsAsync(data);
+        return datasource;
     }
 }

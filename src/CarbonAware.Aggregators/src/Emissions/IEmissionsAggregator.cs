@@ -3,6 +3,7 @@ using CarbonAware.Model;
 
 namespace CarbonAware.Aggregators.Emissions;
 
+[Obsolete]
 public interface IEmissionsAggregator
 {
     /// <summary>

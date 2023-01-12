@@ -17,8 +17,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" PrivateAssets="all"/>
-      <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" PrivateAssets="all" />
+      <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" PrivateAssets="all" />
+	    <ProjectReference Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
@@ -52,13 +52,4 @@
     <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
       <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net6.0/" />
     </ItemGroup>
-
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>GSF.CarbonAware.Tests</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
 </Project>

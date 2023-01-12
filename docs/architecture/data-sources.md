@@ -6,15 +6,17 @@ Data sources allow developers easily integrate different data providers into the
 Data sources act as the data ingestion tier for the SDK, handling the retrieval of data from a given data provider. They contain specific knowledge about the data provider they access, such as flags used in requests, fields that come back in responses, special use cases etc. They also handle any external calls that must be made to access the data provider. While helper clients can be built to handle these calls, only the data source should have access to, and knowledge of, that client.
 - For example, the WattTimeDataSource has a reference to a private WattTimeClient within it's implementation. The WattTimeClient handles the HTTP GET/POST calls to WattTime and the data source invokes the client once it has processed the request, and then processes the response before returning a final result.
 
-### Aggregator <-> Data Source Contract
-In order for the SDK to support different data sources, there is a defined contract between the Aggregators and the Data tier. The Aggregator acts as the "Business Logic" of the application so it needs a standard way of requesting data from the data source and a standard response in return. This means that each data source is responsible for: 
-- Pre-processing any arguments passed to it from the Aggregator to create the expected request for the data provider.
-- Post-processing the data provider result to create the expected return type for the Aggregator
+### GSF Handler <-> Data Source Contract
+In order for the SDK to support different data sources, there is a defined contract between the Handler and the Data tier. The handler acts as the "Business Logic" of the application so it needs a standard way of requesting data from the data source and a standard response in return. This means that each data source is responsible for: 
+- Pre-processing any arguments passed to it from the handler to create the expected request for the data provider.
+- Post-processing the data provider result to create the expected return type for the Handler.
+
+Each handler is responsible for interacting on its own domain. For instance, EmissionsHandler can have a method `GetAverageCarbonIntensityAsync()` to pull EmissionsData data from a configured data source and calculate the average carbon intensity. ForecastHandler can have a method `GetCurrentForecastAsync()`, that will return a EmissionsForecast instance.
 
 #### Post-Processing Caveat
-Post-processing should only ensure the types are what is expected and to fix any inconsistencies or issues that may be known to that specific data source. This post-processing **should not** do any extra data operations beyond those required to fulfill the Aggregator request ( i.e., averaging, min/max ops etc.). In other words, the data source should only manipulate data for the aim of returning _valid*_ data in the boundaries requested by the Aggregator
+Post-processing should only ensure the types are what is expected and to fix any inconsistencies or issues that may be known to that specific data source. This post-processing **should not** do any extra data operations beyond those required to fulfill the Handler request ( i.e., averaging, min/max ops etc.). In other words, the data source should only manipulate data for the aim of returning _valid*_ data in the boundaries requested by the Handler.
 
-\* What constitutes _valid_ data varies between data sources. It may be the case that some data sources don't handle time boundaries well so  extra processing may be required to ensure the data returned is what the aggregator expects assuming it was any data source and that those edge cases would be handled properly.
+\* What constitutes _valid_ data varies between data sources. It may be the case that some data sources don't handle time boundaries well so  extra processing may be required to ensure the data returned is what the handler expects assuming it was any data source and that those edge cases would be handled properly.
 
 ## Creating a New Data Source
 

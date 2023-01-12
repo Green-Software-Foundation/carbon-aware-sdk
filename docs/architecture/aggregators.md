@@ -1,3 +1,5 @@
+> :exclamation:  The Aggregator project is deprecated and should no longer be used. The business logic layer now comprises of Handlers from the GSF library. Please refer to #overview.md for more details.
+
 # Aggregators
 Aggregators live in between the consumer and data tiers, containing the business logic for the SDK. They have knowledge of the different types of data providers and how to aggregate the resulting data.
 

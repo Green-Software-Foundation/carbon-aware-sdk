@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.Aggregators.Configuration;
 
+[Obsolete]
 public static class ServiceCollectionExtensions
 {
     /// <summary>
