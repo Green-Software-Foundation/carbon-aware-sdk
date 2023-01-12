@@ -74,7 +74,7 @@ Below is the environment variable (i.e. bash shell) needed to set up the **Json*
 
 There is a sample console app in the [lib integration folder](../samples/lib-integration/ConsoleApp/). The app shows how to use dependency injection to pull in the packages and interact with the SDK.
 
-In order to run the sample console app, you will need to
+The sample app is not intended to run as a standalone app. In order to build and run the app, all the dependent packages need to be created first and then imported in the app. Follow the steps below to run the sample console app - 
 
 * Run the [script commands](#included-scripts) to create the packages and add them into the app
 * Create the [environment variables](#sdk-configuration) to connect to the WattTime or Json data sources
