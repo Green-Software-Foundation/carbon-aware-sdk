@@ -21,21 +21,6 @@ public record EmissionsDataDTO
     [JsonPropertyName("value")]
     public double Value { get; set; }
 
-    public static EmissionsDataDTO? FromEmissionsData(global::CarbonAware.Model.EmissionsData emissionsData)
-    {
-        if (emissionsData == null)
-        {
-            return null;
-        }
-        return new EmissionsDataDTO
-        {
-            Location = emissionsData.Location,
-            Timestamp = emissionsData.Time,
-            Duration = (int)emissionsData.Duration.TotalMinutes,
-            Value = emissionsData.Rating
-        };
-    }
-
     public static EmissionsDataDTO? FromEmissionsData(global::GSF.CarbonAware.Models.EmissionsData emissionsData)
     {
         if (emissionsData == null)
