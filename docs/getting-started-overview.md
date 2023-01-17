@@ -1,14 +1,16 @@
-# Getting Started
+# Getting Started Overview
 
 This SDK has several entry points:
 
-- You can run the application using the [CLI](./src/CarbonAware.CLI).
+- You can run the application using the [CLI](./src/CarbonAware.CLI) and refer to more documentation [here](./carbon-aware-cli.md).
 
-- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi) and connect via REST requests.
+- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi) and connect via REST requests and refer to more documentation [here](./carbon-aware-webapi.md).
 
 - (Future) You can install the Nuget package and make requests directly. ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
 Each of these has configuration requirements which are detailed below. You can also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step process for running the CLI locally, deploying the Web API locally, polling the API via HTTP requests or generating and using client libraries (Python example).
+
+For more detailed architecture and design decisions around the Carbon Aware SDK, refer to the [Architecture directory](./architecture/).
 
 ## Pre-requisites
 
@@ -21,7 +23,9 @@ Make sure you have installed the following pre-requisites:
 
 ## Data Sources
 
-We intend to support multiple data sources for carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/), and [ElectricityMaps](https://www.electricitymaps.com/) are supported.  To use WattTime data or Electricity Maps data, you'll need to acquire a license from them and set the appropriate configuration information.
+We intend to support multiple data sources for carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/), and [ElectricityMaps](https://www.electricitymaps.com/) are supported. To use WattTime data or Electricity Maps data, you'll need to acquire a license from them and set the appropriate configuration information.
+
+You can also visit the [selecting-a-date-source.md](docs/../selecting-a-data-source.md) guide for more information on data sources options, and [data-sources.md](./architecture/data-sources.md) for detailed architecture decisions around integrating different data providers into the carbon aware SDK.
 
 ## Configuration
 
@@ -36,6 +40,7 @@ Please note that configuration is hierarchical.  The last configuration source l
 See [configuration.md](/docs/configuration.md) for details about how to configure specific components of the application.
 
 #### Environment variables
+
 When adding values via environment variables, we recommend that you use the double underscore form, rather than the colon form.  Colons won't work in non-windows environment.  For example:
 
 ```bash
@@ -58,15 +63,15 @@ To use the settings file, rename a copy of the template called `appsettings.Deve
 
 ## Publish WebAPI with container
 
-You can publish Web API for Carbon Aware SDK with container. This instruction shows how to build / run container image with [Podman](https://podman.io/).
+You can publish Web API for Carbon Aware SDK with container. These instructions show how to build / run container image with [Podman](https://podman.io/).
 
 ### Build container image
 
 Following commands build the container which named to `carbon-aware-sdk-webapi` from sources.
 
 ```bash
-$ cd src
-$ podman build -t carbon-aware-sdk-webapi -f CarbonAware.WebApi/src/Dockerfile .
+$cd src
+$podman build -t carbon-aware-sdk-webapi -f CarbonAware.WebApi/src/Dockerfile .
 ```
 
 ### Run Web API container
@@ -83,7 +88,7 @@ $ podman run -it --rm -p 8080:80 \
   carbon-aware-sdk-webapi
 ```
 
-or 
+or
 
 ```bash
 $ podman run -it --rm -p 8080:80 \
@@ -108,3 +113,5 @@ $ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | j
     },
             :
 ```
+
+For more information on containerization, refer to the markdown in [containerization.md](./containerization.md).
