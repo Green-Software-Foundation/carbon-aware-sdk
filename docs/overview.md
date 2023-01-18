@@ -1,4 +1,4 @@
-# Getting Started Overview
+# Overview
 
 This SDK has several entry points:
 
@@ -11,6 +11,14 @@ This SDK has several entry points:
 Each of these has configuration requirements which are detailed below. You can also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step process for running the CLI locally, deploying the Web API locally, polling the API via HTTP requests or generating and using client libraries (Python example).
 
 For more detailed architecture and design decisions around the Carbon Aware SDK, refer to the [Architecture directory](./architecture/).
+
+## Carbon Aware Library
+
+The Carbon Aware SDK provides a C\# Client Library with handlers that replicates the Web Api, CLI and SDK functionality, leveraging the same configurations as the aggregators. See:
+
+- [carbon-aware-library.md](./carbon-aware-library.md) for more information about library features.
+- [packaging.md](./packaging.md) for details on how to package and consume the library.
+- [gsf-carbon-aware-library-package.md](./gsf-carbon-aware-library-package.md) for instructions about integrating the library in other projects using dependency injection.
 
 ## Pre-requisites
 
