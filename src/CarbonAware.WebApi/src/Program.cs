@@ -1,5 +1,6 @@
 using System.Reflection;
 using CarbonAware;
+using CarbonAware.Exceptions;
 using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -8,15 +9,7 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.local.json", optional:true);// Optional and would locally set variables override environment variables
-        var config2 = configurationBuilder.Build();
-
 // Add services to the container.
-
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<HttpResponseExceptionFilter>();
@@ -36,9 +29,12 @@ builder.Services.AddSwaggerGen(c =>
     c.SchemaFilter<CarbonAwareParametersBaseDtoSchemaFilter>();
 });
 
-builder.Services.Configure<CarbonAwareVariablesConfiguration>(config2.GetSection(CarbonAwareVariablesConfiguration.Key));
-builder.Services.AddCarbonAwareEmissionServices(builder.Configuration);
-CarbonAwareVariablesConfiguration config = new CarbonAwareVariablesConfiguration();
+builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
+
+string? errorMessage;
+bool successfulEmissionServices = builder.Services.TryAddCarbonAwareEmissionServices(builder.Configuration, out errorMessage);
+
+CarbonAwareVariablesConfiguration config = new();
 
 builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
 
@@ -51,6 +47,12 @@ builder.Services.AddSwaggerGen(c => {
     });
 
 var app = builder.Build();
+
+if(!successfulEmissionServices)
+{
+    var _logger = app.Services.GetService<ILogger<Program>>();
+    _logger?.LogError(errorMessage);
+}
 
 if (config.WebApiRoutePrefix != null)
 {

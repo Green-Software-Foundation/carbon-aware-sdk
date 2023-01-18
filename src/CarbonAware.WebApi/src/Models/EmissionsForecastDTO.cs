@@ -101,7 +101,7 @@ public record EmissionsForecastDTO
         return new EmissionsForecastDTO
         {
             GeneratedAt = emissionsForecast.GeneratedAt,
-            Location = emissionsForecast.Location.DisplayName,
+            Location = emissionsForecast.Location.Name!,
             DataStartAt = emissionsForecast.DataStartAt,
             DataEndAt = emissionsForecast.DataEndAt,
             WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,

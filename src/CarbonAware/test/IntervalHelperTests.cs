@@ -48,10 +48,6 @@ public class IntervalHelperTests
         var emptyResult = IntervalHelper.FilterByDuration(Enumerable.Empty<EmissionsData>(), startDateTimeOffset, endDateTimeOffset);
         Assert.False(emptyResult.Any());
 
-        // If pass in duration, will ignore data value. With 45 min duration, captures 3 data points
-        var constantDuration = IntervalHelper.FilterByDuration(data, startDateTimeOffset, endDateTimeOffset, TimeSpan.FromMinutes(45));
-        Assert.True(constantDuration.Count() == 3);
-
         // If don't pass in duration, will lookup value in data. WIth included 30 min duration, captures 2 data points
         var minWindowValid = IntervalHelper.FilterByDuration(data, startDateTimeOffset, endDateTimeOffset);
         Assert.True(minWindowValid.Count() == 2);

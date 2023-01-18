@@ -1,0 +1,54 @@
+name: Build and Install GSF Packages on Sample ConsoleApp
+
+on:
+  push:
+    branches: [ dev, main ]
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/**'
+      - 'samples/lib-integration/ConsoleApp/**'
+      - 'scripts/package/**'
+
+env:
+  DOTNET_SOLUTION: "src/CarbonAwareSDK.sln"
+  OUTPUT_DIR: "packages"
+  CONSOLE_APP: "samples/lib-integration/ConsoleApp/ConsoleApp.csproj"
+  CREATE_PKGS: "scripts/package/create_packages.sh"
+  ADD_PKGS: "scripts/package/add_packages.sh"
+
+jobs:
+  dotnet-pack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup .NET Core SDK 6
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: false
+
+      - name: Create packages
+        run: ${{ env.CREATE_PKGS }} ${{ env.DOTNET_SOLUTION }} ${{ env.OUTPUT_DIR }}
+
+      - name: Restore current packages for ConsoleApp
+        run: dotnet restore ${{ env.CONSOLE_APP }}
+
+      - name: Add packages to ConsoleApp
+        run: ${{ env.ADD_PKGS }} ${{ env.CONSOLE_APP}} ${{ env.OUTPUT_DIR }}
+
+      - name: Cat ConsoleApp project file
+        run: cat ${{ env.CONSOLE_APP }}
+
+      - name: Restore packages for ConsoleApp
+        run: dotnet restore ${{ env.CONSOLE_APP }}
+
+      - name: Build ConsoleApp
+        run: dotnet build ${{ env.CONSOLE_APP }}
+
+      - name: Run ConsoleApp
+        run: dotnet run --project ${{ env.CONSOLE_APP }}
+

@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+      <TargetFramework>net6.0</TargetFramework>
+      <ImplicitUsings>enable</ImplicitUsings>
+      <Nullable>enable</Nullable>
+      <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+      <PackageId>$(AssemblyName)</PackageId>
+      <Version>1.0.0-beta</Version>
+      <Authors>GSF</Authors>
+      <Company>GSF</Company>
+      <PackageTags>Green Software Foundation;GSF;Microsoft</PackageTags>
+      <Title>Green Software Foundation SDK</Title>
+      <RepositoryUrl>https://github.com/Green-Software-Foundation/carbon-aware-sdk.git</RepositoryUrl>
+      <PackageLicenseExpression>MIT</PackageLicenseExpression>
+      <Description>Green Software Foundation SDK. Allows to retreive Carbon Emissions data from different data sources like WattTime or ElectricityMaps or a static json file.</Description>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" PrivateAssets="all"/>
+      <ProjectReference Include="..\..\CarbonAware.Aggregators\src\CarbonAware.Aggregators.csproj" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <!-- Add references for all the other projects external dependencies for packaging -->
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+      <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
+      <PackageReference Include="System.ComponentModel.Composition" Version="6.0.0" />
+      <PackageReference Include="WireMock.Net" Version="1.5.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+        <_Parameter1>GSF.CarbonAware.Tests</_Parameter1>
+      </AssemblyAttribute>
+      <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+        <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+      </AssemblyAttribute>
+    </ItemGroup>
+
+    <!-- Add files required to create a package -->
+    <ItemGroup Label="FilesToCopy">
+      <Content Include="$(AssemblyName).targets" Pack="true" PackagePath="build/$(AssemblyName).targets" />
+      <Content Include="$(TargetDir)/CarbonAware*.dll" Pack="true" PackagePath="lib/net6.0/" />
+      <Content Include="$(TargetDir)/data-sources/**/*.json" Pack="true" PackagePath="data-sources/" />
+      <Content Include="$(TargetDir)/location-sources/**/*.json" Pack="true" PackagePath="location-sources/" />
+    </ItemGroup>
+
+    <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
+      <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net6.0/" />
+    </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>GSF.CarbonAware.Tests</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+</Project>

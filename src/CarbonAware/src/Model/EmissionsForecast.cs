@@ -1,3 +1,5 @@
+using CarbonAware.Exceptions;
+
 namespace CarbonAware.Model;
 
 public record EmissionsForecast
@@ -14,7 +16,7 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the location the forecast is for.
     /// </summary>
-    public Location Location { get; set; } = new Location(){ LocationType = LocationType.NotProvided };
+    public Location Location { get; set; } = new();
    
     /// <summary>
     /// Gets or sets the start time of the forecast data points.
@@ -39,7 +41,7 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the optimal data points within the ForecastData set.
     /// </summary>
-    public IEnumerable<EmissionsData> OptimalDataPoints { get; set; }
+    public IEnumerable<EmissionsData> OptimalDataPoints { get; set; } = new List<EmissionsData>();
 
 
     public void Validate()
@@ -83,5 +85,18 @@ public record EmissionsForecast
             errors[key] = new List<string>();
         }
         errors[key].Add(message);
+    }
+
+    public TimeSpan GetDurationBetweenForecastDataPoints()
+    {
+        var firstPoint = ForecastData.FirstOrDefault();
+        var secondPoint = ForecastData.Skip(1)?.FirstOrDefault();
+
+        var first = firstPoint ?? throw new CarbonAwareException("First. Too few data points returned");
+        var second = secondPoint ?? throw new CarbonAwareException("Second. Too few data points returned");
+
+        // Handle chronological and reverse-chronological data by using `.Duration()` to get
+        // the absolute value of the TimeSpan between the two points.
+        return first.Time.Subtract(second.Time).Duration();
     }
 }

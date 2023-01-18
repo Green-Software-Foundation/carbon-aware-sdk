@@ -13,15 +13,12 @@ public static class IntervalHelper
     /// <param name="startTime">Original start time provided by user</param>
     /// <param name="endTime">Original end time provided by user</param>
     /// <returns>Filtered emissions data.</returns>
-    public static IEnumerable<EmissionsData> FilterByDuration(IEnumerable<EmissionsData> expandedData, DateTimeOffset startTime, DateTimeOffset endTime, TimeSpan duration = default)
+    public static IEnumerable<EmissionsData> FilterByDuration(IEnumerable<EmissionsData> expandedData, DateTimeOffset startTime, DateTimeOffset endTime)
     {
-        if (duration != default)
-        {   // constant duration
-            return expandedData.Where(d => (d.Time + duration) >= startTime && d.Time <= endTime);
-        }
-        return expandedData.Where(d => (d.Time + d.Duration) >= startTime && d.Time <= endTime);
+        return expandedData.Where(d => (d.Time + d.Duration) > startTime && d.Time <= endTime);
     }
 
+    
     /// <summary>
     /// Extends start and end times by subtracting/adding window respectively
     /// </summary>

@@ -1,2 +1,1 @@
-﻿global using CarbonAware.Config;
-global using NUnit.Framework;
+﻿global using NUnit.Framework;

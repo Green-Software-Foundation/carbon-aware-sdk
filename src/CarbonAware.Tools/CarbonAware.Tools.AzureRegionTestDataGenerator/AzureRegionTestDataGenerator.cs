@@ -44,7 +44,7 @@ public class AzureRegionTestDataGenerator
                     {
                         // 3 times per day (8 hours apart), 365 days per year 
                         Time = DateTime.Now + TimeSpan.FromHours(8 * hours) + TimeSpan.FromDays(days),
-                        Location = region.name,
+                        Location = region.name ?? string.Empty,
                         Rating = ran.Next(100)
                     };
                     emData.Add(e);

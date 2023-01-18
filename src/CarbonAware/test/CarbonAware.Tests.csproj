@@ -10,44 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="files\carbon-aware\test-carbon-aware-bad-data.json" />
-    <None Remove="test-carbon-aware-bad-service-config.json" />
-    <None Remove="test-carbon-aware-bad-types.json" />
-    <None Remove="test-carbon-aware-bad.json" />
-    <None Remove="test-carbon-aware-clean.json" />
-    <None Remove="test-data-bad-config.json" />
-    <None Remove="test-data-clean.json" />
-    <None Remove="test-malformed-json.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="files\carbon-aware\test-carbon-aware-bad-service-config.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\carbon-aware\test-carbon-aware-bad.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\carbon-aware\test-carbon-aware-bad-types.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\carbon-aware\test-carbon-aware-bad-data.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\carbon-aware\test-carbon-aware-clean.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\data-files\test-data-bad.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\data-files\test-data-clean.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="files\test-malformed-json.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
     <PackageReference Include="Moq" Version="4.17.2" />
     <PackageReference Include="NUnit" Version="3.13.2" />
@@ -63,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CarbonAware.Plugins.BasicJsonPlugin\src\CarbonAware.Plugins.BasicJsonPlugin.csproj" />
     <ProjectReference Include="..\src\CarbonAware.csproj" />
   </ItemGroup>
 

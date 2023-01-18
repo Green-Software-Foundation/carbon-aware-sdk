@@ -4,6 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware.DataSources.Mocks\mock\CarbonAware.DataSources.Mocks.csproj" />
-    <ProjectReference Include="..\..\..\CarbonAware.Tools\CarbonAware.Tools.WattTimeClient\src\CarbonAware.Tools.WattTimeClient.csproj" />
+    <ProjectReference Include="..\src\CarbonAware.DataSources.WattTime.csproj" />
   </ItemGroup>
 
 </Project>

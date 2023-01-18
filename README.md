@@ -1,25 +1,3 @@
-[![Join #CarbonHack22](images/hackathon-banner.png)](https://grnsft.org/hack22)
-
-**Decarbonize Software. 40K Top Prize.**
-
-Carbon Hack 22, the best carbon aware software solution built using the [Carbon Aware SDK and API](https://github.com/Green-Software-Foundation/carbon-aware-sdk) wins $40K with a total prize pool of $90K.
-
-We're running weekly webinars to talk about the hackathon, demo the SDK and API, talk to hackathon participants and answer any questions. To register for the next one click this link 👉 https://grnsft.org/hack22/webinar
-
-For the duration of the hackathon you can try a hosted version of the API with real-data, try it out here 👉 https://grnsft.org/hack22/api
-
-A carbon aware application does more when the electricity is clean, and less when it's dirty. Whether your specialty is machine learning, web, mobile, cloud, IoT or anything in between you can make any type of application carbon aware with the Carbon Aware SDK and API. Review [FAQ doc](https://grnsft.org/hack22/FAQ) to learn more about the SDK.
-
-You can compete by yourself or join another team if you don't have an idea! Visit our [Project Ideas Matchmaking doc](https://docs.google.com/document/d/14VQZwFe-Q8bxf1TbsNNOXfTT37BFGVfUfk0MzP7rE6c/edit#) where you can find teams to join.
-
-
-
-Competition starts on Oct 13 and runs for 3 weeks.
-
-Hackathon ends with a two-minute pitch presentation on Nov 10, judged by global industry leaders from [Accenture](https://www.linkedin.com/company/accenture/), [Avanade](https://www.linkedin.com/company/avanade/), [Boston Consulting Group (BCG)](https://www.linkedin.com/company/boston-consulting-group/), [Globant](https://www.linkedin.com/company/globant/), [Goldman Sachs](https://www.linkedin.com/company/goldman-sachs/), [Intel Corporation](https://www.linkedin.com/company/intel-corporation/), [Thoughtworks](https://www.linkedin.com/company/thoughtworks/), and [UBS](https://www.linkedin.com/company/ubs/). Hosted by the [Green Software Foundation](https://greensoftware.foundation/).
-
-If you are convinced already and want to signup to the hackathon register at https://grnsft.org/hack22.
-
 # Carbon Aware SDK
 You can reduce the carbon footprint of your application by just running things at different times and in different locations. That is because not all electricity is produced in the same way. Most is produced through burning fossil fuels, some is produced using cleaner sources like wind and solar.
 
@@ -56,7 +34,7 @@ The Carbon Aware SDK is being used by large and small companies around the world
 
 Machine Learning (ML) workloads are a great example of long running compute intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be reduced even further, at times by up to 50% or more.
 
-# What does the SDK/API provide that 3rd party data providers such as WattTime or ElectricityMap do not?
+# What does the SDK/API provide that 3rd party data providers such as WattTime or ElectricityMaps do not?
 Many of the benefits tend to relate to removing the tight coupling of an application from the 3rd party data source it is using, and allow the application to focus on the sustainability impact it is looking to drive.  This abstraction allows for changing of data providers, data provider aggregation, centralised management, auditability and traceability, and more.
 
 ## Collaborative Effort

@@ -191,13 +191,13 @@ public class CarbonAwareParametersTests
         Assert.AreEqual(multipleLocationsIsSet, result._props[PropertyName.MultipleLocations].IsSet);
         Assert.AreEqual(startIsSet, result._props[PropertyName.Start].IsSet);
         Assert.AreEqual(endIsSet, result._props[PropertyName.End].IsSet);
-        if (multipleLocationsIsSet) { Assert.AreEqual(location, result.MultipleLocations.First().RegionName); }
+        if (multipleLocationsIsSet) { Assert.AreEqual(location, result.MultipleLocations.First().Name); }
         if (startIsSet) { Assert.AreEqual(start!.Value, result.Start); }
         if (endIsSet) { Assert.AreEqual(end!.Value, result.End); }
     }
 
     [Test]
-    public void ImplicitOperator_CastsDtoWithNameMapping()
+    public void ImplicitOperator_CastsDtoWithAttributeNameMapping()
     {
         // Arrange
         var dto = new TestDerivedDto();
@@ -209,6 +209,28 @@ public class CarbonAwareParametersTests
         Assert.AreEqual(RENAMED_MULTIPLE_LOCATIONS_PROPERTY, result._props[PropertyName.MultipleLocations].DisplayName);
         Assert.AreEqual(RENAMED_START_PROPERTY, result._props[PropertyName.Start].DisplayName);
         Assert.AreEqual(RENAMED_END_PROPERTY, result._props[PropertyName.End].DisplayName);
+    }
+
+    [Test]
+    public void ImplicitOperator_CastsDtoWithConstructorNameMapping()
+    {
+        // Arrange
+        var customStart = "myTestStart";
+        var customEnd = "myTestEnd";
+        var displayNames = new Dictionary<string, string>()
+        {
+            { "Start", customStart },
+            { "End", customEnd },
+        };
+        var dto = new CarbonAwareParametersBaseDTO(displayNames);
+
+        // Act
+        var result = (CarbonAwareParameters)dto;
+
+        // Assert
+        Assert.AreEqual(PropertyName.MultipleLocations.ToString(), result._props[PropertyName.MultipleLocations].DisplayName);
+        Assert.AreEqual(customStart, result._props[PropertyName.Start].DisplayName);
+        Assert.AreEqual(customEnd, result._props[PropertyName.End].DisplayName);
     }
 
     [Test]
