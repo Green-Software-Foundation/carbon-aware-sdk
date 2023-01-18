@@ -68,8 +68,8 @@ public class CarbonAwareController : ControllerBase
     /// Calculate the best emission data by location for a specified time period.
     /// </summary>
     /// <param name="location"> String named location.</param>
-    /// <param name="time"> [Optional] Start time for the data query.</param>
-    /// <param name="toTime"> [Optional] End time for the data query.</param>
+    /// <param name="startTime"> [Optional] Start time for the data query.</param>
+    /// <param name="endTime"> [Optional] End time for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
@@ -78,16 +78,16 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(
         [FromQuery, SwaggerParameter(Required = true)] string location, 
-        DateTimeOffset? time = null, 
-        DateTimeOffset? toTime = null)
+        DateTimeOffset? startTime = null, 
+        DateTimeOffset? endTime = null)
     {
         using (var activity = Activity.StartActivity())
         {
             var parameters = new EmissionsDataForLocationsParametersDTO
             {
                 MultipleLocations = new string[]{ location },
-                Start = time,
-                End = toTime
+                Start = startTime,
+                End = endTime
             };
             return await GetEmissionsDataForLocationsByTime(parameters);
         }

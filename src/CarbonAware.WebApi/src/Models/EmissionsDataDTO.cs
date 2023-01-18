@@ -1,6 +1,7 @@
 ﻿namespace CarbonAware.WebApi.Models;
 
 using System.Text.Json.Serialization;
+using GSF.CarbonAware.Models;
 
 [Serializable]
 public record EmissionsDataDTO
@@ -21,7 +22,7 @@ public record EmissionsDataDTO
     [JsonPropertyName("value")]
     public double Value { get; set; }
 
-    public static EmissionsDataDTO? FromEmissionsData(global::GSF.CarbonAware.Models.EmissionsData emissionsData)
+    public static EmissionsDataDTO? FromEmissionsData(EmissionsData emissionsData)
     {
         if (emissionsData == null)
         {

@@ -1,6 +1,7 @@
 ﻿namespace CarbonAware.WebApi.Models;
 
 using System.Text.Json.Serialization;
+using GSF.CarbonAware.Models;
 
 [Serializable]
 public record EmissionsForecastDTO
@@ -95,7 +96,7 @@ public record EmissionsForecastDTO
     [JsonPropertyName("forecastData")]
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static EmissionsForecastDTO FromEmissionsForecast(global::GSF.CarbonAware.Models.EmissionsForecast emissionsForecast)
+    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast)
     {
         return new EmissionsForecastDTO
         {

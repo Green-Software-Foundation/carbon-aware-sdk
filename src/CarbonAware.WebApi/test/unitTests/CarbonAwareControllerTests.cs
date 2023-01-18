@@ -79,9 +79,9 @@ public class CarbonAwareControllerTests : TestsBase
         var data = new List<EmissionsData>()
         {
             new EmissionsData(){
-            Location = "Sydney",
-            Rating = 0.9,
-            Time = DateTime.Now
+                Location = "Sydney",
+                Rating = 0.9,
+                Time = DateTime.Now
             }
         };
         var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateHandlerWithBestEmissionsData(data).Object, forecastHandler);

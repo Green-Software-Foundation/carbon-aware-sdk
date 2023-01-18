@@ -22,7 +22,7 @@ public abstract class TestsBase
     {
         var handler = new Mock<IEmissionsHandler>();
 
-        handler.Setup(x => x.GetEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+        handler.Setup(x => x.GetEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()))
             .Callback((string[] location, DateTimeOffset? start, DateTimeOffset? end) =>
             {
                 Assert.NotNull(location);
@@ -35,7 +35,7 @@ public abstract class TestsBase
     protected static Mock<IEmissionsHandler> CreateHandlerWithBestEmissionsData(List<EmissionsData> data)
     {
         var handler = new Mock<IEmissionsHandler>();
-        handler.Setup(x => x.GetBestEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+        handler.Setup(x => x.GetBestEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()))
             .Callback((string[] location, DateTimeOffset? start, DateTimeOffset? end) =>
             {
                 Assert.NotNull(location);
@@ -52,7 +52,7 @@ public abstract class TestsBase
             new EmissionsForecast(){ EmissionsDataPoints = data }
         };
         var handler = new Mock<IForecastHandler>();
-        handler.Setup(x => x.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>()))
+        handler.Setup(x => x.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
             .Callback((string[] locations, DateTimeOffset? dataStartAt, DateTimeOffset? dataEndAt, int? windowSize) =>
             {
                 Assert.NotNull(locations);
