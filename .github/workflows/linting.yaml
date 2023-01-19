@@ -17,9 +17,12 @@ jobs:
     steps:
       - name: Check out the code
         uses: actions/checkout@v2
-      - name: "Validate markdown file locations"
+
+        # See the script for details about exceptions to this check
+      - name: Markdown files should be located in docs folder
         continue-on-error: true
-        run: "scripts/check-markdown-files.sh" 
+        run: "scripts/markdown/check-markdown-files.sh" 
+        
       - name: markdownlint-cli2-action
         uses: DavidAnson/markdownlint-cli2-action@v9
         continue-on-error: true

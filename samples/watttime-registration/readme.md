@@ -1,4 +1,4 @@
-# Watttime account creation
+# WattTime account creation
 
 In order to create an account for watttime, we have set up these sample requests
 to help you get set up very quickly.
