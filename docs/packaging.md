@@ -40,7 +40,7 @@ Alternatively you can run in your local environment using the [.NET Core 6.0 SDK
 
 ## SDK Configuration
 
-The configuration needed to connect to WattTime or Json data sources can be managed using environment variables or appsettings.
+The configuration needed to connect to WattTime or Json data sources can be managed using environment variables or appsettings. More information on data source configuration can be found [here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/configuration.md#datasources)
 
 ### ElectricityMaps
 
