@@ -1,6 +1,7 @@
 using CarbonAware.Aggregators.CarbonAware;
 using CarbonAware.Aggregators.Emissions;
 using CarbonAware.Aggregators.Forecast;
+using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using CarbonAware.WebApi.Controllers;
 using Microsoft.Extensions.Logging;
@@ -75,5 +76,22 @@ public abstract class TestsBase
             .ReturnsAsync(data);
 
         return aggregator;
+    }
+
+    protected static Mock<ILocationSource> CreateLocations(bool withcontent = true)
+    {
+        var locationSource = new Mock<ILocationSource>();
+        var data = new Dictionary<string, Location>();
+        if (withcontent)
+        {
+            data.Add("eastus", new Location {
+                Name = "eastus",
+                Latitude = 1,
+                Longitude = 1
+            });
+        }
+        locationSource.Setup(x => x.GetGeopositionLocationsAsync())
+            .ReturnsAsync(data);
+        return locationSource;
     }
 }
