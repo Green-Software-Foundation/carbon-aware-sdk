@@ -10,7 +10,6 @@ using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
 namespace CarbonAware.Aggregators.Forecast;
 public class ForecastAggregator : IForecastAggregator
 {
-    private static readonly ActivitySource Activity = new(nameof(ForecastAggregator));
     private readonly ILogger<ForecastAggregator> _logger;
     private readonly IForecastDataSource _dataSource;
 
@@ -27,34 +26,28 @@ public class ForecastAggregator : IForecastAggregator
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsForecast>> GetCurrentForecastDataAsync(CarbonAwareParameters parameters)
     {
-        using (var activity = Activity.StartActivity())
+        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+        parameters.Validate();
+        var forecasts = new List<EmissionsForecast>();
+        foreach (var location in parameters.MultipleLocations)
         {
-            parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-            parameters.Validate();
-            var forecasts = new List<EmissionsForecast>();
-            foreach (var location in parameters.MultipleLocations)
-            {
-                var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
-                var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
-                forecasts.Add(emissionsForecast);
-            }
-
-            return forecasts;
+            var forecast = await this._dataSource.GetCurrentCarbonIntensityForecastAsync(location);
+            var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
+            forecasts.Add(emissionsForecast);
         }
+
+        return forecasts;
     }
 
     public async Task<EmissionsForecast> GetForecastDataAsync(CarbonAwareParameters parameters)
     {
         EmissionsForecast forecast;
-        using (var activity = Activity.StartActivity())
-        {
-            parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Requested);
-            parameters.Validate();
+        parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Requested);
+        parameters.Validate();
 
-            forecast = await this._dataSource.GetCarbonIntensityForecastAsync(parameters.SingleLocation, parameters.Requested);
-            var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
-            return emissionsForecast;
-        }
+        forecast = await this._dataSource.GetCarbonIntensityForecastAsync(parameters.SingleLocation, parameters.Requested);
+        var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
+        return emissionsForecast;
     }
 
     private static EmissionsForecast ProcessAndValidateForecast(EmissionsForecast forecast, CarbonAwareParameters parameters)

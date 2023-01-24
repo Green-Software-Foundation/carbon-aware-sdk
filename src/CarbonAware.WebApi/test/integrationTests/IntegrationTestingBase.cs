@@ -101,6 +101,7 @@ public abstract class IntegrationTestingBase
                 }
             case DataSourceType.ElectricityMaps:
                 {
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "ElectricityMaps");
                     Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "ElectricityMaps");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__Type", "ElectricityMaps");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APITokenHeader", "token");

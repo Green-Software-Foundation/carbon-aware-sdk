@@ -77,5 +77,14 @@ namespace CarbonAware.CLI.Common {
                 return ResourceManager.GetString("RootCommandDescription", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provides more verbose debugging output..
+        /// </summary>
+        internal static string VerboseDescription {
+            get {
+                return ResourceManager.GetString("VerboseDescription", resourceCulture);
+            }
+        }
     }
 }

@@ -32,7 +32,8 @@ public static class ServiceCollectionExtensions
             }
             case DataSourceType.ElectricityMaps:
             {
-                throw new ArgumentException("ElectricityMaps data source is not supported for emissions data");
+                services.AddElectricityMapsEmissionsDataSource(dataSources);
+                break;
             }
             case DataSourceType.None:
             {

@@ -48,7 +48,7 @@ public static class EmissionsDataExtensions
         var _data = data.GetEnumerator();
         _data.MoveNext();
         EmissionsData current = _data.Current;
-        EmissionsData last = null;
+        EmissionsData? last = null;
 
         if (tickSize == default)
         {
@@ -151,7 +151,7 @@ public static class EmissionsDataExtensions
     {
         double rating = 0.0;
         TimeSpan totalDuration = endTime - startTime;
-        EmissionsData previous = null;
+        EmissionsData? previous = null;
         (bool reverseChronology, bool emptyEnumerable) = GetChronologyDetails(data);
         bool startTimeCoverage = false;
         bool endTimeCoverage = false;
@@ -193,8 +193,8 @@ public static class EmissionsDataExtensions
 
     private static (bool reverseChronology, bool emptyEnumerable) GetChronologyDetails(IEnumerable<EmissionsData> data)
     {
-        EmissionsData current = null;
-        EmissionsData next = null;
+        EmissionsData? current = null;
+        EmissionsData? next = null;
         var _data = data.GetEnumerator();
 
         if (_data.MoveNext())

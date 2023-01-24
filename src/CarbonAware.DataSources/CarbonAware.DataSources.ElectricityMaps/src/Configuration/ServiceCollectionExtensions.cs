@@ -20,7 +20,9 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddElectricityMapsEmissionsDataSource(this IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
     {
-        throw new NotImplementedException();
+        AddElectricityMapsClient(services, dataSourcesConfig.EmissionsConfigurationSection());
+        services.TryAddSingleton<IEmissionsDataSource, ElectricityMapsDataSource>();
+        return services;
     }
     
     private static void AddElectricityMapsClient(IServiceCollection services, IConfigurationSection configSection)

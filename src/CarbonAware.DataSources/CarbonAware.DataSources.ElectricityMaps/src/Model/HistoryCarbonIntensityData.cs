@@ -1,3 +1,5 @@
+using CarbonAware.Exceptions;
+using CarbonAware.Model;
 using System.Text.Json.Serialization;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Model;
@@ -18,20 +20,20 @@ public record HistoryCarbonIntensityData
     /// List of History Carbon Intensity instances.
     /// </summary>
     [JsonPropertyName("history")]
-    public IEnumerable<HistoryCarbonIntensity> HistoryData { get; init; } = Array.Empty<HistoryCarbonIntensity>();
+    public IEnumerable<CarbonIntensity> HistoryData { get; init; } = Array.Empty<CarbonIntensity>();
 }
 
 /// <summary>
 /// A history carbon intensity.
 /// </summary>
 [Serializable]
-public record HistoryCarbonIntensity
+public record CarbonIntensity
 {
     /// <summary>
     /// Carbon Intensity value.
     /// </summary>
     [JsonPropertyName("carbonIntensity")]
-    public int CarbonIntensity { get; init; }
+    public int Value { get; init; }
 
     /// <summary>
     /// Indicates the datetime of the carbon intensity
@@ -55,7 +57,7 @@ public record HistoryCarbonIntensity
     /// Indicated the emission factor type used for computing the carbon intensity.
     /// </summary>
     [JsonPropertyName("emissionFactorType")]
-    public EmissionsFactor EmissionFactorType { get; init; }
+    public string? EmissionFactorType { get; init; }
 
     /// <summary>
     /// Indicates whether the result is estimated or no
@@ -69,4 +71,27 @@ public record HistoryCarbonIntensity
     [JsonPropertyName("estimationMethod")]
     public string? EstimationMethod { get; init; }
 
+    public static explicit operator EmissionsData(CarbonIntensity historyCarbonIntensity)
+    {
+        return new EmissionsData
+        {
+            Rating = historyCarbonIntensity.Value,
+            Time = historyCarbonIntensity.UpdatedAt,
+        };
+    }
 }
+
+/// <summary>
+/// Carbon intensity data for past date range.
+/// </summary>
+[Serializable]
+public record PastRangeData
+{
+    /// <summary>
+    /// Carbon Intensity value.
+    /// </summary>
+    [JsonPropertyName("data")]
+    public IEnumerable<CarbonIntensity> HistoryData { get; init; } = Array.Empty<CarbonIntensity>();
+
+}
+
