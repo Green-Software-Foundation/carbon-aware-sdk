@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Net;
 using System.Text.Json;
 
+
 namespace CarbonAware.WepApi.IntegrationTests;
 
 /// <summary>
@@ -23,6 +24,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     private readonly string batchForecastURI = "/emissions/forecasts/batch";
     private readonly string averageCarbonIntensityURI = "/emissions/average-carbon-intensity";
     private readonly string batchAverageCarbonIntensityURI = "/emissions/average-carbon-intensity/batch";
+
 
     public CarbonAwareControllerTests(DataSourceType dataSource) : base(dataSource) { }
 

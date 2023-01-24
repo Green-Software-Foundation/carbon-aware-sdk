@@ -16,7 +16,7 @@ using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.Diagnostics;
-
+using CarbonAware.CLI.Commands.Location;
 
 var config = new ConfigurationBuilder()
     .UseCarbonAwareDefaults()
@@ -43,6 +43,7 @@ var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootComm
 rootCommand.AddGlobalOption(CommonOptions.VerboseOption);
 rootCommand.AddCommand(new EmissionsCommand());
 rootCommand.AddCommand(new EmissionsForecastsCommand());
+rootCommand.AddCommand(new LocationsCommand());
 
 var parser = new CommandLineBuilder(rootCommand)
     .UseDefaults()

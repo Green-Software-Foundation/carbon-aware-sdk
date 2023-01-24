@@ -1,4 +1,3 @@
-using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using CarbonAware.LocationSources.Configuration;
@@ -6,7 +5,6 @@ using CarbonAware.LocationSources.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Reflection;
-using System.Globalization;
 using System.Text.Json;
 
 namespace CarbonAware.LocationSources;
@@ -18,9 +16,7 @@ public class LocationSource : ILocationSource
 {
     private readonly ILogger<LocationSource> _logger;
 
-    private IDictionary<string, NamedGeoposition> _namedGeopositions;
-
-    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+    private IDictionary<string, Location> _allLocations;
 
     private IOptionsMonitor<LocationDataSourcesConfiguration> _configurationMonitor { get; }
 
@@ -35,7 +31,7 @@ public class LocationSource : ILocationSource
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _configurationMonitor = monitor ?? throw new ArgumentNullException(nameof(monitor));
-        _namedGeopositions = new Dictionary<string, NamedGeoposition>(StringComparer.InvariantCultureIgnoreCase);
+        _allLocations = new Dictionary<string, Location>(StringComparer.InvariantCultureIgnoreCase);
     }
 
     public async Task<Location> ToGeopositionLocationAsync(Location location)
@@ -43,28 +39,36 @@ public class LocationSource : ILocationSource
         await LoadLocationFromFileIfNotPresentAsync();
 
         var name = location.Name ?? string.Empty;
-        if (!_namedGeopositions.ContainsKey(name))
+        if (!_allLocations.ContainsKey(name))
         {
             throw new ArgumentException($"Unknown Location: '{name}' not found");
         }
+        return _allLocations[name];
+    }
 
-        var geopositionLocation = _namedGeopositions[name];    
-        geopositionLocation.AssertValid(name);
-
-        return (Location) geopositionLocation;
+    /// <inheritdoc />
+    public async Task<IDictionary<string, Location>> GetGeopositionLocationsAsync()
+    {
+        await LoadLocationFromFileIfNotPresentAsync();
+        return _allLocations;
     }
 
     private async Task LoadLocationJsonFileAsync()
     {
+        var options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+        var keyCounter = new Dictionary<string, int>(); // used to keep track of key dups
+
         var sourceFiles = !_configuration.LocationSourceFiles.Any() ? DiscoverFiles() : _configuration.LocationSourceFiles;
         foreach (var source in sourceFiles)
         {
             using Stream stream = GetStreamFromFileLocation(source);
-            var locationMapping = await JsonSerializer.DeserializeAsync<Dictionary<string, NamedGeoposition>>(stream, _options) ?? new Dictionary<string, NamedGeoposition>();
-            foreach (var locationName in locationMapping.Keys) 
+            var namedGeoMap = await JsonSerializer.DeserializeAsync<Dictionary<string, NamedGeoposition>>(stream, options);
+            foreach (var locationKey in namedGeoMap!.Keys) 
             {
-                var key = BuildKey(source, locationName);
-                _namedGeopositions[key] = locationMapping[locationName];
+                var geoInstance = namedGeoMap[locationKey];
+                geoInstance.AssertValid();
+                var key = BuildKey(source, locationKey);
+                AddToLocationMap(key, geoInstance, source.DataFileLocation, keyCounter);
             }
         }
     }
@@ -76,7 +80,7 @@ public class LocationSource : ILocationSource
 
     private async Task LoadLocationFromFileIfNotPresentAsync()
     {
-        if (!_namedGeopositions.Any())
+        if (!_allLocations.Any())
         {
             await LoadLocationJsonFileAsync();
         }
@@ -98,13 +102,32 @@ public class LocationSource : ILocationSource
         var assemblyDirectory = Path.GetDirectoryName(assemblyPath)!;
 
         var pathCombined = Path.Combine(assemblyDirectory, LocationSourceFile.BaseDirectory);
-        var files = Directory.GetFiles(pathCombined, "*.json", SearchOption.AllDirectories);
+        var files = Directory.GetFiles(pathCombined, "*.json", SearchOption.AllDirectories).OrderBy(f => f);
         if (files is null)
         {
             _logger.LogWarning($"No location files found under {pathCombined}");
             return Array.Empty<LocationSourceFile>();
         }
-        _logger.LogInformation($"{files.Length} files discovered");
+        _logger.LogInformation($"{files.Count()} files discovered");
         return files.Select(x => x.Substring(pathCombined.Length + 1)).Select(n => new LocationSourceFile { DataFileLocation = n });
+    }
+
+    private void AddToLocationMap(string key, NamedGeoposition data, string sourceFile, Dictionary<string, int> keyCounter)
+    {
+        var loc = (Location) data;
+        
+        if (_allLocations.TryAdd(key, loc))
+        {
+            keyCounter.Add(key, 0);
+            return;
+        }
+        // Generate new key using keyCounter counter
+        _logger.LogWarning("Location key {key} from {sourceFile} already exists. Creating new key.", key, sourceFile);
+        var counter = keyCounter[key];
+        counter++;
+        var newKey = $"{key}_{counter}";
+        _allLocations.Add(newKey, loc);
+        keyCounter[key] = counter;
+        _logger.LogWarning("New key {newKey} generated from {key}", newKey, key);
     }
 }
