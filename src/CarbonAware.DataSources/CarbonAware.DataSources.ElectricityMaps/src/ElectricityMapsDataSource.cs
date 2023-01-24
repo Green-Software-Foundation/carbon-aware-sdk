@@ -25,8 +25,6 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
 
     private IElectricityMapsClient _electricityMapsClient { get; }
 
-    private static readonly ActivitySource _activity = new ActivitySource(nameof(ElectricityMapsDataSource));
-
     private ILocationSource _locationSource { get; }
 
     /// <summary>
@@ -45,19 +43,16 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
     {
-        using (var activity = _activity.StartActivity())
+        ForecastedCarbonIntensityData forecast;
+        var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
+        if (geolocation.Latitude != null && geolocation.Latitude != null)
+            forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Latitude.ToString() ?? "", geolocation.Longitude.ToString() ?? "");
+        else
         {
-            ForecastedCarbonIntensityData forecast;
-            var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
-            if (geolocation.Latitude != null && geolocation.Latitude != null)
-                forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
-            else
-            {
-                forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Name ?? "");
-            }
-
-            return ToEmissionsForecast(location, forecast);
+            forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Name ?? "");
         }
+
+        return ToEmissionsForecast(location, forecast);
     }
 
     private static EmissionsForecast ToEmissionsForecast(Location location, ForecastedCarbonIntensityData forecast)
@@ -88,38 +83,32 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
     public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
         this._logger.LogDebug("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
-        using (var activity = _activity.StartActivity())
+        List<EmissionsData> result = new();
+        foreach (var location in locations)
         {
-            List<EmissionsData> result = new();
-            foreach (var location in locations)
-            {
-                IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
-                result.AddRange(interimResult);
-            }
-            return result;
+            IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
+            result.AddRange(interimResult);
         }
+        return result;
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
-        using (var activity = _activity.StartActivity())
+        var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
+        IEnumerable<CarbonIntensity> historyCarbonIntensity;
+        DateTime now = DateTime.UtcNow;
+        var isDateRangeWithin24Hours = (periodStartTime > now.AddHours(-24) && periodStartTime <= now) && (periodEndTime > now.AddHours(-24) && periodEndTime <= now);
+        if (isDateRangeWithin24Hours)
         {
-            var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
-            IEnumerable<CarbonIntensity> historyCarbonIntensity;
-            DateTime now = DateTime.UtcNow;
-            var isDateRangeWithin24Hours = (periodStartTime > now.AddHours(-24) && periodStartTime <= now) && (periodEndTime > now.AddHours(-24) && periodEndTime <= now);
-            if (isDateRangeWithin24Hours)
-            {
-                historyCarbonIntensity = await GetRecentCarbonInstensityData(geolocation);
-            }
-            else
-            {
-                historyCarbonIntensity = await GetPastCarbonIntensityData(periodStartTime, periodEndTime, geolocation);
-            }
-            
-            return HistoryCarbonIntensityToEmissionsData(location, historyCarbonIntensity, periodStartTime, periodEndTime);
+            historyCarbonIntensity = await GetRecentCarbonInstensityData(geolocation);
         }
+        else
+        {
+            historyCarbonIntensity = await GetPastCarbonIntensityData(periodStartTime, periodEndTime, geolocation);
+        }
+        
+        return HistoryCarbonIntensityToEmissionsData(location, historyCarbonIntensity, periodStartTime, periodEndTime);
     }
 
     private async Task<IEnumerable<CarbonIntensity>> GetPastCarbonIntensityData(DateTimeOffset periodStartTime, DateTimeOffset periodEndTime, Location geolocation)

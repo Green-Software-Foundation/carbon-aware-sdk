@@ -1,13 +1,30 @@
-using System.Reflection;
 using CarbonAware;
-using CarbonAware.Exceptions;
 using CarbonAware.Aggregators.Configuration;
-using CarbonAware.WebApi.Filters;
-using Swashbuckle.AspNetCore.SwaggerGen;
 using CarbonAware.WebApi.Configuration;
+using CarbonAware.WebApi.Filters;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Reflection;
+
+// Define constants to initialize tracing with
+var serviceName = "CarbonAware.WebAPI";
+var serviceVersion = "1.0.0";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
+{
+    tracerProviderBuilder
+        .AddConsoleExporter()
+        .AddSource(serviceName)
+        .SetResourceBuilder(
+            ResourceBuilder.CreateDefault()
+                .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+        .AddHttpClientInstrumentation()
+        .AddAspNetCoreInstrumentation();
+});
 
 // Add services to the container.
 builder.Services.AddControllers(options =>
@@ -63,10 +80,9 @@ if (config.WebApiRoutePrefix != null)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();   
+    app.UseSwaggerUI();
 }
 
-    
 
 app.UseHttpsRedirection();
 
@@ -79,6 +95,7 @@ app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Run();
+
 
 // Please view https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-6.0#basic-tests-with-the-default-webapplicationfactory
 // This line is needed to allow for Integration Testing

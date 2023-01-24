@@ -43,11 +43,8 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations/best")]
     public async Task<IActionResult> GetBestEmissionsDataForLocationsByTime([FromQuery] EmissionsDataForLocationsParametersDTO parameters)
     {
-        using (var activity = Activity.StartActivity())
-        {
-            var response = await _emissionsAggregator.GetBestEmissionsDataAsync(parameters);
-            return response.Any() ? Ok(response) : NoContent();
-        }
+        var response = await _emissionsAggregator.GetBestEmissionsDataAsync(parameters);
+        return response.Any() ? Ok(response) : NoContent();
     }
 
     /// <summary>
@@ -62,11 +59,8 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocations")]
     public async Task<IActionResult> GetEmissionsDataForLocationsByTime([FromQuery] EmissionsDataForLocationsParametersDTO parameters)
     {
-        using (var activity = Activity.StartActivity())
-        {
-            var response = await _emissionsAggregator.GetEmissionsDataAsync(parameters);
-            return response.Any() ? Ok(response) : NoContent();
-        }
+        var response = await _emissionsAggregator.GetEmissionsDataAsync(parameters);
+        return response.Any() ? Ok(response) : NoContent();
     }
 
     /// <summary>
@@ -83,16 +77,13 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime([FromQuery, SwaggerParameter(Required = true)] string location, DateTimeOffset? time = null, DateTimeOffset? toTime = null)
     {
-        using (var activity = Activity.StartActivity())
+        var parameters = new EmissionsDataForLocationsParametersDTO
         {
-            var parameters = new EmissionsDataForLocationsParametersDTO
-            {
-                MultipleLocations = new string[]{ location },
-                Start = time,
-                End = toTime
-            };
-            return await GetEmissionsDataForLocationsByTime(parameters);
-        }
+            MultipleLocations = new string[]{ location },
+            Start = time,
+            End = toTime
+        };
+        return await GetEmissionsDataForLocationsByTime(parameters);
     }
 
     /// <summary>
@@ -123,12 +114,9 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("forecasts/current")]
     public async Task<IActionResult> GetCurrentForecastData([FromQuery] EmissionsForecastCurrentParametersDTO parameters)
     {
-        using (var activity = Activity.StartActivity())
-        {
-            var forecasts = await _forecastAggregator.GetCurrentForecastDataAsync(parameters);
-            var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
-            return Ok(results);
-        }
+        var forecasts = await _forecastAggregator.GetCurrentForecastDataAsync(parameters);
+        var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
+        return Ok(results);
     }
 
     /// <summary>
@@ -156,17 +144,14 @@ public class CarbonAwareController : ControllerBase
     [HttpPost("forecasts/batch")]
     public async Task<IActionResult> BatchForecastDataAsync([FromBody] IEnumerable<EmissionsForecastBatchParametersDTO> requestedForecasts)
     {
-        using (var activity = Activity.StartActivity())
+        var result = new List<EmissionsForecastDTO>();
+        foreach ( var forecastParameters in requestedForecasts)
         {
-            var result = new List<EmissionsForecastDTO>();
-            foreach ( var forecastParameters in requestedForecasts)
-            {
-                var forecast = await _forecastAggregator.GetForecastDataAsync(forecastParameters);
-                result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast));
-            };
+            var forecast = await _forecastAggregator.GetForecastDataAsync(forecastParameters);
+            result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast));
+        };
 
-            return Ok(result);
-        }
+        return Ok(result);
     }
 
     /// <summary>
@@ -187,19 +172,16 @@ public class CarbonAwareController : ControllerBase
     [HttpGet("average-carbon-intensity")]
     public async Task<IActionResult> GetAverageCarbonIntensity([FromQuery] CarbonIntensityParametersDTO parameters)
     {
-        using (var activity = Activity.StartActivity())
+        var result = await this._emissionsAggregator.CalculateAverageCarbonIntensityAsync(parameters);
+        var carbonIntensity = new CarbonIntensityDTO
         {
-            var result = await this._emissionsAggregator.CalculateAverageCarbonIntensityAsync(parameters);
-            var carbonIntensity = new CarbonIntensityDTO
-            {
-                Location = parameters.SingleLocation,
-                StartTime = parameters.Start,
-                EndTime = parameters.End,
-                CarbonIntensity = result,
-            };
-            _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", carbonIntensity);
-            return Ok(carbonIntensity);
-        }
+            Location = parameters.SingleLocation,
+            StartTime = parameters.Start,
+            EndTime = parameters.End,
+            CarbonIntensity = result,
+        };
+        _logger.LogDebug("calculated average carbon intensity: {carbonIntensity}", carbonIntensity);
+        return Ok(carbonIntensity);
     }
 
     /// <summary>
@@ -222,23 +204,20 @@ public class CarbonAwareController : ControllerBase
     [HttpPost("average-carbon-intensity/batch")]
     public async Task<IActionResult> GetAverageCarbonIntensityBatch([FromBody] IEnumerable<CarbonIntensityBatchParametersDTO> requestedCarbonIntensities)
     {
-        using (var activity = Activity.StartActivity())
+        var result = new List<CarbonIntensityDTO>();
+        foreach ( var carbonIntensityBatchDTO in requestedCarbonIntensities)
         {
-            var result = new List<CarbonIntensityDTO>();
-            foreach ( var carbonIntensityBatchDTO in requestedCarbonIntensities)
+            var carbonIntensityValue = await this._emissionsAggregator.CalculateAverageCarbonIntensityAsync(carbonIntensityBatchDTO);
+            var carbonIntensityDTO = new CarbonIntensityDTO()
             {
-                var carbonIntensityValue = await this._emissionsAggregator.CalculateAverageCarbonIntensityAsync(carbonIntensityBatchDTO);
-                var carbonIntensityDTO = new CarbonIntensityDTO()
-                {
-                    Location = carbonIntensityBatchDTO.SingleLocation,
-                    StartTime = carbonIntensityBatchDTO.Start,
-                    EndTime = carbonIntensityBatchDTO.End,
-                    CarbonIntensity = carbonIntensityValue,
-                };
-                result.Add(carbonIntensityDTO);
-            }
-
-            return Ok(result);
+                Location = carbonIntensityBatchDTO.SingleLocation,
+                StartTime = carbonIntensityBatchDTO.Start,
+                EndTime = carbonIntensityBatchDTO.End,
+                CarbonIntensity = carbonIntensityValue,
+            };
+            result.Add(carbonIntensityDTO);
         }
+
+        return Ok(result);
     }
 }

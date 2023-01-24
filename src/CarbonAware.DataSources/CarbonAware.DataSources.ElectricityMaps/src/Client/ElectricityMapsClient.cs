@@ -3,6 +3,7 @@ using CarbonAware.DataSources.ElectricityMaps.Constants;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -184,7 +185,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
 
     private async Task<HttpResponseMessage> GetResponseAsync(string uriPath)
     {
-        var response = await _client.GetAsync(uriPath, HttpCompletionOption.ResponseHeadersRead);
+        HttpResponseMessage response = await _client.GetAsync(uriPath, HttpCompletionOption.ResponseHeadersRead);
         if (!response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();

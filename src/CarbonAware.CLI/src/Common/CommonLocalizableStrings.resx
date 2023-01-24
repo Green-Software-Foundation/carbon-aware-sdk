@@ -123,4 +123,7 @@
   <data name="RootCommandDescription" xml:space="preserve">
     <value>A command line tool for accessing data relevant to carbon awareness.</value>
   </data>
+  <data name="VerboseDescription" xml:space="preserve">
+    <value>Provides more verbose debugging output.</value>
+  </data>
 </root>
