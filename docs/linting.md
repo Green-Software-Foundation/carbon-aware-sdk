@@ -36,10 +36,11 @@ of [markdownlint](https://github.com/DavidAnson/markdownlint). We reccomend the
 the same used by the Github action pipeline.
 
 The various CLI commands are detailed in the Github docs but the command the
-pipeline will run (checks all files given the custom config) is:
+pipeline will run (checks all files given the custom config except for .github
+folder) is:
 
 ```bash
-markdownlint-cli2-config "./custom.markdownlint.jsonc" "**/*.md"
+markdownlint-cli2-config "./custom.markdownlint.jsonc" {"*[^.github]/**,*"}.md
 ```
 
 The result will list all of the violations including the file, line number, and

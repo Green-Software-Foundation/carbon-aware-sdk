@@ -220,7 +220,7 @@ required.
 
 > **NOTE** The ElectricityMaps API does not currently support access to
 > historical forecasts. This means that functionality such as the CLI
-> `emissions-forecasts` `--requested-at` flag and the API `/forecasts/batch`
+> `emissions-forecasts` `--requested-at` flag and the API `/forecasts/batch` >
 > `requestedAt` input will respond with a `NotImplemented` error.
 >
 > Depending on the goal, the historical measured `emissions` commands may be a
@@ -299,11 +299,15 @@ like this:
 
 ### Tracing and Monitoring Configuration
 
-The application uses Opentelemetry to create traces locally in the console. In order to configure it to send the traces to a tracing app like Zipkin, Jaeger etc, please refer to the Open Telemetry [documentation] (https://opentelemetry.io/).  
+The application uses Opentelemetry to create traces locally in the console. In
+order to configure it to send the traces to a tracing app like Zipkin, Jaeger
+etc, please refer to the Open Telemetry
+[documentation](https://opentelemetry.io/).
 
 #### Configuring with Application Insights
 
-Application monitoring and tracing can be configured using the `TelemetryProvider` variable in the application configuration.  
+Application monitoring and tracing can be configured using the
+`TelemetryProvider` variable in the application configuration.
 
 ```bash
 CarbonAwareVars__TelemetryProvider="ApplicationInsights"

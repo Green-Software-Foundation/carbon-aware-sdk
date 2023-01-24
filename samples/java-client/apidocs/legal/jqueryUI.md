@@ -1,7 +1,8 @@
-## jQuery UI v1.12.1
+# jQuery UI v1.12.1
 
-### jQuery UI License
-```
+## jQuery UI License
+
+```text
 Copyright jQuery Foundation and other contributors, https://jquery.org/
 
 This software consists of voluntary contributions made by many

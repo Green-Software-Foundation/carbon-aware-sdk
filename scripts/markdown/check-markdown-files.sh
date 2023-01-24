@@ -4,7 +4,7 @@
 # Includes exceptions for certain directories, the main repo readme, and the contributing readme. 
 # If any files found, lists them out and exit 1.
 
-DOCS_DIRECTORY = "./docs"
+DOCS_DIRECTORY="./docs"
 EXCLUDED_DIRECTORIES="./samples|.github"
 REPO_README="./README.md"
 CONTRIBUTING_README="./CONTRIBUTING.md"

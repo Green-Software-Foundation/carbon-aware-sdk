@@ -65,7 +65,10 @@ Alternatively you can run in your local environment using the
 
 ## SDK Configuration
 
-The configuration needed to connect to WattTime or Json data sources can be managed using environment variables or appsettings. More information on data source configuration can be found [here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/configuration.md#datasources)
+The configuration needed to connect to WattTime or Json data sources can be
+managed using environment variables or appsettings. More information on data
+source configuration can be found
+[here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/configuration.md#datasources)
 
 ### ElectricityMaps
 
@@ -172,10 +175,15 @@ consumers (CLI/WebApi) should be moved to use the library.
 
 ## Console App Sample
 
-There is a sample console app in the [lib integration folder](../samples/lib-integration/ConsoleApp/) to demonstrate package creation and interaction with Carbon Aware SDK.
+There is a sample console app in the
+[lib integration folder](../samples/lib-integration/ConsoleApp/) to demonstrate
+package creation and interaction with Carbon Aware SDK.
 
 ### Run the Sample Console App
-In order to build and run the app, all the dependent packages need to be created first and then imported in the app. Follow the steps below to run the sample console app - 
+
+In order to build and run the app, all the dependent packages need to be created
+first and then imported in the app. Follow the steps below to run the sample
+console app -
 
 - Run the [script commands](#included-scripts) to create the packages and add
   them into the app.

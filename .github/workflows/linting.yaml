@@ -30,6 +30,6 @@ jobs:
           command: config
           globs: |
             ./custom.markdownlint.jsonc
-            **/*.md
+            {"*[^.github]/**,*"}.md
 
   

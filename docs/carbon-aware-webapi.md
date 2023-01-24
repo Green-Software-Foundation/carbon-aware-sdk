@@ -384,7 +384,10 @@ that time period.
 
 ### GET /locations
 
-This endpoint lists all the supported locations that the datasources potentially can have access to. This information is coming from the `location-source/json` files, that contain dictionaries in the form of <A Location key name, GeoCoordinates>, for instance:
+This endpoint lists all the supported locations that the datasources potentially
+can have access to. This information is coming from the `location-source/json`
+files, that contain dictionaries in the form of <A Location key name,
+GeoCoordinates>, for instance:
 
 ```json
 {
@@ -402,9 +405,15 @@ This endpoint lists all the supported locations that the datasources potentially
 }
 ```
 
-`Emissions` and `Forecasts` endpoints would use the location's `key` name returned by the `emssions/locations` endpoint.
+`Emissions` and `Forecasts` endpoints would use the location's `key` name
+returned by the `emssions/locations` endpoint.
 
-**Note**: If there is ***a location key name*** collision while loading two or more location json files and there is no `LocationDataSourcesConfiguration` `Prefix` and/or `Delimiter` settings, the system would change the collision key name by appending an underscore character and a sequence number to it (i.e. `<key name>`***_seqnumber***). For instance two location json files having `swedencentral` as key, after loading, it would become:
+**Note**: If there is **_a location key name_** collision while loading two or
+more location json files and there is no `LocationDataSourcesConfiguration`
+`Prefix` and/or `Delimiter` settings, the system would change the collision key
+name by appending an underscore character and a sequence number to it (i.e.
+`<key name>`**_\_seqnumber_**). For instance two location json files having
+`swedencentral` as key, after loading, it would become:
 
 ```json
 {
@@ -423,7 +432,11 @@ This endpoint lists all the supported locations that the datasources potentially
 }
 ```
 
-If there is a third file with the same key name, it would be `swedencentral_2` and so on. This information is not persisted, but now the user can make requests using `swedencentral` and/or `swedencentral_1`. Also there are log ***warning*** entries when this scenerario occurs to help the user to understand what key renaming happened.
+If there is a third file with the same key name, it would be `swedencentral_2`
+and so on. This information is not persisted, but now the user can make requests
+using `swedencentral` and/or `swedencentral_1`. Also there are log **_warning_**
+entries when this scenerario occurs to help the user to understand what key
+renaming happened.
 
 ```sh
 warn: Location key swedencentral from ... already exists. Creating new key.
