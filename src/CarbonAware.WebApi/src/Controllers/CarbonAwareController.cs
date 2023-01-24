@@ -19,8 +19,6 @@ public class CarbonAwareController : ControllerBase
 
     private readonly IEmissionsAggregator _emissionsAggregator;
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsAggregator emissionsAggregator, IForecastAggregator forecastAggregator);
-
     private readonly ILocationSource _locationSource;
 
     private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareController));
