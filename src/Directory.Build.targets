@@ -1,0 +1,21 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Update="coverlet.msbuild" Version="3.1.2"/>
+        <PackageReference Update="coverlet.collector" Version="3.1.2"/>
+        <PackageReference Update="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />  
+        <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Update="Microsoft.Extensions.Configuration" Version="6.0.0" />
+        <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Update="Microsoft.Extensions.Hosting" Version="6.0.0" />
+        <PackageReference Update="Microsoft.Extensions.Http" Version="6.0.0" />
+        <PackageReference Update="Microsoft.Net.Http.Headers" Version="2.2.0" />
+        <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Update="Moq" Version="4.17.2" />
+        <PackageReference Update="NUnit" Version="3.13.2" />
+        <PackageReference Update="NUnit3TestAdapter" Version="4.2.1" />
+        <PackageReference Update="NUnit.Analyzers" Version="3.3.0" />
+        <PackageReference Update="System.ComponentModel.Composition" Version="6.0.0" />
+        <PackageReference Update="WireMock.Net" Version="1.4.43" />
+
+    </ItemGroup>
+</Project>
