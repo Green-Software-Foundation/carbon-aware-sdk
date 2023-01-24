@@ -40,7 +40,7 @@ Alternatively you can run in your local environment using the [.NET Core 6.0 SDK
 
 ## SDK Configuration
 
-The configuration needed to connect to WattTime or Json data sources can be managed using environment variables or appsettings.
+The configuration needed to connect to WattTime or Json data sources can be managed using environment variables or appsettings. More information on data source configuration can be found [here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/configuration.md#datasources)
 
 ### ElectricityMaps
 
@@ -72,9 +72,10 @@ Below is the environment variable (i.e. bash shell) needed to set up the **Json*
 
 ## Console App Sample
 
-There is a sample console app in the [lib integration folder](../samples/lib-integration/ConsoleApp/). The app shows how to use dependency injection to pull in the packages and interact with the SDK.
+There is a sample console app in the [lib integration folder](../samples/lib-integration/ConsoleApp/) to demonstrate package creation and interaction with Carbon Aware SDK.
 
-In order to run the sample console app, you will need to
+### Run the Sample Console App
+In order to build and run the app, all the dependent packages need to be created first and then imported in the app. Follow the steps below to run the sample console app - 
 
 * Run the [script commands](#included-scripts) to create the packages and add them into the app
 * Create the [environment variables](#sdk-configuration) to connect to the WattTime or Json data sources
