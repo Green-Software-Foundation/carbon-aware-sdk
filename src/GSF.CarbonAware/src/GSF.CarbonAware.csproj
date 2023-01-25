@@ -18,7 +18,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" PrivateAssets="all" />
-	    <ProjectReference Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj" PrivateAssets="all" />
+	  <ProjectReference Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
