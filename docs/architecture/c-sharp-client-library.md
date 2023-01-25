@@ -41,7 +41,7 @@ There are two main classes that represents the data fetched from the data source
 - `EmissionsData`
 - `EmissionsForecast`
 
-We will define records that are owned by the library for each of these data types.
+A record is defined for each of these data types owned by the library.
 ```c#
 namespace GSF.CarbonAware.Models;
 public record EmissionsData
@@ -67,16 +67,16 @@ The user can expect to either have a primitive type (such as an int) or one of t
 
 ### Handlers
 
-There will be two handlers for each of the data types returned:
+There are currently two handlers for each of the data types returned:
 - `EmissionsHandler`
 - `ForecastHandler`
 
-Each is responsible for interacting on its own domain. For instance, EmissionsHandler can have a method `GetAverageCarbonIntensityAsync()` to pull EmissionsData data from a configured data source and calculate the average carbon intensity. ForecastHandler can have a method `GetCurrentForecastAsync()`, that will return a EmissionsForecast instance.
+Each is responsible for interacting on its own domain. For instance, EmissionsHandler has a method `GetAverageCarbonIntensityAsync()` to pull EmissionsData data from a configured data source and calculate the average carbon intensity. ForecastHandler has a method `GetCurrentForecastAsync()`, that returns an EmissionsForecast instance.
 (**Note**: The current core implementation is using async/await paradigm, which would be the default for library too).
 
 ### Parameters
 
-Both handlers require that exact fields be passed in as input. Within the docs of each library function, we will specifically call out which fields the function expects to be defined versus which are optional. Internally, we will handle creating the CarbonAwareParameters object and validating the fields through that.
+Both handlers require that exact fields be passed in as input. Within the docs of each library function, we specifically call out which fields the function expects to be defined versus which are optional. Internally, we handle creating the CarbonAwareParameters object and validating the fields through that.
 
 ## Carbon Aware Parameters
 The `CarbonAwareParameters` class allows the user to pass in a unique parameter instance to the public methods in the Handlers with the specific parameters needed by that call. 
@@ -91,7 +91,7 @@ The list of allowed parameters is defined in the class and includes
 ### Parameter Display Names
 The display name of each parameter can be overriden using the public setter. By default, each parameter display name is set to the variable name (ex: `Start = "start"`). The parameter display names are used when creating the validation error messages. Overriding them is useful in situations where the variables the user is using for input don't exactly match the default display name of the parameter (e.g. the user variable in the controller is `periodStartTime` instead of `startTime`). That way, when the error is thrown to the user, the parameter names will match the users' expectation
 
-To do the override, define a class that inherits from CarbonAwareParametersBaseDTO and uses the [FromQuery(Name = "myAwesomeDisplayName")] or [JsonPropertyName("myAwesomeDisplayName")] attribute. A second (less recommended) option is to pass the optional arg Dictionary<string, string>? displayNameMap when you are directly creating the object.  With either option, the SDK will handle updating references internally.
+To do the override, define a class that inherits from CarbonAwareParametersBaseDTO and uses the [FromQuery(Name = "myAwesomeDisplayName")] or [JsonPropertyName("myAwesomeDisplayName")] attribute. A second (less recommended) option is to pass the optional arg Dictionary<string, string>? displayNameMap when you are directly creating the object.  With either option, the SDK handles updating references internally.
 
 ### Required Properties
 The first core check the parameters class does is validating that required parameters are defined. By default, all parameters are considered optional. Calling the `SetRequiredProperties(...)` function with the desired arguments sets the required parameters for the instance.
@@ -116,7 +116,7 @@ Calling the `SetValidations(...)` function with the desired arguments sets the v
 ```
 
 ### Validate
-Calling the `Validate(...)` function will validate (1) required parameters and (2) specified validations. Currently, the only validation we check is whether `start` is before `end`.
+Calling the `Validate(...)` function validates (1) required parameters and (2) specified validations. Currently, the only validation we check is whether `start` is before `end`.
 
 If no errors are thrown, the function simply returns. If any validation errors are found, they are packaged into a single  `ArgumentException` error with each being part of the `data` dictionary.
 ```
@@ -140,7 +140,7 @@ If no errors are thrown, the function simply returns. If any validation errors a
 
 ### Error Handling
 
-The `CarbonAwareException` class will be used to report errors to the consumer. It will follow the `Exception` class approach, where messages and details will be provided as part of error reporting.
+The `CarbonAwareException` class is used to report errors to the consumer. It follows the `Exception` class approach, where messages and details are provided as part of error reporting.
 
 ## References
 
