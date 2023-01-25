@@ -102,4 +102,21 @@ public abstract class TestsBase
 
         return handler;
     }
+
+    protected static Mock<ILocationHandler> CreateLocations(bool withcontent = true)
+    {
+        var locationSource = new Mock<ILocationHandler>();
+        var data = new Dictionary<string, Location>();
+        if (withcontent)
+        {
+            data.Add("eastus", new Location {
+                Name = "eastus",
+                Latitude = 1,
+                Longitude = 1
+            });
+        }
+        locationSource.Setup(x => x.GetLocationsAsync())
+            .ReturnsAsync(data);
+        return locationSource;
+    }
 }

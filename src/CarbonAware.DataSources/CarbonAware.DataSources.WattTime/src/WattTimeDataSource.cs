@@ -26,8 +26,6 @@ public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
 
     private IWattTimeClient WattTimeClient { get; }
 
-    private static readonly ActivitySource Activity = new ActivitySource(nameof(WattTimeDataSource));
-
     private ILocationSource LocationSource { get; }
 
     const double MWH_TO_KWH_CONVERSION_FACTOR = 1000.0;
@@ -51,73 +49,60 @@ public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
         this.Logger.LogInformation("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
-        using (var activity = Activity.StartActivity())
+        List<EmissionsData> result = new ();
+        foreach (var location in locations)
         {
-            List<EmissionsData> result = new ();
-            foreach (var location in locations)
-            {
-                IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
-                result.AddRange(interimResult);
-            }
-            return result;
+            IEnumerable<EmissionsData> interimResult = await GetCarbonIntensityAsync(location, periodStartTime, periodEndTime);
+            result.AddRange(interimResult);
         }
+        return result;
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
         Logger.LogInformation($"Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.");
-        using (var activity = Activity.StartActivity())
+        var balancingAuthority = await this.GetBalancingAuthority(location);
+        var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(periodStartTime, periodEndTime, MinSamplingWindow);
+        var data = await this.WattTimeClient.GetDataAsync(balancingAuthority, newStartTime, newEndTime);
+        if (Logger.IsEnabled(LogLevel.Debug))
         {
-            var balancingAuthority = await this.GetBalancingAuthority(location, activity);
-            var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(periodStartTime, periodEndTime, MinSamplingWindow);
-            var data = await this.WattTimeClient.GetDataAsync(balancingAuthority, newStartTime, newEndTime);
-            if (Logger.IsEnabled(LogLevel.Debug))
-            {
-                Logger.LogDebug($"Found {data.Count()} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.");
-            }
-            var windowData = ConvertToEmissionsData(data);
-            var filteredData = IntervalHelper.FilterByDuration(windowData, periodStartTime, periodEndTime);
-
-            if (!filteredData.Any())
-            {
-                Logger.LogInformation($"Not enough data with {MinSamplingWindow} window");
-            }
-            return filteredData;
+            Logger.LogDebug($"Found {data.Count()} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.");
         }
+        var windowData = ConvertToEmissionsData(data);
+        var filteredData = IntervalHelper.FilterByDuration(windowData, periodStartTime, periodEndTime);
+
+        if (!filteredData.Any())
+        {
+            Logger.LogInformation($"Not enough data with {MinSamplingWindow} window");
+        }
+        return filteredData;
     }
 
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location}");
-        using (var activity = Activity.StartActivity())
-        {
-            var balancingAuthority = await this.GetBalancingAuthority(location, activity);
-                var forecast = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority); 
-                return ForecastToEmissionsForecast(forecast, location, DateTimeOffset.UtcNow);
-        } 
+        var balancingAuthority = await this.GetBalancingAuthority(location);
+        var forecast = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority); 
+        return ForecastToEmissionsForecast(forecast, location, DateTimeOffset.UtcNow);
     }
 
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location} requested at {requestedAt}");
-        using (var activity = Activity.StartActivity())
+        var balancingAuthority = await this.GetBalancingAuthority(location);
+        var roundedRequestedAt = TimeToLowestIncrement(requestedAt);
+        var forecast = await this.WattTimeClient.GetForecastOnDateAsync(balancingAuthority, roundedRequestedAt);
+        if (forecast == null)
         {
-            var balancingAuthority = await this.GetBalancingAuthority(location, activity);
-            var roundedRequestedAt = TimeToLowestIncrement(requestedAt);
-            var forecast = await this.WattTimeClient.GetForecastOnDateAsync(balancingAuthority, roundedRequestedAt);
-            if (forecast == null)
-            {
-                var ex = new ArgumentException($"No forecast was generated at the requested time {roundedRequestedAt}");
-                activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-                Logger.LogError(ex, ex.Message);
-                throw ex;
-            }
-            // keep input from the user.
-            return ForecastToEmissionsForecast(forecast, location, requestedAt); 
+            var ex = new ArgumentException($"No forecast was generated at the requested time {roundedRequestedAt}");
+            Logger.LogError(ex, ex.Message);
+            throw ex;
         }
+        // keep input from the user.
+        return ForecastToEmissionsForecast(forecast, location, requestedAt); 
     }
 
     private EmissionsForecast ForecastToEmissionsForecast(Forecast forecast, Location location, DateTimeOffset requestedAt) 
@@ -189,7 +174,7 @@ public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         return (frequency != null) ? TimeSpan.FromSeconds((double)frequency) : defaultValue;
     }
 
-    private async Task<BalancingAuthority> GetBalancingAuthority(Location location, Activity? activity)
+    private async Task<BalancingAuthority> GetBalancingAuthority(Location location)
     {
         BalancingAuthority balancingAuthority;
         try
@@ -199,13 +184,9 @@ public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         }
         catch(Exception ex) when (ex is LocationConversionException ||  ex is WattTimeClientHttpException)
         {
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            Logger.LogError(ex, "Failed to convert the location {location} into a Balancying Authority.", location);
+            Logger.LogError(ex, "Failed to convert the location {location} into a Balancing Authority.", location);
             throw;
         }
-
-        activity?.AddTag("location", location);
-        activity?.AddTag("balancingAuthorityAbbreviation", balancingAuthority.Abbreviation);
 
         Logger.LogDebug("Converted location {location} to balancing authority {balancingAuthorityAbbreviation}", location, balancingAuthority.Abbreviation);
 

@@ -1,5 +1,5 @@
 using GSF.CarbonAware.Handlers;
-using CarbonAware.Model;
+using GSF.CarbonAware.Models;
 using CarbonAware.WebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -17,13 +17,16 @@ public class CarbonAwareController : ControllerBase
 
     private readonly IForecastHandler _forecastHandler;
 
+    private readonly ILocationHandler _locationSource;
+
     private static readonly ActivitySource Activity = new ActivitySource(nameof(CarbonAwareController));
 
-    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsHandler emissionsHandler, IForecastHandler forecastHandler)
+    public CarbonAwareController(ILogger<CarbonAwareController> logger, IEmissionsHandler emissionsHandler, IForecastHandler forecastHandler, ILocationHandler locationSouce)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _forecastHandler = forecastHandler ?? throw new ArgumentNullException(nameof(forecastHandler));
         _emissionsHandler = emissionsHandler ?? throw new ArgumentNullException(nameof(emissionsHandler));
+        _locationSource = locationSouce ?? throw new ArgumentNullException(nameof(locationSouce));
     }
 
     /// <summary>

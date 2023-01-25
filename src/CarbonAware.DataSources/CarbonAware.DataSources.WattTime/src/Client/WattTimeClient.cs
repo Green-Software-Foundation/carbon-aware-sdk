@@ -31,8 +31,6 @@ public class WattTimeClient : IWattTimeClient
 
     private WattTimeClientConfiguration Configuration => this.ConfigurationMonitor.CurrentValue;
 
-    private static readonly ActivitySource Activity = new ActivitySource(nameof(WattTimeClient));
-
     private ILogger<WattTimeClient> Log { get; }
 
     private IMemoryCache memoryCache { get; }
@@ -158,19 +156,15 @@ public class WattTimeClient : IWattTimeClient
             { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
         };
 
-        using (var activity = Activity.StartActivity())
-        {
-            var url = BuildUrlWithQueryString(Paths.Historical, parameters);
+        var url = BuildUrlWithQueryString(Paths.Historical, parameters);
 
-            Log.LogInformation("Requesting data using url {url}", url);
-            activity?.AddTag(QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation);
+        Log.LogInformation("Requesting data using url {url}", url);
 
-            var result = await this.GetStreamWithAuthRetryAsync(url);
+        var result = await this.GetStreamWithAuthRetryAsync(url);
 
-            Log.LogDebug("For query {url}, received data stream", url);
+        Log.LogDebug("For query {url}, received data stream", url);
 
-            return result;
-        }
+        return result;
     }
 
     /// <inheritdoc/>
@@ -182,7 +176,7 @@ public class WattTimeClient : IWattTimeClient
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
     {
         await this.EnsureTokenAsync();
-        var response = await this.client.GetAsync(uriPath, HttpCompletionOption.ResponseHeadersRead);
+        HttpResponseMessage response = await this.client.GetAsync(uriPath, HttpCompletionOption.ResponseHeadersRead);
 
         if (RetriableStatusCodes.Contains(response.StatusCode))
         {
@@ -218,32 +212,27 @@ public class WattTimeClient : IWattTimeClient
 
     private async Task UpdateAuthTokenAsync()
     {
-        using (var activity = Activity.StartActivity())
+        Log.LogInformation("Attempting to log in user {username}", this.Configuration.Username);
+
+        this.SetBasicAuthenticationHeader();
+        HttpResponseMessage response = await this.client.GetAsync(Paths.Login);
+
+        LoginResult? data = null;
+
+        if (response.IsSuccessStatusCode)
         {
-            activity?.SetTag(QueryStrings.Username, this.Configuration.Username);
+            var json = await response.Content.ReadAsStringAsync() ?? String.Empty;
 
-            Log.LogInformation("Attempting to log in user {username}", this.Configuration.Username);
-
-            this.SetBasicAuthenticationHeader();
-            var response = await this.client.GetAsync(Paths.Login);
-
-            LoginResult? data = null;
-
-            if (response.IsSuccessStatusCode)
-            {
-                var json = await response.Content.ReadAsStringAsync() ?? String.Empty;
-
-                data = JsonSerializer.Deserialize<LoginResult>(json, options);
-            }
-
-            if (data == null)
-            {
-                Log.LogError("Login failed for user {username}.  Response: {response}", this.Configuration.Username, response);
-                throw new WattTimeClientHttpException($"Login failed for user: '{this.Configuration.Username}'", response);
-            }
-
-            this.SetBearerAuthenticationHeader(data.Token);
+            data = JsonSerializer.Deserialize<LoginResult>(json, options);
         }
+
+        if (data == null)
+        {
+            Log.LogError("Login failed for user {username}.  Response: {response}", this.Configuration.Username, response);
+            throw new WattTimeClientHttpException($"Login failed for user: '{this.Configuration.Username}'", response);
+        }
+
+        this.SetBearerAuthenticationHeader(data.Token);
     }
 
     private void SetBasicAuthenticationHeader()
@@ -259,25 +248,11 @@ public class WattTimeClient : IWattTimeClient
 
     private async Task<Stream> MakeRequestGetStreamAsync(string path, Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
     {
-        using (var activity = Activity.StartActivity())
-        {
-            var url = BuildUrlWithQueryString(path, parameters);
-
-            Log.LogInformation("Requesting data using url {url}", url);
-
-            if (tags != null)
-            {
-                foreach (var kvp in tags)
-                {
-                    activity?.AddTag(kvp.Key, kvp.Value);
-                }
-            }
-            var result = await this.GetStreamWithAuthRetryAsync(url);
-
-            Log.LogDebug("For query {url}, received data {result}", url, result);
-
-            return result;
-        }
+        var url = BuildUrlWithQueryString(path, parameters);
+        Log.LogInformation("Requesting data using url {url}", url);
+        var result = await this.GetStreamWithAuthRetryAsync(url);
+        Log.LogDebug("For query {url}, received data {result}", url, result);
+        return result;
     }
 
 
