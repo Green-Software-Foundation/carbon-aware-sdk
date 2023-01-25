@@ -1,9 +1,15 @@
 <!-- markdownlint-disable MD024 -->
 # Azure API Management Policy
 
-This folder contains a sample integration of the [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk)
-with [Azure API Management](https://azure.microsoft.com/en-us/products/api-management/) (APIM)
-[policies](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-policies).
+This folder contains sample [Azure API Management](https://azure.microsoft.com/en-us/products/api-management/)
+(APIM) [policy](https://learn.microsoft.com/en-us/azure/api-management/api-management-howto-policies) definitions
+that demonstrate how to integrate the [Carbon Aware SDK](https://github.com/Green-Software-Foundation/carbon-aware-sdk)
+into APIM APIs and change the API behavior based on carbon intensity
+data. This sample does not cover creating a full APIM environment but
+focuses on how the Carbon Aware SDK can be integrated using
+[advanced policies](https://learn.microsoft.com/en-us/azure/api-management/api-management-policies#advanced-policies)
+and [policy expressions](https://learn.microsoft.com/en-us/azure/api-management/api-management-policy-expressions).
+
 
 By integrating the Carbon Aware SDK at the API gateway level
 backend API's and/or downstream consumers are able to do their work
