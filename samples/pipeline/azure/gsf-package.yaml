@@ -1,5 +1,5 @@
 # This is an example of an Azure DevOps pipeline
-# that builds GSF.CarbonAware nuget package and publish it internally.
+# that builds GSF.CarbonAware nuget package and publish it as an internal artifact.
 
 trigger:
 - main
