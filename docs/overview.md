@@ -1,10 +1,10 @@
 # Overview
 
-There are several ways to consume CarbonAware data for your use case.
-Each approach surfaces the same data for the same call (e.g. the CLI
-should not give you different data than the WebAPI for the same query).
-We provide a number of different endpoints to provide the most flexibility
-to integrate to your environment:
+There are several ways to consume CarbonAware data for your use case. Each
+approach surfaces the same data for the same call (e.g. the CLI should not give
+you different data than the WebAPI for the same query). We provide a number of
+different endpoints to provide the most flexibility to integrate to your
+environment:
 
 - You can run the application using the [CLI](./src/CarbonAware.CLI) and refer
   to more documentation [here](./carbon-aware-cli.md).
@@ -13,17 +13,17 @@ to integrate to your environment:
   and connect via REST requests and refer to more documentation
   [here](./carbon-aware-webapi.md).
 
-- You can reference the [Carbon Aware C# Library](./src/GSF.CarbonAware)
-  in your projects and make use of its functionalities and features.
+- You can reference the [Carbon Aware C# Library](./src/GSF.CarbonAware) in your
+  projects and make use of its functionalities and features.
 
 - (Future) You can install the Nuget package and make requests directly.
   ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
-Each of these has configuration requirements which are detailed below.
-You can also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step
-process for running the CLI locally, deploying the Web API locally or in the cloud,
-polling the API via HTTP requests or generating and using
-client libraries (Python example).
+Each of these has configuration requirements which are detailed below. You can
+also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step
+process for running the CLI locally, deploying the Web API locally or in the
+cloud, polling the API via HTTP requests or generating and using client
+libraries (Python example).
 
 For more detailed architecture and design decisions around the Carbon Aware SDK,
 refer to the [Architecture directory](./architecture/).
@@ -31,47 +31,50 @@ refer to the [Architecture directory](./architecture/).
 ## Carbon Aware Library
 
 The Carbon Aware SDK provides a C# Client Library with handlers that replicates
-the Web API, CLI and SDK functionality, leveraging the same configurations as the
-aggregators. See:
+the Web API, CLI and SDK functionality, leveraging the same configurations as
+the aggregators. See:
 
-- [carbon-aware-library.md](./carbon-aware-library.md) for more information about
-  library features.
-- [packaging.md](./packaging.md) for details on how to package and consume
-  the library.
+- [carbon-aware-library.md](./carbon-aware-library.md) for more information
+  about library features.
+- [packaging.md](./packaging.md) for details on how to package and consume the
+  library.
 - [gsf-carbon-aware-library-package.md](./gsf-carbon-aware-library-package.md)
-  for instructions on integrating the library in other
-  projects with dependency injection.
+  for instructions on integrating the library in other projects with dependency
+  injection.
 
 ## Pre-requisites
 
-Make sure you have installed the following pre-requisites
-to setup your local environment:
+Make sure you have installed the following pre-requisites to setup your local
+environment:
 
 - dotnet core SDK
   [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
 - Access to one (or all) of the supported external data APIs
   - WattTime account - See
-  [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user)
-  for details (or use our python samples as described
-  [here](samples/watttime-registration/readme.md)).
+    [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user)
+    for details (or use our python samples as described
+    [here](samples/watttime-registration/readme.md)).
   - ElectricityMaps account - See
-  [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home)
-  for details (or setup a [free trial](https://api-portal.electricitymaps.com)).
+    [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home)
+    for details (or setup a
+    [free trial](https://api-portal.electricitymaps.com)). Note that the free
+    trial has some
+    [restrictions](./docs/selecting-a-data-source.md#restrictions-electricitymaps-free-trial-user)
 
-Alternatively, you can also set up your environment using
-VSCode Remote Containers (Dev Container):
+Alternatively, you can also set up your environment using VSCode Remote
+Containers (Dev Container):
 
 - Docker
 - VSCode (it is recommended to work in a Dev Container)
-- [Remote Containers extension for VSCode](<https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>)
+- [Remote Containers extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 ## Data Sources
 
-We support multiple data sources for carbon data. At this time,
-a JSON file, [WattTime](https://www.watttime.org/), and
-[ElectricityMaps](https://www.electricitymaps.com/) are supported.
-To use WattTime data or Electricity Maps data, you'll need to acquire a license
-from them and set the appropriate configuration information.
+We support multiple data sources for carbon data. At this time, a JSON file,
+[WattTime](https://www.watttime.org/), and
+[ElectricityMaps](https://www.electricitymaps.com/) are supported. To use
+WattTime data or Electricity Maps data, you'll need to acquire a license from
+them and set the appropriate configuration information.
 
 You can also visit the
 [selecting-a-date-source.md](docs/../selecting-a-data-source.md) guide for more
@@ -84,8 +87,8 @@ decisions around integrating different data providers into the carbon aware SDK.
 This project uses the dotnet standard
 [Microsoft.Extensions.Configuration](https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration)
 mechanism, which allows the user to configure their environment variables in a
-unified view while making use of different configuration sources.
-Review the link to understand more about the `IConfiguration` type.
+unified view while making use of different configuration sources. Review the
+link to understand more about the `IConfiguration` type.
 
 The WebAPI project uses standard configuration sources provided by
 [ASPNetCore](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/).
@@ -106,8 +109,8 @@ configure specific components of the application.
 #### Environment variables
 
 When adding values via environment variables, we recommend that you use the
-double underscore form, rather than the colon form.
-Colons won't work in non-windows environment. For example:
+double underscore form, rather than the colon form. Colons won't work in
+non-windows environment. For example:
 
 ```bash
   DataSources__EmissionsDataSource="WattTime"
@@ -125,21 +128,21 @@ using environment variables, you'd do this:
 
 For local-only settings you can use environment variables,
 [the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows#secret-manager)
-, or an untracked Development appsettings file to override
-the default project settings.
+, or an untracked Development appsettings file to override the default project
+settings.
 
 To use the settings file, rename a copy of the template called
 `appsettings.Development.json.template` to `appsettings.Development.json` and
-remove the first line of (invalid) comments.
-Then update any settings according to your preferences.
+remove the first line of (invalid) comments. Then update any settings according
+to your preferences.
 
 > Wherever possible, the projects leverage the
 > [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#default-application-configuration-sources)
-> expectations. Thus, they can be configured using any file matching the
-> format: `appsettings.<ENV>.json`. Where `<ENV>` is the value of
-> the `ASPNETCORE_ENVIRONMENT` environment variable. By convention projects
-> tend to use the provided HostEnvironment constants
-> `Development`, `Staging`, and `Production`.
+> expectations. Thus, they can be configured using any file matching the format:
+> `appsettings.<ENV>.json`. Where `<ENV>` is the value of the
+> `ASPNETCORE_ENVIRONMENT` environment variable. By convention projects tend to
+> use the provided HostEnvironment constants `Development`, `Staging`, and
+> `Production`.
 
 ## Publish WebAPI with container
 
@@ -158,8 +161,8 @@ $podman build -t carbon-aware-sdk-webapi -f CarbonAware.WebApi/src/Dockerfile .
 
 ### Run Web API container
 
-Carbon Aware SDK Web API publishes the service on Port 80, so you need to map
-it to local port. Following commands maps it to Port 8080.
+Carbon Aware SDK Web API publishes the service on Port 80, so you need to map it
+to local port. Following commands maps it to Port 8080.
 
 You also need to configure the SDK with environment variables. They are minimum
 set when you use WattTime or ElectricityMaps as a data source.
@@ -200,5 +203,5 @@ $ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | j
             :
 ```
 
-For more information on containerization, refer to the
-markdown in [containerization.md](./containerization.md).
+For more information on containerization, refer to the markdown in
+[containerization.md](./containerization.md).

@@ -247,7 +247,10 @@ required.
 ```
 
 > **Sign up for a free trial:** Select the free trial product from
-> [the ElectricityMaps catalog](https://api-portal.electricitymaps.com/)
+> [the ElectricityMaps catalog](https://api-portal.electricitymaps.com/). Note
+> that there are some
+> [restrictions](./selecting-a-data-source.md#restrictions-electricitymaps-free-trial-user)
+> on the free trial product.
 
 #### API Token Header
 

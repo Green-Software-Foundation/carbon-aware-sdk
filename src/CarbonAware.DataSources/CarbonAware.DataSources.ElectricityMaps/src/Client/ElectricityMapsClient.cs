@@ -3,7 +3,6 @@ using CarbonAware.DataSources.ElectricityMaps.Constants;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http.Headers;
 using System.Net.Mime;
@@ -20,6 +19,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
     private ElectricityMapsClientConfiguration _configuration => this._configurationMonitor.CurrentValue;
     private readonly ILogger<ElectricityMapsClient> _log;
     private readonly Lazy<Task<Dictionary<string, ZoneData>>> _zonesAllowed;
+    private readonly bool _isFreeTrialUser;
 
     public ElectricityMapsClient(IHttpClientFactory factory, IOptionsMonitor<ElectricityMapsClientConfiguration> monitor, ILogger<ElectricityMapsClient> log)
     {
@@ -27,6 +27,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         _configurationMonitor = monitor;
         _log = log;
         _configuration.Validate();
+        _isFreeTrialUser = this._configuration.BaseUrl == BaseUrls.TrialBaseUrl;
         _client.BaseAddress = new Uri(this._configuration.BaseUrl);
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
@@ -189,6 +190,20 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         if (!response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
+
+            // Add extra error messaging for free trial users to give more context
+            if (_isFreeTrialUser) {
+                switch(response.StatusCode){
+                    case System.Net.HttpStatusCode.Unauthorized:
+                        _log.LogError("Error getting data from ElectricityMaps {uriPath}. Your token is not authorized for this zone. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
+                        throw new ElectricityMapsClientHttpException($"Error requesting {uriPath}. Your token is not authorized for this zone - Content: {content}", response);
+                    case System.Net.HttpStatusCode.Forbidden:
+                        _log.LogError("Error getting data from ElectricityMaps {uriPath}. Your token is not authorized for this endpoint. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
+                        throw new ElectricityMapsClientHttpException($"Error requesting {uriPath}. Your token is not authorized for this endpoint - Content: {content}", response);
+                    default:
+                        break;
+                }
+            }
             _log.LogError("Error getting data from ElectricityMaps {uriPath}. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
             throw new ElectricityMapsClientHttpException($"Error requesting {uriPath} - Content: {content}", response);
         }
