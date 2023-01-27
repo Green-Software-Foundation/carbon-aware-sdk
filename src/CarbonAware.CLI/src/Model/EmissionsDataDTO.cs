@@ -1,6 +1,4 @@
-﻿using CarbonAware.Model;
-
-namespace CarbonAware.CLI.Model
+﻿namespace CarbonAware.CLI.Model
 {
     public class EmissionsDataDTO
     {
@@ -13,7 +11,7 @@ namespace CarbonAware.CLI.Model
         ///<example>1.12:24:02 </example>
         public TimeSpan? Duration { get; set; }
 
-        public static explicit operator EmissionsDataDTO(EmissionsData emissions)
+        public static explicit operator EmissionsDataDTO(global::GSF.CarbonAware.Models.EmissionsData emissions)
         {
             EmissionsDataDTO emissionsDTO = new EmissionsDataDTO();
             emissionsDTO.Location = emissions.Location;

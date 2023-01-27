@@ -1,10 +1,10 @@
-﻿using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Aggregators.Forecast;
+﻿using GSF.CarbonAware.Handlers;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Text.Json;
+using GSF.CarbonAware.Handlers.CarbonAware;
 
 namespace CarbonAware.CLI.Commands.EmissionsForecasts;
 
@@ -60,9 +60,9 @@ class EmissionsForecastsCommand : Command
 
     internal async Task Run(InvocationContext context)
     {
-        // Get aggregator via DI.
+        // Get handler via DI.
         var serviceProvider = context.BindingContext.GetService(typeof(IServiceProvider)) as IServiceProvider ?? throw new NullReferenceException(nameof(IServiceProvider)); 
-        var aggregator = serviceProvider.GetService(typeof(IForecastAggregator)) as IForecastAggregator ?? throw new NullReferenceException(nameof(IForecastAggregator));
+        var forecastHandler = serviceProvider.GetService(typeof(IForecastHandler)) as IForecastHandler ?? throw new NullReferenceException(nameof(IForecastHandler));
 
         // Get the arguments and options to build the parameters.
         var locations = context.ParseResult.GetValueForOption<string[]>(_requiredLocation);
@@ -71,14 +71,14 @@ class EmissionsForecastsCommand : Command
         var requestedAt = context.ParseResult.GetValueForOption<DateTimeOffset?>(_requestedAt);
         var duration = context.ParseResult.GetValueForOption<int?>(_windowSize);
 
-        // Call the aggregator
+        // Call the handler
         var forecastParameters = new CarbonAwareParametersBaseDTO(_displayNameMap)
         {
             Start = startTime,
             End = endTime,
             Duration = duration,
             Requested = requestedAt
-    };
+        };
 
         List<EmissionsForecastDTO> emissionsForecast = new();
 
@@ -88,7 +88,7 @@ class EmissionsForecastsCommand : Command
             foreach (var location in locations!)
             {
                 forecastParameters.SingleLocation = location;
-                var forecast = await aggregator.GetForecastDataAsync(forecastParameters);
+                var forecast = await forecastHandler.GetForecastByDateAsync(forecastParameters.SingleLocation!, forecastParameters.Start, forecastParameters.End, requestedAt, forecastParameters.Duration);
                 if (forecast != null)
                 {
                     emissionsForecast.Add((EmissionsForecastDTO)forecast);
@@ -98,7 +98,7 @@ class EmissionsForecastsCommand : Command
         else
         {
             forecastParameters.MultipleLocations = locations;
-            var results = await aggregator.GetCurrentForecastDataAsync(forecastParameters);
+            var results = await forecastHandler.GetCurrentForecastAsync(forecastParameters.MultipleLocations!, forecastParameters.Start, forecastParameters.End, forecastParameters.Duration);
             if (results != null)
             {
                emissionsForecast = results.Select(forecast => (EmissionsForecastDTO)forecast).ToList();

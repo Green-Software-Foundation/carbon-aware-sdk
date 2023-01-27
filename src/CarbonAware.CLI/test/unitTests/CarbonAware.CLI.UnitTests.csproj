@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\CarbonAware.CLI.csproj" />
+	<ProjectReference Include="..\..\..\GSF.CarbonAware\src\GSF.CarbonAware.csproj" />
   </ItemGroup>
 
 </Project>
