@@ -1,11 +1,4 @@
-﻿using CarbonAware.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CarbonAware.CLI.Model;
+﻿namespace CarbonAware.CLI.Model;
 class EmissionsForecastDTO
 {
     public DateTimeOffset GeneratedAt { get; set; }
@@ -17,18 +10,14 @@ class EmissionsForecastDTO
     public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static explicit operator EmissionsForecastDTO(EmissionsForecast emissionsForecast)
+    public static explicit operator EmissionsForecastDTO(global::GSF.CarbonAware.Models.EmissionsForecast emissionsForecast)
     {
         EmissionsForecastDTO forecast = new()
         {
+            RequestedAt = emissionsForecast.RequestedAt,
             GeneratedAt = emissionsForecast.GeneratedAt,
-            Location = emissionsForecast.Location.Name!,
-            DataStartAt = emissionsForecast.DataStartAt,
-            DataEndAt = emissionsForecast.DataEndAt,
-            WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
-            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => (EmissionsDataDTO)d),
-            ForecastData = emissionsForecast.ForecastData.Select(d => (EmissionsDataDTO)d)!,
-            RequestedAt = emissionsForecast.RequestedAt
+            ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => (EmissionsDataDTO)d!),
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => (EmissionsDataDTO)d)!
         };
         return forecast;
     }

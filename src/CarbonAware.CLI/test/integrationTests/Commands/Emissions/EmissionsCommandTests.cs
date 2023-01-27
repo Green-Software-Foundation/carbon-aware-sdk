@@ -1,6 +1,7 @@
 using CarbonAware.DataSources.Configuration;
 using NUnit.Framework;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace CarbonAware.CLI.IntegrationTests.Commands.Emissions;
 
@@ -93,22 +94,14 @@ public class EmissionsCommandTests : IntegrationTestingBase
         var location = "eastus";
         _dataSourceMocker.SetupDataMock(start, end, location);
 
-        var expectedAliases = new[]
-        {
-            "--start-time",
-            "--end-time",
-        };
-
+        string expectedError = "Invalid parameters Start: Start must be before End ";
         // Act
         var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:05:00Z -e 2022-09-01T01:00:00Z");
-        var output = _console.Error.ToString()!;
+        var output = Regex.Replace(_console.Error.ToString()!, @"\s+", " ");
 
         // Assert
         Assert.AreEqual(2, exitCode);
-        foreach (var expectedAlias in expectedAliases)
-        {
-            StringAssert.Contains(expectedAlias, output);
-        }
+        Assert.AreEqual(expectedError, output);
     }
 
     [Test]
