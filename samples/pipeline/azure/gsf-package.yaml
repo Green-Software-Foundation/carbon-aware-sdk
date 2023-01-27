@@ -11,6 +11,7 @@ variables:
   csproj: 'src/GSF.CarbonAware/src/GSF.CarbonAware.csproj'
   buildConfiguration: 'Release'
   ArtifactNuGetName: 'packages-nuget'
+  packageDir: '$(Build.ArtifactStagingDirectory)/packages/nuget'
 
 steps:
 - task: UseDotNet@2
@@ -44,6 +45,15 @@ steps:
       --output $(Build.ArtifactStagingDirectory)/packages/nuget
       -p:IncludeSymbols="true"
       -p:SymbolPackageFormat="snupkg"
+
+# Alternatively, you can call the script to package the SDK. Replace the 2 tasks above (dotnet build and dotnet pack and replace with the following task) 
+# - task: Bash@3
+#   displayName: 'Run script'
+#   inputs:
+#     targetType: 'filePath'
+#     filePath: "$(System.DefaultWorkingDirectory)/scripts/package/create_packages.sh"
+#     arguments: >
+#       $(csproj) $(packageDir)
 
 - task: Bash@3
   displayName: List packages
