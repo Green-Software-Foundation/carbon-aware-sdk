@@ -1,6 +1,10 @@
 # Overview
 
-This SDK has several entry points:
+There are several ways to consume CarbonAware data for your use case.
+Each approach surfaces the same data for the same call (e.g. the CLI
+should not give you different data than the WebAPI for the same query).
+We provide a number of different endpoints to provide the most flexibility
+to integrate to your environment:
 
 - You can run the application using the [CLI](./src/CarbonAware.CLI) and refer
   to more documentation [here](./carbon-aware-cli.md).
@@ -14,16 +18,17 @@ This SDK has several entry points:
 
 Each of these has configuration requirements which are detailed below.
 You can also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step
-process for running the CLI locally, deploying the Web API locally, polling the
-API via HTTP requests or generating and using client libraries (Python example).
+process for running the CLI locally, deploying the Web API locally or in the cloud,
+polling the API via HTTP requests or generating and using
+client libraries (Python example).
 
 For more detailed architecture and design decisions around the Carbon Aware SDK,
 refer to the [Architecture directory](./architecture/).
 
 ## Carbon Aware Library
 
-The Carbon Aware SDK provides a C\# Client Library with handlers that replicates
-the Web Api, CLI and SDK functionality, leveraging the same configurations as the
+The Carbon Aware SDK provides a C# Client Library with handlers that replicates
+the Web API, CLI and SDK functionality, leveraging the same configurations as the
 aggregators. See:
 
 - [carbon-aware-library.md](./carbon-aware-library.md) for more information about
@@ -36,7 +41,8 @@ aggregators. See:
 
 ## Pre-requisites
 
-Make sure you have installed the following pre-requisites:
+Make sure you have installed the following pre-requisites
+to setup your local environment:
 
 - dotnet core SDK
   [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
@@ -49,9 +55,16 @@ Make sure you have installed the following pre-requisites:
   [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home)
   for details (or setup a [free trial](https://api-portal.electricitymaps.com)).
 
+Alternatively, you can also set up your environment using
+VSCode Remote Containers (Dev Container):
+
+- Docker
+- VSCode (it is recommended to work in a Dev Container)
+- [Remote Containers extension for VSCode](<https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>)
+
 ## Data Sources
 
-We intend to support multiple data sources for carbon data. At this time, only
+We support multiple data sources for carbon data. At this time,
 a JSON file, [WattTime](https://www.watttime.org/), and
 [ElectricityMaps](https://www.electricitymaps.com/) are supported.
 To use WattTime data or Electricity Maps data, you'll need to acquire a license
@@ -92,7 +105,7 @@ double underscore form, rather than the colon form.
 Colons won't work in non-windows environment. For example:
 
 ```bash
-  CarbonAwareVars__EmissionsDataSource="WattTime"
+  DataSources__EmissionsDataSource="WattTime"
 ```
 
 Note that double underscores are used to represent dotted notation or child

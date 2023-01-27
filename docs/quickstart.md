@@ -26,8 +26,10 @@ VSCode Remote Containers (Dev Container). To run locally:
 3. Change directory to: `cd carbon-aware-sdk/src/CarbonAware.CLI/src`
 4. If you have a WattTime account registered (or other data source) - you will
    need to configure the application to use them. By default the SDK will use a
-   pre-generated JSON file with random data. To configure the application, you
-   will need to set up specific environment variables or modify
+   pre-generated JSON file with random data. This random data is meant to make
+   it easier to get started with the SDK and doesn't
+   represent actual Carbon data. To configure the application,
+   you will need to set up specific environment variables or modify
    `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory.
    Detailed information on configuration can be found in the `GettingStarted.md`
    file:
@@ -108,12 +110,12 @@ Expected output:
 ```
 
 To get the best time and location from a list of locations and a specified time
-window, use the `--lowest` flag. E.g. to get the best time and location in a 24
+window, use the `--best` flag. E.g. to get the best time and location in a 24
 hour window on the 23rd of August in the regions: `eastus`, `westus`,
 `westus3`,`uksouth`, run the command:
 
 ```bash
-dotnet run -l eastus,westus,westus3,uksouth -t 2022-08-23T00:00 --toTime 2022-08-23T23:59 --lowest
+dotnet run -l eastus,westus,westus3,uksouth -t 2022-08-23T00:00 --toTime 2022-08-23T23:59 --best
 ```
 
 Expected output:
