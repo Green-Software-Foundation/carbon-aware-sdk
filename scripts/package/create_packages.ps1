@@ -12,10 +12,10 @@ New-Item -Path $DEST_PACKAGES -ItemType Directory
 Get-ChildItem -Path $path -Recurse -Include *.nupkg, *.snupkg | Remove-Item
 
 # Setup package metadata
+dotnet restore
 dotnet build $DOTNET_SOLUTION
 dotnet pack $DOTNET_SOLUTION -o $DEST_PACKAGES -c Debug `
     -p:RepositoryBranch=$BRANCH `
     -p:SourceRevisionId=$REVISION `
     -p:IncludeSymbols="true" `
     -p:SymbolPackageFormat="snupkg"
-
