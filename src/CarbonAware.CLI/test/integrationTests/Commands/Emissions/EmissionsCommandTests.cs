@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace CarbonAware.CLI.IntegrationTests.Commands.Emissions;
 
 /// <summary>
-/// Tests that the CLI handles and packages various responses from aggregators 
+/// Tests that the CLI handles and packages various responses from handlers 
 /// and data sources properly, including empty responses and exceptions.
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
