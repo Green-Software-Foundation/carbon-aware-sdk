@@ -30,7 +30,7 @@ VSCode Remote Containers (Dev Container). To run locally:
    it easier to get started with the SDK and doesn't
    represent actual Carbon data. To configure the application,
    you will need to set up specific environment variables or modify
-   `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory.
+   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
    Detailed information on configuration can be found in the `GettingStarted.md`
    file:
    <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md>.
@@ -62,10 +62,36 @@ The CLI will ask you to at minimum provide a `--location (-l)` parameter.
 
 To run the CLI, simply call `dotnet run` and provide it with any parameters. If
 you fail to pass any parameters, a help screen will be printed out with possible
-parameters and short explanations. For example, to get emissions in the `eastus`
+parameters and short explanations.
+
+To get a list of all locations supported, you can use the Locations API,
+referenced in `src/CarbonAware.CLI/src/Commands/Location`
+and the command `.\caw locations`.
+
+Expected output:
+
+```JSON
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  },
+  ...
+}
+```
+
+For example, to get emissions in the `eastus`
 and `uksouth` region between `2022-08-23 at 11:15am` and
 `2022-08-23 at 11:20am`, run:
 `dotnet run -l eastus,uksouth -t 2022-08-23T11:15 --toTime 2022-08-23T11:20`
+
 Expected output:
 
 ```JSON
@@ -155,7 +181,7 @@ First we need to set up the GitHub repository
    need to configure the application to use them. By default the SDK will use a
    pre-generated JSON file with random data. To configure the application, you
    will need to set up specific environment variables or modify
-   `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory.
+   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
    Detailed information on configuration can be found in the `GettingStarted.md`
    file:
    <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md>.
@@ -194,6 +220,28 @@ Prerequisites:
 With the API running on `localhost:5073`, we can make HTTP requests to its
 endpoints, full endpoint description can be found here:
 <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md>
+
+To get a list of all locations supported, you can use the Locations API
+endpoint `/locations` referenced in
+`src/CarbonAware.WebApi/src/Controllers/LocationsController.cs`.
+
+Expected Output:
+
+```JSON
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  }
+}
+```
 
 #### Calling the `/emissions/bylocation` endpoint
 

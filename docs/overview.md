@@ -13,6 +13,9 @@ to integrate to your environment:
   and connect via REST requests and refer to more documentation
   [here](./carbon-aware-webapi.md).
 
+- You can reference the [Carbon Aware C# Library](./src/GSF.CarbonAware)
+  in your projects and make use of its functionalities and features.
+
 - (Future) You can install the Nuget package and make requests directly.
   ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
@@ -78,9 +81,11 @@ decisions around integrating different data providers into the carbon aware SDK.
 
 ## Configuration
 
-This project uses standard
+This project uses the dotnet standard
 [Microsoft.Extensions.Configuration](https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration)
-mechanisms.
+mechanism, which allows the user to configure their environment variables in a
+unified view while making use of different configuration sources.
+Review the link to understand more about the `IConfiguration` type.
 
 The WebAPI project uses standard configuration sources provided by
 [ASPNetCore](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/).
