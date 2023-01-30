@@ -28,6 +28,7 @@
     <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.WattTime\mock\CarbonAware.DataSources.WattTime.Mocks.csproj" />
     <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\mock\CarbonAware.DataSources.ElectricityMaps.Mocks.csproj" />
     <ProjectReference Include="..\..\src\CarbonAware.WebApi.csproj" />
+	<ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj"   />
   </ItemGroup>
 
   <Target Name="CopyDataFiles" AfterTargets="Build">
