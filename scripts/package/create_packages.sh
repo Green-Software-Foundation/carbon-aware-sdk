@@ -16,7 +16,7 @@ find $DEST_PACKAGES \( -name '*.nupkg' -o -name '*.snupkg' \) -exec rm {} \;
 # Setup package metadata
 REVISION=$(git rev-parse HEAD)
 BRANCH=dev
-dotnet restore
+dotnet restore $DOTNET_SOLUTION
 dotnet build $DOTNET_SOLUTION
 dotnet pack $DOTNET_SOLUTION -o $DEST_PACKAGES -c Debug \
     -p:RepositoryBranch=$BRANCH \
