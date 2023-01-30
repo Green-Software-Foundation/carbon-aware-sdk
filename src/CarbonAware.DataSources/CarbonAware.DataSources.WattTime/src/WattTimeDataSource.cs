@@ -1,5 +1,4 @@
-﻿using CarbonAware.Interfaces;
-using CarbonAware.DataSources.WattTime.Client;
+﻿using CarbonAware.DataSources.WattTime.Client;
 using CarbonAware.DataSources.WattTime.Model;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;

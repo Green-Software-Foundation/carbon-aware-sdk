@@ -1,4 +1,3 @@
-using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.Exceptions;
@@ -145,7 +144,7 @@ internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSo
         emissions = data.Select(d =>
         {
             var emission = (EmissionsData) d;
-            emission.Location = location.Name;
+            emission.Location = location.Name ?? string.Empty;
             emission.Time = d.DateTime;
             emission.Duration = duration;
             return emission;

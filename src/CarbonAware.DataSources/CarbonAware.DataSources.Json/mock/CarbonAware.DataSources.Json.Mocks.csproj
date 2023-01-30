@@ -11,9 +11,9 @@
     <ProjectReference Include="..\src\CarbonAware.DataSources.Json.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
-		<InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
-	</ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
+    <InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
+  </ItemGroup>
 
 </Project>

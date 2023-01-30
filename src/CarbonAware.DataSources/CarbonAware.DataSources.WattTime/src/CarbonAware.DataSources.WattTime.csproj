@@ -8,12 +8,12 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
-		<InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Mocks" />
-		<InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Tests" />
-		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-	</ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Tests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -21,11 +21,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
-    <PackageReference Include="WireMock.Net" Version="1.4.43"/>
+    <PackageReference Include="WireMock.Net" Version="1.4.43" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
+    <ProjectReference
+      Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
     <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 

@@ -8,16 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WireMock.Net"/>
+    <PackageReference Include="WireMock.Net" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\CarbonAware.DataSources.WattTime.csproj" />
   </ItemGroup>
 
-	<ItemGroup>
-		<InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
-		<InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
-	</ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
+    <InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
+  </ItemGroup>
 
 </Project>

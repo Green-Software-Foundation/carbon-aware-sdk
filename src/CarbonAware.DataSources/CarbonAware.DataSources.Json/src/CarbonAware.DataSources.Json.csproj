@@ -8,19 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(ProjectDir)..\..\..\data\data-sources\**\*.json" Link="\data-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
+    <Content Include="$(ProjectDir)..\..\..\data\data-sources\**\*.json"
+      Link="\data-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
-	<ItemGroup>
+  <ItemGroup>
     <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Mocks" />
-		<InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
-		<InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
-		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
-	</ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
-	</ItemGroup> 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
+  </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WireMock.Net"/>
+    <PackageReference Include="WireMock.Net" />
   </ItemGroup>
 
   <ItemGroup>

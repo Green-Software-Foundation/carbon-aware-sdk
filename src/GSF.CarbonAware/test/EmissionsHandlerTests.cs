@@ -1,8 +1,6 @@
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using EmissionsData = CarbonAware.Model.EmissionsData;
-using CarbonAware.Interfaces;
-using CarbonAware.Model;
 using GSF.CarbonAware.Exceptions;
 using GSF.CarbonAware.Handlers;
 using Microsoft.Extensions.Logging;

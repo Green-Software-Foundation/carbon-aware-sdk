@@ -1,4 +1,3 @@
-
 using CarbonAware.Exceptions;
 using System.Text;
 
