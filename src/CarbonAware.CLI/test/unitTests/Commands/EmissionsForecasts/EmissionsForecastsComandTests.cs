@@ -10,7 +10,7 @@ namespace CarbonAware.CLI.UnitTests.Commands.EmissionsForecasts;
 public class EmissionsForecastsCommandTests : TestBase
 {
     [Test]
-    public async Task Run_CallsAggregatorWithLocationOptions()
+    public async Task Run_CallsHandlerWithLocationOptions()
     {
         // Arrange
         var forecastCommand = new EmissionsForecastsCommand();
@@ -20,7 +20,7 @@ public class EmissionsForecastsCommandTests : TestBase
         var expectedLocations = new List<string>() { longAliasLocation, shortAliasLocation };
         IEnumerable<string> actualLocations = Array.Empty<string>();
 
-        _mockForecastHandler.Setup(agg => agg.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
+        _mockForecastHandler.Setup(handler => handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
             .Callback((string[] locations, DateTimeOffset? start, DateTimeOffset? end, int? windowSize) =>
             {
                 actualLocations = locations;
@@ -30,7 +30,7 @@ public class EmissionsForecastsCommandTests : TestBase
         await forecastCommand.Run(invocationContext);
 
         // Assert
-        _mockForecastHandler.Verify(agg => agg.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()), Times.Once);
+        _mockForecastHandler.Verify(handler => handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()), Times.Once);
         CollectionAssert.AreEquivalent(expectedLocations, actualLocations);
     }
 
@@ -44,7 +44,7 @@ public class EmissionsForecastsCommandTests : TestBase
         var expectedStartTime = DateTimeOffset.Parse(optionValue);
         DateTimeOffset? actualStartTime = default;
 
-        _mockForecastHandler.Setup(agg => agg.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
+        _mockForecastHandler.Setup(handler => handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
             .Callback((string[] locations, DateTimeOffset? start, DateTimeOffset? end, int? windowSize) =>
             {
                 actualStartTime = start;
@@ -53,7 +53,7 @@ public class EmissionsForecastsCommandTests : TestBase
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockForecastHandler.Verify(agg => agg.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()), Times.Once);
+        _mockForecastHandler.Verify(handler => handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()), Times.Once);
         Assert.AreEqual(expectedStartTime, actualStartTime);
     }
 
@@ -67,7 +67,7 @@ public class EmissionsForecastsCommandTests : TestBase
         var expectedStartTime = DateTimeOffset.Parse(optionValue);
         DateTimeOffset? actualEndTime = default;
 
-        _mockForecastHandler.Setup(agg => agg.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
+        _mockForecastHandler.Setup(handler => handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()))
             .Callback((string[] locations, DateTimeOffset? start, DateTimeOffset? end, int? windowSize) =>
             {
                 actualEndTime = end;
@@ -76,7 +76,7 @@ public class EmissionsForecastsCommandTests : TestBase
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockForecastHandler.Verify(agg => agg.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()), Times.Once);
+        _mockForecastHandler.Verify(handler => handler.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()), Times.Once);
         Assert.AreEqual(expectedStartTime, actualEndTime);
     }
 
@@ -101,12 +101,12 @@ public class EmissionsForecastsCommandTests : TestBase
             EmissionsDataPoints = emissions,
             OptimalDataPoints = emissions
         };
-        _mockForecastHandler.Setup(agg => agg.GetForecastByDateAsync(It.IsAny<string>(), null, null, It.IsAny<DateTimeOffset?>(), null)).ReturnsAsync(expectedForecast);
+        _mockForecastHandler.Setup(handler => handler.GetForecastByDateAsync(It.IsAny<string>(), null, null, It.IsAny<DateTimeOffset?>(), null)).ReturnsAsync(expectedForecast);
 
         // Act
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockForecastHandler.Verify(agg => agg.GetForecastByDateAsync(It.IsAny<string>(), null, null, It.IsAny<DateTimeOffset?>(), null));
+        _mockForecastHandler.Verify(handler => handler.GetForecastByDateAsync(It.IsAny<string>(), null, null, It.IsAny<DateTimeOffset?>(), null));
     }
 }

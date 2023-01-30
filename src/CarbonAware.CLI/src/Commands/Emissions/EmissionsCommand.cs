@@ -68,7 +68,7 @@ class EmissionsCommand : Command
     }
     internal async Task Run(InvocationContext context)
     {
-        // Get aggregator via DI.
+        // Get handler via DI.
         var serviceProvider = context.BindingContext.GetService(typeof(IServiceProvider)) as IServiceProvider ?? throw new NullReferenceException("ServiceProvider not found");
         var emissionsHandler = serviceProvider.GetService(typeof(IEmissionsHandler)) as IEmissionsHandler ?? throw new NullReferenceException("IEmissionsHandler not found");
 
@@ -84,7 +84,7 @@ class EmissionsCommand : Command
             Start = startTime,
             End = endTime
         };
-        // Call the aggregator.
+        // Call the handler.
         List<EmissionsDataDTO> emissions = new();
         
         if (best)
@@ -106,7 +106,7 @@ class EmissionsCommand : Command
                     (DateTimeOffset)parameters.Start!,
                     (DateTimeOffset)parameters.End!);
                 
-                // If startTime or endTime were not provided, the aggregator would have thrown an error. So, at this point it is safe to assume that the start/end values are not null. 
+                // If startTime or endTime were not provided, the handler would have thrown an error as startTime and endTime are required and validated in it. So, at this point it is safe to assume that the start/end values are not null. 
                 var emissionData = new EmissionsDataDTO()
                 {
                     Location = location,

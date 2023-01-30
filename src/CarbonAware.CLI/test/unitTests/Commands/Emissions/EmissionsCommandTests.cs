@@ -43,7 +43,7 @@ public class EmissionsCommandTests : TestBase
     }
 
     [Test]
-    public async Task Run_CallsAggregatorWithLocationOptions()
+    public async Task Run_CallsHandlerWithLocationOptions()
     {
         // Arrange
         var emissionsCommand = new EmissionsCommand();
@@ -68,7 +68,7 @@ public class EmissionsCommandTests : TestBase
 
     [TestCase("--start-time", "2022-01-02T03:04:05Z", TestName = "EmissionsCommandTests.Run StartTimeOption: long alias")]
     [TestCase("-s", "2022-01-02T03:04:05Z", TestName = "EmissionsCommandTests.Run StartTimeOption: short alias")]
-    public async Task Run_CallsAggregatorWithStartTimeOptions(string alias, string optionValue)
+    public async Task Run_CallsHandlerWithStartTimeOptions(string alias, string optionValue)
     {
         // Arrange
         var emissionsCommand = new EmissionsCommand();
@@ -91,7 +91,7 @@ public class EmissionsCommandTests : TestBase
 
     [TestCase("--end-time", "2022-01-02T03:04:05Z", TestName = "EmissionsCommandTests.Run EndTimeOption: long alias")]
     [TestCase("-e", "2022-01-02T03:04:05Z", TestName = "EmissionsCommandTests.Run EndTimeOption: short alias")]
-    public async Task Run_CallsAggregatorWithEndTimeOptions(string alias, string optionValue)
+    public async Task Run_CallsHandlerWithEndTimeOptions(string alias, string optionValue)
     {
         // Arrange
         var emissionsCommand = new EmissionsCommand();
@@ -114,7 +114,7 @@ public class EmissionsCommandTests : TestBase
 
     [TestCase("--best", TestName = "EmissionsCommandTests.Run BestOption: long alias")]
     [TestCase("-b", TestName = "EmissionsCommandTests.Run BestOption: short alias")]
-    public async Task Run_CallsAggregatorWithBestOption(string alias)
+    public async Task Run_CallsHandlerWithBestOption(string alias)
     {
         // Arrange
         var emissionsCommand = new EmissionsCommand();
@@ -133,7 +133,7 @@ public class EmissionsCommandTests : TestBase
     [TestCase("--average", 1, TestName = "EmissionsCommandTests.Run AverageOption: long alias, single location")]
     [TestCase("-a", 1, TestName = "EmissionsCommandTests.Run AverageOption: short alias, single location")]
     [TestCase("--average", 2, TestName = "EmissionsCommandTests.Run AverageOption: long alias, multiple locations")]
-    public async Task Run_CallsAggregatorWithAverageOption(string alias, int locationCount)
+    public async Task Run_CallsHandlerWithAverageOption(string alias, int locationCount)
     {
         // Arrange
         var emissionsCommand = new EmissionsCommand();
