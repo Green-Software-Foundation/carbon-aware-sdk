@@ -1,11 +1,11 @@
-using GSF.CarbonAware.Handlers;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
+using GSF.CarbonAware.Handlers;
+using GSF.CarbonAware.Handlers.CarbonAware;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.Text.Json;
-using GSF.CarbonAware.Handlers.CarbonAware;
 
 namespace CarbonAware.CLI.Commands.Emissions;
 
