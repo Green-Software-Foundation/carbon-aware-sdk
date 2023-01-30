@@ -1,8 +1,11 @@
 ﻿using CarbonAware;
 using CarbonAware.CLI.Commands.Emissions;
 using CarbonAware.CLI.Commands.EmissionsForecasts;
+using CarbonAware.CLI.Commands.Location;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Extensions;
+using GSF.CarbonAware.Configuration;
+using GSF.CarbonAware.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,9 +15,6 @@ using OpenTelemetry.Trace;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using CarbonAware.CLI.Commands.Location;
-using GSF.CarbonAware.Configuration;
-using GSF.CarbonAware.Exceptions;
 
 var config = new ConfigurationBuilder()
     .UseCarbonAwareDefaults()
