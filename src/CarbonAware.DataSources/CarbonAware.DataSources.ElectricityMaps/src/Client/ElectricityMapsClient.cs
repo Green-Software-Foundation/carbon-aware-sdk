@@ -19,7 +19,6 @@ internal class ElectricityMapsClient : IElectricityMapsClient
     private ElectricityMapsClientConfiguration _configuration => this._configurationMonitor.CurrentValue;
     private readonly ILogger<ElectricityMapsClient> _log;
     private readonly Lazy<Task<Dictionary<string, ZoneData>>> _zonesAllowed;
-    private readonly bool _isFreeTrialUser;
 
     public ElectricityMapsClient(IHttpClientFactory factory, IOptionsMonitor<ElectricityMapsClientConfiguration> monitor, ILogger<ElectricityMapsClient> log)
     {
@@ -27,7 +26,6 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         _configurationMonitor = monitor;
         _log = log;
         _configuration.Validate();
-        _isFreeTrialUser = this._configuration.BaseUrl == BaseUrls.TrialBaseUrl;
         _client.BaseAddress = new Uri(this._configuration.BaseUrl);
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
@@ -35,7 +33,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         {
             _client.DefaultRequestHeaders.Add(_configuration.APITokenHeader, _configuration.APIToken);
         }
-        _zonesAllowed = new Lazy<Task<Dictionary<string, ZoneData>>>(async () => await PopulateZonesData() );
+        _zonesAllowed = new Lazy<Task<Dictionary<string, ZoneData>>>(async () => await PopulateZonesData());
     }
 
     /// <inheritdoc/>
@@ -68,7 +66,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
     }
 
     /// <inheritdoc/>
-    public async Task<ForecastedCarbonIntensityData> GetForecastedCarbonIntensityAsync (string zoneName)
+    public async Task<ForecastedCarbonIntensityData> GetForecastedCarbonIntensityAsync(string zoneName)
     {
         _log.LogDebug("Requesting forecasted carbon intensity using zone name {zoneName}",
             zoneName);
@@ -82,7 +80,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
     }
 
     /// <inheritdoc/>
-    public async Task<ForecastedCarbonIntensityData> GetForecastedCarbonIntensityAsync (string latitude, string longitude)
+    public async Task<ForecastedCarbonIntensityData> GetForecastedCarbonIntensityAsync(string latitude, string longitude)
     {
         _log.LogDebug("Requesting forecasted carbon intensity using latitude {latitude} longitude {longitude}",
             latitude, longitude);
@@ -128,14 +126,14 @@ internal class ElectricityMapsClient : IElectricityMapsClient
 
         return await GetPastRangeDataAsync(parameters);
     }
-    
+
     // The ElectricityMaps API has strict checks about datetime formatting.
     // This helper method ensures that all DateTimeOffsets are properly formatted.
     private static string DateTimeToString(DateTimeOffset dateTime)
     {
         return dateTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture);
     }
-    
+
     /// <summary>
     /// Async method to check for allowed zones and then make GET request to History endpoint
     /// </summary>
@@ -160,9 +158,9 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         if (_configuration.DisableEstimations != null)
         {
             parameters.Add(QueryStrings.DisableEstimations, _configuration.DisableEstimations.ToString()!.ToLowerInvariant());
-        }   
+        }
     }
-    
+
     private async Task<PastRangeData> GetPastRangeDataAsync(Dictionary<string, string> parameters)
     {
         await CheckZonesAllowedForPathAsync(Paths.PastRange, parameters);
@@ -190,19 +188,15 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         if (!response.IsSuccessStatusCode)
         {
             var content = await response.Content.ReadAsStringAsync();
-
-            // Add extra error messaging for free trial users to give more context
-            if (_isFreeTrialUser) {
-                switch(response.StatusCode){
-                    case System.Net.HttpStatusCode.Unauthorized:
-                        _log.LogError("Error getting data from ElectricityMaps {uriPath}. Your token is not authorized for this zone. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
-                        throw new ElectricityMapsClientHttpException($"Error requesting {uriPath}. Your token is not authorized for this zone - Content: {content}", response);
-                    case System.Net.HttpStatusCode.Forbidden:
-                        _log.LogError("Error getting data from ElectricityMaps {uriPath}. Your token is not authorized for this endpoint. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
-                        throw new ElectricityMapsClientHttpException($"Error requesting {uriPath}. Your token is not authorized for this endpoint - Content: {content}", response);
-                    default:
-                        break;
-                }
+            if (content.Contains(ErrorMessages.UnauthorizedZone))
+            {
+                _log.LogError("Error getting data from ElectricityMaps {uriPath}. Your token is not authorized for this zone. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
+                throw new ElectricityMapsClientHttpException($"Error requesting {uriPath}. Your token is not authorized for this zone - Content: {content}", response);
+            }
+            else if (content.Contains(ErrorMessages.UnauthorizedEndpoint))
+            {
+                _log.LogError("Error getting data from ElectricityMaps {uriPath}. Your token is not authorized for this endpoint. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
+                throw new ElectricityMapsClientHttpException($"Error requesting {uriPath}. Your token is not authorized for this endpoint - Content: {content}", response);
             }
             _log.LogError("Error getting data from ElectricityMaps {uriPath}. StatusCode: {statusCode}. Content: {content}", uriPath, response.StatusCode, content);
             throw new ElectricityMapsClientHttpException($"Error requesting {uriPath} - Content: {content}", response);
@@ -229,7 +223,7 @@ internal class ElectricityMapsClient : IElectricityMapsClient
             _log.LogDebug("Attempting to build a url using url {url} and query string parameters {parameters}", url, string.Join(";", queryStringParams.Select(k => $"\"{k.Key}\":\"{k.Value}\"")));
         }
         var query = HttpUtility.ParseQueryString(string.Empty);
-        foreach(var kvp in queryStringParams)
+        foreach (var kvp in queryStringParams)
         {
             query[kvp.Key] = kvp.Value;
         }
@@ -248,10 +242,12 @@ internal class ElectricityMapsClient : IElectricityMapsClient
         if (!parameters.ContainsKey(QueryStrings.ZoneName)) return;
 
         Dictionary<string, ZoneData> values = new();
-        try 
+        try
         {
             values = await _zonesAllowed.Value;
-        } catch (ElectricityMapsClientException e) {
+        }
+        catch (ElectricityMapsClientException e)
+        {
             // Zones call fails, exit
             // Remark: as of 12/1/22, all trial user request to /zones fails with a 500 error
             _log.LogDebug(e.Message);
