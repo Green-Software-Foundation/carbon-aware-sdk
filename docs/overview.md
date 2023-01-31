@@ -167,6 +167,7 @@ set when you use WattTime or ElectricityMaps as a data source.
 ```bash
 $ podman run -it --rm -p 8080:80 \
     -e DataSources__ForecastDataSource="WattTime" \
+    -e DataSources__Configurations__WattTime__Type="WattTime" \
     -e DataSources__Configurations__WattTime__Username="wattTimeUsername" \
     -e DataSources__Configurations__WattTime__Password="wattTimePassword" \
   carbon-aware-sdk-webapi
@@ -177,6 +178,7 @@ or
 ```bash
 $ podman run -it --rm -p 8080:80 \
     -e DataSources__ForecastDataSource="ElectricityMaps" \
+    -e DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps" \
     -e DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token" \
     -e DataSources__Configurations__ElectricityMaps__APIToken="electricityMapsToken" \
   carbon-aware-sdk-webapi
