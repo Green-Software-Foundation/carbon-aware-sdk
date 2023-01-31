@@ -237,7 +237,7 @@ public class WattTimeClient : IWattTimeClient
 
     private void SetBasicAuthenticationHeader()
     {
-        var authToken = Encoding.ASCII.GetBytes($"{this.Configuration.Username}:{this.Configuration.Password}");
+        var authToken = Encoding.UTF8.GetBytes($"{this.Configuration.Username}:{this.Configuration.Password}");
         this.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Basic, Convert.ToBase64String(authToken));
     }
 
