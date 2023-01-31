@@ -45,6 +45,7 @@ steps:
       --output $(Build.ArtifactStagingDirectory)/packages/nuget
       -p:IncludeSymbols="true"
       -p:SymbolPackageFormat="snupkg"
+      -p:Version=1.2.3
 
 # Alternatively, you can call the script to package the SDK. Replace the 2 tasks above (dotnet build and dotnet pack and replace with the following task) 
 # - task: Bash@3
