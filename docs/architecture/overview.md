@@ -22,8 +22,10 @@ The business logic tier functions as the processor, taking in the user input and
 ### Handlers
 Handlers have knowledge of the underlying data source interfaces in the data tier. A Handler takes in consumer requests, calls the specified data source, and performs any data aggregation required before returning the result to the consumer. Each Handler is responsible for handling requests specific to a functionality.
 
-Currently, the SDK provides 2 handlers - `EmissionsHandler` and `ForecastHandler` to handle requests for actual carbon emissions and forecasted carbon emissions respectively. The `EmissionsHandler` handles requests for various carbon emissions information. It can calculate the average carbon emissions over a time period, or the best carbon emissions given a set of locations. It can transform forecasted carbon emissions to suit particular use-cases. It can also just deliver the emissions data points in a standard schema without performing any calculations.
-The `ForecastHandler` 
+Currently, the SDK provides 2 handlers for obtaining the carbon emissions data- `EmissionsHandler` and `ForecastHandler` to handle requests for actual carbon emissions and forecasted carbon emissions respectively. The `EmissionsHandler` handles requests for various carbon emissions information. It can calculate the average carbon emissions over a time period, or the best carbon emissions given a set of locations. It can transform forecasted carbon emissions to suit particular use-cases. It can also just deliver the emissions data points in a standard schema without performing any calculations.
+The `ForecastHandler` is responsible for getting the forecasted carbon emissions values from the underlying datasource. It can filter the emissions forecast based on the window size passed as an input and can also perform operations like finding the rolling average of emission values for a give window size.
+In addition to the above handlers, there is a `LocationHandler` which is responsible for retrieving all the locations supported by the underlying data source.
+
 
 See the [c-sharp-client-library README](./c-sharp-client-library.md) for more detailed information.
 

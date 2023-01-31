@@ -74,6 +74,8 @@ There are currently two handlers for each of the data types returned:
 Each is responsible for interacting on its own domain. For instance, EmissionsHandler has a method `GetAverageCarbonIntensityAsync()` to pull EmissionsData data from a configured data source and calculate the average carbon intensity. ForecastHandler has a method `GetCurrentForecastAsync()`, that returns an EmissionsForecast instance.
 (**Note**: The current core implementation is using async/await paradigm, which would be the default for library too).
 
+In addition, there is a `LocationHandler` that is responsible for retrieving all the locations supported by the underlying datasource. 
+
 ### Parameters
 
 Both handlers require that exact fields be passed in as input. Within the docs of each library function, we specifically call out which fields the function expects to be defined versus which are optional. Internally, we handle creating the CarbonAwareParameters object and validating the fields through that.
