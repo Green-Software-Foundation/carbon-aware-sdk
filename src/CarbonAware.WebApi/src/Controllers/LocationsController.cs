@@ -1,5 +1,5 @@
-using GSF.CarbonAware.Models;
 using GSF.CarbonAware.Handlers;
+using GSF.CarbonAware.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarbonAware.WebApi.Controllers;

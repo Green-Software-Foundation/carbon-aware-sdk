@@ -1,7 +1,7 @@
 ﻿namespace CarbonAware.WebApi.Models;
 
-using System.Text.Json.Serialization;
 using GSF.CarbonAware.Models;
+using System.Text.Json.Serialization;
 
 [Serializable]
 public record EmissionsDataDTO

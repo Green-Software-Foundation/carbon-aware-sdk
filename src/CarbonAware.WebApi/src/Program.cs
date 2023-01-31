@@ -1,12 +1,12 @@
 using CarbonAware;
+using CarbonAware.WebApi.Configuration;
 using CarbonAware.WebApi.Filters;
 using GSF.CarbonAware.Configuration;
 using GSF.CarbonAware.Exceptions;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using CarbonAware.WebApi.Configuration;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 // Define constants to initialize tracing with
