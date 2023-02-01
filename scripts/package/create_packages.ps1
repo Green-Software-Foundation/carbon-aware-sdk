@@ -1,7 +1,15 @@
 param (
-    [Parameter(Mandatory=$true, Position=0)] [string] $DOTNET_SOLUTION,
-    [Parameter(Mandatory=$true, Position=1)] [string] $DEST_PACKAGES
+    [Parameter(Mandatory=$false, Position=0)] [string] $DOTNET_SOLUTION,
+    [Parameter(Mandatory=$false, Position=1)] [string] $DEST_PACKAGES
 )
+
+if ([string]::IsNullOrEmpty($DOTNET_SOLUTION) -or [string]::IsNullOrEmpty($DEST_PACKAGES))
+{
+    $Path = $MyInvocation.InvocationName
+    Write-Host "Missing parameters. Usage: $Path DOTNET_SOLUTION DEST_PACKAGES"
+    Write-Host "Example: $Path src/CarbonAwareSDK.sln /mypackages"
+    Exit 1
+}
 
 $REVISION = $(git rev-parse HEAD)
 $BRANCH = "dev"

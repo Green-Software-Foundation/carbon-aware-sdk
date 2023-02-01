@@ -15,8 +15,8 @@ env:
   DOTNET_SOLUTION: "src/CarbonAwareSDK.sln"
   OUTPUT_DIR: "packages"
   CONSOLE_APP: "samples/lib-integration/ConsoleApp/ConsoleApp.csproj"
-  CREATE_PKGS: "scripts/package/create_packages.sh"
-  ADD_PKGS: "scripts/package/add_packages.sh"
+  CREATE_PKGS: "scripts/package/create_packages.ps1"
+  ADD_PKGS: "scripts/package/add_packages.ps1"
 
 jobs:
   dotnet-pack:

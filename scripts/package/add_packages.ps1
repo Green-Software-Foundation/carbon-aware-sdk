@@ -1,7 +1,15 @@
 param (
-    [Parameter(Mandatory=$true, Position=0)] [string] $DOTNET_PROJECT,
-    [Parameter(Mandatory=$true, Position=1)] [string] $PACKAGE_SRC
+    [Parameter(Mandatory=$false, Position=0)] [string] $DOTNET_PROJECT,
+    [Parameter(Mandatory=$false, Position=1)] [string] $PACKAGE_SRC
 )
+
+if ([string]::IsNullOrEmpty($DOTNET_PROJECT) -or [string]::IsNullOrEmpty($PACKAGE_SRC))
+{
+    $Path = $MyInvocation.InvocationName
+    Write-Host "Missing parameters. Usage: $Path DOTNET_PROJECT PACKAGE_SRC"
+    Write-Host "Example: $Path myapp.csprj /mypackages"
+    Exit 1
+}
 
 $packages = @(
     "GSF.CarbonAware"
