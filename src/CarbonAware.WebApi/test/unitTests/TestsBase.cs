@@ -10,7 +10,7 @@ namespace CarbonAware.WepApi.UnitTests;
 /// <summary>
 /// TestsBase for all WebAPI specific tests.
 /// </summary>
-public abstract class TestsBase
+abstract class TestsBase
 {
     protected Mock<ILogger<CarbonAwareController>> MockCarbonAwareLogger { get; }
     protected TestsBase()

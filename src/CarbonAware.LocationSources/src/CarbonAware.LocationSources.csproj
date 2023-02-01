@@ -12,9 +12,16 @@
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="$(ProjectDir)..\..\data\location-sources\**\*.json" Link="\location-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="$(ProjectDir)..\..\data\location-sources\**\*.json" Link="\location-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
+		<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="GSF.CarbonAware" />
+		<InternalsVisibleTo Include="CarbonAware.Aggregators" />
+		<InternalsVisibleTo Include="CarbonAware.LocationSources.Test" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
 </Project>

@@ -8,17 +8,12 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.WattTime.Client.Tests</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.WattTime.Mocks</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.WattTime.Tests</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+		<InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Mocks" />
+		<InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Tests" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
 
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -2,7 +2,7 @@ using Microsoft.Extensions.Options;
 
 namespace CarbonAware.WebApi.Configuration;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static void AddMonitoringAndTelemetry(this IServiceCollection services, IConfiguration configuration)
     {

@@ -7,7 +7,7 @@ namespace CarbonAware.DataSources.WattTime.Configuration;
 /// <summary>
 /// A configuration class for holding WattTime client config values.
 /// </summary>
-public class WattTimeClientConfiguration
+internal class WattTimeClientConfiguration
 {
     public const string Key = "WattTimeClient";
 

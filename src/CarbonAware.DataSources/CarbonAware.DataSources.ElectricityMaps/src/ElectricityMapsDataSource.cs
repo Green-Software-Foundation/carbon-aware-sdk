@@ -1,3 +1,4 @@
+using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.Exceptions;
@@ -11,7 +12,7 @@ namespace CarbonAware.DataSources.ElectricityMaps;
 /// <summary>
 /// Represents a Electricity Maps data source.
 /// </summary>
-public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSource
+internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSource
 {
     public string _name => "ElectricityMapsDataSource";
 

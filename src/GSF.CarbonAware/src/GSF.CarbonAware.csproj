@@ -33,12 +33,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-        <_Parameter1>GSF.CarbonAware.Tests</_Parameter1>
-      </AssemblyAttribute>
-      <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-        <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
-      </AssemblyAttribute>
+      <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+      <InternalsVisibleTo Include="GSF.CarbonAware.Tests" />
     </ItemGroup>
 
     <!-- Add files required to create a package -->

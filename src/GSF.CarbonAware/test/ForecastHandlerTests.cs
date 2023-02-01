@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace GSF.CarbonAware.Tests;
 
 [TestFixture]
-public class ForecastHandlerTests
+class ForecastHandlerTests
 {
     private Mock<ILogger<ForecastHandler>>? Logger { get; set; }
 

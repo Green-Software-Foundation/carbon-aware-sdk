@@ -1,12 +1,12 @@
 ﻿using CarbonAware.DataSources.Configuration;
-using CarbonAware.DataSources.Mocks;
+using CarbonAware.Interfaces;
+using CarbonAware.DataSources.ElectricityMaps.Mocks;
 using CarbonAware.DataSources.Json.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using NUnit.Framework;
 using System.CommandLine.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using CarbonAware.DataSources.ElectricityMaps.Mocks;
 
 namespace CarbonAware.CLI.IntegrationTests;
 
@@ -14,13 +14,13 @@ namespace CarbonAware.CLI.IntegrationTests;
 /// A base class that does all the common setup for the Integration Testing
 /// Overrides WebAPI factory by switching out different configurations via _datasource
 /// </summary>
-public abstract class IntegrationTestingBase
+internal abstract class IntegrationTestingBase
 {
     private string _executableName = "caw";
     internal DataSourceType _dataSource;
     internal string? _emissionsDataSourceEnv;
     internal string? _forecastDataSourceEnv;
-    protected IDataSourceMocker _dataSourceMocker;
+    protected private IDataSourceMocker _dataSourceMocker;
     protected TestConsole _console = new();
 
 

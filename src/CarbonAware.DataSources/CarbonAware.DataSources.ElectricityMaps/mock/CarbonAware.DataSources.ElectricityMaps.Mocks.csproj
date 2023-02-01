@@ -12,8 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CarbonAware.DataSources.Mocks\mock\CarbonAware.DataSources.Mocks.csproj" />
     <ProjectReference Include="..\src\CarbonAware.DataSources.ElectricityMaps.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
+    <InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
   </ItemGroup>
 
 </Project>

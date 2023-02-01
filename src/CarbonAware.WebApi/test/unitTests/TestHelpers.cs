@@ -7,7 +7,7 @@ using System.Net;
 /// <summary>
 /// Tests helpers for all WebAPI specific tests.
 /// </summary>
-public static class TestHelpers
+internal static class TestHelpers
 {
     /// <summary>
     /// Helper function to assert the HTTP status code of an action result

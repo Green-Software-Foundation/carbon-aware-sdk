@@ -1,4 +1,5 @@
 using CarbonAware.Configuration;
+using CarbonAware.Interfaces;
 using CarbonAware.DataSources.WattTime.Client;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
@@ -9,7 +10,7 @@ using System.Net;
 
 namespace CarbonAware.DataSources.WattTime.Configuration;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWattTimeForecastDataSource(this IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
     {

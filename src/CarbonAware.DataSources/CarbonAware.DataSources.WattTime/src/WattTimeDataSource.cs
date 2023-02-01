@@ -1,18 +1,18 @@
-﻿using CarbonAware.DataSources.WattTime.Client;
+﻿using CarbonAware.Interfaces;
+using CarbonAware.DataSources.WattTime.Client;
 using CarbonAware.DataSources.WattTime.Model;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
-using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace CarbonAware.DataSources.WattTime;
 
 /// <summary>
 /// Represents a WattTime data source.
 /// </summary>
-public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
+internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
 {
     public string Name => "WattTimeDataSource";
 

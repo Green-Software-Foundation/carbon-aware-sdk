@@ -14,4 +14,10 @@
     <ProjectReference Include="..\CarbonAware.DataSources.WattTime\src\CarbonAware.DataSources.WattTime.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="GSF.CarbonAware" />
+		<InternalsVisibleTo Include="CarbonAware.Aggregators" />
+	</ItemGroup>
+
+
 </Project>

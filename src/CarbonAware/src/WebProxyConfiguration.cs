@@ -1,6 +1,6 @@
 namespace CarbonAware;
 
-public class WebProxyConfiguration
+internal class WebProxyConfiguration
 {
 
     /// <summary>

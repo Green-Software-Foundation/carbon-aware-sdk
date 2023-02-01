@@ -2,7 +2,7 @@ using System.Text.Json.Nodes;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
-public static class TestData
+internal static class TestData
 {
     private static readonly string TestZoneId1 = "NL";
     private static readonly string TestZoneName1 = "Netherlands";

@@ -9,7 +9,7 @@ using System.Globalization;
 namespace CarbonAware.CLI.UnitTests;
 
 [TestFixture]
-public class EmissionsCommandTests : TestBase
+class EmissionsCommandTests : TestBase
 {
     [Test]
     public async Task Run_CallsHandlerAndWritesResults()

@@ -7,17 +7,12 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-        <_Parameter1>CarbonAware.DataSources.ElectricityMaps.Tests</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.ElectricityMaps.Mocks</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
-    </AssemblyAttribute>
-  </ItemGroup>
+	<ItemGroup>
+		<InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps.Mocks" />
+		<InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps.Tests" />
+		<InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />

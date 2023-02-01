@@ -1,9 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
-  </ItemGroup>
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -17,4 +12,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+	<ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Mocks" />
+		<InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
+		<InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
+	</ItemGroup> 
 </Project>

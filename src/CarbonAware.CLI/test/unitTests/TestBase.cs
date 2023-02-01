@@ -10,7 +10,7 @@ namespace CarbonAware.CLI.UnitTests;
 /// <summary>
 /// TestsBase for all CLI unit tests.
 /// </summary>
-public abstract class TestBase
+internal abstract class TestBase
 {
     protected Mock<IForecastHandler> _mockForecastHandler = new();
     protected Mock<IEmissionsHandler> _mockEmissionsHandler = new();
