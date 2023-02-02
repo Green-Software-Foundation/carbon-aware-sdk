@@ -32,12 +32,14 @@ jobs:
           include-prerelease: false
 
       - name: Create packages
+        shell: pwsh
         run: ${{ env.CREATE_PKGS }} ${{ env.DOTNET_SOLUTION }} ${{ env.OUTPUT_DIR }}
 
       - name: Restore current packages for ConsoleApp
         run: dotnet restore ${{ env.CONSOLE_APP }}
 
       - name: Add packages to ConsoleApp
+        shell: pwsh
         run: ${{ env.ADD_PKGS }} ${{ env.CONSOLE_APP}} ${{ env.OUTPUT_DIR }}
 
       - name: Cat ConsoleApp project file

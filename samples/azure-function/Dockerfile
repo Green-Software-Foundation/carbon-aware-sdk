@@ -10,7 +10,7 @@ COPY ["scripts/", "data/scripts/"]
 COPY ["samples/", "data/samples/"]
 
 WORKDIR /data
-RUN scripts/package/create_packages.ps1 src/CarbonAwareSDK.sln /packages && \
+RUN pwsh scripts/package/create_packages.ps1 src/CarbonAwareSDK.sln /packages && \
     dotnet restore "samples/azure-function/function.csproj" && \
     scripts/package/add_packages.ps1 samples/azure-function/function.csproj /packages && \
     dotnet build "samples/azure-function/function.csproj" -c Release -o /app/build
