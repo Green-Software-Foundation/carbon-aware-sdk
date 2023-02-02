@@ -9,9 +9,9 @@ With the Carbon Aware SDK you can build software that chooses to run when the wi
 
 Get started on creating sustainable software innovation for a greener future today!
 
-# Getting Started
+# Getting Started Overview
 
-Head on over to the [Getting Started Guide](./GettingStarted.md) to get up and running.
+Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get up and running.
 
 # What is the Carbon Aware SDK?
 
