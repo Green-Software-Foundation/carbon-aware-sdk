@@ -12,7 +12,7 @@ on:
       - 'scripts/package/**'
 
 env:
-  DOTNET_SOLUTION: "src/CarbonAwareSDK.sln"
+  DOTNET_SOLUTION: "src/GSF.CarbonAware/src/GSF.CarbonAware.csproj"
   OUTPUT_DIR: "packages"
   CONSOLE_APP: "samples/lib-integration/ConsoleApp/ConsoleApp.csproj"
   CREATE_PKGS: "scripts/package/create_packages.ps1"
