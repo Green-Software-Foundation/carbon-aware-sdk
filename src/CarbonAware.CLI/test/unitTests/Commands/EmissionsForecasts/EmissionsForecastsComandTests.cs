@@ -101,12 +101,12 @@ public class EmissionsForecastsCommandTests : TestBase
             EmissionsDataPoints = emissions,
             OptimalDataPoints = emissions
         };
-        _mockForecastHandler.Setup(handler => handler.GetForecastByDateAsync(It.IsAny<string>(), null, null, It.IsAny<DateTimeOffset?>(), null)).ReturnsAsync(expectedForecast);
+        _mockForecastHandler.Setup(handler => handler.GetForecastByDateAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>())).ReturnsAsync(expectedForecast);
 
         // Act
         await emissionsForecastsCommand.Run(invocationContext);
 
         // Assert
-        _mockForecastHandler.Verify(handler => handler.GetForecastByDateAsync(It.IsAny<string>(), null, null, It.IsAny<DateTimeOffset?>(), null));
+        _mockForecastHandler.Verify(handler => handler.GetForecastByDateAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>(), It.IsAny<int?>()));
     }
 }

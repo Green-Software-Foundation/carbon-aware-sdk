@@ -1,4 +1,6 @@
-﻿namespace CarbonAware.CLI.Model;
+﻿using GSF.CarbonAware.Models;
+
+namespace CarbonAware.CLI.Model;
 class EmissionsForecastDTO
 {
     public DateTimeOffset GeneratedAt { get; set; }
@@ -10,7 +12,7 @@ class EmissionsForecastDTO
     public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static explicit operator EmissionsForecastDTO(global::GSF.CarbonAware.Models.EmissionsForecast emissionsForecast)
+    public static explicit operator EmissionsForecastDTO(EmissionsForecast emissionsForecast)
     {
         EmissionsForecastDTO forecast = new()
         {

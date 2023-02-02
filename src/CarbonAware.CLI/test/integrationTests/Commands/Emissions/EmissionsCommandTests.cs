@@ -97,7 +97,9 @@ public class EmissionsCommandTests : IntegrationTestingBase
         string expectedError = "Invalid parameters Start: Start must be before End ";
         // Act
         var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:05:00Z -e 2022-09-01T01:00:00Z");
-        var output = Regex.Replace(_console.Error.ToString()!, @"\s+", " ");
+        // Whitespace characters regex 
+        var regex = @"\s+";
+        var output = Regex.Replace(_console.Error.ToString()!, regex, " ");
 
         // Assert
         Assert.AreEqual(2, exitCode);
