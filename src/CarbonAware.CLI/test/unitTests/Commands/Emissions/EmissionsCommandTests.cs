@@ -25,7 +25,7 @@ public class EmissionsCommandTests : TestBase
             Rating = 100.7
         };
       
-        _mockEmissionsHandler.Setup(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+        _mockEmissionsHandler.Setup(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()))
             .ReturnsAsync(new List<EmissionsData>() { expectedEmissions });
 
         // Act
@@ -39,7 +39,7 @@ public class EmissionsCommandTests : TestBase
         StringAssert.Contains(expectedEmissions.Duration.ToString(), consoleOutput);
        
 
-        _mockEmissionsHandler.Verify(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), null, null), Times.Once);
+        _mockEmissionsHandler.Verify(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()), Times.Once);
     }
 
     [Test]
@@ -53,7 +53,7 @@ public class EmissionsCommandTests : TestBase
         var expectedLocations = new List<string>() { longAliasLocation, shortAliasLocation };
         IEnumerable<string> actualLocations = Array.Empty<string>();
 
-        _mockEmissionsHandler.Setup(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+        _mockEmissionsHandler.Setup(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()))
             .Callback((string[] locations, DateTimeOffset? start, DateTimeOffset? end) => {
                 actualLocations = locations;
              });
@@ -62,7 +62,7 @@ public class EmissionsCommandTests : TestBase
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockEmissionsHandler.Verify(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), null, null), Times.Once);
+        _mockEmissionsHandler.Verify(handler => handler.GetEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()), Times.Once);
         CollectionAssert.AreEquivalent(expectedLocations, actualLocations);
     }
 
@@ -120,14 +120,14 @@ public class EmissionsCommandTests : TestBase
         var emissionsCommand = new EmissionsCommand();
         var invocationContext = SetupInvocationContext(emissionsCommand, $"emissions {alias}");
 
-        _mockEmissionsHandler.Setup(handler => handler.GetBestEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+        _mockEmissionsHandler.Setup(handler => handler.GetBestEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()))
             .ReturnsAsync( new List<EmissionsData>() { new EmissionsData() } ); ;
 
         // Act
         await emissionsCommand.Run(invocationContext);
 
         // Assert
-        _mockEmissionsHandler.Verify(handler => handler.GetBestEmissionsDataAsync(It.IsAny<string[]>(), null, null), Times.Once);
+        _mockEmissionsHandler.Verify(handler => handler.GetBestEmissionsDataAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset?>(), It.IsAny<DateTimeOffset?>()), Times.Once);
     }
 
     [TestCase("--average", 1, TestName = "EmissionsCommandTests.Run AverageOption: long alias, single location")]
