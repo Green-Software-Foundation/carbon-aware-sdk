@@ -182,9 +182,8 @@ First we need to set up the GitHub repository
    pre-generated JSON file with random data. To configure the application, you
    will need to set up specific environment variables or modify
    `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the `GettingStarted.md`
-   file:
-   <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md>.
+   Detailed information on configuration can be found in the [overview.md](overview.md) file.
+   
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
 
