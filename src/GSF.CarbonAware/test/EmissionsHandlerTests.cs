@@ -176,6 +176,8 @@ public class EmissionsHandlerTests
                 actualEnd = _end;
             });
 
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
+
         DateTimeOffset expectedEnd;
         DateTimeOffset expectedStart;
 
@@ -207,8 +209,6 @@ public class EmissionsHandlerTests
         var maxAllowableEndTicks = expectedEnd.Ticks + tickTolerance;
 
         // Act
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
-
         await emissionsHandler.GetBestEmissionsDataAsync("eastus", start, end);
 
         // Assert
