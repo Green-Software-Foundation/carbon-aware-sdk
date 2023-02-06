@@ -1,3 +1,5 @@
+# Configuration
+
 - [Configuration](#configuration)
   - [Logging](#logging)
   - [DataSources](#datasources)
@@ -11,7 +13,7 @@
     - [ElectricityMaps Configuration](#electricitymaps-configuration)
       - [API Token Header](#api-token-header)
       - [API Token](#api-token)
-      - [BaseUrl](#baseurl-1)
+      - [BaseUrl](#baseurl)
       - [Emission Factor Type](#emission-factor-type)
       - [Disable Estimations](#disable-estimations)
   - [CarbonAwareVars](#carbonawarevars)
@@ -22,15 +24,18 @@
 - [Sample Configurations](#sample-configurations)
   - [Configuration for Emissions data Using WattTime](#configuration-for-emissions-data-using-watttime)
   - [Configuration for Forecast data Using ElectricityMaps](#configuration-for-forecast-data-using-electricitymaps)
-  - [Configuration for Emissions data Using WattTime and Forecast data Using ElectricityMaps](#configuration-for-emissions-data-using-watttime-and-forecast-data-using-electricitymaps)
+  - [Configuration for Emissions data using ElectricityMaps and Forecast data using WattTime](#configuration-for-emissions-data-using-electricitymaps-and-forecast-data-using-watttime)
   - [Configuration For Emissions data Using JSON](#configuration-for-emissions-data-using-json)
   - [Configuration Using WattTime and Defined Location Source Files](#configuration-using-watttime-and-defined-location-source-files)
 
-# Configuration
-
 ## Logging
 
-The default LogLevel settings for the application are found in the corresponding `appsettings.json`, which may contain the following section -- see here for additional details on [Logging in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging) and on [Logging Providers in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers)
+The default LogLevel settings for the application are found in the corresponding
+`appsettings.json`, which may contain the following section -- see here for
+additional details on
+[Logging in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging)
+and on
+[Logging Providers in .NET](https://docs.microsoft.com/en-us/dotnet/core/extensions/logging-providers)
 
 ```json
   "Logging": {
@@ -41,9 +46,10 @@ The default LogLevel settings for the application are found in the corresponding
   }
 ```
 
-To permanently change the LogLevel, just update the `appsettings.json` for the app.
-To override a LogLevel at runtime, an environment variable can set the LogLevel value. 
-For example to set the Logging:LogLevel:Default LogLevel to Debug: `export Logging__LogLevel__Default="Debug"` 
+To permanently change the LogLevel, just update the `appsettings.json` for the
+app. To override a LogLevel at runtime, an environment variable can set the
+LogLevel value. For example to set the Logging:LogLevel:Default LogLevel to
+Debug: `export Logging__LogLevel__Default="Debug"`
 
 Example using the CLI:
 
@@ -70,17 +76,22 @@ Logging__LogLevel__Default="Debug" dotnet run
 
 ## DataSources
 
-The SDK supports multiple data sources for getting carbon data.  At this time, only a JSON file, [WattTime](https://www.watttime.org/) and [ElectricityMaps](https://www.electricitymaps.com/) are supported.
+The SDK supports multiple data sources for getting carbon data. At this time,
+only a JSON file, [WattTime](https://www.watttime.org/) and
+[ElectricityMaps](https://www.electricitymaps.com/) are supported.
 
-Each data source interface is configured with a specific data source implementation.  
+Each data source interface is configured with a specific data source
+implementation.
 
-If set to `WattTime` or `ElectricityMaps`, the configuration specific to that data provider must also be supplied.
+If set to `WattTime` or `ElectricityMaps`, the configuration specific to that
+data provider must also be supplied.
 
-`JSON` will result in the data being loaded from the file specified in the `DataFileLocation` property
+`JSON` will result in the data being loaded from the file specified in the
+`DataFileLocation` property
 
 ```json
 {
-"DataSources": {
+  "DataSources": {
     "EmissionsDataSource": "Json",
     "ForecastDataSource": "WattTime",
     "Configurations": {
@@ -96,7 +107,7 @@ If set to `WattTime` or `ElectricityMaps`, the configuration specific to that da
           "password": "proxyPassword"
         }
       },
-       "ElectricityMaps": {
+      "ElectricityMaps": {
         "Type": "ElectricityMaps",
         "APITokenHeader": "auth-token",
         "APIToken": "myAwesomeToken",
@@ -117,31 +128,39 @@ If using the WattTime data source, WattTime configuration is required.
 
 ```json
 {
-    "username": "",
-    "password": "",
-    "baseUrl": "https://api2.watttime.org/v2/"
+  "username": "",
+  "password": "",
+  "baseUrl": "https://api2.watttime.org/v2/"
 }
 ```
 
-> **Sign up for a test account:** To create an account, follow these steps [from the WattTime documentation](https://www.watttime.org/api-documentation/#best-practices-for-api-usage)
+> **Sign up for a test account:** To create an account, follow these steps
+> [from the WattTime documentation](https://www.watttime.org/api-documentation/#best-practices-for-api-usage)
 
 #### username
 
-The username you receive from WattTime.  This value is required when using a WattTime data source.
+The username you receive from WattTime. This value is required when using a
+WattTime data source.
 
 #### password
 
-The WattTime password for the username supplied.  This value is required when using a WattTime data source.
+The WattTime password for the username supplied. This value is required when
+using a WattTime data source.
 
-#### baseUrl
+#### baseUrl (WT)
 
-The url to use when connecting to WattTime.  Defaults to [https://api2.watttime.org/v2/](https://api2.watttime.org/v2/).
+The url to use when connecting to WattTime. Defaults to
+[https://api2.watttime.org/v2/](https://api2.watttime.org/v2/).
 
-In normal use, you shouldn't need to set this value, but this value can be used to enable integration testing scenarios or if the WattTime url should change in the future.
+In normal use, you shouldn't need to set this value, but this value can be used
+to enable integration testing scenarios or if the WattTime url should change in
+the future.
 
 #### Proxy
 
-This value is used to set proxy information in situations where internet egress requires a proxy.  For proxy values to be used `useProxy` must be set to `true`.  Other values should be set as needed for your environment.
+This value is used to set proxy information in situations where internet egress
+requires a proxy. For proxy values to be used `useProxy` must be set to `true`.
+Other values should be set as needed for your environment.
 
 ```bash
   DataSources__Configurations__WattTime__UseProxy
@@ -149,7 +168,14 @@ This value is used to set proxy information in situations where internet egress 
 
 #### WattTime Caching BalancingAuthority
 
-To improve performance communicating with the WattTime API service, the client caches the data mapping location coordinates to balancing authorities.  By default, this data is stored in an in-memory cache for `86400` seconds, but expiration can be configured using the setting `BalancingAuthorityCacheTTL` (Set to "0" to disable the caching feature).  The regional boundaries of a balancing authority tend to be stable, but as they can change, the [WattTime documentation](https://www.watttime.org/api-documentation/#determine-grid-region) recommends not caching for longer than 1 month.
+To improve performance communicating with the WattTime API service, the client
+caches the data mapping location coordinates to balancing authorities. By
+default, this data is stored in an in-memory cache for `86400` seconds, but
+expiration can be configured using the setting `BalancingAuthorityCacheTTL` (Set
+to "0" to disable the caching feature). The regional boundaries of a balancing
+authority tend to be stable, but as they can change, the
+[WattTime documentation](https://www.watttime.org/api-documentation/#determine-grid-region)
+recommends not caching for longer than 1 month.
 
 ```bash
 DataSources__Configurations__WattTime__BalancingAuthorityCacheTTL="90"
@@ -157,7 +183,18 @@ DataSources__Configurations__WattTime__BalancingAuthorityCacheTTL="90"
 
 ### Json Configuration
 
-By setting `DataSources__Configurations__Json__DataFileLocation=mycustomfile.json` property when Data source is set to `Json`, the user can specify a file that can contains custom `EmissionsData` sets. The file should be located under the `<user's repo>/src/data/data-sources/` directory that is part of the repository. At build time, all the JSON files under `<user's repo>/src/data/data-sources/`  are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/data-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/data-sources/json`.
+By setting
+`DataSources__Configurations__Json__DataFileLocation=mycustomfile.json` property
+when Data source is set to `Json`, the user can specify a file that can contains
+custom `EmissionsData` sets. The file should be located under the
+`<user's repo>/src/data/data-sources/` directory that is part of the repository.
+At build time, all the JSON files under `<user's repo>/src/data/data-sources/`
+are copied over the destination directory
+`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/data-sources/json`
+that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed
+where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json`
+directory. For instance, if the application is installed under `/app`, copy the
+file to `/app/data-sources/json`.
 
 ```sh
 cp <mydir>/mycustomfile.json /app/data-sources/json
@@ -176,24 +213,26 @@ info: CarbonAware.DataSources.Json.JsonDataSource[0]
 
 ### ElectricityMaps Configuration
 
-If using the ElectricityMaps data source, ElectricityMaps configuration is required.
-
-> **NOTE**
-> The ElectricityMaps API does not currently support access to historical forecasts.
-> This means that functionality such as the CLI `emissions-forecasts` `--requested-at` flag
-> and the API `/forecasts/batch` `requestedAt` input will respond with a `NotImplemented` error.
->
-> Depending on the goal, the historical measured `emissions` commands may be a reasonable workaround.
-> This would treat the measured emissions as a "perfect historical forecast" effectively.
-> Otherwise, use a data source that has support for historical forecasts, such as [WattTime](#watttime-configuration).
+If using the ElectricityMaps data source, ElectricityMaps configuration is
+required.
 
 **With an account token:**
 
+> **NOTE** The ElectricityMaps API does not currently support access to
+> historical forecasts. This means that functionality such as the CLI
+> `emissions-forecasts` `--requested-at` flag and the API `/forecasts/batch` >
+> `requestedAt` input will respond with a `NotImplemented` error.
+>
+> Depending on the goal, the historical measured `emissions` commands may be a
+> reasonable workaround. This would treat the measured emissions as a "perfect
+> historical forecast" effectively. Otherwise, use a data source that has
+> support for historical forecasts, such as [WattTime](#watttime-configuration).
+
 ```json
 {
-    "APITokenHeader": "auth-token",
-    "APIToken": "<api-token>",
-    "baseUrl": "https://api.electricitymap.org/v3/"
+  "APITokenHeader": "auth-token",
+  "APIToken": "<api-token>",
+  "baseUrl": "https://api.electricitymap.org/v3/"
 }
 ```
 
@@ -201,17 +240,19 @@ If using the ElectricityMaps data source, ElectricityMaps configuration is requi
 
 ```json
 {
-    "APITokenHeader": "X-BLOBR-KEY",
-    "APIToken": "<api-token>",
-    "baseUrl": "https://api-access.electricitymaps.com/<url-token>"
+  "APITokenHeader": "X-BLOBR-KEY",
+  "APIToken": "<api-token>",
+  "baseUrl": "https://api-access.electricitymaps.com/<url-token>"
 }
 ```
 
-> **Sign up for a free trial:** Select the free trial product from [the ElectricityMaps catalog](https://api-portal.electricitymaps.com/)
+> **Sign up for a free trial:** Select the free trial product from
+> [the ElectricityMaps catalog](https://api-portal.electricitymaps.com/)
 
 #### API Token Header
 
-The API Token Header for ElectricityMaps. If you have a paid account, the header is "auth-token". If you're using the free trial, the header is "X-BLOBR-KEY"
+The API Token Header for ElectricityMaps. If you have a paid account, the header
+is "auth-token". If you're using the free trial, the header is "X-BLOBR-KEY"
 
 #### API Token
 
@@ -219,49 +260,75 @@ The ElectricityMaps token you receive with your account or free trial.
 
 #### BaseUrl
 
-The url to use when connecting to ElectricityMaps. Defaults to "https://api.electricitymap.org/v3/" but can be overridden in the config if needed (such as for free-trial users or enable integration testing scenarios).
+The url to use when connecting to ElectricityMaps. Defaults to
+"https://api.electricitymap.org/v3/" but can be overridden in the config if
+needed (such as for free-trial users or enable integration testing scenarios).
 
 #### Emission Factor Type
 
-String value for the optional `emissionFactorType` parameter to be sent on every ElectricityMaps API request that accepts this parameter.
+String value for the optional `emissionFactorType` parameter to be sent on every
+ElectricityMaps API request that accepts this parameter.
 
-See the [ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#emission-factors) for more details and valid values.
+See the
+[ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#emission-factors)
+for more details and valid values.
 
 #### Disable Estimations
 
-Boolean value for the optional `disableEstimations` parameter to be sent on every ElectricityMaps API request that accepts this parameter.
+Boolean value for the optional `disableEstimations` parameter to be sent on
+every ElectricityMaps API request that accepts this parameter.
 
-See the [ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#estimations) for more details.
+See the
+[ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#estimations)
+for more details.
 
 ## CarbonAwareVars
 
-This section contains the global settings for the SDK. The configuration looks like this:
+This section contains the global settings for the SDK. The configuration looks
+like this:
 
 ```json
 {
-    "carbonAwareVars": {
-        "TelemetryProvider": "ApplicationInsights",
-        "VerboseApi": "true",
-        "webApiRoutePrefix": ""
-    }
+  "carbonAwareVars": {
+    "TelemetryProvider": "ApplicationInsights",
+    "VerboseApi": "true",
+    "webApiRoutePrefix": ""
+  }
 }
 ```
 
 ### Tracing and Monitoring Configuration
 
-Application monitoring and tracing can be configured using the `TelemetryProvider` variable in the application configuration.  
+The application uses Opentelemetry to create traces locally in the console. In
+order to configure it to send the traces to a tracing app like Zipkin, Jaeger
+etc, please refer to the Open Telemetry
+[documentation](https://opentelemetry.io/).
+
+#### Configuring with Application Insights
+
+Application monitoring and tracing can be configured using the
+`TelemetryProvider` variable in the application configuration.
 
 ```bash
 CarbonAwareVars__TelemetryProvider="ApplicationInsights"
 ```
 
-This application is integrated with Application Insights for monitoring purposes. The telemetry collected in the app is pushed to AppInsights and can be tracked for logs, exceptions, traces and more. To connect to your Application Insights instance, configure the `ApplicationInsights_Connection_String` variable.
+This application is integrated with Application Insights for monitoring
+purposes. The telemetry collected in the app is pushed to AppInsights and can be
+tracked for logs, exceptions, traces and more. To connect to your Application
+Insights instance, configure the `ApplicationInsights_Connection_String`
+variable.
 
 ```bash
 ApplicationInsights_Connection_String="AppInsightsConnectionString"
 ```
 
-You can alternatively configure using Instrumentation Key by setting the `AppInsights_InstrumentationKey` variable. However, Microsoft is ending technical support for instrumentation key�based configuration of the Application Insights feature soon. ConnectionString-based configuration should be used over InstrumentationKey. For more details, please refer to [the documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net).
+You can alternatively configure using Instrumentation Key by setting the
+`AppInsights_InstrumentationKey` variable. However, Microsoft is ending
+technical support for instrumentation key�based configuration of the Application
+Insights feature soon. ConnectionString-based configuration should be used over
+InstrumentationKey. For more details, please refer to
+[the documentation](https://docs.microsoft.com/en-us/azure/azure-monitor/app/sdk-connection-string?tabs=net).
 
 ```bash
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
@@ -269,7 +336,10 @@ AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
 
 ### Verbosity
 
-You can configure the verbosity of the application error messages by setting the 'VerboseApi' environment variable. Typically, you would set this value to 'true' in the development or staging regions. When set to 'true', a detailed stack trace would be presented for any errors in the request.
+You can configure the verbosity of the application error messages by setting the
+'VerboseApi' environment variable. Typically, you would set this value to 'true'
+in the development or staging regions. When set to 'true', a detailed stack
+trace would be presented for any errors in the request.
 
 ```bash
 CarbonAwareVars__VerboseApi="true"
@@ -277,15 +347,18 @@ CarbonAwareVars__VerboseApi="true"
 
 ### Web API Prefix
 
-Used to add a prefix to all routes in the WebApi project.  Must start with a `/`.  Invalid paths will cause an exception to be thrown at startup.
+Used to add a prefix to all routes in the WebApi project. Must start with a `/`.
+Invalid paths will cause an exception to be thrown at startup.
 
-By default, all controllers are off of the root path.  For example:
+By default, all controllers are off of the root path. For example:
 
 ```bash
 http://localhost/emissions
 ```
 
-If `webApiRoutePrefix` is set, it will allow calls to controllers using the prefix, which can be helpful for cross cluster calls, or when proxies strip out information from headers.  For example, if this value is set to:
+If `webApiRoutePrefix` is set, it will allow calls to controllers using the
+prefix, which can be helpful for cross cluster calls, or when proxies strip out
+information from headers. For example, if this value is set to:
 
 ```bash
 CarbonAwareVars__webApiRoutePrefix="/mydepartment/myapp"
@@ -305,7 +378,12 @@ Note that the controllers still respond off of the root path.
 
 ## LocationDataSourcesConfiguration
 
-By setting `LocationDataSourcesConfiguration` property with one or more location data sources, it is possible to load different `Location` data sets in order to have more than one location. For instance by setting two location regions, the property would be set as follow using [environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#naming-of-environment-variables) variables:
+By setting `LocationDataSourcesConfiguration` property with one or more location
+data sources, it is possible to load different `Location` data sets in order to
+have more than one location. For instance by setting two location regions, the
+property would be set as follow using
+[environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#naming-of-environment-variables)
+variables:
 
 ```sh
 "LocationDataSourcesConfiguration__LocationSourceFiles__0__DataFileLocation": "azure-regions.json",
@@ -316,7 +394,14 @@ By setting `LocationDataSourcesConfiguration` property with one or more location
 "LocationDataSourcesConfiguration__LocationSourceFiles__1__Delimiter": "_",
 ```
 
-This way when the application starts, it open the files specified by `DataFileLocation` property that should located under `location-sources/json` directory. The format of these files is the same as the `Location` Model class. In order to differentiate between regions, a `Prefix` and `Delimiter` properties are used to allow the user to select the region when a request is performed. By settings the properties, the region should be made of **region**=`Prefix`+`Delimiter`+`RegionName`, so when the query is performed, it would be found. The following example shows how to perform an http request:
+This way when the application starts, it open the files specified by
+`DataFileLocation` property that should located under `location-sources/json`
+directory. The format of these files is the same as the `Location` Model class.
+In order to differentiate between regions, a `Prefix` and `Delimiter` properties
+are used to allow the user to select the region when a request is performed. By
+settings the properties, the region should be made of
+**region**=`Prefix`+`Delimiter`+`RegionName`, so when the query is performed, it
+would be found. The following example shows how to perform an http request:
 
 ```sh
 PREFIX=az
@@ -325,9 +410,20 @@ REGION=${PREFIX}${DELIMITER}eastus
 curl "http://${IP_HOST}:${PORT}/emissions/bylocations/best?location=${REGION}&time=2022-05-25&toTime=2022-05-26&durationMinutes=0"
 ```
 
-At build time, all the JSON files under `<user's repo>/src/data/location-sources` are copied over the destination directory `<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/location-sources/json` that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed where the assembly `CarbonAware.WebApi.dll` is located under `location-sources/json` directory. For instance, if the application is installed under `/app`, copy the file to `/app/location-sources/json`.
+At build time, all the JSON files under
+`<user's repo>/src/data/location-sources` are copied over the destination
+directory
+`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/location-sources/json`
+that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed
+where the assembly `CarbonAware.WebApi.dll` is located under
+`location-sources/json` directory. For instance, if the application is installed
+under `/app`, copy the file to `/app/location-sources/json`.
 
-**Note**: Under `<user's repo>/src/data/location-sources` there is a template file `custom-azure-zones.json.template` that can be used for locations that don't have latitude and logitude, and the underline datasource requires a zone name. This is the case for data source `ElectricityMaps` where the routes can be accessible using lat/lon, but some regions are zone name based.
+**Note**: Under `<user's repo>/src/data/location-sources` there is a template
+file `custom-azure-zones.json.template` that can be used for locations that
+don't have latitude and logitude, and the underline datasource requires a zone
+name. This is the case for data source `ElectricityMaps` where the routes can be
+accessible using lat/lon, but some regions are zone name based.
 
 One can also specify these values in `appsettings.json` like this:
 
@@ -350,9 +446,9 @@ One can also specify these values in `appsettings.json` like this:
 }
 ```
 
-# Sample Configurations
+## Sample Configurations
 
-## Configuration for Emissions data Using WattTime
+### Configuration for Emissions data Using WattTime
 
 ```bash
 DataSources__EmissionsDataSource="WattTime"
@@ -406,23 +502,23 @@ DataSources__Configurations__WattTime__Password="wattTimePassword"
   }
 ```
 
-## Configuration For Emissions data Using JSON
+### Configuration For Emissions data Using JSON
 
 ```json
 {
   "DataSources": {
-      "EmissionsDataSource": "Json",
-      "Configurations": {
-        "Json": {
-          "Type": "Json",
-          "DataFileLocation": "test-data.json"
-        }
+    "EmissionsDataSource": "Json",
+    "Configurations": {
+      "Json": {
+        "Type": "Json",
+        "DataFileLocation": "test-data.json"
       }
+    }
   }
 }
 ```
 
-## Configuration Using WattTime and Defined Location Source Files
+### Configuration Using WattTime and Defined Location Source Files
 
 ```json
 {

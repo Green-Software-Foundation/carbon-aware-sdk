@@ -25,6 +25,12 @@ const string location = "eastus";
 var parsedStart = DateTimeOffset.Parse(startDate);
 var parsedEnd = DateTimeOffset.Parse(endDate);
 
+// Locations
+var locationHandler = serviceProvider.GetRequiredService<ILocationHandler>();
+var locations = await locationHandler.GetLocationsAsync();
+var value = locations[location];
+Console.WriteLine($"Details for {location}: {value}");
+
 // EmissionsData
 var emissionsDataResult = await handlerEmissions.GetEmissionsDataAsync(location, parsedStart, parsedEnd);
 var rating = emissionsDataResult.First().Rating;

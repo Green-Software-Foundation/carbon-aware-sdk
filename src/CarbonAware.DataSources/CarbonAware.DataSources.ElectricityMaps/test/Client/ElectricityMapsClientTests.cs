@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
 using Moq.Protected;
+using Moq.Contrib.HttpClient;
 using System.Text.Json;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
@@ -14,17 +15,13 @@ namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 [TestFixture]
 public class ElectricityMapsClientTests
 {
-
     private readonly string AuthHeader = "auth-token";
     private readonly string DefaultTokenValue = "myDefaultToken123";
-
     private readonly string TestLatitude = "36.6681";
     private readonly string TestLongitude = "-78.3889";
     private readonly string TestZone = "NL";
 
-    private MockHttpMessageHandler MessageHandler { get; set; }
-
-    private HttpClient HttpClient { get; set; }
+    private Mock<HttpMessageHandler> Handler { get; set; }
 
     private IHttpClientFactory HttpClientFactory { get; set; }
 
@@ -43,6 +40,15 @@ public class ElectricityMapsClientTests
         this.Log = new Mock<ILogger<ElectricityMapsClient>>();
 
         this.Options.Setup(o => o.CurrentValue).Returns(() => this.Configuration);
+
+        this.Handler = new Mock<HttpMessageHandler>();
+        this.HttpClientFactory = Handler.CreateClientFactory();
+        Mock.Get(this.HttpClientFactory).Setup(x => x.CreateClient(IElectricityMapsClient.NamedClient))
+            .Returns(() =>
+            {
+                var client = Handler.CreateClient();
+                return client;
+            });
     }
 
     [TestCase(BaseUrls.TrialBaseUrl, TestName = "ClientInstantiation_FailsForInvalidConfig: Trial")]
@@ -50,7 +56,7 @@ public class ElectricityMapsClientTests
     public void ClientInstantiation_FailsForInvalidConfig(string baseUrl)
     {
         // Arrange
-        CreateBasicClient(TestData.GetZonesAllowedJsonString(), "{}");
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         this.Configuration = new ElectricityMapsClientConfiguration()
         {
             APITokenHeader = string.Empty,
@@ -67,7 +73,7 @@ public class ElectricityMapsClientTests
     public void ClientInstantiation_SucceedsForValidConfig(string baseUrl)
     {
         // Arrange
-        CreateBasicClient(TestData.GetZonesAllowedJsonString(), "{}");
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         this.Configuration.BaseUrl = baseUrl;
 
         // Act & Assert
@@ -104,32 +110,54 @@ public class ElectricityMapsClientTests
     }
 
     [Test]
-    public void GetForecastedCarbonIntensityAsync_ThrowsWhenBadJsonIsReturned()
+    public void AllPublicMethods_ThrowsClientException_WhenNull()
     {
         // Arrange
-        CreateBasicClient(TestData.GetZonesAllowedJsonString(), "This is bad json");
-        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
+        AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains(Paths.Forecast) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "null");
 
-        // Act & Assert
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
-    }
+        AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains(Paths.History) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "null");
 
-    [Test]
-    public void GetForecastedCarbonIntensityAsync_ThrowsWhenNull()
-    {
-        // Arrange
-        CreateBasicClient(TestData.GetZonesAllowedJsonString(), "null");
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
         // Act & Assert
         Assert.ThrowsAsync<ElectricityMapsClientException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
+        Assert.ThrowsAsync<ElectricityMapsClientException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
+    }
+
+    [Test]
+    public void AllPublicMethods_ThrowJsonException_WhenBadJsonIsReturned()
+    {
+        // Arrange
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
+        AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains(Paths.Forecast) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "This is bad json");
+
+        AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains(Paths.History) && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, "This is bad json");
+
+        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+
+        // Act & Assert
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
     }
 
     [Test]
     public void GetForecastedCarbonIntensityAsync_ThrowsWhen_PathNotSupported()
     {
         // Arrange
-        CreateBasicClient(TestData.GetNoPathsSupportedJsonString(), string.Empty);
+        AddHandlers_Auth_Zones(TestData.GetNoPathsSupportedJsonString());
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
         // Act & Assert
@@ -140,7 +168,7 @@ public class ElectricityMapsClientTests
     public void GetForecastedCarbonIntensityAsync_ThrowsWhen_ZoneNotSupported()
     {
         // Arrange
-        CreateBasicClient(TestData.GetNoZonesSupportedJsonString(), string.Empty);
+        AddHandlers_Auth_Zones(TestData.GetNoZonesSupportedJsonString());
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
         // Act & Assert
@@ -154,22 +182,11 @@ public class ElectricityMapsClientTests
     {
         // Arrange
         this.Configuration.BaseUrl = baseUrl;
-        this.CreateHttpClient(m =>
-        {
-            if (m.RequestUri!.ToString() == baseUrl + Paths.Zones)
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
+        AddHandler_RequestResponse(r =>
             {
-                var response = this.MockElectricityMapsResponse(m, new StringContent(TestData.GetZonesAllowedJsonString()));
-                return Task.FromResult(response);
-            }
-            else if (
-                m.RequestUri!.ToString().Contains(baseUrl + Paths.Forecast) &&
-                m.Method == HttpMethod.Get)
-            {
-                var response = this.MockElectricityMapsResponse(m, new StringContent(TestData.GetCurrentForecastJsonString()));
-                return Task.FromResult(response);
-            }
-            return Task.FromResult(this.MockElectricityMapsResponse(m, new StringContent("null")));
-        });
+                return r.RequestUri!.ToString().Contains(baseUrl + Paths.Forecast) && r.Method == HttpMethod.Get;
+            }, System.Net.HttpStatusCode.OK, TestData.GetCurrentForecastJsonString());
 
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
@@ -186,21 +203,10 @@ public class ElectricityMapsClientTests
     }
 
     [Test]
-    public void GetRecentCarbonIntensityHistoryAsync_ThrowsWhenBadJsonIsReturned()
-    {
-        // Arrange
-        CreateBasicClient(TestData.GetZonesAllowedJsonString(), "This is bad json");
-        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
-
-        // Act & Assert
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
-    }
-
-    [Test]
     public void GetRecentCarbonIntensityHistoryAsync_ThrowsWhen_PathNotSupported()
     {
         // Arrange
-        CreateBasicClient(TestData.GetNoPathsSupportedJsonString(), string.Empty);
+        AddHandlers_Auth_Zones(TestData.GetNoPathsSupportedJsonString());
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
         // Act & Assert
@@ -211,7 +217,7 @@ public class ElectricityMapsClientTests
     public void GetRecentCarbonIntensityHistoryAsync_ThrowsWhen_ZoneNotSupported()
     {
         // Arrange
-        CreateBasicClient(TestData.GetNoZonesSupportedJsonString(), string.Empty);
+        AddHandlers_Auth_Zones(TestData.GetNoZonesSupportedJsonString());
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
         // Act & Assert
@@ -224,20 +230,12 @@ public class ElectricityMapsClientTests
     {
         // Arrange
         this.Configuration.BaseUrl = baseUrl;
-        this.CreateHttpClient(m =>
-        {
-            if (m.RequestUri!.ToString() == baseUrl + Paths.Zones)
+
+        AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
+        AddHandler_RequestResponse(r =>
             {
-                var response = this.MockElectricityMapsResponse(m, new StringContent(TestData.GetZonesAllowedJsonString()));
-                return Task.FromResult(response);
-            }
-            else if (m.RequestUri!.ToString().Contains(baseUrl + Paths.History) && m.Method == HttpMethod.Get)
-            {
-                var response = this.MockElectricityMapsResponse(m, new StringContent(TestData.GetHistoryCarbonIntensityDataJsonString()));
-                return Task.FromResult(response);
-            }
-            return Task.FromResult(this.MockElectricityMapsResponse(m, new StringContent("null")));
-        });
+                return r.RequestUri!.ToString().Contains(baseUrl + Paths.History) && r.Method == HttpMethod.Get;
+            }, System.Net.HttpStatusCode.OK, TestData.GetHistoryCarbonIntensityDataJsonString());
 
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
 
@@ -261,53 +259,38 @@ public class ElectricityMapsClientTests
         });
     }
 
-    private void CreateBasicClient(string zoneContent, string resultContent)
+
+    /**
+     * Helper to add client handlers for auth checking and for zone content response
+     */
+    private void AddHandlers_Auth_Zones(string zoneContent)
     {
-        this.CreateHttpClient(m =>
-        {
-            var isTokenAuthValid = m.RequestUri!.ToString().Contains(BaseUrls.TokenBaseUrl) && !m.Headers.Where(x => x.Key == "auth-token").Any();
-            var isTrialAuthValid = m.RequestUri!.ToString().Contains(BaseUrls.TrialBaseUrl) && !m.Headers.Where(x => x.Key == "X-BLOBR-KEY").Any();
-            // If no auth and token setup, return unauthorized
-            if (isTokenAuthValid || isTrialAuthValid)
+        AddHandler_RequestResponse(r =>
             {
-                return Task.FromResult(new HttpResponseMessage(System.Net.HttpStatusCode.Unauthorized));
-            }
+                var isTokenAuthInvalid = r.RequestUri!.ToString().Contains(BaseUrls.TokenBaseUrl) && !r.Headers.Where(x => x.Key == "auth-token").Any();
+                var isTrialAuthInvalid = r.RequestUri!.ToString().Contains(BaseUrls.TrialBaseUrl) && !r.Headers.Where(x => x.Key == "X-BLOBR-KEY").Any();
+                // If no auth and token setup, return unauthorized
+                return isTokenAuthInvalid || isTrialAuthInvalid;
+            }, System.Net.HttpStatusCode.Unauthorized);
 
-            if (m.RequestUri?.ToString() == BaseUrls.TokenBaseUrl + Paths.Zones)
+        AddHandler_RequestResponse(r =>
             {
-                var response = this.MockElectricityMapsResponse(m, new StringContent(zoneContent));
-                return Task.FromResult(response);
-            }
-            return Task.FromResult(this.MockElectricityMapsResponse(m, new StringContent(resultContent)));
-        });
+                return r.RequestUri?.ToString() == BaseUrls.TokenBaseUrl + Paths.Zones;
+            }, System.Net.HttpStatusCode.OK, zoneContent);
     }
 
-    private HttpResponseMessage MockElectricityMapsResponse(HttpRequestMessage request, HttpContent responseContent)
-    {
-        var response = new HttpResponseMessage(System.Net.HttpStatusCode.OK);
-        response.Content = responseContent;
-        return response;
-    }
-
-    private void CreateHttpClient(Func<HttpRequestMessage, Task<HttpResponseMessage>> requestDelegate)
-    {
-        this.MessageHandler = new MockHttpMessageHandler(requestDelegate);
-        this.HttpClient = new HttpClient(this.MessageHandler);
-        this.HttpClientFactory = Mock.Of<IHttpClientFactory>();
-        Mock.Get(this.HttpClientFactory).Setup(h => h.CreateClient(IElectricityMapsClient.NamedClient)).Returns(this.HttpClient);
-    }
-
-    private class MockHttpMessageHandler : HttpMessageHandler
-    {
-        private Func<HttpRequestMessage, Task<HttpResponseMessage>> RequestDelegate { get; set; }
-
-        public MockHttpMessageHandler(Func<HttpRequestMessage, Task<HttpResponseMessage>> requestDelegate)
-        {
-            this.RequestDelegate = requestDelegate;
-        }
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            return await this.RequestDelegate.Invoke(request);
-        }
+    /**
+     * Helper to add client handler for request predicate and corresponding status code and response content
+     */
+    private void AddHandler_RequestResponse(Predicate<HttpRequestMessage> requestPredicate, System.Net.HttpStatusCode statusCode, string? responseContent = null) {
+        if (responseContent != null) {
+            this.Handler
+                .SetupRequest(requestPredicate)
+                .ReturnsResponse(statusCode, new StringContent(responseContent));
+        } else {
+            this.Handler
+                .SetupRequest(requestPredicate)
+                .ReturnsResponse(statusCode);
+        }    
     }
 }

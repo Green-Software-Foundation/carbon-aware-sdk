@@ -1,22 +1,33 @@
 # Carbon Aware CLI
 
-The CLI is best for use with systems you can not change the code in but can invoke command line.  For example - build pipelines.
+The CLI is best for use with systems you can not change the code in but can
+invoke command line. For example - build pipelines.
 
-The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via command line and outputs the results as json to stdout.  
+The CLI exposes the primary `getEmissionsByLocationsAndTime` SDK methods via
+command line and outputs the results as json to stdout.
 
 > You can use the CLI via a docker image.
 
-- [Carbon Aware CLI Reference](#carbon-aware-cli-reference)
+- [Carbon Aware CLI](#carbon-aware-cli)
   - [Build and Install](#build-and-install)
   - [Using the CLI](#using-the-cli)
-    - [emissions](#emissions)
-      - [Description](#description)
-      - [Usage](#usage)
-      - [Options](#options)
-      - [Examples](#examples)
-        - [Single Location Emissions](#single-location-emissions)
-        - [Multiple Location Emissions](#multiple-location-emissions)
-        - [Emissions with Start and End Times](#emissions-with-start-and-end-times)
+  - [emissions](#emissions)
+    - [Description](#description)
+    - [Usage](#usage)
+    - [Options](#options)
+    - [Examples](#examples)
+      - [Single Location Emissions](#single-location-emissions)
+      - [Multiple Location Emissions](#multiple-location-emissions)
+      - [Emissions with Start and End Times](#emissions-with-start-and-end-times)
+  - [emissions-forecasts](#emissions-forecasts)
+    - [Description](#description)
+    - [Usage](#usage)
+    - [Options](#options)
+    - [Examples](#examples)
+      - [Single Location Current Forecast](#single-location-current-forecast)
+      - [Multiple Location Current Forecasts](#multiple-location-current-forecasts)
+      - [Filtered Data and Window Size Forecast](#filtered-data-and-window-size-forecast)
+      - [Historical Forecast](#historical-forecast)
 
 ## Build and Install
 
@@ -26,7 +37,11 @@ Build the CLI using the `dotnet publish` command:
 dotnet publish ./src/CarbonAware.CLI/src/CarbonAware.CLI.csproj -c Release -o <your desired installation path>
 ```
 
-> By default this will build for your host operating system.  To build for a platform other than your host platform you can specify the target runtime like this, using any valid [Runtime ID](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog#using-rids) (EG `win-x64`, `linux-x64`, `osx-x64`):
+> By default this will build for your host operating system. To build for a
+> platform other than your host platform you can specify the target runtime like
+> this, using any valid
+> [Runtime ID](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog#using-rids)
+> (EG `win-x64`, `linux-x64`, `osx-x64`):
 >
 > ```bash
 > dotnet publish .\src\CarbonAware.CLI\src\CarbonAware.CLI.csproj -c Release -r <RuntimeID> --self-contained -o <your desired installation path>
@@ -34,22 +49,32 @@ dotnet publish ./src/CarbonAware.CLI/src/CarbonAware.CLI.csproj -c Release -o <y
 
 ## Using the CLI
 
-To use the CLI for the first time, navigate to your installation directory and run the binary with the `-h` flag to see the help menu.
+To use the CLI for the first time, navigate to your installation directory and
+run the binary with the `-h` flag to see the help menu.
 
-On Windows: `.\caw.exe -h`
-On MacOS/Linux: `.\caw -h`
+On Windows:
 
-### emissions
+```bash
+.\caw.exe -h
+```
 
-#### Description
+On MacOS/Linux:
+
+```bash
+.\caw -h
+```
+
+## emissions
+
+### Description
 
 Retrieve emissions data from specified locations and time periods.
 
-#### Usage
+### Usage
 
 `caw emissions [options]`
 
-#### Options
+### Options
 
 ```text
   -l, --location <location> (REQUIRED)  A named location
@@ -60,83 +85,187 @@ Retrieve emissions data from specified locations and time periods.
   -?, -h, --help                        Show help and usage information
 ```
 
-#### Examples
+### Examples
 
-##### Single Location Emissions
+#### Single Location Emissions
 
-command: `.\caw.exe emissions -l eastus`
+command:
+
+```bash
+.\caw.exe emissions -l eastus
+```
 
 output:
 
 ```json
-[{"Location":"eastus","Time":"2022-08-30T12:45:11+00:00","Rating":65,"Duration":"08:00:00"},
-{"Location":"eastus","Time":"2022-08-30T20:45:11+00:00","Rating":65,"Duration":"08:00:00"},
-// ...
-{"Location":"eastus","Time":"2022-09-06T04:45:11+00:00","Rating":73,"Duration":"08:00:00"},
-{"Location":"eastus","Time":"2022-09-06T12:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+[
+  {
+    "Location": "eastus",
+    "Time": "2022-08-30T12:45:11+00:00",
+    "Rating": 65,
+    "Duration": "08:00:00"
+  },
+  {
+    "Location": "eastus",
+    "Time": "2022-08-30T20:45:11+00:00",
+    "Rating": 65,
+    "Duration": "08:00:00"
+  },
+  // ...
+  {
+    "Location": "eastus",
+    "Time": "2022-09-06T04:45:11+00:00",
+    "Rating": 73,
+    "Duration": "08:00:00"
+  },
+  {
+    "Location": "eastus",
+    "Time": "2022-09-06T12:45:11+00:00",
+    "Rating": 84,
+    "Duration": "08:00:00"
+  }
+]
 ```
 
-##### Multiple Location Emissions
+#### Multiple Location Emissions
 
-command: `.\caw emissions -l eastus -l westus`
+command:
+
+```bash
+.\caw emissions -l eastus -l westus
+```
 
 output:
 
 ```json
-[{"Location":"eastus","Time":"2022-08-30T12:45:11+00:00","Rating":65,"Duration":"08:00:00"},
-{"Location":"eastus","Time":"2022-08-30T20:45:11+00:00","Rating":65,"Duration":"08:00:00"},
-// ...
-{"Location":"westus","Time":"2022-09-06T04:45:11+00:00","Rating":73,"Duration":"08:00:00"},
-{"Location":"westus","Time":"2022-09-06T12:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+[
+  {
+    "Location": "eastus",
+    "Time": "2022-08-30T12:45:11+00:00",
+    "Rating": 65,
+    "Duration": "08:00:00"
+  },
+  {
+    "Location": "eastus",
+    "Time": "2022-08-30T20:45:11+00:00",
+    "Rating": 65,
+    "Duration": "08:00:00"
+  },
+  // ...
+  {
+    "Location": "westus",
+    "Time": "2022-09-06T04:45:11+00:00",
+    "Rating": 73,
+    "Duration": "08:00:00"
+  },
+  {
+    "Location": "westus",
+    "Time": "2022-09-06T12:45:11+00:00",
+    "Rating": 84,
+    "Duration": "08:00:00"
+  }
+]
 ```
 
-##### Emissions with Start and End Times
+#### Emissions with Start and End Times
 
-command: `.\caw emissions -l eastus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best`
+command:
+
+```bash
+.\caw emissions -l eastus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best
+```
 
 output:
 
 ```json
-[{"Location":"eastus","Time":"2022-07-01T04:45:11+00:00","Rating":65,"Duration":"08:00:00"},
-{"Location":"eastus","Time":"2022-07-01T12:45:11+00:00","Rating":65,"Duration":"08:00:00"},
-// ...
-{"Location":"eastus","Time":"2022-07-31T12:45:11+00:00","Rating":73,"Duration":"08:00:00"},
-{"Location":"eastus","Time":"2022-07-31T20:45:11+00:00","Rating":84,"Duration":"08:00:00"}]
+[
+  {
+    "Location": "eastus",
+    "Time": "2022-07-01T04:45:11+00:00",
+    "Rating": 65,
+    "Duration": "08:00:00"
+  },
+  {
+    "Location": "eastus",
+    "Time": "2022-07-01T12:45:11+00:00",
+    "Rating": 65,
+    "Duration": "08:00:00"
+  },
+  // ...
+  {
+    "Location": "eastus",
+    "Time": "2022-07-31T12:45:11+00:00",
+    "Rating": 73,
+    "Duration": "08:00:00"
+  },
+  {
+    "Location": "eastus",
+    "Time": "2022-07-31T20:45:11+00:00",
+    "Rating": 84,
+    "Duration": "08:00:00"
+  }
+]
 ```
 
+#### Best Emissions
 
-##### Best Emissions
+command:
 
-command: `.\caw emissions -l eastus -l westus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best`
+```bash
+.\caw emissions -l eastus -l westus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best
+```
 
 output:
 
 ```json
-[{"Location":"eastus","Time":"2022-07-08T04:45:11+00:00","Rating":48,"Duration":"08:00:00"}]
+[
+  {
+    "Location": "eastus",
+    "Time": "2022-07-08T04:45:11+00:00",
+    "Rating": 48,
+    "Duration": "08:00:00"
+  }
+]
 ```
 
-##### Average Emissions
+#### Average Emissions
 
-command: `.\caw emissions -l eastus -l westus --start-time 2022-07-09T00:00:00Z --end-time 2022-07-09T12:00:00Z --average`
+command:
+
+```bash
+.\caw emissions -l eastus -l westus --start-time 2022-07-09T00:00:00Z --end-time 2022-07-09T12:00:00Z --average
+```
 
 output:
 
 ```json
-[{"Location":"eastus","Time":"2022-07-09T00:00:00+00:00","Rating":79.357,"Duration":"12:00:00"},
-{"Location":"westus","Time":"2022-07-09T00:00:00+00:00","Rating":86.91243,"Duration":"12:00:00"}]
+[
+  {
+    "Location": "eastus",
+    "Time": "2022-07-09T00:00:00+00:00",
+    "Rating": 79.357,
+    "Duration": "12:00:00"
+  },
+  {
+    "Location": "westus",
+    "Time": "2022-07-09T00:00:00+00:00",
+    "Rating": 86.91243,
+    "Duration": "12:00:00"
+  }
+]
 ```
 
-### Command `emissions-forecasts`
+## `emissions-forecasts`
 
-#### Description
+### Description
 
 Forecasted emissions
 
-#### Usage
+### Usage
 
 `caw emissions-forecasts [options]`
 
-#### Options
+### Options
 
 ```text
   -l, --location <location> (REQUIRED)  A list of locations
@@ -147,11 +276,15 @@ Forecasted emissions
   -?, -h, --help                        Show help and usage information
 ```
 
-#### Examples
+### Examples
 
-##### Single Location Current Forecast
+#### Single Location Current Forecast
 
-command: `.\caw emissions-forecasts -l northeurope`
+command:
+
+```bash
+.\caw emissions-forecasts -l northeurope
+```
 
 output:
 
@@ -187,9 +320,13 @@ output:
 }]
 ```
 
-##### Multiple Location Current Forecasts
+#### Multiple Location Current Forecasts
 
-command: `.\caw emissions-forecasts -l eastus -l westus`
+command:
+
+```bash
+.\caw emissions-forecasts -l eastus -l westus
+```
 
 output:
 
@@ -228,14 +365,22 @@ output:
 ]
 ```
 
-##### Filtered Data and Window Size Forecast
+#### Filtered Data and Window Size Forecast
 
-> Note: For current forecasts, since the data filters must fall within the forecasted data points, it is advisable to create them dynamically.
-> `TIME_TWO_HOURS_FROM_NOW=$(date --date='2 hours' --utc --iso-8601='seconds')`
-> `TIME_NINETEEN_HOURS_FROM_NOW=$(date --date='19 hours' --utc --iso-8601='seconds')`
-command: `.\caw emissions-forecasts -l northeurope -l westus --data-start-at TIME_TWO_HOURS_FROM_NOW --data-end-at TIME_NINETEEN_HOURS_FROM_NOW -w 10`
+> Note: For current forecasts, since the data filters must fall within the
+> forecasted data points, it is advisable to create them dynamically.
 
-output:
+Example command:
+
+```bash
+TIME_TWO_HOURS_FROM_NOW=$(date --date='2 hours' --utc --iso-8601='seconds')
+
+TIME_NINETEEN_HOURS_FROM_NOW=$(date --date='19 hours' --utc --iso-8601='seconds')
+
+.\caw emissions-forecasts -l northeurope -l westus --data-start-at TIME_TWO_HOURS_FROM_NOW --data-end-at TIME_NINETEEN_HOURS_FROM_NOW -w 10
+```
+
+Example output:
 
 ```json
 [{
@@ -298,9 +443,13 @@ output:
 }]
 ```
 
-##### Historical Forecast
+#### Historical Forecast
 
-command: `.\caw emissions-forecasts -l northeurope -l westus --requested-at 2022-06-15T18:31:00Z`
+command:
+
+```bash
+.\caw emissions-forecasts -l northeurope -l westus --requested-at 2022-06-15T18:31:00Z
+```
 
 output:
 
@@ -363,4 +512,27 @@ output:
     }
   ]
 }]
+```
+
+##### Locations
+
+command: `.\caw locations`
+
+output:
+
+```json
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  },
+  ...
+}
 ```

@@ -243,6 +243,7 @@ Expected Output:
 }
 ```
 
+
 #### Calling the `/emissions/bylocation` endpoint
 
 In console, we can run the below command, to request data for a single location

@@ -30,3 +30,6 @@ samples/watttime-registration/settings.py
 appsettings.Development.json
 # exclude custom zones to easily set up your repo from the custom-azure-zones.json.template
 src/data/location-sources/custom-azure-zones.json
+
+# exclude artifacts on java-client example
+samples/java-client/target

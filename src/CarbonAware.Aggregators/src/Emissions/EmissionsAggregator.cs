@@ -10,7 +10,6 @@ namespace CarbonAware.Aggregators.Emissions;
 
 public class EmissionsAggregator : IEmissionsAggregator
 {
-    private static readonly ActivitySource Activity = new(nameof(EmissionsAggregator));
     private readonly ILogger<EmissionsAggregator> _logger;
     private readonly IEmissionsDataSource _dataSource;
 
@@ -28,18 +27,15 @@ public class EmissionsAggregator : IEmissionsAggregator
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsData>> GetEmissionsDataAsync(CarbonAwareParameters parameters)
     {
-        using (var activity = Activity.StartActivity())
-        {
-            parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-            parameters.SetValidations(ValidationName.StartRequiredIfEnd);
-            parameters.Validate();
+        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+        parameters.SetValidations(ValidationName.StartRequiredIfEnd);
+        parameters.Validate();
 
-            var locations = parameters.MultipleLocations;
-            var start = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
-            var end = parameters.GetEndOrDefault(start);
+        var locations = parameters.MultipleLocations;
+        var start = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
+        var end = parameters.GetEndOrDefault(start);
 
-            return await _dataSource.GetCarbonIntensityAsync(locations, start, end);
-        }
+        return await _dataSource.GetCarbonIntensityAsync(locations, start, end);
     }
 
     /// <inheritdoc />
@@ -60,21 +56,18 @@ public class EmissionsAggregator : IEmissionsAggregator
     /// <inheritdoc />
     public async Task<double> CalculateAverageCarbonIntensityAsync(CarbonAwareParameters parameters)
     {
-        using (var activity = Activity.StartActivity())
-        {
-            parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
-            parameters.Validate();
+        parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
+        parameters.Validate();
 
-            var end = parameters.End;
-            var start = parameters.Start;
+        var end = parameters.End;
+        var start = parameters.Start;
 
-            _logger.LogInformation("Aggregator getting average carbon intensity from data source");
-            var emissionData = await _dataSource.GetCarbonIntensityAsync(parameters.SingleLocation, start, end);
-            var value = emissionData.AverageOverPeriod(start, end);
-            _logger.LogInformation("Carbon Intensity Average: {value}", value);
+        _logger.LogInformation("Aggregator getting average carbon intensity from data source");
+        var emissionData = await _dataSource.GetCarbonIntensityAsync(parameters.SingleLocation, start, end);
+        var value = emissionData.AverageOverPeriod(start, end);
+        _logger.LogInformation("Carbon Intensity Average: {value}", value);
 
-            return value;
-        }
+        return value;
     }
 
     private static IEnumerable<EmissionsData> GetOptimalEmissions(IEnumerable<EmissionsData> emissionsData)
