@@ -57,7 +57,7 @@ repository:
   appropriate.
 - `/images/placehold.md` is deleted.
 - `/images` directory is moved to `/docs/images`.
-- `GettingStarted.md` content is rehomed to the `/docs` directory as
+- `overview.md` content is rehomed to the `/docs` directory as
   appropriate.
 - Content from the `README.md` files in the `/src` directory/sub-directories
   (detailed below) are rehomed to new files in the `/docs` directory.

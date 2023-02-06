@@ -31,9 +31,9 @@ VSCode Remote Containers (Dev Container). To run locally:
    represent actual Carbon data. To configure the application,
    you will need to set up specific environment variables or modify
    `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the [overview.md](overview.md) 
-   file.
-   
+   Detailed information on configuration can be found in the
+   [overview.md](overview.md) file.
+
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
 
@@ -54,7 +54,7 @@ VSCode Remote Containers (Dev Container). To run locally:
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-5. Run the CLI using `dotnet run`
+1. Run the CLI using `dotnet run`
 
 The CLI will ask you to at minimum provide a `--location (-l)` parameter.
 
@@ -182,8 +182,9 @@ First we need to set up the GitHub repository
    pre-generated JSON file with random data. To configure the application, you
    will need to set up specific environment variables or modify
    `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the [overview.md](overview.md) file.
-   
+   Detailed information on configuration can be found in the
+   [overview.md](overview.md) file.
+
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
 
