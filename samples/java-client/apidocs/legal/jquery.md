@@ -1,7 +1,8 @@
-## jQuery v3.5.1
+# jQuery v3.5.1
 
-### jQuery License
-```
+## jQuery License
+
+```text
 jQuery v 3.5.1
 Copyright JS Foundation and other contributors, https://js.foundation/
 
