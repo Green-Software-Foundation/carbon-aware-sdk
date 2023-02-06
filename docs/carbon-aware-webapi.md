@@ -87,6 +87,11 @@ time and the rating in g/kWh.
     "location":"eastus"
     "time":"2022-05-17T20:45:11.5092741+00:00",
     "rating":70
+  },
+  {
+    "location":"westus"
+    "time":"2022-05-17T20:45:11.5092741+00:00",
+    "rating":64
   }
 ]
 ```
