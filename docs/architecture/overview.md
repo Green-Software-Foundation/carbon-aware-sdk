@@ -16,7 +16,9 @@ changes.
 
 ## Consumer Tier
 
-The consumer tier is the entry point for interacting with the SDK. It handles taking the user input and deciding which handler(s) should handle processing the input. There are currently 2 different consumers that can be used in the SDK
+The consumer tier is the entry point for interacting with the SDK. It handles
+taking the user input and deciding which handler(s) should handle processing the
+input. There are currently 2 different consumers that can be used in the SDK
 
 1. A RESTful WebAPI that can be called using HTTP requests.
 2. A command line tool that runs directly on a host machine.
@@ -25,16 +27,35 @@ Both consumers access the same components in the tiers below.
 
 ## Business Logic Tier
 
-The business logic tier functions as the processor, taking in the user input and figuring out how to fulfill it. It is comprised of a set of handlers that know what type of data they need and how to calculate the result. 
+The business logic tier functions as the processor, taking in the user input and
+figuring out how to fulfill it. It is comprised of a set of handlers that know
+what type of data they need and how to calculate the result.
 
 ### Handlers
-Handlers have knowledge of the underlying data source interfaces in the data tier. A Handler takes in consumer requests, calls the specified data source, and performs any data aggregation required before returning the result to the consumer. Each Handler is responsible for handling requests specific to a functionality.
 
-Currently, the SDK provides 2 handlers for obtaining the carbon emissions data- `EmissionsHandler` and `ForecastHandler` to handle requests for actual carbon emissions and forecasted carbon emissions respectively. The `EmissionsHandler` handles requests for various carbon emissions information. It can calculate the average carbon emissions over a time period, or the best carbon emissions given a set of locations. It can transform forecasted carbon emissions to suit particular use-cases. It can also just deliver the emissions data points in a standard schema without performing any calculations.
-The `ForecastHandler` is responsible for getting the forecasted carbon emissions values from the underlying datasource. It can filter the emissions forecast based on the window size passed as an input and can also perform operations like finding the rolling average of emission values for a give window size.
-In addition to the above handlers, there is a `LocationHandler` which is responsible for retrieving all the locations supported by the underlying data source.
+Handlers have knowledge of the underlying data source interfaces in the data
+tier. A Handler takes in consumer requests, calls the specified data source, and
+performs any data aggregation required before returning the result to the
+consumer. Each Handler is responsible for handling requests specific to a
+functionality.
 
-See the [c-sharp-client-library README](./c-sharp-client-library.md) for more detailed information.
+Currently, the SDK provides 2 handlers for obtaining the carbon emissions data-
+`EmissionsHandler` and `ForecastHandler` to handle requests for actual carbon
+emissions and forecasted carbon emissions respectively. The `EmissionsHandler`
+handles requests for various carbon emissions information. It can calculate the
+average carbon emissions over a time period, or the best carbon emissions given
+a set of locations. It can transform forecasted carbon emissions to suit
+particular use-cases. It can also just deliver the emissions data points in a
+standard schema without performing any calculations. The `ForecastHandler` is
+responsible for getting the forecasted carbon emissions values from the
+underlying datasource. It can filter the emissions forecast based on the window
+size passed as an input and can also perform operations like finding the rolling
+average of emission values for a give window size. In addition to the above
+handlers, there is a `LocationHandler` which is responsible for retrieving all
+the locations supported by the underlying data source.
+
+See the [c-sharp-client-library README](./c-sharp-client-library.md) for more
+detailed information.
 
 ## Data Tier
 
@@ -65,10 +86,16 @@ See the [data source README](./data-sources.md) for more detailed information.
 
 ## Dependency Registration
 
-The SDK uses dependency injection to load the data sources based on set environment variables. To register a new dependency, a new ServiceCollectionExtension method must be defined. These dependencies are loaded in a hierarchical structure such that:
+The SDK uses dependency injection to load the data sources based on set
+environment variables. To register a new dependency, a new
+ServiceCollectionExtension method must be defined. These dependencies are loaded
+in a hierarchical structure such that:
+
 1. Each data source defines a `ServiceCollectionExtension` method.
-2. All available data sources are registered in the `DataSource.Registration` project.
-3. The GSF library defines a `ServiceCollectionExtension` method where it registers the data sources for the handlers to use.
+2. All available data sources are registered in the `DataSource.Registration`
+   project.
+3. The GSF library defines a `ServiceCollectionExtension` method where it
+   registers the data sources for the handlers to use.
 4. The `Program.cs` file registers the GSF library classes at startup
 
 ## Example Call Flow

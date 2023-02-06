@@ -28,7 +28,9 @@ The current package include 8 projects from the SDK:
 6. "CarbonAware.DataSources.WattTime"
 7. "CarbonAware.LocationSources"
 
-These 7 projects enable users of the library to consume the current endpoints exposed by the library. The package that needs to be added to a new C# project is `GSF.CarbonAware`.
+These 7 projects enable users of the library to consume the current endpoints
+exposed by the library. The package that needs to be added to a new C# project
+is `GSF.CarbonAware`.
 
 ## Included Scripts
 

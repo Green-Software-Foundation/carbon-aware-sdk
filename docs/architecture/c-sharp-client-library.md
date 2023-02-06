@@ -91,15 +91,23 @@ will return a EmissionsForecast instance. (**Note**: The current core
 implementation is using async/await paradigm, which would be the default for
 library too).
 
-In addition, there is a `LocationHandler` that is responsible for retrieving all the locations supported by the underlying datasource. 
+In addition, there is a `LocationHandler` that is responsible for retrieving all
+the locations supported by the underlying datasource.
 
 ### Parameters
 
-Both handlers require that exact fields be passed in as input. Within the docs of each library function, we specifically call out which fields the function expects to be defined versus which are optional. Internally, we handle creating the CarbonAwareParameters object and validating the fields through that.
+Both handlers require that exact fields be passed in as input. Within the docs
+of each library function, we specifically call out which fields the function
+expects to be defined versus which are optional. Internally, we handle creating
+the CarbonAwareParameters object and validating the fields through that.
 
 ## Carbon Aware Parameters
-The `CarbonAwareParameters` class allows the user to pass in a unique parameter instance to the public methods in the Handlers with the specific parameters needed by that call. 
-The list of allowed parameters is defined in the class and includes
+
+The `CarbonAwareParameters` class allows the user to pass in a unique parameter
+instance to the public methods in the Handlers with the specific parameters
+needed by that call. The list of allowed parameters is defined in the class and
+includes
+
 - SingleLocation
 - MultipleLocations
 - Start
@@ -108,12 +116,30 @@ The list of allowed parameters is defined in the class and includes
 - Duration
 
 ### Parameter Display Names
-The display name of each parameter can be overriden using the public setter. By default, each parameter display name is set to the variable name (ex: `Start = "start"`). The parameter display names are used when creating the validation error messages. Overriding them is useful in situations where the variables the user is using for input don't exactly match the default display name of the parameter (e.g. the user variable in the controller is `periodStartTime` instead of `startTime`). That way, when the error is thrown to the user, the parameter names will match the users' expectation
 
-To do the override, define a class that inherits from CarbonAwareParametersBaseDTO and uses the [FromQuery(Name = "myAwesomeDisplayName")] or [JsonPropertyName("myAwesomeDisplayName")] attribute. A second (less recommended) option is to pass the optional arg Dictionary<string, string>? displayNameMap when you are directly creating the object.  With either option, the SDK handles updating references internally.
+The display name of each parameter can be overriden using the public setter. By
+default, each parameter display name is set to the variable name (ex:
+`Start = "start"`). The parameter display names are used when creating the
+validation error messages. Overriding them is useful in situations where the
+variables the user is using for input don't exactly match the default display
+name of the parameter (e.g. the user variable in the controller is
+`periodStartTime` instead of `startTime`). That way, when the error is thrown to
+the user, the parameter names will match the users' expectation
+
+To do the override, define a class that inherits from
+CarbonAwareParametersBaseDTO and uses the [FromQuery(Name =
+"myAwesomeDisplayName")] or [JsonPropertyName("myAwesomeDisplayName")]
+attribute. A second (less recommended) option is to pass the optional arg
+Dictionary<string, string>? displayNameMap when you are directly creating the
+object. With either option, the SDK handles updating references internally.
 
 ### Required Properties
-The first core check the parameters class does is validating that required parameters are defined. By default, all parameters are considered optional. Calling the `SetRequiredProperties(...)` function with the desired arguments sets the required parameters for the instance.
+
+The first core check the parameters class does is validating that required
+parameters are defined. By default, all parameters are considered optional.
+Calling the `SetRequiredProperties(...)` function with the desired arguments
+sets the required parameters for the instance.
+
 ```csharp
     /// <summary>
     /// Accepts any PropertyNames as arguments and sets the associated property as required for validation.
@@ -122,44 +148,62 @@ The first core check the parameters class does is validating that required param
 ```
 
 ### Validations
-The second core check the parameters class does is enforcing validations on the parameters themselves. Some common examples include
+
+The second core check the parameters class does is enforcing validations on the
+parameters themselves. Some common examples include
+
 - Relationship validations: _`start < end` must be true_
 - Content validations: _`list.Any()` must be true for list fields_
 
-Calling the `SetValidations(...)` function with the desired arguments sets the validations for the instance.
+Calling the `SetValidations(...)` function with the desired arguments sets the
+validations for the instance.
+
 ```csharp
     /// <summary>
     /// Accepts any ValidationName as arguments and sets the associated validation to check.
     /// </summary>
-    public void SetValidations(params ValidationName[] validationNames) 
+    public void SetValidations(params ValidationName[] validationNames)
 ```
 
 ### Validate
-Calling the `Validate(...)` function validates (1) required parameters and (2) specified validations. Currently, the only validation we check is whether `start` is before `end`.
 
-If no errors are thrown, the function simply returns. If any validation errors are found, they are packaged into a single  `ArgumentException` error with each being part of the `data` dictionary.
+Calling the `Validate(...)` function validates (1) required parameters and (2)
+specified validations. Currently, the only validation we check is whether
+`start` is before `end`.
+
+If no errors are thrown, the function simply returns. If any validation errors
+are found, they are packaged into a single `ArgumentException` error with each
+being part of the `data` dictionary.
+
 ```
     /// <summary>
     /// Validates the properties and relationships between properties. Any validation errors found are packaged into an
-    /// ArgumentException and thrown. If there are no errors, simply returns void. 
+    /// ArgumentException and thrown. If there are no errors, simply returns void.
     /// </summary>
     public void Validate()
- ```
+```
 
- ### Getters With Default Fallbacks
- Certain parameters have special getters that allow you to define a fallback default value if the parameter is null. This can be useful in cases where a parameter is optional, so you want to get it if it was defined by the user, or otherwise fallback to a specific default. These include `Start`, `End`, `Requested`,and `Duration`
- ```
-    DateTimeOffset StartOrDefault(DateTimeOffset defaultStart)
-    DateTimeOffset EndOrDefault(DateTimeOffset defaultEnd)
-    DateTimeOffset RequestedOrDefault(DateTimeOffset defaultRequested)
-    TimeSpan DurationOrDefault
+### Getters With Default Fallbacks
 
- ```
+Certain parameters have special getters that allow you to define a fallback
+default value if the parameter is null. This can be useful in cases where a
+parameter is optional, so you want to get it if it was defined by the user, or
+otherwise fallback to a specific default. These include `Start`, `End`,
+`Requested`,and `Duration`
 
+```
+   DateTimeOffset StartOrDefault(DateTimeOffset defaultStart)
+   DateTimeOffset EndOrDefault(DateTimeOffset defaultEnd)
+   DateTimeOffset RequestedOrDefault(DateTimeOffset defaultRequested)
+   TimeSpan DurationOrDefault
+
+```
 
 ### Error Handling
 
-The `CarbonAwareException` class is used to report errors to the consumer. It follows the `Exception` class approach, where messages and details are provided as part of error reporting.
+The `CarbonAwareException` class is used to report errors to the consumer. It
+follows the `Exception` class approach, where messages and details are provided
+as part of error reporting.
 
 ## References
 

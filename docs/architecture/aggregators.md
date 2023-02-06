@@ -1,4 +1,6 @@
-> :exclamation:  The Aggregator project is deprecated and should no longer be used. The business logic layer now comprises of Handlers from the GSF library. Please refer to #overview.md for more details.
+> :exclamation: The Aggregator project is deprecated and should no longer be
+> used. The business logic layer now comprises of Handlers from the GSF library.
+> Please refer to #overview.md for more details.
 
 # Aggregators
 
@@ -69,7 +71,7 @@ sets the required parameters for the instance.
 
 ```csharp
     /// <summary>
-    /// Accepts any PropertyNames as arguments and sets the associated property 
+    /// Accepts any PropertyNames as arguments and sets the associated property
     /// as required for validation.
     /// </summary>
     public void SetRequiredProperties(params PropertyName[] requiredProperties)
@@ -88,7 +90,7 @@ validations for the instance.
 
 ```csharp
     /// <summary>
-    /// Accepts any ValidationName as arguments and sets the associated 
+    /// Accepts any ValidationName as arguments and sets the associated
     /// validation to check.
     /// </summary>
     public void SetValidations(params ValidationName[] validationNames)
@@ -106,9 +108,9 @@ being part of the `data` dictionary.
 
 ```csharp
     /// <summary>
-    /// Validates the properties and relationships between properties. 
+    /// Validates the properties and relationships between properties.
     /// Any validation errors found are packaged into an
-    /// ArgumentException and thrown. If there are no errors, simply 
+    /// ArgumentException and thrown. If there are no errors, simply
     /// returns void.
     /// </summary>
     public void Validate()
