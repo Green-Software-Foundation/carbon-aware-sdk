@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.WebApi.Models;
 
-using CarbonAware.Model;
+using GSF.CarbonAware.Models;
 using System.Text.Json.Serialization;
 
 [Serializable]
@@ -100,14 +100,10 @@ public record EmissionsForecastDTO
     {
         return new EmissionsForecastDTO
         {
+            RequestedAt = emissionsForecast.RequestedAt,
             GeneratedAt = emissionsForecast.GeneratedAt,
-            Location = emissionsForecast.Location.Name!,
-            DataStartAt = emissionsForecast.DataStartAt,
-            DataEndAt = emissionsForecast.DataEndAt,
-            WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
-            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
-            ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
-            RequestedAt = emissionsForecast.RequestedAt
+            ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!
         };
     }
 }

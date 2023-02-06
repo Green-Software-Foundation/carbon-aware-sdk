@@ -18,6 +18,7 @@ public class HttpResponseExceptionFilter : IExceptionFilter
     {
         { "ArgumentException", (int)HttpStatusCode.BadRequest },
         { "NotImplementedException", (int)HttpStatusCode.NotImplemented },
+        { "InvalidOperationException", (int)HttpStatusCode.BadRequest },
     };
 
     public HttpResponseExceptionFilter(ILogger<HttpResponseExceptionFilter> logger, IOptionsMonitor<CarbonAwareVariablesConfiguration> options)

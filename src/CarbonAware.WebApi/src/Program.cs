@@ -1,7 +1,8 @@
 using CarbonAware;
-using CarbonAware.Aggregators.Configuration;
 using CarbonAware.WebApi.Configuration;
 using CarbonAware.WebApi.Filters;
+using GSF.CarbonAware.Configuration;
+using GSF.CarbonAware.Exceptions;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -48,8 +49,17 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
 
-string? errorMessage;
-bool successfulEmissionServices = builder.Services.TryAddCarbonAwareEmissionServices(builder.Configuration, out errorMessage);
+bool successfulServices = true;
+string? errorMessage = null;
+try
+{
+    builder.Services.AddEmissionsServices(builder.Configuration);
+    builder.Services.AddForecastServices(builder.Configuration);
+} catch(CarbonAwareException e)
+{
+    successfulServices = false;
+    errorMessage = e.Message;
+}
 
 CarbonAwareVariablesConfiguration config = new();
 
@@ -64,8 +74,8 @@ builder.Services.AddSwaggerGen(c => {
     });
 
 var app = builder.Build();
-
-if(!successfulEmissionServices)
+ 
+if (!successfulServices)
 {
     var _logger = app.Services.GetService<ILogger<Program>>();
     _logger?.LogError(errorMessage);

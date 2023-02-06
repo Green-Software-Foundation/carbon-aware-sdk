@@ -1,5 +1,5 @@
-using CarbonAware.Interfaces;
-using CarbonAware.Model;
+using GSF.CarbonAware.Handlers;
+using GSF.CarbonAware.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarbonAware.WebApi.Controllers;
@@ -10,10 +10,10 @@ public class LocationsController : ControllerBase
 {
     private readonly ILogger<CarbonAwareController> _logger;
 
-    private readonly ILocationSource _locationSource;
+    private readonly ILocationHandler _locationSource;
 
 
-    public LocationsController(ILogger<CarbonAwareController> logger, ILocationSource locationSouce)
+    public LocationsController(ILogger<CarbonAwareController> logger, ILocationHandler locationSouce)
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _locationSource = locationSouce ?? throw new ArgumentNullException(nameof(locationSouce));
@@ -29,7 +29,7 @@ public class LocationsController : ControllerBase
     [HttpGet()]
     public async Task<IActionResult> GetAllLocations()
     {
-        var response = await _locationSource.GetGeopositionLocationsAsync(); 
+        var response = await _locationSource.GetLocationsAsync(); 
         return response.Any() ? Ok(response) : NoContent();
     }
 }
