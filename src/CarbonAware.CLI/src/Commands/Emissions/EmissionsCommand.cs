@@ -1,11 +1,10 @@
-using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Aggregators.Emissions;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
+using GSF.CarbonAware.Handlers;
+using GSF.CarbonAware.Handlers.CarbonAware;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
-
 using System.Text.Json;
 
 namespace CarbonAware.CLI.Commands.Emissions;
@@ -69,9 +68,9 @@ class EmissionsCommand : Command
     }
     internal async Task Run(InvocationContext context)
     {
-        // Get aggregator via DI.
+        // Get handler via DI.
         var serviceProvider = context.BindingContext.GetService(typeof(IServiceProvider)) as IServiceProvider ?? throw new NullReferenceException("ServiceProvider not found");
-        var aggregator = serviceProvider.GetService(typeof(IEmissionsAggregator)) as IEmissionsAggregator ?? throw new NullReferenceException("IEmissionsAggregator not found");
+        var emissionsHandler = serviceProvider.GetService(typeof(IEmissionsHandler)) as IEmissionsHandler ?? throw new NullReferenceException("IEmissionsHandler not found");
 
         // Get the arguments and options to build the parameters.
         var locations = context.ParseResult.GetValueForOption<string[]>(_requiredLocation);
@@ -85,14 +84,14 @@ class EmissionsCommand : Command
             Start = startTime,
             End = endTime
         };
-        // Call the aggregator.
+        // Call the handler.
         List<EmissionsDataDTO> emissions = new();
         
         if (best)
         {
             parameters.MultipleLocations = locations;
 
-            var results = await aggregator.GetBestEmissionsDataAsync(parameters);
+            var results = await emissionsHandler.GetBestEmissionsDataAsync(parameters.MultipleLocations!, parameters.Start, parameters.End);
 
             emissions = results.Select(emission => (EmissionsDataDTO)emission).ToList();
         }
@@ -102,9 +101,12 @@ class EmissionsCommand : Command
             {
                 parameters.SingleLocation = location;
 
-                var averageCarbonIntensity = await aggregator.CalculateAverageCarbonIntensityAsync(parameters);
+                var averageCarbonIntensity = await emissionsHandler.GetAverageCarbonIntensityAsync(
+                    parameters.SingleLocation!,
+                    (DateTimeOffset)parameters.Start!,
+                    (DateTimeOffset)parameters.End!);
                 
-                // If startTime or endTime were not provided, the aggregator would have thrown an error. So, at this point it is safe to assume that the start/end values are not null. 
+                // If startTime or endTime were not provided, the handler would have thrown an error as startTime and endTime are required and validated in it. So, at this point it is safe to assume that the start/end values are not null. 
                 var emissionData = new EmissionsDataDTO()
                 {
                     Location = location,
@@ -118,7 +120,7 @@ class EmissionsCommand : Command
         else
         {
             parameters.MultipleLocations = locations;
-            var results = await aggregator.GetEmissionsDataAsync(parameters);
+            var results = await emissionsHandler.GetEmissionsDataAsync(parameters.MultipleLocations!, parameters.Start, parameters.End);
             if (results != null)
             {
                 emissions = results.Select(emission => (EmissionsDataDTO)emission).ToList();
