@@ -29,7 +29,7 @@ public class WattTimeClientConfigurationTests
     [TestCase("testuser", null, "http://example.com", TestName = "Validate throws: no username; password; url")]
     [TestCase(null, null, "http://example.com", TestName = "Validate throws: no username; no password; url")]
     [TestCase("\ud800", null, "http://example.com", TestName = "Non utf8 characters for username")]
-    [TestCase(null, "\ud83e\udd70", "http://example.com", TestName = "Non utf8 characters for password")]
+    [TestCase("username", "\ud800", "http://example.com", TestName = "Non utf8 characters for password")]
 
     public void Validate_Throws(string? username, string? password, string? url)
     {
