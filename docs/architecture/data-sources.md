@@ -22,18 +22,24 @@ of, that client.
   processed the request, and then processes the response before returning a
   final result.
 
-### Aggregator <-> Data Source Contract
+### GSF Handler <-> Data Source Contract
 
 In order for the SDK to support different data sources, there is a defined
-contract between the Aggregators and the Data tier. The Aggregator acts as the
+contract between the Handler and the Data tier. The handler acts as the
 "Business Logic" of the application so it needs a standard way of requesting
 data from the data source and a standard response in return. This means that
 each data source is responsible for:
 
-- Pre-processing any arguments passed to it from the Aggregator to create the
+- Pre-processing any arguments passed to it from the handler to create the
   expected request for the data provider.
 - Post-processing the data provider result to create the expected return type
-  for the Aggregator
+  for the Handler.
+
+Each handler is responsible for interacting on its own domain. For instance,
+EmissionsHandler can have a method `GetAverageCarbonIntensityAsync()` to pull
+EmissionsData data from a configured data source and calculate the average
+carbon intensity. ForecastHandler can have a method `GetCurrentForecastAsync()`,
+that will return a EmissionsForecast instance.
 
 #### Post-Processing Caveat
 

@@ -285,7 +285,7 @@ public class EmissionsAggregatorTests
     [Test]
     public void GetBestEmissionsDataAsync_ThrowsWhenNoLocations()
     {
-        // Arrange
+        // Arrange 
         var emptyListAssigned = new CarbonAwareParameters() { MultipleLocations = new List<Location>() };
         var noLocationsAssigned = new CarbonAwareParameters();
 

@@ -8,6 +8,8 @@ using System.Diagnostics;
 using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
 
 namespace CarbonAware.Aggregators.Forecast;
+
+[Obsolete]
 public class ForecastAggregator : IForecastAggregator
 {
     private readonly ILogger<ForecastAggregator> _logger;

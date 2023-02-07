@@ -7,7 +7,7 @@ public record EmissionsForecast
     public IEnumerable<EmissionsData> EmissionsDataPoints { get; init; } = Array.Empty<EmissionsData>();
     public IEnumerable<EmissionsData> OptimalDataPoints { get; init; } = Array.Empty<EmissionsData>();
 
-     public static implicit operator EmissionsForecast(global::CarbonAware.Model.EmissionsForecast emissionsForecast) {
+    public static implicit operator EmissionsForecast(global::CarbonAware.Model.EmissionsForecast emissionsForecast) {
         return new EmissionsForecast {
             RequestedAt = emissionsForecast.RequestedAt,
             GeneratedAt = emissionsForecast.GeneratedAt,

@@ -3,6 +3,7 @@ using CarbonAware.Model;
 
 namespace CarbonAware.Aggregators.Forecast;
 
+[Obsolete]
 public interface IForecastAggregator
 {
     /// <summary>
