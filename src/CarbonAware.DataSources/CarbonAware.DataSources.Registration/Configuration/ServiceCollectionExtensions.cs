@@ -1,6 +1,7 @@
 using CarbonAware.Configuration;
 using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Configuration;
+using CarbonAware.DataSources.ElectricityMapsFree.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.Exceptions;
@@ -35,6 +36,10 @@ internal static class ServiceCollectionExtensions
                 services.AddElectricityMapsEmissionsDataSource(dataSources);
                 break;
             }
+            case DataSourceType.ElectricityMapsFree:
+            {
+                throw new ArgumentException("ElectricityMapsFree data source is not supported for emissions data");
+            }
             case DataSourceType.None:
             {
                 services.TryAddSingleton<IEmissionsDataSource, NullEmissionsDataSource>();
@@ -56,6 +61,11 @@ internal static class ServiceCollectionExtensions
             case DataSourceType.ElectricityMaps:
             {
                 services.AddElectricityMapsForecastDataSource(dataSources);
+                break;
+            }
+            case DataSourceType.ElectricityMapsFree:
+            {
+                services.AddElectricityMapsFreeForecastDataSource(dataSources);
                 break;
             }
             case DataSourceType.None:
