@@ -20,13 +20,12 @@ where energy is the greenest, and create tools that give insights and help
 software innovators to make greener software decisions. All of this helps reduce
 carbon emissions.
 
+# Getting Started Overview
+
+Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get up and running.
+
 Get started on creating sustainable software innovation for a greener future
 today!
-
-## Getting Started
-
-Head on over to the [Getting Started Guide](./docs/GettingStarted.md) to get up and
-running.
 
 ## What is the Carbon Aware SDK?
 

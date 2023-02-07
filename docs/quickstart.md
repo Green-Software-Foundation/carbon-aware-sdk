@@ -26,12 +26,14 @@ VSCode Remote Containers (Dev Container). To run locally:
 3. Change directory to: `cd carbon-aware-sdk/src/CarbonAware.CLI/src`
 4. If you have a WattTime account registered (or other data source) - you will
    need to configure the application to use them. By default the SDK will use a
-   pre-generated JSON file with random data. To configure the application, you
-   will need to set up specific environment variables or modify
-   `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the `GettingStarted.md`
-   file:
-   <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md>.
+   pre-generated JSON file with random data. This random data is meant to make
+   it easier to get started with the SDK and doesn't
+   represent actual Carbon data. To configure the application,
+   you will need to set up specific environment variables or modify
+   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
+   Detailed information on configuration can be found in the
+   [overview.md](overview.md) file.
+
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
 
@@ -52,7 +54,7 @@ VSCode Remote Containers (Dev Container). To run locally:
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-5. Run the CLI using `dotnet run`
+1. Run the CLI using `dotnet run`
 
 The CLI will ask you to at minimum provide a `--location (-l)` parameter.
 
@@ -60,10 +62,36 @@ The CLI will ask you to at minimum provide a `--location (-l)` parameter.
 
 To run the CLI, simply call `dotnet run` and provide it with any parameters. If
 you fail to pass any parameters, a help screen will be printed out with possible
-parameters and short explanations. For example, to get emissions in the `eastus`
+parameters and short explanations.
+
+To get a list of all locations supported, you can use the Locations API,
+referenced in `src/CarbonAware.CLI/src/Commands/Location`
+and the command `.\caw locations`.
+
+Expected output:
+
+```JSON
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  },
+  ...
+}
+```
+
+For example, to get emissions in the `eastus`
 and `uksouth` region between `2022-08-23 at 11:15am` and
 `2022-08-23 at 11:20am`, run:
 `dotnet run -l eastus,uksouth -t 2022-08-23T11:15 --toTime 2022-08-23T11:20`
+
 Expected output:
 
 ```JSON
@@ -108,12 +136,12 @@ Expected output:
 ```
 
 To get the best time and location from a list of locations and a specified time
-window, use the `--lowest` flag. E.g. to get the best time and location in a 24
+window, use the `--best` flag. E.g. to get the best time and location in a 24
 hour window on the 23rd of August in the regions: `eastus`, `westus`,
 `westus3`,`uksouth`, run the command:
 
 ```bash
-dotnet run -l eastus,westus,westus3,uksouth -t 2022-08-23T00:00 --toTime 2022-08-23T23:59 --lowest
+dotnet run -l eastus,westus,westus3,uksouth -t 2022-08-23T00:00 --toTime 2022-08-23T23:59 --best
 ```
 
 Expected output:
@@ -153,10 +181,10 @@ First we need to set up the GitHub repository
    need to configure the application to use them. By default the SDK will use a
    pre-generated JSON file with random data. To configure the application, you
    will need to set up specific environment variables or modify
-   `appsetttings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the `GettingStarted.md`
-   file:
-   <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/GettingStarted.md>.
+   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
+   Detailed information on configuration can be found in the
+   [overview.md](overview.md) file.
+
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
 
@@ -192,6 +220,29 @@ Prerequisites:
 With the API running on `localhost:5073`, we can make HTTP requests to its
 endpoints, full endpoint description can be found here:
 <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md>
+
+To get a list of all locations supported, you can use the Locations API
+endpoint `/locations` referenced in
+`src/CarbonAware.WebApi/src/Controllers/LocationsController.cs`.
+
+Expected Output:
+
+```JSON
+{
+  "eastus": {
+    "Latitude": 37.3719,
+    "Longitude": -79.8164,
+    "Name": "eastus"
+  },
+  ...
+  "switzerlandnorth":{
+    "Latitude": 47.451542,
+    "Longitude": 8.564572,
+    "Name": "switzerlandnorth"
+  }
+}
+```
+
 
 #### Calling the `/emissions/bylocation` endpoint
 
@@ -348,9 +399,6 @@ from  dateutil.parser import parse
 configuration = openapi_client.Configuration(
         host = "http://localhost:5073"
 )
-
-
-
 # Enter a context with an instance of the API client
 with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
@@ -359,13 +407,11 @@ with openapi_client.ApiClient(configuration) as api_client:
     time = parse('2022-07-22T10:30:00.00Z') # datetime |  (optional)
     to_time = parse('2022-07-22T11:00:00.00Z') # datetime |  (optional)
     duration_minutes = 0 # int |  (optional) (default to 0)
-
     try:
         api_response = api_instance.get_emissions_data_for_location_by_time(location=location, time=time, to_time=to_time, duration_minutes=duration_minutes)
         pprint(api_response)
     except openapi_client.ApiException as e:
         print("Exception when calling CarbonAwareApi->emissions_bylocation_get: %s\n" % e)
-
 ```
 
 Here, we import the `openapi_client` along with other modules generated by the

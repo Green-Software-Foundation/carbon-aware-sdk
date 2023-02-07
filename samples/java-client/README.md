@@ -18,7 +18,7 @@ run/modify project files in it.
   - See [WebAPI document](../../docs/carbon-aware-webapi.md#autogenerate-webapi)
     for details.
 - WebAPI instance
-  - See [Getting Started](../../GettingStarted.md#publish-webapi-with-container)
+  - See the [Overview](../../docs/overview.md#publish-webapi-with-container)
     if you'd like to start it on container.
 - Java 8 or later
 - Maven
@@ -105,7 +105,7 @@ podman pod create -p 8080:80 --name carbon-aware-sdk
 Start WebAPI container in `carbon-aware-sdk` pod. It is specified at `--pod`
 option.
 
-See [Getting Started](../../GettingStarted.md) to build container image.
+See [Overview](../../docs/overview.md) document to build container image.
 
 ```sh
 $ podman run -it --rm --pod carbon-aware-sdk \
