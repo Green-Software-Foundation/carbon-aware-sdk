@@ -31,8 +31,7 @@ refer to the [Architecture directory](./architecture/).
 ## Carbon Aware Library
 
 The Carbon Aware SDK provides a C# Client Library with handlers that replicates
-the Web API, CLI and SDK functionality, leveraging the same configurations as the
-aggregators. See:
+the Web API, CLI and SDK functionality. See:
 
 - [carbon-aware-library.md](./carbon-aware-library.md) for more information about
   library features.
