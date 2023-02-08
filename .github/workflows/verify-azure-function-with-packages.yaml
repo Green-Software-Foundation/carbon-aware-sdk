@@ -8,7 +8,7 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/**'
-      - 'samples/azure-function/**'
+      - 'samples/azure/azure-function/**'
       
 env:
   DOCKERFILE_PATH: samples/azure/azure-function/Dockerfile
