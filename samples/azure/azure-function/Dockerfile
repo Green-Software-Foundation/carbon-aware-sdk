@@ -16,7 +16,7 @@ RUN pwsh -c scripts/package/create_packages.ps1 src/GSF.CarbonAware/src/GSF.Carb
     dotnet build "samples/azure-function/function.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "samples/azure-function/function.csproj" -c Release -o /app/publish
+RUN dotnet publish "samples/azure/azure-function/function.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /home/site/wwwroot
