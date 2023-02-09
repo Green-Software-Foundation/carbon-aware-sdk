@@ -1,8 +1,7 @@
-using CarbonAware.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 
-namespace GSF.CarbonAware.Handlers.CarbonAware;
+namespace CarbonAware.Model;
 
 public class CarbonAwareParametersBaseDTO
 {
