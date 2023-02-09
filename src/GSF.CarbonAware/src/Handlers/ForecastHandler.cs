@@ -37,23 +37,16 @@ internal sealed class ForecastHandler : IForecastHandler
         };
 
         var parameters = (CarbonAwareParameters) dto;
-        try
+        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+        parameters.Validate();
+        var forecasts = new List<EmissionsForecast>();
+        foreach (var location in parameters.MultipleLocations)
         {
-            parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-            parameters.Validate();
-            var forecasts = new List<EmissionsForecast>();
-            foreach (var location in parameters.MultipleLocations)
-            {
-                var forecast = await _forecastDataSource.GetCurrentCarbonIntensityForecastAsync(location);
-                var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
-                forecasts.Add(emissionsForecast);
-            }
-            return forecasts;
+            var forecast = await _forecastDataSource.GetCurrentCarbonIntensityForecastAsync(location);
+            var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
+            forecasts.Add(emissionsForecast);
         }
-        catch (CarbonAwareException ex)
-        {
-            throw new Exceptions.CarbonAwareException(ex.Message, ex);
-        }
+        return forecasts;
     }
 
     /// <inheritdoc />
@@ -69,18 +62,12 @@ internal sealed class ForecastHandler : IForecastHandler
         };
 
         var parameters = (CarbonAwareParameters) dto;
-        try
-        {
-            parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Requested);
-            parameters.Validate();
-            var forecast = await _forecastDataSource.GetCarbonIntensityForecastAsync(parameters.SingleLocation, parameters.Requested);
-            var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
-            return emissionsForecast;
-        }
-        catch (CarbonAwareException ex)
-        {
-            throw new Exceptions.CarbonAwareException(ex.Message, ex);
-        }
+        
+        parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Requested);
+        parameters.Validate();
+        var forecast = await _forecastDataSource.GetCarbonIntensityForecastAsync(parameters.SingleLocation, parameters.Requested);
+        var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
+        return emissionsForecast;
     }
 
     private static EmissionsForecast ProcessAndValidateForecast(global::CarbonAware.Model.EmissionsForecast forecast, CarbonAwareParameters parameters)

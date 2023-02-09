@@ -40,24 +40,19 @@ internal sealed class EmissionsHandler : IEmissionsHandler
         };
 
         var parameters = (CarbonAwareParameters)dto;
-        try
-        {
-            parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-            parameters.SetValidations(ValidationName.StartRequiredIfEnd);
-            parameters.Validate();
+    
+        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+        parameters.SetValidations(ValidationName.StartRequiredIfEnd);
+        parameters.Validate();
 
-            var multipleLocations = parameters.MultipleLocations;
-            var startTime = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
-            var endTime = parameters.GetEndOrDefault(startTime);
+        var multipleLocations = parameters.MultipleLocations;
+        var startTime = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
+        var endTime = parameters.GetEndOrDefault(startTime);
 
-            var emissionsData = await _emissionsDataSource.GetCarbonIntensityAsync(multipleLocations, startTime, endTime);
+        var emissionsData = await _emissionsDataSource.GetCarbonIntensityAsync(multipleLocations, startTime, endTime);
 
-            return emissionsData.Select(e => (EmissionsData) e);
-        }
-        catch (CarbonAwareException ex)
-        {
-            throw new Exceptions.CarbonAwareException(ex.Message, ex);
-        }
+        return emissionsData.Select(e => (EmissionsData) e);
+        
     }
 
     ///<inheritdoc/>
@@ -77,24 +72,15 @@ internal sealed class EmissionsHandler : IEmissionsHandler
         };
 
         var parameters = (CarbonAwareParameters)dto;
-        try
-        {
-            parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-            parameters.SetValidations(ValidationName.StartRequiredIfEnd);
-            parameters.Validate();
+        parameters.SetRequiredProperties(PropertyName.MultipleLocations);
+        parameters.SetValidations(ValidationName.StartRequiredIfEnd);
+        parameters.Validate();
 
-            var startTime = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
-            var endTime = parameters.GetEndOrDefault(startTime);
-            var results = await _emissionsDataSource.GetCarbonIntensityAsync(parameters.MultipleLocations, startTime, endTime);
-            var emissions = CarbonAwareOptimalEmission.GetOptimalEmissions(results).Select(r => (EmissionsData)r);
-            return emissions;
-        }
-        catch (CarbonAwareException ex)
-        {
-            throw new Exceptions.CarbonAwareException(ex.Message, ex);
-        }
-        
-        
+        var startTime = parameters.GetStartOrDefault(DateTimeOffset.UtcNow);
+        var endTime = parameters.GetEndOrDefault(startTime);
+        var results = await _emissionsDataSource.GetCarbonIntensityAsync(parameters.MultipleLocations, startTime, endTime);
+        var emissions = CarbonAwareOptimalEmission.GetOptimalEmissions(results).Select(r => (EmissionsData)r);
+        return emissions;
     }
 
     /// <inheritdoc />
@@ -108,21 +94,15 @@ internal sealed class EmissionsHandler : IEmissionsHandler
         };
 
         var parameters = (CarbonAwareParameters)dto;
-        try
-        {
-            parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
-            parameters.Validate();
+        
+        parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
+        parameters.Validate();
 
-            _logger.LogInformation("Handler getting average carbon intensity from data source");
-            var emissionData = await _emissionsDataSource.GetCarbonIntensityAsync(parameters.SingleLocation, parameters.Start, parameters.End);
-            var value = emissionData.AverageOverPeriod(start, end);
-            _logger.LogInformation("Carbon Intensity Average: {value}", value);
+        _logger.LogInformation("Handler getting average carbon intensity from data source");
+        var emissionData = await _emissionsDataSource.GetCarbonIntensityAsync(parameters.SingleLocation, parameters.Start, parameters.End);
+        var value = emissionData.AverageOverPeriod(start, end);
+        _logger.LogInformation("Carbon Intensity Average: {value}", value);
 
-            return value;
-        }
-        catch (CarbonAwareException ex)
-        {
-            throw new Exceptions.CarbonAwareException(ex.Message, ex);
-        }
+        return value;
     }
 }
