@@ -1,5 +1,10 @@
 # This is an example of an Azure DevOps pipeline
 # that builds GSF.CarbonAware nuget package and publish it as a pipeline artifact.
+parameters:
+- name: packageVersion
+  displayName: Package Version
+  type: string
+  default: 1.0.0-beta
 
 trigger:
 - main
@@ -45,7 +50,7 @@ steps:
       --output $(Build.ArtifactStagingDirectory)/packages/nuget
       -p:IncludeSymbols="true"
       -p:SymbolPackageFormat="snupkg"
-      -p:Version=1.2.3
+      -p:Version=${{ parameters.packageVersion }}
 
 # Alternatively, you can call the script to package the SDK. Replace the 2 tasks above (dotnet build and dotnet pack and replace with the following task) 
 # - task: Bash@3
