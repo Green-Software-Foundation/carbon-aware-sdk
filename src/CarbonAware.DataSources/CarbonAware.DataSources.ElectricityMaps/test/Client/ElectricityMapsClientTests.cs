@@ -1,7 +1,6 @@
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.DataSources.ElectricityMaps.Configuration;
 using CarbonAware.DataSources.ElectricityMaps.Constants;
-using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -107,6 +106,10 @@ public class ElectricityMapsClientTests
         Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetForecastedCarbonIntensityAsync(TestLatitude, TestLongitude));
         Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestZone));
         Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude));
+        var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6)); ;
+        var endDate = startDate.AddMinutes(10);
+        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetPastRangeDataAsync(TestLatitude, TestLongitude, startDate, endDate));
+        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetPastRangeDataAsync(TestZone, startDate, endDate));
     }
 
     [Test]
