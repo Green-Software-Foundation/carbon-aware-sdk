@@ -9,8 +9,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using CarbonAware.Interfaces;
-using GSF.CarbonAware.Handlers.CarbonAware;
-using System.Collections;
 using CarbonAware.Model;
 using System.Collections.Generic;
 
@@ -138,6 +136,64 @@ public class EmissionsHandlerTests
         Assert.That(end, Is.EqualTo(results.Last().Time));
     }
 
+    [TestCase("2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", 0, TestName = "GetEmissionsDataAsync calls data source with expected dates: start & end")]
+    [TestCase("2000-01-01T00:00:00Z", null, 1000, TestName = "GetEmissionsDataAsync calls data source with expected dates: only start")]
+    [TestCase(null, null, 1000, TestName = "GetEmissionsDataAsync calls data source with expected dates: no start or end")]
+    public async Task GetEmissionsDataAsync_CallsWithExpectedDates(DateTimeOffset? start, DateTimeOffset? end, long tickTolerance)
+    {
+        // Arrange
+        // Default to a random time that will always be wrong for these test cases.
+        DateTimeOffset actualStart = DateTimeOffset.Parse("1984-06-06Z");
+        DateTimeOffset actualEnd = DateTimeOffset.Parse("1984-06-06Z");
+        var datasource = new Mock<IEmissionsDataSource>();
+        datasource.Setup(x => x.GetCarbonIntensityAsync(
+            It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .Callback((IEnumerable<Location> _, DateTimeOffset _start, DateTimeOffset _end) =>
+            {
+                actualStart = _start;
+                actualEnd = _end;
+            });
+
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
+
+        DateTimeOffset expectedEnd;
+        DateTimeOffset expectedStart;
+
+        if (start.HasValue)
+        {
+            expectedStart = start.Value;
+        }
+        else
+        {
+            expectedStart = DateTimeOffset.UtcNow;
+        }
+
+        if (end.HasValue)
+        {
+            expectedEnd = end.Value;
+        }
+        else
+        {
+            expectedEnd = expectedStart;
+        }
+
+        // Because this method uses DateTimeOffset.UtcNow as a default, we cannot precisely check our date expectations
+        // so instead, we test that the dates are within a tolerable range using DateTimeOffset Ticks.
+        // 1 Second == 10,000,000 Ticks
+        // 1000 Ticks == 0.1 Milliseconds
+        var minAllowableStartTicks = expectedStart.Ticks - tickTolerance;
+        var maxAllowableStartTicks = expectedStart.Ticks + tickTolerance;
+        var minAllowableEndTicks = expectedEnd.Ticks - tickTolerance;
+        var maxAllowableEndTicks = expectedEnd.Ticks + tickTolerance;
+
+        // Act
+        await emissionsHandler.GetEmissionsDataAsync("eastus", start, end);
+
+        // Assert
+        Assert.That(actualStart.Ticks, Is.InRange(minAllowableStartTicks, maxAllowableStartTicks));
+        Assert.That(actualEnd.Ticks, Is.InRange(minAllowableEndTicks, maxAllowableEndTicks));
+    }
+
     [Test]
     public async Task GetBestEmissionsDataAsync_ReturnsExpected()
     {
@@ -236,6 +292,16 @@ public class EmissionsHandlerTests
         Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetBestEmissionsDataAsync("eastus",null, DateTimeOffset.Now));
     }
 
+    [Test]
+    public void GetBestEmissionsDataAsync_ThrowsWhenStartBeforeEnd()
+    {
+        // Arrange
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
+
+        // Act & Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetBestEmissionsDataAsync("eastus", DateTimeOffset.Now.AddHours(3), DateTimeOffset.Now));
+    }
+
     [TestCase("eastus", "2021-11-18T00:00:00Z", "2021-11-18T08:00:00Z", ExpectedResult = 60)]
     [TestCase("westus", "2021-11-17T00:00:00Z", "2021-11-18T00:00:00Z", ExpectedResult = 20)]
     [TestCase("eastus", "2021-11-19T00:00:00Z", "2021-12-30T00:00:00Z", ExpectedResult = 0)]
@@ -270,64 +336,6 @@ public class EmissionsHandlerTests
 
         //Act Assert
         Assert.ThrowsAsync<CarbonAwareException>(async () => await emissionsHandler.GetAverageCarbonIntensityAsync("location", DateTimeOffset.Now, DateTimeOffset.Now));
-    }
-
-    [TestCase("2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", 0, TestName = "GetEmissionsDataAsync calls data source with expected dates: start & end")]
-    [TestCase("2000-01-01T00:00:00Z", null, 1000, TestName = "GetEmissionsDataAsync calls data source with expected dates: only start")]
-    [TestCase(null, null, 1000, TestName = "GetEmissionsDataAsync calls data source with expected dates: no start or end")]
-    public async Task GetEmissionsDataAsync_CallsWithExpectedDates(DateTimeOffset? start, DateTimeOffset? end, long tickTolerance)
-    {
-        // Arrange
-        // Default to a random time that will always be wrong for these test cases.
-        DateTimeOffset actualStart = DateTimeOffset.Parse("1984-06-06Z");
-        DateTimeOffset actualEnd = DateTimeOffset.Parse("1984-06-06Z");
-        var datasource = new Mock<IEmissionsDataSource>();
-        datasource.Setup(x => x.GetCarbonIntensityAsync(
-            It.IsAny<IEnumerable<Location>>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
-            .Callback((IEnumerable<Location> _, DateTimeOffset _start, DateTimeOffset _end) =>
-            {
-                actualStart = _start;
-                actualEnd = _end;
-            });
-
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, datasource.Object);
-
-        DateTimeOffset expectedEnd;
-        DateTimeOffset expectedStart;
-
-        if (start.HasValue)
-        {
-            expectedStart = start.Value;
-        }
-        else
-        {
-            expectedStart = DateTimeOffset.UtcNow;
-        }
-
-        if (end.HasValue)
-        {
-            expectedEnd = end.Value;
-        }
-        else
-        {
-            expectedEnd = expectedStart;
-        }
-
-        // Because this method uses DateTimeOffset.UtcNow as a default, we cannot precisely check our date expectations
-        // so instead, we test that the dates are within a tolerable range using DateTimeOffset Ticks.
-        // 1 Second == 10,000,000 Ticks
-        // 1000 Ticks == 0.1 Milliseconds
-        var minAllowableStartTicks = expectedStart.Ticks - tickTolerance;
-        var maxAllowableStartTicks = expectedStart.Ticks + tickTolerance;
-        var minAllowableEndTicks = expectedEnd.Ticks - tickTolerance;
-        var maxAllowableEndTicks = expectedEnd.Ticks + tickTolerance;
-
-        // Act
-        await emissionsHandler.GetEmissionsDataAsync("eastus", start, end);
-
-        // Assert
-        Assert.That(actualStart.Ticks, Is.InRange(minAllowableStartTicks, maxAllowableStartTicks));
-        Assert.That(actualEnd.Ticks, Is.InRange(minAllowableEndTicks, maxAllowableEndTicks));
     }
     
     private static Mock<IEmissionsDataSource> CreateEmissionsDataSource(IEnumerable<EmissionsData> data)

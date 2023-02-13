@@ -225,7 +225,7 @@ public class ForecastHandlerTests
 
         datasource
             .Setup(x => x.GetCarbonIntensityForecastAsync(It.IsAny<Location>(), It.IsAny<DateTimeOffset>()))
-            .ThrowsAsync(new CarbonAware.Exceptions.CarbonAwareException(""));
+            .ThrowsAsync(new CarbonAware.Exceptions.CarbonAwareException("", It.IsAny<Exception>()));
 
         return datasource;
     }
