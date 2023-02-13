@@ -211,24 +211,49 @@ public class LocationSourceTest
         var mockLogger = new Mock<ILogger<LocationSource>>();
         var locationSource = new LocationSource(mockLogger.Object, options.Object);
 
-        Location inputLocation = new Location {
+        Location inputLocation = new Location
+        {
             Name = $"{Constants.EastUsRegion.Name}_1"
         };
         var result = await locationSource.ToGeopositionLocationAsync(inputLocation);
         Assert.That(result?.Name, Is.EqualTo(Constants.EastUsRegion.Name));
-        inputLocation = new Location {
+        inputLocation = new Location
+        {
             Name = $"{Constants.WestUsRegion.Name}_1"
         };
         result = await locationSource.ToGeopositionLocationAsync(inputLocation);
         Assert.That(result?.Name, Is.EqualTo(Constants.WestUsRegion.Name));
 
-        inputLocation = new Location {
+        inputLocation = new Location
+        {
             Name = $"{Constants.WestUsRegion.Name}_2"
         };
         Assert.ThrowsAsync<ArgumentException>(async () =>
         {
             await locationSource.ToGeopositionLocationAsync(inputLocation);
         });
+    }
+
+    [Test]
+    public async Task GetGeopositionLocationsAsync_ReturnsListOfLocations()
+    {
+        var configuration = new LocationDataSourcesConfiguration();
+        configuration.LocationSourceFiles.Add(new LocationSourceFile
+        {
+            Prefix = "prefix",
+            Delimiter = "-",
+            DataFileLocation = _goodFile
+        });
+        var options = new Mock<IOptionsMonitor<LocationDataSourcesConfiguration>>();
+        options.Setup(o => o.CurrentValue).Returns(() => configuration);
+        var logger = Mock.Of<ILogger<LocationSource>>();
+        var locationSource = new LocationSource(logger, options.Object);
+
+        IDictionary<string, Location> allLocations = await locationSource.GetGeopositionLocationsAsync();
+
+        Assert.AreEqual(allLocations.Count, 3);
+        AssertLocationsEqual(Constants.LocationEastUs, allLocations["prefix-test-eastus"]);
+        AssertLocationsEqual(Constants.LocationWestUs, allLocations["prefix-test-westus"]);
     }
 
     [OneTimeTearDown]
