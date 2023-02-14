@@ -95,6 +95,8 @@ public abstract class IntegrationTestingBase
                 {
                     Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "WattTime");
                     Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Username", "username");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Password", "password");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Type", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
                     break;
