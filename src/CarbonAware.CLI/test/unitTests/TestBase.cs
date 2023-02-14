@@ -1,11 +1,9 @@
 using Moq;
 using GSF.CarbonAware.Handlers;
-using GSF.CarbonAware.Models;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.CommandLine.Parsing;
 using System.CommandLine.IO;
-using CarbonAware.Interfaces;
 
 namespace CarbonAware.CLI.UnitTests;
 
@@ -16,7 +14,7 @@ public abstract class TestBase
 {
     protected Mock<IForecastHandler> _mockForecastHandler = new();
     protected Mock<IEmissionsHandler> _mockEmissionsHandler = new();
-    protected Mock<ILocationSource> _mockLocationSource = new();
+    protected Mock<ILocationHandler> _mockLocationHandler = new();
 
 
     protected readonly TestConsole _console = new();
@@ -25,7 +23,7 @@ public abstract class TestBase
     {
         _mockEmissionsHandler = new Mock<IEmissionsHandler>();
         _mockForecastHandler = new Mock<IForecastHandler>();
-        _mockLocationSource = new Mock<ILocationSource>();
+        _mockLocationHandler = new Mock<ILocationHandler>();
 
         var parser = new Parser(command);
         var parseResult = parser.Parse(stringCommand);
@@ -38,8 +36,8 @@ public abstract class TestBase
         mockServiceProvider.Setup(x => x.GetService(typeof(IForecastHandler)))
             .Returns(_mockForecastHandler.Object);
 
-        mockServiceProvider.Setup(x => x.GetService(typeof(ILocationSource)))
-            .Returns(_mockLocationSource.Object);
+        mockServiceProvider.Setup(x => x.GetService(typeof(ILocationHandler)))
+            .Returns(_mockLocationHandler.Object);
 
         invocationContext.BindingContext.AddService<IServiceProvider>(_ => mockServiceProvider.Object);
 

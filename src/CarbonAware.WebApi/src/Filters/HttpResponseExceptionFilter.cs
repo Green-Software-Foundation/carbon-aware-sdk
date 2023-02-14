@@ -31,7 +31,7 @@ public class HttpResponseExceptionFilter : IExceptionFilter
         var activity = Activity.Current;
 
         HttpValidationProblemDetails response;
-        var contextException = GetRelevantExceptionFromContext(context);
+        var contextException = GetRelevantException(context);
         if (contextException is IHttpResponseException httpResponseException)
         {
             response = new HttpValidationProblemDetails(){
@@ -90,7 +90,7 @@ public class HttpResponseExceptionFilter : IExceptionFilter
         context.ExceptionHandled = true;
     }
 
-    private static Exception GetRelevantExceptionFromContext(ExceptionContext context)
+    private static Exception GetRelevantException(ExceptionContext context)
     {
         // Give priority to the inner exception since it contains the exception root cause.
         if (context.Exception.InnerException is not null)
