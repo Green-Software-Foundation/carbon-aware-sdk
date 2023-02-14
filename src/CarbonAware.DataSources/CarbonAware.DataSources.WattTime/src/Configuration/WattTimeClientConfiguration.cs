@@ -1,5 +1,6 @@
 
 using CarbonAware.Exceptions;
+using System.Text;
 
 namespace CarbonAware.DataSources.WattTime.Configuration;
 
@@ -49,6 +50,17 @@ public class WattTimeClientConfiguration
         if (!Uri.IsWellFormedUriString(this.BaseUrl, UriKind.Absolute))
         {
             throw new ConfigurationException($"{Key}:{nameof(this.BaseUrl)} is not a valid absolute url.");
+        }
+
+        // Validate credential encoding/decoding with UTF8
+        if (!Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(this.Username)).Equals(this.Username))
+        {
+            throw new ConfigurationException($"{Key}:{nameof(this.Username)} failed to be encoded/decoded with UTF8.");
+        }
+
+        if (!Encoding.UTF8.GetString(Encoding.UTF8.GetBytes(this.Password)).Equals(this.Password))
+        {
+            throw new ConfigurationException($"{Key}:{nameof(this.Password)} failed to be encoded/decoded with UTF8.");
         }
     }
 }

@@ -1,7 +1,7 @@
 # Packaging the Carbon Aware SDK
 
 With the addition of the C# Client Library as a way to consume the Carbon Aware
-SDK, we have also added [bash scripts](../scripts/package/) to package the
+SDK, we have also added [powershell scripts](../scripts/package/) to package the
 library, and have included a sample [Console App](../samples/lib-integration/)
 showing how the package can be consumed.
 
@@ -14,7 +14,8 @@ showing how the package can be consumed.
     - [WattTime](#watttime)
     - [Json](#json)
   - [Use Package with Dependency Injection](#use-package-with-dependency-injection)
-    - [Console App Sample](#console-app-sample)
+  - [Console App Sample](#console-app-sample)
+    - [Run the Sample Console App](#run-the-sample-console-app)
 
 ## Included Projects
 
@@ -36,14 +37,14 @@ is `GSF.CarbonAware`.
 
 There are 2 scripts included to help the packaging process
 
-1. `create_package.sh <dotnet_solution> <package_destination>`
-2. `add_package.sh <dotnet_project> <package_destination>`
+1. `create_packages.ps1 <dotnet_solution> <package_destination>`
+2. `add_packages.ps1 <dotnet_project> <package_destination>`
 
-The [`create_package`](../scripts/package/create_packages.sh) script is called
+The [`create_packages`](../scripts/package/create_packages.ps1) script is called
 with 2 parameters: the CarbonAwareSDK dotnet solution file (`.sln`) path, and
 the output directory destination for the package. The
-[`add_package`](../scripts/package/add_package.sh) script is also called with 2
-parameters: the target project file (`.csproj`) path, and the package
+[`add_packages`](../scripts/package/add_packages.ps1) script is also called with
+2 parameters: the target project file (`.csproj`) path, and the package
 destination path.
 
 To see a working example of both scripts being invoked, you can look at the
@@ -71,7 +72,7 @@ source configuration can be found
 
 ### ElectricityMaps
 
-Below are the environment variables (i.e. bash shell) needed to set up the
+Below are the environment variables needed to set up the
 **WattTime** data source.
 
 ```bash
@@ -83,7 +84,7 @@ export DataSources__Configurations__ElectricityMaps__APIToken=[ElectricityMaps A
 
 ### WattTime
 
-Below are the environment variables (i.e. bash shell) needed to set up the
+Below are the environment variables needed to set up the
 **WattTime** data source.
 
 ```bash
@@ -97,7 +98,7 @@ export DataSources__Configurations__WattTime__BaseURL="https://api2.watttime.org
 
 ### Json
 
-Below is the environment variable (i.e. bash shell) needed to set up the
+Below is the environment variable needed to set up the
 **Json** data source.
 
 ```bash
