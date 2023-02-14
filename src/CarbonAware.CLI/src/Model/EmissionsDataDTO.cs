@@ -1,4 +1,4 @@
-﻿using CarbonAware.Model;
+﻿using GSF.CarbonAware.Models;
 
 namespace CarbonAware.CLI.Model
 {

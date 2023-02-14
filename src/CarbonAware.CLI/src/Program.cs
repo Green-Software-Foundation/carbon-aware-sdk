@@ -1,11 +1,11 @@
 ﻿using CarbonAware;
-using CarbonAware.Aggregators.Configuration;
 using CarbonAware.CLI.Commands.Emissions;
 using CarbonAware.CLI.Commands.EmissionsForecasts;
+using CarbonAware.CLI.Commands.Location;
 using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Extensions;
-using CarbonAware.DataSources.ElectricityMaps;
-using CarbonAware.Exceptions;
+using GSF.CarbonAware.Configuration;
+using GSF.CarbonAware.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -15,8 +15,6 @@ using OpenTelemetry.Trace;
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using System.Diagnostics;
-using CarbonAware.CLI.Commands.Location;
 
 var config = new ConfigurationBuilder()
     .UseCarbonAwareDefaults()
@@ -28,16 +26,29 @@ var builder = new ServiceCollection()
         config.GetSection(CarbonAwareVariablesConfiguration.Key))
     .AddLogging(builder => builder.AddDebug());
 
-string? errorMessage = "";
-bool successfulEmissionServices = builder.TryAddCarbonAwareEmissionServices(config, out errorMessage);
+try
+{
+    builder.AddEmissionsServices(config);
+}
+catch (CarbonAwareException e)
+{
+    var _logger = builder.BuildServiceProvider().GetService<ILogger<Program>>();
+    _logger?.LogError(e, "Failed to create emissions services.");
+    Environment.Exit(1);
+}
+
+try
+{
+    builder.AddForecastServices(config);
+}
+catch (CarbonAwareException e)
+{
+    var _logger = builder.BuildServiceProvider().GetService<ILogger<Program>>();
+    _logger?.LogError(e, "Failed to create forecast services.");
+    Environment.Exit(1);
+}
 
 var serviceProvider = builder.BuildServiceProvider();
-
-if(!successfulEmissionServices)
-{
-    var _logger = serviceProvider.GetService<ILogger<Program>>();
-    _logger?.LogError(errorMessage);
-}
 
 var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootCommandDescription);
 rootCommand.AddGlobalOption(CommonOptions.VerboseOption);
