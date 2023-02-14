@@ -31,7 +31,8 @@ public class HttpResponseExceptionFilter : IExceptionFilter
         var activity = Activity.Current;
 
         HttpValidationProblemDetails response;
-        if (context.Exception is IHttpResponseException httpResponseException)
+        var contextException = GetRelevantExceptionFromContext(context);
+        if (contextException is IHttpResponseException httpResponseException)
         {
             response = new HttpValidationProblemDetails(){
                 Title = httpResponseException.Title,
@@ -39,12 +40,12 @@ public class HttpResponseExceptionFilter : IExceptionFilter
                 Detail = httpResponseException.Detail
             };
         } else {
-            var exceptionType = context.Exception.GetType().Name;
+            var exceptionType = contextException.GetType().Name;
             int statusCode;
             if (!EXCEPTION_STATUS_CODE_MAP.TryGetValue(exceptionType, out statusCode))
             {
                 statusCode = (int)HttpStatusCode.InternalServerError;
-                activity?.SetStatus(ActivityStatusCode.Error, context.Exception.Message);
+                activity?.SetStatus(ActivityStatusCode.Error, contextException.Message);
             }
             var isVerboseApi = _options.CurrentValue.VerboseApi;
        
@@ -60,10 +61,10 @@ public class HttpResponseExceptionFilter : IExceptionFilter
                 response = new HttpValidationProblemDetails() {
                             Title = exceptionType,
                             Status = statusCode,
-                            Detail = context.Exception.Message
+                            Detail = contextException.Message
                 };
                 if (isVerboseApi) {
-                    response.Errors["stackTrace"] = new string[] { context.Exception.StackTrace! };
+                    response.Errors["stackTrace"] = new string[] { contextException.StackTrace! };
                 }
             }
         }
@@ -74,7 +75,7 @@ public class HttpResponseExceptionFilter : IExceptionFilter
             response.Extensions["traceId"] = traceId;
         }
 
-        foreach (DictionaryEntry entry in context.Exception.Data)
+        foreach (DictionaryEntry entry in contextException.Data)
         {
             if (entry.Value is string[] messages && entry.Key is string key){
                 response.Errors[key] = messages;
@@ -85,7 +86,17 @@ public class HttpResponseExceptionFilter : IExceptionFilter
         {
             StatusCode = response.Status
         };
-        _logger.LogError(context.Exception, "Exception: {exception}", context.Exception.Message);
+        _logger.LogError(contextException, "Exception: {exception}", contextException.Message);
         context.ExceptionHandled = true;
+    }
+
+    private static Exception GetRelevantExceptionFromContext(ExceptionContext context)
+    {
+        // Give priority to the inner exception since it contains the exception root cause.
+        if (context.Exception.InnerException is not null)
+        {
+            return context.Exception.InnerException;
+        }
+        return context.Exception;
     }
 }
