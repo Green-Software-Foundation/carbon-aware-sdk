@@ -10,7 +10,6 @@ using Moq;
 using NUnit.Framework;
 using System.Net;
 using Microsoft.Extensions.Options;
-using GSF.CarbonAware.Exceptions;
 
 namespace CarbonAware.WepApi.UnitTests;
 
@@ -36,14 +35,15 @@ public class HttpResponseExceptionFilterTests
         this._logger = new Mock<ILogger<HttpResponseExceptionFilter>>();
     }
 
-    [Test]
-    public void TestOnException_IHttpResponseException()
+    [TestCase(false, TestName = "Without Inner Exception")]
+    [TestCase(true, TestName = "With Inner Exception")]
+    public void TestOnException_IHttpResponseException(bool innerEx)
     {
         // Arrange
         var ex = new DummyHttpResponseException();
         var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
         {
-            Exception = ex
+            Exception = innerEx ? new Exception("Inner Exception", ex) : ex
         };
         var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
         var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
@@ -266,32 +266,6 @@ public class HttpResponseExceptionFilterTests
         Assert.AreEqual(HttpStatusCode.InternalServerError.ToString(), content!.Title);
         Assert.IsNull(content.Detail);
     }
-
-    [Test]
-    public void TestOnInnerException_IHttpResponseException()
-    {
-        // Arrange
-        var innerEx = new DummyHttpResponseException();
-        var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
-        {
-            Exception = new CarbonAwareException("InnerException", innerEx)
-        };
-        var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
-        var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
-
-        // Act
-        filter.OnException(exceptionContext);
-
-        (var result, var content) = GetExceptionContextDetails(exceptionContext);
-
-        // Assert
-        Assert.IsTrue(exceptionContext.ExceptionHandled);
-        Assert.AreEqual(innerEx.Status, result!.StatusCode);
-        Assert.AreEqual(innerEx.Status, content!.Status);
-        Assert.AreEqual(innerEx.Title, content.Title);
-        Assert.AreEqual(innerEx.Detail, content.Detail);
-    }
-
 
     private (ObjectResult?, HttpValidationProblemDetails?) GetExceptionContextDetails(ExceptionContext context)
     {
