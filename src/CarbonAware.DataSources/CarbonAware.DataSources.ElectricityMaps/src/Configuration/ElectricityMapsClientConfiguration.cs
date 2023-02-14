@@ -54,5 +54,14 @@ public class ElectricityMapsClientConfiguration
         if (string.IsNullOrWhiteSpace(this.APITokenHeader) || string.IsNullOrWhiteSpace(this.APIToken)){
             throw new ConfigurationException($"Incomplete auth config: must set both {nameof(this.APITokenHeader)} and {nameof(this.APIToken)}.");
         }
+
+        // Required to have correct token header given base url
+        if (BaseUrl.Equals(BaseUrls.TokenBaseUrl) && !APITokenHeader.Equals(Headers.TokenAuthHeader)){
+            throw new ConfigurationException($"Invalid configuration. {nameof(this.BaseUrl)} '{this.BaseUrl}' requires '{Headers.TokenAuthHeader}' as the {nameof(this.APITokenHeader)}.");
+        }
+
+        if (BaseUrl.Equals(BaseUrls.TrialBaseUrl) && !APITokenHeader.Equals(Headers.TrialAuthHeader)){
+            throw new ConfigurationException($"Invalid configuration. {nameof(this.BaseUrl)} '{this.BaseUrl}' requires '{Headers.TrialAuthHeader}' as the {nameof(this.APITokenHeader)}.");
+        }
     }
 }

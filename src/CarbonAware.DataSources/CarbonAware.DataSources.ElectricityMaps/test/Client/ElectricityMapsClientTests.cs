@@ -1,7 +1,6 @@
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.DataSources.ElectricityMaps.Configuration;
 using CarbonAware.DataSources.ElectricityMaps.Constants;
-using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -68,13 +67,14 @@ public class ElectricityMapsClientTests
         Assert.Throws<ConfigurationException>(() => new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object));
     }
 
-    [TestCase(BaseUrls.TrialBaseUrl, TestName = "ClientInstantiation_SucceedsForValidConfig: Trial")]
-    [TestCase(BaseUrls.TokenBaseUrl, TestName = "ClientInstantiation_SucceedsForValidConfig: Token")]
-    public void ClientInstantiation_SucceedsForValidConfig(string baseUrl)
+    [TestCase(BaseUrls.TrialBaseUrl, Headers.TrialAuthHeader, TestName = "ClientInstantiation_SucceedsForValidConfig: Trial")]
+    [TestCase(BaseUrls.TokenBaseUrl, Headers.TokenAuthHeader, TestName = "ClientInstantiation_SucceedsForValidConfig: Token")]
+    public void ClientInstantiation_SucceedsForValidConfig(string baseUrl, string header)
     {
         // Arrange
         AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         this.Configuration.BaseUrl = baseUrl;
+        this.Configuration.APITokenHeader = header;
 
         // Act & Assert
         Assert.DoesNotThrow(() => new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object));
@@ -176,16 +176,17 @@ public class ElectricityMapsClientTests
     }
 
 
-    [TestCase(BaseUrls.TrialBaseUrl, TestName = "GetForecastedCarbonIntensityAsync_DeserializesExpectedResponse: Trial")]
-    [TestCase(BaseUrls.TokenBaseUrl, TestName = "GetForecastedCarbonIntensityAsync_DeserializesExpectedResponse: Token")]
-    public async Task GetForecastedCarbonIntensityAsync_DeserializesExpectedResponse(string baseUrl)
+    [TestCase(BaseUrls.TrialBaseUrl, Headers.TrialAuthHeader, TestName = "GetForecastedCarbonIntensityAsync_DeserializesExpectedResponse: Trial")]
+    [TestCase(BaseUrls.TokenBaseUrl, Headers.TokenAuthHeader, TestName = "GetForecastedCarbonIntensityAsync_DeserializesExpectedResponse: Token")]
+    public async Task GetForecastedCarbonIntensityAsync_DeserializesExpectedResponse(string baseUrl, string header)
     {
         // Arrange
         this.Configuration.BaseUrl = baseUrl;
+        this.Configuration.APITokenHeader = header;
         AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         AddHandler_RequestResponse(r =>
-            {
-                return r.RequestUri!.ToString().Contains(baseUrl + Paths.Forecast) && r.Method == HttpMethod.Get;
+        {
+            return r.RequestUri!.ToString().Contains(baseUrl + Paths.Forecast) && r.Method == HttpMethod.Get;
             }, System.Net.HttpStatusCode.OK, TestData.GetCurrentForecastJsonString());
 
         var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
@@ -224,12 +225,13 @@ public class ElectricityMapsClientTests
         Assert.ThrowsAsync<ElectricityMapsClientException>(async () => await client.GetRecentCarbonIntensityHistoryAsync(TestZone));
     }
 
-    [TestCase(BaseUrls.TrialBaseUrl, TestName = "GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponse: Trial")]
-    [TestCase(BaseUrls.TokenBaseUrl, TestName = "GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponse: Token")]
-    public async Task GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponse(string baseUrl)
+    [TestCase(BaseUrls.TrialBaseUrl, Headers.TrialAuthHeader, TestName = "GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponse: Trial")]
+    [TestCase(BaseUrls.TokenBaseUrl, Headers.TokenAuthHeader, TestName = "GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponse: Token")]
+    public async Task GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponse(string baseUrl, string header)
     {
         // Arrange
         this.Configuration.BaseUrl = baseUrl;
+        this.Configuration.APITokenHeader = header;
 
         AddHandlers_Auth_Zones(TestData.GetZonesAllowedJsonString());
         AddHandler_RequestResponse(r =>
