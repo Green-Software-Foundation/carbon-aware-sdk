@@ -101,8 +101,8 @@ public class JsonDataSourceTests
         var end = DateTimeOffset.Parse("2022-09-07T13:45:11+00:00");
         var dataSource = mockDataSource.Object;
         var result = await dataSource.GetCarbonIntensityAsync(locations, start, end);
-        Assert.AreEqual(0, result.Count());
-        Assert.IsTrue(!result.Any());
+        Assert.That(result.Count(), Is.EqualTo(0));
+        Assert.That(!result.Any(), Is.True);
     }
 
     private Mock<JsonDataSource> SetupMockDataSource() {

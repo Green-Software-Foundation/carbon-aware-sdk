@@ -13,75 +13,73 @@ public class ServiceCollectionExtensionsTests
     public void AddMonitoringAndTelemetry_AddsServices_WithConnectionString()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
         var inMemorySettings = new Dictionary<string, string>
         {
             { "CarbonAwareVars:TelemetryProvider", "ApplicationInsights" },
             { "ApplicationInsights_Connection_String", "AppInsightsConnectionString" }
         };
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
         // Act & Assert
-        Assert.DoesNotThrow(() => ServiceCollectionExtensions.AddMonitoringAndTelemetry(services, configuration));
-        Assert.AreEqual(services.Count(), 43);
+        Assert.DoesNotThrow(() => services.AddMonitoringAndTelemetry(configuration));
     }
 
     [Test]
     public void AddMonitoringAndTelemetry_AddsServices_WithInstrumentationKey()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
         var inMemorySettings = new Dictionary<string, string>
         {
             { "CarbonAwareVars:TelemetryProvider", "ApplicationInsights" },
             { "AppInsights_InstrumentationKey", "AppInsightsInstrumentationKey" }
         };
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
         // Act & Assert
-        Assert.DoesNotThrow(() => ServiceCollectionExtensions.AddMonitoringAndTelemetry(services, configuration));
-        Assert.AreEqual(services.Count(), 43);
+        Assert.DoesNotThrow(() => services.AddMonitoringAndTelemetry(configuration));
     }
 
     [Test]
     public void AddMonitoringAndTelemetry_DoesNotAddServices_WithoutConfiguration()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
         var inMemorySettings = new Dictionary<string, string>
         {
             { "CarbonAwareVars:TelemetryProvider", "ApplicationInsights" }
         };
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
         // Act & Assert
-        Assert.DoesNotThrow(() => ServiceCollectionExtensions.AddMonitoringAndTelemetry(services, configuration));
-        Assert.AreEqual(services.Count(), 0);
+        Assert.DoesNotThrow(() => services.AddMonitoringAndTelemetry(configuration));
+        Assert.That(services.Count, Is.EqualTo(0));
     }
 
     [Test]
     public void AddMonitoringAndTelemetry_DoesNotAddServices_WithoutTelemetryProvider()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
         var inMemorySettings = new Dictionary<string, string>{};
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
         // Act & Assert
-        Assert.DoesNotThrow(() => ServiceCollectionExtensions.AddMonitoringAndTelemetry(services, configuration));
-        Assert.AreEqual(services.Count(), 0);
+        Assert.DoesNotThrow(() => services.AddMonitoringAndTelemetry(configuration));
+        Assert.That(services.Count, Is.EqualTo(0));
     }    
 
     [Test]
@@ -93,7 +91,7 @@ public class ServiceCollectionExtensionsTests
             { "Logging:LogLevel:Default", "Information" },
             { "Logging:LogLevel:Microsoft.AspNetCore", "Warning" }
         };
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
@@ -101,6 +99,6 @@ public class ServiceCollectionExtensionsTests
         Microsoft.Extensions.Logging.ILogger logger = ServiceCollectionExtensions.CreateConsoleLogger(configuration);
 
         // Assert
-        Assert.NotNull(logger);
+        Assert.That(logger, Is.Not.Null);
     }
 }

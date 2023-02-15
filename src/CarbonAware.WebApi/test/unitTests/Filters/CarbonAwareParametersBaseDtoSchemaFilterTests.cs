@@ -2,8 +2,8 @@ using CarbonAware.WebApi.Filters;
 using Microsoft.OpenApi.Models;
 using NUnit.Framework;
 using Swashbuckle.AspNetCore.SwaggerGen;
-using GSF.CarbonAware.Handlers.CarbonAware;
 using System.Text.Json;
+using CarbonAware.WebApi.Models;
 
 namespace CarbonAware.WepApi.UnitTests;
 
@@ -12,11 +12,8 @@ namespace CarbonAware.WepApi.UnitTests;
 public class CarbonAwareParametersBaseDtoSchemaFilterTests
 {
 
-// Not relevant for tests which populate this field via the [SetUp] attribute.
+    // Not relevant for tests which populate this field via the [SetUp] attribute.
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-
-    private OpenApiSchema _schema;
-    private Type _type;
     private SchemaRepository _schemaRepository;
     private ISchemaGenerator _schemaGenerator;
 
@@ -25,25 +22,59 @@ public class CarbonAwareParametersBaseDtoSchemaFilterTests
     [SetUp]
     public void Setup()
     {
-        this._schema = new OpenApiSchema();
-        this._type = typeof(CarbonAwareParametersBaseDTO);
         this._schemaRepository = new SchemaRepository("document-name");
         ISerializerDataContractResolver dataContractResolver = new JsonSerializerDataContractResolver(new JsonSerializerOptions());
         this._schemaGenerator = new SchemaGenerator(new SchemaGeneratorOptions(), dataContractResolver);
     }
 
-    [Test]
-    public void Apply_ReturnsSuccessfully()
+    [TestCase(typeof(CarbonIntensityBatchParametersDTO), new string[] { "MultipleLocations", "Duration", "Requested" }, TestName = "CarbonIntensityBatchParametersDTO, Removing nonOverriddenInheritedProperties")]
+    [TestCase(typeof(CarbonIntensityParametersDTO), new string[] { "MultipleLocations", "Duration", "Requested" }, TestName = "CarbonIntensityParametersDTO, Removing nonOverriddenInheritedProperties")]
+    [TestCase(typeof(EmissionsDataForLocationsParametersDTO), new string[] { "SingleLocation", "Duration", "Requested" }, TestName = "EmissionsDataForLocationsParametersDTO, Removing nonOverriddenInheritedProperties")]
+    [TestCase(typeof(EmissionsForecastBatchParametersDTO), new string[] { "MultipleLocations" }, TestName = "EmissionsForecastBatchParametersDTO, Removing nonOverriddenInheritedProperties")]
+    [TestCase(typeof(EmissionsForecastCurrentParametersDTO), new string[] { "SingleLocation", "Requested" }, TestName = "EmissionsForecastCurrentParametersDTO, Removing nonOverriddenInheritedProperties")]
+    [TestCase(typeof(EmissionsDataDTO), new string[] {}, TestName = "EmissionsDataDTO, Does not remove any properties from non-child class")]
+    public void Apply_RemovesCorrectProperties_FromSchema(Type type, string[] nonOverriddenProperties)
     {
         // Arrange
+        string[] carbonAwareParametersBaseDTOProperties = {
+            "SingleLocation",
+            "MultipleLocations",
+            "Start",
+            "End",
+            "Duration",
+            "Requested"
+        };
+
         var schemaFilterContext = new SchemaFilterContext(
-            _type,
+            type,
             _schemaGenerator,
             _schemaRepository);
 
-        CarbonAwareParametersBaseDtoSchemaFilter caBaseDtoSchemaFilter = new();
+        var caBaseDtoSchemaFilter = new CarbonAwareParametersBaseDtoSchemaFilter();
+
+        var openApiProperties = new Dictionary<string, OpenApiSchema>();
+        foreach (var property in carbonAwareParametersBaseDTOProperties)
+        {
+            openApiProperties.Add(property, new OpenApiSchema());
+        }
+
+        var schema = new OpenApiSchema()
+        {
+            Properties = openApiProperties
+        };
 
         // Act & Assert
-        Assert.DoesNotThrow(() => caBaseDtoSchemaFilter.Apply(_schema, schemaFilterContext));
+        Assert.DoesNotThrow(() => caBaseDtoSchemaFilter.Apply(schema, schemaFilterContext));
+        foreach (var property in carbonAwareParametersBaseDTOProperties)
+        {
+            if(nonOverriddenProperties.Contains(property))
+            {
+                Assert.That(schema.Properties.ContainsKey(property), Is.False);
+            }
+            else
+            {
+                Assert.That(schema.Properties.ContainsKey(property), Is.True);
+            }
+        }
     }
 }

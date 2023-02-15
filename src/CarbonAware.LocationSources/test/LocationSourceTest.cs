@@ -245,9 +245,9 @@ public class LocationSourceTest
         var logger = Mock.Of<ILogger<LocationSource>>();
         var locationSource = new LocationSource(logger, options.Object);
 
-        IDictionary<string, Location> allLocations = await locationSource.GetGeopositionLocationsAsync();
+        var allLocations = await locationSource.GetGeopositionLocationsAsync();
 
-        Assert.AreEqual(allLocations.Count, 3);
+        Assert.That(allLocations.Count, Is.EqualTo(3));
         AssertLocationsEqual(Constants.LocationEastUs, allLocations["prefix-test-eastus"]);
         AssertLocationsEqual(Constants.LocationWestUs, allLocations["prefix-test-westus"]);
     }

@@ -22,6 +22,8 @@ public class ServiceCollectionExtensionTests
     private readonly string PasswordKey = $"DataSources:Configurations:WattTimeTest:Password";
     private readonly string Password = "12345";
     private readonly string ProxyUrl = $"DataSources:Configurations:WattTimeTest:Proxy:Url";
+    private readonly string ProxyUsername = $"DataSources:Configurations:WattTimeTest:Proxy:Username";
+    private readonly string ProxyPassword = $"DataSources:Configurations:WattTimeTest:Proxy:Password";
     private readonly string UseProxyKey = $"DataSources:Configurations:WattTimeTest:Proxy:UseProxy";
 
     [Test]
@@ -73,8 +75,9 @@ public class ServiceCollectionExtensionTests
         Assert.Throws<ConfigurationException>(() => serviceCollection.AddWattTimeEmissionsDataSource(configuration.DataSources()));
     }
 
-    [Test]
-    public void ClientProxyTest_With_Missing_ProxyURL_AddsDataSource()
+    [TestCase(true, TestName = "ClientProxyTest, successful: denotes adding WattTime data sources using proxy.")]
+    [TestCase(false, TestName = "ClientProxyTest, successful: denotes adding WattTime data sources without using proxy.")]
+    public void ClientProxyTest_AddsDataSource(bool withProxyUrl)
     {
         // Arrange
         var settings = new Dictionary<string, string> {
@@ -82,8 +85,15 @@ public class ServiceCollectionExtensionTests
             { EmissionsDataSourceKey, EmissionsDataSourceValue },
             { UsernameKey, Username },
             { PasswordKey, Password },
-            { UseProxyKey, "false" },
+            { UseProxyKey, withProxyUrl.ToString() }
         };
+
+        if (withProxyUrl)
+        {
+            settings.Add(ProxyUrl, "http://10.10.10.1");
+            settings.Add(ProxyUsername, "proxyUsername");
+            settings.Add(ProxyPassword, "proxyPassword");
+        }
 
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(settings)
@@ -92,11 +102,11 @@ public class ServiceCollectionExtensionTests
         var serviceCollection = new ServiceCollection();
 
         // Act
-        var forecastService = serviceCollection.AddWattTimeEmissionsDataSource(configuration.DataSources());
-        var emissionsService = serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources());
+        var forecastDataSource = serviceCollection.AddWattTimeEmissionsDataSource(configuration.DataSources());
+        var emissionsDataSource = serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources());
 
         // Assert
-        Assert.NotNull(forecastService);
-        Assert.NotNull(emissionsService);
+        Assert.That(forecastDataSource, Is.Not.Null);
+        Assert.That(emissionsDataSource, Is.Not.Null);
     }
 }

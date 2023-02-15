@@ -9,15 +9,18 @@ namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 [TestFixture]
 public class ServiceCollectionExtensionTests
 {
-    private readonly string ForecastDataSourceKey = $"DataSources:ForecastDataSource";
-    private readonly string EmissionsDataSourceKey = $"DataSources:EmissionsDataSource";
-    private readonly string ForecastDataSourceValue = $"ElectricityMapsTest";
-    private readonly string EmissionsDataSourceValue = $"ElectricityMapsTest";
-    private readonly string HeaderKey = $"DataSources:Configurations:ElectricityMapsTest:APITokenHeader";
-    private readonly string AuthHeader = "auth-token";
-    private readonly string TokenKey = $"DataSources:Configurations:ElectricityMapsTest:APIToken";
-    private readonly string DefaultTokenValue = "myDefaultToken123";
-    private readonly string UseProxyKey = $"DataSources:Configurations:ElectricityMapsTest:Proxy:UseProxy";
+    const string ForecastDataSourceKey = $"DataSources:ForecastDataSource";
+    const string EmissionsDataSourceKey = $"DataSources:EmissionsDataSource";
+    const string ForecastDataSourceValue = $"ElectricityMapsTest";
+    const string EmissionsDataSourceValue = $"ElectricityMapsTest";
+    const string HeaderKey = $"DataSources:Configurations:ElectricityMapsTest:APITokenHeader";
+    const string AuthHeader = "auth-token";
+    const string TokenKey = $"DataSources:Configurations:ElectricityMapsTest:APIToken";
+    const string DefaultTokenValue = "myDefaultToken123";
+    const string UseProxyKey = $"DataSources:Configurations:ElectricityMapsTest:Proxy:UseProxy";
+    const string ProxyUrl = $"DataSources:Configurations:ElectricityMapsTest:Proxy:Url";
+    const string ProxyUsername = $"DataSources:Configurations:ElectricityMapsTest:Proxy:Username";
+    const string ProxyPassword = $"DataSources:Configurations:ElectricityMapsTest:Proxy:Password";
 
     [Test]
     public void ClientProxyTest_With_Missing_ProxyURL_ThrowsException()
@@ -41,8 +44,9 @@ public class ServiceCollectionExtensionTests
         Assert.Throws<ConfigurationException>(() => serviceCollection.AddElectricityMapsEmissionsDataSource(configuration.DataSources()));
     }
 
-    [Test]
-    public void ClientProxyTest_With_No_ProxyURL_AddsServices()
+    [TestCase(true, TestName = "ClientProxyTest, successful: denotes adding ElectricityMaps data sources using proxy.")]
+    [TestCase(false, TestName = "ClientProxyTest, successful: denotes adding ElectricityMaps data sources without using proxy.")]
+    public void ClientProxy_ConfigurationTest(bool withProxyUrl)
     {
         // Arrange
         var settings = new Dictionary<string, string> {
@@ -50,8 +54,16 @@ public class ServiceCollectionExtensionTests
             { EmissionsDataSourceKey, EmissionsDataSourceValue },
             { HeaderKey, AuthHeader },
             { TokenKey, DefaultTokenValue },
-            { UseProxyKey, "false" },
+            { UseProxyKey, withProxyUrl.ToString() }
         };
+
+        if (withProxyUrl)
+        {
+            settings.Add(ProxyUrl, "http://fakeProxy");
+            settings.Add(ProxyUsername, "proxyUsername");
+            settings.Add(ProxyPassword, "proxyPassword");
+        }
+
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(settings)
             .AddEnvironmentVariables()
@@ -59,40 +71,11 @@ public class ServiceCollectionExtensionTests
         var serviceCollection = new ServiceCollection();
 
         // Act
-        var forecastService = serviceCollection.AddElectricityMapsForecastDataSource(configuration.DataSources());
-        var emissionsService = serviceCollection.AddElectricityMapsEmissionsDataSource(configuration.DataSources());
+        var forecastDataSource = serviceCollection.AddElectricityMapsForecastDataSource(configuration.DataSources());
+        var emissionsDataSource = serviceCollection.AddElectricityMapsEmissionsDataSource(configuration.DataSources());
 
         // Assert
-        Assert.NotNull(forecastService);
-        Assert.NotNull(emissionsService);
-    }
-
-    [Test]
-    public void ClientProxyTest_With_ProxyURL_AddsServices()
-    {
-        // Arrange
-        var settings = new Dictionary<string, string> {
-            { ForecastDataSourceKey, ForecastDataSourceValue },
-            { EmissionsDataSourceKey, EmissionsDataSourceValue },
-            { HeaderKey, AuthHeader },
-            { TokenKey, DefaultTokenValue },
-            { UseProxyKey, "true" },
-            { "DataSources:Configurations:ElectricityMapsTest:Proxy:url", "http://10.10.10.1"},
-            { "DataSources:Configurations:ElectricityMapsTest:Proxy:username", "proxyUsername"},
-            { "DataSources:Configurations:ElectricityMapsTest:Proxy:password", "proxyPassword"}
-        };
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(settings)
-            .AddEnvironmentVariables()
-            .Build();
-        var serviceCollection = new ServiceCollection();
-
-        // Act
-        var forecastService = serviceCollection.AddElectricityMapsForecastDataSource(configuration.DataSources());
-        var emissionsService = serviceCollection.AddElectricityMapsEmissionsDataSource(configuration.DataSources());
-
-        // Assert
-        Assert.NotNull(forecastService);
-        Assert.NotNull(emissionsService);
+        Assert.That(forecastDataSource, Is.Not.Null);
+        Assert.That(emissionsDataSource, Is.Not.Null);
     }
 }

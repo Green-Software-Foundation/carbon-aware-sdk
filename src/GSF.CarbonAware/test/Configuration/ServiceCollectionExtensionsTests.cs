@@ -14,7 +14,7 @@ public class ServiceCollectionExtensionsTest
     public void AddEmissionsServices_ReturnsServices()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
         var inMemorySettings = new Dictionary<string, string>
         {
@@ -26,22 +26,22 @@ public class ServiceCollectionExtensionsTest
             { "DataSources:Configurations:Json:Type", "JSON" },
             { "DataSources:Configurations:Json:DataFileLocation", "test-data-azure-emissions.json" }
         };
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
         // Act
-        IServiceCollection provider = ServiceCollectionExtensions.AddEmissionsServices(services, configuration);
+        var provider = ServiceCollectionExtensions.AddEmissionsServices(services, configuration);
 
         // Assert
-        Assert.NotNull(provider);
+        Assert.That(provider, Is.Not.Null);
     }
 
     [Test]
     public void AddForecastServices_ReturnsServices()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
         var inMemorySettings = new Dictionary<string, string>
         {
@@ -55,22 +55,22 @@ public class ServiceCollectionExtensionsTest
             { "DataSources:Configurations:WattTime:Password", "password123" },
             { "DataSources:Configurations:WattTime:BaseURL", "https://api2.watttime.org/v2/" },
         };
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
         // Act
-        IServiceCollection provider = ServiceCollectionExtensions.AddForecastServices(services, configuration);
+        var provider = ServiceCollectionExtensions.AddForecastServices(services, configuration);
 
         // Assert
-        Assert.NotNull(provider);
+        Assert.That(provider, Is.Not.Null);
     }
 
     [Test]
     public void AllServices_ThrowExceptions_WithMissingConfigValues()
     {
         // Arrange
-        IServiceCollection services = new ServiceCollection();
+        var services = new ServiceCollection();
 
                 var inMemorySettings = new Dictionary<string, string>
         {
@@ -78,7 +78,7 @@ public class ServiceCollectionExtensionsTest
             { "DataSources:ForecastDataSource", "" },
         };
 
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 

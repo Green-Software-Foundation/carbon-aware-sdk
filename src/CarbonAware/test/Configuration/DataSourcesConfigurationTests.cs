@@ -57,37 +57,40 @@ class DataSourcesConfigurationTests
         Assert.That(ex!.Message, Contains.Substring(errorMessage));
     }
 
-    [Test]
-    public void ConfigurationTypesAndSections_ReturnCorrectType()
+    [TestCase("WattTime", "Json", TestName = "Assert Configuration Type is forecast=WattTime and emissions=Json")]
+    [TestCase("WattTime", "ElectricityMaps", TestName = "Assert Configuration Type is forecast=WattTime and emissions=ElectricityMaps")]
+    [TestCase("Json", null, TestName = "Assert Configuration Type is forecast=Json and emissions=null")]
+    public void ConfigurationTypesAndSections_ReturnCorrectType(string forecastDataSource, string emissionsDataSource)
     {
         // Arrange
         var inMemorySettings = new Dictionary<string, string>()
         {
             { "Configurations:WattTime:Type", "WattTime" },
-            { "Configurations:Json:Type", "Json" }
+            { "Configurations:Json:Type", "Json" },
+            { "Configurations:ElectricityMaps:Type", "ElectricityMaps" }
         };
 
-        IConfiguration configuration = new ConfigurationBuilder()
+        var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
 
-        DataSourcesConfiguration dataSourceConfig = new()
+        var dataSourceConfig = new DataSourcesConfiguration()
         {
-            EmissionsDataSource = "WattTime",
-            ForecastDataSource = "Json",
+            EmissionsDataSource = emissionsDataSource,
+            ForecastDataSource = forecastDataSource,
             ConfigurationSection = configuration.GetSection("Configurations")
         };
         
         // Act
-        string emissionsType = dataSourceConfig.EmissionsConfigurationType();
-        string forecastType = dataSourceConfig.ForecastConfigurationType();
-        IConfigurationSection emissionsSection = dataSourceConfig.EmissionsConfigurationSection();
-        IConfigurationSection forecastSection = dataSourceConfig.ForecastConfigurationSection();
+        var emissionsType = dataSourceConfig.EmissionsConfigurationType();
+        var forecastType = dataSourceConfig.ForecastConfigurationType();
+        var emissionsSection = dataSourceConfig.EmissionsConfigurationSection();
+        var forecastSection = dataSourceConfig.ForecastConfigurationSection();
 
         // Assert
-        Assert.AreEqual("WattTime", emissionsType);
-        Assert.AreEqual("Json", forecastType);
-        Assert.AreEqual(emissionsSection.Value, configuration.GetSection("Configurations").Value);
-        Assert.AreEqual(forecastSection.Value, configuration.GetSection("Configurations").Value);
+        Assert.That(emissionsDataSource, Is.EqualTo(emissionsType));
+        Assert.That(forecastDataSource, Is.EqualTo(forecastType));
+        Assert.That(emissionsSection.Value, Is.EqualTo(configuration.GetSection("Configurations").Value));
+        Assert.That(forecastSection.Value, Is.EqualTo(configuration.GetSection("Configurations").Value));
     }
 }

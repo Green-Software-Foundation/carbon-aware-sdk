@@ -288,5 +288,11 @@ public class CarbonAwareControllerTests : TestsBase
 
         //Assert
         TestHelpers.AssertStatusCode(result, HttpStatusCode.OK);
+        handler.Verify(a => a.GetForecastByDateAsync(
+            It.IsAny<string>(),
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<int>()), Times.Once);
     }
 }
