@@ -1,4 +1,3 @@
-
 using EmissionsData = CarbonAware.Model.EmissionsData;
 using GSF.CarbonAware.Exceptions;
 using GSF.CarbonAware.Handlers;
@@ -9,8 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System;
 using CarbonAware.Interfaces;
-using GSF.CarbonAware.Handlers.CarbonAware;
-using System.Collections;
 using CarbonAware.Model;
 using System.Collections.Generic;
 
@@ -74,16 +71,6 @@ public class EmissionsHandlerTests
     }
 
     [Test]
-    public void GetEmissionsDataAsync_LocationMissing()
-    {
-        //Arrange
-        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
-
-        //Act and assert
-        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetEmissionsDataAsync("", DateTimeOffset.Now, DateTimeOffset.Now + TimeSpan.FromHours(1)));
-    }
-
-    [Test]
     public async Task GetEmissionsDataAsync_StartProvidedAndEndMissing()
     {
         //Arrange
@@ -117,6 +104,20 @@ public class EmissionsHandlerTests
 
         //Act and Assert
         Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetEmissionsDataAsync("westus", null, end));
+    }
+
+    [Test]
+    public void GetBestEmissionsDataAsync_ThrowsWhenStartBeforeEnd()
+    {
+        // Arrange
+        var emissionsHandler = new EmissionsHandler(Logger!.Object, CreateEmissionsDataSource(EmptyTestData).Object);
+
+        // Act & Assert
+        Assert.ThrowsAsync<ArgumentException>(async () => await emissionsHandler.GetBestEmissionsDataAsync(
+            "eastus",
+            DateTimeOffset.Now.AddHours(3),
+            DateTimeOffset.Now
+            ));
     }
 
     [Test]

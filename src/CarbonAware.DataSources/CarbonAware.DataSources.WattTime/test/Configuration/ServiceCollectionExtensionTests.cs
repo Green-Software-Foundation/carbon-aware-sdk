@@ -14,7 +14,9 @@ namespace CarbonAware.DataSources.WattTime.Tests;
 public class ServiceCollectionExtensionTests
 {
     private readonly string ForecastDataSourceKey = $"DataSources:ForecastDataSource";
+    private readonly string EmissionsDataSourceKey = $"DataSources:EmissionsDataSource";
     private readonly string ForecastDataSourceValue = $"WattTimeTest";
+    private readonly string EmissionsDataSourceValue = $"WattTimeTest";
     private readonly string UsernameKey = $"DataSources:Configurations:WattTimeTest:Username";
     private readonly string Username = "devuser";
     private readonly string PasswordKey = $"DataSources:Configurations:WattTimeTest:Password";
@@ -28,6 +30,7 @@ public class ServiceCollectionExtensionTests
         // Arrange
         var settings = new Dictionary<string, string> {
             { ForecastDataSourceKey, ForecastDataSourceValue },
+            { EmissionsDataSourceKey, EmissionsDataSourceValue },
             { UsernameKey, Username },
             { PasswordKey, Password },
             { ProxyUrl, "http://fakeproxy:8080" },
@@ -53,6 +56,7 @@ public class ServiceCollectionExtensionTests
         // Arrange
         var settings = new Dictionary<string, string> {
             { ForecastDataSourceKey, ForecastDataSourceValue },
+            { EmissionsDataSourceKey, EmissionsDataSourceValue },
             { UsernameKey, Username },
             { PasswordKey, Password },
             { UseProxyKey, "true" },
@@ -66,5 +70,33 @@ public class ServiceCollectionExtensionTests
 
         // Act & Assert
         Assert.Throws<ConfigurationException>(() => serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources()));
+        Assert.Throws<ConfigurationException>(() => serviceCollection.AddWattTimeEmissionsDataSource(configuration.DataSources()));
+    }
+
+    [Test]
+    public void ClientProxyTest_With_Missing_ProxyURL_AddsDataSource()
+    {
+        // Arrange
+        var settings = new Dictionary<string, string> {
+            { ForecastDataSourceKey, ForecastDataSourceValue },
+            { EmissionsDataSourceKey, EmissionsDataSourceValue },
+            { UsernameKey, Username },
+            { PasswordKey, Password },
+            { UseProxyKey, "false" },
+        };
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(settings)
+            .AddEnvironmentVariables()
+            .Build();
+        var serviceCollection = new ServiceCollection();
+
+        // Act
+        var forecastService = serviceCollection.AddWattTimeEmissionsDataSource(configuration.DataSources());
+        var emissionsService = serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources());
+
+        // Assert
+        Assert.NotNull(forecastService);
+        Assert.NotNull(emissionsService);
     }
 }

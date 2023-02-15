@@ -57,4 +57,37 @@ class DataSourcesConfigurationTests
         Assert.That(ex!.Message, Contains.Substring(errorMessage));
     }
 
+    [Test]
+    public void ConfigurationTypesAndSections_ReturnCorrectType()
+    {
+        // Arrange
+        var inMemorySettings = new Dictionary<string, string>()
+        {
+            { "Configurations:WattTime:Type", "WattTime" },
+            { "Configurations:Json:Type", "Json" }
+        };
+
+        IConfiguration configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        DataSourcesConfiguration dataSourceConfig = new()
+        {
+            EmissionsDataSource = "WattTime",
+            ForecastDataSource = "Json",
+            ConfigurationSection = configuration.GetSection("Configurations")
+        };
+        
+        // Act
+        string emissionsType = dataSourceConfig.EmissionsConfigurationType();
+        string forecastType = dataSourceConfig.ForecastConfigurationType();
+        IConfigurationSection emissionsSection = dataSourceConfig.EmissionsConfigurationSection();
+        IConfigurationSection forecastSection = dataSourceConfig.ForecastConfigurationSection();
+
+        // Assert
+        Assert.AreEqual("WattTime", emissionsType);
+        Assert.AreEqual("Json", forecastType);
+        Assert.AreEqual(emissionsSection.Value, configuration.GetSection("Configurations").Value);
+        Assert.AreEqual(forecastSection.Value, configuration.GetSection("Configurations").Value);
+    }
 }
