@@ -34,7 +34,6 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
 
     public ElectricityMapsFreeClient(IHttpClientFactory factory, IOptionsMonitor<ElectricityMapsFreeClientConfiguration> configurationMonitor, ILogger<ElectricityMapsFreeClient> log)
     {
-        Console.WriteLine("Fabio - Constructor of ElectricityMapsFreeClient");
         this.client = factory.CreateClient(IElectricityMapsFreeClient.NamedClient);
         this.ConfigurationMonitor = configurationMonitor;
         this.Log = log;
@@ -42,7 +41,6 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
         this.client.BaseAddress = new Uri(this.Configuration.BaseUrl);
         this.client.DefaultRequestHeaders.Accept.Clear();
         this.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-        Console.WriteLine("Fabio - Constructor of ElectricityMapsFreeClient finished");
     }
 
     /// <inheritdoc/>

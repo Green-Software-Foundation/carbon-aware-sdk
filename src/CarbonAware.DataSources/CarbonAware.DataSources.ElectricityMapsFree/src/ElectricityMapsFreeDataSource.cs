@@ -46,10 +46,6 @@ public class ElectricityMapsFreeDataSource : IForecastDataSource//, IEmissionsDa
 
         using (var activity = Activity.StartActivity())
         {
-            // TODO: Watttime api use mapper from cloud region to watttime region (Balanceing Authority)
-            // BalancingAuthority balancingAuthority = await this.GetBalancingAuthority(location, activity);
-
-            // No mapper for electricity map yet, so use region data directly
             var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
             Forecast? data;
             if (geolocation.Latitude != null && geolocation.Latitude != null)
@@ -110,11 +106,7 @@ public class ElectricityMapsFreeDataSource : IForecastDataSource//, IEmissionsDa
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
         => throw new NotImplementedException("The API of CO2 Signal does not provide this service");
-    /*
-    {
-        // The API of CO2 Signal does not make it possible
-    }
-    */
+
 
     /*
     /// <inheritdoc />
@@ -123,8 +115,6 @@ public class ElectricityMapsFreeDataSource : IForecastDataSource//, IEmissionsDa
         this._logger.LogDebug("Getting carbon intensity for locations {locations} for period {periodStartTime} to {periodEndTime}.", locations, periodStartTime, periodEndTime);
         this._logger.LogDebug("Not implemented yet, throwing");
         throw new NotImplementedException();
-        // TODO: no, iterare sulla lista di Location e chiamare il metodo successivo?
-        // In realtà non dovremmo neanche offrirlo, questo metodo
     }
 
     /// <inheritdoc />
