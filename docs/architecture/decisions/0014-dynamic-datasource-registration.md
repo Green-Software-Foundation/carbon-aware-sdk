@@ -39,13 +39,18 @@ To modify this interaction and to make it more dynamic, these are things that re
 
     Data Sources interfaces and Data Records are internal and available only to certain projects (i.e GSF.CarbonAware). This would require to be changed so consumers can dynamically register those and consume them.
 
+    Effort Level: **Medium**
+
 - Packaging
 
     Current Data Source project is not allowed to be packaged (nuget package), which would require how this is going to be done in terms of, what the package contains, versioning and where to publish it.
 
+    Effort Level: **Medium**
+
 - Load, Register and Instantiate
-    Using technics like Reflection and Assembly Discovery, it would be possible to load Data Sources assemblies and instantiate the classes that implements the interfaces that are available.
-    As an example, this could be done by a Data Source class loader
+
+    Using technics like **Reflection** and **Assembly Discovery**, it would be possible to load Data Sources assemblies and instantiate classes that implements the interfaces that are available.
+    As an example, this could be done via a Data Source class loader
 
     ```c#
     static Assembly[] GetDataSourceAssemblies()
@@ -68,17 +73,25 @@ To modify this interaction and to make it more dynamic, these are things that re
 
     This responsibility should be part of a new GSF library subsystem.
 
+    Effort Level: **Medium**
+
 - Data Source manifest
 
-    Configuration information would be required to be part of the Data Source package, so the GSF handlers can interact with it. Properties like where to locate the assembly, what assembly to load, what classes to interact with (i.e., Builders/Factories) therefore Emissions and Forecast data can be retrieved from GSF handlers.
+    Configuration information would be required to be part of the Data Source package, so the GSF handlers can interact with it. Properties like where to locate the assembly, what assembly to load, what classes to interact with (i.e., Builders/Factories) therefore Emissions and Forecast data can be retrieved from GSF handlers. Designing this manifest would help to drive the implementation of the other items.
+
+    Effort Level: **Large**
 
 - GSF Enhancements
 
     Given the fact the current registration is done using D.I., GSF library would require to be changed and enhanced to accommodate discovery, how to load the assemblies that are available and that implement Data Sources interfaces. Also understand the configuration that comes from the manifest, in such a way that all the required properties are available.
 
+    Effort Level: **Medium**
+
 - Documentation
 
     Document how to create 3rd party Data Sources, how to package them and how to configure those based on a Data Source manifest.
+
+    Effort Level: **Medium**
 
 ## Green Impact
 
@@ -89,3 +102,5 @@ Positive
 [Package dotnet CLI](https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-dotnet-cli)
 
 [Sign Package](https://learn.microsoft.com/en-us/nuget/create-packages/sign-a-package)
+
+[Assemblies in .NET](https://learn.microsoft.com/en-us/dotnet/standard/assembly/)
