@@ -21,7 +21,7 @@ public class CarbonAwareControllerTests : TestsBase
     readonly IForecastHandler forecastHandler = Mock.Of<IForecastHandler>();
     
     /// <summary>
-    /// Tests that successful emissions call to an aggregator with any data returned results in action with OK status.
+    /// Tests that successful emissions call to an handler with any data returned results in action with OK status.
     /// </summary>
     [TestCase(new object?[] { null, "Sydney" }, TestName = "GetEmissions simulates 'location=&location=Sydney'")]
     [TestCase(new object?[] { "Sydney", null }, TestName = "GetEmissions simulates 'location=Sydney&location='")]
@@ -46,7 +46,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// Tests that successful emissions call to an aggregator with any data returned results in action with OK status.
+    /// Tests that successful emissions call to an handler with any data returned results in action with OK status.
     /// </summary>
     [Test]
     public async Task GetEmissionsBySingleLocation_SuccessfulCallReturnsOk()
@@ -69,7 +69,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// Tests that successful best emissions call to an aggregator with any data returned results in action with OK status.
+    /// Tests that successful best emissions call to an handler with any data returned results in action with OK status.
     /// </summary>
     [TestCase(new object?[] { null, "Sydney" }, TestName = "GetBestEmissions simulates 'location=&location=Sydney'")]
     [TestCase(new object?[] { "Sydney", null }, TestName = "GetBestEmissions simulates 'location=Sydney&location='")]
@@ -93,7 +93,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// Tests that successful forecast call to an aggregator with any data returned results in action with OK status.
+    /// Tests that successful forecast call to an handler with any data returned results in action with OK status.
     /// </summary>
     [TestCase(new object?[] { null, "Sydney" }, TestName = "GetForecast simulates 'location=&location=Sydney'")]
     [TestCase(new object?[] { "Sydney", null }, TestName = "GetForecast simulates 'location=Sydney&location='")]
@@ -121,7 +121,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// Tests that successfull call to the aggregator with any data returned results in action with OK status.
+    /// Tests that successfull call to the handler with any data returned results in action with OK status.
     /// </summary>
     [TestCase("Sydney", "2022-03-07T01:00:00", "2022-03-07T03:30:00", TestName = "GetAverageCarbonIntensity Success ReturnsOk")]
     public async Task GetAverageCarbonIntensity_SuccessfulCallReturnsOk(string location, DateTimeOffset start, DateTimeOffset end)
@@ -181,7 +181,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// GetEmissionsDataForLocationByTime: Tests that a success call to aggregator with no data returned results in action with No Content status.
+    /// GetEmissionsDataForLocationByTime: Tests that a success call to handler with no data returned results in action with No Content status.
     /// </summary>
     [Test]
     public async Task GetEmissionsDataForLocationByTime_EmptyResultReturnsNoContent()
@@ -196,7 +196,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// GetEmissionsDataForLocationsByTime: Tests that a success call to aggregator with no data returned results in action with No Content status.
+    /// GetEmissionsDataForLocationsByTime: Tests that a success call to handler with no data returned results in action with No Content status.
     /// </summary>
     [Test]
     public async Task GetEmissionsDataForLocationsByTime_EmptyResultReturnsNoContent()
@@ -213,7 +213,7 @@ public class CarbonAwareControllerTests : TestsBase
     }
 
     /// <summary>
-    /// Tests that a success call to aggregator with no data returned results in action with No Content status.
+    /// Tests that a success call to handler with no data returned results in action with No Content status.
     /// </summary>
     [Test]
     public async Task GetBestEmissions_EmptyResultReturnsNoContent()

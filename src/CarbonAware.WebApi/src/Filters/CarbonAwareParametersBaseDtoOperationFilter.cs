@@ -1,4 +1,4 @@
-using CarbonAware.Aggregators.CarbonAware;
+using GSF.CarbonAware.Handlers.CarbonAware;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 

@@ -46,13 +46,13 @@ that will return a EmissionsForecast instance.
 Post-processing should only ensure the types are what is expected and to fix any
 inconsistencies or issues that may be known to that specific data source. This
 post-processing **should not** do any extra data operations beyond those
-required to fulfill the Aggregator request ( i.e., averaging, min/max ops etc.).
+required to fulfill the Handler request ( i.e., averaging, min/max ops etc.).
 In other words, the data source should only manipulate data for the aim of
-returning _valid\*_ data in the boundaries requested by the Aggregator
+returning _valid\*_ data in the boundaries requested by the Handler.
 
 \* What constitutes _valid_ data varies between data sources. It may be the case
 that some data sources don't handle time boundaries well so extra processing may
-be required to ensure the data returned is what the aggregator expects assuming
+be required to ensure the data returned is what the handler expects assuming
 it was any data source and that those edge cases would be handled properly.
 
 ## Creating a New Data Source
