@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.WepApi.UnitTests;
 
-using CarbonAware.Model;
+using GSF.CarbonAware.Models;
 using CarbonAware.WebApi.Models;
 using NUnit.Framework;
 

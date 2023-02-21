@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+        <_Parameter1>CarbonAware.DataSources.ElectricityMaps.Tests</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>CarbonAware.DataSources.ElectricityMaps.Mocks</_Parameter1>
+    </AssemblyAttribute>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration"/>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+	  <PackageReference Include="Microsoft.Extensions.Hosting"/>
+	  <PackageReference Include="System.ComponentModel.Composition"/>
+	  <PackageReference Include="Microsoft.Extensions.Http"/>
+      <PackageReference Include="Microsoft.Net.Http.Headers"/>
+
+  </ItemGroup>
+</Project>

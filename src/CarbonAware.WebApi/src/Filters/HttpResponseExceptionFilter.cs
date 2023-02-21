@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Options;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net;
 
@@ -18,6 +17,7 @@ public class HttpResponseExceptionFilter : IExceptionFilter
     {
         { "ArgumentException", (int)HttpStatusCode.BadRequest },
         { "NotImplementedException", (int)HttpStatusCode.NotImplemented },
+        { "InvalidOperationException", (int)HttpStatusCode.BadRequest },
     };
 
     public HttpResponseExceptionFilter(ILogger<HttpResponseExceptionFilter> logger, IOptionsMonitor<CarbonAwareVariablesConfiguration> options)

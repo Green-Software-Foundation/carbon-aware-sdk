@@ -4,12 +4,24 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
+      "label": "buildWebApi",
       "command": "dotnet",
       "type": "process",
       "args": [
           "build",
           "${workspaceFolder}/src/CarbonAware.WebApi/src/CarbonAware.WebApi.csproj",
+          "/property:GenerateFullPaths=true",
+          "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "buildCLI",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+          "build",
+          "${workspaceFolder}/src/CarbonAware.CLI/src/CarbonAware.CLI.csproj",
           "/property:GenerateFullPaths=true",
           "/consoleloggerparameters:NoSummary"
       ],

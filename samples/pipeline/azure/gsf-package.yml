@@ -1,0 +1,74 @@
+# This is an example of an Azure DevOps pipeline
+# that builds GSF.CarbonAware nuget package and publish it as a pipeline artifact.
+parameters:
+- name: packageVersion
+  displayName: Package Version
+  type: string
+  default: 1.0.0-beta
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  csproj: 'src/GSF.CarbonAware/src/GSF.CarbonAware.csproj'
+  buildConfiguration: 'Release'
+  ArtifactNuGetName: 'packages-nuget'
+  packageDir: '$(Build.ArtifactStagingDirectory)/packages/nuget'
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Install .NET Core SDK'
+  inputs:
+    version: 6.x
+    performMultiLevelLookup: true
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet restore'
+  inputs:
+    command: restore
+    projects: '$(csproj)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet build $(buildConfiguration)'
+  inputs:
+    command: 'build'
+    projects: '$(csproj)'
+    arguments: >
+      --configuration $(buildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack $(buildConfiguration)'
+  inputs:
+    command: custom
+    custom: pack
+    arguments: >
+      $(csproj)
+      --configuration $(buildConfiguration)
+      --output $(Build.ArtifactStagingDirectory)/packages/nuget
+      -p:IncludeSymbols="true"
+      -p:SymbolPackageFormat="snupkg"
+      -p:Version=${{ parameters.packageVersion }}
+
+# Alternatively, you can call the script to package the SDK. Replace the 2 tasks above (dotnet build and dotnet pack and replace with the following task) 
+# - task: Bash@3
+#   displayName: 'Run script'
+#   inputs:
+#     targetType: 'filePath'
+#     filePath: "$(System.DefaultWorkingDirectory)/scripts/package/create_packages.sh"
+#     arguments: >
+#       $(csproj) $(packageDir)
+
+- task: Bash@3
+  displayName: List packages
+  inputs:
+    targetType: 'inline'
+    script: ls -l '$(Build.ArtifactStagingDirectory)/packages/nuget'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifact: $(ArtifactNuGetName)'
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/packages/nuget'
+    artifactName: '$(ArtifactNuGetName)'

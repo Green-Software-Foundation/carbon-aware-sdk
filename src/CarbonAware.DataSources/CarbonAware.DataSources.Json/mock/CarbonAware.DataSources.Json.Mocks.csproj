@@ -4,10 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware.DataSources.Mocks\mock\CarbonAware.DataSources.Mocks.csproj" />
+    <ProjectReference Include="..\src\CarbonAware.DataSources.Json.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,7 @@
 ﻿using CarbonAware.DataSources.Configuration;
 using CarbonAware.DataSources.Json.Mocks;
 using CarbonAware.DataSources.Mocks;
+using CarbonAware.DataSources.ElectricityMaps.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NUnit.Framework;
@@ -18,7 +19,8 @@ namespace CarbonAware.WebApi.IntegrationTests;
 public abstract class IntegrationTestingBase
 {
     internal DataSourceType _dataSource;
-    internal string? _dataSourceEnv;
+    internal string? _emissionsDataSourceEnv;
+    internal string? _forecastDataSourceEnv;
     internal WebApplicationFactory<Program> _factory;
     protected HttpClient _client;
     protected IDataSourceMocker _dataSourceMocker;
@@ -29,7 +31,8 @@ public abstract class IntegrationTestingBase
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
         _dataSource = dataSource;
-        _dataSourceEnv = null;
+        _emissionsDataSourceEnv = null;
+        _forecastDataSourceEnv = null;
         _factory = new WebApplicationFactory<Program>();
     }
 
@@ -72,29 +75,48 @@ public abstract class IntegrationTestingBase
     [OneTimeSetUp]
     public void Setup()
     {
-        _dataSourceEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource");
-
+        _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__EmissionsDataSource");
+        _forecastDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__ForecastDataSource");
         //Switch between different data sources as needed
         //Each datasource should have an accompanying DataSourceMocker that will perform setup activities
         switch (_dataSource)
         {
             case DataSourceType.JSON:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "JSON");
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__Type", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__DataFileLocation", "demo.json");
                     Environment.SetEnvironmentVariable("CarbonAwareVars__VerboseApi", "true");
-                    Environment.SetEnvironmentVariable("JsonDataSourceConfiguration__DataFileLocation", "demo.json");
                     _dataSourceMocker = new JsonDataSourceMocker();
                     break;
                 }
             case DataSourceType.WattTime:
                 {
-                    Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "WattTime");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Username", "username");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Password", "password");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__Type", "WattTime");
                     _dataSourceMocker = new WattTimeDataSourceMocker();
+                    break;
+                }
+            case DataSourceType.ElectricityMaps:
+                {
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__Type", "ElectricityMaps");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APITokenHeader", "token");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APIToken", "test");
+
+                    _dataSourceMocker = new ElectricityMapsDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:
                 {
-                    throw new NotSupportedException($"DataSourceType {_dataSource.ToString()} not supported");
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "");
+                    break;
                 }
         }
 
@@ -105,13 +127,13 @@ public abstract class IntegrationTestingBase
     [SetUp]
     public void SetupTests()
     {
-        _dataSourceMocker.Initialize();
+        _dataSourceMocker?.Initialize();
     }
 
     [TearDown]
     public void ResetTests()
     {
-        _dataSourceMocker.Reset();
+        _dataSourceMocker?.Reset();
     }
 
     [OneTimeTearDown]
@@ -119,7 +141,8 @@ public abstract class IntegrationTestingBase
     {
         _client.Dispose();
         _factory.Dispose();
-        _dataSourceMocker.Dispose();
-        Environment.SetEnvironmentVariable("CarbonAwareVars__CarbonIntensityDataSource", _dataSourceEnv);
+        _dataSourceMocker?.Dispose();
+        Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", _emissionsDataSourceEnv);
+        Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", _forecastDataSourceEnv);
     }
 }

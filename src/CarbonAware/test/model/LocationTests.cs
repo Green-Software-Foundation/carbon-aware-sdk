@@ -1,23 +1,23 @@
-﻿namespace CarbonAware.Tests;
+﻿using CarbonAware.Model;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-using CarbonAware.Model;
-using NUnit.Framework;
+namespace CarbonAware.Tests.model;
 
 public class LocationTests
 {
-    [TestCase(LocationType.Geoposition, ExpectedResult="12.345, 67.89")]
-    [TestCase(LocationType.CloudProvider, ExpectedResult="test region")]
-    [TestCase(LocationType.NotProvided, ExpectedResult="Not Provided")]
-    public string DisplayName(LocationType locationType)
+    [TestCase(34.123, "34.123", "en-US", TestName = "Lat/Long conversion to culture invariant string for en-US")]
+    [TestCase(34.123, "34.123", "da-DK", TestName = "Lat/Long conversion to culture invariant string for da-DK")]
+    public void LatLongConversionToInvariantCulture_WhenThreadCultureSpecified(decimal value, string expectedValue , string culture)
     {
-        var location = new Location()
-        {
-            LocationType = locationType,
-            Latitude = 12.345m,
-            Longitude = 67.89m,
-            RegionName = "test region"
-        };
+        Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
+        Location _defaultLocation = new Location() { Name = "eastus", Latitude = value, Longitude = value};
 
-        return location.DisplayName;
+        Assert.That(_defaultLocation.LatitudeAsCultureInvariantString(), Is.EqualTo(expectedValue));
+        Assert.That(_defaultLocation.LongitudeAsCultureInvariantString(), Is.EqualTo(expectedValue));
     }
 }

@@ -1,0 +1,11 @@
+{
+    "northeurope": {
+        "Name": "NL"
+    },
+    "swedencentral": {
+        "Name": "SE"
+    },
+    "eastus": {
+        "Name": "US-NE-ISNE"
+    }
+}

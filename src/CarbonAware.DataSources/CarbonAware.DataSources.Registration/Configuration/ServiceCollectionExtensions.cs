@@ -1,44 +1,88 @@
-using Microsoft.Extensions.DependencyInjection;
+using CarbonAware.Configuration;
+using CarbonAware.DataSources.ElectricityMaps.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
+using CarbonAware.Exceptions;
+using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.DataSources.Configuration;
 public static class ServiceCollectionExtensions
 {
-    public static void AddDataSourceService(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDataSourceService(this IServiceCollection services, IConfiguration configuration)
     {
-        // find all the Classes in the Assembly that implements AddEmissionServices method,
-        // and added them here with the specific implementation class.
-        var envVars = configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Get<CarbonAwareVariablesConfiguration>();
-        var dataSourceType = GetDataSourceTypeFromValue(envVars?.CarbonIntensityDataSource);
+        var dataSources = configuration.DataSources();
 
-        switch (dataSourceType)
+        var emissionsDataSource = GetDataSourceTypeFromValue(dataSources.EmissionsConfigurationType());
+        var forecastDataSource = GetDataSourceTypeFromValue(dataSources.ForecastConfigurationType());
+
+        switch (emissionsDataSource)
         {
             case DataSourceType.JSON:
             {
-                    services.AddJsonDataSourceService(configuration);
-                    break;
+                services.AddJsonEmissionsDataSource(dataSources);
+                break;
             }
             case DataSourceType.WattTime:
             {
-                    services.AddWattTimeDataSourceService(configuration);
-                    break;
+                services.AddWattTimeEmissionsDataSource(dataSources);
+                break;
+            }
+            case DataSourceType.ElectricityMaps:
+            {
+                services.AddElectricityMapsEmissionsDataSource(dataSources);
+                break;
             }
             case DataSourceType.None:
             {
-                throw new NotSupportedException($"DataSourceType {dataSourceType.ToString()} not supported");
+                services.TryAddSingleton<IEmissionsDataSource, NullEmissionsDataSource>();
+                break;
             }
         }
+
+        switch (forecastDataSource)
+        {
+            case DataSourceType.JSON:
+            {
+                throw new ArgumentException("JSON data source is not supported for forecast data");
+            }
+            case DataSourceType.WattTime:
+            {
+                services.AddWattTimeForecastDataSource(dataSources);
+                break;
+            }
+            case DataSourceType.ElectricityMaps:
+            {
+                services.AddElectricityMapsForecastDataSource(dataSources);
+                break;
+            }
+            case DataSourceType.None:
+            {
+                services.TryAddSingleton<IForecastDataSource, NullForecastDataSource>();
+                break;
+            }
+        }
+
+        if (forecastDataSource == DataSourceType.None && emissionsDataSource == DataSourceType.None)
+        {
+            throw new ConfigurationException("No data sources are configured");
+        }
+        
+        return services;
     }
+
     private static DataSourceType GetDataSourceTypeFromValue(string? srcVal)
     {
         DataSourceType result;
-        if (String.IsNullOrEmpty(srcVal) ||
-            !Enum.TryParse<DataSourceType>(srcVal, true, out result))
+        if (String.IsNullOrWhiteSpace(srcVal))
         {
-            // defaults to JSON in case env is empty, null or parsing fails
-            return DataSourceType.JSON;
+            result = DataSourceType.None;
+        }
+        else if (!Enum.TryParse<DataSourceType>(srcVal, true, out result))
+        {
+            throw new ArgumentException($"Unknown data source type: {srcVal}");
         }
         return result;
     }

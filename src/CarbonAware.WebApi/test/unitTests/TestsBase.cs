@@ -1,9 +1,9 @@
-using CarbonAware.Model;
-using CarbonAware.Aggregators.CarbonAware;
+using GSF.CarbonAware.Handlers;
+using GSF.CarbonAware.Models;
 using CarbonAware.WebApi.Controllers;
 using Microsoft.Extensions.Logging;
 using Moq;
-using static CarbonAware.Aggregators.CarbonAware.CarbonAwareParameters;
+using NUnit.Framework;
 
 namespace CarbonAware.WepApi.UnitTests;
 
@@ -18,60 +18,80 @@ public abstract class TestsBase
         this.MockCarbonAwareLogger = new Mock<ILogger<CarbonAwareController>>();
     }
 
-    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithEmissionsData(List<EmissionsData> data)
+    protected static Mock<IEmissionsHandler> CreateEmissionsHandler(List<EmissionsData> data)
     {
-        var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x => x.GetEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
+        var handler = new Mock<IEmissionsHandler>();
+
+        handler.Setup(x => x.GetEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+            .Callback((string[] location, DateTimeOffset? start, DateTimeOffset? end) =>
             {
-                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-                parameters.Validate();
+                Assert.NotNull(location);
+                Assert.NotZero(location.Length);
             })
             .ReturnsAsync(data);
-        return aggregator;
+        return handler;
     }
 
-    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithBestEmissionsData(List<EmissionsData> data)
+    protected static Mock<IEmissionsHandler> CreateHandlerWithBestEmissionsData(List<EmissionsData> data)
     {
-        var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x => x.GetBestEmissionsDataAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
+        var handler = new Mock<IEmissionsHandler>();
+        handler.Setup(x => x.GetBestEmissionsDataAsync(It.IsAny<string[]>(), null, null))
+            .Callback((string[] location, DateTimeOffset? start, DateTimeOffset? end) =>
             {
-                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-                parameters.Validate();
+                Assert.NotNull(location);
+                Assert.NotZero(location.Length);
             })
             .ReturnsAsync(data);
-        return aggregator;
+        return handler;
     }
 
-    protected static Mock<ICarbonAwareAggregator> CreateAggregatorWithForecastData(List<EmissionsData> data)
+    protected static Mock<IForecastHandler> CreateForecastHandler(List<EmissionsData> data)
     {
         var forecasts = new List<EmissionsForecast>()
         {
-            new EmissionsForecast(){ ForecastData = data }
+            new EmissionsForecast(){ EmissionsDataPoints = data }
         };
-        var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x => x.GetCurrentForecastDataAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
+        var handler = new Mock<IForecastHandler>();
+        handler.Setup(x => x.GetCurrentForecastAsync(It.IsAny<string[]>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>(), It.IsAny<int>()))
+            .Callback((string[] locations, DateTimeOffset? dataStartAt, DateTimeOffset? dataEndAt, int? windowSize) =>
             {
-                parameters.SetRequiredProperties(PropertyName.MultipleLocations);
-                parameters.Validate();
+                Assert.NotNull(locations);
+                Assert.NotZero(locations.Length);
             })
             .ReturnsAsync(forecasts);
-        return aggregator;
+        return handler;
     }
 
-    protected static Mock<ICarbonAwareAggregator> CreateCarbonAwareAggregatorWithAverageCI(double data)
+    protected static Mock<IEmissionsHandler> CreateCarbonAwareHandlerWithAverageCI(double data)
     {
-        var aggregator = new Mock<ICarbonAwareAggregator>();
-        aggregator.Setup(x => x.CalculateAverageCarbonIntensityAsync(It.IsAny<CarbonAwareParameters>()))
-            .Callback((CarbonAwareParameters parameters) =>
+        var handler = new Mock<IEmissionsHandler>();
+        handler.Setup(x => x.GetAverageCarbonIntensityAsync(It.IsAny<string>(), It.IsAny<DateTimeOffset>(), It.IsAny<DateTimeOffset>()))
+            .Callback((string location, DateTimeOffset start, DateTimeOffset end) =>
             {
-                parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Start, PropertyName.End);
-                parameters.Validate();
+                Assert.NotNull(location);
+                Assert.NotZero(location.Length);
+                Assert.NotNull(start);
+                Assert.NotNull(end);
             })
             .ReturnsAsync(data);
 
-        return aggregator;
+        return handler;
+    }
+    protected static Mock<ILocationHandler> CreateLocations(bool withcontent = true)
+    {
+        var locationSource = new Mock<ILocationHandler>();
+        var data = new Dictionary<string, Location>();
+        if (withcontent)
+        {
+            data.Add("eastus", new Location
+            {
+                Name = "eastus",
+                Latitude = 1,
+                Longitude = 1
+            });
+        }
+        locationSource.Setup(x => x.GetLocationsAsync())
+            .ReturnsAsync(data);
+        return locationSource;
     }
 }

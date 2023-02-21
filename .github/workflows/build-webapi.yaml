@@ -12,7 +12,6 @@ on:
 env:
   DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"
   HEALTH_ENDPOINT: "0.0.0.0:8080/health"
-  DATA_ENDPOINT: "0.0.0.0:8080/emissions/bylocation?location=eastus"
   DLL_FILE_PATH: "./bin/Release/net6.0/CarbonAware.WebApi.dll"
   DOTNET_SRC_DIR: "./src"
 
@@ -83,10 +82,6 @@ jobs:
       - name: Docker WGET Health Endpoint
         run: |
           wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
-
-      - name: Docker WGET Data Endpoint
-        run: |
-          wget -t 5 --waitretry=5 ${DATA_ENDPOINT}
 
   api-comparison:
       needs: container-dotnet-build
