@@ -11,9 +11,9 @@ COPY ["samples/", "data/samples/"]
 
 WORKDIR /data
 RUN pwsh -c scripts/package/create_packages.ps1 src/GSF.CarbonAware/src/GSF.CarbonAware.csproj /packages && \
-    dotnet restore "samples/azure-function/function.csproj" && \
-    pwsh -c scripts/package/add_packages.ps1 samples/azure-function/function.csproj /packages && \
-    dotnet build "samples/azure-function/function.csproj" -c Release -o /app/build
+    dotnet restore "samples/azure/azure-function/function.csproj" && \
+    pwsh -c scripts/package/add_packages.ps1 samples/azure/azure-function/function.csproj /packages && \
+    dotnet build "samples/azure/azure-function/function.csproj" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "samples/azure/azure-function/function.csproj" -c Release -o /app/publish
