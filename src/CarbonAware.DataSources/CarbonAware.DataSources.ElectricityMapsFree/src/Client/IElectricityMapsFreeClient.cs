@@ -10,23 +10,18 @@ public interface IElectricityMapsFreeClient
     public const string NamedClient = "ElectricityMapsFreeClient";
 
     /// <summary>
-    /// Async method to get the latest emission data for a given zone
+    /// Async method to get the latest emission data for a given country code
     /// </summary>
-    public Task<Forecast?> GetCurrentForecastAsync(string countryCodeAbbreviation);
+    public Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string countryCodeAbbreviation);
 
     /// <summary>
     /// Async method to get the latest emission data for a given zone
     /// </summary>
-    public Task<Forecast?> GetCurrentForecastAsync(Zone zone);
+    public Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(Zone zone);
 
-    // TODO: For GetCurrentForecastAsync by latitude and longitude
-    public Task<Forecast?> GetCurrentForecastAsync(string latitude, string longitude);
+    /// <summary>
+    /// Async method to get the latest emission data for a given latitude and longitude
+    /// </summary>
+    public Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string latitude, string longitude);
 
-    // TODO: For Commercial Version methods
-    //public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string countryCodeAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);
-    //public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(Zone zone, DateTimeOffset startTime, DateTimeOffset endTime);
-    //public Task<IEnumerable<Forecast>> GetForecastByDateAsync(string countryCodeAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime);
-    //public Task<IEnumerable<Forecast>> GetForecastByDateAsync(Zone zone, DateTimeOffset startTime, DateTimeOffset endTime);
-    //public Task<Stream> GetHistoricalDataAsync(string countryCodeAbbreviation);
-    //public Task<Stream> GetHistoricalDataAsync(Zone zone);
 }

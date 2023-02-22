@@ -38,7 +38,8 @@ internal static class ServiceCollectionExtensions
             }
             case DataSourceType.ElectricityMapsFree:
             {
-                throw new ArgumentException("ElectricityMapsFree data source is not supported for emissions data");
+                services.AddElectricityMapsFreeEmissionsDataSource(dataSources);
+                break;
             }
             case DataSourceType.None:
             {
@@ -65,8 +66,7 @@ internal static class ServiceCollectionExtensions
             }
             case DataSourceType.ElectricityMapsFree:
             {
-                services.AddElectricityMapsFreeForecastDataSource(dataSources);
-                break;
+                throw new ArgumentException("ElectricityMapsFree data source is not supported for forecast data");
             }
             case DataSourceType.None:
             {

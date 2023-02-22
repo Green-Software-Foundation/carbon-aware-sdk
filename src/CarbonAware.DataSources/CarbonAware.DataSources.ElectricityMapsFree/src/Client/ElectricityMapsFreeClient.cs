@@ -44,10 +44,9 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
     }
 
     /// <inheritdoc/>
-    public async Task<Forecast?> GetCurrentForecastAsync(string countryCodeAbbreviation)
+    public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string countryCodeAbbreviation)
     {
-
-        Log.LogInformation("Requesting current carbon intensity forecast from zone {countryCode}", countryCodeAbbreviation);
+        Log.LogInformation("Requesting current carbon intensity from zone {countryCode}", countryCodeAbbreviation);
 
         var parameters = new Dictionary<string, string>()
         {
@@ -61,28 +60,20 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
 
         var result = await this.MakeRequestAsync(parameters, tags);
 
-        var emission_data = JsonSerializer.Deserialize<GridEmissionDataPoint?>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for  {countryCodeAbbreviation}");
-
-        // convert from emissiondata to forecast
-        var forecastdata = new List<GridEmissionDataPoint>() { emission_data };
-        var forecast = new Forecast()
-        {
-            GeneratedAt = emission_data.Data.Datetime,
-            ForecastData = forecastdata
-        };
-
-        return forecast;
+        var emissionData = JsonSerializer.Deserialize<GridEmissionDataPoint>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for countryCode {countryCodeAbbreviation}");
+        return emissionData;
     }
 
     /// <inheritdoc/>
-    public Task<Forecast?> GetCurrentForecastAsync(Zone zone)
+    public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(Zone zone)
     {
-        return this.GetCurrentForecastAsync(zone.countryCode);
+        return await this.GetCurrentEmissionsAsync(zone.countryCode);
     }
 
-    public async Task<Forecast?> GetCurrentForecastAsync(string latitude, string longitude)
+    /// <inheritdoc/>
+    public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string latitude, string longitude)
     {
-        Log.LogDebug("Requesting current carbon intensity forecast using latitude {latitude} longitude {longitude}",
+        Log.LogDebug("Requesting current carbon intensity using latitude {latitude} longitude {longitude}",
             latitude, longitude);
 
         var parameters = new Dictionary<string, string>()
@@ -93,18 +84,8 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
 
         var result = await this.MakeRequestAsync(parameters);
 
-        var emission_data = JsonSerializer.Deserialize<GridEmissionDataPoint?>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for latitude {latitude} longitude {longitude}");
-
-        // TODO: this part is in common with GetCurrentForecastAsync(string countryCodeAbbreviation), extract it?
-        // convert from emissiondata to forecast
-        var forecastdata = new List<GridEmissionDataPoint>() { emission_data };
-        var forecast = new Forecast()
-        {
-            GeneratedAt = emission_data.Data.Datetime,
-            ForecastData = forecastdata
-        };
-
-        return forecast;
+        var emissionData = JsonSerializer.Deserialize<GridEmissionDataPoint>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for latitude {latitude} longitude {longitude}");
+        return emissionData;
     }
 
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
