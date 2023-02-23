@@ -22,7 +22,7 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
         HttpStatusCode.Forbidden
     };
 
-    private HttpClient client;
+    private readonly HttpClient client;
 
     private IOptionsMonitor<ElectricityMapsFreeClientConfiguration> ConfigurationMonitor { get; }
 
@@ -142,56 +142,6 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
     internal void SetAuthTokenAuthenticationHeader(string token)
     {
         this.client.DefaultRequestHeaders.Add("auth-token", token);
-    }
-
-    // Overload method for electricity Map Personal 
-    private async Task<string> MakeRequestAsync(Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)
-    {
-        using (var activity = Activity.StartActivity())
-        {
-            var url = BuildUrlWithQueryString(parameters);
-
-            Log.LogInformation("Requesting data using url {url}", url);
-
-            if (tags != null)
-            {
-                foreach (var kvp in tags)
-                {
-                    activity?.AddTag(kvp.Key, kvp.Value);
-                }
-            }
-
-            var result = await this.GetAsyncStringWithAuthRetry(url);
-
-            Log.LogDebug("For query {url}, received data {result}", url, result);
-
-            return result;
-        }
-    }
-
-    private string BuildUrlWithQueryString(IDictionary<string, string> queryStringParams)
-    {
-        if (Log.IsEnabled(LogLevel.Debug))
-        {
-            Log.LogDebug("Attempting to build a url using query string parameters {parameters}", string.Join(";", queryStringParams.Select(k => $"\"{k.Key}\":\"{k.Value}\"")));
-        }
-
-        // this will get a specialized namevalue collection for formatting query strings.
-        var query = HttpUtility.ParseQueryString(string.Empty);
-
-        foreach (var kvp in queryStringParams)
-        {
-            query[kvp.Key] = kvp.Value;
-        }
-
-        var result = $"?{query}";
-
-        if (Log.IsEnabled(LogLevel.Debug))
-        {
-            Log.LogDebug("Built url {result} from query string parameters {parameters}", result, string.Join(";", queryStringParams.Select(k => $"\"{k.Key}\":\"{k.Value}\"")));
-        }
-
-        return result;
     }
 
     private async Task<string> MakeRequestAsync(string path, Dictionary<string, string> parameters, Dictionary<string, string>? tags = null)

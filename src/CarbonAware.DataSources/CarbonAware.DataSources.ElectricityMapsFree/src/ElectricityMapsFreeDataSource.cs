@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace CarbonAware.DataSources.ElectricityMapsFree;
 /// <summary>
-/// Represents a Electricity Maps Free data source.
+/// Represents an Electricity Maps Free data source.
 /// </summary>
 public class ElectricityMapsFreeDataSource : IEmissionsDataSource
 {
@@ -60,26 +60,39 @@ public class ElectricityMapsFreeDataSource : IEmissionsDataSource
     {
         this._logger.LogInformation($"Getting current carbon intensity emissions for location {location}");
 
-        var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
-
-        List<EmissionsData> EmissionsDataList = new List<EmissionsData>();
+        Location? geolocation = null;
+        bool coordinatesAvailable = false;
+        try
+        {
+            geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
+            if (geolocation.Latitude != null && geolocation.Longitude != null)
+            {
+                coordinatesAvailable = true;
+            }
+        }
+        catch (ArgumentException)
+        {
+            
+        }
 
         GridEmissionDataPoint gridEmissionData;
-        if (geolocation.Latitude != null && geolocation.Latitude != null)
+        if (coordinatesAvailable && geolocation != null)
         {
             gridEmissionData = await this._electricityMapsFreeClient.GetCurrentEmissionsAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
         }
         else
         {
-            gridEmissionData = await this._electricityMapsFreeClient.GetCurrentEmissionsAsync(geolocation.Name ?? "");
+            gridEmissionData = await this._electricityMapsFreeClient.GetCurrentEmissionsAsync(location.Name ?? "");
         }
+        
+        List<EmissionsData> EmissionsDataList = new List<EmissionsData>();
 
         var emissionData = new EmissionsData()
         {
             Location = location.Name ?? "",
             Time = gridEmissionData.Data.Datetime,
             Rating = gridEmissionData.Data.CarbonIntensity,
-            Duration = new TimeSpan(0, 0, 0),
+            Duration = new TimeSpan(0, 0, 0)
         };
         EmissionsDataList.Add(emissionData);
 
