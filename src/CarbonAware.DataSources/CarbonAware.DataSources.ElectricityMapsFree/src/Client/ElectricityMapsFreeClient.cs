@@ -58,7 +58,7 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
             { QueryStrings.countryCodeAbbreviation, countryCodeAbbreviation }
         };
 
-        var result = await this.MakeRequestAsync(parameters, tags);
+        var result = await this.MakeRequestAsync(Paths.Latest, parameters, tags);
 
         var emissionData = JsonSerializer.Deserialize<GridEmissionDataPoint>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for countryCode {countryCodeAbbreviation}");
         return emissionData;
@@ -82,7 +82,7 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
             { QueryStrings.Longitude, longitude }
         };
 
-        var result = await this.MakeRequestAsync(parameters);
+        var result = await this.MakeRequestAsync(Paths.Latest, parameters);
 
         var emissionData = JsonSerializer.Deserialize<GridEmissionDataPoint>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for latitude {latitude} longitude {longitude}");
         return emissionData;
