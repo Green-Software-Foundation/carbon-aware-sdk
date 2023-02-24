@@ -61,24 +61,31 @@ public class ElectricityMapsFreeDataSource : IEmissionsDataSource
         this._logger.LogInformation($"Getting current carbon intensity emissions for location {location}");
 
         Location? geolocation = null;
-        bool coordinatesAvailable = false;
+        bool coordinatesAvailable;
         try
         {
             geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
+
             if (geolocation.Latitude != null && geolocation.Longitude != null)
             {
                 coordinatesAvailable = true;
             }
+            else
+            {
+                coordinatesAvailable = false;
+            }
         }
-        catch (ArgumentException)
+        catch (Exception)
         {
-            
+            coordinatesAvailable = false;
         }
 
         GridEmissionDataPoint gridEmissionData;
         if (coordinatesAvailable && geolocation != null)
         {
-            gridEmissionData = await this._electricityMapsFreeClient.GetCurrentEmissionsAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
+            string latitude = geolocation.LatitudeAsCultureInvariantString();
+            string longitude = geolocation.LongitudeAsCultureInvariantString();
+            gridEmissionData = await this._electricityMapsFreeClient.GetCurrentEmissionsAsync(latitude, longitude);
         }
         else
         {
