@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Mocks" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 
