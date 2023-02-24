@@ -15,6 +15,7 @@ public class EmissionsForecastDTOTests
         var expectedRequestedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero);
         var expectedStart = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero);
         var expectedEnd = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero);
+        var expectedWindowSize = 60;
         var emissionsForecast = new EmissionsForecast()
         {
             GeneratedAt = expectedGeneratedAt,
@@ -22,7 +23,7 @@ public class EmissionsForecastDTOTests
             OptimalDataPoints = new List<EmissionsData>(){ new EmissionsData(){ Rating = expectedOptimalValue } }
         };
 
-        var emissionsForecastDTO = EmissionsForecastDTO.FromEmissionsForecast(emissionsForecast, expectedRequestedAt, expectedStart, expectedEnd);
+        var emissionsForecastDTO = EmissionsForecastDTO.FromEmissionsForecast(emissionsForecast, expectedRequestedAt, expectedStart, expectedEnd, expectedWindowSize);
         var emissionsDataDTO = emissionsForecastDTO.ForecastData?.ToList();
 
         Assert.AreEqual(expectedGeneratedAt, emissionsForecastDTO.GeneratedAt);
@@ -32,5 +33,6 @@ public class EmissionsForecastDTOTests
         Assert.AreEqual(expectedRequestedAt, emissionsForecastDTO.RequestedAt);
         Assert.AreEqual(expectedStart, emissionsForecastDTO.DataStartAt);
         Assert.AreEqual(expectedEnd, emissionsForecastDTO.DataEndAt);
+        Assert.AreEqual(expectedWindowSize, emissionsForecastDTO.WindowSize);
     }
 }

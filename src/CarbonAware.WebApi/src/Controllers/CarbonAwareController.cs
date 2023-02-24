@@ -116,7 +116,7 @@ public class CarbonAwareController : ControllerBase
     public async Task<IActionResult> GetCurrentForecastData([FromQuery] EmissionsForecastCurrentParametersDTO parameters)
     {
         var forecasts = await _forecastHandler.GetCurrentForecastAsync(parameters.MultipleLocations!, parameters.Start, parameters.End, parameters.Duration);
-        var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f, parameters.Requested, parameters.Start, parameters.End));
+        var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f, parameters.Requested, parameters.Start, parameters.End, parameters.Duration));
         return Ok(results);
     }
 
@@ -155,7 +155,7 @@ public class CarbonAwareController : ControllerBase
                 forecastParameters.Requested,
                 forecastParameters.Duration
             );
-            result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast, forecastParameters.Requested, forecastParameters.Start, forecastParameters.End));
+            result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast, forecastParameters.Requested, forecastParameters.Start, forecastParameters.End, forecastParameters.Duration));
         };
 
         return Ok(result);

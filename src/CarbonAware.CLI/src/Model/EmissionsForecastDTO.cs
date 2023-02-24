@@ -12,7 +12,7 @@ class EmissionsForecastDTO
     public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast, DateTimeOffset? requestedAt, DateTimeOffset? startTime, DateTimeOffset? endTime)
+    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast, DateTimeOffset? requestedAt, DateTimeOffset? startTime, DateTimeOffset? endTime, int? windowSize)
     {
         return new EmissionsForecastDTO
         {
@@ -22,7 +22,8 @@ class EmissionsForecastDTO
             DataEndAt = endTime ?? emissionsForecast.EmissionsDataPoints.Last().Time,
             GeneratedAt = emissionsForecast.GeneratedAt,
             ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => (EmissionsDataDTO)d),
-            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => (EmissionsDataDTO)d)
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => (EmissionsDataDTO)d),
+            WindowSize  = windowSize ?? 0
         };
     }
 }

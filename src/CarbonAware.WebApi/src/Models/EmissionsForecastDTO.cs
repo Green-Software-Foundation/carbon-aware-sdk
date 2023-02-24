@@ -96,17 +96,18 @@ public record EmissionsForecastDTO
     [JsonPropertyName("forecastData")]
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast, DateTimeOffset? requestedAt, DateTimeOffset? startTime, DateTimeOffset? endTime)
+    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast, DateTimeOffset? requestedAt, DateTimeOffset? startTime, DateTimeOffset? endTime, int? windowSize)
     {
         return new EmissionsForecastDTO
         {
             Location = emissionsForecast.Location!,
             RequestedAt = requestedAt ?? DateTimeOffset.UtcNow,
             DataStartAt = startTime ?? emissionsForecast.EmissionsDataPoints.First().Time,
-            DataEndAt= endTime ?? emissionsForecast.EmissionsDataPoints.Last().Time,
+            DataEndAt = endTime ?? emissionsForecast.EmissionsDataPoints.Last().Time,
             GeneratedAt = emissionsForecast.GeneratedAt,
             ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
-            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
+            WindowSize = windowSize ?? 0
         };
     }
 }
