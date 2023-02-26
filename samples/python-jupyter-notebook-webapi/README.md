@@ -19,13 +19,18 @@ After Generating the Python client for the Carbon Aware SDK (with swagger openap
 1. Update conda: `conda update conda`
 2. Create the environment (Call it `sdktest`) with `conda create -n sdktest python=3.8` and you will need to select 'Y' at the prompt to proceed.
 3. Activate the environment: `source activate sdktest`.
-4. Install all required packages: `pip install -r requirements.txt`.
+4. Install all required packages: `conda install jupyter` and `pip install -r requirements.txt`.
 5. Get some space back: `conda clean -a`
 6. Change directory into the generated client directory in order to install it. If moved to this directory: `cd python/`.
 7. Install the carbon aware SDK `python setup.py install`
 8. Change directory back to the sample: `cd ~/carbon-aware-sdk/samples/python-jupyter-notebook-webapi`.
 9. Copy the `.env.template` file and rename it to `.env`: `cp .env.template .env`
 10. Edit the `.env` file and fill in with the url of a deployed Carbon Aware SDK Web API or your own. By default the url is pointing at `https://localhost:5073`. Command: `echo "SDK_WEB_HOST = '<CARBON_AWARE_SDK_API_URL>'" > .env`
-11. Start the notebook server: `jupyter-lab`
+11. Start the notebook server: `jupyter-lab` or `python -m jupyter-lab`
 12. Open the `Carbon_aware_SDK_demo.ipynb` notebook and follow the flow of it.
 12. When you're done, execute `conda deactivate` to deactivate the environment and then `conda env remove -n sdktest` to remove it.
+
+
+## Contents of the notebook
+
+The notebook contains an example usage of a generated python library for the Carbon Aware SDK, and shows an *example* benefit of time shifting and location shifting. This can be a useful starting point for building a business case around doing a larger time shift or location shift.
