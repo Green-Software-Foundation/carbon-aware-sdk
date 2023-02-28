@@ -2,8 +2,10 @@ namespace GSF.CarbonAware.Models;
 
 public record EmissionsForecast
 {
-    public DateTimeOffset RequestedAt { get; init; }
-    public DateTimeOffset GeneratedAt { get; init; }
+    private readonly DateTimeOffset _requestedAt;
+    private readonly DateTimeOffset _generatedAt;
+    public DateTimeOffset RequestedAt { get => _requestedAt; init => _requestedAt = value.ToUniversalTime(); }
+    public DateTimeOffset GeneratedAt { get => _generatedAt; init => _generatedAt = value.ToUniversalTime(); }
     public IEnumerable<EmissionsData> EmissionsDataPoints { get; init; } = Array.Empty<EmissionsData>();
     public IEnumerable<EmissionsData> OptimalDataPoints { get; init; } = Array.Empty<EmissionsData>();
 
