@@ -137,7 +137,7 @@ Another possible way to represent the data would be to create multiple csv ouput
 - Update library version as new changes/fixes are added 
 
 
-## Green Impact   
+## Green Impact  
 
 Neutral
 
