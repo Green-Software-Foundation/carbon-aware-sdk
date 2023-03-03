@@ -46,7 +46,7 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
     /// <inheritdoc/>
     public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string countryCodeAbbreviation)
     {
-        Log.LogInformation("Requesting current carbon intensity from zone {countryCode}", countryCodeAbbreviation);
+        Log.LogInformation("Requesting latest carbon intensity from zone {countryCode}", countryCodeAbbreviation);
 
         var parameters = new Dictionary<string, string>()
         {
@@ -59,8 +59,12 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
         };
 
         var result = await this.MakeRequestAsync(Paths.Latest, parameters, tags);
-
-        var emissionData = JsonSerializer.Deserialize<GridEmissionDataPoint>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting forecast for countryCode {countryCodeAbbreviation}");
+        var emissionData = JsonSerializer.Deserialize<GridEmissionDataPoint>(result, options) ?? throw new ElectricityMapsFreeClientException($"Error getting latest carbon intensity for countryCode {countryCodeAbbreviation}");
+        if (emissionData == null || emissionData.Data.CarbonIntensity == null || emissionData.Data.Datetime == null)
+        {
+            Log.LogError("Region {countryCode} is not known", countryCodeAbbreviation);
+            throw new ElectricityMapsFreeClientException($"Region {countryCodeAbbreviation} is not known");
+        }
         return emissionData;
     }
 
@@ -73,7 +77,7 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
     /// <inheritdoc/>
     public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string latitude, string longitude)
     {
-        Log.LogDebug("Requesting current carbon intensity using latitude {latitude} longitude {longitude}",
+        Log.LogDebug("Requesting latest carbon intensity using latitude {latitude} longitude {longitude}",
             latitude, longitude);
 
         var parameters = new Dictionary<string, string>()
@@ -90,14 +94,14 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
 
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
     {
-        await this.EnsureTokenAsync();
+        this.EnsureToken();
 
         var response = await this.client.GetAsync(uriPath);
 
         if (RetriableStatusCodes.Contains(response.StatusCode))
         {
             Log.LogDebug("Failed to get url {url} with status code {statusCode}.  Attempting to log in again.", uriPath, response.StatusCode);
-            await this.UpdateAuthTokenAsync();
+            this.UpdateAuthToken();
             response = await this.client.GetAsync(uriPath);
         }
 
@@ -122,20 +126,20 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
         return await response.Content.ReadAsStreamAsync();
     }
 
-    private async Task EnsureTokenAsync()
+    private void EnsureToken()
     {
         if (!this.client.DefaultRequestHeaders.Contains("auth-token"))
         {
-            await this.UpdateAuthTokenAsync();
+            this.UpdateAuthToken();
         }
     }
 
-    private async Task UpdateAuthTokenAsync()
+    private void UpdateAuthToken()
     {
         using (var activity = Activity.StartActivity())
         {
             Log.LogInformation("Attempting to log using token {token}", this.Configuration.Token);
-            this.SetAuthTokenAuthenticationHeader(this.Configuration.Token);
+            this.SetAuthTokenAuthenticationHeader(this.Configuration.Token!);
         }
     }
 

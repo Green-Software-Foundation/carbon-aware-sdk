@@ -29,13 +29,13 @@ public record GridEmissionDataPoint
 public record Data
 {
     [JsonPropertyName("datetime")]
-    public DateTimeOffset Datetime { get; set; }
+    public DateTimeOffset? Datetime { get; set; }
 
     [JsonPropertyName("carbonIntensity")]
-    public float CarbonIntensity { get; set; }
+    public float? CarbonIntensity { get; set; }
 
     [JsonPropertyName("fossilFuelPercentage")]
-    public float FossilFuelPercentage { get; set; }
+    public float? FossilFuelPercentage { get; set; }
 }
 
 public record Units

@@ -97,8 +97,8 @@ public class ElectricityMapsFreeDataSource : IEmissionsDataSource
         var emissionData = new EmissionsData()
         {
             Location = location.Name ?? "",
-            Time = gridEmissionData.Data.Datetime,
-            Rating = gridEmissionData.Data.CarbonIntensity,
+            Time = gridEmissionData.Data.Datetime ?? new DateTimeOffset(),
+            Rating = gridEmissionData.Data.CarbonIntensity ?? 0.0,
             Duration = new TimeSpan(0, 0, 0)
         };
         EmissionsDataList.Add(emissionData);
