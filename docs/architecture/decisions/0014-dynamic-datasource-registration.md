@@ -6,7 +6,7 @@ Accepted
 
 ## Context
 
-Decouple the data sources from the SDK into their own nuget packages and create a mechanism to allow auto discovery and dynamic registration. This will allow for new data sources to be plugged in with minimum configuration and dependency on the existing code base. 
+Decouple the data sources from the SDK into their own NuGet packages and create a mechanism to allow auto discovery and dynamic registration. This will allow for new data sources to be plugged in with minimum configuration and dependency on the existing code base. 
 
 ## Decision
 
@@ -43,13 +43,13 @@ To modify this interaction and to make it more dynamic, these are things that re
 
 - Packaging
 
-    Current Data Source project is not allowed to be packaged (nuget package), which would require how this is going to be done in terms of, what the package contains, versioning and where to publish it.
+    Current Data Source project is not allowed to be packaged (NuGet package, see `<IsPackable>` property on one of the Data Source projects), which would require how this is going to be done in terms of, what the package contains, versioning and where to publish it.
 
     Effort Level: **Medium**
 
 - Load, Register and Instantiate
 
-    Using technics like **Reflection** and **Assembly Discovery**, it would be possible to load Data Sources assemblies and instantiate classes that implements the interfaces that are available.
+    Using techniques like **Reflection** and **Assembly Discovery**, it would be possible to load Data Sources assemblies and instantiate classes that implements the interfaces that are available.
     As an example, this could be done via a Data Source class loader
 
     ```c#
@@ -83,7 +83,7 @@ To modify this interaction and to make it more dynamic, these are things that re
 
 - GSF Enhancements
 
-    Given the fact the current registration is done using D.I., GSF library would require to be changed and enhanced to accommodate discovery, how to load the assemblies that are available and that implement Data Sources interfaces. Also understand the configuration that comes from the manifest, in such a way that all the required properties are available.
+    Given the fact the current registration is done using Dependency Injection, GSF library would require to be changed and enhanced to accommodate discovery, how to load the assemblies that are available and that implement Data Sources interfaces. Also understand the configuration that comes from the manifest, in such a way that all the required properties are available.
 
     Effort Level: **Medium**
 
