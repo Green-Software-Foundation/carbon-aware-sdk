@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Ele
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.ElectricityMapsFree", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMapsFree\src\CarbonAware.DataSources.ElectricityMapsFree.csproj", "{F08A1A30-EE88-4A32-9586-DC4E6410B9E2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.DataSources.ElectricityMapsFree.Tests", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMapsFree\test\CarbonAware.DataSources.ElectricityMapsFree.Tests.csproj", "{52100C22-4F79-4498-B413-B93C68A599C2}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarbonAware.DataSources.ElectricityMapsFree.Mocks", "CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMapsFree\mock\CarbonAware.DataSources.ElectricityMapsFree.Mocks.csproj", "{A7B0EF32-5AF3-4E56-AE88-627CC99BE635}"
 EndProject
 Global
@@ -165,6 +167,10 @@ Global
 		{A7B0EF32-5AF3-4E56-AE88-627CC99BE635}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7B0EF32-5AF3-4E56-AE88-627CC99BE635}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7B0EF32-5AF3-4E56-AE88-627CC99BE635}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52100C22-4F79-4498-B413-B93C68A599C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52100C22-4F79-4498-B413-B93C68A599C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52100C22-4F79-4498-B413-B93C68A599C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52100C22-4F79-4498-B413-B93C68A599C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
