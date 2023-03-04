@@ -154,4 +154,24 @@ public class EmissionsCommandTests : IntegrationTestingBase
         Assert.IsNotNull(firstResult["Duration"]);
     }
 
+    [Test]
+    public async Task Average_Best_ReturnsExpectedError()
+    {
+        // Arrange
+        var start = DateTimeOffset.Parse("2022-09-01T00:00:00Z");
+        var end = DateTimeOffset.Parse("2022-09-01T03:00:00Z");
+        var location = "eastus";
+        _dataSourceMocker.SetupDataMock(start, end, location);
+
+        // Act
+        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:01:00Z -e 2022-09-01T02:04:00Z -a -best");
+        // Assert
+        Assert.AreEqual(1, exitCode);
+        var expectedError = "Options --average and --best cannot be used together Option '-s' expects a single argument but 2 were provided. ";
+        // Whitespace characters regex 
+        var regex = @"\s+";
+        var output = Regex.Replace(_console.Error.ToString()!, regex, " ");
+
+        Assert.AreEqual(expectedError, output);
+    }
 }

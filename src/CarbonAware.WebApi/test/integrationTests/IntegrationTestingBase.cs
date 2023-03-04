@@ -86,7 +86,7 @@ public abstract class IntegrationTestingBase
                     Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "Json");
                     Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__Json__Type", "Json");
-                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__DataFileLocation", "demo.json");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__DataFileLocation", "test-data-azure-emissions.json");
                     Environment.SetEnvironmentVariable("CarbonAwareVars__VerboseApi", "true");
                     _dataSourceMocker = new JsonDataSourceMocker();
                     break;
@@ -127,6 +127,15 @@ public abstract class IntegrationTestingBase
     [SetUp]
     public void SetupTests()
     {
+        if (_dataSource == DataSourceType.JSON)
+        {
+            // To force WebApplication to consume new JSON datasorce it needs to be restarted.
+            // This is a direct result of JSON caching in the CatbonAware code 
+            _factory.Dispose();
+            _factory = new WebApplicationFactory<Program>();
+            _client = _factory.CreateClient();
+        }
+
         _dataSourceMocker?.Initialize();
     }
 
