@@ -372,7 +372,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
         _dataSourceMocker?.SetupDataMock(startDate, endDate, location);
         var intesityData = Enumerable.Range(0, nelems).Select(x => new
         {
-            location = location,
+            location,
             startTime = start,
             endTime = end
         });
