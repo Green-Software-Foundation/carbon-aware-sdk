@@ -31,7 +31,8 @@ public class AzureRegionTestDataGenerator
     {
         List<EmissionsData> emData = new List<EmissionsData>();
         var ran = new Random(DateTimeOffset.Now.Millisecond);
-        var startTime = DateTimeOffset.Now;
+        var startTime = DateTimeOffset.Now.ToUniversalTime();
+        var durationHours = 8;
 
         foreach (var region in regionData)
         {
@@ -42,9 +43,10 @@ public class AzureRegionTestDataGenerator
                     var e = new EmissionsData()
                     {
                         // 3 times per day (8 hours apart), 365 days per year 
-                        Time = startTime + TimeSpan.FromHours(8 * hours) + TimeSpan.FromDays(days),
+                        Time = startTime + TimeSpan.FromHours(durationHours * hours) + TimeSpan.FromDays(days),
                         Location = region.name ?? string.Empty,
-                        Rating = ran.Next(99) + 1
+                        Rating = ran.Next(99) + 1,
+                        Duration = TimeSpan.FromHours(durationHours)
                     };
                     emData.Add(e);
                 }
@@ -59,7 +61,7 @@ public class AzureRegionTestDataGenerator
         List<EmissionsForecast> emissionsForecasts = new List<EmissionsForecast>();
 
         var ran = new Random(DateTimeOffset.Now.Millisecond);
-        var startTime = DateTimeOffset.Now;
+        var startTime = DateTimeOffset.Now.ToUniversalTime();
         var maxMinutesOffset = 24 * 60;
 
         foreach (var region in regionData)

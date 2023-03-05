@@ -18,8 +18,8 @@ var serviceProvider = serviceCollection.AddLogging()
     .BuildServiceProvider();
 var handlerEmissions = serviceProvider.GetRequiredService<IEmissionsHandler>();
 
-const string startDate = "2022-03-01T15:30:00Z";
-const string endDate = "2022-03-01T18:30:00Z";
+const string startDate = "2023-03-10T15:30:00Z";
+const string endDate = "2023-03-11T18:30:00Z";
 const string location = "eastus";
 
 var parsedStart = DateTimeOffset.Parse(startDate);
