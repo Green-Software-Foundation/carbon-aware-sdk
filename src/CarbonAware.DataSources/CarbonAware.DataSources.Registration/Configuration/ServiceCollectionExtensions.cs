@@ -46,7 +46,8 @@ public static class ServiceCollectionExtensions
         {
             case DataSourceType.JSON:
             {
-                throw new ArgumentException("JSON data source is not supported for forecast data");
+                services.AddJsonForecastDataSource(dataSources);                
+                break;
             }
             case DataSourceType.WattTime:
             {

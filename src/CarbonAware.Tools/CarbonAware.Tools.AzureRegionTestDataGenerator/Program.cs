@@ -1,6 +1,7 @@
 ﻿using CarbonAware.Model;
 using CarbonAware.Tools;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 /// <summary>
 /// Generates a test data json string as output based on the 
@@ -8,14 +9,16 @@ using Newtonsoft.Json;
 /// </summary>
 var generator = new AzureRegionTestDataGenerator(@"azure-regions.json");
 
-var data = generator.GetRegionData();
+var data = generator.GetRegionData()!;
 
-var emissions = generator.GenerateTestData(data);
+var emissions = generator.GenerateTestEmissionsData(data);
+var emissionsForecasts = generator.GenerateTestEmissionsForecastsData(data);
 
 var jsonFile = new EmissionsJsonFile()
 {
     Date = DateTime.Now.ToString(),
     Emissions = emissions,
+    EmissionsForecasts = emissionsForecasts
 };
 
-Console.WriteLine(JsonConvert.SerializeObject(jsonFile));
+Console.WriteLine(JsonSerializer.Serialize(jsonFile, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault }));

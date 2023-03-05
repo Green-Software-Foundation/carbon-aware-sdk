@@ -98,7 +98,9 @@ public abstract class IntegrationTestingBase
             case DataSourceType.JSON:
                 {
                     Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "Json");
-                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__Type", "JSON");
+                    Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__Type", "Json");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__Json__DataFileLocation", "test-data-azure-emissions.json");
                     _dataSourceMocker = new JsonDataSourceMocker();
                     break;
                 }

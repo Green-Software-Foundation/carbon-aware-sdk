@@ -1,5 +1,5 @@
 ﻿using CarbonAware.Model;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace CarbonAware.Tools;
 
@@ -21,18 +21,17 @@ public class AzureRegionTestDataGenerator
         _fileName = fileName;
     }
 
-    public List<AzureRegionData> GetRegionData()
+    public List<AzureRegionData>? GetRegionData()
     {
         using StreamReader file = File.OpenText(_fileName);
-        var jsonObject = JsonConvert.DeserializeObject<List<AzureRegionData>>(file.ReadToEnd());
-
-        return jsonObject;
+        return JsonSerializer.Deserialize<List<AzureRegionData>>(file.ReadToEnd(), new JsonSerializerOptions { ReadCommentHandling = JsonCommentHandling.Skip });
     }
 
-    public List<EmissionsData> GenerateTestData(List<AzureRegionData> regionData)
+    public List<EmissionsData> GenerateTestEmissionsData(List<AzureRegionData> regionData)
     {
         List<EmissionsData> emData = new List<EmissionsData>();
-        var ran = new Random(DateTime.Now.Millisecond);
+        var ran = new Random(DateTimeOffset.Now.Millisecond);
+        var startTime = DateTimeOffset.Now;
 
         foreach (var region in regionData)
         {
@@ -43,9 +42,9 @@ public class AzureRegionTestDataGenerator
                     var e = new EmissionsData()
                     {
                         // 3 times per day (8 hours apart), 365 days per year 
-                        Time = DateTime.Now + TimeSpan.FromHours(8 * hours) + TimeSpan.FromDays(days),
+                        Time = startTime + TimeSpan.FromHours(8 * hours) + TimeSpan.FromDays(days),
                         Location = region.name ?? string.Empty,
-                        Rating = ran.Next(100)
+                        Rating = ran.Next(99) + 1
                     };
                     emData.Add(e);
                 }
@@ -54,4 +53,46 @@ public class AzureRegionTestDataGenerator
 
         return emData;
     }
+
+    public List<EmissionsForecast> GenerateTestEmissionsForecastsData(List<AzureRegionData> regionData)
+    {
+        List<EmissionsForecast> emissionsForecasts = new List<EmissionsForecast>();
+
+        var ran = new Random(DateTimeOffset.Now.Millisecond);
+        var startTime = DateTimeOffset.Now;
+        var maxMinutesOffset = 24 * 60;
+
+        foreach (var region in regionData)
+        {
+            List<EmissionsData> emissionsData = new List<EmissionsData>();
+            
+            for (var minutes = 0; minutes < maxMinutesOffset; minutes += 5)
+            {
+
+                var e = new EmissionsData()
+                {                    
+                    Time = startTime + TimeSpan.FromMinutes(minutes),
+                    Rating = ran.Next(99) + 1,
+                    // Setting Location to default to ignore it in the JSON serialization
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. 
+                    Location = default
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+                };
+                emissionsData.Add(e);
+            }
+
+            emissionsForecasts.Add(new EmissionsForecast
+            {
+                Location = new Location { Name = region.name },
+                ForecastData = emissionsData,
+                // Setting OptimalDataPoints to default to ignore it in the JSON serialization
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type. 
+                OptimalDataPoints = default
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+            }); 
+        }
+
+        return emissionsForecasts;
+    }
+
 }

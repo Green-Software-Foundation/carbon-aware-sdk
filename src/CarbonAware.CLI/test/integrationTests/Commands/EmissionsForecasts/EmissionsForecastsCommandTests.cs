@@ -8,6 +8,7 @@ namespace CarbonAware.CLI.IntegrationTests.Commands.EmissionsForecasts;
 /// Tests that the CLI handles and packages various responses from handlers 
 /// and data sources properly, including empty responses and exceptions.
 /// </summary>
+[TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
 public class EmissionsForecastsCommandTests : IntegrationTestingBase
@@ -95,7 +96,7 @@ public class EmissionsForecastsCommandTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecasts_RequestedAtOptions_ReturnsExpectedData()
     {
-        IgnoreTestForDataSource("data source does not implement '--requested-at'", DataSourceType.ElectricityMaps);
+        IgnoreTestForDataSource("data source does not implement '--requested-at'", DataSourceType.ElectricityMaps, DataSourceType.JSON);
 
         // Arrange
         _dataSourceMocker.SetupBatchForecastMock();

@@ -21,7 +21,7 @@ configuration fields that must be set in order to access the raw data.
 | Type | WattTime  | ElectricityMaps | JSON |
 |------|------|------|------|
 | Is Emissions DataSource | &#9989; | &#9989; | &#9989; |
-| Is Forecast DataSource | &#9989;  | &#9989; | &#10060; |
+| Is Forecast DataSource | &#9989;  | &#9989; | &#9989; |
 | Makes HTTP(s) call | &#9989;  | &#9989; | &#10060; |
 | Can Use Custom Data | &#10060;  | &#10060; | &#9989; |
 | Supports Trial + Full Account | &#9989;  | &#9989; (*[see restriction below](#restrictions-electricitymaps-free-trial-user)) | N/A |
@@ -34,7 +34,7 @@ Not all data sources support all the routes provided in the interfaces
 | Methods | WattTime | ElectricityMaps | JSON | CLI Usage | Web Api Usage | SDK Usage |
 | --- | :---: | :---: | :---: | :---: | :---: | :---: |
 | GetCarbonIntensityAsync | &#9989; | &#9989; | &#9989; | `emissions` | `emissions/bylocation` or `emissions/bylocations` or `emissions/bylocations/best` or `emissions/average`&#8209;`carbon`&#8209;`intensity` or `emissions/average`&#8209;`carbon`&#8209;`intensity/batch` | `GetEmissionsDataAsync(...)` or `GetBestEmissionsDataAsync(...)` or `GetAverageCarbonIntensityDataAsync(...)` |
-| GetCurrentForecastAsync | &#9989; | &#9989; | &#10060; | `emissions`&#8209;`forecasts` | `forecasts/current` | `GetCurrentForecastAsync(...)` |
+| GetCurrentForecastAsync | &#9989; | &#9989; | &#9989; | `emissions`&#8209;`forecasts` | `forecasts/current` | `GetCurrentForecastAsync(...)` |
 | GetForecastByDateAsync | &#9989; | &#10060; | &#10060; | `emissions`&#8209;`forecasts`&#32;&#8209;&#8209;`requested`&#8209;`at` | `forecasts/batch` with `requestedAt` field | `GetForecastByDateAsync(...)` |
 
 ## Location Coverage

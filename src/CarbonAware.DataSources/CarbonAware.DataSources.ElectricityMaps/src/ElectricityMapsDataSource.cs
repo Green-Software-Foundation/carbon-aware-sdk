@@ -75,7 +75,6 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {
-        await Task.Run(() => true);
         throw new NotImplementedException();
     }
 

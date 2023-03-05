@@ -1,4 +1,5 @@
 ﻿using CarbonAware.DataSources.Json.Configuration;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
@@ -10,7 +11,7 @@ namespace CarbonAware.DataSources.Json;
 /// <summary>
 /// Represents a JSON data source.
 /// </summary>
-public class JsonDataSource : IEmissionsDataSource
+public class JsonDataSource : IEmissionsDataSource, IForecastDataSource
 {
     public string Name => "JsonDataSource";
 
@@ -23,6 +24,8 @@ public class JsonDataSource : IEmissionsDataSource
     public double MinSamplingWindow => 1440;  // 24 hrs
 
     private List<EmissionsData>? _emissionsData;
+
+    private List<EmissionsForecast>? _emissionsForecasts;
 
     private readonly ILogger<JsonDataSource> _logger;
 
@@ -73,6 +76,32 @@ public class JsonDataSource : IEmissionsDataSource
         return emissionsData;
     }
 
+    public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
+    {
+        _logger.LogInformation("JSON data source getting current carbon intensity forecast for location {locations}", location);
+
+        IEnumerable<EmissionsForecast>? emissionsForecasts = await GetJsonEmissionsForecastsAsync();
+        if (emissionsForecasts is null || !emissionsForecasts.Any())
+        {
+            throw new CarbonAwareException("EmissionsForecasts data is empty in JSON data source file.");
+        }
+
+        var emissionsForecast = GetEmissionsForecastByLocation(emissionsForecasts, location);
+
+        if (emissionsForecast is null) 
+        {
+            throw new CarbonAwareException($"JSON data source file doesn't contain forecast data for location: {location}.");
+        }
+
+        return emissionsForecast;
+    }
+
+    public Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
+    {
+        // Similarly to ElectricityMaps Data Source this Data Source doesn't implement RequestedAt since JSON source is static.
+        throw new NotImplementedException();
+    }
+
     private IEnumerable<EmissionsData> FilterByDateRange(IEnumerable<EmissionsData> data, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(startTime, endTime, MinSamplingWindow);
@@ -96,24 +125,41 @@ public class JsonDataSource : IEmissionsDataSource
         return data;
     }
 
+    private EmissionsForecast? GetEmissionsForecastByLocation(IEnumerable<EmissionsForecast> data, Location location)
+    {
+        return data.Where(ef => location.Name == ef.Location.Name).SingleOrDefault();        
+    }
+
     protected virtual async Task<List<EmissionsData>?> GetJsonDataAsync()
     {
         if (_emissionsData is not null)
         {
             return _emissionsData;
-        }
-        using Stream stream = GetStreamFromFileLocation();
-        var jsonObject = await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
+        }        
         if (_emissionsData is null || !_emissionsData.Any())
         {
-            _emissionsData = jsonObject?.Emissions;
+            _emissionsData = (await GetEmissionsJsonFile())?.Emissions;
         }
         return _emissionsData;
     }
 
-    private Stream GetStreamFromFileLocation()
+    protected virtual async Task<List<EmissionsForecast>?> GetJsonEmissionsForecastsAsync()
     {
-        _logger.LogInformation($"Reading Json data from {_configuration.DataFileLocation}");
-        return File.OpenRead(_configuration.DataFileLocation!);
+        if (_emissionsForecasts is not null)
+        {
+            return _emissionsForecasts;
+        }
+        if (_emissionsForecasts is null || !_emissionsForecasts.Any())
+        {
+            _emissionsForecasts = (await GetEmissionsJsonFile())?.EmissionsForecasts;
+        }
+        return _emissionsForecasts;
     }
+
+    private async Task<EmissionsJsonFile?> GetEmissionsJsonFile()
+    {
+        _logger.LogInformation($"Reading Json data from {_configuration.DataFileLocation}");        
+        using Stream stream = File.OpenRead(_configuration.DataFileLocation!);
+        return await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
+    }    
 }
