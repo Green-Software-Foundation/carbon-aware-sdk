@@ -1,7 +1,7 @@
 ﻿using CarbonAware.CLI.Common;
 using CarbonAware.CLI.Model;
 using GSF.CarbonAware.Handlers;
-using GSF.CarbonAware.Handlers.CarbonAware;
+using CarbonAware.Model;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Text.Json;

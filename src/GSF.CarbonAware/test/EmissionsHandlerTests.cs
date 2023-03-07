@@ -1,17 +1,14 @@
-
+using CarbonAware.Interfaces;
+using CarbonAware.Model;
 using EmissionsData = CarbonAware.Model.EmissionsData;
 using GSF.CarbonAware.Exceptions;
 using GSF.CarbonAware.Handlers;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System;
-using CarbonAware.Interfaces;
-using GSF.CarbonAware.Handlers.CarbonAware;
-using System.Collections;
-using CarbonAware.Model;
 using System.Collections.Generic;
 
 namespace GSF.CarbonAware.Tests;

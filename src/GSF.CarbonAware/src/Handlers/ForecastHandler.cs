@@ -2,10 +2,10 @@ using CarbonAware;
 using CarbonAware.Exceptions;
 using CarbonAware.Extensions;
 using CarbonAware.Interfaces;
-using GSF.CarbonAware.Handlers.CarbonAware;
-using GSF.CarbonAware.Models;
+using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
-using static GSF.CarbonAware.Handlers.CarbonAware.CarbonAwareParameters;
+using static CarbonAware.Model.CarbonAwareParameters;
+using EmissionsForecast = GSF.CarbonAware.Models.EmissionsForecast;
 
 namespace GSF.CarbonAware.Handlers;
 
