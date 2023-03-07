@@ -4,6 +4,7 @@ using GSF.CarbonAware.Models;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using System.Globalization;
 
 namespace CarbonAware.CLI.UnitTests;
 
@@ -34,7 +35,7 @@ public class EmissionsCommandTests : TestBase
         // Assert
         string? consoleOutput = _console.Out.ToString();
         StringAssert.Contains(expectedEmissions.Location, consoleOutput);
-        StringAssert.Contains(expectedEmissions.Rating.ToString(), consoleOutput);
+        StringAssert.Contains(expectedEmissions.Rating.ToString(CultureInfo.InvariantCulture), consoleOutput);
         StringAssert.Contains(expectedEmissions.Time.ToString("yyyy-MM-ddTHH:mm:sszzz"), consoleOutput);
         StringAssert.Contains(expectedEmissions.Duration.ToString(), consoleOutput);
        
