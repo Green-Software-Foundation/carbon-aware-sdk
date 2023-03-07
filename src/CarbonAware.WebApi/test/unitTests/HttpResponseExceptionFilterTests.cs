@@ -35,14 +35,15 @@ public class HttpResponseExceptionFilterTests
         this._logger = new Mock<ILogger<HttpResponseExceptionFilter>>();
     }
 
-    [Test]
-    public void TestOnException_IHttpResponseException()
+    [TestCase(false, TestName = "Without Inner Exception")]
+    [TestCase(true, TestName = "With Inner Exception")]
+    public void TestOnException_IHttpResponseException(bool innerEx)
     {
         // Arrange
         var ex = new DummyHttpResponseException();
         var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
         {
-            Exception = ex
+            Exception = innerEx ? new Exception("Inner Exception", ex) : ex
         };
         var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
         var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);

@@ -22,17 +22,18 @@ public static class CommandLineBuilderExtensions
     private static void ExceptionHandler(Exception exception, InvocationContext context)
     {
         var exitCode = ExitCode.Failure;
-        if (exception is IHttpResponseException httpResponseException)
+        var relevantException = GetRelevantException(exception);
+        if (relevantException is IHttpResponseException httpResponseException)
         {
             context.Console.Error.Write($"{httpResponseException.Title}\n");
             context.Console.Error.Write($"{httpResponseException.Status}\n");
             context.Console.Error.Write($"{httpResponseException.Detail}\n");
             exitCode = ExitCode.DataSourceError;
         }
-        else if (exception is ArgumentException)
+        else if (relevantException is ArgumentException)
         {
-            context.Console.Error.Write($"{exception.Message}\n");
-            foreach (DictionaryEntry entry in exception.Data)
+            context.Console.Error.Write($"{relevantException.Message}\n");
+            foreach (DictionaryEntry entry in relevantException.Data)
             {
                 if (entry.Value is string[] messages && entry.Key is string key)
                 {
@@ -47,9 +48,19 @@ public static class CommandLineBuilderExtensions
         }
         else
         {
-            context.Console.Error.Write($"{exception.Message}\n");
-            context.Console.Error.Write($"{exception.InnerException?.Message}\n");
+            context.Console.Error.Write($"{relevantException.Message}\n");
+            context.Console.Error.Write($"{relevantException.InnerException?.Message}\n");
         }
         context.ExitCode = (int)exitCode;
+    }
+
+    private static Exception GetRelevantException(Exception context)
+    {
+        // Give priority to the inner exception since it contains the exception root cause.
+        if (context.InnerException is not null)
+        {
+            return context.InnerException;
+        }
+        return context;
     }
 }
