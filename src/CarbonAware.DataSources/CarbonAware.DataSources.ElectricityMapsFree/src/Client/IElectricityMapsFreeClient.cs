@@ -15,11 +15,6 @@ public interface IElectricityMapsFreeClient
     public Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string countryCodeAbbreviation);
 
     /// <summary>
-    /// Async method to get the latest emission data for a given zone
-    /// </summary>
-    public Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(Zone zone);
-
-    /// <summary>
     /// Async method to get the latest emission data for a given latitude and longitude
     /// </summary>
     public Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string latitude, string longitude);

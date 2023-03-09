@@ -69,12 +69,6 @@ public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
     }
 
     /// <inheritdoc/>
-    public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(Zone zone)
-    {
-        return await this.GetCurrentEmissionsAsync(zone.countryCode);
-    }
-
-    /// <inheritdoc/>
     public async Task<GridEmissionDataPoint> GetCurrentEmissionsAsync(string latitude, string longitude)
     {
         Log.LogDebug("Requesting latest carbon intensity using latitude {latitude} longitude {longitude}",
