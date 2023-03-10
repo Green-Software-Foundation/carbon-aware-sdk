@@ -11,6 +11,7 @@ namespace CarbonAware.CLI.IntegrationTests.Commands.Emissions;
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
+[TestFixture(DataSourceType.ElectricityMapsFree)]
 internal class EmissionsCommandTests : IntegrationTestingBase
 {
     public EmissionsCommandTests(DataSourceType dataSource) : base(dataSource) { }

@@ -10,6 +10,7 @@ namespace CarbonAware.CLI.IntegrationTests.Commands.EmissionsForecasts;
 /// </summary>
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
+[TestFixture(DataSourceType.ElectricityMapsFree)]
 internal class EmissionsForecastsCommandTests : IntegrationTestingBase
 {
     public EmissionsForecastsCommandTests(DataSourceType dataSource) : base(dataSource) { }
@@ -42,6 +43,8 @@ internal class EmissionsForecastsCommandTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecasts_OnlyRequiredOptions_ReturnsExpectedData()
     {
+        IgnoreTestForDataSource("data source does not implement 'emissions-forecasts'", DataSourceType.ElectricityMapsFree);
+
         // Arrange
         var location = "eastus";
 
@@ -66,6 +69,8 @@ internal class EmissionsForecastsCommandTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecasts_StartAndEndOptions_ReturnsExpectedData()
     {
+        IgnoreTestForDataSource("data source does not implement 'emissions-forecasts'", DataSourceType.ElectricityMapsFree);
+
         // Arrange
         var location = "eastus";
         var start = DateTimeOffset.UtcNow.AddMinutes(10);
@@ -95,7 +100,7 @@ internal class EmissionsForecastsCommandTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecasts_RequestedAtOptions_ReturnsExpectedData()
     {
-        IgnoreTestForDataSource("data source does not implement '--requested-at'", DataSourceType.ElectricityMaps);
+        IgnoreTestForDataSource("data source does not implement '--requested-at'", DataSourceType.ElectricityMaps, DataSourceType.ElectricityMapsFree);
 
         // Arrange
         _dataSourceMocker.SetupBatchForecastMock();
