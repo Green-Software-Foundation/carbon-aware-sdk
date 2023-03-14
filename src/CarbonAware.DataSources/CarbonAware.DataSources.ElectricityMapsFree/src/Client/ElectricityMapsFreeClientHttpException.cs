@@ -22,10 +22,8 @@ public class ElectricityMapsFreeClientHttpException : Exception, IHttpResponseEx
     /// Gets the status code for the exception.  See remarks for the status codes that can be returned.
     /// </summary>
     /// <remarks>
-    /// 400:  Returned when the lattitude/longitude provided aren't associated with a known balancing authority.
-    /// 401:  Returned when no authorization header is passed.  You should not expect to receive this status code.
-    /// 403:  Returned when an invalid username or password is used for login.  Please check your configuration and verify your account when this error is received.
-    /// 429:  Returned when the number of requests has exceeded the WattTime rate limit, currently at 3,000 per rolling 5 minute window.  For current limits, see https://www.watttime.org/api-documentation/#restrictions
+    /// 400:  Returned when missing arguments (no country code passed or lat/lon don't map to a known country code)
+    /// 401:  Returned when trying to access a path or location that isn't authorized for the token.
     /// </remarks>
     public int? Status { get; }
 
@@ -42,7 +40,7 @@ public class ElectricityMapsFreeClientHttpException : Exception, IHttpResponseEx
     public string? Detail { get; }
 
     /// <summary>
-    /// Gets the response returned from the WattTime call.
+    /// Gets the response returned from the Electricity Maps Free call.
     /// </summary>
     public HttpResponseMessage? Response { get; }
 }
