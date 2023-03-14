@@ -55,14 +55,14 @@ jobs:
           directory: ${{ env.DOTNET_SRC_DIR }}
       
       - name: Generate Open API
-        run: dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1  
+        run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
         working-directory: ./src/CarbonAware.WebApi/src 
       
       - name: Upload artifact
         uses: actions/upload-artifact@v1
         with:
           name: pr-swagger.yaml
-          path: src/CarbonAware.WebApi/src/api/v1/swagger.yaml
+          path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
       
   container-validation:
       runs-on: ubuntu-latest
@@ -110,16 +110,16 @@ jobs:
 #         run: dotnet build --configuration Release --no-restore
 #         working-directory: ${{ env.DOTNET_SRC_DIR }}
 #       - name: Generate Open API
-#         run: dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1  
+#         run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
 #       - name: Upload dev artifact
 #         uses: actions/upload-artifact@v1
 #         with:
 #           name: dev-swagger.yaml
-#           path: src/CarbonAware.WebApi/src/api/v1/swagger.yaml
+#           path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
 #       - uses: actions/download-artifact@v3
 #         with:
 #           name: pr-swagger.yaml
-#           path: ./src/CarbonAware.WebApi/src/api/v1/pr-swagger.yaml
+#           path: ./src/CarbonAware.WebApi/src/wwwroot/api/v1/pr-swagger.yaml
 #       - name: API Diff Comparison
 #         run: |
-#           diff ./api/v1/pr-swagger.yaml ./api/v1/swagger.yaml && echo "No API Changes detected" || echo "::warning:: API Changed
+#           diff ./wwwroot/api/v1/pr-swagger.yaml ./wwwroot/api/v1/swagger.yaml && echo "No API Changes detected" || echo "::warning:: API Changed"
