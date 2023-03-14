@@ -91,7 +91,7 @@ class EmissionsForecastsCommand : Command
                 var forecast = await forecastHandler.GetForecastByDateAsync(forecastParameters.SingleLocation!, forecastParameters.Start, forecastParameters.End, requestedAt, forecastParameters.Duration);
                 if (forecast != null)
                 {
-                    emissionsForecast.Add((EmissionsForecastDTO)forecast);
+                    emissionsForecast.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast, forecastParameters.Requested, forecastParameters.Start, forecastParameters.End, forecastParameters.Duration));
                 }
             }
         }
@@ -101,7 +101,7 @@ class EmissionsForecastsCommand : Command
             var results = await forecastHandler.GetCurrentForecastAsync(forecastParameters.MultipleLocations!, forecastParameters.Start, forecastParameters.End, forecastParameters.Duration);
             if (results != null)
             {
-               emissionsForecast = results.Select(forecast => (EmissionsForecastDTO)forecast).ToList();
+               emissionsForecast = results.Select(forecast => EmissionsForecastDTO.FromEmissionsForecast(forecast, forecastParameters.Requested, forecastParameters.Start, forecastParameters.End, forecastParameters.Duration)).ToList();
             }
         }
         var serializedOuput = JsonSerializer.Serialize(emissionsForecast);
