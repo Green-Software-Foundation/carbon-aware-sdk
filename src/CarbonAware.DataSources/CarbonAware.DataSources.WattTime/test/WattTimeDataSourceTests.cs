@@ -235,7 +235,6 @@ public class WattTimeDataSourceTests
         
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(requestedAt, result.RequestedAt);
         this.WattTimeClient.Verify(w => w.GetForecastOnDateAsync(
             It.IsAny<BalancingAuthority>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
     }

@@ -121,7 +121,6 @@ public class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
             Location = location,
             ForecastData = forecastData
         };
-        emissionsForecast.RequestedAt = requestedAt;
         return emissionsForecast;
     }
 

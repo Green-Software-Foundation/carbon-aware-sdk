@@ -1,4 +1,4 @@
-using GSF.CarbonAware.Handlers.CarbonAware;
+using CarbonAware.Model;
 using System.Text.Json.Serialization;
 using Swashbuckle.AspNetCore.Annotations;
 

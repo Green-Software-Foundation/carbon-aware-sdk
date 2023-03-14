@@ -1,0 +1,50 @@
+<!--
+    The following named values are used in this policy:
+    - ocp-apim-subscription-key - APIM subscription key
+-->
+<policies>
+    <inbound>
+        <base />
+        <send-request mode="new" response-variable-name="forecast-east" timeout="60" ignore-error="true">
+            <set-url>https://my-apim-instance.azure-api.net/emissions/forecasts/current?location=eastus</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Ocp-Apim-Subscription-Key" exists-action="override">
+                <value>{{ocp-apim-subscription-key}}</value>
+            </set-header>
+        </send-request>
+        <send-request mode="new" response-variable-name="forecast-west" timeout="60" ignore-error="true">
+            <set-url>https://my-apim-instance.azure-api.net/emissions/forecasts/current?location=westus</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Ocp-Apim-Subscription-Key" exists-action="override">
+                <value>{{ocp-apim-subscription-key}}</value>
+            </set-header>
+        </send-request>
+        <set-backend-service base-url="@{
+            var eastResponse = ((IResponse)context.Variables["forecast-east"]).Body.As<string>();
+            var eastJson = "{ \"data\": " + eastResponse + "}";
+            var eastData = JObject.Parse(eastJson);
+            float eastRating = (float) eastData.SelectToken("data[0].forecastData[0].value");
+
+            var westResponse = ((IResponse)context.Variables["forecast-west"]).Body.As<string>();
+            var westJson = "{ \"data\": " + westResponse + "}";
+            var westData = JObject.Parse(westJson);
+            float westRating = (float) westData.SelectToken("data[0].forecastData[0].value");
+
+            if (eastRating < westRating) {
+                return "https://my-app-eastus.azurewebsites.net/api/TestTrigger";
+            }
+            else {
+                return "https://my-app-westus.azurewebsites.net/api/TestTrigger";
+            }
+        }" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
