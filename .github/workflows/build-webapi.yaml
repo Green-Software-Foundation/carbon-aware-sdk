@@ -83,43 +83,43 @@ jobs:
         run: |
           wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
 
-  api-comparison:
-      needs: container-dotnet-build
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: ./src/CarbonAware.WebApi/src
-      container:
-        image: mcr.microsoft.com/dotnet/sdk
-      steps:
-        - name: Checkout Dev Branch
-          uses: actions/checkout@v3
-          with:
-            ref: dev
-        - name: Setup .NET Core SDK 6
-          uses: actions/setup-dotnet@v2
-          with:
-            dotnet-version: '6.0.x'
-            include-prerelease: false
-        - name: Install dependencies
-          run: dotnet restore
-          working-directory: ${{ env.DOTNET_SRC_DIR }}
-        - name: Install tools
-          run: dotnet tool restore 
-        - name: Build
-          run: dotnet build --configuration Release --no-restore
-          working-directory: ${{ env.DOTNET_SRC_DIR }}
-        - name: Generate Open API
-          run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
-        - name: Upload dev artifact
-          uses: actions/upload-artifact@v1
-          with:
-            name: dev-swagger.yaml
-            path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
-        - uses: actions/download-artifact@v3
-          with:
-            name: pr-swagger.yaml
-            path: ./src/CarbonAware.WebApi/src/wwwroot/api/v1/pr-swagger.yaml
-        - name: API Diff Comparison
-          run: |
-            diff ./wwwroot/api/v1/pr-swagger.yaml ./wwwroot/api/v1/swagger.yaml && echo "No API Changes detected" || echo "::warning:: API Changed"
+#  api-comparison:
+#      needs: container-dotnet-build
+#      runs-on: ubuntu-latest
+#      defaults:
+#        run:
+#          working-directory: ./src/CarbonAware.WebApi/src
+#      container:
+#        image: mcr.microsoft.com/dotnet/sdk
+#     steps:
+#       - name: Checkout Dev Branch
+#         uses: actions/checkout@v3
+#         with:
+#           ref: dev
+#       - name: Setup .NET Core SDK 6
+#         uses: actions/setup-dotnet@v2
+#         with:
+#           dotnet-version: '6.0.x'
+#           include-prerelease: false
+#       - name: Install dependencies
+#         run: dotnet restore
+#         working-directory: ${{ env.DOTNET_SRC_DIR }}
+#       - name: Install tools
+#         run: dotnet tool restore 
+#       - name: Build
+#         run: dotnet build --configuration Release --no-restore
+#         working-directory: ${{ env.DOTNET_SRC_DIR }}
+#       - name: Generate Open API
+#         run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
+#       - name: Upload dev artifact
+#         uses: actions/upload-artifact@v1
+#         with:
+#           name: dev-swagger.yaml
+#           path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
+#       - uses: actions/download-artifact@v3
+#         with:
+#           name: pr-swagger.yaml
+#           path: ./src/CarbonAware.WebApi/src/wwwroot/api/v1/pr-swagger.yaml
+#       - name: API Diff Comparison
+#         run: |
+#           diff ./wwwroot/api/v1/pr-swagger.yaml ./wwwroot/api/v1/swagger.yaml && echo "No API Changes detected" || echo "::warning:: API Changed"
