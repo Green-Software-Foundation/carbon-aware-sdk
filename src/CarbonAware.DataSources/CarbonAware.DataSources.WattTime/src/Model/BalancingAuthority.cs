@@ -6,7 +6,7 @@ namespace CarbonAware.DataSources.WattTime.Model;
 /// The details of the balancing authority (BA) serving a particular location.
 /// </summary>
 [Serializable]
-public record BalancingAuthority
+internal record BalancingAuthority
 {
     /// <summary>
     /// Balancing authority abbreviation.

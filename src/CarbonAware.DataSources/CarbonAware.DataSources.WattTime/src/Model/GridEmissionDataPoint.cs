@@ -6,7 +6,7 @@ namespace CarbonAware.DataSources.WattTime.Model;
 /// An object describing the emissions for a given time period and balancing authority.
 /// </summary>
 [Serializable]
-public record GridEmissionDataPoint
+internal record GridEmissionDataPoint
 {
     /// <summary>
     /// Balancing authority abbreviation

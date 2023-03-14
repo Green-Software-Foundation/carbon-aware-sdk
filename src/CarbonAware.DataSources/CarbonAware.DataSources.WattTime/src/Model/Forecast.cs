@@ -6,7 +6,7 @@ namespace CarbonAware.DataSources.WattTime.Model;
 /// An emissions forecast for a given time period.
 /// </summary>
 [Serializable]
-public record Forecast
+internal record Forecast
 {
     /// <summary>
     /// DateTime indicating when the forecast was generated.

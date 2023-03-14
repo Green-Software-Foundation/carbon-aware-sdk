@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarbonAware.Tests.model;
 
-public class LocationTests
+class LocationTests
 {
     [TestCase(34.123, "34.123", "en-US", TestName = "Lat/Long conversion to culture invariant string for en-US")]
     [TestCase(34.123, "34.123", "da-DK", TestName = "Lat/Long conversion to culture invariant string for da-DK")]

@@ -4,7 +4,7 @@ using GSF.CarbonAware.Models;
 using CarbonAware.WebApi.Models;
 using NUnit.Framework;
 
-public class EmissionsForecastDTOTests
+class EmissionsForecastDTOTests
 {
     [Test]
     public void FromEmissionsForecast()

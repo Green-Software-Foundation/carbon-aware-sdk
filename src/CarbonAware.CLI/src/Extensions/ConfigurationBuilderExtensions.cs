@@ -2,7 +2,7 @@
 
 namespace CarbonAware.CLI.Extensions;
 
-public static class ConfigurationBuilderExtensions
+internal static class ConfigurationBuilderExtensions
 {
     public const string DevelopmentEnvironment = "Development";
     public const string ProductionEnvironment = "Production";

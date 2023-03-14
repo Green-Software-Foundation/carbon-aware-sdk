@@ -1,4 +1,4 @@
-﻿using CarbonAware.LocationSources.Exceptions;
+﻿using CarbonAware.Exceptions;
 using CarbonAware.LocationSources.Model;
 using CarbonAware.Model;
 using NUnit.Framework;

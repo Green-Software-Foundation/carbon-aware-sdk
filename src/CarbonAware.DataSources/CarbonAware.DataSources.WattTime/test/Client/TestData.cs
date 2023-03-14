@@ -1,12 +1,11 @@
 using System;
-using System.Text.Json;
 using System.Text.Json.Nodes;
 
 namespace CarbonAware.DataSources.WattTime.Client.Tests;
 
-public static class TestData
+internal static class TestData
 {
-    public static string GetGridDataJsonString()
+    internal static string GetGridDataJsonString()
     {
         var json = new JsonArray(
           new JsonObject
@@ -24,7 +23,7 @@ public static class TestData
         return json.ToString();
     }
 
-    public static string GetCurrentForecastJsonString()
+    internal static string GetCurrentForecastJsonString()
     {
 
         var json = new JsonObject
@@ -45,7 +44,7 @@ public static class TestData
         return json.ToString();
     }
 
-    public static string GetForecastByDateJsonString()
+    internal static string GetForecastByDateJsonString()
     {
         var json = new JsonArray
         {
@@ -68,7 +67,7 @@ public static class TestData
         return json.ToString();
     }
 
-    public static string GetBalancingAuthorityJsonString()
+    internal static string GetBalancingAuthorityJsonString()
     {
         var json = new JsonObject
         {

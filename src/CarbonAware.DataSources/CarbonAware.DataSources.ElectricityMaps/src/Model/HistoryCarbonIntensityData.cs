@@ -1,4 +1,3 @@
-using CarbonAware.Exceptions;
 using CarbonAware.Model;
 using System.Text.Json.Serialization;
 
@@ -8,7 +7,7 @@ namespace CarbonAware.DataSources.ElectricityMaps.Model;
 /// History Carbon Intensity collection data.
 /// </summary>
 [Serializable]
-public record HistoryCarbonIntensityData
+internal record HistoryCarbonIntensityData
 {
     /// <summary>
     /// Zone.
@@ -27,7 +26,7 @@ public record HistoryCarbonIntensityData
 /// A history carbon intensity.
 /// </summary>
 [Serializable]
-public record CarbonIntensity
+internal record CarbonIntensity
 {
     /// <summary>
     /// Carbon Intensity value.
@@ -85,7 +84,7 @@ public record CarbonIntensity
 /// Carbon intensity data for past date range.
 /// </summary>
 [Serializable]
-public record PastRangeData
+internal record PastRangeData
 {
     /// <summary>
     /// Carbon Intensity value.

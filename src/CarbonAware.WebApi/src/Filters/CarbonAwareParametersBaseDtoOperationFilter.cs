@@ -4,7 +4,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CarbonAware.WebApi.Filters;
 
-public class CarbonAwareParametersBaseDtoOperationFilter : IOperationFilter
+internal class CarbonAwareParametersBaseDtoOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {

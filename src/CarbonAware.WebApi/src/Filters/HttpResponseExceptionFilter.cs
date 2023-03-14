@@ -8,7 +8,7 @@ using System.Net;
 
 namespace CarbonAware.WebApi.Filters;
 
-public class HttpResponseExceptionFilter : IExceptionFilter
+internal class HttpResponseExceptionFilter : IExceptionFilter
 {
     private ILogger<HttpResponseExceptionFilter> _logger;
     private IOptionsMonitor<CarbonAwareVariablesConfiguration> _options;

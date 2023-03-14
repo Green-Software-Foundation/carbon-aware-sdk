@@ -4,7 +4,7 @@ using System.CommandLine.Builder;
 using System.CommandLine.Invocation;
 
 namespace CarbonAware.CLI.Extensions;
-public static class CommandLineBuilderExtensions
+internal static class CommandLineBuilderExtensions
 {
     public enum ExitCode
     {

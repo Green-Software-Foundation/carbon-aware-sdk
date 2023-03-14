@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace CarbonAware.CLI.UnitTests;
 
 [TestFixture]
-public class LocationCommandTests : TestBase
+internal class LocationCommandTests : TestBase
 {
     [Test]
     public async Task Run_CallsLocationSourceAndWritesResults()

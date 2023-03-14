@@ -14,7 +14,7 @@ using System.Collections.Generic;
 namespace GSF.CarbonAware.Tests;
 
 [TestFixture]
-public class EmissionsHandlerTests
+class EmissionsHandlerTests
 {
     private Mock<ILogger<EmissionsHandler>>? Logger { get; set; }
 
