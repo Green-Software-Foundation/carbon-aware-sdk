@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Configuration;
-public class DataSourcesConfiguration
+internal class DataSourcesConfiguration
 {
     public const string Key = "DataSources";
 

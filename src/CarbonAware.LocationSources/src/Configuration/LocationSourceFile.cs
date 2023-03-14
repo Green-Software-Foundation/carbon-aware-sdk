@@ -3,9 +3,8 @@ using System.Text.RegularExpressions;
 
 namespace CarbonAware.LocationSources.Configuration;
 
-public class LocationSourceFile
+internal class LocationSourceFile
 {
-
     public const string BaseDirectory = "location-sources/json";
     private const string DirectoryRegExPattern = @"^[-\\/a-zA-Z_\d ]*$";
 

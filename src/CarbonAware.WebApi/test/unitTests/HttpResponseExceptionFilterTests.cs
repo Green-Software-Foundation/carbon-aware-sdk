@@ -1,4 +1,3 @@
-using CarbonAware.WebApi.Filters;
 using CarbonAware.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -10,11 +9,12 @@ using Moq;
 using NUnit.Framework;
 using System.Net;
 using Microsoft.Extensions.Options;
+using CarbonAware.WebApi.Filters;
 
 namespace CarbonAware.WepApi.UnitTests;
 
 [TestFixture]
-public class HttpResponseExceptionFilterTests
+class HttpResponseExceptionFilterTests
 {
     // Not relevant for tests which populate this field via the [SetUp] attribute.
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -35,14 +35,15 @@ public class HttpResponseExceptionFilterTests
         this._logger = new Mock<ILogger<HttpResponseExceptionFilter>>();
     }
 
-    [Test]
-    public void TestOnException_IHttpResponseException()
+    [TestCase(false, TestName = "Without Inner Exception")]
+    [TestCase(true, TestName = "With Inner Exception")]
+    public void TestOnException_IHttpResponseException(bool innerEx)
     {
         // Arrange
         var ex = new DummyHttpResponseException();
         var exceptionContext = new ExceptionContext(this._actionContext, new List<IFilterMetadata>())
         {
-            Exception = ex
+            Exception = innerEx ? new Exception("Inner Exception", ex) : ex
         };
         var mockIOption = new Mock<IOptionsMonitor<CarbonAwareVariablesConfiguration>>();
         var filter = new HttpResponseExceptionFilter(this._logger.Object, mockIOption.Object);
@@ -276,7 +277,7 @@ public class HttpResponseExceptionFilterTests
     }
 }
 
-public class DummyHttpResponseException : Exception, IHttpResponseException
+internal class DummyHttpResponseException : Exception, IHttpResponseException
 {
     public string? Title => "Dummy Title";
     public string? Detail => "Dummy Details";

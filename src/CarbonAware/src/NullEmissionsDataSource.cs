@@ -2,7 +2,7 @@
 
 namespace CarbonAware;
 
-public class NullEmissionsDataSource : IEmissionsDataSource
+internal class NullEmissionsDataSource : IEmissionsDataSource
 {
     public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {

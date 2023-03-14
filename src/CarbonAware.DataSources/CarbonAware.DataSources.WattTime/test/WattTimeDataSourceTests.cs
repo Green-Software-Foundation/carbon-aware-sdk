@@ -1,9 +1,8 @@
-﻿using CarbonAware.Exceptions;
-using CarbonAware.Interfaces;
-using CarbonAware.LocationSources.Exceptions;
-using CarbonAware.Model;
-using CarbonAware.DataSources.WattTime.Client;
+﻿using CarbonAware.DataSources.WattTime.Client;
 using CarbonAware.DataSources.WattTime.Model;
+using CarbonAware.Exceptions;
+using CarbonAware.Interfaces;
+using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -16,7 +15,7 @@ namespace CarbonAware.DataSources.WattTime.Tests;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 [TestFixture]
-public class WattTimeDataSourceTests
+class WattTimeDataSourceTests
 {
     private Mock<ILogger<WattTimeDataSource>> Logger { get; set; }
 
@@ -235,7 +234,6 @@ public class WattTimeDataSourceTests
         
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(requestedAt, result.RequestedAt);
         this.WattTimeClient.Verify(w => w.GetForecastOnDateAsync(
             It.IsAny<BalancingAuthority>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
     }

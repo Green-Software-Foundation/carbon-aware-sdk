@@ -7,7 +7,7 @@ namespace CarbonAware.Tools;
 /// Generates a test data json string as output based on the 
 /// azure-regions.json structure 
 /// </summary>
-public class AzureRegionTestDataGenerator
+internal class AzureRegionTestDataGenerator
 {
     public class AzureRegionData
     {

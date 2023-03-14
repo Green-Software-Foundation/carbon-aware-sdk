@@ -2,7 +2,7 @@
 
 namespace CarbonAware.DataSources.ElectricityMaps.Client;
 
-public class ElectricityMapsClientException : CarbonAwareException
+internal class ElectricityMapsClientException : CarbonAwareException
 {
     public ElectricityMapsClientException(string message) : base(message)
     {

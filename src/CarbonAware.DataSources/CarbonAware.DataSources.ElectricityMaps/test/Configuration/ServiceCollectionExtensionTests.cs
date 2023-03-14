@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
 [TestFixture]
-public class ServiceCollectionExtensionTests
+class ServiceCollectionExtensionTests
 {
     private readonly string ForecastDataSourceKey = $"DataSources:ForecastDataSource";
     private readonly string ForecastDataSourceValue = $"ElectricityMapsTest";

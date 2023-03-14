@@ -1,12 +1,9 @@
-﻿using CarbonAware.Exceptions;
-using System;
-
-namespace CarbonAware.LocationSources.Exceptions;
+﻿namespace CarbonAware.Exceptions;
 
 /// <summary>
 /// Represents a conversion exception.
 /// </summary>
-public class LocationConversionException : CarbonAwareException
+internal class LocationConversionException : CarbonAwareException
 {
     /// <summary>
     /// Creates a new instance of the <see cref="LocationConversionException"/> class.

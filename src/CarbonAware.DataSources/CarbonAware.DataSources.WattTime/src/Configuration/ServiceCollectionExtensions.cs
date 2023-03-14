@@ -9,7 +9,7 @@ using System.Net;
 
 namespace CarbonAware.DataSources.WattTime.Configuration;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddWattTimeForecastDataSource(this IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
     {

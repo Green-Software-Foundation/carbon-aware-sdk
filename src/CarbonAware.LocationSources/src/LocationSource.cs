@@ -12,7 +12,7 @@ namespace CarbonAware.LocationSources;
 /// <summary>
 /// Represents a location source.
 /// </summary>
-public class LocationSource : ILocationSource
+internal class LocationSource : ILocationSource
 {
     private readonly ILogger<LocationSource> _logger;
 

@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a location source for Location type.
 /// </summary>
-public interface ILocationSource
+internal interface ILocationSource
 {
     /// <summary>
     /// Converts given Location to a new Location with type Geoposition

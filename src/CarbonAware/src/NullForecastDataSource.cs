@@ -2,7 +2,7 @@
 
 namespace CarbonAware;
 
-public class NullForecastDataSource : IForecastDataSource
+internal class NullForecastDataSource : IForecastDataSource
 {
     public Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {

@@ -1,6 +1,6 @@
-﻿using CarbonAware.DataSources.ElectricityMaps.Model;
+﻿using CarbonAware.Interfaces;
+using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.DataSources.ElectricityMaps.Constants;
-using CarbonAware.DataSources.Mocks;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
@@ -10,7 +10,7 @@ using WireMock.Server;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Mocks;
 
-public class ElectricityMapsDataSourceMocker : IDataSourceMocker
+internal class ElectricityMapsDataSourceMocker : IDataSourceMocker
 {
     private readonly WireMockServer _server;
     private const string ZONE_NAME = "eastus";

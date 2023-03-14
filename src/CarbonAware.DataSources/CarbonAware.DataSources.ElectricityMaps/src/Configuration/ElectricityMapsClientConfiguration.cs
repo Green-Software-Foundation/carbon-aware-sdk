@@ -7,7 +7,7 @@ namespace CarbonAware.DataSources.ElectricityMaps.Configuration;
 /// <summary>
 /// A configuration class for holding ElectricityMaps client config values.
 /// </summary>
-public class ElectricityMapsClientConfiguration
+internal class ElectricityMapsClientConfiguration
 {
     /// <summary>
     /// API Token Header (i.e 'auth-token')

@@ -1,5 +1,5 @@
-﻿using CarbonAware.DataSources.Json.Configuration;
-using CarbonAware.Interfaces;
+﻿using CarbonAware.Interfaces;
+using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -10,7 +10,7 @@ namespace CarbonAware.DataSources.Json;
 /// <summary>
 /// Represents a JSON data source.
 /// </summary>
-public class JsonDataSource : IEmissionsDataSource
+internal class JsonDataSource : IEmissionsDataSource
 {
     public string Name => "JsonDataSource";
 

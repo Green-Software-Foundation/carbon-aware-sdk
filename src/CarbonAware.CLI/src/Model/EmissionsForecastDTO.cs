@@ -12,15 +12,18 @@ class EmissionsForecastDTO
     public IEnumerable<EmissionsDataDTO>? OptimalDataPoints { get; set; }
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static explicit operator EmissionsForecastDTO(EmissionsForecast emissionsForecast)
+    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast, DateTimeOffset? requestedAt, DateTimeOffset? startTime, DateTimeOffset? endTime, int? windowSize)
     {
-        EmissionsForecastDTO forecast = new()
+        return new EmissionsForecastDTO
         {
-            RequestedAt = emissionsForecast.RequestedAt,
+            Location = emissionsForecast.Location!,
+            RequestedAt = requestedAt ?? DateTimeOffset.UtcNow,
+            DataStartAt = startTime ?? emissionsForecast.EmissionsDataPoints.First().Time,
+            DataEndAt = endTime ?? emissionsForecast.EmissionsDataPoints.Last().Time,
             GeneratedAt = emissionsForecast.GeneratedAt,
-            ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => (EmissionsDataDTO)d!),
-            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => (EmissionsDataDTO)d)!
+            ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => (EmissionsDataDTO)d),
+            OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => (EmissionsDataDTO)d),
+            WindowSize  = windowSize ?? 0
         };
-        return forecast;
     }
- }
+}
