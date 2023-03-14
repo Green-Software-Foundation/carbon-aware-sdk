@@ -21,10 +21,11 @@ jobs:
     - uses: actions/stale@v5
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-issue-message: 'Stale issue message'
-        stale-pr-message: 'Stale pull request message'
+        stale-issue-message: 'This issue has not had any activity in 240 days. Please review this issue and ensure it is still relevant. If no more activity is detected on this issue for the next 20 days, it will be closed automatically.'
+        close-issue-message: 'This issue has not had any activity for too long. If you believe this issue has been closed in error, please contact an administrator to re-open, or if absolutly relevant and necessary, create a new issue referencing this one. '
+        stale-pr-message: 'This a stale pull request. Please review, update or/and close as necessary.'
         stale-issue-label: 'no-issue-activity'
         stale-pr-label: 'no-pr-activity'
-        days-before-issue-stale: 240 #5 months old - initial value aimed to be reduced in the short terms
+        days-before-issue-stale: 240 #6 months old - initial value aimed to be reduced in the short terms
         days-before-issue-close: 20
         days-before-pr-stale: 120
