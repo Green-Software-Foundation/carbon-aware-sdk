@@ -9,7 +9,7 @@ namespace CarbonAware.DataSources.ElectricityMapsFree;
 /// <summary>
 /// Represents an Electricity Maps Free data source.
 /// </summary>
-public class ElectricityMapsFreeDataSource : IEmissionsDataSource
+internal class ElectricityMapsFreeDataSource : IEmissionsDataSource
 {
     public string _name => "ElectricityMapsFreeDataSource";
 

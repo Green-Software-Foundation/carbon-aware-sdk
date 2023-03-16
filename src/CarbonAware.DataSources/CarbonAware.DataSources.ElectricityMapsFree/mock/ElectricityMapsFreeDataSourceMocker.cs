@@ -1,6 +1,6 @@
-﻿using CarbonAware.DataSources.ElectricityMapsFree.Model;
+﻿using CarbonAware.Interfaces;
+using CarbonAware.DataSources.ElectricityMapsFree.Model;
 using CarbonAware.DataSources.ElectricityMapsFree.Constants;
-using CarbonAware.DataSources.Mocks;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
@@ -10,7 +10,7 @@ using WireMock.Server;
 
 namespace CarbonAware.DataSources.ElectricityMapsFree.Mocks;
 
-public class ElectricityMapsFreeDataSourceMocker : IDataSourceMocker
+internal class ElectricityMapsFreeDataSourceMocker : IDataSourceMocker
 {
     private readonly WireMockServer _server;
     private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);

@@ -1,8 +1,7 @@
-using CarbonAware.DataSources.ElectricityMapsFree;
 using CarbonAware.DataSources.ElectricityMapsFree.Client;
 using CarbonAware.DataSources.ElectricityMapsFree.Model;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
-using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;

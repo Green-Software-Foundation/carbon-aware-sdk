@@ -8,6 +8,7 @@
   <ItemGroup>
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Tests" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
   </ItemGroup>
 
   <ItemGroup>

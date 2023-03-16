@@ -9,7 +9,7 @@ using System.Net;
 
 namespace CarbonAware.DataSources.ElectricityMapsFree.Configuration;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     // ElectricityMapsFree does not implement IForecastDataSource
     /*

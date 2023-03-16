@@ -3,7 +3,7 @@ using System;
 
 namespace CarbonAware.DataSources.ElectricityMapsFree.Client;
 
-public class ElectricityMapsFreeClientHttpException : Exception, IHttpResponseException
+internal class ElectricityMapsFreeClientHttpException : Exception, IHttpResponseException
 {
     /// <summary>
     /// Creates a new instance of the <see cref="ElectricityMapsFreeClientHttpException"/> class.
