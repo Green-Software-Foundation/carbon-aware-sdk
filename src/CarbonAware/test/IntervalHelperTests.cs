@@ -3,7 +3,7 @@ using CarbonAware.Model;
 namespace CarbonAware.Tests;
 
 [TestFixture]
-public class IntervalHelperTests
+class IntervalHelperTests
 {
     private readonly DateTimeOffset startDateTimeOffset = new (2021, 9, 1, 9, 40, 0, TimeSpan.Zero);
     private readonly DateTimeOffset endDateTimeOffset = new (2021, 9, 1, 10, 20, 0, TimeSpan.Zero);

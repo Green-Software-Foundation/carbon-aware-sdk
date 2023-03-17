@@ -10,10 +10,36 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
-    <PackageReference Include="Microsoft.Extensions.Configuration"/>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
-    <PackageReference Include="Microsoft.Extensions.Hosting"/>
-    <PackageReference Include="System.ComponentModel.Composition"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="caw" />
+    <InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
+    <InternalsVisibleTo Include="CarbonAware.CLI.UnitTests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="CarbonAware.LocationSources" />
+    <InternalsVisibleTo Include="CarbonAware.LocationSources.Test" />
+    <InternalsVisibleTo Include="CarbonAware.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.Tools.AzureRegionTestDataGenerator" />
+    <InternalsVisibleTo Include="CarbonAware.Tools.AWSRegionTestDataGenerator" />
+    <InternalsVisibleTo Include="CarbonAware.WebApi" />
+    <InternalsVisibleTo Include="CarbonAware.WebApi.UnitTests" />
+    <InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
+    <InternalsVisibleTo Include="GSF.CarbonAware" />
+    <InternalsVisibleTo Include="GSF.CarbonAware.Tests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
 </Project>

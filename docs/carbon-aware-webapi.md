@@ -481,17 +481,16 @@ specification
 
 1. Make sure the current directory is `<path to project root>/src/`
 
-   ```sh
-   dotnet restore
-   cd CarbonAware.WebApi/src
-   dotnet tool restore
-   dotnet build --configuration Release --no-restore
-   dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
-   ```
-
-1. The `CarbonAware.WebApi/src/api/v1/swagger.yaml` file contains the supported
+    ```sh
+    dotnet restore
+    cd CarbonAware.WebApi/src
+    dotnet tool restore
+    dotnet build --configuration Release --no-restore
+    dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
+    ```
+1. The `CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml` file contains the supported 
    OpenApi specification.
-1. Use for instance [swagger editor](https://editor.swagger.io) to see and try
+1. Use for instance [swagger editor](https://editor.swagger.io) to see and try 
    the endpoint routes.
 
 ## Data Sources

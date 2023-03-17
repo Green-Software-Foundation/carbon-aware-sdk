@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
 [TestFixture]
-public class ServiceCollectionExtensionTests
+class ServiceCollectionExtensionTests
 {
     const string ForecastDataSourceKey = $"DataSources:ForecastDataSource";
     const string EmissionsDataSourceKey = $"DataSources:EmissionsDataSource";

@@ -1,12 +1,12 @@
 ﻿using CarbonAware.CLI.Commands.Location;
+using GSF.CarbonAware.Models;
 using Moq;
 using NUnit.Framework;
-using CarbonAware.Model;
 
 namespace CarbonAware.CLI.UnitTests;
 
 [TestFixture]
-public class LocationCommandTests : TestBase
+internal class LocationCommandTests : TestBase
 {
     [Test]
     public async Task Run_CallsLocationSourceAndWritesResults()
@@ -25,7 +25,7 @@ public class LocationCommandTests : TestBase
             }
         };
 
-        _mockLocationSource.Setup(ls => ls.GetGeopositionLocationsAsync())
+        _mockLocationHandler.Setup(ls => ls.GetLocationsAsync())
             .ReturnsAsync(expectedLocations);
 
         // Act
@@ -38,6 +38,6 @@ public class LocationCommandTests : TestBase
             StringAssert.Contains(location, consoleOutput);
         }
 
-        _mockLocationSource.Verify(ls => ls.GetGeopositionLocationsAsync(), Times.Once);
+        _mockLocationHandler.Verify(ls => ls.GetLocationsAsync(), Times.Once);
     }
 }

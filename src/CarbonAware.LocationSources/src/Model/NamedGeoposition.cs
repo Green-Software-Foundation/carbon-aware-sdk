@@ -1,10 +1,10 @@
-using CarbonAware.LocationSources.Exceptions;
+using CarbonAware.Exceptions;
 using CarbonAware.Model;
 using System.Globalization;
 
 namespace CarbonAware.LocationSources.Model;
 
-public class NamedGeoposition
+internal class NamedGeoposition
 {
     public string Name { get; set; } = string.Empty;
     public string Latitude { get; set; } = string.Empty;

@@ -3,7 +3,7 @@ namespace CarbonAware;
 /// <summary>
 /// Helper for intervals within Carbon Aware.
 /// </summary>
-public static class IntervalHelper
+internal static class IntervalHelper
 {
 
     /// <summary>

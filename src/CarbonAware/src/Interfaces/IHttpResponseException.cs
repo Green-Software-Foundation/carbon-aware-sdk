@@ -1,6 +1,6 @@
 namespace CarbonAware.Interfaces;
 
-public interface IHttpResponseException
+internal interface IHttpResponseException
 {
     /// <summary>
     /// A short, human-readable summary of the problem type. It SHOULD NOT change from occurrence to occurrence

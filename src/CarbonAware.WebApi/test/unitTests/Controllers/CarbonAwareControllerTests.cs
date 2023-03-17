@@ -17,7 +17,7 @@ using System.ComponentModel.DataAnnotations;
 /// including empty responses and exceptions.
 /// </summary>
 [TestFixture]
-public class CarbonAwareControllerTests : TestsBase
+class CarbonAwareControllerTests : TestsBase
 {
     readonly IForecastHandler forecastHandler = Mock.Of<IForecastHandler>();
     

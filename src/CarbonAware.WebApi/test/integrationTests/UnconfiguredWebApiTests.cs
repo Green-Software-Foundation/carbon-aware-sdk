@@ -8,7 +8,7 @@ namespace CarbonAware.WebApi.IntegrationTests;
 /// Tests that the Web API starts without configuration.
 /// </summary>
 [TestFixture(DataSourceType.None)]
-public class UnconfiguredWebApiTests : IntegrationTestingBase
+class UnconfiguredWebApiTests : IntegrationTestingBase
 {
     private readonly string healthURI = "/health";
     private readonly string fakeURI = "/fake-endpoint";

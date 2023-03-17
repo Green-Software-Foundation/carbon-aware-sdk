@@ -1,5 +1,5 @@
+using CarbonAware.Exceptions;
 using CarbonAware.LocationSources.Configuration;
-using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.LocationSources.Model;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace CarbonAware.LocationSources.Test;
 
 [TestFixture]
-public class LocationSourceTest
+class LocationSourceTest
 {
     private string _goodFile { get; set; }
     private string _badFile { get; set; }

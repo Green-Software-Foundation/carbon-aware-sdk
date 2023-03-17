@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
 [TestFixture]
-public class ElectricityMapsClientTests
+class ElectricityMapsClientTests
 {
     private readonly string AuthHeader = "auth-token";
     private readonly string DefaultTokenValue = "myDefaultToken123";

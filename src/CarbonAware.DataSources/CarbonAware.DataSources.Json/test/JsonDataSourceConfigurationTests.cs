@@ -1,5 +1,5 @@
-using NUnit.Framework;
 using CarbonAware.DataSources.Json.Configuration;
+using NUnit.Framework;
 using System.Reflection;
 using System.IO;
 using System;
@@ -7,7 +7,7 @@ using System;
 namespace CarbonAware.DataSources.Json.Tests;
 
 [TestFixture]
-public class JsonDataSourceConfigurationTests
+class JsonDataSourceConfigurationTests
 {
 
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

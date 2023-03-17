@@ -1,10 +1,10 @@
-namespace CarbonAware.DataSources.Mocks;
+namespace CarbonAware.Interfaces;
 
 /// <summary>
 /// This interface is used by the Integration Tests to set up data for different data sources
 /// Each method corresponds to the dataset needed by a different integration test
 /// </summary>
-public interface IDataSourceMocker
+internal interface IDataSourceMocker
 {
     /// <summary>
     /// This sets up a data endpoint with certain parameters so that it can be pinged.

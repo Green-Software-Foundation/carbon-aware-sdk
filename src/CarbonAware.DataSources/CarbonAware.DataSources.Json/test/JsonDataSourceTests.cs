@@ -12,7 +12,7 @@ using CarbonAware.DataSources.Json.Configuration;
 
 namespace CarbonAware.DataSources.Json.Tests;
 
-public class JsonDataSourceTests
+class JsonDataSourceTests
 {
     [Test]
     public async Task GetCarbonIntensityAsync_ByLocationMultiple()

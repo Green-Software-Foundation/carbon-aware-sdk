@@ -14,7 +14,7 @@ using System.Web;
 
 namespace CarbonAware.DataSources.WattTime.Client;
 
-public class WattTimeClient : IWattTimeClient
+internal class WattTimeClient : IWattTimeClient
 {
     private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 

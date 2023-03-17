@@ -2,7 +2,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Configuration;
 
-public static class DataSourcesConfigurationExtensions
+internal static class DataSourcesConfigurationExtensions
 {
     public static DataSourcesConfiguration DataSources(this IConfiguration configuration)
     {

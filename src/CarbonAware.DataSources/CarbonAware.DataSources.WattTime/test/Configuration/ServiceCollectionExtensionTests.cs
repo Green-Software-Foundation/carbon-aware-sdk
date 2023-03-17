@@ -11,7 +11,7 @@ using System.Net.Http;
 namespace CarbonAware.DataSources.WattTime.Tests;
 
 [TestFixture]
-public class ServiceCollectionExtensionTests
+class ServiceCollectionExtensionTests
 {
     private readonly string ForecastDataSourceKey = $"DataSources:ForecastDataSource";
     private readonly string EmissionsDataSourceKey = $"DataSources:EmissionsDataSource";

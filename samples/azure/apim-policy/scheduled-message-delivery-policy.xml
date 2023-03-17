@@ -1,0 +1,62 @@
+<!--
+    The following named values are used in this policy:
+    - ocp-apim-subscription-key - APIM subscription key
+    - test-queue-key - Azure Service bus queue key
+    - test-sb-namespace - Azure Service bus queue namespace
+-->
+<policies>
+    <inbound>
+        <base />
+        <send-request mode="new" response-variable-name="my-id" timeout="60" ignore-error="true">
+            <set-url>https://my-apim-instance.azure-api.net/emissions/forecasts/current?location=eastus</set-url>
+            <set-method>GET</set-method>
+            <set-header name="Ocp-Apim-Subscription-Key" exists-action="override">
+                <value>{{ocp-apim-subscription-key}}</value>
+            </set-header>
+        </send-request>
+        <set-header name="Content-Type" exists-action="override">
+            <value>vnd.microsoft.servicebus.yml</value>
+        </set-header>
+        <set-header name="Authorization" exists-action="override">
+            <value>{{test-queue-key}}</value>
+        </set-header>
+        <set-header name="BrokerProperties" exists-action="override">
+            <value>
+                @{
+                    var resp = ((IResponse)context.Variables["my-id"]).Body.As<string>();
+                    var json = "{ \"data\": " + resp + "}";
+                    var data = JObject.Parse(json);
+                    string optimalTimestamp = (string) data.SelectToken("data[0].optimalDataPoints[0].timestamp");
+
+                    var msg = new JObject();
+                    msg.Add("MessageId", context.RequestId);
+                    msg.Add("Label", "New-Message");
+                    msg.Add("ScheduledEnqueueTimeUtc", optimalTimestamp);
+                    return msg.ToString(Newtonsoft.Json.Formatting.None);                    
+                }
+            </value>
+        </set-header>
+        <set-backend-service base-url="{{test-sb-namespace}}" />
+    </inbound>
+    <backend>
+        <base />
+    </backend>
+    <outbound>
+        <choose>
+            <when condition="@(context.Response.StatusCode == 201)">
+                <set-header name="Content-Type" exists-action="override">
+                    <value>application/json</value>
+                </set-header>
+                <set-body>
+                    @{
+                        var json = new JObject() {{"MessageId", context.RequestId}};
+                        return json.ToString(Newtonsoft.Json.Formatting.None);     
+                    }
+                </set-body>
+            </when>
+        </choose>
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>

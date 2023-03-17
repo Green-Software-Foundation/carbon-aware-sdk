@@ -7,7 +7,7 @@ using NUnit.Framework.Internal;
 namespace CarbonAware.CLI.UnitTests.Commands.EmissionsForecasts;
 
 [TestFixture]
-public class EmissionsForecastsCommandTests : TestBase
+class EmissionsForecastsCommandTests : TestBase
 {
     [Test]
     public async Task Run_CallsHandlerWithLocationOptions()
