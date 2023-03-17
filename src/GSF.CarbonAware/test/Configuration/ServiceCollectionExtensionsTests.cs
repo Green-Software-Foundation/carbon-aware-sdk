@@ -77,7 +77,6 @@ public class ServiceCollectionExtensionsTest
             { "DataSources:EmissionsDataSource", "" },
             { "DataSources:ForecastDataSource", "" },
         };
-
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(inMemorySettings)
             .Build();
