@@ -134,6 +134,8 @@ internal class EmissionsCommandTests : IntegrationTestingBase
     [Test]
     public async Task Emissions_AverageOption_ReturnsExpectedData()
     {
+        IgnoreTestForDataSource($"data source does not implement the '-a' switch", DataSourceType.ElectricityMapsFree);
+
         // Arrange
         var start = DateTimeOffset.Parse("2022-09-01T00:00:00Z");
         var end = DateTimeOffset.Parse("2022-09-01T03:00:00Z");
@@ -153,6 +155,14 @@ internal class EmissionsCommandTests : IntegrationTestingBase
         Assert.IsNotNull(firstResult["Time"]);
         Assert.IsNotNull(firstResult["Rating"]);
         Assert.IsNotNull(firstResult["Duration"]);
+    }
+
+    private void IgnoreTestForDataSource(string reasonMessage, params DataSourceType[] ignoredDataSources)
+    {
+        if (ignoredDataSources.Contains(_dataSource))
+        {
+            Assert.Ignore($"Ignoring test: {reasonMessage}");
+        }
     }
 
 }

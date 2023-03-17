@@ -9,6 +9,7 @@
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Tests" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Mocks" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
   <ItemGroup>
