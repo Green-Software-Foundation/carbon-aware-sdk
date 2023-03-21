@@ -1,15 +1,15 @@
 using CarbonAware.Configuration;
+using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.Exceptions;
-using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.DataSources.Configuration;
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataSourceService(this IServiceCollection services, IConfiguration configuration)
     {

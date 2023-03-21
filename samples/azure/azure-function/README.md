@@ -60,7 +60,7 @@ as they use the same configuration, just call different paths within the SDK.
 To run and debug locally, update the [appsettings.json](appsettings.json) file
 to include the desired [configuration](../../docs/configuration.md).
 
-In the app folder (`samples/azure-function`), run the command: `func start`
+In the app folder (`samples/azure/azure-function`), run the command: `func start`
 
 After the function has compiled and is running, the URLs to the functions will
 be presented.
@@ -145,7 +145,7 @@ Update the [appsettings.json](./appsettings.json) file to include the desired
 [configuration](../../docs/configuration.md).
 
 To publish the function code to a function app in Azure, use the publish command
-in the samples/azure-function folder:
+in the samples/azure/azure-function folder:
 
 ```bash
 func azure functionapp publish $functionApp

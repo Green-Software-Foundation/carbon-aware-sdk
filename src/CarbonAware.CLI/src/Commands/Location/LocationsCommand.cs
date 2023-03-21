@@ -1,4 +1,4 @@
-﻿using CarbonAware.Interfaces;
+﻿using GSF.CarbonAware.Handlers;
 using System.CommandLine;
 using System.CommandLine.Invocation;
 using System.Text.Json;
@@ -15,9 +15,9 @@ public class LocationsCommand : Command
     internal async Task Run(InvocationContext context)
     {
         var serviceProvider = context.BindingContext.GetService(typeof(IServiceProvider)) as IServiceProvider ?? throw new NullReferenceException("ServiceProvider not found");
-        var locationSource = serviceProvider.GetService(typeof(ILocationSource)) as ILocationSource ?? throw new NullReferenceException("ILocationSource not found");
+        var locationSource = serviceProvider.GetService(typeof(ILocationHandler)) as ILocationHandler ?? throw new NullReferenceException("ILocationHandler not found");
 
-        var locations = await locationSource.GetGeopositionLocationsAsync();
+        var locations = await locationSource.GetLocationsAsync();
         var serializedOuput = JsonSerializer.Serialize(locations);
         context.Console.WriteLine(serializedOuput);
         context.ExitCode = 0;

@@ -59,7 +59,6 @@ try
     foreach (var forecast in forecasts)
     {
         Console.WriteLine($"Forecast GeneratedAt: {forecast.GeneratedAt} ");
-        Console.WriteLine($"Forecast RequestedAt: {forecast.RequestedAt} ");
         Console.WriteLine("EmissionsDataPoints");
         Array.ForEach(forecast.EmissionsDataPoints.ToArray(), Console.WriteLine);
         Console.WriteLine("OptimalDataPoints");

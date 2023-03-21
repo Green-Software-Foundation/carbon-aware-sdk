@@ -9,7 +9,7 @@ namespace CarbonAware.WepApi.UnitTests;
 /// Tests that the Web API controller handles request for Location instances 
 /// </summary>
 [TestFixture]
-public class LocationsControllerTests : TestsBase
+class LocationsControllerTests : TestsBase
 {
     /// <summary>
     /// Test result with content

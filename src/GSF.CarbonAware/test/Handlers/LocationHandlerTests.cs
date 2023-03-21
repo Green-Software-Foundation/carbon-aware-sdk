@@ -1,9 +1,9 @@
+using CarbonAware.Interfaces;
 using GSF.CarbonAware.Handlers;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CarbonAware.Interfaces;
 using System.Collections.Immutable;
 
 namespace GSF.CarbonAware.Tests;

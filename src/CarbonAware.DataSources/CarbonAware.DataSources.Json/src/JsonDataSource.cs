@@ -33,8 +33,6 @@ public class JsonDataSource : IEmissionsDataSource, IForecastDataSource
 
     private JsonDataSourceConfiguration _configuration => _configurationMonitor.CurrentValue;
 
-
-
     /// <summary>
     /// Creates a new instance of the <see cref="JsonDataSource"/> class.
     /// </summary>

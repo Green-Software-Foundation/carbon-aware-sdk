@@ -5,7 +5,7 @@ using CarbonAware.Exceptions;
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
 [TestFixture]
-public class ElectricityMapsClientConfigurationTests
+class ElectricityMapsClientConfigurationTests
 {
     [TestCase("x-token-header", "faketoken", "http://example.com", TestName = "Validate does not throw: header; value; url")]
     [TestCase(Headers.TokenAuthHeader, "faketoken", BaseUrls.TokenBaseUrl, TestName = "Validate does not throw: token header; value; token url")]

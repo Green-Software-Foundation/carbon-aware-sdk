@@ -13,7 +13,7 @@ using CarbonAware.Exceptions;
 
 namespace CarbonAware.DataSources.Json.Tests;
 
-public class JsonDataSourceTests
+class JsonDataSourceTests
 {
     [Test]
     public async Task GetCarbonIntensityAsync_ByLocationMultiple()
@@ -111,8 +111,28 @@ public class JsonDataSourceTests
         var e = Assert.CatchAsync(() => dataSource.GetCurrentCarbonIntensityForecastAsync(location));
         Assert.IsInstanceOf<CarbonAwareException>(e);
     }
-    private Mock<JsonDataSource> SetupMockDataSource()
+    public async Task GetCarbonIntensityAsync_ReturnsEmptyEmissionData()
     {
+        var logger = Mock.Of<ILogger<JsonDataSource>>();
+        var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
+        var mockDataSource = new Mock<JsonDataSource>(logger, monitor);
+        
+        mockDataSource.Protected()
+            .Setup<Task<List<EmissionsData>?>>("GetJsonDataAsync")
+            .ReturnsAsync(new List<EmissionsData>())
+            .Verifiable();
+
+        var location = new Location() { Name = "midwest" };
+        var locations = new List<Location>() { location };
+        var start = DateTimeOffset.Parse("2022-09-07T12:45:11+00:00");
+        var end = DateTimeOffset.Parse("2022-09-07T13:45:11+00:00");
+        var dataSource = mockDataSource.Object;
+        var result = await dataSource.GetCarbonIntensityAsync(locations, start, end);
+        Assert.That(result.Count(), Is.EqualTo(0));
+        Assert.That(!result.Any(), Is.True);
+    }
+
+    private Mock<JsonDataSource> SetupMockDataSource() {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
         var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
         var mockDataSource = new Mock<JsonDataSource>(logger, monitor);

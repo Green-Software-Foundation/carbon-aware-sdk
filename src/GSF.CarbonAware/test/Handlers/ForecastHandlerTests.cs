@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace GSF.CarbonAware.Tests;
 
 [TestFixture]
-public class ForecastHandlerTests
+class ForecastHandlerTests
 {
     private Mock<ILogger<ForecastHandler>>? Logger { get; set; }
 
@@ -28,7 +28,6 @@ public class ForecastHandlerTests
     public async Task GetCurrentForecastAsync_Succeed_Call_MockDataSource_WithOutputData(string location1, string? location2, DateTimeOffset? start, DateTimeOffset? end, int? duration)
     {
         var data = new global::CarbonAware.Model.EmissionsForecast {
-                RequestedAt = DateTimeOffset.Now,
                 GeneratedAt = DateTimeOffset.Now - TimeSpan.FromMinutes(1),
                 ForecastData = TestData.GetForecast("2022-03-07T01:00:00").ForecastData
         };
@@ -45,7 +44,6 @@ public class ForecastHandlerTests
     public async Task GetForecastByDateAsync_Succeed_Call_MockDataSource_WithOutputData(string location, DateTimeOffset? start, DateTimeOffset? end, DateTimeOffset requestedAt, int? duration)
     {
         var data = new global::CarbonAware.Model.EmissionsForecast {
-            RequestedAt = requestedAt,
             GeneratedAt = DateTimeOffset.UtcNow - TimeSpan.FromMinutes(1),
             ForecastData = TestData.GetForecast("2022-03-07T01:00:00").ForecastData,
         };
@@ -53,7 +51,6 @@ public class ForecastHandlerTests
         var datasource = CreateForecastByDateDataSource(data, requestedAt);
         var handler = new ForecastHandler(Logger!.Object, datasource.Object);
         var result = await handler.GetForecastByDateAsync(location, start, end, requestedAt, duration);
-        Assert.That(result.RequestedAt, Is.EqualTo(requestedAt));
     }
 
     [Test]
@@ -225,7 +222,7 @@ public class ForecastHandlerTests
 
         datasource
             .Setup(x => x.GetCarbonIntensityForecastAsync(It.IsAny<Location>(), It.IsAny<DateTimeOffset>()))
-            .ThrowsAsync(new CarbonAware.Exceptions.CarbonAwareException(""));
+            .ThrowsAsync(new CarbonAware.Exceptions.CarbonAwareException("", It.IsAny<Exception>()));
 
         return datasource;
     }

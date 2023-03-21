@@ -1,5 +1,6 @@
 using CarbonAware;
 using CarbonAware.WebApi.Configuration;
+using Microsoft.AspNetCore.StaticFiles;
 using CarbonAware.WebApi.Filters;
 using GSF.CarbonAware.Configuration;
 using GSF.CarbonAware.Exceptions;
@@ -95,6 +96,13 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".yaml"] = "application/x-yaml";
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider
+});
 
 app.UseRouting();
 

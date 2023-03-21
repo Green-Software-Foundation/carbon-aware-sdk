@@ -2,7 +2,7 @@
 
 namespace CarbonAware.DataSources.WattTime;
 
-public class WattTimeClientException : CarbonAwareException
+internal class WattTimeClientException : CarbonAwareException
 {
     public WattTimeClientException(string message) : base(message)
     {

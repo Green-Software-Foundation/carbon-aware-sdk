@@ -8,10 +8,10 @@ on:
     paths:
       - 'src/**'
       - '.github/workflows/**'
-      - 'samples/azure-function/**'
+      - 'samples/azure/azure-function/**'
       
 env:
-  DOCKERFILE_PATH: samples/azure-function/Dockerfile
+  DOCKERFILE_PATH: samples/azure/azure-function/Dockerfile
   CONTAINER_IMAGE_NAME: runnable-container
   CONTAINER_RUNTIME_NAME: az-func
 

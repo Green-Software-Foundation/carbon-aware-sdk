@@ -1,10 +1,10 @@
-﻿using CarbonAware.DataSources.Json.Configuration;
-using CarbonAware.DataSources.Mocks;
+﻿using CarbonAware.Interfaces;
+using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.Model;
 using System.Text.Json;
 
 namespace CarbonAware.DataSources.Json.Mocks;
-public class JsonDataSourceMocker : IDataSourceMocker
+internal class JsonDataSourceMocker : IDataSourceMocker
 {
     public JsonDataSourceMocker() { }
 

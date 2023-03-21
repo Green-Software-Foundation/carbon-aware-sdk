@@ -3,7 +3,7 @@ using CarbonAware.Model;
 
 namespace CarbonAware.LocationSources.Test;
 
-public static class Constants
+internal static class Constants
 {
 
     public static readonly NamedGeoposition EastUsRegion = new () {

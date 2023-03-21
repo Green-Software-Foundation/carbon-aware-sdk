@@ -1,4 +1,4 @@
-﻿using CarbonAware.DataSources.Mocks;
+﻿using CarbonAware.Interfaces;
 using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.DataSources.WattTime.Model;
 using System.Net;
@@ -9,7 +9,7 @@ using WireMock.ResponseBuilders;
 using WireMock.Server;
 
 namespace CarbonAware.DataSources.WattTime.Mocks;
-public class WattTimeDataSourceMocker : IDataSourceMocker
+internal class WattTimeDataSourceMocker : IDataSourceMocker
 {
     protected WireMockServer _server;
 

@@ -1,9 +1,8 @@
 ﻿using CarbonAware.Model;
-using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Tests;
 
-public class EmissionsDataTests
+class EmissionsDataTests
 {
     [SetUp]
     public void Setup()

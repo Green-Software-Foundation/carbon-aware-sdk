@@ -11,7 +11,7 @@ namespace CarbonAware.DataSources.ElectricityMaps;
 /// <summary>
 /// Represents a Electricity Maps data source.
 /// </summary>
-public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSource
+internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSource
 {
     public string _name => "ElectricityMapsDataSource";
 
@@ -61,7 +61,6 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
         var emissionsForecast = (EmissionsForecast)forecast;
         var duration = emissionsForecast.GetDurationBetweenForecastDataPoints();
         emissionsForecast.Location = location;
-        emissionsForecast.RequestedAt = requestedAt;
         emissionsForecast.ForecastData = emissionsForecast.ForecastData.Select(d =>
         {
             d.Location = location.Name ?? string.Empty;
@@ -143,7 +142,7 @@ public class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSour
         emissions = data.Select(d =>
         {
             var emission = (EmissionsData) d;
-            emission.Location = location.Name;
+            emission.Location = location.Name ?? string.Empty;
             emission.Time = d.DateTime;
             emission.Duration = duration;
             return emission;

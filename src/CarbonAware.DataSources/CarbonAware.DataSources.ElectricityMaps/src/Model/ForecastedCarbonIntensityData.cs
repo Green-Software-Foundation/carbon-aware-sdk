@@ -7,7 +7,7 @@ namespace CarbonAware.DataSources.ElectricityMaps.Model;
 /// A collection of forecast carbon intensity instances.
 /// </summary>
 [Serializable]
-public record ForecastedCarbonIntensityData
+internal record ForecastedCarbonIntensityData
 {
     /// <summary>
     /// Zone.
@@ -41,7 +41,7 @@ public record ForecastedCarbonIntensityData
 /// A forecast for a given time period.
 /// </summary>
 [Serializable]
-public record Forecast
+internal record Forecast
 {
     /// <summary>
     /// Carbon Intensity value

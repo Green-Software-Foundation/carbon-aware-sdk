@@ -1,7 +1,7 @@
 using CarbonAware.Configuration;
+using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.Exceptions;
-using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -9,7 +9,7 @@ using System.Net;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Configuration;
 
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddElectricityMapsForecastDataSource(this IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
     {

@@ -1,7 +1,7 @@
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.DataSources.ElectricityMaps.Model;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
-using CarbonAware.LocationSources.Exceptions;
 using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -9,7 +9,7 @@ using Moq;
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
 [TestFixture]
-public class ElectricityMapsDataSourceTests
+class ElectricityMapsDataSourceTests
 {
     private Mock<ILogger<ElectricityMapsDataSource>> _logger { get; set; }
 
