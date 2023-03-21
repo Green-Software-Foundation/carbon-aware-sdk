@@ -129,8 +129,8 @@ public abstract class IntegrationTestingBase
     {
         if (_dataSource == DataSourceType.JSON)
         {
-            // To force WebApplication to consume new JSON datasorce it needs to be restarted.
-            // This is a direct result of JSON caching in the CatbonAware code 
+            // To force WebApplication to consume new JSON datasource it needs to be restarted.
+            // This is a direct result of JSON caching in the CarbonAware code 
             _factory.Dispose();
             _factory = new WebApplicationFactory<Program>();
             _client = _factory.CreateClient();
