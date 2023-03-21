@@ -90,7 +90,7 @@ class JsonDataSourceTests
     {
         var mockDataSource = SetupMockDataSource();
 
-        var location = new Location { Name = "westus" };        
+        var location = new Location { Name = "westus" };
 
         var dataSource = mockDataSource.Object;
         var result = await dataSource.GetCurrentCarbonIntensityForecastAsync(location);
@@ -116,7 +116,7 @@ class JsonDataSourceTests
         var logger = Mock.Of<ILogger<JsonDataSource>>();
         var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
         var mockDataSource = new Mock<JsonDataSource>(logger, monitor);
-        
+
         mockDataSource.Protected()
             .Setup<Task<List<EmissionsData>?>>("GetJsonDataAsync")
             .ReturnsAsync(new List<EmissionsData>())
@@ -132,7 +132,8 @@ class JsonDataSourceTests
         Assert.That(!result.Any(), Is.True);
     }
 
-    private Mock<JsonDataSource> SetupMockDataSource() {
+    private Mock<JsonDataSource> SetupMockDataSource()
+    {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
         var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
         var mockDataSource = new Mock<JsonDataSource>(logger, monitor);
