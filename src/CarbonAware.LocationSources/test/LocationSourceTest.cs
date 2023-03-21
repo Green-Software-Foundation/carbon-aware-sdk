@@ -14,7 +14,6 @@ namespace CarbonAware.LocationSources.Test;
 [TestFixture]
 class LocationSourceTest
 {
-
     private string _goodFile { get; set; }
     private string _badFile { get; set; }
     private string _dupFile { get; set; }
@@ -229,6 +228,28 @@ class LocationSourceTest
         {
             await locationSource.ToGeopositionLocationAsync(inputLocation);
         });
+    }
+
+    [Test]
+    public async Task GetGeopositionLocationsAsync_ReturnsListOfLocations()
+    {
+        var configuration = new LocationDataSourcesConfiguration();
+        configuration.LocationSourceFiles.Add(new LocationSourceFile
+        {
+            Prefix = "prefix",
+            Delimiter = "-",
+            DataFileLocation = _goodFile
+        });
+        var options = new Mock<IOptionsMonitor<LocationDataSourcesConfiguration>>();
+        options.Setup(o => o.CurrentValue).Returns(() => configuration);
+        var logger = Mock.Of<ILogger<LocationSource>>();
+        var locationSource = new LocationSource(logger, options.Object);
+
+        var allLocations = await locationSource.GetGeopositionLocationsAsync();
+
+        Assert.That(allLocations.Count, Is.EqualTo(3));
+        AssertLocationsEqual(Constants.LocationEastUs, allLocations["prefix-test-eastus"]);
+        AssertLocationsEqual(Constants.LocationWestUs, allLocations["prefix-test-westus"]);
     }
 
     [OneTimeTearDown]

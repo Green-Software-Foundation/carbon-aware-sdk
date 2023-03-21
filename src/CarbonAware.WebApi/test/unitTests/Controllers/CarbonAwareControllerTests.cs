@@ -10,6 +10,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 /// <summary>
 /// Tests that the Web API controller handles and packages various responses from a plugin properly 
@@ -242,5 +243,56 @@ class CarbonAwareControllerTests : TestsBase
 
         //Assert
         TestHelpers.AssertStatusCode(result, HttpStatusCode.NoContent);
+    }
+
+    [Test]
+    public async Task BatchForecastDataAsync_SuccessfulCallReturnsOk()
+    {
+        // Arrange
+        var handler = new Mock<IForecastHandler>();
+        var controller = new CarbonAwareController(this.MockCarbonAwareLogger.Object, CreateEmissionsHandler(new List<EmissionsData>()).Object, handler.Object, CreateLocations(false).Object);
+
+        EmissionsForecastBatchParametersDTO emissionsForecastBatch = new()
+        {
+            SingleLocation = "Sydney",
+            Start = new DateTimeOffset(2022, 3, 1, 0, 0, 0, TimeSpan.Zero),
+            End = new DateTimeOffset(2022, 3, 1, 1, 0, 0, TimeSpan.Zero),
+            Requested = new DateTimeOffset(2022, 3, 1, 0, 0, 0, TimeSpan.Zero),
+            Duration = 60
+        };
+
+        EmissionsData emissionData = new()
+        {
+            Location = emissionsForecastBatch.SingleLocation,
+            Rating = 0.9,
+            Time = DateTime.Now
+        };
+
+        EmissionsForecast emissionsForecast = new()
+        {
+            RequestedAt = new DateTimeOffset(2022, 3, 1, 0, 0, 0, TimeSpan.Zero),
+            GeneratedAt = new DateTimeOffset(2022, 3, 2, 0, 0, 0, TimeSpan.Zero),
+            EmissionsDataPoints = new List<EmissionsData>() { emissionData },
+            OptimalDataPoints = new List<EmissionsData>() { emissionData },
+        };
+
+        handler.Setup(f => f.GetForecastByDateAsync(
+            emissionsForecastBatch.SingleLocation,
+            emissionsForecastBatch.Start,
+            emissionsForecastBatch.End,
+            emissionsForecastBatch.Requested,
+            emissionsForecastBatch.Duration)).ReturnsAsync(emissionsForecast);
+
+        // Act
+        IActionResult result = await controller.BatchForecastDataAsync(new List<EmissionsForecastBatchParametersDTO>() { emissionsForecastBatch });
+
+        //Assert
+        TestHelpers.AssertStatusCode(result, HttpStatusCode.OK);
+        handler.Verify(a => a.GetForecastByDateAsync(
+            It.IsAny<string>(),
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<int>()), Times.Once);
     }
 }

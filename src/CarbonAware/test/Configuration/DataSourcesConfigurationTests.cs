@@ -57,4 +57,40 @@ class DataSourcesConfigurationTests
         Assert.That(ex!.Message, Contains.Substring(errorMessage));
     }
 
+    [TestCase("WattTime", "Json", TestName = "Assert Configuration Type is forecast=WattTime and emissions=Json")]
+    [TestCase("WattTime", "ElectricityMaps", TestName = "Assert Configuration Type is forecast=WattTime and emissions=ElectricityMaps")]
+    [TestCase("Json", null, TestName = "Assert Configuration Type is forecast=Json and emissions=null")]
+    public void ConfigurationTypesAndSections_ReturnCorrectType(string forecastDataSource, string emissionsDataSource)
+    {
+        // Arrange
+        var inMemorySettings = new Dictionary<string, string>()
+        {
+            { "Configurations:WattTime:Type", "WattTime" },
+            { "Configurations:Json:Type", "Json" },
+            { "Configurations:ElectricityMaps:Type", "ElectricityMaps" }
+        };
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        var dataSourceConfig = new DataSourcesConfiguration()
+        {
+            EmissionsDataSource = emissionsDataSource,
+            ForecastDataSource = forecastDataSource,
+            ConfigurationSection = configuration.GetSection("Configurations")
+        };
+        
+        // Act
+        var emissionsType = dataSourceConfig.EmissionsConfigurationType();
+        var forecastType = dataSourceConfig.ForecastConfigurationType();
+        var emissionsSection = dataSourceConfig.EmissionsConfigurationSection();
+        var forecastSection = dataSourceConfig.ForecastConfigurationSection();
+
+        // Assert
+        Assert.That(emissionsDataSource, Is.EqualTo(emissionsType));
+        Assert.That(forecastDataSource, Is.EqualTo(forecastType));
+        Assert.That(emissionsSection.Value, Is.EqualTo(configuration.GetSection("Configurations").Value));
+        Assert.That(forecastSection.Value, Is.EqualTo(configuration.GetSection("Configurations").Value));
+    }
 }
