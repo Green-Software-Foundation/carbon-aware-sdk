@@ -25,7 +25,7 @@ jobs:
         close-issue-message: 'This issue has not had any activity for too long. If you believe this issue has been closed in error, please contact an administrator to re-open, or if absolutly relevant and necessary, create a new issue referencing this one. '
         stale-pr-message: 'This a stale pull request. Please review, update or/and close as necessary.'
         stale-issue-label: 'stale'
-        stale-pr-label: 'stale-pr'
+        stale-pr-label: 'stale'
         days-before-issue-stale: 120 #4 months old - initial value aimed to be reduced in the short terms
         days-before-issue-close: 20
         days-before-pr-stale: 120
