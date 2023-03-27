@@ -95,7 +95,7 @@ public class ElectricityMapsFreeClientTests
     }
 
     [Test]
-    public void AllPublicMethods_ThrowJsonException_WhenBadJsonIsReturned()
+    public void GetCurrentEmissionsAsync_ThrowJsonException_WhenBadJsonIsReturned()
     {
         // Arrange
         this.Configuration = GetValidConfiguration();
@@ -111,7 +111,7 @@ public class ElectricityMapsFreeClientTests
     }
 
     [Test]
-    public async Task GetLatestCarbonIntensityAsync_DeserializesExpectedResponse()
+    public async Task GetCurrentEmissionsAsync_DeserializesExpectedResponse()
     {
         // Arrange
         this.Configuration = GetValidConfiguration();
@@ -124,15 +124,15 @@ public class ElectricityMapsFreeClientTests
 
         // Act
         var latestData = await client.GetCurrentEmissionsAsync(TestLatitude, TestLongitude);
-        var dataPoint = latestData?.Data;
 
         // Assert
         Assert.That(latestData, Is.Not.Null);
-        Assert.That(latestData?.CountryCodeAbbreviation, Is.EqualTo(TestCountryCode));
+        var dataPoint = latestData.Data;
+        Assert.That(latestData.CountryCodeAbbreviation, Is.EqualTo(TestCountryCode));
         Assert.Multiple(() =>
         {
-            Assert.That(dataPoint?.Datetime, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
-            Assert.That(dataPoint?.CarbonIntensity, Is.EqualTo(999));
+            Assert.That(dataPoint.Datetime, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            Assert.That(dataPoint.CarbonIntensity, Is.EqualTo(999));
         });
     }
 

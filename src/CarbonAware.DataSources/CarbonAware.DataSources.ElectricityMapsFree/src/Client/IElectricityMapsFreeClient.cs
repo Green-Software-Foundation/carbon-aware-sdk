@@ -5,7 +5,7 @@ namespace CarbonAware.DataSources.ElectricityMapsFree.Client;
 /// <summary>
 /// An interface for interacting with the Electricity Maps Free API, also called CO2 Signal.
 /// </summary>
-public interface IElectricityMapsFreeClient
+internal interface IElectricityMapsFreeClient
 {
     public const string NamedClient = "ElectricityMapsFreeClient";
 

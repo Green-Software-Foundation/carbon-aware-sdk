@@ -11,16 +11,6 @@ namespace CarbonAware.DataSources.ElectricityMapsFree.Configuration;
 
 internal static class ServiceCollectionExtensions
 {
-    // ElectricityMapsFree does not implement IForecastDataSource
-    /*
-    public static IServiceCollection AddElectricityMapsFreeForecastDataSource(this IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
-    {
-        AddElectricityMapsFreeClient(services, dataSourcesConfig.ForecastConfigurationSection());
-        services.TryAddSingleton<IForecastDataSource, ElectricityMapsFreeDataSource>();
-        return services;
-    }
-    */
-    
     public static IServiceCollection AddElectricityMapsFreeEmissionsDataSource(this IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
     {
         AddElectricityMapsFreeClient(services, dataSourcesConfig.EmissionsConfigurationSection());

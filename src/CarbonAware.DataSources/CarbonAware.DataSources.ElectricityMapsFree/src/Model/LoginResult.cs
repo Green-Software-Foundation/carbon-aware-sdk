@@ -6,7 +6,7 @@ namespace CarbonAware.DataSources.ElectricityMapsFree.Model;
 /// Serializable object describing the electricityMap login response object.
 /// </summary>
 [Serializable]
-public record LoginResult
+internal record LoginResult
 {
     /// <summary>
     /// The Bearer Token used to authenticate future requests.

@@ -12,7 +12,7 @@ using System.Web;
 
 namespace CarbonAware.DataSources.ElectricityMapsFree.Client;
 
-public class ElectricityMapsFreeClient : IElectricityMapsFreeClient
+internal class ElectricityMapsFreeClient : IElectricityMapsFreeClient
 {
     private static readonly JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 

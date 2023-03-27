@@ -66,14 +66,7 @@ internal class ElectricityMapsFreeDataSource : IEmissionsDataSource
         {
             geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
 
-            if (geolocation.Latitude != null && geolocation.Longitude != null)
-            {
-                coordinatesAvailable = true;
-            }
-            else
-            {
-                coordinatesAvailable = false;
-            }
+            coordinatesAvailable = geolocation.Latitude != null && geolocation.Longitude != null;
         }
         catch (Exception)
         {

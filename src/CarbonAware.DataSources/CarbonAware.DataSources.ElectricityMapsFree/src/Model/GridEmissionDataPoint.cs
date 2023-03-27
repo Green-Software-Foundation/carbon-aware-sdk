@@ -6,7 +6,7 @@ namespace CarbonAware.DataSources.ElectricityMapsFree.Model;
 /// An object describing the emissions for a given countryCode
 /// </summary>
 [Serializable]
-public record GridEmissionDataPoint
+internal record GridEmissionDataPoint
 {
 
     [JsonPropertyName("_disclaimer")]
@@ -26,7 +26,7 @@ public record GridEmissionDataPoint
 
 }
 
-public record Data
+internal record Data
 {
     [JsonPropertyName("datetime")]
     public DateTimeOffset? Datetime { get; set; }
@@ -38,7 +38,7 @@ public record Data
     public float? FossilFuelPercentage { get; set; }
 }
 
-public record Units
+internal record Units
 {
     [JsonPropertyName("carbonIntensity")]
     public string CarbonIntensity { get; set; } = string.Empty;
