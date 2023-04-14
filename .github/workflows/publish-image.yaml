@@ -1,0 +1,53 @@
+name: "Build & Publish image"
+
+on:
+  push:
+    paths:
+      - './**'
+      - '.github/workflows/**'
+  pull_request:
+    branches: [ dev, main ]
+    paths:
+      - './**'
+      
+permissions:
+  contents: write
+  packages: write
+
+
+env:
+  REGISTRY: ghcr.io
+  SDK_TAG : '0.1.0'
+
+jobs:
+  export-registry:
+    runs-on: ubuntu-20.04
+    outputs:
+      registry: ${{ steps.export.outputs.registry }}
+    steps:
+      - id: export
+        run: |
+          # registry must be in lowercase
+          echo "registry=$(echo "${{ env.REGISTRY }}/${{ github.repository }}" | tr [:upper:] [:lower:])" >> $GITHUB_OUTPUT
+
+  publish-images:
+    runs-on: ubuntu-20.04
+    needs:
+    - export-registry
+    env:
+      REGISTRY: ${{ needs.export-registry.outputs.registry }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Login to ${{ env.REGISTRY }}
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push image
+        run: |
+          scripts/publish-image/build-publish-image.sh
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+          SDK_TAG: ${{ env.SDK_TAG }}
