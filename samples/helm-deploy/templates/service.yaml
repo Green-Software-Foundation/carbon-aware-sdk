@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: carbon-aware-sdk
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "carbon-aware-sdk.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: api-server-port
+      protocol: TCP
+  selector:
+    {{- include "carbon-aware-sdk.selectorLabels" . | nindent 4 }}

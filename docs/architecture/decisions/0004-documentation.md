@@ -110,7 +110,7 @@ following implementation of this ADR proposal:
  ┃ ┣ carbon-aware-webapi.md
  ┃ ┗ carbon-aware-cli.md
  ┣ samples/
- ┃ ┣ helmexample/
+ ┃ ┣ helm-deploy/
  ┃ ┃ ┗ README.md
  ┃ ┗ python-proxy-server/
  ┃   ┗ README.md

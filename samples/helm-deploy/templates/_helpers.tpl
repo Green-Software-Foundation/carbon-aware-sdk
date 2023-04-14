@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "helmexample.name" -}}
+{{- define "carbon-aware-sdk.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "helmexample.fullname" -}}
+{{- define "carbon-aware-sdk.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "helmexample.chart" -}}
+{{- define "carbon-aware-sdk.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "helmexample.labels" -}}
-helm.sh/chart: {{ include "helmexample.chart" . }}
-{{ include "helmexample.selectorLabels" . }}
+{{- define "carbon-aware-sdk.labels" -}}
+helm.sh/chart: {{ include "carbon-aware-sdk.chart" . }}
+{{ include "carbon-aware-sdk.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,18 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "helmexample.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "helmexample.name" . }}
+{{- define "carbon-aware-sdk.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "carbon-aware-sdk.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+name: carbon-aware-sdk
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "helmexample.serviceAccountName" -}}
+{{- define "carbon-aware-sdk.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "helmexample.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "carbon-aware-sdk.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}

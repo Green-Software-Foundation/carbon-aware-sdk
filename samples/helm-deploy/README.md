@@ -132,7 +132,7 @@ and going to credentials.
 To install your helm chart, you should run
 
 ```bash
-helm install <fullNameOverride> <helm-chart-name>/
+helm install carbon-aware ./samples/helm-deploy/
 ```
 
 (If you run into an error, see the [troubleshooting](#troubleshooting) section.
@@ -145,10 +145,18 @@ for your to copy and paste to deploy the chart. We've replicated below for quick
 reference (you will need to fill in `nameOverride` and `fullNameOverride`):
 
 ```bash
-export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=<nameOverride>,app.kubernetes.io/instance=<fullNameOverride>" -o jsonpath="{.items[0].metadata.name}")
-export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
-echo "Visit http://127.0.0.1:8080 to use your application"
-kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
+NAME: carbon-aware
+LAST DEPLOYED: Thu Apr 13 17:39:51 2023
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace default -l "app.kubernetes.io/name=carbon-aware-sdk,app.kubernetes.io/instance=carbon-aware" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace default $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  echo "Visit http://127.0.0.1:8080 to use your application"
+  kubectl --namespace default port-forward $POD_NAME 8080:$CONTAINER_PORT
 ```
 
 If the deployment works properly, you should be able to visit the link they

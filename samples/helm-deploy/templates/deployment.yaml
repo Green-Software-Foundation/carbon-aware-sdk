@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "carbon-aware-sdk.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "carbon-aware-sdk.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "carbon-aware-sdk.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "carbon-aware-sdk.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ .Values.rbac.serviceAccountName }}
+      containers:
+        - name: {{ .Values.image.name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - cd /app && sed "s/username/{{ .Values.image.auth.username }}/" -i appsettings.json && sed "s/password/{{ .Values.image.auth.password }}/" -i appsettings.json && dotnet CarbonAware.WebApi.dll
+          ports:
+            - name: api-server-port
+              containerPort: 7031
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
