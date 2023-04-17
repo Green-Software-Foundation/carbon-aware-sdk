@@ -29,3 +29,4 @@ jobs:
         days-before-issue-stale: 120 #4 months old - initial value aimed to be reduced in the short terms
         days-before-issue-close: 20
         days-before-pr-stale: 120
+        operations-per-run: 55 #was not processing all the issues and some issues that should have been stale were missed. This value based on current number of issues (43) and PRs (10)
