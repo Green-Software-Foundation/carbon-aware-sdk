@@ -1,7 +1,7 @@
 # 0012. Treat Electricity Maps and Electricity Maps Free as different, unrelated data sources
 
 ## Status
-Proposed
+Approved
 
 ## Context
 Electricity Maps offers two different services:
