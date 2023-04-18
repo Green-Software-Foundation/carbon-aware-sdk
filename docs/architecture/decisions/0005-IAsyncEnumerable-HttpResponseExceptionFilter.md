@@ -2,7 +2,7 @@
 
 ## Status
 
-Proposed
+Rejected (by design when proposed)
 
 ## Context
 
