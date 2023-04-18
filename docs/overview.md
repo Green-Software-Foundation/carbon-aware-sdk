@@ -59,6 +59,9 @@ environment:
     [free trial](https://api-portal.electricitymaps.com)). Note that the free
     trial has some
     [restrictions](./docs/selecting-a-data-source.md#restrictions-electricitymaps-free-trial-user)
+  - ElectricityMapsFree account - See
+    [instruction on ElectricityMapsFree](https://www.co2signal.com/#Subscriber-Email)
+    for details.
 
 Alternatively, you can also set up your environment using VSCode Remote
 Containers (Dev Container):
@@ -70,10 +73,11 @@ Containers (Dev Container):
 ## Data Sources
 
 We support multiple data sources for carbon data. At this time, a JSON file,
-[WattTime](https://www.watttime.org/), and
-[ElectricityMaps](https://www.electricitymaps.com/) are supported. To use
-WattTime data or Electricity Maps data, you'll need to acquire a license from
-them and set the appropriate configuration information.
+[WattTime](https://www.watttime.org/),
+[ElectricityMaps](https://www.electricitymaps.com/), and
+[ElectricityMapsFree](https://www.co2signal.com/) are supported. To use WattTime
+data or Electricity Maps data, you'll need to acquire a license from them and
+set the appropriate configuration information.
 
 You can also visit the
 [selecting-a-date-source.md](docs/../selecting-a-data-source.md) guide for more
@@ -164,7 +168,8 @@ Carbon Aware SDK Web API publishes the service on Port 80, so you need to map it
 to local port. Following commands maps it to Port 8080.
 
 You also need to configure the SDK with environment variables. They are minimum
-set when you use WattTime or ElectricityMaps as a data source.
+set when you use WattTime or ElectricityMaps or ElectricityMapsFree as a data
+source.
 
 ```bash
 $ podman run -it --rm -p 8080:80 \
@@ -183,6 +188,16 @@ $ podman run -it --rm -p 8080:80 \
     -e DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps" \
     -e DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token" \
     -e DataSources__Configurations__ElectricityMaps__APIToken="electricityMapsToken" \
+  carbon-aware-sdk-webapi
+```
+
+or
+
+```bash
+$ podman run -it --rm -p 8080:80 \
+    -e DataSources__EmissionsDataSource="ElectricityMapsFree" \
+    -e DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree" \
+    -e DataSources__Configurations__ElectricityMapsFree__token="<YOUR_CO2SIGNAL_TOKEN>" \
   carbon-aware-sdk-webapi
 ```
 

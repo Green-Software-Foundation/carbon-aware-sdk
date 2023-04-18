@@ -15,6 +15,7 @@ namespace CarbonAware.WepApi.IntegrationTests;
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
+[TestFixture(DataSourceType.ElectricityMapsFree)]
 class CarbonAwareControllerTests : IntegrationTestingBase
 {
     private readonly string healthURI = "/health";
@@ -88,7 +89,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecastsCurrent_SupportedDataSources_ReturnsOk()
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
+        IgnoreTestForDataSource($"data source does not implement '{currentForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMapsFree);
 
         _dataSourceMocker?.SetupForecastMock();
 
@@ -168,7 +169,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-09-01T08:30:00Z", "2021-09-01T08:30:00Z", "2021-09-02T08:30:00Z", "westus", 3, TestName = "EmissionsForecastsBatch expects OK for multiple elements")]
     public async Task EmissionsForecastsBatch_SupportedDataSources_ReturnsOk(string reqAt, string start, string end, string location, int nelems)
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/batch'", DataSourceType.JSON, DataSourceType.ElectricityMaps);
+        IgnoreTestForDataSource($"data source does not implement '{batchForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMaps, DataSourceType.ElectricityMapsFree);
 
         var expectedRequestedAt = DateTimeOffset.Parse(reqAt);
         var expectedDataStartAt = DateTimeOffset.Parse(start);
@@ -208,6 +209,8 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-12-25", "2021-12-26", "westus", TestName = "EmissionsMarginalCarbonIntensity expects OK date only, no time")]
     public async Task EmissionsMarginalCarbonIntensity_ReturnsOk(string start, string end, string location)
     {
+        IgnoreTestForDataSource($"data source does not implement '{averageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
+
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
         _dataSourceMocker?.SetupDataMock(startDate, endDate, location);
@@ -272,6 +275,8 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-12-25", "2021-12-26", "westus", 3, TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for multiple element batch")]
     public async Task EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk(string start, string end, string location, int nelems)
     {
+        IgnoreTestForDataSource($"data source does not implement '{batchAverageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
+
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
         _dataSourceMocker?.SetupDataMock(startDate, endDate, location);

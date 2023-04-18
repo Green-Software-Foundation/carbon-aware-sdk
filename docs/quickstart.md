@@ -27,12 +27,11 @@ VSCode Remote Containers (Dev Container). To run locally:
 4. If you have a WattTime account registered (or other data source) - you will
    need to configure the application to use them. By default the SDK will use a
    pre-generated JSON file with random data. This random data is meant to make
-   it easier to get started with the SDK and doesn't
-   represent actual Carbon data. To configure the application,
-   you will need to set up specific environment variables or modify
-   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the
-   [overview.md](overview.md) file.
+   it easier to get started with the SDK and doesn't represent actual Carbon
+   data. To configure the application, you will need to set up specific
+   environment variables or modify `appsettings.json` inside of
+   `src/CarbonAware.WebApi/src` directory. Detailed information on configuration
+   can be found in the [overview.md](overview.md) file.
 
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
@@ -52,6 +51,14 @@ VSCode Remote Containers (Dev Container). To run locally:
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
+   ```
+
+   or
+
+   ```bash
+    export DataSources__EmissionsDataSource="ElectricityMapsFree"
+    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
+    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
    ```
 
 1. Run the CLI using `dotnet run`
@@ -87,9 +94,8 @@ Expected output:
 }
 ```
 
-For example, to get emissions in the `eastus`
-and `uksouth` region between `2022-08-23 at 11:15am` and
-`2022-08-23 at 11:20am`, run:
+For example, to get emissions in the `eastus` and `uksouth` region between
+`2022-08-23 at 11:15am` and `2022-08-23 at 11:20am`, run:
 `dotnet run -l eastus,uksouth -t 2022-08-23T11:15 --toTime 2022-08-23T11:20`
 
 Expected output:
@@ -181,9 +187,9 @@ First we need to set up the GitHub repository
    need to configure the application to use them. By default the SDK will use a
    pre-generated JSON file with random data. To configure the application, you
    will need to set up specific environment variables or modify
-   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory.
-   Detailed information on configuration can be found in the
-   [overview.md](overview.md) file.
+   `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory. Detailed
+   information on configuration can be found in the [overview.md](overview.md)
+   file.
 
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
@@ -205,6 +211,14 @@ First we need to set up the GitHub repository
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
+   or
+
+   ```bash
+    export DataSources__EmissionsDataSource="ElectricityMapsFree"
+    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
+    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
+   ```
+
 6. In the VSCode Terminal:
 7. Change directory to: `cd src/CarbonAware.WebApi/src`
 8. And run the application using: `dotnet run`
@@ -221,8 +235,8 @@ With the API running on `localhost:5073`, we can make HTTP requests to its
 endpoints, full endpoint description can be found here:
 <https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md>
 
-To get a list of all locations supported, you can use the Locations API
-endpoint `/locations` referenced in
+To get a list of all locations supported, you can use the Locations API endpoint
+`/locations` referenced in
 `src/CarbonAware.WebApi/src/Controllers/LocationsController.cs`.
 
 Expected Output:

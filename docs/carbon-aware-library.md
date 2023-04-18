@@ -30,6 +30,9 @@ same configuration
     - [ElectricityMaps](#electricitymaps)
       - [Locations](#locations)
       - [Exception Handling](#exception-handling)
+    - [ElectricityMapsFree](#electricitymapsfree)
+      - [Locations](#locations)
+      - [Exception Handling](#exception-handling)
 
 ## EmissionsHandler Functions
 
@@ -466,4 +469,25 @@ If ElectricityMaps responds with a 4XX or 5XX status code the ElectricityMaps
 Data Source will forward the response code and message back to the caller. Refer
 to the
 [ElectricityMapsHttpClientException](../src/CarbonAware.DataSources/CarbonAware.DataSources.ElectricityMaps/src/Client/ElectricityMapsClientHttpException.cs)
+class for documentation on expected error codes.
+
+### ElectricityMapsFree
+
+#### Locations
+
+Each ElectricityMapsFree emissions data point is associated with a particular
+named country code. While the ElectricityMapsFree endpoint supports calling with
+lat/long geoposition as well, the result will always be a corresponding country
+code.
+They provide a
+[route on their parent API (ElectricityMaps)](https://static.electricitymaps.com/api/docs/index.html#zones)
+which can be queried to list all the country codes you have access to given your
+token.
+
+#### Exception Handling
+
+If ElectricityMapsFree responds with a 4XX or 5XX status code the
+ElectricityMapsFree Data Source will forward the response code and message back
+to the caller. Refer to the
+[ElectricityMapsFreeHttpClientException](../src/CarbonAware.DataSources/CarbonAware.DataSources.ElectricityMapsFree/src/Client/ElectricityMapsFreeClientHttpException.cs)
 class for documentation on expected error codes.
