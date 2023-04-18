@@ -3,7 +3,7 @@
 
 ## Status
 
-Approved
+Accepted
 
 ## Context
 There is a command line interface in the Carbon Aware SDK that currently contains 2 commands - emissions and emissions-forecasts. Both the commands produces response in a JSON format. There is no option to specify tje output in a different format such as CSV.  
