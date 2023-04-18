@@ -1,0 +1,75 @@
+name: Publish container image to GitHub Packages
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  PACKAGE_NAME: carbon-aware-sdk
+  IMAGE_NAME: ${{ github.repository }}
+  NUM_KEEP_IMAGES: 3
+
+concurrency:
+  group: publish
+  cancel-in-progress: true
+
+jobs:
+  publish-container-image:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.3.0
+        with:
+          tags: |
+            type=raw,value=pre
+            type=sha
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: "{{defaultContext}}:src"
+          file: CarbonAware.WebApi/src/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          provenance: false
+      - name: List older container images to remove
+        run: |
+          JSON=`curl -sL -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ github.token }}" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/orgs/${{ github.repository_owner }}/packages/container/${{ env.PACKAGE_NAME }}/versions`
+          TAGS=(`echo "$JSON" | jq -r '[.[] | select((.metadata.container.tags | length) > 0)] | sort_by(.created_at) | reverse | .[].metadata.container.tags[0] | select(startswith("sha-"))'`)
+          for TAG in "${TAGS[@]:${{ env.NUM_KEEP_IMAGES }}}"; do
+            PARENT_SHA=`echo "$JSON" | jq -r ".[] | select(.metadata.container.tags | contains([\"$TAG\"])) | .name"`
+            PARENT_ID=`echo "$JSON" | jq -r ".[] | select(.name == \"$PARENT_SHA\") | .id"`
+            echo "$PARENT_ID" >> stale-images.txt
+            PLATFORM_SHAS=(`docker manifest inspect ghcr.io/${{ env.IMAGE_NAME }}@$PARENT_SHA | jq -r '.manifests[].digest'`)
+            for SHA in "${PLATFORM_SHAS[@]}"; do
+              CHILD_ID=`echo "$JSON" | jq -r ".[] | select(.name == \"$SHA\") | .id"`
+              echo "$CHILD_ID" >> stale-images.txt
+            done
+          done
+
+          STALE_LIST=`cat stale-images.txt | sed -z 's/\n/,/g' | sed -e 's/,$//'`
+          echo "STALE_LIST=$STALE_LIST" >> $GITHUB_ENV
+      - name: Remove stale packages
+        uses: actions/delete-package-versions@v4
+        with:
+          package-name: carbon-aware-sdk
+          package-type: container
+          package-version-ids: ${{ env.STALE_LIST }}
