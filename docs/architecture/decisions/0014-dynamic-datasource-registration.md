@@ -32,7 +32,7 @@ Be able to have outsourced Data Sources would benefit the overall system in case
 
 ## Design Considerations
 
-Currently Data Sources project is consumed by GSF library using Dependency Injection. Each GSF library handlers have references to IForecastDataSource and/or IEmissionsDataSource Data Source interfaces.
+Currently Data Sources project is consumed by GSF library using Dependency Injection. Each GSF library handlers have references to `IForecastDataSource` and/or `IEmissionsDataSource` Data Source interfaces.
 To modify this interaction and to make it more dynamic, these are things that required to be considered:
 
 - Public interfaces & Data Records
