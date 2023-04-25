@@ -2,11 +2,11 @@
 
 ## Status
 
-Accepted
+Proposed
 
 ## Context
 
-Decouple the data sources from the SDK into their own NuGet packages and create a mechanism to allow auto discovery and dynamic registration. This will allow for new data sources to be plugged in with minimum configuration and dependency on the existing code base. 
+Decouple the data sources from the SDK into their own NuGet packages will allow for new data sources to be plugged in with minimum configuration and dependency on the existing code base.
 
 ## Decision
 
@@ -22,9 +22,9 @@ Currently, the data source registration code is implemented using a switch state
 
 All the data sources are part of the current SDK, even if they are not used at runtime. For e.g., if both **IEmissions** and **IForecast** interfaces are configured to use WattTime, we need not package the JSON and ElectricityMaps data sources, thereby reducing solution’s size.
 
-- Reduction of Security threads
+- Reduction of Security threats
 
-Having decoupled data sources as packages, it allows us to control potential security threads that can be injected into the overall system, by providing the opportunity to certify them.
+Having decoupled data sources as packages, it allows us to control potential security threats that can be injected into the overall system, by providing the opportunity to certify them.
 
 ## Consequences
 
