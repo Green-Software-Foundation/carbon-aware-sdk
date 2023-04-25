@@ -1,9 +1,9 @@
 # Selecting a Data Source
 
 The Carbon Aware SDK includes access to various data sources of carbon aware
-data, including WattTime, ElectricityMaps, and a custom JSON source. These
-matrices are an attempt to track what features of the Carbon Aware SDK are
-enabled for which data sources.
+data, including WattTime, ElectricityMaps, ElectricityMapsFree, and a custom
+JSON source. These matrices are an attempt to track what features of the Carbon
+Aware SDK are enabled for which data sources.
 
 ## Contents
 
@@ -18,24 +18,24 @@ In the CarbonAware SDK configuration, you can set what data source to use as the
 `EmissionsDataSource` and the `ForecastDataSource`. There are also certain
 configuration fields that must be set in order to access the raw data.
 
-| Type | WattTime  | ElectricityMaps | JSON |
-|------|------|------|------|
-| Is Emissions DataSource | &#9989; | &#9989; | &#9989; |
-| Is Forecast DataSource | &#9989;  | &#9989; | &#9989; |
-| Makes HTTP(s) call | &#9989;  | &#9989; | &#10060; |
-| Can Use Custom Data | &#10060;  | &#10060; | &#9989; |
-| Supports Trial + Full Account | &#9989;  | &#9989; (*[see restriction below](#restrictions-electricitymaps-free-trial-user)) | N/A |
+| Type                          | WattTime  | ElectricityMaps                                                                    | ElectricityMapsFree | JSON     |
+|-------------------------------|-----------|------------------------------------------------------------------------------------|---------------------|----------|
+| Is Emissions DataSource       | &#9989;   | &#9989;                                                                            | &#9989;             | &#9989;  |
+| Is Forecast DataSource        | &#9989;   | &#9989;                                                                            | &#10060;            | &#9989;  |
+| Makes HTTP(s) call            | &#9989;   | &#9989;                                                                            | &#9989;             | &#10060; |
+| Can Use Custom Data           | &#10060;  | &#10060;                                                                           | &#10060;            | &#9989;  |
+| Supports Trial + Full Account | &#9989;   | &#9989; (\*[see restriction below](#restrictions-electricitymaps-free-trial-user)) | N/A                 | N/A      |
 
 ## Data Source Methods Available
 
 Not all data sources support all the routes provided in the interfaces
 (`IEmissionsDataSource`/`IForecastDataSource`).
 
-| Methods | WattTime | ElectricityMaps | JSON | CLI Usage | Web Api Usage | SDK Usage |
-| --- | :---: | :---: | :---: | :---: | :---: | :---: |
-| GetCarbonIntensityAsync | &#9989; | &#9989; | &#9989; | `emissions` | `emissions/bylocation` or `emissions/bylocations` or `emissions/bylocations/best` or `emissions/average`&#8209;`carbon`&#8209;`intensity` or `emissions/average`&#8209;`carbon`&#8209;`intensity/batch` | `GetEmissionsDataAsync(...)` or `GetBestEmissionsDataAsync(...)` or `GetAverageCarbonIntensityDataAsync(...)` |
-| GetCurrentForecastAsync | &#9989; | &#9989; | &#9989; | `emissions`&#8209;`forecasts` | `forecasts/current` | `GetCurrentForecastAsync(...)` |
-| GetForecastByDateAsync | &#9989; | &#10060; | &#10060; | `emissions`&#8209;`forecasts`&#32;&#8209;&#8209;`requested`&#8209;`at` | `forecasts/batch` with `requestedAt` field | `GetForecastByDateAsync(...)` |
+| Methods                 | WattTime | ElectricityMaps | ElectricityMapsFree |   JSON   | CLI Usage                                                              | Web Api Usage                                                                                                                                                                                           | SDK Usage                                                                                                     |
+| ----------------------- | :------: | :-------------: | :-----------------: | :------: | :--------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| GetCarbonIntensityAsync | &#9989;  |     &#9989;     |        &#9989;      | &#9989;  | `emissions`                                                            | `emissions/bylocation` or `emissions/bylocations` or `emissions/bylocations/best` or `emissions/average`&#8209;`carbon`&#8209;`intensity` or `emissions/average`&#8209;`carbon`&#8209;`intensity/batch` | `GetEmissionsDataAsync(...)` or `GetBestEmissionsDataAsync(...)` or `GetAverageCarbonIntensityDataAsync(...)` |
+| GetCurrentForecastAsync | &#9989;  |     &#9989;     |        &#10060;     | &#9989;  | `emissions`&#8209;`forecasts`                                          | `forecasts/current`                                                                                                                                                                                     | `GetCurrentForecastAsync(...)`                                                                                |
+| GetForecastByDateAsync  | &#9989;  |     &#10060;    |        &#10060;     | &#10060; | `emissions`&#8209;`forecasts`&#32;&#8209;&#8209;`requested`&#8209;`at` | `forecasts/batch` with `requestedAt` field                                                                                                                                                              | `GetForecastByDateAsync(...)`                                                                                 |
 
 ## Location Coverage
 
@@ -48,10 +48,13 @@ location config.
   [interactive coverage map](https://www.watttime.org/explorer) to find the
   relevant zone.
 - For `ElectricityMaps`, see their
-  [live map app](https://app.electricitymaps.com/map?utm_source=electricitymaps.com&utm_medium=website&utm_campaign=banner)
+  [live map app](https://app.electricitymaps.com/map)
   to find the relevant zone and see current data coming in.
+- For `ElectricityMapsFree`, see the Electricity Maps
+  [zone list](https://api.electricitymap.org/v3/zones) to find the relevant
+  zones.
 
-## Restrictions: ElectricityMaps Free Trial User
+## Restrictions: free trial of ElectricityMaps
 
 ElectricityMaps allows new users to create a free trial for 1 month access to
 the API. Free trial users have restricted access to the API and a slightly
