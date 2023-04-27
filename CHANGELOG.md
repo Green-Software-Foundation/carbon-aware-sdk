@@ -6,7 +6,8 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 
 ### Added 
 
-- Added Electricity Map support for forecasting.  This supports the commercial Electricity Map API only, and currently does not support the free Electrity Map API due to differences in the API's.
+- Added Electricity Maps (paid api) support for forecasting and historical data.  
+- Added ElectricityMaps (free api) support for historical data.  Note that this API does not support forecast capabilities. 
 
 ### Fixed
 
@@ -16,7 +17,7 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 
 #### API
 
-- No API changes have been made
+- `/locations` - Show the list of configured named locations that can be used in the API.
 
 #### API Deployment
 
