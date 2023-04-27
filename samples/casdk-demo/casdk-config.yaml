@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: casdk-config
+data:
+  DataSources__EmissionsDataSource: ElectricityMapsFree
+  DataSources__Configurations__ElectricityMapsFree__Type: ElectricityMapsFree
+  DataSources__Configurations__ElectricityMapsFree__token: YOUR_SECRET_TOKEN
