@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   publish-container-image:
+    if: github.repository == 'Green-Software-Foundation/carbon-aware-sdk'
     runs-on: ubuntu-latest
     permissions:
       packages: write

@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    if: github.repository == 'Green-Software-Foundation/carbon-aware-sdk'
     runs-on: windows-latest
 
     steps:
