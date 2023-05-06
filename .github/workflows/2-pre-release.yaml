@@ -56,11 +56,7 @@ jobs:
           $image_lower = "${{ env.IMAGE_NAME }}".ToLower()
 
           # Retrieve information of all of container images
-          $headers = @{"Authorization" = "Bearer ${{ github.token }}";
-                       "Accept" = "application/vnd.github+json";
-                       "X-GitHub-Api-Version" = "2022-11-28"}
-          $versions = Invoke-WebRequest -Headers $headers https://api.github.com/orgs/${{ github.repository_owner }}/packages/container/${{ env.PACKAGE_NAME }}/versions |
-              ConvertFrom-Json
+          $versions = gh api orgs/${{ github.repository_owner }}/packages/container/${{ env.PACKAGE_NAME }}/versions | ConvertFrom-Json
 
           $digests = New-Object System.Collections.Generic.HashSet[string]
           # Pick up digest of tagged images which should be removed
