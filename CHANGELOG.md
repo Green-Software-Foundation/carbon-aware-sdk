@@ -18,6 +18,7 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 #### API
 
 - `/locations` - Show the list of configured named locations that can be used in the API.
+- `/api/v1/swagger.yaml` - Provide OpenAPI document.
 
 #### API Deployment
 
