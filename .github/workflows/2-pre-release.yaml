@@ -83,6 +83,8 @@ jobs:
 
           $remove_images = $ids -join ","
           "REMOVE_IMAGES=$remove_images" >> $env:GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: pwsh
       - name: Remove stale packages
         uses: actions/delete-package-versions@v4
