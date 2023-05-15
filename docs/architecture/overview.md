@@ -12,7 +12,7 @@ of communication between adjacent tiers. This allows the SDK to switch to
 different implementations withing the same tier without any necessary code
 changes.
 
-![Tiers architecture diagram](../images/tiers-architecture.drawio.png)
+![Tiers architecture diagram](../images/revised-architecture.png)
 
 ## Consumer Tier
 
