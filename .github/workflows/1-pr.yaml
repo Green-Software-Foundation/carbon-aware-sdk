@@ -109,7 +109,7 @@ jobs:
           wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
 
   api-comparison:
-    needs: container-dotnet-build
+    needs: webapp-container-dotnet-build
     runs-on: ubuntu-latest
     defaults:
       run:
