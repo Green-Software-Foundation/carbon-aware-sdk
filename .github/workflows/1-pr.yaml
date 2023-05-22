@@ -109,13 +109,13 @@ jobs:
           wget -t 5 --waitretry=5 ${HEALTH_ENDPOINT}
 
   api-comparison:
-     needs: container-dotnet-build
-     runs-on: ubuntu-latest
-     defaults:
-       run:
-         working-directory: ./src/CarbonAware.WebApi/src
-     container:
-       image: mcr.microsoft.com/dotnet/sdk
+    needs: container-dotnet-build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/CarbonAware.WebApi/src
+    container:
+      image: mcr.microsoft.com/dotnet/sdk
     steps:
       - name: Checkout Dev Branch
         uses: actions/checkout@v3
