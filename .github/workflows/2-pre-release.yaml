@@ -1,4 +1,4 @@
-name: Publish container image to GitHub Packages
+name: 2-Publish container image to GitHub Packages
 
 on:
   push:
