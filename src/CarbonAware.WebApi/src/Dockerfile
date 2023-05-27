@@ -13,6 +13,10 @@ RUN dotnet tool restore && \
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
+# Install curl for health check
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl
+# Copy artifacts from build-env
 WORKDIR /app
 COPY --from=build-env /app/publish .
 ENTRYPOINT ["dotnet", "CarbonAware.WebApi.dll"]
