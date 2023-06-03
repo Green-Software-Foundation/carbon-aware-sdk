@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    if: github.repository == 'Green-Software-Foundation/carbon-aware-sdk'
+    if: github.repository == 'Green-Software-Foundation/carbon-aware-sdk' || vars.ENABLE_WEBAPP_WORKFLOW == 'true'
     runs-on: windows-latest
 
     steps:
