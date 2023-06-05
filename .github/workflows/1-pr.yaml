@@ -42,6 +42,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal
   
   webapp-container-dotnet-build:
+    needs: sln-build-and-test
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/dotnet/sdk:6.0
@@ -83,13 +84,14 @@ jobs:
         run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
         working-directory: ./src/CarbonAware.WebApi/src 
       
-      - name: Upload artifact
+      - name: Upload swagger artifact
         uses: actions/upload-artifact@v1
         with:
           name: pr-swagger.yaml
           path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
       
   webapp-container-validation:
+      needs: sln-build-and-test
       runs-on: ubuntu-latest
       steps:
       - name: Checkout Repository
@@ -150,6 +152,7 @@ jobs:
           diff ./wwwroot/api/v1/pr-swagger.yaml ./wwwroot/api/v1/swagger.yaml && echo "No API Changes detected" || echo "::warning:: API Changed"
   
   dotnet-pack:
+    needs: sln-build-and-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
