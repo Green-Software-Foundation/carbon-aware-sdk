@@ -1,42 +1,42 @@
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
+# # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: 2.a-Deploy Container to Azure Web App - carbon-aware-api
+# name: 2.a-Deploy Container to Azure Web App - carbon-aware-api
 
-# Check what scenario we are in
-# If push to dev, deploy latest pre image
+# # Check what scenario we are in
+# # If push to dev, deploy latest pre image
 
-# TODO:
-# - add how to get the latest pre package
-# - test?
-# - deploy (existing code to use new image instead of what would have come from build step)
+# # TODO:
+# # - add how to get the latest pre package
+# # - test?
+# # - deploy (existing code to use new image instead of what would have come from build step)
 
-on:
-  push:
-    branches:
-      - dev
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - dev
+#   workflow_dispatch:
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      packages: read
-    environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       packages: read
+#     environment:
+#       name: 'Production'
+#       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
-    steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: CarbonAwareApi
+#     steps:
+#       - name: Download artifact from build job
+#         uses: actions/download-artifact@v2
+#         with:
+#           name: CarbonAwareApi
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'carbon-aware-api'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D9BE266F4F034E79818711107BC7DDC5 }}
-          package: .
+#       - name: Deploy to Azure Web App
+#         id: deploy-to-webapp
+#         uses: azure/webapps-deploy@v2
+#         with:
+#           app-name: 'carbon-aware-api'
+#           slot-name: 'Production'
+#           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D9BE266F4F034E79818711107BC7DDC5 }}
+#           package: .

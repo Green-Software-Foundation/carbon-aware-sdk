@@ -181,3 +181,23 @@ jobs:
       - name: Build ConsoleApp
         run: dotnet build ${{ env.CONSOLE_APP }}
 
+  # Non-blocking job that checks .md file locations and also lints them
+  markdown-linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+        # See the script for details about exceptions to this check
+      - name: Markdown files should be located in docs folder
+        continue-on-error: true
+        run: "scripts/markdown/check-markdown-files.sh" 
+        
+      - name: markdownlint-cli2-action
+        uses: DavidAnson/markdownlint-cli2-action@v9
+        continue-on-error: true
+        with:
+          command: config
+          globs: |
+            ./custom.markdownlint.jsonc
+            {"*[^.github]/**,*"}.md
