@@ -11,6 +11,8 @@ env:
 jobs:
   publish-container-image:
     runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.retrieve-container-image.outputs.CONTAINER_IMAGE }}
     permissions:
       packages: write
     steps:
@@ -41,3 +43,18 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           provenance: false
+      - name: Retrieve container image
+        id: retrieve-container-image
+        run: |
+          CONTAINER_IMAGE=`echo "$DOCKER_METADATA_OUTPUT_TAGS" | head -n 1 | cut -d ':' -f 1`
+          echo "CONTAINER_IMAGE=$CONTAINER_IMAGE" > "$GITHUB_OUTPUT"
+
+  publish-java-client:
+    needs: publish-container-image
+    permissions:
+      packages: write
+      contents: write
+    uses: ./.github/workflows/2b-generate-java-client.yaml
+    with:
+      image: ${{ needs.publish-container-image.outputs.image }}
+      tag: latest
