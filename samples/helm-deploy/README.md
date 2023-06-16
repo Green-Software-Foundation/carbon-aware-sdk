@@ -1,58 +1,35 @@
-# How-To: Deploy to AKS using Helm
+# How-To: Deploy to Kubernetes using Helm
 
 ## Setup Dev Environment (optional)
 
-The easiest way to setup your environment is to use a VSCode dev container.
-Suggested setup is with the latest `debian` OS with `az CLI` and `kubectl-helm`
-packages enabled.
+The easiest way to setup your environment is to install [Kind](https://kind.sigs.k8s.io/) or [Minikube](https://minikube.sigs.k8s.io/docs/start/). It is also valid to setup a cloud provider kubernetes cluster (i.e. AKS, EKS, GKE, ...)
 
-## Setup Resource Group in Azure
-
-1. Create a new Kubernetes service following the default settings
-1. Create a container registry
-1. Create a key vault
-
-## Push an image to the container registry
+## Push an image to the Docker registry
 
 The following steps illustrates how to push a webservice image in order to be
-deployed in AKS using ACR (Azure Container Registry).
+deployed in Kubernetes clsuter.
 
-1. Build a `published` image using for instancee the following
-   [Dockerfile](https://docs.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows#create-the-dockerfile)
-
-   ```sh
-   docker build -t myapp:v1 .
-   ```
-
-1. Login into ACR using the username and password credentials that are needed in
-   order to push. See Access Keys section of the ACR Portal.
+1. Build an image using the following
+   [Dockerfile](.../../../../src/CarbonAware.WebApi/src/Dockerfile)
 
    ```sh
-   docker login <acrloginserver>.azurecr.io
+   cd <Dockerfile path>
+   docker build -t <registry>/myapp:v1 .
    ```
 
-1. Tag the image following ACR tagging scheme
+1. Login into docker using the username and password credentials that are needed in
+   order to push.
 
    ```sh
-   docker tag myapp <acrloginserver>.azurecr.io/myapp:v1
+   docker login 
    ```
 
-1. Push to ACR
+1. Push to Docker registry 
 
    ```sh
-   docker push <acrloginserver>.azurecr.io/myapp:v1
+   docker push <registry>/myapp:v1
    ```
 
-After these steps, using Azure's Portal ACR resource an image should be
-available under repositories following the naming convention mentioned above.
-
-### Give cluster access to ACR
-
-To attach the ACR to the cluster so that the image can be accessed, run
-
-```bash
-az aks update -n <cluster-name> -g <resource-group-name> --attach-acr <acr-name>
-```
 
 ## Create a new Helm chart (optional)
 
@@ -78,7 +55,7 @@ In `Chart.yaml`, we won't need to make any changes but make note of the chart
 In `values.yaml`, we need to change a couple fields. In the `image` section, you
 will need to set
 
-- The `repository` field to be `<acr-login-server>/<image-repository>`
+- The `repository` field to be `<image-repository>`
 - The `pullPolicy` field to be `IfNotPresent` (pulls a new image if not present)
   or `Always` (pulls a new image every time).
 - The `tag` field if you need a particuar tag version
@@ -94,38 +71,6 @@ In the `monitorConfig` section, you will need to adjust the `liveness` and
 `readiness` that the helm chart will ping to ensure the sdk is ready. As a
 default, you should set the path to `/health`.
 
-## Connecting to AKS from Helm
-
-To connect to AKS you need to be logged into the azure. Run `az login` and
-follow the prompts to get access to your azure subscriptions.
-
-To set the right subscription for the service, run:
-
-```bash
-az account set --subscription <subscription-id>
-```
-
-To give credentials for the resource group to the kubernetes service, run:
-
-```bash
-az aks get-credentials --resource-group <resource-group-name> --name <kubernetes-service-name>
-```
-
-With these two commands, helm should be setup to access AKS and be able to
-deploy on it. With the current setup, Helm is not directly accessing the ACR to
-pull the image, put instead is going through the cluster (which is why we gave
-the cluster authorized access to the ACR in the earlier section). If you do need
-helm to access your ACR for any reason, you will need to register it and login
-with the following
-
-```bash
-helm registry login <acr-login-server> \
-  --username <acr-username> \
-  --password <acr-password>
-```
-
-The neccessary credentials can be found by opening your ACR in the Azure portal
-and going to credentials.
 
 ### Installing your helm chart
 
@@ -176,32 +121,17 @@ that means that helm cannot connect to kubernetes. Helm connects to kuberentes
 either via the $KUBECONFIG env variable, or (if it's not set) looks for the
 default location kubectl files are location (`~/.kube/config`). This may occur
 the first time to try connecting the helm chart or if you clear the
-files/variables. To fix, follow the cli commands in the
-[connecting to AKS](#connecting-to-aks-from-helm) section and that should
-automatically generate the proper config files.
+files/variables.
 
 ### Error installing the helm chart
 
-If you get
-`Error: INSTALLATION FAILED: cannot re-use a name that is still in use` when you
+If you get `Error: INSTALLATION FAILED: cannot re-use a name that is still in use` when you
 tried to install the helm chart, it means there is still an instance of that
 chart installed. If you started this instance, you can simply skip the install
 step and continue. If you're unsure that it's the right installation, or you've
 made changes, first run `helm uninstall <fullNameOverride>`. Once it's
 uninstalled, you can redo the helm install step.
 
-### Error pulling image
-
-If there is an issue pulling the image from ACR, the pod will deploy but will
-fail to start. If you check the status of the pod (using the kubectl commands
-below in the azure portal) you will see the `ImagePullBackOff` status and a note
-that the pod has not started. This may be for a couple reasons:
-
-1. The cluster isn't authorized to access the ACR registry. Ensure you've run
-   [this command](#give-cluster-access-to-acr).
-2. The image reference in helm is incorrect. Review the Values.yaml
-   [section](#valuesyaml) to ensure you've got the right reference in the
-   image repository field.
 
 ### Error deploying the helm chart
 
@@ -225,15 +155,8 @@ can actual spin up correctly.
 
 ## References
 
-Helm 3: [docs](https://helm.sh/docs/),
+- Helm 3: [docs](https://helm.sh/docs/),
 [image docs](https://helm.sh/docs/chart_best_practices/pods/#images)
 
-MS Docs:
-[Creating an ingress controller in AKS](https://docs.microsoft.com/en-us/azure/aks/ingress-basic?tabs=azure-cli),
-[Authenticate with ACR from AKS](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration?tabs=azure-cli#access-with-kubernetes-secret)
-
-Github Issue:
-[Deploying a container from ACR to AKS](https://github.com/MicrosoftDocs/azure-docs/issues/33430)
-
-ContainIQ:
+- ContainIQ:
 [Troubleshooting ImagePullBackOff Error](https://www.containiq.com/post/kubernetes-imagepullbackoff)

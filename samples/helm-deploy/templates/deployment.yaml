@@ -19,7 +19,6 @@ spec:
       labels:
         {{- include "carbon-aware-sdk.selectorLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ .Values.rbac.serviceAccountName }}
       containers:
         - name: {{ .Values.image.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
