@@ -1,14 +1,18 @@
-﻿using CarbonAware.DataSources.WattTime.Client;
+﻿using CarbonAware.Configuration;
+using CarbonAware.DataSources.WattTime.Client;
 using CarbonAware.DataSources.WattTime.Model;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CarbonAware.DataSources.WattTime.Tests;
@@ -34,6 +38,14 @@ class WattTimeDataSourceTests
     // Conversion factors for asserting proper unit conversions
     private const double GRAMS_TO_POUNDS = 0.00220462262185;
     private const double KWH_TO_MWH = 0.001;
+
+    private readonly string TypeKey = $"Configurations:WattTime:Type";
+    private readonly string UsernameKey = $"Configurations:WattTime:Username";
+    private readonly string PasswordKey = $"Configurations:WattTime:Password";
+    private readonly string UseProxyKey = $"Configurations:WattTime:Proxy:UseProxy";
+    private readonly string ProxyUrlKey = $"Configurations:WattTime:Proxy:Url";
+    private readonly string ProxyUsernameKey = $"Configurations:WattTime:Proxy:Username";
+    private readonly string ProxyPasswordKey = $"Configurations:WattTime:Proxy:Password";
 
 
     [SetUp]
@@ -286,6 +298,81 @@ class WattTimeDataSourceTests
         List<double> actualDurationList = result.Select(e => e.Duration.TotalSeconds).ToList();
         
         CollectionAssert.AreEqual(expectedDurationList, actualDurationList);
+    }
+
+    [Test]
+    public void ConfigureDI_ClientProxyTest_With_Missing_ProxyURL_ThrowsException()
+    {
+        // Arrange
+        var inMemorySettings = new Dictionary<string, string> {
+            { TypeKey, "WattTime" },
+            { UsernameKey, "testUsername" },
+            { PasswordKey, "testPassword123!" },
+            { UseProxyKey, "true" },
+        };
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        var dataSourceConfig = new DataSourcesConfiguration()
+        {
+            EmissionsDataSource = "WattTime",
+            ForecastDataSource = "WattTime",
+            Section = configuration.GetSection("Configurations")
+        };
+
+        var serviceCollection = new ServiceCollection();
+
+        // Act & Assert
+        Assert.Throws<ConfigurationException>(() => WattTimeDataSource.ConfigureDI<IEmissionsDataSource>(serviceCollection, dataSourceConfig));
+        Assert.Throws<ConfigurationException>(() => WattTimeDataSource.ConfigureDI<IForecastDataSource>(serviceCollection, dataSourceConfig));
+    }
+
+    [TestCase(true, TestName = "ClientProxyTest, successful: denotes adding WattTime data sources using proxy.")]
+    [TestCase(false, TestName = "ClientProxyTest, successful: denotes adding WattTime data sources without using proxy.")]
+    public void ConfigureDI_ClientProxyTest_AddsDataSource(bool withProxyUrl)
+    {
+        // Arrange
+        var inMemorySettings = new Dictionary<string, string> {
+            { TypeKey, "WattTime" },
+            { UsernameKey, "testUsername" },
+            { PasswordKey, "testPassword123!" },
+            { UseProxyKey, withProxyUrl.ToString() },
+        };
+
+        if (withProxyUrl)
+        {
+            inMemorySettings.Add(ProxyUrlKey, "http://10.10.10.1");
+            inMemorySettings.Add(ProxyUsernameKey, "proxyUsername");
+            inMemorySettings.Add(ProxyPasswordKey, "proxyPassword");
+        }
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        var dataSourceConfig = new DataSourcesConfiguration()
+        {
+            EmissionsDataSource = "WattTime",
+            ForecastDataSource = "WattTime",
+            Section = configuration.GetSection("Configurations")
+        };
+
+        var serviceCollection = new ServiceCollection();
+        var emissionsDescriptor = new ServiceDescriptor(typeof(IEmissionsDataSource), typeof(WattTimeDataSource), ServiceLifetime.Singleton);
+        var forecastDescriptor = new ServiceDescriptor(typeof(IForecastDataSource), typeof(WattTimeDataSource), ServiceLifetime.Singleton);
+
+        Assert.That(!serviceCollection.Any( i => i.ToString() == emissionsDescriptor.ToString()));
+        Assert.That(!serviceCollection.Any( i => i.ToString() == forecastDescriptor.ToString()));
+
+        // Act
+        WattTimeDataSource.ConfigureDI<IEmissionsDataSource>(serviceCollection, dataSourceConfig);
+        WattTimeDataSource.ConfigureDI<IForecastDataSource>(serviceCollection, dataSourceConfig);
+
+        // Assert
+        Assert.That(serviceCollection.Any( i => i.ToString() == emissionsDescriptor.ToString()));
+        Assert.That(serviceCollection.Any( i => i.ToString() == forecastDescriptor.ToString()));
     }
 
     private void MockBalancingAuthorityLocationMapping()

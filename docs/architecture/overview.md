@@ -84,19 +84,14 @@ result.
 
 See the [data source README](./data-sources.md) for more detailed information.
 
-## Dependency Registration
+### Dependency Registration
 
-The SDK uses dependency injection to load the data sources based on set
-environment variables. To register a new dependency, a new
-ServiceCollectionExtension method must be defined. These dependencies are loaded
-in a hierarchical structure such that:
+The SDK uses dependency injection to load the data sources based on configuration. To register a new dependency, the data source musr define a static method `ConfigureDI<T>`. These dependencies are then loaded in the following manner:
 
-1. Each data source defines a `ServiceCollectionExtension` method.
-2. All available data sources are registered in the `DataSource.Registration`
-   project.
-3. The GSF library defines a `ServiceCollectionExtension` method where it
-   registers the data sources for the handlers to use.
-4. The `Program.cs` file registers the GSF library classes at startup
+1. Each data source defines a `ConfigureDI<T>` method.
+2. The GSF library defines a `ServiceCollectionExtension` method where it
+   uses the configuration settings to dynamically load and configure the user-specified data sources for the handlers to use.
+3. The `Program.cs` file registers the GSF library classes at startup
 
 ## Example Call Flow
 

@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.Interfaces;
 
-internal interface IForecastDataSource
+internal interface IForecastDataSource : IDataSource
 {
     /// <summary>
     /// Gets the current forecasted carbon intensity for a location

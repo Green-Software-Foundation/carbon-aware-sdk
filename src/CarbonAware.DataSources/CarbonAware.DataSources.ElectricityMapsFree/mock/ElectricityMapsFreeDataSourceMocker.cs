@@ -44,21 +44,11 @@ internal class ElectricityMapsFreeDataSourceMocker : IDataSourceMocker
         SetupResponseGivenGetRequest(Paths.Latest, data);
     }
 
-    public void SetupForecastMock()
-    {
-        throw new NotImplementedException();
-    }
+    public void SetupForecastMock() { }
 
-    public void SetupBatchForecastMock()
-    {
-        throw new NotImplementedException();
-    }
+    public void SetupBatchForecastMock() { }
 
-    public void Initialize()
-    {
-        // No initialization needed
-        return;
-    }
+    public void Initialize() { }
 
     public void Reset() => _server.Reset();
 

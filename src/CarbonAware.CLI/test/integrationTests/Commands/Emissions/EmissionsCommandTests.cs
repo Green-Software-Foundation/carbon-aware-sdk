@@ -1,4 +1,3 @@
-using CarbonAware.DataSources.Configuration;
 using NUnit.Framework;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;

@@ -1,0 +1,8 @@
+<Project>
+    <ItemGroup>
+        <DllFiles Include="$(MSBuildThisFileDirectory)/../lib/net6.0/*.dll" />
+    </ItemGroup>
+    <Target Name="CopyDllFiles" BeforeTargets="BeforeBuild">
+        <Copy SourceFiles="@(DllFiles)" DestinationFolder="$(TargetDir)" />
+    </Target>
+</Project>

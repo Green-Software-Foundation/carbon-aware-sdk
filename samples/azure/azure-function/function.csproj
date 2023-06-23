@@ -4,6 +4,9 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="CarbonAware.DataSources.Json" Version="1.0.0" />
+    <PackageReference Include="CarbonAware.DataSources.WattTime" Version="1.0.0" />
+    <PackageReference Include="GSF.CarbonAware" Version="1.0.0-beta" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />

@@ -160,8 +160,8 @@ class EmissionsHandlerTests
     }
 
     [TestCase("2000-01-01T00:00:00Z", "2000-01-02T00:00:00Z", 0, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: start & end")]
-    [TestCase("2000-01-01T00:00:00Z", null, 1000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: only start")]
-    [TestCase(null, null, 1000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: no start or end")]
+    [TestCase("2000-01-01T00:00:00Z", null, 10000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: only start")]
+    [TestCase(null, null, 10000, TestName = "GetBestEmissionsDataAsync calls data source with expected dates: no start or end")]
     public async Task GetBestEmissionsDataAsync_CallsWithExpectedDates(DateTimeOffset? start, DateTimeOffset? end, long tickTolerance)
     {
         // Arrange
@@ -203,7 +203,7 @@ class EmissionsHandlerTests
         // Because this method uses DateTimeOffset.UtcNow as a default, we cannot precisely check our date expectations
         // so instead, we test that the dates are within a tolerable range using DateTimeOffset Ticks.
         // 1 Second == 10,000,000 Ticks
-        // 1000 Ticks == 0.1 Milliseconds
+        // 10,000 Ticks == 1 Millisecond
         var minAllowableStartTicks = expectedStart.Ticks - tickTolerance;
         var maxAllowableStartTicks = expectedStart.Ticks + tickTolerance;
         var minAllowableEndTicks = expectedEnd.Ticks - tickTolerance;

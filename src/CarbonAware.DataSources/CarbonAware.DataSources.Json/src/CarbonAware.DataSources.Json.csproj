@@ -4,7 +4,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,11 +16,22 @@
   <ItemGroup>
     <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Mocks" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
-    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Add files required to create a package -->
+  <ItemGroup Label="FilesToCopy">
+    <Content Include="$(AssemblyName).targets" Pack="true"
+      PackagePath="build/$(AssemblyName).targets" />
+    <Content Include="$(TargetDir)/CarbonAware.dll" Pack="true" PackagePath="lib/net6.0/" />
+    <Content Include="$(TargetDir)/data-sources/**/*.json" Pack="true" PackagePath="data-sources/" />
+  </ItemGroup>
+
+  <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
+    <Content Include="$(TargetDir)/CarbonAware.pdb" Pack="true" PackagePath="lib/net6.0/" />
   </ItemGroup>
 </Project>

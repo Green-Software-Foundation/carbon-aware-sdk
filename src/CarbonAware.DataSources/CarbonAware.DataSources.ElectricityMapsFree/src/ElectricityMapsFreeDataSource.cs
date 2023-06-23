@@ -1,9 +1,16 @@
 ﻿using CarbonAware.DataSources.ElectricityMapsFree.Client;
+using CarbonAware.DataSources.ElectricityMapsFree.Configuration;
 using CarbonAware.DataSources.ElectricityMapsFree.Model;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
+using System.Net;
 using System.Diagnostics;
+using CarbonAware.Configuration;
 
 namespace CarbonAware.DataSources.ElectricityMapsFree;
 /// <summary>
@@ -40,6 +47,20 @@ internal class ElectricityMapsFreeDataSource : IEmissionsDataSource
         this._locationSource = locationSource;
     }
 
+    public static IServiceCollection ConfigureDI<T>(IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
+        where T : IDataSource
+    {
+        var configSection = dataSourcesConfig.ConfigurationSection<T>();
+        AddElectricityMapsFreeClient(services, configSection);
+        try
+        {
+            services.TryAddSingleton(typeof(T), typeof(ElectricityMapsFreeDataSource));
+        } catch (Exception ex)
+        {
+            throw new ArgumentException($"ElectricityMapsFreeDataSource is not a supported {typeof(T).Name} data source.", ex);
+        }
+        return services;
+    }
 
     /// <inheritdoc />
     public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
@@ -111,5 +132,34 @@ internal class ElectricityMapsFreeDataSource : IEmissionsDataSource
         }
 
         return EmissionsDataList;
+    }
+
+    private static void AddElectricityMapsFreeClient(IServiceCollection services, IConfigurationSection configSection)
+    {
+        services.Configure<ElectricityMapsFreeClientConfiguration>(c =>
+        {
+            configSection.Bind(c);
+        });
+
+        var httpClientBuilder = services.AddHttpClient<ElectricityMapsFreeClient>(IElectricityMapsFreeClient.NamedClient);
+
+        var Proxy = configSection.GetSection("Proxy").Get<WebProxyConfiguration>();
+        if (Proxy?.UseProxy == true)
+        {
+            if (String.IsNullOrEmpty(Proxy.Url))
+            {
+                throw new ConfigurationException("Proxy Url is not configured.");
+            }
+            httpClientBuilder.ConfigurePrimaryHttpMessageHandler(() => 
+                new HttpClientHandler() {
+                    Proxy = new WebProxy {
+                        Address = new Uri(Proxy.Url),
+                        Credentials = new NetworkCredential(Proxy.Username, Proxy.Password),
+                        BypassProxyOnLocal = true
+                    }
+                }
+            );
+        }
+        services.TryAddSingleton<IElectricityMapsFreeClient, ElectricityMapsFreeClient>();
     }
 }

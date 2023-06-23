@@ -30,23 +30,28 @@ jobs:
       - name: Docker Target Final
         run: |
           docker build --no-cache . -f ${{ env.DOCKERFILE_PATH }} -t ${{ env.CONTAINER_IMAGE_NAME }}
-          docker images -qf dangling=true | xargs --no-run-if-empty docker rmi
+          docker image prune -f
 
       - name: Docker Run Container
-        run: docker run -d --name ${{ env.CONTAINER_RUNTIME_NAME }} -p 8080:80 ${{ env.CONTAINER_IMAGE_NAME }}
+        run: |
+          docker run -d --name ${{ env.CONTAINER_RUNTIME_NAME }} -p 8080:80 ${{ env.CONTAINER_IMAGE_NAME }}
+          timeout 30 bash -c -- 'while [ -z "$(docker ps -q)" ]; do echo "waiting for container to start" && sleep 5s; done'
+          docker ps
 
       # Request fails with authentication error. Expected
       - name: Get Average Carbon Intensity
         run: |
           set +e
-          ret_code=$(wget -S -t 5 --waitretry=5 "http://0.0.0.0:8080/api/GetAverageCarbonIntensity?startDate=2022-03-01T15:30:00Z&endDate=2022-03-01T18:30:00Z&location=eastus" 2>&1 | grep "HTTP/" | awk '{print $2}')
+          ret_code=$(wget --server-response "http://0.0.0.0:8080/api/GetAverageCarbonIntensity?startDate=2022-03-01T15:30:00Z&endDate=2022-03-01T18:30:00Z&location=eastus" 2>&1 | awk '/^  HTTP/{print $2}')
+          echo "Return Code: $ret_code"
           set -e
-          [ "401" == $ret_code ]
+          [ "401" = "$ret_code" ] 
 
       # Request fails with authentication error. Expected
       - name: Get Current Forecast
         run: |
           set +e
-          ret_code=$(wget -S -t 5 --waitretry=5 "http://0.0.0.0:8080/api/GetCurrentForecast" --header "Content-Type: application/json" --post-data '{"startDate":"2022-11-02T15:30:00Z","endDate":"2022-11-02T18:30:00Z","location":"eastus","duration":"15"}' 2>&1 | grep "HTTP/" | awk '{print $2}')
+          ret_code=$(wget --server-response "http://0.0.0.0:8080/api/GetCurrentForecast" --header "Content-Type: application/json" --post-data '{"startDate":"2022-11-02T15:30:00Z","endDate":"2022-11-02T18:30:00Z","location":"eastus","duration":"15"}' 2>&1 | awk '/^  HTTP/{print $2}')
+          echo "Return Code: $ret_code"
           set -e
-          [ "401" == $ret_code ]
+          [ "401" = "$ret_code" ] 

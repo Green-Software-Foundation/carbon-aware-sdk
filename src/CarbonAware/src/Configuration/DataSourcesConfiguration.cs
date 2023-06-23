@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CarbonAware.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace CarbonAware.Configuration;
 internal class DataSourcesConfiguration
@@ -8,8 +9,28 @@ internal class DataSourcesConfiguration
     #nullable enable
     public string? EmissionsDataSource { get; set; }
     public string? ForecastDataSource { get; set; }
-    public IConfigurationSection? ConfigurationSection { get; set; }
+    public IConfigurationSection? Section { get; set; }
     #nullable disable
+
+    /// <summary>
+    /// Gets the "Type" field for configuration object associated with a setting by data source interface type.
+    /// </summary>
+    /// <returns>Returns the string value of the associated "Type" field.</returns>
+    public string ConfigurationType<T>() where T : IDataSource
+    {
+        if (typeof(T) == typeof(IEmissionsDataSource))
+        {
+            return EmissionsConfigurationType();
+        }
+        else if (typeof(T) == typeof(IForecastDataSource))
+        {
+            return ForecastConfigurationType();
+        }
+        else
+        {
+            throw new ArgumentException($"Data source interface type '{typeof(T)}' is not supported.");
+        }
+    }
 
     /// <summary>
     /// Gets the "Type" field for configuration object associated with EmissionsDataSource setting. 
@@ -27,6 +48,26 @@ internal class DataSourcesConfiguration
     public string ForecastConfigurationType()
     {
         return GetConfigurationType(ForecastDataSource);
+    }
+
+    /// <summary>
+    /// Gets the entire configuration object associated with a setting by data source interface type. 
+    /// </summary>
+    /// <returns>Returns the <see cref="IConfigurationSection"> of the associated data source interface.</returns>
+    public IConfigurationSection ConfigurationSection<T>() where T : IDataSource
+    {
+        if (typeof(T) == typeof(IEmissionsDataSource))
+        {
+            return EmissionsConfigurationSection();
+        }
+        else if (typeof(T) == typeof(IForecastDataSource))
+        {
+            return ForecastConfigurationSection();
+        }
+        else
+        {
+            throw new ArgumentException($"Data source interface type '{typeof(T)}' is not supported.");
+        }
     }
 
     /// <summary>
@@ -66,17 +107,17 @@ internal class DataSourcesConfiguration
 
     private string GetConfigurationType(string dataSourceName)
     {
-        return ConfigurationSection.GetValue<string>($"{dataSourceName}:Type");   
+        return Section.GetValue<string>($"{dataSourceName}:Type");   
     }
 
     private IConfigurationSection GetConfigurationSection(string dataSourceName)
     {
-        return ConfigurationSection.GetSection(dataSourceName);
+        return Section.GetSection(dataSourceName);
     }
 
     private bool ConfigurationSectionContainsKey(string key)
     {
-        foreach (var subsection in ConfigurationSection.GetChildren())
+        foreach (var subsection in Section.GetChildren())
         {
             if (subsection.Key == key)
             {

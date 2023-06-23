@@ -100,56 +100,28 @@ public class MyNewDataSource: IEmissionsDataSource
 
 ### Add Dependency Injection Configuration
 
-The SDK uses dependency injection to load registered data sources based on set
-environment variables. For a data source to be registered, it need to have a
-Service Collection Extension defined. To do so, add a `Configuration` directory
-in your data source project and create a new ServiceCollectionExtensions file.
-We have provided a command snippet below:
-
-```sh
-cd src/CarbonAware.DataSources/CarbonAware.DataSources.MyNewDataSource/src
-mkdir Configuration
-touch Configuration\ServiceCollectionExtensions.cs
-```
-
-Using the skeleton below, add the data source specific configuration and
-implementation instances to the service collection.
+The SDK uses dependency injection to load registered data sources based on configuration. For a data source to be registered, it needs to have a
+static method `ConfigureDI<T>` defined. We have provided an example below:
 
 ```csharp
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-namespace CarbonAware.DataSources.MyNewDataSource.Configuration;
-public static class ServiceCollectionExtensions
+public static IServiceCollection ConfigureDI<T>(IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
+    where T : IDataSource
 {
-    public static void AddMyNewDataSource(this IServiceCollection services)
+    var configSection = dataSourcesConfig.ConfigurationSection<T>();
+    AddMyNewDataSourceClient(services, configSection);
+    services.AddScoped<ISomeInterface, MyDataSourceDependency>();
+    try
     {
-        // ... register your data source with the IServiceCollection instance
+        services.TryAddSingleton(typeof(T), typeof(MyNewDataSource));
+    } catch (Exception ex)
+    {
+        throw new ArgumentException($"MyNewDataSource is not a supported {typeof(T).Name} data source.", ex);
     }
+    return services;
 }
 ```
 
-### Register the New Data Source
-
-Once the data source's ServiceCollectionExtensions is configured, it can be
-registered as an available data source for the SDK by adding to the switch
-statement found in the AddDataSourceService function of
-[this file](../../src/CarbonAware.DataSources/CarbonAware.DataSources.Registration\Configuration\ServiceCollectionExtensions.cs).
-Note you will need to add a new enum type to the `DataSourceType`
-[enum file](../../src/CarbonAware.DataSources/CarbonAware.DataSources.Registration/Configuration/DataSourceType.cs)
-to reference in the switch statement.
-
-```csharp
-    switch (dataSourceType)
-    {
-        ...
-        case DataSourceType.MyNewDataSourceEnum:
-        {
-            services.AddMyNewDataSource();
-            break;
-        }
-        ...
-    }
-```
+This function will be called at runtime to configure your data source like `MyNewDataSource.ConfigureDI<IEmissionsDataSource>(services, config);`. For more examples, check out the [implementations of the existing data sources](/src/CarbonAware.DataSources/).
 
 ### Adding Tests
 
@@ -180,7 +152,8 @@ setting:
 
 ```bash
 DataSources__EmissionsDataSource="MyNewDataSource"
-DataSources__Configurations__MyNewDataSource__Proxy__UseProxy=true
+DataSources__Configurations__MyNewDataSource__Username="MyNewDataSourceUser123"
+DataSources__Configurations__MyNewDataSource__Password="MyNewDataSourceP@ssword!"
 ```
 
 Both the WebAPI and the CLI read the env variables in so once set, you can spin

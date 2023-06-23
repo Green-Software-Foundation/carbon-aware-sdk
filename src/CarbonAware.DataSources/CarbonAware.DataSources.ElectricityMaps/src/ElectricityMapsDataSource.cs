@@ -1,10 +1,15 @@
+using CarbonAware.Configuration;
 using CarbonAware.DataSources.ElectricityMaps.Client;
+using CarbonAware.DataSources.ElectricityMaps.Configuration;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+using System.Net;
 
 namespace CarbonAware.DataSources.ElectricityMaps;
 
@@ -39,6 +44,21 @@ internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSo
         this._electricityMapsClient = client;
         this._locationSource = locationSource;
     }
+
+    public static IServiceCollection ConfigureDI<T>(IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
+        where T : IDataSource
+    {
+        var configSection = dataSourcesConfig.ConfigurationSection<T>();
+        AddElectricityMapsClient(services, configSection);
+        try
+        {
+            services.TryAddSingleton(typeof(T), typeof(ElectricityMapsDataSource));
+        } catch (Exception ex)
+        {
+            throw new ArgumentException($"ElectricityMapsDataSource is not a supported {typeof(T).Name} data source.", ex);
+        }
+        return services;
+    } 
 
     /// <inheritdoc />
     public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
@@ -175,5 +195,34 @@ internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSo
         // Handle chronological and reverse-chronological data by using `.Duration()` to get
         // the absolute value of the TimeSpan between the two points.
         return first.DateTime.Subtract(second.DateTime).Duration();
+    }
+
+    private static void AddElectricityMapsClient(IServiceCollection services, IConfigurationSection configSection)
+    {
+        services.Configure<ElectricityMapsClientConfiguration>(c =>
+        {
+            configSection.Bind(c);
+        });
+
+        var httpClientBuilder = services.AddHttpClient<ElectricityMapsClient>(IElectricityMapsClient.NamedClient);
+
+        var Proxy = configSection.GetSection("Proxy").Get<WebProxyConfiguration>();
+        if (Proxy?.UseProxy == true)
+        {
+            if (String.IsNullOrEmpty(Proxy.Url))
+            {
+                throw new ConfigurationException("Proxy Url is not configured.");
+            }
+            httpClientBuilder.ConfigurePrimaryHttpMessageHandler(() => 
+                new HttpClientHandler() {
+                    Proxy = new WebProxy {
+                        Address = new Uri(Proxy.Url),
+                        Credentials = new NetworkCredential(Proxy.Username, Proxy.Password),
+                        BypassProxyOnLocal = true
+                    }
+                }
+            );
+        }
+        services.TryAddSingleton<IElectricityMapsClient, ElectricityMapsClient>();
     }
 }

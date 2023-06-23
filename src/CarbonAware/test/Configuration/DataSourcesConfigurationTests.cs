@@ -27,7 +27,7 @@ class DataSourcesConfigurationTests
         {
             EmissionsDataSource = emissionsDataSource,
             ForecastDataSource = forecastDataSource,
-            ConfigurationSection = configuration.GetSection("Configurations")
+            Section = configuration.GetSection("Configurations")
         };
         
         Assert.DoesNotThrow(() => dataSourceConfig.AssertValid());
@@ -51,7 +51,7 @@ class DataSourcesConfigurationTests
         {
             EmissionsDataSource = emissionsDataSource,
             ForecastDataSource = forecastDataSource,
-            ConfigurationSection = configuration.GetSection("Configurations")
+            Section = configuration.GetSection("Configurations")
         };
         var ex = Assert.Throws<ArgumentException>(() => dataSourceConfig.AssertValid());
         Assert.That(ex!.Message, Contains.Substring(errorMessage));
@@ -78,7 +78,7 @@ class DataSourcesConfigurationTests
         {
             EmissionsDataSource = emissionsDataSource,
             ForecastDataSource = forecastDataSource,
-            ConfigurationSection = configuration.GetSection("Configurations")
+            Section = configuration.GetSection("Configurations")
         };
         
         // Act

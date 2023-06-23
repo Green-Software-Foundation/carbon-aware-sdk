@@ -26,8 +26,7 @@ class WattTimeClientConfigurationTests
 
     [TestCase("testuser", "12345", "not a url", TestName = "Validate throws: username; password; bad url")]
     [TestCase(null, "12345", "http://example.com", TestName = "Validate throws: no username; password; url")]
-    [TestCase("testuser", null, "http://example.com", TestName = "Validate throws: no username; password; url")]
-    [TestCase(null, "password", "http://example.com", TestName = "Validate throws: username; no password; url")]
+    [TestCase("testuser", null, "http://example.com", TestName = "Validate throws: username; no password; url")]
 
     public void Validate_Throws(string? username, string? password, string? url)
     {

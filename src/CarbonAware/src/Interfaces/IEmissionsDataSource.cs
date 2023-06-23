@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.Interfaces;
 
-internal interface IEmissionsDataSource
+internal interface IEmissionsDataSource : IDataSource
 {
     /// <summary>
     /// Gets the carbon intensity for multiple locations for a given start and end time

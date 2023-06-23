@@ -1,9 +1,9 @@
 using CarbonAware;
 using CarbonAware.WebApi.Configuration;
-using Microsoft.AspNetCore.StaticFiles;
 using CarbonAware.WebApi.Filters;
 using GSF.CarbonAware.Configuration;
 using GSF.CarbonAware.Exceptions;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;

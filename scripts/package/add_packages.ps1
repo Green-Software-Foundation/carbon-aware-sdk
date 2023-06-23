@@ -13,6 +13,10 @@ if ([string]::IsNullOrEmpty($DOTNET_PROJECT) -or [string]::IsNullOrEmpty($PACKAG
 
 $packages = @(
     "GSF.CarbonAware"
+    "CarbonAware.DataSources.Json"
+    "CarbonAware.DataSources.WattTime"
+    "CarbonAware.DataSources.ElectricityMaps"
+    "CarbonAware.DataSources.ElectricityMapsFree"
 )
 
 # Remove packages from project
@@ -21,6 +25,7 @@ foreach ($pname in $packages) {
 }
 
 Remove-Item -Recurse -Force ~/.nuget/packages/gsf.carbonaware*
+Remove-Item -Recurse -Force ~/.nuget/packages/carbonaware.datasources*
 
 # Add packages to project
 foreach ($pname in $packages) {

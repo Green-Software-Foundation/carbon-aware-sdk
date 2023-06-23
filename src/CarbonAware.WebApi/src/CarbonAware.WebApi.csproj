@@ -12,6 +12,7 @@
 
     <DocumentationFile>$(AssemblyName).xml</DocumentationFile>
     <NoWarn>1591</NoWarn>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,6 +30,14 @@
   <ItemGroup>
     <ProjectReference Include="..\..\CarbonAware\src\CarbonAware.csproj" />
     <ProjectReference Include="..\..\GSF.CarbonAware\src\GSF.CarbonAware.csproj" />
+    <ProjectReference
+      Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.Json\src\CarbonAware.DataSources.Json.csproj" />
+    <ProjectReference
+      Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.WattTime\src\CarbonAware.DataSources.WattTime.csproj" />
+    <ProjectReference
+      Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\src\CarbonAware.DataSources.ElectricityMaps.csproj" />
+    <ProjectReference
+      Include="..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMapsFree\src\CarbonAware.DataSources.ElectricityMapsFree.csproj" />
   </ItemGroup>
 
   <ItemGroup>

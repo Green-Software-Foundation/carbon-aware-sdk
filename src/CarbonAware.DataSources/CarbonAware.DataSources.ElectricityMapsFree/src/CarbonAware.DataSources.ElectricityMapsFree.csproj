@@ -8,12 +8,11 @@
   <ItemGroup>
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Tests" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Mocks" />
-    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
+    <Folder Include="Constants\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +21,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Constants\" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!-- Add files required to create a package -->
+  <ItemGroup Label="FilesToCopy">
+    <Content Include="$(AssemblyName).targets" Pack="true"
+      PackagePath="build/$(AssemblyName).targets" />
+    <Content Include="$(TargetDir)/CarbonAware.dll" Pack="true" PackagePath="lib/net6.0/" />
+  </ItemGroup>
+
+  <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
+    <Content Include="$(TargetDir)/CarbonAware.pdb" Pack="true" PackagePath="lib/net6.0/" />
   </ItemGroup>
 
 

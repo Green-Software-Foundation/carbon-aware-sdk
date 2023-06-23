@@ -31,7 +31,6 @@
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Mocks" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMapsFree.Tests" />
-    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
     <InternalsVisibleTo Include="CarbonAware.LocationSources" />
     <InternalsVisibleTo Include="CarbonAware.LocationSources.Test" />
     <InternalsVisibleTo Include="CarbonAware.Tests" />
