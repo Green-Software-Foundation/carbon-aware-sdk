@@ -1,0 +1,95 @@
+name: 2-Publish container image to GitHub Packages
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  PACKAGE_NAME: carbon-aware-sdk
+  IMAGE_NAME: ${{ github.repository }}
+  NUM_KEEP_IMAGES: 3
+
+concurrency:
+  group: publish
+  cancel-in-progress: true
+
+jobs:
+  publish-container-image:
+    if: github.repository == 'Green-Software-Foundation/carbon-aware-sdk' || vars.ENABLE_PRERELEASE_WORKFLOW == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v4.3.0
+        with:
+          tags: |
+            type=raw,value=pre
+            type=sha
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4.0.0
+        with:
+          context: "{{defaultContext}}:src"
+          file: CarbonAware.WebApi/src/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          provenance: false
+      - name: List older container images to remove
+        id: list-older-images
+        run: |
+          $image_lower = "${{ env.IMAGE_NAME }}".ToLower()
+
+          # Retrieve information of all of container images
+          $versions = gh api orgs/${{ github.repository_owner }}/packages/container/${{ env.PACKAGE_NAME }}/versions | ConvertFrom-Json
+
+          $digests = New-Object System.Collections.Generic.HashSet[string]
+          # Pick up digest of tagged images which should be removed
+          $versions |
+              Where-Object {$_.metadata.container.tags.Where({$_.StartsWith("sha-")}, "First").Count -gt 0} |
+              Sort-Object -Property created_at -Descending |
+              Select-Object -Skip ${{ env.NUM_KEEP_IMAGES }} |
+              ForEach-Object {[void]$digests.add($_.name)}
+
+          # Pick up digest of children tagged images which should be removed
+          $loop_set = New-Object System.Collections.Generic.HashSet[string]($digests)
+          $loop_set.foreach{
+            docker manifest inspect "${{ env.REGISTRY }}/$image_lower@$_" |
+            Out-String |
+            ConvertFrom-Json |
+            Select-Object -ExpandProperty "manifests" |
+            ForEach-Object {[void]$digests.Add($_.digest)}
+          }
+
+          # Retrieve IDs to be removed
+          $ids = $versions |
+              Where-Object {$digests.Contains($_.name)} |
+              Select-Object -ExpandProperty id
+
+          $remove_images = $ids -join ","
+          "REMOVE_IMAGES=$remove_images" >> $env:GITHUB_OUTPUT
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+      - name: Remove stale packages
+        uses: actions/delete-package-versions@v4
+        with:
+          package-name: carbon-aware-sdk
+          package-type: container
+          package-version-ids: ${{ steps.list-older-images.outputs.REMOVE_IMAGES }}

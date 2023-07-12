@@ -7,6 +7,7 @@ using Moq;
 using Moq.Contrib.HttpClient;
 using NUnit.Framework;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -18,7 +19,7 @@ using System.Threading.Tasks;
 namespace CarbonAware.DataSources.WattTime.Client.Tests;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-public class WattTimeClientTests
+class WattTimeClientTests
 {
     private Mock<HttpMessageHandler> Handler { get; set; }
 
@@ -134,7 +135,7 @@ public class WattTimeClientTests
         Assert.AreEqual(300, gridDataPoint.Frequency);
         Assert.AreEqual("mkt", gridDataPoint.Market);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), gridDataPoint.PointTime);
-        Assert.AreEqual("999.99", gridDataPoint.Value.ToString("0.00")); //Format float to avoid precision issues
+        Assert.AreEqual("999.99", gridDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", gridDataPoint.Version);
     }
 
@@ -192,7 +193,7 @@ public class WattTimeClientTests
         var forecastDataPoint = forecast?.ForecastData.First();
         Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint?.PointTime);
-        Assert.AreEqual("999.99", forecastDataPoint?.Value.ToString("0.00")); //Format float to avoid precision issues
+        Assert.AreEqual("999.99", forecastDataPoint?.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint?.Version);
     }
 
@@ -258,7 +259,7 @@ public class WattTimeClientTests
         var forecastDataPoint = forecast.ForecastData.ToList().First();
         Assert.AreEqual("ba", forecastDataPoint.BalancingAuthorityAbbreviation);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint.PointTime);
-        Assert.AreEqual("999.99", forecastDataPoint.Value.ToString("0.00")); //Format float to avoid precision issues
+        Assert.AreEqual("999.99", forecastDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint.Version);
     }
 

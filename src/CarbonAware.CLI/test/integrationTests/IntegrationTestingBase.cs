@@ -1,12 +1,13 @@
 ﻿using CarbonAware.DataSources.Configuration;
-using CarbonAware.DataSources.Mocks;
+using CarbonAware.Interfaces;
+using CarbonAware.DataSources.ElectricityMaps.Mocks;
+using CarbonAware.DataSources.ElectricityMapsFree.Mocks;
 using CarbonAware.DataSources.Json.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using NUnit.Framework;
 using System.CommandLine.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using CarbonAware.DataSources.ElectricityMaps.Mocks;
 
 namespace CarbonAware.CLI.IntegrationTests;
 
@@ -14,13 +15,13 @@ namespace CarbonAware.CLI.IntegrationTests;
 /// A base class that does all the common setup for the Integration Testing
 /// Overrides WebAPI factory by switching out different configurations via _datasource
 /// </summary>
-public abstract class IntegrationTestingBase
+internal abstract class IntegrationTestingBase
 {
     private string _executableName = "caw";
     internal DataSourceType _dataSource;
     internal string? _emissionsDataSourceEnv;
     internal string? _forecastDataSourceEnv;
-    protected IDataSourceMocker _dataSourceMocker;
+    protected private IDataSourceMocker _dataSourceMocker;
     protected TestConsole _console = new();
 
 
@@ -120,6 +121,15 @@ public abstract class IntegrationTestingBase
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APIToken", "test");
 
                     _dataSourceMocker = new ElectricityMapsDataSourceMocker();
+                    break;
+                }
+            case DataSourceType.ElectricityMapsFree:
+                {
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "ElectricityMapsFree");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMapsFree__Type", "ElectricityMapsFree");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMapsFree__token", "token");
+
+                    _dataSourceMocker = new ElectricityMapsFreeDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:

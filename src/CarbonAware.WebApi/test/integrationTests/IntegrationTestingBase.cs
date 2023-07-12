@@ -1,6 +1,6 @@
 ﻿using CarbonAware.DataSources.Configuration;
+using CarbonAware.Interfaces;
 using CarbonAware.DataSources.Json.Mocks;
-using CarbonAware.DataSources.Mocks;
 using CarbonAware.DataSources.ElectricityMaps.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -16,14 +16,14 @@ namespace CarbonAware.WebApi.IntegrationTests;
 /// A base class that does all the common setup for the Integration Testing
 /// Overrides WebAPI factory by switching out different configurations via _datasource
 /// </summary>
-public abstract class IntegrationTestingBase
+internal abstract class IntegrationTestingBase
 {
     internal DataSourceType _dataSource;
     internal string? _emissionsDataSourceEnv;
     internal string? _forecastDataSourceEnv;
     internal WebApplicationFactory<Program> _factory;
     protected HttpClient _client;
-    protected IDataSourceMocker _dataSourceMocker;
+    internal IDataSourceMocker _dataSourceMocker;
     private readonly MediaTypeHeaderValue _mediaType = new MediaTypeHeaderValue(MediaTypeNames.Application.Json);
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

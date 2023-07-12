@@ -5,7 +5,7 @@ namespace CarbonAware;
 /// <summary>
 /// Carbon Aware Variables bindings
 /// </summary>
-public class CarbonAwareVariablesConfiguration
+internal class CarbonAwareVariablesConfiguration
 {
     /// <summary>
     /// The Key containing the configuration values.

@@ -3,7 +3,7 @@ using CarbonAware.Interfaces;
 
 namespace CarbonAware.DataSources.WattTime.Client;
 
-public class WattTimeClientHttpException : CarbonAwareException, IHttpResponseException
+internal class WattTimeClientHttpException : CarbonAwareException, IHttpResponseException
 {
     /// <summary>
     /// Creates a new instance of the <see cref="WattTimeClientHttpException"/> class.

@@ -8,30 +8,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-        <_Parameter1>CarbonAware.DataSources.ElectricityMaps.Tests</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.ElectricityMaps.Mocks</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>DynamicProxyGenAssembly2</_Parameter1>
-    </AssemblyAttribute>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.ElectricityMaps.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
     <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
-	  <PackageReference Include="Microsoft.Extensions.Configuration"/>
-	  <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
-	  <PackageReference Include="Microsoft.Extensions.Hosting"/>
-	  <PackageReference Include="System.ComponentModel.Composition"/>
-	  <PackageReference Include="Microsoft.Extensions.Http"/>
-      <PackageReference Include="Microsoft.Net.Http.Headers"/>
-
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
 </Project>

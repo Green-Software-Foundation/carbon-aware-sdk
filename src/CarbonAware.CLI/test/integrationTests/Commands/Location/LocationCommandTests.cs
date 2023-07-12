@@ -10,7 +10,8 @@ namespace CarbonAware.CLI.IntegrationTests.Commands.Location;
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
-public class LocationCommandTests : IntegrationTestingBase
+[TestFixture(DataSourceType.ElectricityMapsFree)]
+class LocationCommandTests : IntegrationTestingBase
 {
     public LocationCommandTests(DataSourceType dataSource) : base(dataSource) { }
 

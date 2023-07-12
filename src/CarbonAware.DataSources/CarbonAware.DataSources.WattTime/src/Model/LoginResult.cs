@@ -6,7 +6,7 @@ namespace CarbonAware.DataSources.WattTime.Model;
 /// Serializable object describing the WattTime login response object.
 /// </summary>
 [Serializable]
-public record LoginResult
+internal record LoginResult
 {
     /// <summary>
     /// The Bearer token used to authenticate future requests.

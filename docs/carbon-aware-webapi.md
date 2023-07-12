@@ -36,6 +36,9 @@ client generation
     - [ElectricityMaps](#electricitymaps)
       - [Locations](#electricitymaps-locations)
       - [Exception Handling](#electricitymaps-exception-handling)
+    - [ElectricityMapsFree](#electricitymapsfree)
+      - [Locations](#locations)
+      - [Exception Handling](#exception-handling)
 
 ## Endpoints
 
@@ -481,17 +484,16 @@ specification
 
 1. Make sure the current directory is `<path to project root>/src/`
 
-   ```sh
-   dotnet restore
-   cd CarbonAware.WebApi/src
-   dotnet tool restore
-   dotnet build --configuration Release --no-restore
-   dotnet tool run swagger tofile --output ./api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
-   ```
-
-1. The `CarbonAware.WebApi/src/api/v1/swagger.yaml` file contains the supported
+    ```sh
+    dotnet restore
+    cd CarbonAware.WebApi/src
+    dotnet tool restore
+    dotnet build --configuration Release --no-restore
+    dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
+    ```
+1. The `CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml` file contains the supported 
    OpenApi specification.
-1. Use for instance [swagger editor](https://editor.swagger.io) to see and try
+1. Use for instance [swagger editor](https://editor.swagger.io) to see and try 
    the endpoint routes.
 
 ## Data Sources
@@ -547,4 +549,25 @@ If ElectricityMaps responds with a 4XX or 5XX status code the ElectricityMaps
 Data Source will forward the response code and message back to the caller. Refer
 to the
 [ElectricityMapsHttpClientException](../src/CarbonAware.DataSources/CarbonAware.DataSources.ElectricityMaps/src/Client/ElectricityMapsClientHttpException.cs)
+class for documentation on expected error codes.
+
+### ElectricityMapsFree
+
+#### Locations
+
+Each ElectricityMapsFree emissions data point is associated with a particular
+named country code. While the ElectricityMapsFree endpoint supports calling with
+lat/long geoposition as well, the result will always be a corresponding country
+code.
+They provide a
+[route on their parent API (ElectricityMaps)](https://static.electricitymaps.com/api/docs/index.html#zones)
+which can be queried to list all the country codes you have access to given your
+token.
+
+#### Exception Handling
+
+If ElectricityMapsFree responds with a 4XX or 5XX status code the
+ElectricityMapsFree Data Source will forward the response code and message back
+to the caller. Refer to the
+[ElectricityMapsFreeHttpClientException](../src/CarbonAware.DataSources/CarbonAware.DataSources.ElectricityMapsFree/src/Client/ElectricityMapsFreeClientHttpException.cs)
 class for documentation on expected error codes.

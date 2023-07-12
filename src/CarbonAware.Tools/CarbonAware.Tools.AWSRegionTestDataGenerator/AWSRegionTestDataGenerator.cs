@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace CarbonAware.Tools;
 
-public class AWSRegionTestDataGenerator
+internal class AWSRegionTestDataGenerator
 {
     public class AwsRegionData
     {

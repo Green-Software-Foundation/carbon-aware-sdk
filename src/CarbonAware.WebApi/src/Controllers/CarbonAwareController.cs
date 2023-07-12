@@ -34,7 +34,7 @@ public class CarbonAwareController : ControllerBase
     /// </summary>
     /// <param name="parameters">The request object <see cref="EmissionsDataForLocationsParametersDTO"/></param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
@@ -50,7 +50,7 @@ public class CarbonAwareController : ControllerBase
     /// </summary>
     /// <param name="parameters">The request object <see cref="EmissionsDataForLocationsParametersDTO"/></param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
@@ -68,7 +68,7 @@ public class CarbonAwareController : ControllerBase
     /// <param name="startTime"> [Optional] Start time for the data query.</param>
     /// <param name="endTime"> [Optional] End time for the data query.</param>
     /// <returns>Array of EmissionsData objects that contains the location, time and the rating in g/kWh</returns>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsData>))]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
@@ -107,7 +107,7 @@ public class CarbonAwareController : ControllerBase
     /// <response code="400">Returned if any of the input parameters are invalid</response>
     /// <response code="500">Internal server error</response>
     /// <response code="501">Returned if the underlying data source does not support forecasting</response>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsForecastDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
@@ -116,7 +116,7 @@ public class CarbonAwareController : ControllerBase
     public async Task<IActionResult> GetCurrentForecastData([FromQuery] EmissionsForecastCurrentParametersDTO parameters)
     {
         var forecasts = await _forecastHandler.GetCurrentForecastAsync(parameters.MultipleLocations!, parameters.Start, parameters.End, parameters.Duration);
-        var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f));
+        var results = forecasts.Select(f => EmissionsForecastDTO.FromEmissionsForecast(f, parameters.Requested, parameters.Start, parameters.End, parameters.Duration));
         return Ok(results);
     }
 
@@ -138,7 +138,7 @@ public class CarbonAwareController : ControllerBase
     /// <response code="400">Returned if any of the input parameters are invalid</response>
     /// <response code="500">Internal server error</response>
     /// <response code="501">Returned if the underlying data source does not support forecasting</response>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<EmissionsForecastDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
@@ -155,7 +155,7 @@ public class CarbonAwareController : ControllerBase
                 forecastParameters.Requested,
                 forecastParameters.Duration
             );
-            result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast));
+            result.Add(EmissionsForecastDTO.FromEmissionsForecast(forecast, forecastParameters.Requested, forecastParameters.Start, forecastParameters.End, forecastParameters.Duration));
         };
 
         return Ok(result);
@@ -172,7 +172,7 @@ public class CarbonAwareController : ControllerBase
     /// <response code="200">Returns a single object that contains the information about the request and the average marginal carbon intensity</response>
     /// <response code="400">Returned if any of the requested items are invalid</response>
     /// <response code="500">Internal server error</response>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CarbonIntensityDTO))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]
@@ -209,7 +209,7 @@ public class CarbonAwareController : ControllerBase
     /// <response code="200">Returns an array of objects where each contains location, time boundaries and the corresponding average marginal carbon intensity</response>
     /// <response code="400">Returned if any of the requested items are invalid</response>
     /// <response code="500">Internal server error</response>
-    [Produces("application/json")]
+    [Produces("application/json", "application/json; charset=utf-8")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<CarbonIntensityDTO>))]
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ValidationProblemDetails))]

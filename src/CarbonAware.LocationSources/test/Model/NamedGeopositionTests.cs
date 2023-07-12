@@ -1,4 +1,4 @@
-﻿using CarbonAware.LocationSources.Exceptions;
+﻿using CarbonAware.Exceptions;
 using CarbonAware.LocationSources.Model;
 using CarbonAware.Model;
 using NUnit.Framework;
@@ -40,7 +40,7 @@ class NamedGeopositionTests
         if (!string.IsNullOrWhiteSpace(latitude))
         {
             Assert.NotNull(location.Latitude);
-            Assert.AreEqual(latitude, location.Latitude.ToString());
+            Assert.AreEqual(latitude, location.LatitudeAsCultureInvariantString());
         }
         else
         {
@@ -50,7 +50,7 @@ class NamedGeopositionTests
         if (!string.IsNullOrWhiteSpace(longitude))
         {
             Assert.NotNull(location.Longitude);
-            Assert.AreEqual(longitude, location.Longitude.ToString());
+            Assert.AreEqual(longitude, location.LongitudeAsCultureInvariantString());
         }
         else
         {

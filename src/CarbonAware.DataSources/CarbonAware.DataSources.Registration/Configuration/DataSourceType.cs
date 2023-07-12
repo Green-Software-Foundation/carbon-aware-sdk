@@ -6,4 +6,5 @@ public enum DataSourceType
     WattTime,
     JSON,
     ElectricityMaps,
+    ElectricityMapsFree,
 }

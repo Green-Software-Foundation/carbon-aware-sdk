@@ -11,7 +11,8 @@ namespace CarbonAware.CLI.IntegrationTests.Commands.Emissions;
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
-public class EmissionsCommandTests : IntegrationTestingBase
+[TestFixture(DataSourceType.ElectricityMapsFree)]
+internal class EmissionsCommandTests : IntegrationTestingBase
 {
     public EmissionsCommandTests(DataSourceType dataSource) : base(dataSource) { }
 
@@ -133,6 +134,8 @@ public class EmissionsCommandTests : IntegrationTestingBase
     [Test]
     public async Task Emissions_AverageOption_ReturnsExpectedData()
     {
+        IgnoreTestForDataSource($"data source does not implement the '-a' switch", DataSourceType.ElectricityMapsFree);
+
         // Arrange
         var start = DateTimeOffset.Parse("2022-09-01T00:00:00Z");
         var end = DateTimeOffset.Parse("2022-09-01T03:00:00Z");
@@ -174,4 +177,12 @@ public class EmissionsCommandTests : IntegrationTestingBase
 
         Assert.AreEqual(expectedError, output);
     }
+    private void IgnoreTestForDataSource(string reasonMessage, params DataSourceType[] ignoredDataSources)
+    {
+        if (ignoredDataSources.Contains(_dataSource))
+        {
+            Assert.Ignore($"Ignoring test: {reasonMessage}");
+        }
+    }
+
 }

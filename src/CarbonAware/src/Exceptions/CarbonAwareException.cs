@@ -3,7 +3,7 @@ namespace CarbonAware.Exceptions;
 /// <summary>
 /// Represents a CarbonAware project exception.
 /// </summary>
-public class CarbonAwareException : Exception
+internal class CarbonAwareException : Exception
 {
     /// <summary>
     /// Creates a new instance of the <see cref="CarbonAwareException"/> class.

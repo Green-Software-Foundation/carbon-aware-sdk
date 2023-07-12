@@ -12,7 +12,8 @@ namespace CarbonAware.WepApi.IntegrationTests;
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
-public class LocationsControllerTests : IntegrationTestingBase
+[TestFixture(DataSourceType.ElectricityMapsFree)]
+class LocationsControllerTests : IntegrationTestingBase
 {
     private readonly string locationsURI = "/locations";
 

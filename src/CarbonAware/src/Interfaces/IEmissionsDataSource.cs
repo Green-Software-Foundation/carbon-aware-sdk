@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.Interfaces;
 
-public interface IEmissionsDataSource
+internal interface IEmissionsDataSource
 {
     /// <summary>
     /// Gets the carbon intensity for multiple locations for a given start and end time
@@ -9,7 +9,7 @@ public interface IEmissionsDataSource
     /// <param name="periodStartTime">The start time of the period.</param>
     /// <param name="periodEndTime">The end time of the period.</param>
     /// <returns>A list of emissions data for the given time period.</returns>
-    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime);
+    Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(IEnumerable<Location> locations, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime);
 
     /// <summary>
     /// Gets the carbon intensity for a single location for a given start and end time
@@ -18,5 +18,5 @@ public interface IEmissionsDataSource
     /// <param name="periodStartTime">The start time of the period.</param>
     /// <param name="periodEndTime">The end time of the period.</param>
     /// <returns>A list of emissions data for the given time period.</returns>
-    public Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime);
+    Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime);
 }

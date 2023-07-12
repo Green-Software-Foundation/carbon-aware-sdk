@@ -3,7 +3,7 @@ using CarbonAware.Model;
 
 namespace CarbonAware.Tests;
 
-public class EmissionsForecastTests
+class EmissionsForecastTests
 {
     [Test]
     public void GetDurationBetweenForecastDataPoints_ThrowsWhenZeroDatapointsReturned()

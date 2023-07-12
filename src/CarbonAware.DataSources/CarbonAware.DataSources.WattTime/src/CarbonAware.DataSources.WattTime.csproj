@@ -9,15 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.WattTime.Client.Tests</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.WattTime.Mocks</_Parameter1>
-    </AssemblyAttribute>
-    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-      <_Parameter1>CarbonAware.DataSources.WattTime.Tests</_Parameter1>
-    </AssemblyAttribute>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.WattTime.Tests" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Net.Http.Headers" Version="2.2.8" />
-    <PackageReference Include="WireMock.Net" Version="1.4.43"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
     <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 

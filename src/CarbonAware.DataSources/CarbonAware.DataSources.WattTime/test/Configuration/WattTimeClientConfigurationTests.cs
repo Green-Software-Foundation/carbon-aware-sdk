@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace CarbonAware.DataSources.WattTime.Tests;
 
 [TestFixture]
-public class WattTimeClientConfigurationTests
+class WattTimeClientConfigurationTests
 {
     [TestCase("testuser", "12345", "http://example.com", TestName = "Validate does not throw: username; password; url")]
     [TestCase("üsername", "password$1£", "http://example.com", TestName = "Validate does not throw; non-ASCII username; non-ASCII password; url")]

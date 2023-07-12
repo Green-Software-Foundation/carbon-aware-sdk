@@ -3,7 +3,7 @@ namespace CarbonAware.Extensions;
 /// <summary>
 /// Extension class for working with EmissionsData objects.
 /// </summary>
-public static class EmissionsDataExtensions
+internal static class EmissionsDataExtensions
 {
     /// <summary>
     /// Projects the data as a rolling average for a specified window size. 

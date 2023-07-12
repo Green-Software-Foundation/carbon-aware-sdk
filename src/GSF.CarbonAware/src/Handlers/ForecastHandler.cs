@@ -2,10 +2,10 @@ using CarbonAware;
 using CarbonAware.Exceptions;
 using CarbonAware.Extensions;
 using CarbonAware.Interfaces;
-using GSF.CarbonAware.Handlers.CarbonAware;
-using GSF.CarbonAware.Models;
+using CarbonAware.Model;
 using Microsoft.Extensions.Logging;
-using static GSF.CarbonAware.Handlers.CarbonAware.CarbonAwareParameters;
+using static CarbonAware.Model.CarbonAwareParameters;
+using EmissionsForecast = GSF.CarbonAware.Models.EmissionsForecast;
 
 namespace GSF.CarbonAware.Handlers;
 
@@ -88,16 +88,12 @@ internal sealed class ForecastHandler : IForecastHandler
         var windowSize = parameters.Duration;
         var firstDataPoint = forecast.ForecastData.First();
         var lastDataPoint = forecast.ForecastData.Last();
-        forecast.DataStartAt = parameters.GetStartOrDefault(firstDataPoint.Time);
-        forecast.DataEndAt = parameters.GetEndOrDefault(lastDataPoint.Time + lastDataPoint.Duration);
-        forecast.Validate();
-        forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, forecast.DataStartAt, forecast.DataEndAt);
-        forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, forecast.DataStartAt, forecast.DataEndAt);
+        var dataStartAt = parameters.GetStartOrDefault(firstDataPoint.Time);
+        var dataEndAt = parameters.GetEndOrDefault(lastDataPoint.Time + lastDataPoint.Duration);
+        forecast.Validate(dataStartAt, dataEndAt);
+        forecast.ForecastData = IntervalHelper.FilterByDuration(forecast.ForecastData, dataStartAt, dataEndAt);
+        forecast.ForecastData = forecast.ForecastData.RollingAverage(windowSize, dataStartAt, dataEndAt);
         forecast.OptimalDataPoints = CarbonAwareOptimalEmission.GetOptimalEmissions(forecast.ForecastData);
-        if (forecast.ForecastData.Any())
-        {
-            forecast.WindowSize = forecast.ForecastData.First().Duration;
-        }
         return forecast;
     }
 }

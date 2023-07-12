@@ -1,15 +1,16 @@
 using CarbonAware.Configuration;
+using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Configuration;
+using CarbonAware.DataSources.ElectricityMapsFree.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.Exceptions;
-using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace CarbonAware.DataSources.Configuration;
-public static class ServiceCollectionExtensions
+internal static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddDataSourceService(this IServiceCollection services, IConfiguration configuration)
     {
@@ -35,6 +36,11 @@ public static class ServiceCollectionExtensions
                 services.AddElectricityMapsEmissionsDataSource(dataSources);
                 break;
             }
+            case DataSourceType.ElectricityMapsFree:
+            {
+                services.AddElectricityMapsFreeEmissionsDataSource(dataSources);
+                break;
+            }
             case DataSourceType.None:
             {
                 services.TryAddSingleton<IEmissionsDataSource, NullEmissionsDataSource>();
@@ -57,6 +63,10 @@ public static class ServiceCollectionExtensions
             {
                 services.AddElectricityMapsForecastDataSource(dataSources);
                 break;
+            }
+            case DataSourceType.ElectricityMapsFree:
+            {
+                throw new ArgumentException("ElectricityMapsFree data source is not supported for forecast data");
             }
             case DataSourceType.None:
             {

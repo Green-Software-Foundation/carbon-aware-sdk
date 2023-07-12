@@ -12,7 +12,7 @@ using CarbonAware.DataSources.Json.Configuration;
 
 namespace CarbonAware.DataSources.Json.Tests;
 
-public class JsonDataSourceTests
+class JsonDataSourceTests
 {
     [Test]
     public async Task GetCarbonIntensityAsync_ByLocationMultiple()
@@ -82,6 +82,29 @@ public class JsonDataSourceTests
             Assert.IsTrue(locations.Where(loc => loc.Name == r.Location).Any());
         }
     }
+
+    [Test]
+    public async Task GetCarbonIntensityAsync_ReturnsEmptyEmissionData()
+    {
+        var logger = Mock.Of<ILogger<JsonDataSource>>();
+        var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
+        var mockDataSource = new Mock<JsonDataSource>(logger, monitor);
+        
+        mockDataSource.Protected()
+            .Setup<Task<List<EmissionsData>?>>("GetJsonDataAsync")
+            .ReturnsAsync(new List<EmissionsData>())
+            .Verifiable();
+
+        var location = new Location() { Name = "midwest" };
+        var locations = new List<Location>() { location };
+        var start = DateTimeOffset.Parse("2022-09-07T12:45:11+00:00");
+        var end = DateTimeOffset.Parse("2022-09-07T13:45:11+00:00");
+        var dataSource = mockDataSource.Object;
+        var result = await dataSource.GetCarbonIntensityAsync(locations, start, end);
+        Assert.That(result.Count(), Is.EqualTo(0));
+        Assert.That(!result.Any(), Is.True);
+    }
+
     private Mock<JsonDataSource> SetupMockDataSource() {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
         var monitor = Mock.Of<IOptionsMonitor<JsonDataSourceConfiguration>>();
@@ -94,6 +117,7 @@ public class JsonDataSourceTests
 
         return mockDataSource;
     }
+
     private List<EmissionsData> GetTestEmissionData() {
         // All the tests above correspond to values in this mock data. If the mock values are changed, the tests need to be updated 
         return new List<EmissionsData>() {
