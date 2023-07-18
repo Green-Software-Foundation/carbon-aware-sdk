@@ -18,7 +18,7 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 
 ### Changed
 
-- No API's were changed
+- No previous API's were changed.  
 - Configuration has changed.  Refer to upgrading from 1.0.0 to 1.1.0 below.
 - Time is now always in UTC.  Previously the API may have returned local time depending on underlying API.
 
