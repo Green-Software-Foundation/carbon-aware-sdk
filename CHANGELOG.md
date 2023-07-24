@@ -12,9 +12,9 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 ### Fixed
 
 - Fixed generated test data that had time bomb bug that was in test data, which caused integration tests to fail.  This is now automatically generated each time.
-- Fixed some bugs that related to underlying data source errors surfacing as 500 errors from the API.  These should now be more consistent.
+- Fixed some bugs that related to underlying data source errors surfacing as HTTP 500 errors from the API.  These should now be more consistent.
 - Fixed an issue where UTF-8 passwords were encoded as ASCII for WattTime API, causing integration failure. 
-- Fixes some bugs in unit tests with uncaught scenarios, or faulty tests
+- Fixes some bugs in unit tests with uncaught scenarios, or faulty tests.
 
 ### Changed
 
@@ -25,7 +25,7 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 #### API
 
 - `/locations` - Show the list of configured named locations that can be used in the API.
-- `/api/v1/swagger.yaml` - Provides OpenAPI document now at public endpoint when deployed
+- `/api/v1/swagger.yaml` - Provides OpenAPI document now at public endpoint when deployed.
 
 #### API Deployment
 
@@ -33,23 +33,22 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 
 #### SDK 
 
-- SDK was abstracted to provide a library for DLL import usage, which now allows users to use the SDK in their projects directly without the need to deploy an API.  This is useful in scenarios where the API can not be centralised.  Note - we still highly recommend centralising for management of the API adn audit capabilities with observability.
-- Functionality for forecast and historical data have been seperated into seperate interfaces.  This impacts 
-configuration, see upgrading from 1.0.0 to 1.1.0 for more information
-- Additional tests across the SDK have been added
+- SDK was abstracted to provide a library for DLL import usage, which now allows users to use the SDK in their projects directly without the need to deploy an API.  This is useful in scenarios where the API can not be centralised.  Note - we still highly recommend centralising for management of the API and audit capabilities with observability.
+- Functionality for forecast and historical data have been seperated into seperate interfaces.  This impacts configuration, see upgrading from 1.0.0 to 1.1.0 for more information.
+- Additional tests across the SDK have been added.
 - Aggregation tier in the SDK was removed, this should not impact users of the SDK, but may impact maintainers who were actively contributing.
 
 
 #### Other
 
-- All contributors need to sign commit for contribution using `git commit -S` 
-- Added PR release workflow improvements for the project management of the CA SDK project team
-- Updated the project to prune stale PR's and issues to help with the management of the CA SDK project
+- All contributors need to signoff commits for contribution using `git commit -s`.
+- Added PR release workflow improvements for the project management of the CA SDK project team.
+- Updated the project to prune stale PR's and issues to help with the management of the CA SDK project.
 
 
 ### Upgrading from 1.0.0 to 1.1.0 
 
-- Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - [Configuration](docs/configuration.md) for a guide.  The following is provided as an example of the new data source configuration format.
+- Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - [Configuration](docs/configuration.md) for a guide. The following is provided as an example of the new data source configuration format.
 ```json
 {
   "DataSources": {
