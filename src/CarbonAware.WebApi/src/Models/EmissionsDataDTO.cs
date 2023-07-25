@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.WebApi.Models;
 
-using CarbonAware.Model;
+using GSF.CarbonAware.Models;
 using System.Text.Json.Serialization;
 
 [Serializable]
@@ -30,7 +30,7 @@ public record EmissionsDataDTO
         }
         return new EmissionsDataDTO
         {
-            Location = emissionsData.Location,
+            Location = emissionsData.Location!,
             Timestamp = emissionsData.Time,
             Duration = (int)emissionsData.Duration.TotalMinutes,
             Value = emissionsData.Rating

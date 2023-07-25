@@ -1,19 +1,27 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
-  </ItemGroup>
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(ProjectDir)..\..\..\data\data-sources\**\*.json" Link="\data-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
+    <Content Include="$(ProjectDir)..\..\..\data\data-sources\**\*.json"
+      Link="\data-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Mocks" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
+    <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 </Project>

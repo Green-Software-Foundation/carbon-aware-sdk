@@ -5,7 +5,7 @@ namespace CarbonAware;
 /// <summary>
 /// Carbon Aware Variables bindings
 /// </summary>
-public class CarbonAwareVariablesConfiguration
+internal class CarbonAwareVariablesConfiguration
 {
     /// <summary>
     /// The Key containing the configuration values.
@@ -18,11 +18,16 @@ public class CarbonAwareVariablesConfiguration
     public PathString WebApiRoutePrefix { get; set; }
 
     /// <summary>
-    /// Gets or sets the the carbon intensity data source to use.
+    /// Gets or sets the forecast data source to use.
     /// </summary>
-    public string CarbonIntensityDataSource { get; set; }
+    public string ForecastDataSource { get; set; } = string.Empty;
 
-    #nullable enable
+    /// <summary>
+    /// Gets or sets the emissions data source to use.
+    /// </summary>
+    public string EmissionsDataSource { get; set; } = string.Empty;
+
+#nullable enable
     /// <summary>
     /// Gets or sets proxy information for making calls to the internet.
     /// </summary>

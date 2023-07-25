@@ -1,14 +1,8 @@
-
 using CarbonAware.Model;
-using CarbonAware.Extensions;
-using Microsoft.Extensions.Logging;
-using Moq;
-using NUnit.Framework;
-
 
 namespace CarbonAware.Extensions.Tests;
 
-public class EmissionsDataExtensionsTests
+class EmissionsDataExtensionsTests
 {
     // Test class sets these fields in [SetUp] rather than traditional class constructor.
     #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.

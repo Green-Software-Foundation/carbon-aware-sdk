@@ -1,46 +1,94 @@
-﻿namespace CarbonAware.CLI;
-
-using CarbonAware.Aggregators.CarbonAware;
-using CarbonAware.Aggregators.Configuration;
+﻿using CarbonAware;
+using CarbonAware.CLI.Commands.Emissions;
+using CarbonAware.CLI.Commands.EmissionsForecasts;
+using CarbonAware.CLI.Commands.Location;
+using CarbonAware.CLI.Common;
+using CarbonAware.CLI.Extensions;
+using GSF.CarbonAware.Configuration;
+using GSF.CarbonAware.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
+using System.CommandLine;
+using System.CommandLine.Builder;
+using System.CommandLine.Parsing;
 
-class Program
+var config = new ConfigurationBuilder()
+    .UseCarbonAwareDefaults()
+    .Build();
+
+var builder = new ServiceCollection()
+    .AddSingleton<IConfiguration>(config)
+    .Configure<CarbonAwareVariablesConfiguration>(
+        config.GetSection(CarbonAwareVariablesConfiguration.Key))
+    .AddLogging(builder => builder.AddDebug());
+
+try
 {
-    public static async Task Main(string[] args)
-    {
-        ServiceProvider serviceProvider = BootstrapServices();
-
-        await GetEmissionsAsync(args, serviceProvider.GetRequiredService<ICarbonAwareAggregator>(), serviceProvider.GetService<ILogger<CarbonAwareCLI>>());
-    }
-
-    private static ServiceProvider BootstrapServices() {
-             
-        var configurationBuilder = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
-                .AddEnvironmentVariables()
-                .AddJsonFile("appsettings.local.json", optional:true);// Optional and would locally set variables override environment variables
-        var config = configurationBuilder.Build();
-        var services = new ServiceCollection();
-        services.Configure<CarbonAwareVariablesConfiguration>(config.GetSection(CarbonAwareVariablesConfiguration.Key));
-        services.AddSingleton<IConfiguration>(config);
-        services.AddCarbonAwareEmissionServices(config);
-
-        services.AddLogging(configure => configure.AddConsole());
-
-        var serviceProvider = services.BuildServiceProvider();
-
-        return serviceProvider;
-    }
-
-    private static async Task GetEmissionsAsync(string[] args, ICarbonAwareAggregator aggregator, ILogger<CarbonAwareCLI> logger) {
-        var cli = new CarbonAwareCLI(args, aggregator, logger);
-
-        if (cli.Parsed)
-        {
-            var emissions = await cli.GetEmissions();
-            cli.OutputEmissionsData(emissions);
-        }    
-    }
+    builder.AddEmissionsServices(config);
 }
+catch (CarbonAwareException e)
+{
+    var _logger = builder.BuildServiceProvider().GetService<ILogger<Program>>();
+    _logger?.LogError(e, "Failed to create emissions services.");
+    Environment.Exit(1);
+}
+
+try
+{
+    builder.AddForecastServices(config);
+}
+catch (CarbonAwareException e)
+{
+    var _logger = builder.BuildServiceProvider().GetService<ILogger<Program>>();
+    _logger?.LogError(e, "Failed to create forecast services.");
+    Environment.Exit(1);
+}
+
+var serviceProvider = builder.BuildServiceProvider();
+
+var rootCommand = new RootCommand(description: CommonLocalizableStrings.RootCommandDescription);
+rootCommand.AddGlobalOption(CommonOptions.VerboseOption);
+rootCommand.AddCommand(new EmissionsCommand());
+rootCommand.AddCommand(new EmissionsForecastsCommand());
+rootCommand.AddCommand(new LocationsCommand());
+
+var parser = new CommandLineBuilder(rootCommand)
+    .UseDefaults()
+    .UseCarbonAwareExceptionHandler()
+    .AddMiddleware(async (context, next) =>
+        {
+            context.BindingContext.AddService<IServiceProvider>(_ => serviceProvider);
+            await next(context);
+        }
+    )
+    .AddMiddleware(async (context, next) =>
+        {
+            if (context.ParseResult.HasOption(CommonOptions.VerboseOption)) 
+            { 
+                var serviceName = "CarbonAware.CLI";
+                var serviceVersion = "1.0.0";
+
+                using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                    .AddSource(serviceName)
+                    .SetResourceBuilder(ResourceBuilder
+                        .CreateDefault()
+                        .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+                    .AddConsoleExporter()
+                    .AddHttpClientInstrumentation()
+                    .Build();
+                await next(context);
+            }
+            else
+            {
+                await next(context);
+            }
+        }
+    )
+    .Build();
+
+
+return await parser.InvokeAsync(args);

@@ -1,6 +1,6 @@
 namespace CarbonAware;
 
-public class WebProxyConfiguration
+internal class WebProxyConfiguration
 {
 
     /// <summary>
@@ -11,15 +11,15 @@ public class WebProxyConfiguration
     /// <summary>
     /// Gets or sets the proxy url
     /// </summary>
-    public string Url { get; set; }
+    public string Url { get; set; } = string.Empty;
 
     /// <summary>
     /// Sets the proxy username
     /// </summary>
-    public string Username { get; set; }
+    public string Username { get; set; } = string.Empty;
 
     /// <summary>
     /// Sets the proxy password
     /// </summary>
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
 }

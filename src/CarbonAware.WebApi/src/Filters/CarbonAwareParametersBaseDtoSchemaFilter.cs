@@ -1,10 +1,10 @@
-using CarbonAware.Aggregators.CarbonAware;
+using CarbonAware.Model;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace CarbonAware.WebApi.Filters;
 
-public class CarbonAwareParametersBaseDtoSchemaFilter : ISchemaFilter
+internal class CarbonAwareParametersBaseDtoSchemaFilter : ISchemaFilter
 {
     public void Apply(OpenApiSchema schema, SchemaFilterContext context)
     {

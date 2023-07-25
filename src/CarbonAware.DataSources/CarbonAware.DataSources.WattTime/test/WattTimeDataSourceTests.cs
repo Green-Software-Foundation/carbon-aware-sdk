@@ -1,8 +1,8 @@
-﻿using CarbonAware.Exceptions;
+﻿using CarbonAware.DataSources.WattTime.Client;
+using CarbonAware.DataSources.WattTime.Model;
+using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
-using CarbonAware.Tools.WattTimeClient;
-using CarbonAware.Tools.WattTimeClient.Model;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
@@ -15,7 +15,7 @@ namespace CarbonAware.DataSources.WattTime.Tests;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 [TestFixture]
-public class WattTimeDataSourceTests
+class WattTimeDataSourceTests
 {
     private Mock<ILogger<WattTimeDataSource>> Logger { get; set; }
 
@@ -45,7 +45,7 @@ public class WattTimeDataSourceTests
 
         this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
 
-        this.DefaultLocation = new Location() { RegionName = "eastus", LocationType = LocationType.CloudProvider, CloudProvider = CloudProvider.Azure };
+        this.DefaultLocation = new Location() { Name = "eastus" };
         this.DefaultBalancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         MockBalancingAuthorityLocationMapping();
@@ -234,7 +234,6 @@ public class WattTimeDataSourceTests
         
         // Assert
         Assert.IsNotNull(result);
-        Assert.AreEqual(requestedAt, result.RequestedAt);
         this.WattTimeClient.Verify(w => w.GetForecastOnDateAsync(
             It.IsAny<BalancingAuthority>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
     }
@@ -257,7 +256,7 @@ public class WattTimeDataSourceTests
     /// Tests that if 'frequency' is not provided in the WattTime response of emission data, it is calculated from the first 2 data points, or defaulted to 0 if fewer than 2 data points are returned 
     /// </summary>
     [TestCase(new double[] { 300, 300 }, 300, null, TestName = "GetCarbonIntensity - for multiple data points, frequency is null for one data point ")]
-    [TestCase(new double[] { 0 }, null, TestName = "GetCarbonIntensity - for less than 2 data points, frequency is null for one data point ")]
+    [TestCase(new double[] { }, null, TestName = "GetCarbonIntensity - for less than 2 data points, frequency is null for one data point ")]
     [TestCase(new double[] { 300, 300 }, null, null, TestName = "GetCarbonIntensity - for multiple data points, frequency is null for all data points")]
     [TestCase(new double[] { 500 }, 500, TestName = "GetCarbonIntensity - frequency is not null")]
     [TestCase(new double[] { }, TestName = "GetCarbonIntensity - for zero data points, returns empty enumerable")]

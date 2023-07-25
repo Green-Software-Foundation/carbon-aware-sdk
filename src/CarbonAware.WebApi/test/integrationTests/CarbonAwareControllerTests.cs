@@ -5,6 +5,7 @@ using NUnit.Framework;
 using System.Net;
 using System.Text.Json;
 
+
 namespace CarbonAware.WepApi.IntegrationTests;
 
 /// <summary>
@@ -13,17 +14,18 @@ namespace CarbonAware.WepApi.IntegrationTests;
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
-public class CarbonAwareControllerTests : IntegrationTestingBase
+[TestFixture(DataSourceType.ElectricityMaps)]
+[TestFixture(DataSourceType.ElectricityMapsFree)]
+class CarbonAwareControllerTests : IntegrationTestingBase
 {
-    private string healthURI = "/health";
-    private string fakeURI = "/fake-endpoint";
-    private string bestLocationsURI = "/emissions/bylocations/best";
-    private string currentForecastURI = "/emissions/forecasts/current";
-    private string batchForecastURI = "/emissions/forecasts/batch";
-    private string averageCarbonIntensityURI = "/emissions/average-carbon-intensity";
-    private string batchAverageCarbonIntensityURI = "/emissions/average-carbon-intensity/batch";
+    private readonly string healthURI = "/health";
+    private readonly string fakeURI = "/fake-endpoint";
+    private readonly string bestLocationsURI = "/emissions/bylocations/best";
+    private readonly string currentForecastURI = "/emissions/forecasts/current";
+    private readonly string batchForecastURI = "/emissions/forecasts/batch";
+    private readonly string averageCarbonIntensityURI = "/emissions/average-carbon-intensity";
+    private readonly string batchAverageCarbonIntensityURI = "/emissions/average-carbon-intensity/batch";
 
-    private JsonSerializerOptions options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
 
     public CarbonAwareControllerTests(DataSourceType dataSource) : base(dataSource) { }
 
@@ -50,7 +52,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     public async Task BestLocations_ReturnsOK(DateTimeOffset start, DateTimeOffset end, string location)
     {
         //Sets up any data endpoints needed for mocking purposes
-        _dataSourceMocker.SetupDataMock(start, end, location);
+        _dataSourceMocker?.SetupDataMock(start, end, location);
 
         //Call the private method to construct with parameters
         var queryStrings = new Dictionary<string, string>();
@@ -85,26 +87,11 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     }
 
     [Test]
-    public async Task EmissionsForecastsCurrent_UnsupportedDataSources_ReturnsNotImplemented()
-    {
-        IgnoreTestForDataSource("data source does implement '/emissions/forecasts/current'.", DataSourceType.WattTime);
-
-        var queryStrings = new Dictionary<string, string>();
-        queryStrings["location"] = "fakeLocation";
-
-        var endpointURI = ConstructUriWithQueryString(currentForecastURI, queryStrings);
-
-        var result = await _client.GetAsync(endpointURI);
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotImplemented));
-    }
-
-    [Test]
     public async Task EmissionsForecastsCurrent_SupportedDataSources_ReturnsOk()
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
+        IgnoreTestForDataSource($"data source does not implement '{currentForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMapsFree);
 
-        _dataSourceMocker.SetupForecastMock();
+        _dataSourceMocker?.SetupForecastMock();
 
         var queryStrings = new Dictionary<string, string>();
         // A valid region name is required: 'location' is not specifically under test.
@@ -122,7 +109,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     {
         IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
 
-        _dataSourceMocker.SetupForecastMock();
+        _dataSourceMocker?.SetupForecastMock();
 
         var queryStrings = new Dictionary<string, string>();
         // A valid region name is required: 'location' is not specifically under test.
@@ -145,7 +132,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
 
         IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
 
-        _dataSourceMocker.SetupForecastMock();
+        _dataSourceMocker?.SetupForecastMock();
 
         var queryStrings = new Dictionary<string, string>();
         queryStrings[queryString] = value;
@@ -165,7 +152,7 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     {
         IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/batch'", DataSourceType.JSON);
 
-        _dataSourceMocker.SetupForecastMock();
+        _dataSourceMocker?.SetupForecastMock();
         var forecastData = Enumerable.Range(0, 1).Select(x => new
         {
             location = location,
@@ -182,12 +169,12 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-09-01T08:30:00Z", "2021-09-01T08:30:00Z", "2021-09-02T08:30:00Z", "westus", 3, TestName = "EmissionsForecastsBatch expects OK for multiple elements")]
     public async Task EmissionsForecastsBatch_SupportedDataSources_ReturnsOk(string reqAt, string start, string end, string location, int nelems)
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/batch'", DataSourceType.JSON);
+        IgnoreTestForDataSource($"data source does not implement '{batchForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMaps, DataSourceType.ElectricityMapsFree);
 
         var expectedRequestedAt = DateTimeOffset.Parse(reqAt);
         var expectedDataStartAt = DateTimeOffset.Parse(start);
         var expectedDataEndAt = DateTimeOffset.Parse(end);
-        _dataSourceMocker.SetupBatchForecastMock();
+        _dataSourceMocker?.SetupBatchForecastMock();
         var inputData = Enumerable.Range(0, nelems).Select(x => new
         {
             requestedAt = reqAt,
@@ -209,9 +196,6 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
                 Assert.That(forecasts!.Count, Is.EqualTo(inputData.Count()));
                 foreach (var forecast in forecasts!)
                 {
-                    Assert.That(forecast.Location, Is.EqualTo(location));
-                    Assert.That(forecast.DataStartAt, Is.EqualTo(expectedDataStartAt));
-                    Assert.That(forecast.DataEndAt, Is.EqualTo(expectedDataEndAt));
                     Assert.That(forecast.RequestedAt, Is.EqualTo(expectedRequestedAt));
                     Assert.That(forecast.GeneratedAt, Is.Not.Null);
                     Assert.That(forecast.OptimalDataPoints, Is.Not.Null);
@@ -225,9 +209,11 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-12-25", "2021-12-26", "westus", TestName = "EmissionsMarginalCarbonIntensity expects OK date only, no time")]
     public async Task EmissionsMarginalCarbonIntensity_ReturnsOk(string start, string end, string location)
     {
+        IgnoreTestForDataSource($"data source does not implement '{averageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
+
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
-        _dataSourceMocker.SetupDataMock(startDate, endDate, location);
+        _dataSourceMocker?.SetupDataMock(startDate, endDate, location);
 
         var queryStrings = new Dictionary<string, string>();
         queryStrings["location"] = location;
@@ -289,9 +275,11 @@ public class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("2021-12-25", "2021-12-26", "westus", 3, TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for multiple element batch")]
     public async Task EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk(string start, string end, string location, int nelems)
     {
+        IgnoreTestForDataSource($"data source does not implement '{batchAverageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
+
         var startDate = DateTimeOffset.Parse(start);
         var endDate = DateTimeOffset.Parse(end);
-        _dataSourceMocker.SetupDataMock(startDate, endDate, location);
+        _dataSourceMocker?.SetupDataMock(startDate, endDate, location);
         var intesityData = Enumerable.Range(0, nelems).Select(x => new
         {
             location = location,

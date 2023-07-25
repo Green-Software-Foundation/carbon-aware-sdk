@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace CarbonAware.Tools;
 
-public class AWSRegionTestDataGenerator
+internal class AWSRegionTestDataGenerator
 {
     public class AwsRegionData
     {
@@ -40,7 +40,7 @@ public class AWSRegionTestDataGenerator
                 var e = new EmissionsData()
                 {
                     Time = DateTime.Now + TimeSpan.FromHours(i),
-                    Location = region.code,
+                    Location = region.code ?? string.Empty,
                     Rating = ran.Next(100)
                 };
                 emData.Add(e);

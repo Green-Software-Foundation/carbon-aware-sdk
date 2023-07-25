@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.WebApi.Models;
 
-using CarbonAware.Model;
+using GSF.CarbonAware.Models;
 using System.Text.Json.Serialization;
 
 [Serializable]
@@ -96,18 +96,18 @@ public record EmissionsForecastDTO
     [JsonPropertyName("forecastData")]
     public IEnumerable<EmissionsDataDTO>? ForecastData { get; set; }
 
-    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast)
+    public static EmissionsForecastDTO FromEmissionsForecast(EmissionsForecast emissionsForecast, DateTimeOffset? requestedAt, DateTimeOffset? startTime, DateTimeOffset? endTime, int? windowSize)
     {
         return new EmissionsForecastDTO
         {
+            Location = emissionsForecast.Location!,
+            RequestedAt = requestedAt ?? DateTimeOffset.UtcNow,
+            DataStartAt = startTime ?? emissionsForecast.EmissionsDataPoints.First().Time,
+            DataEndAt = endTime ?? emissionsForecast.EmissionsDataPoints.Last().Time,
             GeneratedAt = emissionsForecast.GeneratedAt,
-            Location = emissionsForecast.Location.DisplayName,
-            DataStartAt = emissionsForecast.DataStartAt,
-            DataEndAt = emissionsForecast.DataEndAt,
-            WindowSize = (int)emissionsForecast.WindowSize.TotalMinutes,
+            ForecastData = emissionsForecast.EmissionsDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
             OptimalDataPoints = emissionsForecast.OptimalDataPoints.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
-            ForecastData = emissionsForecast.ForecastData.Select(d => EmissionsDataDTO.FromEmissionsData(d))!,
-            RequestedAt = emissionsForecast.RequestedAt
+            WindowSize = windowSize ?? 0
         };
     }
 }

@@ -3,7 +3,7 @@
 /// <summary>
 /// Represents a conversion exception.
 /// </summary>
-public class LocationConversionException : Exception
+internal class LocationConversionException : CarbonAwareException
 {
     /// <summary>
     /// Creates a new instance of the <see cref="LocationConversionException"/> class.

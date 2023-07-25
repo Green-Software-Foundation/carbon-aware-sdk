@@ -1,11 +1,9 @@
+using CarbonAware.Exceptions;
+
 namespace CarbonAware.Model;
 
 public record EmissionsForecast
 {
-    /// <summary>
-    /// Gets the time when the request was made
-    /// </summary>
-    public DateTimeOffset RequestedAt { get; set; }
     /// <summary>
     /// Gets or sets the time that the forecast was generated.
     /// </summary>
@@ -14,22 +12,7 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the location the forecast is for.
     /// </summary>
-    public Location Location { get; set; } = new Location(){ LocationType = LocationType.NotProvided };
-   
-    /// <summary>
-    /// Gets or sets the start time of the forecast data points.
-    /// </summary>
-    public DateTimeOffset DataStartAt { get; set; }
-
-    /// <summary>
-    /// Gets or sets the end time of the forecast data points.
-    /// </summary>
-    public DateTimeOffset DataEndAt { get; set; }
-
-    /// <summary>
-    /// Gets or sets rolling average window duration.
-    /// </summary>
-    public TimeSpan WindowSize { get; set; }
+    public Location Location { get; set; } = new();
 
     /// <summary>
     /// Gets or sets the forecast data points.
@@ -39,10 +22,10 @@ public record EmissionsForecast
     /// <summary>
     /// Gets or sets the optimal data points within the ForecastData set.
     /// </summary>
-    public IEnumerable<EmissionsData> OptimalDataPoints { get; set; }
+    public IEnumerable<EmissionsData> OptimalDataPoints { get; set; } = new List<EmissionsData>();
 
 
-    public void Validate()
+    public void Validate(DateTimeOffset dataStartAt, DateTimeOffset dataEndAt)
     {
         var errors = new Dictionary<string, List<string>>();
         var firstDataPoint = ForecastData.First();
@@ -50,17 +33,17 @@ public record EmissionsForecast
         var minTime = firstDataPoint.Time;
         var maxTime = lastDataPoint.Time + lastDataPoint.Duration;
 
-        if (DataStartAt >= DataEndAt)
+        if (dataStartAt >= dataEndAt)
         {
             AddErrorMessage(errors, "dataStartAt", "dataStartAt must be earlier than dataEndAt");
         }
 
-        if (DataStartAt < minTime || DataStartAt > maxTime)
+        if (dataStartAt < minTime || dataStartAt > maxTime)
         {
             AddErrorMessage(errors, "dataStartAt", $"dataStartAt must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
         }
 
-        if (DataEndAt < minTime || DataEndAt > maxTime)
+        if (dataEndAt < minTime || dataEndAt > maxTime)
         {
             AddErrorMessage(errors, "dataEndAt", $"dataEndAt must be within time range of the forecasted data, '{minTime}' through '{maxTime}'");
         }
@@ -83,5 +66,18 @@ public record EmissionsForecast
             errors[key] = new List<string>();
         }
         errors[key].Add(message);
+    }
+
+    public TimeSpan GetDurationBetweenForecastDataPoints()
+    {
+        var firstPoint = ForecastData.FirstOrDefault();
+        var secondPoint = ForecastData.Skip(1)?.FirstOrDefault();
+
+        var first = firstPoint ?? throw new CarbonAwareException("First. Too few data points returned");
+        var second = secondPoint ?? throw new CarbonAwareException("Second. Too few data points returned");
+
+        // Handle chronological and reverse-chronological data by using `.Duration()` to get
+        // the absolute value of the TimeSpan between the two points.
+        return first.Time.Subtract(second.Time).Duration();
     }
 }

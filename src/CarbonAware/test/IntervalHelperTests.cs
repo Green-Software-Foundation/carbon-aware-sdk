@@ -3,7 +3,7 @@ using CarbonAware.Model;
 namespace CarbonAware.Tests;
 
 [TestFixture]
-public class IntervalHelperTests
+class IntervalHelperTests
 {
     private readonly DateTimeOffset startDateTimeOffset = new (2021, 9, 1, 9, 40, 0, TimeSpan.Zero);
     private readonly DateTimeOffset endDateTimeOffset = new (2021, 9, 1, 10, 20, 0, TimeSpan.Zero);
@@ -47,10 +47,6 @@ public class IntervalHelperTests
         // If pass in empty data, will just return empty data
         var emptyResult = IntervalHelper.FilterByDuration(Enumerable.Empty<EmissionsData>(), startDateTimeOffset, endDateTimeOffset);
         Assert.False(emptyResult.Any());
-
-        // If pass in duration, will ignore data value. With 45 min duration, captures 3 data points
-        var constantDuration = IntervalHelper.FilterByDuration(data, startDateTimeOffset, endDateTimeOffset, TimeSpan.FromMinutes(45));
-        Assert.True(constantDuration.Count() == 3);
 
         // If don't pass in duration, will lookup value in data. WIth included 30 min duration, captures 2 data points
         var minWindowValid = IntervalHelper.FilterByDuration(data, startDateTimeOffset, endDateTimeOffset);
