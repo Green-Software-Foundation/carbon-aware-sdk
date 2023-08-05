@@ -1,0 +1,40 @@
+name: Publish Helm chart
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: publish-helm-chart
+  cancel-in-progress: true
+
+jobs:
+  push-helm-charts:
+    if: github.repository == 'Green-Software-Foundation/carbon-aware-sdk' || vars.ENABLE_HELM_WORKFLOW == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Detect Helm chart version
+        run: |
+          CHART_VERSION=`yq .version helm-chart/Chart.yaml`
+          echo "CHART_VERSION=$CHART_VERSION" >> "$GITHUB_ENV"
+
+      - name: Packaging
+        run: helm package helm-chart
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v2.1.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Push charts to GHCR
+        run: |
+          helm push carbon-aware-sdk-${{ env.CHART_VERSION  }}.tgz "oci://ghcr.io/green-software-foundation/charts"
+        shell: bash
