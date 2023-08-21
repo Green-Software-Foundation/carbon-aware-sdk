@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'Carbon Aware SDK',
   tagline: 'An SDK to enable the creation of carbon aware applications, that do more when the electricity comes from clean low-carbon sources and less when it does not.',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
   url: 'https://green-software-foundation.github.io',
