@@ -36,7 +36,7 @@ No documentation shall live outside the `root` or `/docs` directories. All other
 > ```markdown
 > # CarbonAware.WebApi
 >
-> - [Getting started](/docs/carbon-aware-webapi.md)
+> - [Getting started](../../tutorial-basics/carbon-aware-webapi.md)
 > - [Architecture](/docs/architecture/overview.md)
 > ```
 

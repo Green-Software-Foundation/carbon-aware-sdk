@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# C\# Client Library
+# C# Client Library
 
 This document outlines the designs behind the GSF Carbon Aware C# Client
 Library.

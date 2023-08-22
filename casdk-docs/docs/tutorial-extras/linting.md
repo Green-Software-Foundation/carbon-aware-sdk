@@ -8,7 +8,7 @@
 
 ## Markdown Linting
 
-Per [ADR 0004](./architecture/decisions/0004-documentation.md), documentation
+Per [ADR 0004](../architecture/decisions/0004-documentation.md), documentation
 will be linted using
 [markdownlint](https://github.com/DavidAnson/markdownlint/tree/main) to enforce
 file consistency for readers and authors.

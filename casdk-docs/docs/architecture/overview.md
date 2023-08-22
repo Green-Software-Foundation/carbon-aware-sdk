@@ -1,3 +1,8 @@
+---
+sidebar_position: 1
+---
+
+
 # Architecture Overview
 
 The Carbon Aware SDK is built with three tiers where each tier has its own set
