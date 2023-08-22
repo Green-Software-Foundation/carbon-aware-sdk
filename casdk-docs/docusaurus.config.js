@@ -68,7 +68,7 @@ const config = {
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'quickstart',
             position: 'left',
             label: 'Tutorial',
           },
@@ -88,7 +88,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/carbon-aware-sdk/docs/intro',
+                to: '/carbon-aware-sdk/docs/overview',
               },
             ],
           },

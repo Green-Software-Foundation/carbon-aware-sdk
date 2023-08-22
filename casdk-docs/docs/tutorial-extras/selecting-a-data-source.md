@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Selecting a Data Source
 
 The Carbon Aware SDK includes access to various data sources of carbon aware
@@ -59,7 +63,7 @@ location config.
 ElectricityMaps allows new users to create a free trial for 1 month access to
 the API. Free trial users have restricted access to the API and a slightly
 different configuration for the SDK (see
-[configuration.md](./configuration.md#electricitymaps-configuration). You can
+[configuration.md](../configuration.md#electricitymaps-configuration). You can
 request a free trial on the
 [ElectricityMaps API Portal](https://api-portal.electricitymaps.com/).
 

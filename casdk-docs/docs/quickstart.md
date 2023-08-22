@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Setting up and using the Carbon Aware SDK
 
 This guide will provide you with knowledge and examples necessary to use the

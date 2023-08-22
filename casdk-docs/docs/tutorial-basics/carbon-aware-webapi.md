@@ -475,7 +475,7 @@ object. Using the Exception Filter class enables the WebAPI to consistently
 respond with the `ValidationProblemDetails` error schema in all error cases and
 take advantage of error handling automatically provided by the framework.
 
-![WebAPI Error Handling Flow Chart](./images/web-api-error-handling-flow.png)
+![WebAPI Error Handling Flow Chart](../images/web-api-error-handling-flow.png)
 
 ## Autogenerate WebAPI
 
@@ -529,7 +529,7 @@ WattTime as the data source provider. In this diagram, the _Client_ is a user of
 the SDK and the _WattTimeService_ is the [WattTime](https://www.wattime.org)
 API.
 
-![webapi to watttime flow diagram](./images/webapi-swimlanes.png)
+![webapi to watttime flow diagram](../images/webapi-swimlanes.png)
 
 ### ElectricityMaps
 
