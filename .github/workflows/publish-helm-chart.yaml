@@ -36,5 +36,6 @@ jobs:
 
       - name: Push charts to GHCR
         run: |
-          helm push carbon-aware-sdk-${{ env.CHART_VERSION  }}.tgz "oci://ghcr.io/green-software-foundation/charts"
+          OWNER_LOWER=${GITHUB_REPOSITORY_OWNER,,}
+          helm push carbon-aware-sdk-${{ env.CHART_VERSION  }}.tgz "oci://ghcr.io/$OWNER_LOWER/charts"
         shell: bash
