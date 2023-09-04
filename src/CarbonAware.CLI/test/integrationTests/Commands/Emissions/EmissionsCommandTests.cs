@@ -72,7 +72,7 @@ internal class EmissionsCommandTests : IntegrationTestingBase
         _dataSourceMocker.SetupDataMock(start, end, location);
 
         // Act
-        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:01:00Z -e 2022-09-01T02:04:00Z");
+        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T00:00:00Z -e 2022-09-01T00:04:00Z");
 
         // Assert
         Assert.AreEqual(0, exitCode);
@@ -117,7 +117,7 @@ internal class EmissionsCommandTests : IntegrationTestingBase
         _dataSourceMocker.SetupDataMock(start, end, location);
 
         // Act
-        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:01:00Z -e 2022-09-01T02:04:00Z -b");
+        var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T00:00:00Z -e 2022-09-01T00:04:00Z -b");
 
         // Assert
         Assert.AreEqual(0, exitCode);

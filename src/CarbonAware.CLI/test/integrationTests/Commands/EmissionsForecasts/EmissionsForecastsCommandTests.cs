@@ -71,8 +71,8 @@ internal class EmissionsForecastsCommandTests : IntegrationTestingBase
         var location = "eastus";
         var start = DateTimeOffset.UtcNow.AddMinutes(10);
         var end =  start.AddHours(5);
-        var dataStartAt = start.ToString("yyyy-MM-ddTHH:mm:ss");
-        var dataEndAt = end.ToString("yyyy-MM-ddTHH:mm:ss");
+        var dataStartAt = start.ToString("yyyy-MM-ddTHH:mm:ssZ");
+        var dataEndAt = end.ToString("yyyy-MM-ddTHH:mm:ssZ");
        
         _dataSourceMocker.SetupForecastMock();
         // Act

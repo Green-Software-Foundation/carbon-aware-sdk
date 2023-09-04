@@ -86,15 +86,27 @@ internal class ElectricityMapsFreeDataSource : IEmissionsDataSource
         }
         
         List<EmissionsData> EmissionsDataList = new List<EmissionsData>();
-
-        var emissionData = new EmissionsData()
+        var emissionDateTime = gridEmissionData.Data.Datetime;
+        var shouldReturn = true;
+        if (emissionDateTime != null && periodStartTime < periodEndTime)
         {
-            Location = location.Name ?? "",
-            Time = gridEmissionData.Data.Datetime ?? new DateTimeOffset(),
-            Rating = gridEmissionData.Data.CarbonIntensity ?? 0.0,
-            Duration = new TimeSpan(0, 0, 0)
-        };
-        EmissionsDataList.Add(emissionData);
+            // periodEndTime would be set periodStartTime in EmissionHandler if it is not specified.
+            // So we can assume we should return the most recent data if they equal.
+            // If not, we should return the data after checking it is within specified time range.
+            shouldReturn = periodStartTime <= emissionDateTime && emissionDateTime < periodEndTime;
+        }
+
+        if (shouldReturn)
+        {
+            var emissionData = new EmissionsData()
+            {
+                Location = location.Name ?? "",
+                Time = emissionDateTime ?? new DateTimeOffset(),
+                Rating = gridEmissionData.Data.CarbonIntensity ?? 0.0,
+                Duration = new TimeSpan(0, 0, 0)
+            };
+            EmissionsDataList.Add(emissionData);
+        }
 
         return EmissionsDataList;
     }
