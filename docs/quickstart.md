@@ -96,7 +96,7 @@ Expected output:
 
 For example, to get emissions in the `eastus` and `uksouth` region between
 `2022-08-23 at 11:15am` and `2022-08-23 at 11:20am`, run:
-`dotnet run -l eastus,uksouth -t 2022-08-23T11:15 --toTime 2022-08-23T11:20`
+`dotnet run emissions -l eastus,uksouth -s 2022-08-23T11:15 -e 2022-08-23T11:20`
 
 Expected output:
 
@@ -147,7 +147,7 @@ hour window on the 23rd of August in the regions: `eastus`, `westus`,
 `westus3`,`uksouth`, run the command:
 
 ```bash
-dotnet run -l eastus,westus,westus3,uksouth -t 2022-08-23T00:00 --toTime 2022-08-23T23:59 --best
+dotnet run -l eastus,westus,westus3,uksouth -s 2022-08-23T00:00 -e 2022-08-23T23:59 --best
 ```
 
 Expected output:
