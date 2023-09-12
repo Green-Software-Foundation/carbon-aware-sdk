@@ -356,3 +356,7 @@ appsettings: |-
     }
   }
 ```
+
+The video in below is demonstration to install Carbon Aware SDK via Helm. Note that installing the SDK from local directory ( ~/github-forked/carbon-aware-sdk/helm-chart ), not an OCI container.
+
+[!Demonstration to intall Carbon Aware SDK from local with Helm](https://github.com/Green-Software-Foundation/carbon-aware-sdk/assets/7421132/b09d8ab1-642b-442a-882f-abc802153070)
