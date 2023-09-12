@@ -74,9 +74,9 @@ public class CarbonAwareController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
     [HttpGet("bylocation")]
     public async Task<IActionResult> GetEmissionsDataForLocationByTime(
-        [FromQuery, SwaggerParameter(Required = true)] string location, 
-        DateTimeOffset? startTime = null, 
-        DateTimeOffset? endTime = null)
+        [FromQuery, SwaggerParameter(Required = true)] string location,
+        [FromQuery(Name = "time")] DateTimeOffset? startTime = null,
+        [FromQuery(Name = "toTime")] DateTimeOffset? endTime = null)
     {
         var parameters = new EmissionsDataForLocationsParametersDTO
         {
