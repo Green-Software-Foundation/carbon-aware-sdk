@@ -87,8 +87,10 @@ internal class ElectricityMapsFreeDataSource : IEmissionsDataSource
         
         List<EmissionsData> EmissionsDataList = new List<EmissionsData>();
         var emissionDateTime = gridEmissionData.Data.Datetime;
-        var shouldReturn = true;
-        if (emissionDateTime != null && periodStartTime < periodEndTime)
+
+        // periodStartTime should be less than current date time because this method should not handle forecast data.
+        var shouldReturn = periodStartTime <= DateTimeOffset.UtcNow;
+        if (shouldReturn && emissionDateTime != null && periodStartTime < periodEndTime)
         {
             // periodEndTime would be set periodStartTime in EmissionHandler if it is not specified.
             // So we can assume we should return the most recent data if they equal.
