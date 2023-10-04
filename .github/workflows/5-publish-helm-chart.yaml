@@ -1,4 +1,4 @@
-name: Publish Helm chart
+name: 5-Publish Helm chart
 
 on:
   workflow_dispatch:
