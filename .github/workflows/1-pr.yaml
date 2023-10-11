@@ -8,7 +8,7 @@ env:
   # web app
   DOCKERFILE_PATH: "CarbonAware.WebApi/src/Dockerfile"
   HEALTH_ENDPOINT: "0.0.0.0:8080/health"
-  DLL_FILE_PATH: "./bin/Release/net6.0/CarbonAware.WebApi.dll"
+  DLL_FILE_PATH: "./bin/Release/net8.0/CarbonAware.WebApi.dll"
   DOTNET_SRC_DIR: "./src"
   # console app packages
   DOTNET_SOLUTION: "src/GSF.CarbonAware/src/GSF.CarbonAware.csproj"
@@ -42,7 +42,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: 8.0.x
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -86,14 +86,14 @@ jobs:
     needs: sln-build-and-test
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/dotnet/sdk:6.0
+      image: mcr.microsoft.com/dotnet/sdk:8.0
     steps:
       - uses: actions/checkout@v3
       
-      - name: Setup .NET Core SDK 6
+      - name: Setup .NET Core SDK 8
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
           include-prerelease: false
           
       - name: Install dependencies
@@ -164,10 +164,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: dev
-      - name: Setup .NET Core SDK 6
+      - name: Setup .NET Core SDK 8
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
           include-prerelease: false
       - name: Install dependencies
         run: dotnet restore
@@ -199,10 +199,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       
-      - name: Setup .NET Core SDK 6
+      - name: Setup .NET Core SDK 8
         uses: actions/setup-dotnet@v2
         with:
-          dotnet-version: '6.0.x'
+          dotnet-version: '8.0.x'
           include-prerelease: false
 
       - name: Create packages

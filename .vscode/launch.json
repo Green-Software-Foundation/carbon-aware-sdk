@@ -10,7 +10,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "buildCLI",
-      "program": "${workspaceFolder}/src/CarbonAware.CLI/src/bin/Debug/net6.0/caw.dll",
+      "program": "${workspaceFolder}/src/CarbonAware.CLI/src/bin/Debug/net8.0/caw.dll",
       "args": [
         "emissions",
         "--location", "${input:caw_location}"
@@ -27,7 +27,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "buildWebApi",
-      "program": "${workspaceFolder}/src/CarbonAware.WebApi/src/bin/Debug/net6.0/CarbonAware.WebApi.dll",
+      "program": "${workspaceFolder}/src/CarbonAware.WebApi/src/bin/Debug/net8.0/CarbonAware.WebApi.dll",
       "args": [],
       "cwd": "${workspaceFolder}/src/CarbonAware.WebApi/src/",
       "stopAtEntry": false,

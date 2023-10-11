@@ -135,7 +135,7 @@ using environment variables, you'd do this:
 #### Local project settings
 
 For local-only settings you can use environment variables,
-[the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows#secret-manager)
+[the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=windows#secret-manager)
 , or an untracked Development appsettings file to override the default project
 settings.
 
@@ -145,7 +145,7 @@ remove the first line of (invalid) comments. Then update any settings according
 to your preferences.
 
 > Wherever possible, the projects leverage the
-> [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#default-application-configuration-sources)
+> [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#default-application-configuration-sources)
 > expectations. Thus, they can be configured using any file matching the format:
 > `appsettings.<ENV>.json`. Where `<ENV>` is the value of the
 > `ASPNETCORE_ENVIRONMENT` environment variable. By convention projects tend to
