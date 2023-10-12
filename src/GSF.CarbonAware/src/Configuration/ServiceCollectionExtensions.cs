@@ -11,15 +11,22 @@ namespace GSF.CarbonAware.Configuration;
 
 public static class ServiceCollectionExtensions
 {
-    /// <summary>
-    /// Add services needed in order to use an Emissions service.
-    /// </summary>
-    public static IServiceCollection AddEmissionsServices(this IServiceCollection services, IConfiguration configuration)
+
+    private  static IServiceCollection ConfigureLocationDataSourcesConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<LocationDataSourcesConfiguration>(c =>
         {
             configuration.GetSection(LocationDataSourcesConfiguration.Key).Bind(c);
         });
+        return services;
+    }
+
+    /// <summary>
+    /// Add services needed in order to use an Emissions service.
+    /// </summary>
+    public static IServiceCollection AddEmissionsServices(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.ConfigureLocationDataSourcesConfiguration(configuration);
         services.TryAddSingleton<ILocationSource, LocationSource>();
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<IEmissionsHandler, EmissionsHandler>();
@@ -32,10 +39,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddForecastServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.Configure<LocationDataSourcesConfiguration>(c =>
-        {
-            configuration.GetSection(LocationDataSourcesConfiguration.Key).Bind(c);
-        });
+        services.ConfigureLocationDataSourcesConfiguration(configuration);
         services.TryAddSingleton<ILocationSource, LocationSource>();
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<IForecastHandler, ForecastHandler>();

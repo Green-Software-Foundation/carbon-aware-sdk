@@ -403,6 +403,19 @@ InstrumentationKey. For more details, please refer to
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
 ```
 
+### Prometheus exporter for emissions data
+
+In the WebApi project, this application can exporse latest carbon emissions data as a prometheus exporter.
+
+```bash
+CarbonAwareVars__EnableCarbonExporter="true"
+```
+The scraping endpoint is `<ROOT_PATH>/metrics` like this:
+
+```bash
+http://localhost/metrics
+```
+
 ### Verbosity
 
 You can configure the verbosity of the application error messages by setting the
