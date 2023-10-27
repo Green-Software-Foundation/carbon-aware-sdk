@@ -1,6 +1,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
+ENV DOTNET_ROLL_FORWARD LatestMajor
 # Copy everything from source
 COPY . ./
 # Use implicit restore to build and publish
