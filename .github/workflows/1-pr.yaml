@@ -40,7 +40,7 @@ jobs:
 
     - uses: actions/checkout@v2
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
 
@@ -91,7 +91,7 @@ jobs:
       - uses: actions/checkout@v3
       
       - name: Setup .NET Core SDK 8
-        uses: actions/setup-dotnet@v2
+        uses: actions/@v3
         with:
           dotnet-version: '8.0.x'
           include-prerelease: false
@@ -165,7 +165,7 @@ jobs:
         with:
           ref: dev
       - name: Setup .NET Core SDK 8
-        uses: actions/setup-dotnet@v2
+        uses: actions/@v3
         with:
           dotnet-version: '8.0.x'
           include-prerelease: false
@@ -200,7 +200,7 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Setup .NET Core SDK 8
-        uses: actions/setup-dotnet@v2
+        uses: actions/@v3
         with:
           dotnet-version: '8.0.x'
           include-prerelease: false
