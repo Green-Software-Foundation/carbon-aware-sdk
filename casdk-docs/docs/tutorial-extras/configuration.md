@@ -19,6 +19,7 @@
     - [ElectricityMapsFree Configuration](#electricitymapsfree-configuration)
       - [API Token](#api-token)
       - [BaseUrl](#baseurl)
+  - [Cache](#cache)
   - [CarbonAwareVars](#carbonawarevars)
     - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
     - [Verbosity](#verbosity)
@@ -326,6 +327,29 @@ The ElectricityMapsFree token you receive with your account.
 The url to use when connecting to ElectricityMapsFree. Defaults to
 "https://api.co2signal.com/v1/" but can be overridden in the config if needed
 (such as to enable integration testing scenarios).
+
+## Cache
+
+Frequent access to data sources could cause problems such as performance trouble
+or exceed rate limit. To avoid them, you can configure data cache like this:
+
+```json
+{
+  "EmissionsDataCache": {
+    "Enabled": true,
+    "ExpirationMin": 30
+  }
+}
+```
+
+The behavior of current cache implementation:
+* Only emissions data are cached
+  * Forecast data are not stored
+* The result of the latest query to data sources is cached
+* Use cache rather than data sources if even one datum in cache match with the query
+  * Even though more data in data sources would be matched, they are not retrieved
+* Cached data are stored in memory
+  * They are cleard when the process of the SDK is down
 
 ## CarbonAwareVars
 
