@@ -6,14 +6,14 @@ you different data than the WebAPI for the same query). We provide a number of
 different endpoints to provide the most flexibility to integrate to your
 environment:
 
-- You can run the application using the [CLI](./src/CarbonAware.CLI) and refer
+- You can run the application using the [CLI](../src/CarbonAware.CLI) and refer
   to more documentation [here](./carbon-aware-cli.md).
 
-- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi)
+- You can build a container containing the [WebAPI](../src/CarbonAware.WebApi)
   and connect via REST requests and refer to more documentation
   [here](./carbon-aware-webapi.md).
 
-- You can reference the [Carbon Aware C# Library](./src/GSF.CarbonAware) in your
+- You can reference the [Carbon Aware C# Library](../src/GSF.CarbonAware) in your
   projects and make use of its functionalities and features.
 
 - (Future) You can install the Nuget package and make requests directly.

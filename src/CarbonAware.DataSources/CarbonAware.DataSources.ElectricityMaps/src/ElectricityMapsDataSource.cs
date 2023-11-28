@@ -45,8 +45,8 @@ internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSo
     {
         ForecastedCarbonIntensityData forecast;
         var geolocation = await this._locationSource.ToGeopositionLocationAsync(location);
-        if (geolocation.Latitude != null && geolocation.Latitude != null)
-            forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Latitude.ToString() ?? "", geolocation.Longitude.ToString() ?? "");
+        if (geolocation.Latitude != null && geolocation.Longitude != null)
+            forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
         else
         {
             forecast = await this._electricityMapsClient.GetForecastedCarbonIntensityAsync (geolocation.Name ?? "");

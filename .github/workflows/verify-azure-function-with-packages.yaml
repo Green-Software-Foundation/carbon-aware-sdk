@@ -26,10 +26,11 @@ jobs:
         continue-on-error: true
         run: docker rm -f ${{ env.CONTAINER_RUNTIME_NAME }}
 
+      # Build and tag final image, remove dangling images only if there are any
       - name: Docker Target Final
         run: |
           docker build --no-cache . -f ${{ env.DOCKERFILE_PATH }} -t ${{ env.CONTAINER_IMAGE_NAME }}
-          docker rmi -f $(docker images -f "dangling=true" -q)
+          docker images -qf dangling=true | xargs --no-run-if-empty docker rmi
 
       - name: Docker Run Container
         run: docker run -d --name ${{ env.CONTAINER_RUNTIME_NAME }} -p 8080:80 ${{ env.CONTAINER_IMAGE_NAME }}
