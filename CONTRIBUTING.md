@@ -29,12 +29,15 @@ We're currently looking for contributions in the following areas:
 Introduce yourself on on our [discussions page](https://github.com/orgs/Green-Software-Foundation/discussions/65) and let us know where you think you can help. 
 Find the Project Key contacts in the [Confluence page](https://greensoftwarefoundation.atlassian.net/wiki/spaces/~612dd45e45cd76006a84071a/pages/17137665/Opensource+Carbon+Aware+SDK).
 
-GSF member organisation employees should:
+If you are a GSF member organisation employee, you should:
 Fill out the [Onboarding form](https://greensoftware.foundation/onboarding/) if you are new to the GSF; or
 Fill out the [Subscribe form](https://greensoftware.foundation/subscribe/) if you are already part of the GSF but want to join this project.
 Following this, you'll receive an invite to join the Carbon Aware SDK Weekly Meeting. 
+Only members of the foundation can join meetings and internal conversations.
 
-Only members of the foundation can join meetings, but individual contributions are still welcome on our public Github repo. 
+If you are NOT a GSF member organisation employee, individual contributions are still welcome on our public Github repo eg. raising PRs, joining discussions. 
+
+Only our Project Leads have the right to merge PRs. 
 
 Any questions, email help@greensoftware.foundation. 
 
@@ -57,6 +60,11 @@ authority within GSF.
 6. Once development is over, the Approved Reviewer pushes the PR into the "Ready
    for Review" state
 7. If the Chair accepts the PR, it merges into `GSF/carbon-aware-sdk/dev`
+
+### Project Release Schedule: 
+At most once per month. 
+As frequent as possible. 
+We prioritise Security release over Feature release. Documentation release is not restricted. 
 
 ## Public Issues
 
