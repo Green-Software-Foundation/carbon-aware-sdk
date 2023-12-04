@@ -219,3 +219,144 @@ $ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | j
 
 For more information on containerization, refer to the markdown in
 [containerization.md](./containerization.md).
+
+### Deploy Web API on Kubernetes with Helm
+
+You can deploy Web API as a Kubernetes application via Helm. GSF provides a chart as an OCI container, so you have to use Helm v3.8.0 or later.
+
+Following command creates `carbon-aware-sdk` namespace and deploys Web API into it with specified `values.yaml`.
+
+```bash
+$ helm install casdk -n carbon-aware-sdk --create-namespace oci://ghcr.io/green-software-foundation/charts/carbon-aware-sdk --values values.yaml
+```
+
+`values.yaml` should contain `appsettings.json` which would be used in Web API at least. It should include data source definitions and their credentials. It would be stored as `Secret` resource.
+
+```yaml
+appsettings: |-
+  {
+    "DataSources": {
+      "EmissionsDataSource": "WattTime",
+      "ForecastDataSource": "WattTime",
+      "Configurations": {
+        "WattTime": {
+          "Type": "WattTime",
+          "Username": "username",
+          "Password": "password",
+          "BaseURL": "https://api2.watttime.org/v2/"
+        }
+      }
+    }
+  }
+```
+
+Also you can include following configuration into `values.yaml`.
+
+```yaml
+# Number of replicas
+replicaCount: 1
+
+image:
+  repository: ghcr.io/green-software-foundation/carbon-aware-sdk
+  pullPolicy: IfNotPresent
+  # You can set specified tag (equivalent with the SDK version in here)
+  tag: latest
+
+# Set the value if you want to override the name.
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: carbon-aware-sdk.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: carbon-aware-sdk-tls
+  #    hosts:
+  #      - carbon-aware-sdk.local
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# appsettings.json
+appsettings: |-
+  {
+    "DataSources": {
+      "EmissionsDataSource": "ElectricityMaps",
+      "ForecastDataSource": "WattTime",
+      "Configurations": {
+        "WattTime": {
+          "Type": "WattTime",
+          "Username": "username",
+          "Password": "password",
+          "BaseURL": "https://api2.watttime.org/v2/",
+          "Proxy": {
+            "useProxy": true,
+            "url": "http://10.10.10.1",
+            "username": "proxyUsername",
+            "password": "proxyPassword"
+          }
+        },
+        "ElectricityMaps": {
+          "Type": "ElectricityMaps",
+          "APITokenHeader": "auth-token",
+          "APIToken": "myAwesomeToken",
+          "BaseURL": "https://api.electricitymap.org/v3/"
+        }
+      }
+    }
+  }
+```
+
+The video in below is demonstration to install Carbon Aware SDK via Helm. Note that installing the SDK from local directory ( ~/github-forked/carbon-aware-sdk/helm-chart ), not an OCI container.
+
+[!Demonstration to intall Carbon Aware SDK from local with Helm](https://github.com/Green-Software-Foundation/carbon-aware-sdk/assets/7421132/b09d8ab1-642b-442a-882f-abc802153070)
