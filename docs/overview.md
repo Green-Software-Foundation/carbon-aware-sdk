@@ -50,9 +50,9 @@ environment:
   [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
 - Access to one (or all) of the supported external data APIs
   - WattTime account - See
-    [instruction on WattTime](https://www.watttime.org/api-documentation/#register-new-user)
+    [instruction on WattTime](https://docs.watttime.org/#tag/Authentication/operation/post_username_register_post)
     for details (or use our python samples as described
-    [here](samples/watttime-registration/readme.md)).
+    [here](../samples/watttime-registration/readme.md)).
   - ElectricityMaps account - See
     [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home)
     for details (or setup a
