@@ -2,7 +2,39 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
-## [1.1.0] - 2023-18-07
+## [1.2.0] - 2023-12-12
+
+### Added 
+
+- Helm chart for deployment of the API to Kubernetes.  This is available in the `helm` directory.
+- 
+
+### Fixed
+
+- 
+
+### Changed
+
+- 
+
+#### API
+
+- 
+
+#### API Deployment
+
+- 
+
+#### SDK 
+
+- 
+
+
+#### Other
+
+- 
+
+## [1.1.0] - 2023-07-18
 
 ### Added 
 
