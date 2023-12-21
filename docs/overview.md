@@ -355,6 +355,40 @@ appsettings: |-
       }
     }
   }
+
+# Location source
+# Location data will be deployed into /app/location-sources/json .
+locationSources:
+  enabled: false
+#  files:
+#  - fileName: custom-locations-1.json
+#    locations: |-
+#      {
+#        "east": {
+#          "Latitude": "35.68",
+#          "Longitude": "139.77",
+#          "Name": "eastdc"
+#        },
+#        "west": {
+#          "Latitude": "34.6939",
+#          "Longitude": "135.5022",
+#          "Name": "westdc"
+#        }
+#      }
+#  - fileName: custom-locations-2.json
+#    locations: |-
+#      {
+#        "north": {
+#         "Latitude": "35.68",
+#          "Longitude": "139.77",
+#          "Name": "northdc"
+#        },
+#        "south": {
+#          "Latitude": "34.6939",
+#          "Longitude": "135.5022",
+#          "Name": "southdc"
+#        }
+#      }
 ```
 
 The video in below is demonstration to install Carbon Aware SDK via Helm. Note that installing the SDK from local directory ( ~/github-forked/carbon-aware-sdk/helm-chart ), not an OCI container.
