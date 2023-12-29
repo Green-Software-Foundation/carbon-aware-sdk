@@ -23,15 +23,13 @@ concurrency:
 
 jobs:
    deploy:
-    name: Deploy to GitHub Pages
+    name: Deploy docs to GitHub Pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: yarn
-          cache-dependency-path: ./casdk-docs/yarn.lock
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
@@ -53,5 +51,5 @@ jobs:
           # https://github.com/actions/checkout/issues/13#issuecomment-724415212
           # The GH actions bot is used by default if you didn't specify the two fields.
           # You can swap them out with your own user credentials.
-          user_name: github-actions[bot]
-          user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          user_name: danuw
+          user_email: bdanuw@gmail.com
