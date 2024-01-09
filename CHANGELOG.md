@@ -2,7 +2,7 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
-## [1.2.0] - 2023-12-12
+## [1.2.0] - 2024-01
 
 ### Added 
 
