@@ -36,8 +36,9 @@ public class ElectricityMapsFreeDataSourceTests
         _dataSource = new ElectricityMapsFreeDataSource(_logger.Object, _ElectricityMapsFreeClient.Object, _locationSource.Object);
     }
 
-    [Test]
-    public async Task GetCarbonIntensity_ReturnsResultsWhenRecordsFound()
+    [TestCase(false, TestName = "GetCarbonIntensity_ReturnsResultsWhenRecordsFound without emission date time")]
+    [TestCase(true, TestName = "GetCarbonIntensity_ReturnsResultsWhenRecordsFound with emission date time")]
+    public async Task GetCarbonIntensity_ReturnsResultsWhenRecordsFound(bool withEmissionDateTime)
     {
         var startDate = DateTimeOffset.UtcNow.AddHours(-10);
         var endDate = startDate.AddHours(1);
@@ -49,6 +50,7 @@ public class ElectricityMapsFreeDataSourceTests
         {
             Data = new Data()
             {
+                Datetime = withEmissionDateTime ? startDate.AddMinutes(30) : null,
                 CarbonIntensity = expectedCarbonIntensity,
             }
         };
@@ -71,8 +73,9 @@ public class ElectricityMapsFreeDataSourceTests
         this._locationSource.Verify(l => l.ToGeopositionLocationAsync(_defaultLocation));
     }
 
-    [Test]
-    public async Task GetCarbonIntensity_UseRegionNameWhenCoordinatesNotAvailable()
+    [TestCase(false, TestName = "GetCarbonIntensity_UseRegionNameWhenCoordinatesNotAvailable without emission date time")]
+    [TestCase(true, TestName = "GetCarbonIntensity_UseRegionNameWhenCoordinatesNotAvailable with emission date time")]
+    public async Task GetCarbonIntensity_UseRegionNameWhenCoordinatesNotAvailable(bool withEmissionDateTime)
     {
         var startDate = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         var endDate = startDate.AddMinutes(1);
@@ -84,6 +87,7 @@ public class ElectricityMapsFreeDataSourceTests
         {
             Data = new Data()
             {
+                Datetime = withEmissionDateTime ? startDate.AddSeconds(30) : null,
                 CarbonIntensity = expectedCarbonIntensity,
             }
         };

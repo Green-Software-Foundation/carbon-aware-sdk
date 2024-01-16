@@ -11,8 +11,8 @@ Accepted
 ## Context
 
 Current GSF CarbonAware software can't be consumed as
-[Nuget](https://www.nuget.org) Packages in case there is an application that
-requires to integrate with it. There are scenerarios where the current runtimes
+[Nuget](https://www.nuget.org) packages in case there is an application that
+requires to integrate with it. There are scenarios where the current runtimes
 (CLI/WebApi) environments are not allowed to be used since all the functionality
 requires to be bundled together. The goal of this proposal is to show that the
 current GSF repository can provide a mechanism to generate `Nuget` packages that
@@ -21,7 +21,7 @@ can be consumed by any application that wants to integrate with
 
 ## Decision
 
-Having nuget packages available to be consumed by 3rd party application would
+Having Nuget packages available to be consumed by 3rd party application would
 help to integrate easily and it would open the possibilities to extend the SDK
 more. Currently there are seven (7) `dotnet` projects that can be set to be
 packaged with tools like `dotnet pack` or `msbuild -t:pack`.
@@ -37,7 +37,7 @@ packaged with tools like `dotnet pack` or `msbuild -t:pack`.
 | CarbonAware.LocationSources             |
 | CarbonAware.Tools.WattTimeClient        |
 
-**[Must Address]** Creation of a minimum set of packages that can be integrate
+**[Must Address]** Creation of a minimum set of packages that can be integrated
 with a 3rd party application.
 
 - Continues enhancing the SDK to support integration with different type of

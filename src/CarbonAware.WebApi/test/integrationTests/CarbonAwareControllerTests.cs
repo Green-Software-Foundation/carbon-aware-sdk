@@ -21,11 +21,12 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     private readonly string healthURI = "/health";
     private readonly string fakeURI = "/fake-endpoint";
     private readonly string bestLocationsURI = "/emissions/bylocations/best";
+    private readonly string bylocationsURI = "/emissions/bylocations";
+    private readonly string bylocationURI = "/emissions/bylocation";
     private readonly string currentForecastURI = "/emissions/forecasts/current";
     private readonly string batchForecastURI = "/emissions/forecasts/batch";
     private readonly string averageCarbonIntensityURI = "/emissions/average-carbon-intensity";
     private readonly string batchAverageCarbonIntensityURI = "/emissions/average-carbon-intensity/batch";
-
 
     public CarbonAwareControllerTests(DataSourceType dataSource) : base(dataSource) { }
 
@@ -47,9 +48,89 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     }
 
     //ISO8601: YYYY-MM-DD
-    [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus")]
-    [TestCase("2021-12-25", "2021-12-26", "westus")]
-    public async Task BestLocations_ReturnsOK(DateTimeOffset start, DateTimeOffset end, string location)
+    [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", nameof(ByLocationURI_ReturnsOK) + "0")]
+    [TestCase("2021-12-25T00:00:00+06:00", "2021-12-26T00:00:00+06:00", "westus", nameof(ByLocationURI_ReturnsOK) + "1")]
+    public async Task ByLocationURI_ReturnsOK(DateTimeOffset start, DateTimeOffset end, string location, string expectedResultName)
+    {
+        //Sets up any data endpoints needed for mocking purposes
+        _dataSourceMocker?.SetupDataMock(start, end, location);
+
+        //Call the private method to construct with parameters
+        var queryStrings = new Dictionary<string, string>();
+        queryStrings["location"] = location;
+        queryStrings["time"] = $"{start:O}";
+        queryStrings["toTime"] = $"{end:O}";
+
+        var endpointURI = ConstructUriWithQueryString(bylocationURI, queryStrings);
+
+        //Get response and response content
+        var result = await _client.GetAsync(endpointURI);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+    }
+
+    [TestCase("location", "", TestName = "empty location query string")]
+    [TestCase("non-location-param", "", TestName = "location param not present")]
+    public async Task ByLocation_EmptyLocationQueryString_ReturnsBadRequest(string queryString, string value)
+    {
+        //Call the private method to construct with parameters
+        var queryStrings = new Dictionary<string, string>();
+        queryStrings[queryString] = value;
+
+        var endpointURI = ConstructUriWithQueryString(bylocationURI, queryStrings);
+
+        //Get response and response content
+        var result = await _client.GetAsync(endpointURI);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    //ISO8601: YYYY-MM-DD
+    [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", nameof(ByLocationsURI_ReturnsOK) + "0")]
+    [TestCase("2021-12-25T00:00:00+06:00", "2021-12-26T00:00:00+06:00", "westus", nameof(ByLocationsURI_ReturnsOK) + "1")]
+    public async Task ByLocationsURI_ReturnsOK(DateTimeOffset start, DateTimeOffset end, string location, string expectedResultName)
+    {
+        //Sets up any data endpoints needed for mocking purposes
+        _dataSourceMocker?.SetupDataMock(start, end, location);
+
+        //Call the private method to construct with parameters
+        var queryStrings = new Dictionary<string, string>();
+        queryStrings["location"] = location;
+        queryStrings["time"] = $"{start:O}";
+        queryStrings["toTime"] = $"{end:O}";
+
+        var endpointURI = ConstructUriWithQueryString(bylocationsURI, queryStrings);
+
+        //Get response and response content
+        var result = await _client.GetAsync(endpointURI);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+    }
+
+    [TestCase("location", "", TestName = "empty location query string")]
+    [TestCase("non-location-param", "", TestName = "location param not present")]
+    public async Task ByLocations_EmptyLocationQueryString_ReturnsBadRequest(string queryString, string value)
+    {
+        //Call the private method to construct with parameters
+        var queryStrings = new Dictionary<string, string>();
+        queryStrings[queryString] = value;
+
+        var endpointURI = ConstructUriWithQueryString(bylocationsURI, queryStrings);
+
+        //Get response and response content
+        var result = await _client.GetAsync(endpointURI);
+
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
+    }
+
+    //ISO8601: YYYY-MM-DD
+    [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", nameof(BestLocations_ReturnsOK) + "0")]
+    [TestCase("2021-12-25T00:00:00+06:00", "2021-12-26T00:00:00+06:00", "westus", nameof(BestLocations_ReturnsOK) + "1")]
+    public async Task BestLocations_ReturnsOK(DateTimeOffset start, DateTimeOffset end, string location, string expectedResultName)
     {
         //Sets up any data endpoints needed for mocking purposes
         _dataSourceMocker?.SetupDataMock(start, end, location);
@@ -102,6 +183,20 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         var result = await _client.GetAsync(endpointURI);
         Assert.That(result, Is.Not.Null);
         Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using (var data = await result!.Content.ReadAsStreamAsync())
+        {
+            Assert.That(data, Is.Not.Null);
+            var forecasts = await JsonSerializer.DeserializeAsync<IEnumerable<EmissionsForecastDTO>>(data);
+            Assert.That(forecasts, Is.Not.Null);
+            Assert.AreEqual(forecasts!.Count(), 1);
+            foreach (var forecast in forecasts!)
+            {
+                Assert.That(forecast.RequestedAt, Is.Not.Null);
+                Assert.That(forecast.GeneratedAt, Is.Not.Null);
+                Assert.That(forecast.OptimalDataPoints, Is.Not.Null);
+                Assert.That(forecast.ForecastData, Is.Not.Null);
+            }
+        }
     }
 
     [Test]
@@ -205,9 +300,9 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         }
     }
 
-    [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", TestName = "EmissionsMarginalCarbonIntensity expects OK for full datetime")]
-    [TestCase("2021-12-25", "2021-12-26", "westus", TestName = "EmissionsMarginalCarbonIntensity expects OK date only, no time")]
-    public async Task EmissionsMarginalCarbonIntensity_ReturnsOk(string start, string end, string location)
+    [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", nameof(EmissionsMarginalCarbonIntensity_ReturnsOk) + "0", TestName = "EmissionsMarginalCarbonIntensity expects OK for full datetime")]
+    [TestCase("2021-12-25T00:00:00+06:00", "2021-12-26T00:00:00+06:00", "westus", nameof(EmissionsMarginalCarbonIntensity_ReturnsOk) + "1", TestName = "EmissionsMarginalCarbonIntensity expects OK date only, no time")]
+    public async Task EmissionsMarginalCarbonIntensity_ReturnsOk(string start, string end, string location, string expectedResultName)
     {
         IgnoreTestForDataSource($"data source does not implement '{averageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
 
@@ -271,9 +366,9 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         Assert.That(result!.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
     }
 
-    [TestCase("2022-01-01T04:05:06Z", "2022-01-02T04:05:06Z", "eastus", 1, TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for single element batch")]
-    [TestCase("2021-12-25", "2021-12-26", "westus", 3, TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for multiple element batch")]
-    public async Task EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk(string start, string end, string location, int nelems)
+    [TestCase("2022-01-01T04:05:06Z", "2022-01-02T04:05:06Z", "eastus", 1, nameof(EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk) + "0", TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for single element batch")]
+    [TestCase("2021-12-25T00:00:00+06:00", "2021-12-26T00:00:00+06:00", "westus", 3, nameof(EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk) + "1", TestName = "EmissionsMarginalCarbonIntensityBatch expects OK for multiple element batch")]
+    public async Task EmissionsMarginalCarbonIntensityBatch_SupportedDataSources_ReturnsOk(string start, string end, string location, int nelems, string expectedResultName)
     {
         IgnoreTestForDataSource($"data source does not implement '{batchAverageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
 
@@ -282,7 +377,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         _dataSourceMocker?.SetupDataMock(startDate, endDate, location);
         var intesityData = Enumerable.Range(0, nelems).Select(x => new
         {
-            location = location,
+            location,
             startTime = start,
             endTime = end
         });

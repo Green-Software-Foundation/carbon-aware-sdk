@@ -1,15 +1,16 @@
 {{- if .Values.autoscaling.enabled }}
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "helmexample.fullname" . }}
+  name: webapi
+  namespace: {{ $.Release.Namespace }}
   labels:
-    {{- include "helmexample.labels" . | nindent 4 }}
+    {{- include "carbon-aware-sdk.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "helmexample.fullname" . }}
+    name: webapi
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

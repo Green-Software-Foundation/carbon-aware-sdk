@@ -2,7 +2,45 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
-## [1.1.0] - 2023-18-07
+## [1.2.0] - 2024-01
+
+### Added 
+
+- [#381 Add Helm chart and workflow](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/381)
+- New package release for Helm charts available at https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/charts%2Fcarbon-aware-sdk
+
+### Fixed
+
+- [#232 Generating SDK client does not work on linux](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/232)
+- [#393 Fix: verify-azure-function-with-packages](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/393)
+- [#391 fixing 3 broken links in overview.md](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/391)
+- [#389 EMFree data source should regard specified time range](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/389)
+
+### Changed
+
+- [#425 Updating CONTRIBUTING.md](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/425)
+
+#### API
+
+- 
+
+#### API Deployment
+
+- 
+
+#### SDK 
+
+- 
+
+
+#### Other
+
+- Improved process leveraging the project boards at https://github.com/orgs/Green-Software-Foundation/projects/15/views/2
+
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/232](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues?q=label%3Av1.2+is%3Aclosed+)
+
+## [1.1.0] - 2023-07-18
 
 ### Added 
 

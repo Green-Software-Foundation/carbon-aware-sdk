@@ -1,16 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "helmexample.fullname" . }}
+  name: webapi
+  namespace: {{ $.Release.Namespace }}
   labels:
-    {{- include "helmexample.labels" . | nindent 4 }}
+    {{- include "carbon-aware-sdk.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "helmexample.selectorLabels" . | nindent 6 }}
+      {{- include "carbon-aware-sdk.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,31 +19,47 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "helmexample.selectorLabels" . | nindent 8 }}
+        {{- include "carbon-aware-sdk.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "helmexample.serviceAccountName" . }}
+      serviceAccountName: {{ include "carbon-aware-sdk.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      enableServiceLinks: false
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.image.pullPolicy }}
+          imagePullPolicy: {{ . }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
+          volumeMounts:
+            - name: appsettings
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json
+              readOnly: true
           livenessProbe:
-            {{ .Values.monitorConfig.liveness | toYaml | indent 12 | trim }}
+            httpGet:
+              path: /health
+              port: http
           readinessProbe:
-            {{ .Values.monitorConfig.readiness | toYaml | indent 12 | trim }}
+            httpGet:
+              path: /health
+              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: appsettings
+          secret:
+            secretName: appsettings
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
