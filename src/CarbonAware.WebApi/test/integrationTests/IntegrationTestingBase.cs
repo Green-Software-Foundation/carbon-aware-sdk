@@ -2,6 +2,7 @@
 using CarbonAware.Interfaces;
 using CarbonAware.DataSources.Json.Mocks;
 using CarbonAware.DataSources.ElectricityMaps.Mocks;
+using CarbonAware.DataSources.ElectricityMapsFree.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NUnit.Framework;
@@ -114,6 +115,16 @@ internal abstract class IntegrationTestingBase
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APIToken", "test");
 
                     _dataSourceMocker = new ElectricityMapsDataSourceMocker();
+                    break;
+                }
+            case DataSourceType.ElectricityMapsFree:
+                {
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "ElectricityMapsFree");
+                    /* ElectricityMapsFree datasource does not support forecast data */
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMapsFree__Type", "ElectricityMapsFree");
+                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMapsFree__token", "test");
+
+                    _dataSourceMocker = new ElectricityMapsFreeDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:
