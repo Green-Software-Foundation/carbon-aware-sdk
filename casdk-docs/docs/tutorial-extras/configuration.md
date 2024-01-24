@@ -23,6 +23,7 @@
   - [CarbonAwareVars](#carbonawarevars)
     - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
     - [Verbosity](#verbosity)
+    - [Prometheus exporter](#prometheus-exporter-for-emissions-data)
     - [Web API Prefix](#web-api-prefix)
   - [LocationDataSourcesConfiguration](#locationdatasourcesconfiguration)
 - [Sample Configurations](#sample-configurations)
@@ -414,6 +415,17 @@ The scraping endpoint is `<ROOT_PATH>/metrics` like this:
 
 ```bash
 http://localhost/metrics
+```
+
+By default, the exposed data are latest ones within last 24 hours. If you would like to change the period 
+in some reasones, you can configure the value like this:
+
+```json
+{
+  "CarbonExporter": {
+    "PeriodInHours": 48
+  }
+}
 ```
 
 ### Verbosity

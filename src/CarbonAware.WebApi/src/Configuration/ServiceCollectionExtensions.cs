@@ -40,6 +40,12 @@ internal static class ServiceCollectionExtensions
         var envVars = configuration?.GetSection(CarbonAwareVariablesConfiguration.Key).Get<CarbonAwareVariablesConfiguration>();
         var enableCarbonExporter = envVars?.EnableCarbonExporter ?? false;
         if(enableCarbonExporter){
+            var carbonExporter = configuration?.GetSection(CarbonExporterConfiguration.Key);
+            services.Configure<CarbonExporterConfiguration>(c => 
+            {
+                carbonExporter?.Bind(c);
+            });
+
             services.AddOpenTelemetry()
                 .WithMetrics(meterProviderBuilder =>
                     meterProviderBuilder

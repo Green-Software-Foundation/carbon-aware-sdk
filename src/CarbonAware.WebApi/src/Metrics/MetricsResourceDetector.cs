@@ -1,7 +1,7 @@
 using CarbonAware.WebApi.Metrics;
 using OpenTelemetry.Resources;
 
-public class MetricsResourceDetector : IResourceDetector
+internal class MetricsResourceDetector : IResourceDetector
 {
     private readonly CarbonMetrics _carbonMetrics;
 
