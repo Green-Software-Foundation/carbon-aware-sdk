@@ -61,7 +61,7 @@ On Windows:
 On MacOS/Linux:
 
 ```bash
-.\caw -h
+./caw -h
 ```
 
 ## emissions
@@ -132,7 +132,7 @@ output:
 command:
 
 ```bash
-.\caw emissions -l eastus -l westus
+./caw emissions -l eastus -l westus
 ```
 
 output:
@@ -172,7 +172,7 @@ output:
 command:
 
 ```bash
-.\caw emissions -l eastus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best
+./caw emissions -l eastus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best
 ```
 
 output:
@@ -212,7 +212,7 @@ output:
 command:
 
 ```bash
-.\caw emissions -l eastus -l westus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best
+./caw emissions -l eastus -l westus --start-time 2022-07-01T00:00:00Z --end-time 2022-07-31T23:59:59Z --best
 ```
 
 output:
@@ -233,7 +233,7 @@ output:
 command:
 
 ```bash
-.\caw emissions -l eastus -l westus --start-time 2022-07-09T00:00:00Z --end-time 2022-07-09T12:00:00Z --average
+./caw emissions -l eastus -l westus --start-time 2022-07-09T00:00:00Z --end-time 2022-07-09T12:00:00Z --average
 ```
 
 output:
@@ -283,7 +283,7 @@ Forecasted emissions
 command:
 
 ```bash
-.\caw emissions-forecasts -l northeurope
+./caw emissions-forecasts -l northeurope
 ```
 
 output:
@@ -325,7 +325,7 @@ output:
 command:
 
 ```bash
-.\caw emissions-forecasts -l eastus -l westus
+./caw emissions-forecasts -l eastus -l westus
 ```
 
 output:
@@ -377,7 +377,7 @@ TIME_TWO_HOURS_FROM_NOW=$(date --date='2 hours' --utc --iso-8601='seconds')
 
 TIME_NINETEEN_HOURS_FROM_NOW=$(date --date='19 hours' --utc --iso-8601='seconds')
 
-.\caw emissions-forecasts -l northeurope -l westus --data-start-at TIME_TWO_HOURS_FROM_NOW --data-end-at TIME_NINETEEN_HOURS_FROM_NOW -w 10
+./caw emissions-forecasts -l northeurope -l westus --data-start-at TIME_TWO_HOURS_FROM_NOW --data-end-at TIME_NINETEEN_HOURS_FROM_NOW -w 10
 ```
 
 Example output:
@@ -448,7 +448,7 @@ Example output:
 command:
 
 ```bash
-.\caw emissions-forecasts -l northeurope -l westus --requested-at 2022-06-15T18:31:00Z
+./caw emissions-forecasts -l northeurope -l westus --requested-at 2022-06-15T18:31:00Z
 ```
 
 output:
@@ -516,7 +516,7 @@ output:
 
 ##### Locations
 
-command: `.\caw locations`
+command: `./caw locations`
 
 output:
 
