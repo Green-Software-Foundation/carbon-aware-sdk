@@ -123,7 +123,7 @@ repository (e.g \<your-username>/my-private-repo)
    ```sh
    docker login <myacrname>.azurecr.io -u username -p <CopiedKeyFromAzurePortal>
    cd ./$(git rev-parse --show-cdup)/src
-   docker build -t <myacrname>.azurecr.io/carbon_aware:v1 -f arbonAware.WebApi/src/Dockerfile .
+   docker build -t <myacrname>.azurecr.io/carbon_aware:v1 -f CarbonAware.WebApi/src/Dockerfile .
    docker push <myacrname>.azurecr.io/carbon_aware:v1
    ```
 
