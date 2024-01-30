@@ -135,7 +135,7 @@ To do the override, define a class that inherits from
 CarbonAwareParametersBaseDTO and uses the [FromQuery(Name =
 "myAwesomeDisplayName")] or [JsonPropertyName("myAwesomeDisplayName")]
 attribute. A second (less recommended) option is to pass the optional arg
-Dictionary<string, string>? displayNameMap when you are directly creating the
+`Dictionary<string, string>? displayNameMap` when you are directly creating the
 object. With either option, the SDK handles updating references internally.
 
 ### Required Properties
@@ -212,4 +212,4 @@ as part of error reporting.
 
 ## References
 
-<https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/>
+[https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/)

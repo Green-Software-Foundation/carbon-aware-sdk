@@ -4,7 +4,7 @@ In order to create an account for watttime, we have set up these sample requests
 to help you get set up very quickly.
 
 > Note these steps reflect the documentation at
-> <https://www.watttime.org/api-documentation/#best-practices-for-api-usage>
+> [https://www.watttime.org/api-documentation/#best-practices-for-api-usage](https://www.watttime.org/api-documentation/#best-practices-for-api-usage)
 > This sample is in python
 
 Please follow these steps to get started quickly:

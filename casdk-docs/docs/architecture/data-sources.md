@@ -28,7 +28,7 @@ of, that client.
   processed the request, and then processes the response before returning a
   final result.
 
-### GSF Handler <-> Data Source Contract
+### GSF Handler < - > Data Source Contract
 
 In order for the SDK to support different data sources, there is a defined
 contract between the Handler and the Data tier. The handler acts as the

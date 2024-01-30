@@ -15,13 +15,13 @@ Prerequisites:
   - Docker
   - VSCode (it is recommended to work in a Dev Container)
   - Remote Containers extension for VSCode:
-    <https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>
+    [https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 The CLI can either be run locally with `dotnet` or in a container, e.g. using
 VSCode Remote Containers (Dev Container). To run locally:
 
 1. Make sure you have the repository cloned:
-   <https://github.com/Green-Software-Foundation/carbon-aware-sdk.git>
+   [https://github.com/Green-Software-Foundation/carbon-aware-sdk.git](https://github.com/Green-Software-Foundation/carbon-aware-sdk.git)
 2. `git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git`
 3. Change directory to: `cd carbon-aware-sdk/src/CarbonAware.CLI/src`
 4. If you have a WattTime account registered (or other data source) - you will
@@ -172,10 +172,10 @@ Prerequisites:
 - Docker Desktop/CLI
 - VSCode (it is recommended to work in a Dev Container)
 - Remote Containers extension for VSCode:
-  <https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers>
+  [https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 First we need to set up the GitHub repository
-(<https://github.com/Green-Software-Foundation/carbon-aware-sdk.git>):
+([https://github.com/Green-Software-Foundation/carbon-aware-sdk.git](https://github.com/Green-Software-Foundation/carbon-aware-sdk.git)):
 
 1. `git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git`
 2. Change directory into the repository: `cd carbon-aware-sdk`
@@ -229,11 +229,11 @@ First we need to set up the GitHub repository
 Prerequisites:
 
 - `curl` or other tool that allows making HTTP requests (e.g. `wget`)
-- Recommended: `jq` for parsing JSON output: <https://stedolan.github.io/jq/>
+- Recommended: `jq` for parsing JSON output: [https://stedolan.github.io/jq/](https://stedolan.github.io/jq/)
 
 With the API running on `localhost:5073`, we can make HTTP requests to its
 endpoints, full endpoint description can be found here:
-<https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md>
+[https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md)
 
 To get a list of all locations supported, you can use the Locations API endpoint
 `/locations` referenced in

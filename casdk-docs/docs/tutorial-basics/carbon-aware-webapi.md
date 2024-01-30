@@ -394,8 +394,8 @@ that time period.
 
 This endpoint lists all the supported locations that the datasources potentially
 can have access to. This information is coming from the `location-source/json`
-files, that contain dictionaries in the form of <A Location key name,
-GeoCoordinates>, for instance:
+files, that contain dictionaries in the form of `<A Location key name,
+GeoCoordinates>`, for instance:
 
 ```json
 {

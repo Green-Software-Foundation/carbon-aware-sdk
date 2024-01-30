@@ -38,7 +38,7 @@ Some additional clients that could be generated, and include:
 - Swift
 - TypeScript
 - and many more can be found here:
-  <https://openapi-generator.tech/docs/generators>
+  [https://openapi-generator.tech/docs/generators](https://openapi-generator.tech/docs/generators)
 
 ## Generation and Testing via Docker
 
@@ -66,7 +66,7 @@ converts standardized requests into one of the native client SDK calls.
 ## Generate
 
 To generate the clients, you may install the Open API Generator:
-<https://openapi-generator.tech/docs/installation>. Then you can run
+[https://openapi-generator.tech/docs/installation](https://openapi-generator.tech/docs/installation). Then you can run
 `./generate-client.sh` to build a full set of supported clients.
 
 With Docker installed, you can also generate the full list of supported clients
@@ -123,7 +123,7 @@ from the .env file.
 In the "tests" folder, there is a .env file which contains the configuration
 settings used by the client proxies for testing. Those parameters include:
 
-**BASE_URL**: (ex. <http://localhost:5073>) This is the fully qualified base URL
+**BASE_URL**: (ex. [http://localhost:5073](http://localhost:5073)) This is the fully qualified base URL
 of the Grid API service for which clients will be generated and tested against.
 
 **CSHARP_PORT**: (ex. 50000) This is the port that the C# proxy will run on.

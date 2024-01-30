@@ -208,4 +208,4 @@ as part of error reporting.
 
 ## References
 
-<https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/>
+[https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/)

@@ -54,6 +54,6 @@ Neutral
 
 ## References
 
-- <https://github.com/Green-Software-Foundation/carbon-aware-sdk/discussions/46>
+- [https://github.com/Green-Software-Foundation/carbon-aware-sdk/discussions/46](https://github.com/Green-Software-Foundation/carbon-aware-sdk/discussions/46)
 - [GitHub Packages](https://github.com/features/packages)
 - [GitHub Actions](https://github.com/features/actions)
