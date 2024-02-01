@@ -1,7 +1,8 @@
 # Carbon Aware SDK adopters
 
-Do you currently use Carbon Aware SDK in your production environment?
-If so, please consider adding your organization’s name and use case to the list below by referencing [CONTRIBUTING.md](../CONTRIBUTING.md).
+We're sharing adopters of the Carbon Aware SDK with public evidence, although we know many others are also using the Carbon Aware SDK to reduce the carbon footprint their software.
+If you're using the Carbon Aware SDK and can share evidence, we'd love to add you to this list.
+Please reach out to carbon-aware-sdk@greensoftware.foundation.
 
 
 ## Adopters list
