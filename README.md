@@ -30,7 +30,7 @@ When software does more when the electricity is clean and do less when the
 electricity is dirty, or runs in a location where the energy is cleaner, we call
 this **carbon aware software**.
 
-> todo: insert the image of demand shaping here
+> ```todo: insert the image of demand shaping here```
 
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
@@ -74,6 +74,8 @@ deployment in the greenest location.
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
 to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./docs/adopters.md).
+
+Both UBS and Vestas have used the SDK, with more information ```link to case study page```
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
