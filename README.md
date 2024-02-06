@@ -1,5 +1,26 @@
 # Carbon Aware SDK
+The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, 
+in turn helping you **measure and reduce your software's carbon emissions**.
 
+By knowing the carbon emissions of the energy that powers your applications, 
+you and your organisation can make decisions on when and where to run your software, 
+and leverage greener energy sources.  
+
+* Build your AI models when carbon emissions are lower
+* Deploy software into the cloud in locations that have greener energy sources
+* Run software updates at greener energy time windows 
+* Use data to run hypothetical models to understand how you could start driving impact and reduce emissions 
+
+Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build green software, and you can too!
+
+# Getting Started Overview
+
+Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get up and running.
+
+Get started on creating sustainable software innovation for a greener future
+today!
+
+# How Does This Work?
 You can reduce the carbon footprint of your application by just running things
 at different times and in different locations. That is because not all
 electricity is produced in the same way. Most is produced through burning fossil
@@ -8,6 +29,8 @@ fuels, some is produced using cleaner sources like wind and solar.
 When software does more when the electricity is clean and do less when the
 electricity is dirty, or runs in a location where the energy is cleaner, we call
 this **carbon aware software**.
+
+> todo: insert the image of demand shaping here
 
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
@@ -19,13 +42,6 @@ wind is blowing, enable systems to follow the sun, moving around the world to
 where energy is the greenest, and create tools that give insights and help
 software innovators to make greener software decisions. All of this helps reduce
 carbon emissions.
-
-# Getting Started Overview
-
-Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get up and running.
-
-Get started on creating sustainable software innovation for a greener future
-today!
 
 ## What is the Carbon Aware SDK?
 
@@ -155,7 +171,12 @@ Open Source Working Group.
 ### Appointments
 
 - Chair/Project lead - Vaughan Knight (Microsoft)
-- Vice Chair - Szymon Duchniewicz (Avanade)
+- Senior Technical Program Manager - Sophie Trinder (Green Software Foundation)
+- Principal Contributor - Szymon Duchniewicz (Avanade)
+- Principal Contributor - Dan Benitah (Avanade)
+- Contributor - Bill Derusha (Avanade)
+- Contributor - Yasumasa Suenaga (NTT Data)
+- Contributor - Damien Roux (NTT Data)
 
 ### GSF Project Scope
 
