@@ -30,7 +30,7 @@ When software does more when the electricity is clean and do less when the
 electricity is dirty, or runs in a location where the energy is cleaner, we call
 this **carbon aware software**.
 
-> todo: insert the image of demand shaping here
+> ```todo: insert the image of demand shaping here```
 
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
@@ -48,6 +48,8 @@ carbon emissions.
 At its core the Carbon Aware SDK is a WebApi and Command Line Interface (CLI) to
 assist in building carbon aware software. The functionality across the CLI and
 WebApi is identical by design.
+
+You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programatically make greener decisions in your software.
 
 ### The WebApi
 
@@ -72,6 +74,8 @@ deployment in the greenest location.
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
 to start-ups.
+
+Both UBS and Vestas have used the SDK, with more information ```link to case study page```
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these
