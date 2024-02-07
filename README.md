@@ -1,18 +1,18 @@
 # Carbon Aware SDK
-The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, 
-in turn helping you **measure and reduce your software's carbon emissions**.
+Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.  
+
+The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you **measure and reduce your software's carbon emissions**, and choose when and where you run your software to make it greener.
 
 ![Carbon Aware Software](./images/carbon-aware-software.png)
-> TODO: Get the bigger image
+
 
 By knowing the carbon emissions of the energy that powers your applications, 
-you and your organisation can make decisions on when and where to run your software, 
-and leverage greener energy sources.  
+you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  
 
-* Build your AI models when carbon emissions are lower
-* Deploy software into the cloud in locations that have greener energy sources
-* Run software updates at greener energy time windows 
-* Use data to run hypothetical models to understand how you could start driving impact and reduce emissions 
+* Building  AI models when carbon emissions are lower
+* Deploying software into the cloud in locations that have greener energy sources
+* Running software updates at greener energy time windows 
+* Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
 
 Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
 
@@ -23,7 +23,7 @@ Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get 
 Get started on creating sustainable software innovation for a greener future
 today!
 
-![WebApi Screenshot](./images/what-is-green-software-asim-hussain-green-software-foundation1.avif)
+![Green Software](./images/what-is-green-software.avif)
 
 # How Does This Work?
 You can reduce the carbon footprint of your application by just running things
@@ -36,7 +36,6 @@ electricity is dirty, or runs in a location where the energy is cleaner, we call
 this **carbon aware software**.
 
 ![Carbon Aware Software](./images/types-of-green-software.png)
-> TODO: Get a higher quality image - this was from a slide deck
 
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
@@ -183,9 +182,11 @@ The following are those who are currently actively working on the SDK and have m
 - Senior Technical Program Manager - Sophie Trinder (Green Software Foundation)
 - Principal Contributor - Szymon Duchniewicz (Avanade)
 - Principal Contributor - Dan Benitah (Avanade)
-- Contributor - Bill Derusha (Avanade)
+- Contributor - Bill DeRusha (Microsoft)
 - Contributor - Yasumasa Suenaga (NTT Data)
 - Contributor - Damien Roux (NTT Data)
+
+Please note that there are many others who have made contributions over time - these are all greatly appreciated, the project would not be where it is today without everyone's support.  Thank you.
 
 ### GSF Project Scope
 
