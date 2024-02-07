@@ -38,8 +38,6 @@ this **carbon aware software**.
 
 ![Carbon Aware Software](./images/types-of-green-software.png)
 
-![Carbon Aware Software](./images/types-of-green-software.png)
-
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
 time, or in the greenest locations, or both! Capture consistent telemetry and
@@ -56,8 +54,6 @@ carbon emissions.
 At its core the Carbon Aware SDK is a WebApi and Command Line Interface (CLI) to
 assist in building carbon aware software. The functionality across the CLI and
 WebApi is identical by design.
-
-You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programatically make greener decisions in your software.
 
 You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programatically make greener decisions in your software.
 
@@ -183,14 +179,6 @@ The following are those who are currently actively working on the SDK and have m
 The following are those who are currently actively working on the SDK and have made significant ongoing contributions.
 
 - Chair/Project lead - Vaughan Knight (Microsoft)
-- Senior Technical Program Manager - Sophie Trinder (Green Software Foundation)
-- Principal Contributor - Szymon Duchniewicz (Avanade)
-- Principal Contributor - Dan Benitah (Avanade)
-- Contributor - Bill DeRusha (Microsoft)
-- Contributor - Yasumasa Suenaga (NTT Data)
-- Contributor - Damien Roux (NTT Data)
-
-Please note that there are many others who have made contributions over time - these are all greatly appreciated, the project would not be where it is today without everyone's support.  Thank you.
 - Senior Technical Program Manager - Sophie Trinder (Green Software Foundation)
 - Principal Contributor - Szymon Duchniewicz (Avanade)
 - Principal Contributor - Dan Benitah (Avanade)
