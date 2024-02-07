@@ -14,6 +14,8 @@ you and your organisation can leverage greener energy sources to reduce your CO2
 * Running software updates at greener energy time windows 
 * Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
 
+Withing the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
+
 Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
 
 # Getting Started Overview
@@ -80,7 +82,7 @@ The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
 to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./docs/adopters.md).
 
-Both UBS and Vestas have used the SDK, with more information ```link to case study page```
+Both UBS and Vestas have used the SDK, with further details over on the [adopters page](./docs/adopters.md).
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
