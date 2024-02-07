@@ -13,6 +13,13 @@
 	// Use 'appPort' to create a container with published ports. If the port isn't working, be sure
 	// your server accepts connections from all interfaces (0.0.0.0 or '*'), not just localhost.
 	// "appPort": [],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [5073],
+	// "portsAttributes": {
+	//   "5073": {
+	//     "protocol": "https"
+	//   }
+	// },
 
 	// Uncomment the next line to run commands after the container is created.
 	// "postCreateCommand": "rustc --version",
@@ -26,8 +33,19 @@
 	// Uncomment the line below to mount your local usersecrets into the devcontainer from a Mac/Linux OS
 	// "mounts": [ "source=${localEnv:HOME}/.microsoft/usersecrets,target=/root/.microsoft/usersecrets,type=bind" ],
 	
+	
 	// Add the IDs of extensions you want installed when the container is created in the array below.
-	"extensions": [
-		"ms-dotnettools.csharp"	
-	]
+	"customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.vscode-node-azure-pack",
+                "GitHub.copilot",
+                "GitHub.vscode-github-actions",
+				"GitHub.copilot-chat",
+                "ms-dotnettools.vscode-dotnet-runtime",
+                "ms-dotnettools.csdevkit",
+                "ms-dotnetools.csharp"
+            ]
+        }
+    }
 }
