@@ -33,6 +33,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+    
+      - name: Copy Files
+        run: |
+          # Moving the samples folder at build& deploy time of the docs so that it appears in the end result
+          cp -r samples/* casdk-docs/docs/
+        working-directory: ./casdk-docs
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
