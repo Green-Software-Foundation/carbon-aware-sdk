@@ -1,5 +1,5 @@
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
-name: 6 - Deploy docs to GitHub Pages
+name: 6-Deploy docs to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
