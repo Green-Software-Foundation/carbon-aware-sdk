@@ -72,6 +72,7 @@ const config = {
             position: 'left',
             label: 'Tutorial',
           },
+          {to: '/blog', label: 'Blog', position: 'left'},
           {to: 'https://greensoftware.foundation/', label: 'GSF', position: 'left'},
           {
             href: 'https://github.com/Green-Software-Foundation/carbon-aware-sdk',
