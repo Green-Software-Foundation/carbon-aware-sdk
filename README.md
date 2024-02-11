@@ -1,5 +1,32 @@
 # Carbon Aware SDK
+Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.  
 
+The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you **measure and reduce your software's carbon emissions**, and choose when and where you run your software to make it greener.
+
+![Carbon Aware Software](./images/carbon-aware-software.png)
+
+
+By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  
+
+* Building  AI models when carbon emissions are lower
+* Deploying software into the cloud in locations that have greener energy sources
+* Running software updates at greener energy time windows 
+* Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
+
+Withing the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
+
+Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
+
+# Getting Started Overview
+
+Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get up and running.
+
+Get started on creating sustainable software innovation for a greener future
+today!
+
+![Green Software](./images/what-is-green-software.avif)
+
+# How Does This Work?
 You can reduce the carbon footprint of your application by just running things
 at different times and in different locations. That is because not all
 electricity is produced in the same way. Most is produced through burning fossil
@@ -8,6 +35,8 @@ fuels, some is produced using cleaner sources like wind and solar.
 When software does more when the electricity is clean and do less when the
 electricity is dirty, or runs in a location where the energy is cleaner, we call
 this **carbon aware software**.
+
+![Carbon Aware Software](./images/types-of-green-software.png)
 
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
@@ -20,18 +49,13 @@ where energy is the greenest, and create tools that give insights and help
 software innovators to make greener software decisions. All of this helps reduce
 carbon emissions.
 
-# Getting Started Overview
-
-Head on over to the [Getting Started Overview Guide](./docs/overview.md) to get up and running.
-
-Get started on creating sustainable software innovation for a greener future
-today!
-
 ## What is the Carbon Aware SDK?
 
 At its core the Carbon Aware SDK is a WebApi and Command Line Interface (CLI) to
 assist in building carbon aware software. The functionality across the CLI and
 WebApi is identical by design.
+
+You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programatically make greener decisions in your software.
 
 ### The WebApi
 
@@ -55,12 +79,10 @@ deployment in the greenest location.
 
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
-to start-ups.
+to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./docs/adopters.md).
 
 Machine Learning (ML) workloads are a great example of long running compute
-intensive workloads, that often are also not time critical. By moving these
-workloads to a different time, the carbon emissions from the ML training can be
-reduced by up to 15%, and by moving the location of the training this can be
+intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
 reduced even further, at times by up to 50% or more.
 
 ## What does the SDK/API provide that 3rd party data providers such as WattTime or ElectricityMaps do not?
@@ -153,9 +175,18 @@ The Carbon Aware SDK is a project as part of the
 Open Source Working Group.
 
 ### Appointments
+The following are those who are currently actively working on the SDK and have made significant ongoing contributions.
+The following are those who are currently actively working on the SDK and have made significant ongoing contributions.
 
 - Chair/Project lead - Vaughan Knight (Microsoft)
-- Vice Chair - Szymon Duchniewicz (Avanade)
+- Senior Technical Program Manager - Sophie Trinder (Green Software Foundation)
+- Principal Contributor - Szymon Duchniewicz (Avanade)
+- Principal Contributor - Dan Benitah (Avanade)
+- Contributor - Bill DeRusha (Microsoft)
+- Contributor - Yasumasa Suenaga (NTT Data)
+- Contributor - Damien Roux (NTT Data)
+
+Please note that there are many others who have made contributions over time - these are all greatly appreciated, the project would not be where it is today without everyone's support.  Thank you.
 
 ### GSF Project Scope
 
