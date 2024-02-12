@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Enablement
 
 ## Table of Contents
@@ -41,12 +45,12 @@ environment:
 
 * CLI  
 You can run the application using the [CLI](../src/CarbonAware.CLI) and refer
-  to more documentation [here](./carbon-aware-cli.md).  
+  to more documentation [here](../tutorial-basics/carbon-aware-cli.md).  
 
 * WebAPI  
 You can build a container containing the [WebAPI](../src/CarbonAware.WebApi)
   and connect via REST requests and refer to more documentation
-  [here](./carbon-aware-webapi.md).
+  [here](../tutorial-basics/carbon-aware-webapi.md).
 
 * SDK  
 You can reference the [Carbon Aware C# Library](../src/GSF.CarbonAware) in your
@@ -59,7 +63,7 @@ You can reference the [Carbon Aware C# Library](../src/GSF.CarbonAware) in your
 ### Use cases
 
 CarbonAwareSDK has been embraced by the industry leaders across the globe. Here
-we show some examples of the [use case](./adoptors.md).
+we show some examples of the [use case](./adopters.md).
 
 ## 2. How to use Carbon Aware SDK?
 
@@ -75,8 +79,8 @@ We support various data sources of carbon aware data:
 * JSON file
 
 There are a few constraints to select data sources to some functions of
-CarbonAwareSDK. You can also visit the [Selecting a Data Source](selecting-a-date-source.md)
-guide for further information on data sources options, and [Data Sources](./architecture/data-sources.md)
+CarbonAwareSDK. You can also visit the [Selecting a Data Source](../tutorial-extras/selecting-a-data-source.md)
+guide for further information on data sources options, and [Data Sources](../architecture/data-sources.md)
 for detailed architecture decisions around integrating different data
 providers into the carbon aware SDK.
 
@@ -235,7 +239,7 @@ Expected output:
 ##### Deploying with Container
 
 First we need to set up the GitHub repository
-(<https://github.com/Green-Software-Foundation/carbon-aware-sdk.git>):
+[https://github.com/Green-Software-Foundation/carbon-aware-sdk.git](https://github.com/Green-Software-Foundation/carbon-aware-sdk.git):
 
 1. `git clone https://github.com/Green-Software-Foundation/carbon-aware-sdk.git`
 2. Change directory into the repository: `cd carbon-aware-sdk`
@@ -438,7 +442,7 @@ that installing the SDK from local directory
 Prerequisites:
 
 * `curl` or other tool that allows making HTTP requests (e.g. `wget`)
-* Recommended: `jq` for parsing JSON output: <https://stedolan.github.io/jq/>
+* Recommended: `jq` for parsing JSON output: [https://stedolan.github.io/jq/](https://stedolan.github.io/jq/)
 
 With the API running on `localhost:5073`, we can make HTTP requests to its
 endpoints, full endpoint description can be found [here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md)
@@ -560,7 +564,7 @@ means that if the same configuration value is found in both `appsettings.json`
 and as an environment variable, the value from the environment variable will be
 the value that's applied.
 
-See [configuration.md](/docs/configuration.md) for details about how to
+See [configuration.md](../tutorial-extras/configuration.md) for details about how to
 configure specific components of the application.
 
 #### Environment variables
