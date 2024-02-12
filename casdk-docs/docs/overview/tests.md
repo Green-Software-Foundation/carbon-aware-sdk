@@ -12,7 +12,7 @@ Here, we detail our test coverage targets for the Core SDK and samples, pivotal 
 # Core SDK
 
 The Core SDK is built to work for entreprise and we aspire to work with no regression, high levels of reliability and stability.
-As for the core SDK, we have a 75% test coverage target and expect this increase overtime.
+As for the core SDK, we have a 70% test coverage target and expect this increase overtime.
 
 # Sample 
 
