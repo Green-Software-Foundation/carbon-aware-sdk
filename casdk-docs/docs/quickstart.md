@@ -8,6 +8,10 @@ This guide will provide you with knowledge and examples necessary to use the
 SDK, either as a CLI, by directly calling the Web API endpoints or by using
 generated libraries for your language of choice!
 
+- [using the cli](#using-the-cli)
+- [using the web api](#using-the-web-api)
+
+
 ## Using the CLI
 
 ### Setting up the CLI
@@ -35,7 +39,7 @@ VSCode Remote Containers (Dev Container). To run locally:
    data. To configure the application, you will need to set up specific
    environment variables or modify `appsettings.json` inside of
    `src/CarbonAware.WebApi/src` directory. Detailed information on configuration
-   can be found in the [overview.md](overview.md) file.
+   can be found in the [overview.md](overview/overview.md) file.
 
    Otherwise, you can follow an example configuration below (export these
    environment variables in the Terminal):
@@ -192,7 +196,7 @@ First we need to set up the GitHub repository
    pre-generated JSON file with random data. To configure the application, you
    will need to set up specific environment variables or modify
    `appsettings.json` inside of `src/CarbonAware.WebApi/src` directory. Detailed
-   information on configuration can be found in the [overview.md](overview.md)
+   information on configuration can be found in the [overview.md](overview/overview.md)
    file.
 
    Otherwise, you can follow an example configuration below (export these

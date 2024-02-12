@@ -11,11 +11,11 @@ different endpoints to provide the most flexibility to integrate to your
 environment:
 
 - You can run the application using the [CLI](./src/CarbonAware.CLI) and refer
-  to more documentation [here](./tutorial-basics/carbon-aware-cli.md).
+  to more documentation [here](../tutorial-basics/carbon-aware-cli.md).
 
 - You can build a container containing the [WebAPI](./src/CarbonAware.WebApi)
   and connect via REST requests and refer to more documentation
-  [here](./tutorial-basics/carbon-aware-webapi.md).
+  [here](../tutorial-basics/carbon-aware-webapi.md).
 
 - You can reference the [Carbon Aware C# Library](./src/GSF.CarbonAware) in your
   projects and make use of its functionalities and features.
@@ -24,24 +24,24 @@ environment:
   ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
 
 Each of these has configuration requirements which are detailed below. You can
-also visit the [quickstart.md](docs/quickstart.md) guide for a step-by-step
+also visit the [quickstart.md](../quickstart.md) guide for a step-by-step
 process for running the CLI locally, deploying the Web API locally or in the
 cloud, polling the API via HTTP requests or generating and using client
 libraries (Python example).
 
 For more detailed architecture and design decisions around the Carbon Aware SDK,
-refer to the [Architecture directory](./architecture/).
+refer to the [Architecture directory](../architecture/).
 
 ## Carbon Aware Library
 
 The Carbon Aware SDK provides a C# Client Library with handlers that replicates
 the Web API, CLI and SDK functionality. See:
 
-- [carbon-aware-library.md](./tutorial-extras/carbon-aware-library.md) for more information
+- [carbon-aware-library.md](../tutorial-extras/carbon-aware-library.md) for more information
   about library features.
-- [packaging.md](./tutorial-extras/packaging.md) for details on how to package and consume the
+- [packaging.md](../tutorial-extras/packaging.md) for details on how to package and consume the
   library.
-- [packaging.md](./tutorial-extras/packaging.md#use-package-with-dependency-injection)
+- [packaging.md](../tutorial-extras/packaging.md#use-package-with-dependency-injection)
   for instructions on integrating the library in other projects with dependency
   injection.
 
@@ -62,7 +62,7 @@ environment:
     for details (or setup a
     [free trial](https://api-portal.electricitymaps.com)). Note that the free
     trial has some
-    [restrictions](./tutorial-extras/selecting-a-data-source.md#restrictions-electricitymaps-free-trial-user)
+    [restrictions](../tutorial-extras/selecting-a-data-source.md#restrictions-electricitymaps-free-trial-user)
   - ElectricityMapsFree account - See
     [instruction on ElectricityMapsFree](https://www.co2signal.com/#Subscriber-Email)
     for details.
@@ -84,9 +84,9 @@ data or Electricity Maps data, you'll need to acquire a license from them and
 set the appropriate configuration information.
 
 You can also visit the
-[selecting-a-date-source.md](./tutorial-extras/selecting-a-data-source.md) guide for more
+[selecting-a-date-source.md](../tutorial-extras/selecting-a-data-source.md) guide for more
 information on data sources options, and
-[data-sources.md](./architecture/data-sources.md) for detailed architecture
+[data-sources.md](../architecture/data-sources.md) for detailed architecture
 decisions around integrating different data providers into the carbon aware SDK.
 
 ## Configuration
@@ -110,7 +110,7 @@ the value that's applied.
 
 ### Configuration options
 
-See [configuration.md](./tutorial-extras/configuration.md) for details about how to
+See [configuration.md](../tutorial-extras/configuration.md) for details about how to
 configure specific components of the application.
 
 #### Environment variables
@@ -222,7 +222,7 @@ $ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | j
 ```
 
 For more information on containerization, refer to the markdown in
-[containerization.md](./tutorial-basics/containerization.md).
+[containerization.md](../tutorial-basics/containerization.md).
 
 ### Deploy Web API on Kubernetes with Helm
 
