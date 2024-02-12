@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcasdk_docs=self.webpackChunkcasdk_docs||[]).push([[7073],{7696:e=>{e.exports=JSON.parse('{"title":"Overview","slug":"/category/overview","permalink":"/carbon-aware-sdk/docs/category/overview","navigation":{"next":{"title":"Carbon Aware SDK adopters","permalink":"/carbon-aware-sdk/docs/overview/adopters"}}}')}}]);

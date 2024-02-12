@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="docs-wrapper plugin-docs plugin-id-default docs-version-current docs-doc-page docs-doc-id-tutorial-extras/containerization" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.1.1">
+<title data-rh="true">Containerized WebApi | Carbon Aware SDK</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://green-software-foundation.github.io/carbon-aware-sdk/img/docusaurus-social-card.jpg"><meta data-rh="true" name="twitter:image" content="https://green-software-foundation.github.io/carbon-aware-sdk/img/docusaurus-social-card.jpg"><meta data-rh="true" property="og:url" content="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/containerization"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docusaurus_version" content="current"><meta data-rh="true" name="docusaurus_tag" content="docs-default-current"><meta data-rh="true" name="docsearch:version" content="current"><meta data-rh="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-rh="true" property="og:title" content="Containerized WebApi | Carbon Aware SDK"><meta data-rh="true" name="description" content="The goal of this readme is to show how to build a container WebApi image that"><meta data-rh="true" property="og:description" content="The goal of this readme is to show how to build a container WebApi image that"><link data-rh="true" rel="icon" href="/carbon-aware-sdk/img/favicon-32x32.png"><link data-rh="true" rel="canonical" href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/containerization"><link data-rh="true" rel="alternate" href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/containerization" hreflang="en"><link data-rh="true" rel="alternate" href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/containerization" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/carbon-aware-sdk/blog/rss.xml" title="Carbon Aware SDK RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/carbon-aware-sdk/blog/atom.xml" title="Carbon Aware SDK Atom Feed"><link rel="stylesheet" href="/carbon-aware-sdk/assets/css/styles.22701361.css">
+<script src="/carbon-aware-sdk/assets/js/runtime~main.a311f8d0.js" defer="defer"></script>
+<script src="/carbon-aware-sdk/assets/js/main.acd847a4.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())</script><div id="__docusaurus"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><div class="announcementBar_mb4j" style="background-color:#EBF2D7;color:#00524f" role="banner"><div class="announcementBarPlaceholder_vyr4"></div><div class="content_knG7 announcementBarContent_xLdY"><strong>⚠ Incubation Project This project is an incubation project being run inside the Green Software Foundation; as such, we <b>DON'T</b> recommend using it in any critical use case. Incubation projects are experimental, offer no support guarantee, have minimal governance and process, and may be retired at any moment. This project may one day graduate, in which case this disclaimer will be removed. <br><br> 🎉️ We are running a Hackathon! CarbonHack is open to all, including software practitioners and those with a passion for Green Software. Find out more on the <a href="https://grnsft.org/hack/github">CarbonHack website</a> </strong></div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/carbon-aware-sdk/"><div class="navbar__logo"><img src="/carbon-aware-sdk/img/GSF-logo.jpg" alt="Carbon Aware SDK Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/carbon-aware-sdk/img/GSF-logo.jpg" alt="Carbon Aware SDK Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Carbon Aware SDK</b></a><a aria-current="page" class="navbar__item navbar__link navbar__link--active" href="/carbon-aware-sdk/docs/quickstart">Tutorial</a><a class="navbar__item navbar__link" href="/carbon-aware-sdk/blog">Blog</a><a href="https://greensoftware.foundation/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GSF</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><div class="docsWrapper_hBAB"><button aria-label="Scroll back to top" class="clean-btn theme-back-to-top-button backToTopButton_sjWU" type="button"></button><div class="docRoot_UBD9"><aside class="theme-doc-sidebar-container docSidebarContainer_YfHR"><div class="sidebarViewport_aRkj"><div class="sidebar_njMd"><nav aria-label="Docs sidebar" class="menu thin-scrollbar menu_SIkG menuWithAnnouncementBar_GW3s"><ul class="theme-doc-sidebar-menu menu__list"><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/carbon-aware-sdk/docs/category/overview">Overview</a><button aria-label="Expand sidebar category &#x27;Overview&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item"><a class="menu__link" href="/carbon-aware-sdk/docs/quickstart">Setting up and using the Carbon Aware SDK</a></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/carbon-aware-sdk/docs/category/tutorial---basics">Tutorial - Basics</a><button aria-label="Expand sidebar category &#x27;Tutorial - Basics&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist menu__link--active" aria-expanded="true" href="/carbon-aware-sdk/docs/category/tutorial---extras">Tutorial - Extras</a><button aria-label="Collapse sidebar category &#x27;Tutorial - Extras&#x27;" type="button" class="clean-btn menu__caret"></button></div><ul style="display:block;overflow:visible;height:auto" class="menu__list"><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/selecting-a-data-source">Selecting a Data Source</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/carbon-aware-library">Carbon Aware Library</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/codespaces">Launching the SDK in github Codespaces</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/configuration">Configuration</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link menu__link--active" aria-current="page" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/containerization">Containerized WebApi</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/linting">Linting</a></li><li class="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-2 menu__list-item"><a class="menu__link" tabindex="0" href="/carbon-aware-sdk/docs/tutorial-extras/packaging">Packaging the Carbon Aware SDK</a></li></ul></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/carbon-aware-sdk/docs/category/architecture">Architecture</a><button aria-label="Expand sidebar category &#x27;Architecture&#x27;" type="button" class="clean-btn menu__caret"></button></div></li><li class="theme-doc-sidebar-item-category theme-doc-sidebar-item-category-level-1 menu__list-item menu__list-item--collapsed"><div class="menu__list-item-collapsible"><a class="menu__link menu__link--sublist" aria-expanded="false" href="/carbon-aware-sdk/docs/category/samples">Samples</a><button aria-label="Expand sidebar category &#x27;Samples&#x27;" type="button" class="clean-btn menu__caret"></button></div></li></ul></nav></div></div></aside><main class="docMainContainer_TBSr"><div class="container padding-top--md padding-bottom--lg"><div class="row"><div class="col docItemCol_VOVn"><div class="docItemContainer_Djhp"><article><nav class="theme-doc-breadcrumbs breadcrumbsContainer_Z_bl" aria-label="Breadcrumbs"><ul class="breadcrumbs" itemscope="" itemtype="https://schema.org/BreadcrumbList"><li class="breadcrumbs__item"><a aria-label="Home page" class="breadcrumbs__link" href="/carbon-aware-sdk/"><svg viewBox="0 0 24 24" class="breadcrumbHomeIcon_YNFT"><path d="M10 19v-5h4v5c0 .55.45 1 1 1h3c.55 0 1-.45 1-1v-7h1.7c.46 0 .68-.57.33-.87L12.67 3.6c-.38-.34-.96-.34-1.34 0l-8.36 7.53c-.34.3-.13.87.33.87H5v7c0 .55.45 1 1 1h3c.55 0 1-.45 1-1z" fill="currentColor"></path></svg></a></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item"><a class="breadcrumbs__link" itemprop="item" href="/carbon-aware-sdk/docs/category/tutorial---extras"><span itemprop="name">Tutorial - Extras</span></a><meta itemprop="position" content="1"></li><li itemscope="" itemprop="itemListElement" itemtype="https://schema.org/ListItem" class="breadcrumbs__item breadcrumbs__item--active"><span class="breadcrumbs__link" itemprop="name">Containerized WebApi</span><meta itemprop="position" content="2"></li></ul></nav><div class="tocCollapsible_ETCw theme-doc-toc-mobile tocMobile_ITEo"><button type="button" class="clean-btn tocCollapsibleButton_TO0P">On this page</button></div><div class="theme-doc-markdown markdown"><h1 id="containerized-webapi">Containerized WebApi</h1>
+<p>The goal of this readme is to show how to build a container WebApi image that
+can be used to deploy the application into a container registry and that can be
+used later to run the service.</p>
+<h2 id="build-and-list-runtime-image">Build and List Runtime Image</h2>
+<p>Use <code>docker</code> to build the WebApi images. (Note: Make sure the run <code>docker</code> at
+the root branch)</p>
+<pre><code class="language-sh">cd ./$(git rev-parse --show-cdup)/src
+docker build -t carbon_aware:v1 -f CarbonAware.WebApi/src/Dockerfile .
+</code></pre>
+<p>List <code>carbon_aware</code> image</p>
+<pre><code class="language-sh">docker image ls carbon_aware
+REPOSITORY     TAG       IMAGE ID       CREATED             SIZE
+carbon_aware   v1        6293e2528bf2   About an hour ago   230MB
+</code></pre>
+<h2 id="run-webapi-image">Run WebApi Image</h2>
+<ol>
+<li>
+<p>Run the image using <code>docker run</code> with host port 8000 mapped to the WebApi
+port 80 and configure environment variable settings for
+<a href="https://www.watttime.org">WattTime</a> provider.</p>
+<pre><code class="language-sh">docker run --rm -p 8000:80 \
+&gt; -e DataSources__EmissionsDataSource=&quot;WattTime&quot; \
+&gt; -e DataSources__ForecastDataSource=&quot;WattTime&quot; \
+&gt; -e DataSources__Configurations__WattTime__Type=&quot;WattTime&quot; \
+&gt; -e DataSources__Configurations__WattTime__password=&quot;username&quot; \
+&gt; carbon_aware:v1
+</code></pre>
+<p>or the <a href="https://www.electricitymaps.com">ElectricityMaps</a> provider</p>
+<pre><code class="language-sh">docker run --rm -p 8000:80 \
+&gt; -e DataSources__EmissionsDataSource=&quot;ElectricityMaps&quot; \
+&gt; -e DataSources__ForecastDataSource=&quot;ElectricityMaps&quot; \
+&gt; -e DataSources__Configurations__ElectricityMaps__Type=&quot;ElectricityMaps&quot; \
+&gt; -e DataSources__Configurations__ElectricityMaps__APITokenHeader=&quot;auth-token&quot; \
+&gt; -e DataSources__Configurations__ElectricityMaps__APIToken=&quot;&lt;YOUR_ELECTRICITYMAPS_TOKEN&gt;&quot; \
+&gt; carbon_aware:v1
+</code></pre>
+<p>or the <a href="https://www.co2signal.com/">ElectricityMapsFree</a> provider</p>
+<pre><code class="language-sh">docker run --rm -p 8000:80 \
+&gt; -e DataSources__EmissionsDataSource=&quot;ElectricityMapsFree&quot; \
+&gt; -e DataSources__Configurations__ElectricityMapsFree__Type=&quot;ElectricityMapsFree&quot; \
+&gt; -e DataSources__Configurations__ElectricityMapsFree__token=&quot;&lt;YOUR_CO2SIGNAL_TOKEN&gt;&quot; \
+&gt; carbon_aware:v1
+</code></pre>
+</li>
+<li>
+<p>Verify that the WebApi is responding to requests using an HTTP client tool
+(e.g. <code>postman</code>, <code>curl</code>)</p>
+<pre><code class="language-sh">curl -v -s -X &#x27;POST&#x27; http://localhost:8000/emissions/forecasts/batch  -H &#x27;accept: */*&#x27; -H &#x27;Content-Type: application/json&#x27; -d &#x27;[
+    {
+        &quot;requestedAt&quot;: &quot;2021-11-01T00:00:00Z&quot;,
+        &quot;dataStartAt&quot;: &quot;2021-11-01T00:05:00Z&quot;,
+        &quot;dataEndAt&quot;: &quot;2021-11-01T23:55:00Z&quot;,
+        &quot;windowSize&quot;: 5,
+        &quot;location&quot;: &quot;eastus&quot;
+    }
+]&#x27;
+...
+&gt; POST /emissions/forecasts/batch HTTP/1.1
+&gt; Host: localhost:8000
+...
+&lt; HTTP/1.1 200 OK
+&lt; Content-Type: application/json; charset=utf-8
+...
+&lt;
+[{&quot;generatedAt&quot;:&quot;2021-11-01T00:00:00+00:00&quot;,&quot;optimalDataPoint&quot;:{
+    ...
+}}]
+</code></pre>
+</li>
+</ol>
+<h2 id="upload-image-to-a-container-registry">Upload Image to a Container Registry</h2>
+<p>For easy image consumption, upload it to a well-known container registry,
+self-hosted or managed. The following are examples of using
+<a href="https://hub.docker.com">docker hub</a> or
+<a href="https://docs.microsoft.com/en-us/azure/container-registry/container-registry-quickstart-task-cli">Azure Container Registry</a></p>
+<h3 id="docker-hub">Docker Hub</h3>
+<p>Sign in to <a href="https://hub.docker.com">Docker Hub</a> and create a private (or public)
+repository (e.g &lt;your-username&gt;/my-private-repo)</p>
+<ol>
+<li>
+<p>Build and Push</p>
+<pre><code class="language-sh">docker login --username=your-username
+cd ./$(git rev-parse --show-cdup)/src
+docker build -t &lt;your-username&gt;/my-private-repo/carbon_aware:v1 -f CarbonAware.WebApi/src/Dockerfile .
+docker push &lt;your-username&gt;/my-private-repo/carbon_aware:v1
+</code></pre>
+</li>
+<li>
+<p>Pull</p>
+<pre><code class="language-sh">docker login --username=your-username
+docker pull &lt;your-username&gt;/my-private-repo/carbon_aware:v1
+</code></pre>
+</li>
+</ol>
+<h3 id="azure-container-registry">Azure Container Registry</h3>
+<ol>
+<li>
+<p>Build and Push image Assuming the container registry is already created, use
+the user&#x27;s credentials push the image using <code>docker</code> (it can be done also
+using
+<a href="https://docs.microsoft.com/en-us/azure/container-registry/container-registry-tutorial-quick-task">Azure CLI</a>)</p>
+<pre><code class="language-sh">docker login &lt;myacrname&gt;.azurecr.io -u username -p &lt;CopiedKeyFromAzurePortal&gt;
+cd ./$(git rev-parse --show-cdup)/src
+docker build -t &lt;myacrname&gt;.azurecr.io/carbon_aware:v1 -f CarbonAware.WebApi/src/Dockerfile .
+docker push &lt;myacrname&gt;.azurecr.io/carbon_aware:v1
+</code></pre>
+</li>
+<li>
+<p>Pull image</p>
+<pre><code class="language-sh">docker login &lt;myacrname&gt;.azurecr.io -u username -p &lt;CopiedKeyFromAzurePortal&gt;
+docker pull &lt;myacrname&gt;.azurecr.io/carbon_aware:v1
+</code></pre>
+</li>
+</ol>
+<h2 id="pipeline-integration-github-action">Pipeline Integration (Github Action)</h2>
+<p>To automate an image deployment from a GitHub CI/CD pipeline, the following link
+provides detailed information on how to build a <code>workflow</code> with all the
+necesarily tools in order to push an image to a container registry of user&#x27;s
+preference (i.e. Docker Hub).</p>
+<p><a href="https://docs.github.com/en/actions/publishing-packages/publishing-docker-images#publishing-images-to-docker-hub">Github Workflows</a></p></div><footer class="theme-doc-footer docusaurus-mt-lg"><div class="theme-doc-footer-edit-meta-row row"><div class="col"><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/docs/tutorial-extras/containerization.md" target="_blank" rel="noopener noreferrer" class="theme-edit-this-page"><svg fill="currentColor" height="20" width="20" viewBox="0 0 40 40" class="iconEdit_Z9Sw" aria-hidden="true"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div><div class="col lastUpdated_vwxv"></div></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Docs pages"><a class="pagination-nav__link pagination-nav__link--prev" href="/carbon-aware-sdk/docs/tutorial-extras/configuration"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">Configuration</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/carbon-aware-sdk/docs/tutorial-extras/linting"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Linting</div></a></nav></div></div><div class="col col--3"><div class="tableOfContents_bqdL thin-scrollbar theme-doc-toc-desktop"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#build-and-list-runtime-image" class="table-of-contents__link toc-highlight">Build and List Runtime Image</a></li><li><a href="#run-webapi-image" class="table-of-contents__link toc-highlight">Run WebApi Image</a></li><li><a href="#upload-image-to-a-container-registry" class="table-of-contents__link toc-highlight">Upload Image to a Container Registry</a><ul><li><a href="#docker-hub" class="table-of-contents__link toc-highlight">Docker Hub</a></li><li><a href="#azure-container-registry" class="table-of-contents__link toc-highlight">Azure Container Registry</a></li></ul></li><li><a href="#pipeline-integration-github-action" class="table-of-contents__link toc-highlight">Pipeline Integration (Github Action)</a></li></ul></div></div></div></div></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/carbon-aware-sdk/docs/overview">Tutorial</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://www.linkedin.com/company/green-software-foundation/" target="_blank" rel="noopener noreferrer" class="footer__link-item">Linkedin<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://twitter.com/gsfcommunity" target="_blank" rel="noopener noreferrer" class="footer__link-item">Twitter<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li><li class="footer__item"><a href="https://greensoftwarefdn.slack.com/archives/C02JRAV4QEP" target="_blank" rel="noopener noreferrer" class="footer__link-item">Slack (private members only)<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div><div class="col footer__col"><div class="footer__title">More</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://greensoftware.foundation/" target="_blank" rel="noopener noreferrer" class="footer__link-item">greensoftware.foundation</a></li><li class="footer__item"><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2024 GSF, Inc. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>

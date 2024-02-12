@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcasdk_docs=self.webpackChunkcasdk_docs||[]).push([[3272],{6950:s=>{s.exports=JSON.parse('{"label":"docusaurus","permalink":"/carbon-aware-sdk/blog/tags/docusaurus","allTagsPath":"/carbon-aware-sdk/blog/tags","count":1,"unlisted":false}')}}]);
