@@ -1,5 +1,5 @@
 <div id="header" align="center">
-<img style=”margin: 0px” src=hack-banner.png alt=”banner” height=”500" />
+<img style=”margin: 0px” src=./images/hack-banner.png alt=”banner” height=”500" />
 </div>
 
 ----------------------------
