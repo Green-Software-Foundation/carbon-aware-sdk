@@ -47,7 +47,8 @@ Make sure you have installed the following pre-requisites to setup your local
 environment:
 
 - dotnet core SDK
-  [https://dotnet.microsoft.com/en-us/download](https://dotnet.microsoft.com/en-us/download)
+  [https://dotnet.microsoft.com/en-us/download/dotnet/6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+  
 - Access to one (or all) of the supported external data APIs
   - WattTime account - See
     [instruction on WattTime](https://docs.watttime.org/#tag/Authentication/operation/post_username_register_post)
