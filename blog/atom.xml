@@ -101,7 +101,7 @@
 </ul>
 <h3 id="upgrading-from-100-to-110">Upgrading from 1.0.0 to 1.1.0</h3>
 <ul>
-<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/configuration.md">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
+<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
 </ul>
 <pre><code class="language-json">{
   "DataSources": {
@@ -224,18 +224,25 @@
         <category label="release" term="release"/>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Welcome]]></title>
+        <title type="html"><![CDATA[Welcome to the Carbon Aware SDK documentation site]]></title>
         <id>https://green-software-foundation.github.io/carbon-aware-sdk/blog/welcome</id>
         <link href="https://green-software-foundation.github.io/carbon-aware-sdk/blog/welcome"/>
         <updated>2021-08-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Welcome to our documentation site!]]></summary>
-        <content type="html"><![CDATA[<p>Welcome to our documentation site!</p>
-<p>A blog post folder can be convenient to co-locate blog post images:</p>
-<p><img alt="Docusaurus Plushie" src="https://green-software-foundation.github.io/carbon-aware-sdk/assets/images/docusaurus-plushie-banner-a60f7593abca1e3eef26a9afa244e4fb.jpeg" width="1500" height="500"></p>
-<p>The blog supports tags as well!</p>
-<p><strong>And if you don't want a blog</strong>: just delete this directory, and use <code>blog: false</code> in your Docusaurus config.</p>]]></content>
-        <category label="facebook" term="facebook"/>
-        <category label="hello" term="hello"/>
-        <category label="docusaurus" term="docusaurus"/>
+        <summary type="html"><![CDATA[Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.]]></summary>
+        <content type="html"><![CDATA[<p>Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.</p>
+<p>The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you <strong>measure and reduce your software's carbon emissions</strong>, and choose when and where you run your software to make it greener.</p>
+<p><img alt="Carbon Aware Software" src="https://green-software-foundation.github.io/carbon-aware-sdk/assets/images/carbon-aware-software-827a8c0d6dcd3f664855aabfdf735bbf.png" width="1920" height="1080"></p>
+<p>By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:</p>
+<ul>
+<li>Building  AI models when carbon emissions are lower</li>
+<li>Deploying software into the cloud in locations that have greener energy sources</li>
+<li>Running software updates at greener energy time windows</li>
+<li>Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future.</li>
+</ul>
+<p>Within the <a href="https://greensoftware.foundation/articles/theory-of-change">Green Software Foundations Theory of Change</a>, we look at 3 pillars, that being <strong>Knowledge</strong>, <strong>Tech Culture</strong>, and <strong>Tooling</strong> as focus areas to drive this change.  The Carbon Aware SDK at its core sits firmly in the <strong>Tooling</strong> pillar, and also supports the other pillars, providing <strong>Knowledge</strong> through emissions data to inform change, and being core enabler for the <strong>Tech Culture</strong> for building carbon aware software.</p>
+<p>Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!</p>
+<p><em>Published in feb 2024 based on latest updates to the readme.md</em></p>]]></content>
+        <category label="welcome" term="welcome"/>
+        <category label="post" term="post"/>
     </entry>
 </feed>
