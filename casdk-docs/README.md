@@ -10,7 +10,7 @@ $ yarn
 
 ### Local Development 
 
-```
+``` 
 $ yarn start
 ```
 
