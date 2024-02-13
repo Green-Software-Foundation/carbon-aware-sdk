@@ -233,7 +233,7 @@ Prerequisites:
 
 With the API running on `localhost:5073`, we can make HTTP requests to its
 endpoints, full endpoint description can be found here:
-<https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/CarbonAware.WebApi/src/README.md>
+<https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/carbon-aware-webapi.md>
 
 To get a list of all locations supported, you can use the Locations API endpoint
 `/locations` referenced in
