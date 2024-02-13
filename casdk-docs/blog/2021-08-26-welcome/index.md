@@ -8,7 +8,7 @@ Carbon aware software does more when it can leverage greener energy sources, and
 
 The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you **measure and reduce your software's carbon emissions**, and choose when and where you run your software to make it greener.
 
-![Carbon Aware Software](../../docs/images/carbon-aware-software.png)
+![Carbon Aware Software](./carbon-aware-software.png)
 
 
 By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  

@@ -1,5 +1,5 @@
 <div id="header" align="center">
-<img style=”margin: 0px” src=hack-banner.png alt=”banner” height=”500" />
+<img style=”margin: 0px” src=./images/hack-banner.png alt=”banner” height=”500" />
 </div>
 
 ----------------------------
@@ -26,8 +26,7 @@ The Carbon Aware SDK is a toolset to help you measure the carbon emissions of yo
 ![Carbon Aware Software](./images/carbon-aware-software.png)
 
 
-By knowing the carbon emissions of the energy that powers your applications, 
-you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  
+By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  
 
 * Building  AI models when carbon emissions are lower
 * Deploying software into the cloud in locations that have greener energy sources
@@ -100,9 +99,7 @@ deployment in the greenest location.
 
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
-to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./docs/adopters.md).
-
-Both UBS and Vestas have used the SDK, with further details over on the [adopters page](./docs/adopters.md).
+to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./casdk-docs/docs/overview/adopters.md).
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be

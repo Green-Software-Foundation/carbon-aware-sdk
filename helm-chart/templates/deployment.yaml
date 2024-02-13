@@ -46,6 +46,11 @@ spec:
               mountPath: /app/appsettings.json
               subPath: appsettings.json
               readOnly: true
+            {{- if .Values.locationSources.enabled }}
+            - name: location-sources
+              mountPath: /app/location-sources/json
+              readOnly: true
+            {{- end }}
           livenessProbe:
             httpGet:
               path: /health
@@ -60,6 +65,16 @@ spec:
         - name: appsettings
           secret:
             secretName: appsettings
+        {{- if .Values.locationSources.enabled }}
+        - name: location-sources
+          configMap:
+            name: location-sources
+            items:
+            {{- range .Values.locationSources.files }}
+            - key: {{ .fileName }}
+              path: {{ .fileName }}
+            {{- end }}
+        {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
