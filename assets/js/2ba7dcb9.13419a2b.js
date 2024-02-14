@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcasdk_docs=self.webpackChunkcasdk_docs||[]).push([[6108],{4704:a=>{a.exports=JSON.parse('{"label":"welcome","permalink":"/carbon-aware-sdk/blog/tags/welcome","allTagsPath":"/carbon-aware-sdk/blog/tags","count":1,"unlisted":false}')}}]);
