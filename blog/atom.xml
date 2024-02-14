@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://green-software-foundation.github.io/carbon-aware-sdk/blog</id>
+    <id>https://green-software-foundation.github.io/blog</id>
     <title>Carbon Aware SDK Blog</title>
     <updated>2024-01-14T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://green-software-foundation.github.io/carbon-aware-sdk/blog"/>
+    <link rel="alternate" href="https://green-software-foundation.github.io/blog"/>
     <subtitle>Carbon Aware SDK Blog</subtitle>
-    <icon>https://green-software-foundation.github.io/carbon-aware-sdk/img/favicon-32x32.png</icon>
+    <icon>https://green-software-foundation.github.io/img/favicon-32x32.png</icon>
     <entry>
         <title type="html"><![CDATA[Release v1.2]]></title>
-        <id>https://green-software-foundation.github.io/carbon-aware-sdk/blog/release-v1.2</id>
-        <link href="https://green-software-foundation.github.io/carbon-aware-sdk/blog/release-v1.2"/>
+        <id>https://green-software-foundation.github.io/blog/release-v1.2</id>
+        <link href="https://green-software-foundation.github.io/blog/release-v1.2"/>
         <updated>2024-01-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Release 1.2]]></summary>
         <content type="html"><![CDATA[<p>Release 1.2</p>
@@ -53,8 +53,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Release v1.1]]></title>
-        <id>https://green-software-foundation.github.io/carbon-aware-sdk/blog/release-v1.1</id>
-        <link href="https://green-software-foundation.github.io/carbon-aware-sdk/blog/release-v1.1"/>
+        <id>https://green-software-foundation.github.io/blog/release-v1.1</id>
+        <link href="https://green-software-foundation.github.io/blog/release-v1.1"/>
         <updated>2023-07-18T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Release 1.1]]></summary>
         <content type="html"><![CDATA[<p>Release 1.1</p>
@@ -101,7 +101,7 @@
 </ul>
 <h3 id="upgrading-from-100-to-110">Upgrading from 1.0.0 to 1.1.0</h3>
 <ul>
-<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
+<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://green-software-foundation.github.io/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
 </ul>
 <pre><code class="language-json">{
   "DataSources": {
@@ -139,8 +139,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Release v1.0]]></title>
-        <id>https://green-software-foundation.github.io/carbon-aware-sdk/blog/release-v1.0</id>
-        <link href="https://green-software-foundation.github.io/carbon-aware-sdk/blog/release-v1.0"/>
+        <id>https://green-software-foundation.github.io/blog/release-v1.0</id>
+        <link href="https://green-software-foundation.github.io/blog/release-v1.0"/>
         <updated>2022-10-01T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Release 1.1]]></summary>
         <content type="html"><![CDATA[<p>Release 1.1</p>
@@ -187,7 +187,7 @@
 </ul>
 <h3 id="upgrading-from-100-to-110">Upgrading from 1.0.0 to 1.1.0</h3>
 <ul>
-<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://green-software-foundation.github.io/carbon-aware-sdk/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
+<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://green-software-foundation.github.io/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
 </ul>
 <pre><code class="language-json">{
   "DataSources": {
@@ -225,13 +225,13 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[Welcome to the Carbon Aware SDK documentation site]]></title>
-        <id>https://green-software-foundation.github.io/carbon-aware-sdk/blog/welcome</id>
-        <link href="https://green-software-foundation.github.io/carbon-aware-sdk/blog/welcome"/>
+        <id>https://green-software-foundation.github.io/blog/welcome</id>
+        <link href="https://green-software-foundation.github.io/blog/welcome"/>
         <updated>2021-08-26T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.]]></summary>
         <content type="html"><![CDATA[<p>Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.</p>
 <p>The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you <strong>measure and reduce your software's carbon emissions</strong>, and choose when and where you run your software to make it greener.</p>
-<p><img alt="Carbon Aware Software" src="https://green-software-foundation.github.io/carbon-aware-sdk/assets/images/carbon-aware-software-827a8c0d6dcd3f664855aabfdf735bbf.png" width="1920" height="1080"></p>
+<p><img alt="Carbon Aware Software" src="https://green-software-foundation.github.io/assets/images/carbon-aware-software-827a8c0d6dcd3f664855aabfdf735bbf.png" width="1920" height="1080"></p>
 <p>By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:</p>
 <ul>
 <li>Building  AI models when carbon emissions are lower</li>
