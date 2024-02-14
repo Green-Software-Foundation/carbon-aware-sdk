@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
     <channel>
         <title>Carbon Aware SDK Blog</title>
-        <link>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog</link>
+        <link>https://carbon-aware-sdk.greensoftware.foundation/blog</link>
         <description>Carbon Aware SDK Blog</description>
         <lastBuildDate>Sun, 14 Jan 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
@@ -10,8 +10,8 @@
         <language>en</language>
         <item>
             <title><![CDATA[Release v1.2]]></title>
-            <link>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/release-v1.2</link>
-            <guid>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/release-v1.2</guid>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2</guid>
             <pubDate>Sun, 14 Jan 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Release 1.2]]></description>
             <content:encoded><![CDATA[<p>Release 1.2</p>
@@ -54,8 +54,8 @@
         </item>
         <item>
             <title><![CDATA[Release v1.1]]></title>
-            <link>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/release-v1.1</link>
-            <guid>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/release-v1.1</guid>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.1</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.1</guid>
             <pubDate>Tue, 18 Jul 2023 00:00:00 GMT</pubDate>
             <description><![CDATA[Release 1.1]]></description>
             <content:encoded><![CDATA[<p>Release 1.1</p>
@@ -102,7 +102,7 @@
 </ul>
 <h3 id="upgrading-from-100-to-110">Upgrading from 1.0.0 to 1.1.0</h3>
 <ul>
-<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
+<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://carbon-aware-sdk.greensoftware.foundation/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
 </ul>
 <pre><code class="language-json">{
   "DataSources": {
@@ -140,8 +140,8 @@
         </item>
         <item>
             <title><![CDATA[Release v1.0]]></title>
-            <link>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/release-v1.0</link>
-            <guid>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/release-v1.0</guid>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.0</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.0</guid>
             <pubDate>Sat, 01 Oct 2022 00:00:00 GMT</pubDate>
             <description><![CDATA[Release 1.1]]></description>
             <content:encoded><![CDATA[<p>Release 1.1</p>
@@ -188,7 +188,7 @@
 </ul>
 <h3 id="upgrading-from-100-to-110">Upgrading from 1.0.0 to 1.1.0</h3>
 <ul>
-<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
+<li>Configuration changes are required due to historical and forecast configuration now being decoupled.  Refer to - <a href="https://carbon-aware-sdk.greensoftware.foundation/docs/tutorial-extras/configuration">Configuration</a> for a guide. The following is provided as an example of the new data source configuration format.</li>
 </ul>
 <pre><code class="language-json">{
   "DataSources": {
@@ -226,13 +226,13 @@
         </item>
         <item>
             <title><![CDATA[Welcome to the Carbon Aware SDK documentation site]]></title>
-            <link>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/welcome</link>
-            <guid>https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/blog/welcome</guid>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/welcome</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/welcome</guid>
             <pubDate>Thu, 26 Aug 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.]]></description>
             <content:encoded><![CDATA[<p>Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.</p>
 <p>The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you <strong>measure and reduce your software's carbon emissions</strong>, and choose when and where you run your software to make it greener.</p>
-<p><img alt="Carbon Aware Software" src="https://carbon-aware-sdk.greensoftware.foundation/carbon-aware-sdk/assets/images/carbon-aware-software-827a8c0d6dcd3f664855aabfdf735bbf.png" width="1920" height="1080"></p>
+<p><img alt="Carbon Aware Software" src="https://carbon-aware-sdk.greensoftware.foundation/assets/images/carbon-aware-software-827a8c0d6dcd3f664855aabfdf735bbf.png" width="1920" height="1080"></p>
 <p>By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:</p>
 <ul>
 <li>Building  AI models when carbon emissions are lower</li>
