@@ -11,7 +11,7 @@ const config = {
   favicon: 'img/favicon-32x32.png',
 
   // Set the production url of your site here
-  url: 'https://green-software-foundation.github.io',
+  url: 'https://carbon-aware-sdk.greensoftware.foundation',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/carbon-aware-sdk',
