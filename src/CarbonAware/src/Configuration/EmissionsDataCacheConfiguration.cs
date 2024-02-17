@@ -12,9 +12,9 @@ internal class EmissionsDataCacheConfiguration
 
     public void AssertValid()
     {
-        if(ExpirationMin < 0)
+        if(ExpirationMin <= 0)
         {
-            throw new ArgumentException($"Expiration period for data cache value must be greater than or equal 0.");
+            throw new ArgumentException($"Expiration period for data cache value must be greater than 0.");
         }
     }
 }
