@@ -25,11 +25,11 @@ carbon_aware   v1        6293e2528bf2   About an hour ago   230MB
 ## Run WebApi Image
 
 1. Run the image using `docker run` with host port 8000 mapped to the WebApi
-   port 80 and configure environment variable settings for
+   port 8080 and configure environment variable settings for
    [WattTime](https://www.watttime.org) provider.
 
    ```sh
-   docker run --rm -p 8000:80 \
+   docker run --rm -p 8000:8080 \
    > -e DataSources__EmissionsDataSource="WattTime" \
    > -e DataSources__ForecastDataSource="WattTime" \
    > -e DataSources__Configurations__WattTime__Type="WattTime" \
@@ -40,7 +40,7 @@ carbon_aware   v1        6293e2528bf2   About an hour ago   230MB
    or the [ElectricityMaps](https://www.electricitymaps.com) provider
 
    ```sh
-   docker run --rm -p 8000:80 \
+   docker run --rm -p 8000:8080 \
    > -e DataSources__EmissionsDataSource="ElectricityMaps" \
    > -e DataSources__ForecastDataSource="ElectricityMaps" \
    > -e DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps" \
@@ -52,7 +52,7 @@ carbon_aware   v1        6293e2528bf2   About an hour ago   230MB
    or the [ElectricityMapsFree](https://www.co2signal.com/) provider
 
    ```sh
-   docker run --rm -p 8000:80 \
+   docker run --rm -p 8000:8080 \
    > -e DataSources__EmissionsDataSource="ElectricityMapsFree" \
    > -e DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree" \
    > -e DataSources__Configurations__ElectricityMapsFree__token="<YOUR_CO2SIGNAL_TOKEN>" \
