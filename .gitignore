@@ -33,3 +33,5 @@ src/data/location-sources/custom-azure-zones.json
 
 # exclude artifacts on java-client example
 samples/java-client/target
+
+casdk-docs/docs/samples/*
