@@ -9,6 +9,7 @@ on:
       - 'src/**'
       - '.github/workflows/**'
       - 'samples/azure/azure-function/**'
+      - '!casdk-docs/**'
       
 env:
   DOCKERFILE_PATH: samples/azure/azure-function/Dockerfile

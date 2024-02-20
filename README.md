@@ -99,7 +99,7 @@ deployment in the greenest location.
 
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
-to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./docs/adopters.md).
+to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./casdk-docs/docs/overview/adopters.md).
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
@@ -195,7 +195,6 @@ The Carbon Aware SDK is a project as part of the
 Open Source Working Group.
 
 ### Appointments
-The following are those who are currently actively working on the SDK and have made significant ongoing contributions.
 The following are those who are currently actively working on the SDK and have made significant ongoing contributions.
 
 - Chair/Project lead - Vaughan Knight (Microsoft)
