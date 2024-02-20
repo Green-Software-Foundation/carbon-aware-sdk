@@ -70,7 +70,7 @@ const config = {
             type: 'doc',
             docId: 'quickstart',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Docs',
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {to: 'https://greensoftware.foundation/', label: 'GSF', position: 'left'},
@@ -89,7 +89,7 @@ const config = {
             items: [
               {
                 label: 'Tutorial',
-                to: '/carbon-aware-sdk/docs/overview',
+                to: '/docs/quickstart',
               },
             ],
           },
