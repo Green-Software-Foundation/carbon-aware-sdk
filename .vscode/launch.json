@@ -37,7 +37,8 @@
         "uriFormat": "%s/swagger"
       },
       "env": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE": "false"
       },
       "sourceFileMap": {
         "/Views": "${workspaceFolder}/Views"

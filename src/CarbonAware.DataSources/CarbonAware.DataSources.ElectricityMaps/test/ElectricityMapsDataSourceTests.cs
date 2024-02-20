@@ -1,8 +1,11 @@
+using CarbonAware.Configuration;
 using CarbonAware.DataSources.ElectricityMaps.Client;
 using CarbonAware.DataSources.ElectricityMaps.Model;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -23,6 +26,14 @@ class ElectricityMapsDataSourceTests
     private static string _defaultLongitude => _defaultLocation.Longitude.ToString() ?? "";
     private static DateTimeOffset _defaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
 
+    private readonly string TypeKey = $"Configurations:ElectricityMaps:Type";
+    private readonly string UsernameKey = $"Configurations:ElectricityMaps:Username";
+    private readonly string PasswordKey = $"Configurations:ElectricityMaps:Password";
+    private readonly string UseProxyKey = $"Configurations:ElectricityMaps:Proxy:UseProxy";
+    private readonly string ProxyUrlKey = $"Configurations:ElectricityMaps:Proxy:Url";
+    private readonly string ProxyUsernameKey = $"Configurations:ElectricityMaps:Proxy:Username";
+    private readonly string ProxyPasswordKey = $"Configurations:ElectricityMaps:Proxy:Password";
+    
     [SetUp]
     public void Setup()
     {
@@ -323,5 +334,80 @@ class ElectricityMapsDataSourceTests
         var second = result.Skip(1)?.First();
         Assert.IsNotNull(second);
         Assert.That(second.Duration, Is.EqualTo(expectedDuration));
+    }
+
+    [Test]
+    public void ConfigureDI_ClientProxyTest_With_Missing_ProxyURL_ThrowsException()
+    {
+        // Arrange
+        var inMemorySettings = new Dictionary<string, string> {
+            { TypeKey, "ElectricityMaps" },
+            { UsernameKey, "testUsername" },
+            { PasswordKey, "testPassword123!" },
+            { UseProxyKey, "true" },
+        };
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        var dataSourceConfig = new DataSourcesConfiguration()
+        {
+            EmissionsDataSource = "ElectricityMaps",
+            ForecastDataSource = "ElectricityMaps",
+            Section = configuration.GetSection("Configurations")
+        };
+
+        var serviceCollection = new ServiceCollection();
+
+        // Act & Assert
+        Assert.Throws<ConfigurationException>(() => ElectricityMapsDataSource.ConfigureDI<IEmissionsDataSource>(serviceCollection, dataSourceConfig));
+        Assert.Throws<ConfigurationException>(() => ElectricityMapsDataSource.ConfigureDI<IForecastDataSource>(serviceCollection, dataSourceConfig));
+    }
+
+    [TestCase(true, TestName = "ClientProxyTest, successful: denotes adding ElectricityMaps data sources using proxy.")]
+    [TestCase(false, TestName = "ClientProxyTest, successful: denotes adding ElectricityMaps data sources without using proxy.")]
+    public void ConfigureDI_ClientProxyTest_AddsDataSource(bool withProxyUrl)
+    {
+        // Arrange
+        var inMemorySettings = new Dictionary<string, string> {
+            { TypeKey, "ElectricityMaps" },
+            { UsernameKey, "testUsername" },
+            { PasswordKey, "testPassword123!" },
+            { UseProxyKey, withProxyUrl.ToString() },
+        };
+
+        if (withProxyUrl)
+        {
+            inMemorySettings.Add(ProxyUrlKey, "http://10.10.10.1");
+            inMemorySettings.Add(ProxyUsernameKey, "proxyUsername");
+            inMemorySettings.Add(ProxyPasswordKey, "proxyPassword");
+        }
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        var dataSourceConfig = new DataSourcesConfiguration()
+        {
+            EmissionsDataSource = "ElectricityMaps",
+            ForecastDataSource = "ElectricityMaps",
+            Section = configuration.GetSection("Configurations")
+        };
+
+        var serviceCollection = new ServiceCollection();
+        var emissionsDescriptor = new ServiceDescriptor(typeof(IEmissionsDataSource), typeof(ElectricityMapsDataSource), ServiceLifetime.Singleton);
+        var forecastDescriptor = new ServiceDescriptor(typeof(IForecastDataSource), typeof(ElectricityMapsDataSource), ServiceLifetime.Singleton);
+
+        Assert.That(!serviceCollection.Any(i => i.ToString() == emissionsDescriptor.ToString()));
+        Assert.That(!serviceCollection.Any(i => i.ToString() == forecastDescriptor.ToString()));
+
+        // Act
+        ElectricityMapsDataSource.ConfigureDI<IEmissionsDataSource>(serviceCollection, dataSourceConfig);
+        ElectricityMapsDataSource.ConfigureDI<IForecastDataSource>(serviceCollection, dataSourceConfig);
+
+        // Assert
+        Assert.That(serviceCollection.Any(i => i.ToString() == emissionsDescriptor.ToString()));
+        Assert.That(serviceCollection.Any(i => i.ToString() == forecastDescriptor.ToString()));
     }
 }

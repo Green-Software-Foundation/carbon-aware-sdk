@@ -33,3 +33,6 @@ src/data/location-sources/custom-azure-zones.json
 
 # exclude artifacts on java-client example
 samples/java-client/target
+
+# exclude artifacts from default package builder
+/packages

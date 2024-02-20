@@ -1,5 +1,4 @@
-﻿using CarbonAware.DataSources.Configuration;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Text.Json;
 
 namespace CarbonAware.CLI.IntegrationTests.Commands.Location;

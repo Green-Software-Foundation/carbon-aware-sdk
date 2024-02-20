@@ -1,10 +1,15 @@
-﻿using CarbonAware.DataSources.WattTime.Client;
+﻿using CarbonAware.Configuration;
+using CarbonAware.DataSources.WattTime.Client;
+using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.DataSources.WattTime.Model;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using CarbonAware.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+using System.Net;
 
 namespace CarbonAware.DataSources.WattTime;
 
@@ -42,6 +47,22 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         this.Logger = logger;
         this.WattTimeClient = client;
         this.LocationSource = locationSource;
+    }
+
+    public static IServiceCollection ConfigureDI<T>(IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
+        where T : IDataSource
+    {
+        var configSection = dataSourcesConfig.ConfigurationSection<T>();
+        AddWattTimeClient(services, configSection);
+        services.AddMemoryCache();
+        try
+        {
+            services.TryAddSingleton(typeof(T), typeof(WattTimeDataSource));
+        } catch (Exception ex)
+        {
+            throw new ArgumentException($"WattTimeDataSource is not a supported {typeof(T).Name} data source.", ex);
+        }
+        return services;
     }
 
     /// <inheritdoc />
@@ -195,5 +216,34 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     {
         var d = TimeSpan.FromMinutes(minutes);
         return new DateTimeOffset((date.Ticks / d.Ticks) * d.Ticks, date.Offset);
+    }
+
+    private static void AddWattTimeClient(IServiceCollection services, IConfigurationSection configSection)
+    {
+        services.Configure<WattTimeClientConfiguration>(c =>
+        {
+            configSection.Bind(c);
+        });
+
+        var httpClientBuilder = services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedClient);
+
+        var Proxy = configSection.GetSection("Proxy").Get<WebProxyConfiguration>();
+        if (Proxy != null && Proxy.UseProxy == true)
+        {
+            if (String.IsNullOrEmpty(Proxy.Url))
+            {
+                throw new Exceptions.ConfigurationException("Proxy Url is not configured.");
+            }
+            httpClientBuilder.ConfigurePrimaryHttpMessageHandler(() => 
+                new HttpClientHandler() {
+                    Proxy = new WebProxy {
+                        Address = new Uri(Proxy.Url),
+                        Credentials = new NetworkCredential(Proxy.Username, Proxy.Password),
+                        BypassProxyOnLocal = true
+                    }
+                }
+            );
+        }
+        services.TryAddSingleton<IWattTimeClient, WattTimeClient>();
     }
 }

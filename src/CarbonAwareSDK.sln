@@ -25,8 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Wat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.WattTime", "CarbonAware.DataSources\CarbonAware.DataSources.WattTime\src\CarbonAware.DataSources.WattTime.csproj", "{12D19F2D-0427-4591-949D-0DCDEDACF5B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.DataSources.Registration", "CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj", "{5CFC4F4D-7E8D-4682-A659-35050C637FF4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources", "CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj", "{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarbonAware.LocationSources.Test", "CarbonAware.LocationSources\test\CarbonAware.LocationSources.Test.csproj", "{F4BD1233-447F-4245-AE7B-A877427EB2D7}"
@@ -107,10 +105,6 @@ Global
 		{12D19F2D-0427-4591-949D-0DCDEDACF5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12D19F2D-0427-4591-949D-0DCDEDACF5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12D19F2D-0427-4591-949D-0DCDEDACF5B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5CFC4F4D-7E8D-4682-A659-35050C637FF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C120DB7C-E4D8-4A8F-B180-0C5D0D8C085C}.Release|Any CPU.ActiveCfg = Release|Any CPU

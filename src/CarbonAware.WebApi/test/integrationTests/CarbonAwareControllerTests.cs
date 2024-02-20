@@ -1,4 +1,3 @@
-using CarbonAware.DataSources.Configuration;
 using CarbonAware.WebApi.IntegrationTests;
 using CarbonAware.WebApi.Models;
 using NUnit.Framework;
@@ -150,8 +149,8 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
     }
 
-    [TestCase("location", "", TestName = "empty location query string")]
-    [TestCase("non-location-param", "", TestName = "location param not present")]
+    [TestCase("location", "", TestName = "BestLocations_EmptyLocationQueryString: empty location query string")]
+    [TestCase("non-location-param", "", TestName = "BestLocations_EmptyLocationQueryString: location param not present")]
     public async Task BestLocations_EmptyLocationQueryString_ReturnsBadRequest(string queryString, string value)
     {
         //Call the private method to construct with parameters
@@ -202,7 +201,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecastsCurrent_StartAndEndOutsideWindow_ReturnsBadRequest()
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
+        IgnoreTestForDataSource($"data source does not implement '{currentForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMapsFree);
 
         _dataSourceMocker?.SetupForecastMock();
 
@@ -225,7 +224,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     public async Task EmissionsForecastsCurrent_InvalidLocationQueryString_ReturnsBadRequest(string queryString, string value)
     {
 
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
+        IgnoreTestForDataSource($"data source does not implement '{currentForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMapsFree);
 
         _dataSourceMocker?.SetupForecastMock();
 
@@ -245,7 +244,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("eastus", "2021-9-1T08:30:00Z", TestName = "EmissionsForecastsBatch returns BadRequest for wrong date format")]
     public async Task EmissionsForecastsBatch_MissingRequiredParams_ReturnsBadRequest(string location, string requestedAt)
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/batch'", DataSourceType.JSON);
+        IgnoreTestForDataSource($"data source does not implement '{batchForecastURI}'", DataSourceType.JSON, DataSourceType.ElectricityMapsFree);
 
         _dataSourceMocker?.SetupForecastMock();
         var forecastData = Enumerable.Range(0, 1).Select(x => new
@@ -337,6 +336,8 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("non-location-param", "", TestName = "EmissionsMarginalCarbonIntensity returns BadRequest for location not present")]
     public async Task EmissionsMarginalCarbonIntensity_EmptyLocationQueryString_ReturnsBadRequest(string queryString, string value)
     {
+        IgnoreTestForDataSource($"data source does not implement '{averageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
+
         var queryStrings = new Dictionary<string, string>();
         queryStrings[queryString] = value;
 
@@ -354,6 +355,8 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("westus", "2022-3-1T15:30:00Z", "2022-3-1T18:00:00Z", TestName = "EmissionsMarginalCarbonIntensityBatch returns BadRequest for wrong date format")]
     public async Task EmissionsMarginalCarbonIntensityBatch_MissingRequiredParams_ReturnsBadRequest(string location, string startTime, string endTime)
     {
+        IgnoreTestForDataSource($"data source does not implement '{batchAverageCarbonIntensityURI}'", DataSourceType.ElectricityMapsFree);
+
         var intesityData = Enumerable.Range(0, 1).Select(x => new
         {
             location = location,

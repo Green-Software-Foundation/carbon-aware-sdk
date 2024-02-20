@@ -14,7 +14,7 @@ if ([string]::IsNullOrEmpty($DOTNET_SOLUTION) -or [string]::IsNullOrEmpty($DEST_
 $REVISION = $(git rev-parse HEAD)
 $BRANCH = "dev"
 
-New-Item -Path $DEST_PACKAGES -ItemType Directory
+New-Item -Path $DEST_PACKAGES -ItemType Directory -Force | Out-Null
 
 # Remove existing packages
 Get-ChildItem -Path $path -Recurse -Include *.nupkg, *.snupkg | Remove-Item

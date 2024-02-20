@@ -1,8 +1,14 @@
-﻿using CarbonAware.Interfaces;
+﻿using CarbonAware.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
+using CarbonAware.Exceptions;
+using CarbonAware.Interfaces;
 using CarbonAware.Model;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System.Net;
 using System.Text.Json;
 
 namespace CarbonAware.DataSources.Json;
@@ -40,6 +46,25 @@ internal class JsonDataSource : IEmissionsDataSource
     {
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         _configurationMonitor = monitor ?? throw new ArgumentNullException(nameof(monitor));
+    }
+
+    public static IServiceCollection ConfigureDI<T>(IServiceCollection services, DataSourcesConfiguration dataSourcesConfig)
+        where T : IDataSource
+    {
+        var configSection = dataSourcesConfig.ConfigurationSection<T>();
+        services.Configure<JsonDataSourceConfiguration>(config =>
+        {
+            configSection.Bind(config);
+        });
+
+        try
+        {
+            services.TryAddSingleton(typeof(T), typeof(JsonDataSource));
+        } catch (Exception ex)
+        {
+            throw new ArgumentException($"JsonDataSource is not a supported {typeof(T).Name} data source.", ex);
+        }
+        return services;
     }
 
     /// <inheritdoc />

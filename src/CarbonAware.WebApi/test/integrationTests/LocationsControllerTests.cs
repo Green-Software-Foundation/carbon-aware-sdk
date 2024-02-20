@@ -1,4 +1,3 @@
-using CarbonAware.DataSources.Configuration;
 using CarbonAware.WebApi.IntegrationTests;
 using NUnit.Framework;
 using System.Net;

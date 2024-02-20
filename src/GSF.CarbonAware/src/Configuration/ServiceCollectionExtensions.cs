@@ -1,5 +1,5 @@
-using CarbonAware.DataSources.Configuration;
 using CarbonAware.Interfaces;
+using CarbonAware.Extensions;
 using CarbonAware.LocationSources;
 using CarbonAware.LocationSources.Configuration;
 using GSF.CarbonAware.Handlers;
@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
             configuration.GetSection(LocationDataSourcesConfiguration.Key).Bind(c);
         });
         services.TryAddSingleton<ILocationSource, LocationSource>();
-        services.AddDataSourceService(configuration);
+        services.AddDataSourceServices(configuration);
         services.TryAddSingleton<IEmissionsHandler, EmissionsHandler>();
         services.TryAddSingleton<ILocationHandler, LocationHandler>();
         return services;
@@ -37,7 +37,7 @@ public static class ServiceCollectionExtensions
             configuration.GetSection(LocationDataSourcesConfiguration.Key).Bind(c);
         });
         services.TryAddSingleton<ILocationSource, LocationSource>();
-        services.AddDataSourceService(configuration);
+        services.AddDataSourceServices(configuration);
         services.TryAddSingleton<IForecastHandler, ForecastHandler>();
         services.TryAddSingleton<ILocationHandler, LocationHandler>();
         return services;

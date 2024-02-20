@@ -1,5 +1,4 @@
-﻿using CarbonAware.DataSources.Configuration;
-using CarbonAware.Interfaces;
+﻿using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Mocks;
 using CarbonAware.DataSources.ElectricityMapsFree.Mocks;
 using CarbonAware.DataSources.Json.Mocks;
@@ -10,6 +9,15 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace CarbonAware.CLI.IntegrationTests;
+
+public enum DataSourceType
+{
+    None,
+    WattTime,
+    JSON,
+    ElectricityMaps,
+    ElectricityMapsFree,
+}
 
 /// <summary>
 /// A base class that does all the common setup for the Integration Testing

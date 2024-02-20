@@ -11,7 +11,7 @@ env:
   DLL_FILE_PATH: "./bin/Release/net6.0/CarbonAware.WebApi.dll"
   DOTNET_SRC_DIR: "./src"
   # console app packages
-  DOTNET_SOLUTION: "src/GSF.CarbonAware/src/GSF.CarbonAware.csproj"
+  DOTNET_SOLUTION: "src/CarbonAwareSDK.sln"
   OUTPUT_DIR: "packages"
   CONSOLE_APP: "samples/lib-integration/ConsoleApp/ConsoleApp.csproj"
   CREATE_PKGS: "scripts/package/create_packages.ps1"

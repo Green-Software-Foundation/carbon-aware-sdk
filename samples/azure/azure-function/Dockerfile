@@ -10,7 +10,9 @@ COPY ["scripts/", "data/scripts/"]
 COPY ["samples/", "data/samples/"]
 
 WORKDIR /data
-RUN pwsh -c scripts/package/create_packages.ps1 src/GSF.CarbonAware/src/GSF.CarbonAware.csproj /packages && \
+RUN pwsh -c scripts/package/create_packages.ps1 src/CarbonAwareSDK.sln /packages && \
+    dotnet nuget locals all --clear && \
+    dotnet nuget add source /packages -n carbonaware && \
     dotnet restore "samples/azure/azure-function/function.csproj" && \
     pwsh -c scripts/package/add_packages.ps1 samples/azure/azure-function/function.csproj /packages && \
     dotnet build "samples/azure/azure-function/function.csproj" -c Release -o /app/build
@@ -20,4 +22,6 @@ RUN dotnet publish "samples/azure/azure-function/function.csproj" -c Release -o 
 
 FROM base AS final
 WORKDIR /home/site/wwwroot
+ENV AzureWebJobsScriptRoot=/home/site/wwwroot \
+    AzureFunctionsJobHost__Logging__Console__IsEnabled=true
 COPY --from=publish /app/publish .

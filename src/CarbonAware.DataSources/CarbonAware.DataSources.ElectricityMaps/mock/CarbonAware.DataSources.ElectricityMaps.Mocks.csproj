@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\CarbonAware.DataSources.ElectricityMaps.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 
   <ItemGroup>

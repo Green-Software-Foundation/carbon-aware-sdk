@@ -23,7 +23,7 @@ public class ServiceCollectionExtensionsTest
             { "LocationDataSourcesConfiguration:LocationSourceFiles:Delimiter", "-" },
             { "DataSources:EmissionsDataSource", "Json" },
             { "DataSources:ForecastDataSource", "" },
-            { "DataSources:Configurations:Json:Type", "JSON" },
+            { "DataSources:Configurations:Json:Type", "Json" },
             { "DataSources:Configurations:Json:DataFileLocation", "test-data-azure-emissions.json" }
         };
         var configuration = new ConfigurationBuilder()

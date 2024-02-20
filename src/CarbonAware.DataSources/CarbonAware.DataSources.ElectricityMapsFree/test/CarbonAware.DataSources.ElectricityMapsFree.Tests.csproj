@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\CarbonAware.LocationSources\src\CarbonAware.LocationSources.csproj" />
     <ProjectReference Include="..\src\CarbonAware.DataSources.ElectricityMapsFree.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
 
 </Project>

@@ -18,22 +18,21 @@ showing how the package can be consumed.
   - [Console App Sample](#console-app-sample)
     - [Run the Sample Console App](#run-the-sample-console-app)
 
-## Included Projects
+## Included Packages
 
-The current package include 8 projects from the SDK:
+The current solution creates 5 packages from the SDK projects:
 
 1. "GSF.CarbonAware"
-2. "CarbonAware"
-3. "CarbonAware.DataSources.ElectricityMapsFree"
-4. "CarbonAware.DataSources.ElectricityMaps"
-5. "CarbonAware.DataSources.Json"
-6. "CarbonAware.DataSources.Registration"
-7. "CarbonAware.DataSources.WattTime"
-8. "CarbonAware.LocationSources"
+  1. "CarbonAware"
+  2. "CarbonAware.LocationSources"
+2. "CarbonAware.DataSources.ElectricityMapsFree"
+3. "CarbonAware.DataSources.ElectricityMaps"
+4. "CarbonAware.DataSources.Json"
+5. "CarbonAware.DataSources.WattTime"
 
-These 8 projects enable users of the library to consume the current endpoints
-exposed by the library. The package that needs to be added to a new C# project
-is `GSF.CarbonAware`.
+Adding the `GSF.CarbonAware` project to your C# projects gives you access to all
+CarbonAware SDK interfaces.
+Additionally, operators must add any data source packages they plan to use.
 
 ## Included Scripts
 
