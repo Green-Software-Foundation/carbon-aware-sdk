@@ -12,10 +12,8 @@
         <id>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2</id>
         <link href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2"/>
         <updated>2024-01-14T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Release 1.2]]></summary>
-        <content type="html"><![CDATA[<p>Release 1.2</p>
-<h2 id="120---2024-01">[1.2.0] - 2024-01</h2>
-<h3 id="added">Added</h3>
+        <summary type="html"><![CDATA[Added]]></summary>
+        <content type="html"><![CDATA[<h3 id="added">Added</h3>
 <ul>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/381">#381 Add Helm chart and workflow</a></li>
 <li>New package release for Helm charts available at <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/charts%2Fcarbon-aware-sdk">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/charts%2Fcarbon-aware-sdk</a></li>
@@ -56,10 +54,8 @@
         <id>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.1</id>
         <link href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.1"/>
         <updated>2023-07-18T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Release 1.1]]></summary>
-        <content type="html"><![CDATA[<p>Release 1.1</p>
-<h2 id="110---2023-18-07">[1.1.0] - 2023-18-07</h2>
-<h3 id="added">Added</h3>
+        <summary type="html"><![CDATA[Added]]></summary>
+        <content type="html"><![CDATA[<h3 id="added">Added</h3>
 <ul>
 <li>Added Electricity Maps (paid api) support for forecasting and historical data.</li>
 <li>Added ElectricityMaps (free api) support for historical data.  Note that this API does not support forecast capabilities.</li>
@@ -142,10 +138,8 @@
         <id>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.0</id>
         <link href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.0"/>
         <updated>2022-10-01T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Release 1.1]]></summary>
-        <content type="html"><![CDATA[<p>Release 1.1</p>
-<h2 id="110---2023-18-07">[1.1.0] - 2023-18-07</h2>
-<h3 id="added">Added</h3>
+        <summary type="html"><![CDATA[Added]]></summary>
+        <content type="html"><![CDATA[<h3 id="added">Added</h3>
 <ul>
 <li>Added Electricity Maps (paid api) support for forecasting and historical data.</li>
 <li>Added ElectricityMaps (free api) support for historical data.  Note that this API does not support forecast capabilities.</li>

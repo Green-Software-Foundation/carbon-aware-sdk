@@ -13,10 +13,8 @@
             <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2</link>
             <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2</guid>
             <pubDate>Sun, 14 Jan 2024 00:00:00 GMT</pubDate>
-            <description><![CDATA[Release 1.2]]></description>
-            <content:encoded><![CDATA[<p>Release 1.2</p>
-<h2 id="120---2024-01">[1.2.0] - 2024-01</h2>
-<h3 id="added">Added</h3>
+            <description><![CDATA[Added]]></description>
+            <content:encoded><![CDATA[<h3 id="added">Added</h3>
 <ul>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/381">#381 Add Helm chart and workflow</a></li>
 <li>New package release for Helm charts available at <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/charts%2Fcarbon-aware-sdk">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/charts%2Fcarbon-aware-sdk</a></li>
@@ -57,10 +55,8 @@
             <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.1</link>
             <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.1</guid>
             <pubDate>Tue, 18 Jul 2023 00:00:00 GMT</pubDate>
-            <description><![CDATA[Release 1.1]]></description>
-            <content:encoded><![CDATA[<p>Release 1.1</p>
-<h2 id="110---2023-18-07">[1.1.0] - 2023-18-07</h2>
-<h3 id="added">Added</h3>
+            <description><![CDATA[Added]]></description>
+            <content:encoded><![CDATA[<h3 id="added">Added</h3>
 <ul>
 <li>Added Electricity Maps (paid api) support for forecasting and historical data.</li>
 <li>Added ElectricityMaps (free api) support for historical data.  Note that this API does not support forecast capabilities.</li>
@@ -143,10 +139,8 @@
             <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.0</link>
             <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.0</guid>
             <pubDate>Sat, 01 Oct 2022 00:00:00 GMT</pubDate>
-            <description><![CDATA[Release 1.1]]></description>
-            <content:encoded><![CDATA[<p>Release 1.1</p>
-<h2 id="110---2023-18-07">[1.1.0] - 2023-18-07</h2>
-<h3 id="added">Added</h3>
+            <description><![CDATA[Added]]></description>
+            <content:encoded><![CDATA[<h3 id="added">Added</h3>
 <ul>
 <li>Added Electricity Maps (paid api) support for forecasting and historical data.</li>
 <li>Added ElectricityMaps (free api) support for historical data.  Note that this API does not support forecast capabilities.</li>
