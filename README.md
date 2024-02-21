@@ -84,7 +84,7 @@ management and increase control and auditability, especially in regulated
 environments. It can be deployed as a container for easy management, and can be
 deployed alongside an application within a cluster or separately.
 
-![WebApi Screenshot](./images/screenshot_web_api.png)
+![WebApi Screenshot](./casdk-docs/docs/images/screenshot_web_api.png)
 
 ### The CLI
 
@@ -93,7 +93,7 @@ where a command-line can be used. This tends to be common with legacy DevOps
 pipelines to drive deployment for integration testing where you can test your
 deployment in the greenest location.
 
-![WebApi Screenshot](./images/screenshot_cli.png)
+![WebApi Screenshot](./casdk-docs/docs/images/screenshot_cli.png)
 
 ## Who Is Using the Carbon Aware SDK?
 
