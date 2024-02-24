@@ -11,7 +11,7 @@
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/YaSuenag/carbon-aware-sdk</url>
+            <url>https://maven.pkg.github.com/Green-Software-Foundation/carbon-aware-sdk</url>
         </repository>
     </repositories>
 
@@ -70,12 +70,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>github</id>
-            <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/YaSuenag/carbon-aware-sdk</url>
-        </repository>
-    </distributionManagement>
 </project>
