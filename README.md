@@ -33,7 +33,7 @@ By knowing the carbon emissions of the energy that powers your applications, you
 * Running software updates at greener energy time windows 
 * Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
 
-Withing the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
+Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
 
 Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
 
@@ -75,7 +75,7 @@ At its core the Carbon Aware SDK is a WebApi and Command Line Interface (CLI) to
 assist in building carbon aware software. The functionality across the CLI and
 WebApi is identical by design.
 
-You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programatically make greener decisions in your software.
+You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programmatically make greener decisions in your software.
 
 ### The WebApi
 
@@ -178,7 +178,7 @@ prefer to use for on premises workloads, which you can combine in aggregate with
 
 ## Is it possible to retrieve energy mix information from the SDK?
 
-Energy mix (the percentages that are from different energy soruces i.e. coal,
+Energy mix (the percentages that are from different energy sources i.e. coal,
 nuclear, wind, gas, solar, tidal, hydro etc) is not provided in the API to date.
 This may be a feature we will consider in the future. The SDK provides emissions
 percentage information only at the moment.
