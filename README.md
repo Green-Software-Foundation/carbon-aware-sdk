@@ -12,7 +12,7 @@
 > 
 > CarbonHack is open to all, including software practitioners and those with a passion for Green Software.
 >
-> Find out more about CarbonHack 2024 on the [CarbonHack website](https://grnsft.org/hack/github). Check out the [FAQ on GitHub](https://github.com/Green-Software-Foundation/hack/blob/main/FAQ.md).
+> Find out more about CarbonHack 2024 on the [CarbonHack website](https://grnsft.org/hack/github). Check out the [FAQ on GitHub](https://grnsft.org/hack/faq).
 > 
 > Registration opens 15th January!
 ----------------------------
