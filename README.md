@@ -39,7 +39,7 @@ Companies including UBS and Vestas have already deployed the Carbon Aware SDK to
 
 # Getting Started Overview
 
-Head on over to the [Getting Started Overview Guide](./casdk-docs/docs/overview.md) to get up and running.
+Head on over to the [Getting Started Overview Guide](./casdk-docs/docs/overview/overview.md) to get up and running.
 
 Get started on creating sustainable software innovation for a greener future
 today!
