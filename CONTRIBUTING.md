@@ -17,13 +17,15 @@ and the approved contribution process that members should follow.
   - [Collaborating with the OSWG](#collaborating-with-the-opensource-working-group)
 
 ## Current Opportunities
-We have opportunities for both code and non code contributors. 
+We have opportunities for both code and non code contributors. We're currently looking all contributions, with some areas of extra opportunity outlined in the table below.
 
-We're currently looking for contributions in the following areas:
-1. Sample Creation 
-2. Documentation Updates, including getting docusaurus up and running
-3. Video Content Creation (how to enable, demos etc)
-4. Slide Deck Creation, available for presenter use, including real time video demo
+
+| Contribution Areas | Description |
+|----------|----------|
+|**Sample Creation** | These help adopters of the SDK learn how they can quick get started and build their own carbon aware solutions.|
+|**Documentation Updates** | The documentation always can be improved to make the Carbon Aware SDK more accessible to everyone.  Guides, SDK and API document, and more! |
+|**Video Content Creation (how to enable, demos etc)** | Quick videos help adopters undersatnd just how easy it is to get started in an easy to consume form.
+|**Slide Deck Creation <br> Available for presenter use, including real time video demo**| We get a lot of traction at conferences, and if we have a standard deck for anyone to present, it will enable those who might not be able to create a deck, but could easily present it, to also participate.
 
 ## How To Get Started 
 Introduce yourself on on our [discussions page](https://github.com/orgs/Green-Software-Foundation/discussions/65) and let us know where you think you can help. 
