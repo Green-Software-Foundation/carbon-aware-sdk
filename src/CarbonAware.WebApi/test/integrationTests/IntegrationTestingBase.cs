@@ -21,6 +21,7 @@ internal abstract class IntegrationTestingBase
     internal DataSourceType _dataSource;
     internal string? _emissionsDataSourceEnv;
     internal string? _forecastDataSourceEnv;
+    internal string? _enableCarbonExporterEnv;
     internal WebApplicationFactory<Program> _factory;
     protected HttpClient _client;
     internal IDataSourceMocker _dataSourceMocker;
@@ -33,6 +34,7 @@ internal abstract class IntegrationTestingBase
         _dataSource = dataSource;
         _emissionsDataSourceEnv = null;
         _forecastDataSourceEnv = null;
+        _enableCarbonExporterEnv = null;
         _factory = new WebApplicationFactory<Program>();
     }
 
@@ -77,6 +79,8 @@ internal abstract class IntegrationTestingBase
     {
         _emissionsDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__EmissionsDataSource");
         _forecastDataSourceEnv = Environment.GetEnvironmentVariable("DataSources__ForecastDataSource");
+        _enableCarbonExporterEnv = Environment.GetEnvironmentVariable("CarbonAwareVars__EnableCarbonExporter");
+        Environment.SetEnvironmentVariable("CarbonAwareVars__EnableCarbonExporter", "true");
         //Switch between different data sources as needed
         //Each datasource should have an accompanying DataSourceMocker that will perform setup activities
         switch (_dataSource)
@@ -153,5 +157,6 @@ internal abstract class IntegrationTestingBase
         _dataSourceMocker?.Dispose();
         Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", _emissionsDataSourceEnv);
         Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", _forecastDataSourceEnv);
+        Environment.SetEnvironmentVariable("CarbonAwareVars__EnableCarbonMetrics", _enableCarbonExporterEnv);
     }
 }

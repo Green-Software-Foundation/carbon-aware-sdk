@@ -23,6 +23,7 @@
   - [CarbonAwareVars](#carbonawarevars)
     - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
     - [Verbosity](#verbosity)
+    - [Prometheus exporter](#prometheus-exporter-for-emissions-data)
     - [Web API Prefix](#web-api-prefix)
   - [LocationDataSourcesConfiguration](#locationdatasourcesconfiguration)
 - [Sample Configurations](#sample-configurations)
@@ -401,6 +402,32 @@ InstrumentationKey. For more details, please refer to
 
 ```bash
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
+```
+
+### Prometheus exporter for emissions data
+
+> DISCLAIMER:  The `/metrics` Prometheus exporter is currently unsupported, and is used for internal GSF needs, and may change in the future.  It will retrieve _all_ emissions data and create heavy load on your data API's.  It is turned off by default.
+
+In the WebApi project, this application can exporse latest carbon emissions data as a prometheus exporter.
+
+```bash
+CarbonAwareVars__EnableCarbonExporter="true"
+```
+The scraping endpoint is `<ROOT_PATH>/metrics` like this:
+
+```bash
+http://localhost/metrics
+```
+
+By default, the exposed data are latest ones within last 24 hours. If you would like to change the period 
+in some reasones, you can configure the value like this:
+
+```json
+{
+  "CarbonExporter": {
+    "PeriodInHours": 48
+  }
+}
 ```
 
 ### Verbosity

@@ -15,12 +15,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.0-rc.1.23419.4" />
+    <PackageReference Include="Opentelemetry.Exporter.Prometheus.AspNetCore" Version="1.6.0-rc.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"
       Version="1.14.0" />
-    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.4.0-beta.3" />
-    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc9.9" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.9" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.9" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.6.0" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.6.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.5.1-beta.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.5.1-beta.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.4.0" />

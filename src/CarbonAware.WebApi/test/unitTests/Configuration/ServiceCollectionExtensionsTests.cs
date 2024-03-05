@@ -83,6 +83,61 @@ public class ServiceCollectionExtensionsTests
     }    
 
     [Test]
+    public void AddCarbonExporter_AddsServices_IsEnabledInConfiguration()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+
+        var inMemorySettings = new Dictionary<string, string>
+        {
+            { "CarbonAwareVars:EnableCarbonExporter", "true" }
+        };
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        // Act & Assert
+        Assert.DoesNotThrow(() => services.AddCarbonExporter(configuration));
+        Assert.That(services.Count, Is.GreaterThan(0));
+    }
+
+    [Test]
+    public void AddCarbonExporter_DoesNotAddServices_IsDisabledInConfiguration()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+
+        var inMemorySettings = new Dictionary<string, string>
+        {
+            { "CarbonAwareVars:EnableCarbonExporter", "false" }
+        };
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        // Act & Assert
+        Assert.DoesNotThrow(() => services.AddCarbonExporter(configuration));
+        Assert.That(services.Count, Is.EqualTo(0));
+    }
+
+
+    [Test]
+    public void AddCarbonExporter_DoesNotAddServices_WithoutConfiguration()
+    {
+        // Arrange
+        var services = new ServiceCollection();
+
+        var inMemorySettings = new Dictionary<string, string>{};
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(inMemorySettings)
+            .Build();
+
+        // Act & Assert
+        Assert.DoesNotThrow(() => services.AddCarbonExporter(configuration));
+        Assert.That(services.Count, Is.EqualTo(0));
+    }
+
+    [Test]
     public void CreateConsoleLogger_ReturnsILogger()
     {
         // Arrange
