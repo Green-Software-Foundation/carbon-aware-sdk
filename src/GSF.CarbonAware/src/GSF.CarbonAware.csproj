@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
@@ -48,13 +48,13 @@
   <ItemGroup Label="FilesToCopy">
     <Content Include="$(AssemblyName).targets" Pack="true"
       PackagePath="build/$(AssemblyName).targets" />
-    <Content Include="$(TargetDir)/CarbonAware*.dll" Pack="true" PackagePath="lib/net6.0/" />
+    <Content Include="$(TargetDir)/CarbonAware*.dll" Pack="true" PackagePath="lib/net8.0/" />
     <Content Include="$(TargetDir)/data-sources/**/*.json" Pack="true" PackagePath="data-sources/" />
     <Content Include="$(TargetDir)/location-sources/**/*.json" Pack="true"
       PackagePath="location-sources/" />
   </ItemGroup>
 
   <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
-    <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net6.0/" />
+    <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net8.0/" />
   </ItemGroup>
 </Project>

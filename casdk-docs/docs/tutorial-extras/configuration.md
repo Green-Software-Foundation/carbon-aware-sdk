@@ -194,7 +194,7 @@ custom `EmissionsData` sets. The file should be located under the
 `<user's repo>/src/data/data-sources/` directory that is part of the repository.
 At build time, all the JSON files under `<user's repo>/src/data/data-sources/`
 are copied over the destination directory
-`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/data-sources/json`
+`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net8.0/data-sources/json`
 that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed
 where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json`
 directory. For instance, if the application is installed under `/app`, copy the
@@ -427,7 +427,7 @@ By setting `LocationDataSourcesConfiguration` property with one or more location
 data sources, it is possible to load different `Location` data sets in order to
 have more than one location. For instance by setting two location regions, the
 property would be set as follow using
-[environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#naming-of-environment-variables)
+[environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#naming-of-environment-variables)
 variables:
 
 ```sh
@@ -458,7 +458,7 @@ curl "http://${IP_HOST}:${PORT}/emissions/bylocations/best?location=${REGION}&ti
 At build time, all the JSON files under
 `<user's repo>/src/data/location-sources` are copied over the destination
 directory
-`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/location-sources/json`
+`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net8.0/location-sources/json`
 that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed
 where the assembly `CarbonAware.WebApi.dll` is located under
 `location-sources/json` directory. For instance, if the application is installed

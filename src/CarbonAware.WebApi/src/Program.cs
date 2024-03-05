@@ -115,6 +115,6 @@ app.MapHealthChecks("/health");
 app.Run();
 
 
-// Please view https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-6.0#basic-tests-with-the-default-webapplicationfactory
+// Please view https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0#basic-tests-with-the-default-webapplicationfactory
 // This line is needed to allow for Integration Testing
 public partial class Program { }

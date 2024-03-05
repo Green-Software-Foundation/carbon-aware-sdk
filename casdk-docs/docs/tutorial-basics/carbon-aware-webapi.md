@@ -456,10 +456,10 @@ CarbonAware.LocationSources.LocationSource: Warning: New key swedencentral_1 gen
 ## Error Handling
 
 The WebAPI leveraged the
-[.Net controller filter pipeline](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-6.0)
+[.Net controller filter pipeline](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-8.0)
 to ensure that all requests respond with a consistent JSON schema.
 
-![.Net controller filter pipeline image](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters/_static/filter-pipeline-2.png?view=aspnetcore-6.0)
+![.Net controller filter pipeline image](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters/_static/filter-pipeline-2.png?view=aspnetcore-8.0)
 
 Controllers are responsible for managing the "Success" responses. If an error
 occurs in the WebAPI code and an unhandled exception is thrown, the
@@ -470,7 +470,7 @@ caught and handled by the WebAPI code, the controller will continue to manage
 the response.
 
 The .Net framework will automatically respond to validation errors with a
-[ValidationProblemDetails](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-6.0)
+[ValidationProblemDetails](https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails?view=aspnetcore-8.0)
 object. Using the Exception Filter class enables the WebAPI to consistently
 respond with the `ValidationProblemDetails` error schema in all error cases and
 take advantage of error handling automatically provided by the framework.
@@ -489,7 +489,7 @@ specification
     cd CarbonAware.WebApi/src
     dotnet tool restore
     dotnet build --configuration Release --no-restore
-    dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml bin/Release/net6.0/CarbonAware.WebApi.dll v1
+    dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml bin/Release/net8.0/CarbonAware.WebApi.dll v1
     ```
 1. The `CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml` file contains the supported 
    OpenApi specification.
