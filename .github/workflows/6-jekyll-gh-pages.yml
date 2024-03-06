@@ -37,6 +37,8 @@ jobs:
         run: |
           # Moving the samples folder at build& deploy time of the docs so that it appears in the end result
           cp -r ./samples/ ./casdk-docs/docs/
+          cp -r ./README.md ./casdk-docs/docs/overview/overview.md
+          cp -r ./CONTRIBUTING.md ./casdk-docs/docs/overview/contributing.md
         working-directory: .
 
       - name: Install dependencies

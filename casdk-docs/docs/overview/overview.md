@@ -1,401 +1,204 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Overview
-
-There are several ways to consume CarbonAware data for your use case. Each
-approach surfaces the same data for the same call (e.g. the CLI should not give
-you different data than the WebAPI for the same query). We provide a number of
-different endpoints to provide the most flexibility to integrate to your
-environment:
-
-- You can run the application using the [CLI](./src/CarbonAware.CLI) and refer
-  to more documentation [here](../tutorial-basics/carbon-aware-cli.md).
-
-- You can build a container containing the [WebAPI](./src/CarbonAware.WebApi)
-  and connect via REST requests and refer to more documentation
-  [here](../tutorial-basics/carbon-aware-webapi.md).
-
-- You can reference the [Carbon Aware C# Library](./src/GSF.CarbonAware) in your
-  projects and make use of its functionalities and features.
-
-- (Future) You can install the Nuget package and make requests directly.
-  ([tracked here](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/40))
-
-Each of these has configuration requirements which are detailed below. You can
-also visit the [quickstart.md](../quickstart.md) guide for a step-by-step
-process for running the CLI locally, deploying the Web API locally or in the
-cloud, polling the API via HTTP requests or generating and using client
-libraries (Python example).
-
-For more detailed architecture and design decisions around the Carbon Aware SDK,
-refer to the [Architecture directory](../architecture/).
-
-## Carbon Aware Library
-
-The Carbon Aware SDK provides a C# Client Library with handlers that replicates
-the Web API, CLI and SDK functionality. See:
-
-- [carbon-aware-library.md](../tutorial-extras/carbon-aware-library.md) for more information
-  about library features.
-- [packaging.md](../tutorial-extras/packaging.md) for details on how to package and consume the
-  library.
-- [packaging.md](../tutorial-extras/packaging.md#use-package-with-dependency-injection)
-  for instructions on integrating the library in other projects with dependency
-  injection.
-
-## Pre-requisites
-
-Make sure you have installed the following pre-requisites to setup your local
-environment:
-
-- dotnet core SDK
-  [https://dotnet.microsoft.com/en-us/download/dotnet/6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-  
-- Access to one (or all) of the supported external data APIs
-  - WattTime account - See
-    [instruction on WattTime](https://docs.watttime.org/#tag/Authentication/operation/post_username_register_post)
-    for details (or use our python samples as described
-    [here](../samples/watttime-registration/readme.md)).
-  - ElectricityMaps account - See
-    [instruction on ElectricityMaps](https://api-portal.electricitymaps.com/home)
-    for details (or setup a
-    [free trial](https://api-portal.electricitymaps.com)). Note that the free
-    trial has some
-    [restrictions](../tutorial-extras/selecting-a-data-source.md#restrictions-electricitymaps-free-trial-user)
-  - ElectricityMapsFree account - See
-    [instruction on ElectricityMapsFree](https://www.co2signal.com/#Subscriber-Email)
-    for details.
-
-Alternatively, you can also set up your environment using VSCode Remote
-Containers (Dev Container):
-
-- Docker
-- VSCode (it is recommended to work in a Dev Container)
-- [Remote Containers extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-
-## Data Sources
-
-We support multiple data sources for carbon data. At this time, a JSON file,
-[WattTime](https://www.watttime.org/),
-[ElectricityMaps](https://www.electricitymaps.com/), and
-[ElectricityMapsFree](https://www.co2signal.com/) are supported. To use WattTime
-data or Electricity Maps data, you'll need to acquire a license from them and
-set the appropriate configuration information.
-
-You can also visit the
-[selecting-a-date-source.md](../tutorial-extras/selecting-a-data-source.md) guide for more
-information on data sources options, and
-[data-sources.md](../architecture/data-sources.md) for detailed architecture
-decisions around integrating different data providers into the carbon aware SDK.
-
-## Configuration
-
-This project uses the dotnet standard
-[Microsoft.Extensions.Configuration](https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration)
-mechanism, which allows the user to configure their environment variables in a
-unified view while making use of different configuration sources. Review the
-link to understand more about the `IConfiguration` type.
-
-The WebAPI project uses standard configuration sources provided by
-[ASPNetCore](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/).
-Please review this link to understand how configuration is loaded and the
-priority of that configuration.
-
-Please note that configuration is hierarchical. The last configuration source
-loaded that contains a configuration value will be the value that's used. This
-means that if the same configuration value is found in both `appsettings.json`
-and as an environment variable, the value from the environment variable will be
-the value that's applied.
+# Carbon Aware SDK
+Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.  
 
-### Configuration options
+The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you **measure and reduce your software's carbon emissions**, and choose when and where you run your software to make it greener.
 
-See [configuration.md](../tutorial-extras/configuration.md) for details about how to
-configure specific components of the application.
-
-#### Environment variables
-
-When adding values via environment variables, we recommend that you use the
-double underscore form, rather than the colon form. Colons won't work in
-non-windows environment. For example:
-
-```bash
-  DataSources__EmissionsDataSource="WattTime"
-```
-
-Note that double underscores are used to represent dotted notation or child
-elements that you see in the JSON below. For example, to set proxy information
-using environment variables, you'd do this:
-
-```bash
-  DataSources__Configurations__WattTime__UseProxy
-```
-
-#### Local project settings
-
-For local-only settings you can use environment variables,
-[the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows#secret-manager)
-, or an untracked Development appsettings file to override the default project
-settings.
+![Carbon Aware Software](./images/readme/carbon-aware-software.png)
 
-To use the settings file, rename a copy of the template called
-`appsettings.Development.json.template` to `appsettings.Development.json` and
-remove the first line of (invalid) comments. Then update any settings according
-to your preferences.
-
-> Wherever possible, the projects leverage the
-> [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#default-application-configuration-sources)
-> expectations. Thus, they can be configured using any file matching the format:
-> `appsettings.<ENV>.json`. Where `<ENV>` is the value of the
-> `ASPNETCORE_ENVIRONMENT` environment variable. By convention projects tend to
-> use the provided HostEnvironment constants `Development`, `Staging`, and
-> `Production`.
-
-## Publish WebAPI with container
-
-You can publish Web API for Carbon Aware SDK with container. These instructions
-show how to build / run container image with [Podman](https://podman.io/).
-
-### Build container image
-
-Following commands build the container which named to `carbon-aware-sdk-webapi`
-from sources.
-
-```bash
-$cd src
-$podman build -t carbon-aware-sdk-webapi -f CarbonAware.WebApi/src/Dockerfile .
-```
-
-### Run Web API container
-
-Carbon Aware SDK Web API publishes the service on Port 80, so you need to map it
-to local port. Following commands maps it to Port 8080.
-
-You also need to configure the SDK with environment variables. They are minimum
-set when you use WattTime or ElectricityMaps or ElectricityMapsFree as a data
-source.
-
-```bash
-$ podman run -it --rm -p 8080:80 \
-    -e DataSources__ForecastDataSource="WattTime" \
-    -e DataSources__Configurations__WattTime__Type="WattTime" \
-    -e DataSources__Configurations__WattTime__Username="wattTimeUsername" \
-    -e DataSources__Configurations__WattTime__Password="wattTimePassword" \
-  carbon-aware-sdk-webapi
-```
-
-or
-
-```bash
-$ podman run -it --rm -p 8080:80 \
-    -e DataSources__ForecastDataSource="ElectricityMaps" \
-    -e DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps" \
-    -e DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token" \
-    -e DataSources__Configurations__ElectricityMaps__APIToken="electricityMapsToken" \
-  carbon-aware-sdk-webapi
-```
-
-or
-
-```bash
-$ podman run -it --rm -p 8080:80 \
-    -e DataSources__EmissionsDataSource="ElectricityMapsFree" \
-    -e DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree" \
-    -e DataSources__Configurations__ElectricityMapsFree__token="<YOUR_CO2SIGNAL_TOKEN>" \
-  carbon-aware-sdk-webapi
-```
-
-When you success to run the container, you can access it via HTTP client.
-
-```bash
-$ curl -s http://localhost:8080/emissions/forecasts/current?location=westus2 | jq
-[
-  {
-    "generatedAt": "2022-08-10T14:10:00+00:00",
-    "optimalDataPoint": {
-      "location": "GCPD",
-      "timestamp": "2022-08-10T20:40:00+00:00",
-      "duration": 5,
-      "value": 440.4361702590741
-    },
-            :
-```
-
-For more information on containerization, refer to the markdown in
-[containerization.md](../tutorial-basics/containerization.md).
-
-### Deploy Web API on Kubernetes with Helm
-
-You can deploy Web API as a Kubernetes application via Helm. GSF provides a chart as an OCI container, so you have to use Helm v3.8.0 or later.
-
-Following command creates `carbon-aware-sdk` namespace and deploys Web API into it with specified `values.yaml`.
-
-```bash
-$ helm install casdk -n carbon-aware-sdk --create-namespace oci://ghcr.io/green-software-foundation/charts/carbon-aware-sdk --values values.yaml
-```
-
-`values.yaml` should contain `appsettings.json` which would be used in Web API at least. It should include data source definitions and their credentials. It would be stored as `Secret` resource.
-
-```yaml
-appsettings: |-
-  {
-    "DataSources": {
-      "EmissionsDataSource": "WattTime",
-      "ForecastDataSource": "WattTime",
-      "Configurations": {
-        "WattTime": {
-          "Type": "WattTime",
-          "Username": "username",
-          "Password": "password",
-          "BaseURL": "https://api2.watttime.org/v2/"
-        }
-      }
-    }
-  }
-```
-
-Also you can include following configuration into `values.yaml`.
-
-```yaml
-# Number of replicas
-replicaCount: 1
-
-image:
-  repository: ghcr.io/green-software-foundation/carbon-aware-sdk
-  pullPolicy: IfNotPresent
-  # You can set specified tag (equivalent with the SDK version in here)
-  tag: latest
-
-# Set the value if you want to override the name.
-nameOverride: ""
-fullnameOverride: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
-
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
-
-service:
-  type: ClusterIP
-  port: 80
-
-ingress:
-  enabled: false
-  className: ""
-  annotations: {}
-  hosts:
-    - host: carbon-aware-sdk.local
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  tls: []
-  #  - secretName: carbon-aware-sdk-tls
-  #    hosts:
-  #      - carbon-aware-sdk.local
-
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
-
-nodeSelector: {}
-
-tolerations: []
-
-affinity: {}
-
-# appsettings.json
-appsettings: |-
-  {
-    "DataSources": {
-      "EmissionsDataSource": "ElectricityMaps",
-      "ForecastDataSource": "WattTime",
-      "Configurations": {
-        "WattTime": {
-          "Type": "WattTime",
-          "Username": "username",
-          "Password": "password",
-          "BaseURL": "https://api2.watttime.org/v2/",
-          "Proxy": {
-            "useProxy": true,
-            "url": "http://10.10.10.1",
-            "username": "proxyUsername",
-            "password": "proxyPassword"
-          }
-        },
-        "ElectricityMaps": {
-          "Type": "ElectricityMaps",
-          "APITokenHeader": "auth-token",
-          "APIToken": "myAwesomeToken",
-          "BaseURL": "https://api.electricitymap.org/v3/"
-        }
-      }
-    }
-  }
-
-# Location source
-# Location data will be deployed into /app/location-sources/json .
-locationSources:
-  enabled: false
-#  files:
-#  - fileName: custom-locations-1.json
-#    locations: |-
-#      {
-#        "east": {
-#          "Latitude": "35.68",
-#          "Longitude": "139.77",
-#          "Name": "eastdc"
-#        },
-#        "west": {
-#          "Latitude": "34.6939",
-#          "Longitude": "135.5022",
-#          "Name": "westdc"
-#        }
-#      }
-#  - fileName: custom-locations-2.json
-#    locations: |-
-#      {
-#        "north": {
-#         "Latitude": "35.68",
-#          "Longitude": "139.77",
-#          "Name": "northdc"
-#        },
-#        "south": {
-#          "Latitude": "34.6939",
-#          "Longitude": "135.5022",
-#          "Name": "southdc"
-#        }
-#      }
-```
-
-The video in below is demonstration to install Carbon Aware SDK via Helm. Note that installing the SDK from local directory ( ~/github-forked/carbon-aware-sdk/helm-chart ), not an OCI container.
-
-[!Demonstration to intall Carbon Aware SDK from local with Helm](https://github.com/Green-Software-Foundation/carbon-aware-sdk/assets/7421132/b09d8ab1-642b-442a-882f-abc802153070)
+
+By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  
+
+* Building  AI models when carbon emissions are lower
+* Deploying software into the cloud in locations that have greener energy sources
+* Running software updates at greener energy time windows 
+* Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
+
+Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
+
+Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
+
+# Getting Started Overview
+
+Head on over to the [Getting Started Overview Guide](./casdk-docs/docs/overview/overview.md) to get up and running.
+
+Get started on creating sustainable software innovation for a greener future
+today!
+
+![Green Software](./images/readme/what-is-green-software.avif)
+
+# How Does This Work?
+You can reduce the carbon footprint of your application by just running things
+at different times and in different locations. That is because not all
+electricity is produced in the same way. Most is produced through burning fossil
+fuels, some is produced using cleaner sources like wind and solar.
+
+When software does more when the electricity is clean and do less when the
+electricity is dirty, or runs in a location where the energy is cleaner, we call
+this **carbon aware software**.
+
+![Carbon Aware Software](./images/readme/types-of-green-software.png)
+
+The Carbon Aware SDK helps you build the carbon aware software solutions with
+the intelligence to use the greenest energy sources. Run them at the greenest
+time, or in the greenest locations, or both! Capture consistent telemetry and
+report on your emissions reduction and make informed decisions.
+
+With the Carbon Aware SDK you can build software that chooses to run when the
+wind is blowing, enable systems to follow the sun, moving around the world to
+where energy is the greenest, and create tools that give insights and help
+software innovators to make greener software decisions. All of this helps reduce
+carbon emissions.
+
+## What is the Carbon Aware SDK?
+
+At its core the Carbon Aware SDK is a WebApi and Command Line Interface (CLI) to
+assist in building carbon aware software. The functionality across the CLI and
+WebApi is identical by design.
+
+You can use these to attain carbon emissions data for the energy that powers your applications, and in turn programmatically make greener decisions in your software.
+
+### The WebApi
+
+The WebApi is the preferred deployment within large organisations to centralise
+management and increase control and auditability, especially in regulated
+environments. It can be deployed as a container for easy management, and can be
+deployed alongside an application within a cluster or separately.
+
+![WebApi Screenshot](./images/readme/screenshot_web_api.png)
+
+### The CLI
+
+The CLI tends to be handy for legacy integration and non-cloud deployments,
+where a command-line can be used. This tends to be common with legacy DevOps
+pipelines to drive deployment for integration testing where you can test your
+deployment in the greenest location.
+
+![WebApi Screenshot](./images/readme/screenshot_cli.png)
+
+## Who Is Using the Carbon Aware SDK?
+
+The Carbon Aware SDK is being used by large and small companies around the
+world. Some of the world’s biggest enterprises and software companies, through
+to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./casdk-docs/docs/overview/adopters.md).
+
+Machine Learning (ML) workloads are a great example of long running compute
+intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
+reduced even further, at times by up to 50% or more.
+
+## What does the SDK/API provide that 3rd party data providers such as WattTime or ElectricityMaps do not?
+
+Many of the benefits tend to relate to removing the tight coupling of an
+application from the 3rd party data source it is using, and allow the
+application to focus on the sustainability impact it is looking to drive. This
+abstraction allows for changing of data providers, data provider aggregation,
+centralised management, auditability and traceability, and more.
+
+### Collaborative Effort
+
+The Carbon Aware SDK is a collaborative effort between companies around the
+world, with the intention of providing a platform that everyone can use. This
+means the API will be striving towards what solves the highest impact issues
+with diverse perspectives from these organisation and contributors.
+
+### Standardization
+
+Something we are driving with the Carbon Aware SDK is towards standardisation of
+the interface into these data providers. This ultimately will help to drive SCI
+calculations in the future, and also helps to drive innovation. The 3rd party
+API’s do differ, and the results can vary in units, from lbCO2/kWh to gCO2/Wh.
+The Carbon Aware SDK will take care of all conversions to a standardised
+gCO2/kWh, which becomes increasingly valuable with aggregated data sources.
+
+Standardisation also helps drive innovation. For example, if a 3rd party
+develops tools to scale Kubernetes clusters based on emissions, they can build
+against the Carbon Aware SDK. If you want to use this 3rd party tool, the SDK
+allows the tool to plug in _your_ choice of data providers, not _their_ choice
+of data provider. In this way the standardisation drives innovation and
+flexibility of choice.
+
+The intention is to have other compatible tooling and software that leverages
+the Carbon Aware SDK to obtain emissions data, while being agnostic to the data
+provider.
+
+### Centralised secret and key management
+
+The ability to manage keys to 3rd party API’s can be centralised with the Carbon
+Aware API. This means that any changes to keys or rotation can be done in a
+centralised and controlled manner without exposing the keys to application
+development teams.
+
+It also can be upgraded across all applications within an organisation when
+centralised, with new data sources being added without consuming applications to
+make any changes.
+
+In addition, the need for the Carbon Aware SDK is something that has been
+identified by some of the largest enterprises when looking to drive innovation
+within their own organisations by centralising the capability within their
+business, creating green software engineering practices and providing the API
+internally across their organisation.
+
+### Auditability
+
+Due to the API being centralised, this gives you the ability to audit a
+controlled environment for when decisions are made. With increasing regulatory
+need, the ability to prove sustainability actions and impact will need to be
+from highly trusted sources, and having centralised management provides this
+capability.
+
+### Aggregated Sources
+
+A feature we have in the roadmap is the ability aggregate data sources across
+multiple providers. Different data providers have different levels of
+granularity depending on region, and it may be that data provider A is preferred
+in Japan, while data provider B is preferred in US regions.
+
+Similarly, you may have your own data for your data centres that you would
+prefer to use for on premises workloads, which you can combine in aggregate with
+3rd party data providers.
+
+## Is it possible to retrieve energy mix information from the SDK?
+
+Energy mix (the percentages that are from different energy sources i.e. coal,
+nuclear, wind, gas, solar, tidal, hydro etc) is not provided in the API to date.
+This may be a feature we will consider in the future. The SDK provides emissions
+percentage information only at the moment.
+
+## Contributing
+
+The Carbon Aware SDK is open for contribution! Want to contribute? Check out the
+[contribution guide](./CONTRIBUTING.md).
+
+## Green Software Foundation Project Summary
+
+The Carbon Aware SDK is a project as part of the
+[Green Software Foundation](https://greensoftware.foundation/) (GSF) and the GSF
+Open Source Working Group.
+
+### Appointments
+The following are those who are currently actively working on the SDK and have made significant ongoing contributions.
+
+- Chair/Project lead - Vaughan Knight (Microsoft)
+- Senior Technical Program Manager - Sophie Trinder (Green Software Foundation)
+- Principal Contributor - Szymon Duchniewicz (Avanade)
+- Principal Contributor - Dan Benitah (Avanade)
+- Contributor - Bill DeRusha (Microsoft)
+- Contributor - Yasumasa Suenaga (NTT Data)
+- Contributor - Damien Roux (NTT Data)
+
+Please note that there are many others who have made contributions over time - these are all greatly appreciated, the project would not be where it is today without everyone's support.  Thank you.
+
+### GSF Project Scope
+
+For developers to build carbon aware software, there is a need for a unified
+baseline to be implemented. The Carbon Aware Core SDK is a project to build a
+common core, that is flexible, agnostic, and open, allowing software and systems
+to build around carbon aware capabilities, and provide the information so those
+systems themselves become carbon aware.
+
+The Carbon Aware Core API will look to standardise and simplify carbon awareness
+for developers through a unified API, command line interface, and modular
+carbon-aware-logic plugin architecture.

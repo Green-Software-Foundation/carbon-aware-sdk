@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Enablement
@@ -56,7 +56,7 @@ You can build a container containing the [WebAPI](../src/CarbonAware.WebApi)
 You can reference the [Carbon Aware C# Library](../src/GSF.CarbonAware) in your
   projects and make use of its functionalities and features.
 
-| ![Image 2](../images/screenshot_cli.png) | ![Image 1](../images/screenshot_web_api.png) |
+| ![Image 2](./images/readme/screenshot_cli.png) | ![Image 1](./images/readme/screenshot_web_api.png) |
 |:---:|:---:|
 | CLI | WebAPI |
 
