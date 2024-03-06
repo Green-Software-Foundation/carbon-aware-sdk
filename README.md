@@ -1,29 +1,13 @@
-<div id="header" align="center">
-<img style=”margin: 0px” src=./images/hack-banner.png alt=”banner” height=”500" />
-</div>
-
-----------------------------
-
-**Welcome to [CarbonHack 24](https://grnsft.org/hack/github) from the Green Software Foundation.**
-
-> From Monday, 18th March - Monday, 8th April 2024, participants will compete to showcase their best application of IF in measuring the environmental impacts of software. 
-> 
-> Carbon Hack is a dynamic competition that combines healthy rivalry with collaborative innovation. Hackers will push the limits of the framework, uncover potential weaknesses, and create innovations to enhance the tool.
-> 
-> CarbonHack is open to all, including software practitioners and those with a passion for Green Software.
->
-> Find out more about CarbonHack 2024 on the [CarbonHack website](https://grnsft.org/hack/github). Check out the [FAQ on GitHub](https://grnsft.org/hack/faq).
-> 
-> Registration opens 15th January!
-----------------------------
-
+---
+sidebar_position: 2
+---
 
 # Carbon Aware SDK
 Carbon aware software does more when it can leverage greener energy sources, and less when the energy CO2 emissions are higher.  
 
 The Carbon Aware SDK is a toolset to help you measure the carbon emissions of your software, in turn helping you **measure and reduce your software's carbon emissions**, and choose when and where you run your software to make it greener.
 
-![Carbon Aware Software](./images/carbon-aware-software.png)
+![Carbon Aware Software](./images/readme/carbon-aware-software.png)
 
 
 By knowing the carbon emissions of the energy that powers your applications, you and your organisation can leverage greener energy sources to reduce your CO2 emissions by:  
@@ -44,7 +28,7 @@ Head on over to the [Getting Started Overview Guide](./casdk-docs/docs/overview/
 Get started on creating sustainable software innovation for a greener future
 today!
 
-![Green Software](./images/what-is-green-software.avif)
+![Green Software](./images/readme/what-is-green-software.avif)
 
 # How Does This Work?
 You can reduce the carbon footprint of your application by just running things
@@ -56,7 +40,7 @@ When software does more when the electricity is clean and do less when the
 electricity is dirty, or runs in a location where the energy is cleaner, we call
 this **carbon aware software**.
 
-![Carbon Aware Software](./images/types-of-green-software.png)
+![Carbon Aware Software](./images/readme/types-of-green-software.png)
 
 The Carbon Aware SDK helps you build the carbon aware software solutions with
 the intelligence to use the greenest energy sources. Run them at the greenest
@@ -84,7 +68,7 @@ management and increase control and auditability, especially in regulated
 environments. It can be deployed as a container for easy management, and can be
 deployed alongside an application within a cluster or separately.
 
-![WebApi Screenshot](./casdk-docs/docs/images/screenshot_web_api.png)
+![WebApi Screenshot](./images/readme/screenshot_web_api.png)
 
 ### The CLI
 
@@ -93,7 +77,7 @@ where a command-line can be used. This tends to be common with legacy DevOps
 pipelines to drive deployment for integration testing where you can test your
 deployment in the greenest location.
 
-![WebApi Screenshot](./casdk-docs/docs/images/screenshot_cli.png)
+![WebApi Screenshot](./images/readme/screenshot_cli.png)
 
 ## Who Is Using the Carbon Aware SDK?
 

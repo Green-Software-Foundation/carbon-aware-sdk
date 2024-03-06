@@ -58,17 +58,17 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/GSF-logo.jpg',
+      image: 'img/CASDK-logo.png',
       navbar: {
         title: 'Carbon Aware SDK',
         logo: {
           alt: 'Carbon Aware SDK Logo',
-          src: 'img/GSF-logo.jpg',
+          src: 'img/CASDK-logo.png',
         },
         items: [
           {
             type: 'doc',
-            docId: 'quickstart',
+            docId: 'overview/overview',
             position: 'left',
             label: 'Docs',
           },
@@ -130,7 +130,7 @@ const config = {
         id: 'announcementBar-0', // Increment on change
         // content: `⭐️ If you like Docusaurus, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/facebook/docusaurus">GitHub</a> and follow us on <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/docusaurus">Twitter ${TwitterSvg}</a>`,
         //content: `🎉️ <b><a target="_blank" href="https://docusaurus.io/blog/releases/3.0">Docusaurus v3.0</a> is now out!</b> 🥳️`,
-        content:`<strong>\u26A0 Incubation Project This project is an incubation project being run inside the Green Software Foundation; as such, we <b>DON'T</b> recommend using it in any critical use case. Incubation projects are experimental, offer no support guarantee, have minimal governance and process, and may be retired at any moment. This project may one day graduate, in which case this disclaimer will be removed. <br><br> 🎉️ We are running a Hackathon! CarbonHack is open to all, including software practitioners and those with a passion for Green Software. Find out more on the <a href="https://grnsft.org/hack/github">CarbonHack website</a> </strong>`,
+        content:`<strong>\u26A0 Graduated Project: This project is a Graduated Project, supported by the Green Software Foundation. The publicly available version documented in the README is trusted by the GSF. New versions of the project may be released, or it may move to the Maintained or Archived Stage. <br><br> 🎉️ We are running a Hackathon! CarbonHack is open to all, including software practitioners and those with a passion for Green Software. Find out more on the <a href="https://grnsft.org/hack/github">CarbonHack website</a> </strong>`,
         backgroundColor:'#EBF2D7',
         textColor:'#00524f'
       },

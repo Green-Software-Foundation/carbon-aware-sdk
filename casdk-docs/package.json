@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "docusaurus": "docusaurus",
-    "start-with-samples": "rm -rf ./docs/samples/ && cp -r ../samples/ ./docs/samples/ && docusaurus start",
+    "start-with-samples": "rm -rf ./docs/samples/ && cp -r ../README.md ./docs/overview/overview.md && cp -r ../CONTRIBUTING.md ./docs/overview/contributing.md && docusaurus start",
+    "start-with-samples2": "rm -rf ./docs/samples/ && cp -r ../samples/ ./docs/samples/ && cp -r ../README.md ./docs/overview/overview.md && cp -r ../CONTRIBUTING.md ./docs/overview/contributing.md && docusaurus start",
     "start": "docusaurus start",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
