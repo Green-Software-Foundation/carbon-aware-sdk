@@ -109,7 +109,7 @@ internal class LocationSource : ILocationSource
             return Array.Empty<LocationSourceFile>();
         }
         _logger.LogInformation($"{files.Count()} files discovered");
-        return files.Select(x => x.Substring(pathCombined.Length + 1)).Select(n => new LocationSourceFile { DataFileLocation = n });
+        return files.Select(x => x.Substring(pathCombined.Length + 1)).Where(n => !n.StartsWith("..")).Select(n => new LocationSourceFile { DataFileLocation = n });
     }
 
     private void AddToLocationMap(string key, NamedGeoposition data, string sourceFile, Dictionary<string, int> keyCounter)

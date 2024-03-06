@@ -1,0 +1,13 @@
+{{- if .Values.locationSources.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: location-sources
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "carbon-aware-sdk.labels" . | nindent 4 }}
+data:
+  {{- range .Values.locationSources.files }}
+  {{ .fileName }}: {{- toYaml .locations | nindent 4 }}
+  {{- end }}
+{{- end }}
