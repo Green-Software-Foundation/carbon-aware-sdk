@@ -9,7 +9,6 @@ namespace CarbonAware.DataSources.Json.Configuration;
 internal class JsonDataSourceConfiguration
 {
     private const string BaseDirectory = "data-sources/json";
-    private const string DefaultDataFile = "test-data-azure-emissions.json";
     private const string DirectoryRegExPattern = @"^(?!\.{2})[-\\/a-zA-Z_\d\.: ]*$";
     private string assemblyDirectory;
     private string? dataFileLocation;
@@ -34,7 +33,6 @@ internal class JsonDataSourceConfiguration
     {
         var assemblyPath = Assembly.GetExecutingAssembly().Location;
         assemblyDirectory = Path.GetDirectoryName(assemblyPath)!;
-        DataFileLocation = DefaultDataFile;
     }
 
     private static bool IsValidDirPath(string fileName)

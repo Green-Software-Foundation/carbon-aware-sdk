@@ -36,6 +36,8 @@
   <Target Name="CopyDataFiles" AfterTargets="Build">
     <Copy SourceFiles="$(ProjectDir)..\..\..\data\data-sources\test-data-azure-emissions.json"
       DestinationFiles="$(TargetDir)\data-sources\json\demo.json" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ProjectDir)..\..\..\data\location-sources\azure-regions.json"
+      DestinationFiles="$(TargetDir)\location-sources\json\azure-regions.json" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

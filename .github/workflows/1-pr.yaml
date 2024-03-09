@@ -122,6 +122,9 @@ jobs:
           directory: ${{ env.DOTNET_SRC_DIR }}
       
       - name: Generate Open API
+        env:
+          DataSources__EmissionsDataSource: Json
+          DataSources__Configurations__Json__Type: JSON
         run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
         working-directory: ./src/CarbonAware.WebApi/src 
       
@@ -144,7 +147,7 @@ jobs:
         
       - name: Docker Run Container
         run: |
-          docker run -d --name runnable-container -p 8080:80 ca-api
+          docker run -d --name runnable-container -e DataSources__EmissionsDataSource=Json -e DataSources__Configurations__Json__Type=JSON -p 8080:80 ca-api
           docker container ls
 
       - name: Docker WGET Health Endpoint

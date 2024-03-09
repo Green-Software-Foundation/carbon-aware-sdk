@@ -13,15 +13,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="$(ProjectDir)..\..\data\location-sources\**\*.json"
-            Link="\location-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
-            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </Content>
-    </ItemGroup>
-
-    <ItemGroup>
         <InternalsVisibleTo Include="GSF.CarbonAware" />
         <InternalsVisibleTo Include="CarbonAware.LocationSources.Test" />
         <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
     </ItemGroup>
+
+    <Target Name="CreateLocationDirectory" AfterTargets="Build">
+        <MakeDir Directories="$(PublishDir)\location-sources\json" />
+    </Target>
 </Project>

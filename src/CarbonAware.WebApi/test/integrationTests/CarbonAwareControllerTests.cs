@@ -15,7 +15,7 @@ namespace CarbonAware.WepApi.IntegrationTests;
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
-[TestFixture(DataSourceType.ElectricityMapsFree)]
+//[TestFixture(DataSourceType.ElectricityMapsFree)]  // TODO: need to implement data source into IntegrationTestingBase.cs
 class CarbonAwareControllerTests : IntegrationTestingBase
 {
     private readonly string healthURI = "/health";

@@ -10,7 +10,9 @@ internal class JsonDataSourceMocker : IDataSourceMocker
 
     public void SetupDataMock(DateTimeOffset start, DateTimeOffset end, string location)
     {
-        string path = new JsonDataSourceConfiguration().DataFileLocation;
+        var config = new JsonDataSourceConfiguration();
+        config.DataFileLocation = "test-data-azure-emissions.json";
+        string path = config.DataFileLocation;
 
         var data = new List<EmissionsData>();
         DateTimeOffset pointTime = start;

@@ -8,13 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="$(ProjectDir)..\..\..\data\data-sources\**\*.json"
-      Link="\data-sources\json\%(RecursiveDir)%(Filename)%(Extension)">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Mocks" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.Json.Tests" />
     <InternalsVisibleTo Include="CarbonAware.DataSources.Registration" />
@@ -24,4 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\CarbonAware\src\CarbonAware.csproj" />
   </ItemGroup>
+
+  <Target Name="CreateDatasourceDirectory" AfterTargets="Build">
+    <MakeDir Directories="$(PublishDir)\data-sources\json" />
+  </Target>
 </Project>
