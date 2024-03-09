@@ -23,6 +23,14 @@ start () {
     echo "  $KEY: $VALUE" >> $CONFIGMAP
   done
 
+
+  # Change security context of nginx-rp.conf because it would be mounted by
+  # NGINX container in demo.yaml.
+  SELINUX_MODE=`getenforce 2>/dev/null`
+  if [ "$SELINUX_MODE" = 'Enforcing' ]; then
+    chcon -t container_file_t $BASEDIR/nginx-rp.conf
+  fi
+
   # Start Podman
   # Move to BASEDIR because demo.yaml should refer nginx-rp.conf in that dir.
   pushd $BASEDIR > /dev/null 2>&1

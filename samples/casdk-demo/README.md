@@ -38,7 +38,8 @@ See [nginx-rp.conf](nginx-rp.conf)
 
 :::warning
 
-[demo.sh](demo.sh) would create `/tmp/casdk-config.yaml` which may contain credentials (e.g. API token of backend service). This file would be removed by `./demo.sh stop`.
+* [demo.sh](demo.sh) would create `/tmp/casdk-config.yaml` which may contain credentials (e.g. API token of backend service). This file would be removed by `./demo.sh stop`.
+* [demo.sh](demo.sh) would change security context of [nginx-rp.conf](nginx-rp.conf) to `container_file_t` if SELinux is enabled. It would not recover in `./demo.sh stop`, so you need to recover manually via `restorecon` if need.
 
 :::
 
