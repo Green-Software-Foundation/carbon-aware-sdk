@@ -28,16 +28,36 @@ See [nginx-rp.conf](nginx-rp.conf)
 
 ## How to run
 
-1. Write configuration for Carbon Aware SDK to [casdk-config.yaml](casdk-config.yaml).
+1. Set environment variables prefixed with `CASDK_`: e.g. `CASDK_DataSources__EmissionsDataSource`
 
-2. Run demonstration
-
-```
-$ podman play kube --configmap=casdk-config.yaml demo.yaml
-```
-
-3. Stop demonstration
+2. Start demonstration
 
 ```
-$ podman play kube --down demo.yaml
+./demo.sh start
+```
+
+:::warning
+
+[demo.sh](demo.sh) would create `/tmp/casdk-config.yaml` which may contain credentials (e.g. API token of backend service). This file would be removed by `./demo.sh stop`.
+
+:::
+
+3. Access endpoints (e.g. http://localhost:8082/swagger-ui/ )
+
+4. Stop demonstration
+
+```
+./demo.sh stop
+```
+
+## Example
+
+Run demonstration with ElectricityMapsFree datasource
+
+```
+export CASDK_DataSources__EmissionsDataSource=ElectricityMapsFree
+export CASDK_DataSources__Configurations__ElectricityMapsFree__Type=ElectricityMapsFree
+export CASDK_DataSources__Configurations__ElectricityMapsFree__token=YOUR_SECRET_TOKEN
+
+./demo.sh start
 ```
