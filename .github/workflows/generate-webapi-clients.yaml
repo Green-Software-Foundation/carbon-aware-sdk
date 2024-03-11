@@ -1,0 +1,48 @@
+name: Generate WebAPI client libraries
+
+on:
+  workflow_call:
+    inputs:
+      registry:
+        type: string
+        required: true
+      image-repo:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: false
+        default: latest
+  workflow_dispatch:
+    inputs:
+      registry:
+        type: string
+        required: false
+        default: ghcr.io
+      image-repo:
+        type: string
+        required: false
+        default: "green-software-foundation/carbon-aware-sdk"
+      tag:
+        type: string
+        required: false
+        default: latest
+
+permissions:
+  contents: write
+  packages: write
+
+jobs:
+  detect-api-version:
+    uses: ./.github/workflows/detect-webapi-version.yaml
+    with:
+      registry: ${{ inputs.registry }}
+      image-repo: ${{ inputs.image-repo }}
+      tag: ${{ inputs.tag }}
+
+  generate-java-client:
+    needs: detect-api-version
+    uses: ./.github/workflows/generate-webapi-client-java.yaml
+    with:
+      image: ${{ needs.detect-api-version.outputs.image }}
+      apiver: ${{ needs.detect-api-version.outputs.apiver }}
