@@ -5,6 +5,7 @@ using CarbonAware.DataSources.ElectricityMapsFree.Configuration;
 using CarbonAware.DataSources.Json.Configuration;
 using CarbonAware.DataSources.WattTime.Configuration;
 using CarbonAware.Exceptions;
+using CarbonAware.Proxies.Cache;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -47,6 +48,8 @@ internal static class ServiceCollectionExtensions
                 break;
             }
         }
+
+        services.SetupCacheForEmissionsDataSource(configuration);
 
         switch (forecastDataSource)
         {
@@ -95,5 +98,30 @@ internal static class ServiceCollectionExtensions
             throw new ArgumentException($"Unknown data source type: {srcVal}");
         }
         return result;
+    }
+
+    private static IServiceCollection SetupCacheForEmissionsDataSource(this IServiceCollection services, IConfiguration configuration)
+    {
+        var emissionsDataCache = configuration.EmissionsDataCache();
+        if(emissionsDataCache.Enabled){
+            var emissionsDataSourceDescriptor = services.SingleOrDefault(s => s.ServiceType == typeof(IEmissionsDataSource));
+            var type = emissionsDataSourceDescriptor!.ImplementationType;
+            if(type == null) return services;
+            services.Replace
+            (
+                ServiceDescriptor.Describe
+                (
+                    typeof(IEmissionsDataSource),
+                    serviceProvider =>
+                        LatestEmissionsCache<IEmissionsDataSource>.CreateProxy
+                        (
+                            (IEmissionsDataSource)ActivatorUtilities.GetServiceOrCreateInstance(serviceProvider, type!),
+                            emissionsDataCache
+                        )!,
+                    emissionsDataSourceDescriptor.Lifetime
+                )
+            );
+        }
+        return services;
     }
 }

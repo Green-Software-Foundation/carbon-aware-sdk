@@ -1,7 +1,7 @@
 using GSF.CarbonAware.Handlers;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,17 +14,18 @@ namespace function
     public class GetCarbonIntensity
     {
         private readonly IEmissionsHandler _handler;
+        private readonly ILogger<GetCarbonIntensity> _log;
 
-        public GetCarbonIntensity(IEmissionsHandler handler)
+        public GetCarbonIntensity(IEmissionsHandler handler, ILogger<GetCarbonIntensity> log)
         {
             this._handler = handler;
+            this._log = log;
         }
 
 
-        [FunctionName("GetAverageCarbonIntensity")]
+        [Function("GetAverageCarbonIntensity")]
         public async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req)
         {
             //Get the startDate, endDate, and location from the request query if the values are present in the query
             string startDate = req.Query["startdate"];
@@ -47,7 +48,7 @@ namespace function
             try
             {
                 var result = await _handler.GetAverageCarbonIntensityAsync(location, DateTimeOffset.Parse(startDate), DateTimeOffset.Parse(endDate));
-                log.LogInformation($"For location {location} Starting at: {startDate} Ending at: {endDate} the Average Emissions Rating is: {result}.");
+                _log.LogInformation($"For location {location} Starting at: {startDate} Ending at: {endDate} the Average Emissions Rating is: {result}.");
 
                 return new OkObjectResult(result);
             }

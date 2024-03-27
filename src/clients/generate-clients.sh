@@ -12,5 +12,5 @@ cd generated
 openapi-generator-cli generate -i http://$1/swagger/v1/swagger.json -g java -o ./java
 openapi-generator-cli generate -i http://$1/swagger/v1/swagger.json -g python -o ./python
 openapi-generator-cli generate -i http://$1/swagger/v1/swagger.json -g javascript -o ./javascript
-openapi-generator-cli generate -i http://$1/swagger/v1/swagger.json -g csharp-netcore -o ./csharp --additional-properties=targetFramework=net6.0
+openapi-generator-cli generate -i http://$1/swagger/v1/swagger.json -g csharp-netcore -o ./csharp --additional-properties=targetFramework=net8.0
 openapi-generator-cli generate -i http://$1/swagger/v1/swagger.json -g go -o ./golang

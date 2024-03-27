@@ -1,10 +1,10 @@
 # Find the Dockerfile at this URL
 # https://github.com/Azure/azure-functions-docker/blob/dev/host/4/bullseye/amd64/dotnet/dotnet-inproc/dotnet.Dockerfile
 
-FROM mcr.microsoft.com/azure-functions/dotnet:4.0 AS base
+FROM mcr.microsoft.com/azure-functions/dotnet-isolated:4-dotnet-isolated8.0 AS base
 WORKDIR /home/site/wwwroot
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 COPY ["src/", "data/src/"]
 COPY ["scripts/", "data/scripts/"]
 COPY ["samples/", "data/samples/"]
@@ -21,3 +21,4 @@ RUN dotnet publish "samples/azure/azure-function/function.csproj" -c Release -o 
 FROM base AS final
 WORKDIR /home/site/wwwroot
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_CONTENTROOT=/home/site/wwwroot

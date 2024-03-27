@@ -63,7 +63,7 @@ project. When running in the dev container you will need:
 - [Remote Containers extension for VSCode](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 Alternatively you can run in your local environment using the
-[.NET Core 6.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/6.0).
+[.NET Core 8.0 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/8.0).
 
 ## SDK Configuration
 

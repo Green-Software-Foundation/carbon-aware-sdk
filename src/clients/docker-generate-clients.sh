@@ -45,7 +45,7 @@ docker run --rm \
   -i http://$1/swagger/v1/swagger.json \
   -g csharp-netcore \
   -o /local/csharp \
-  --additional-properties=targetFramework=net6.0
+  --additional-properties=targetFramework=net8.0
 
 # golang
 docker run --rm \

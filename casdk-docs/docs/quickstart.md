@@ -18,7 +18,7 @@ generated libraries for your language of choice!
 
 Prerequisites:
 
-- .NET Core 6.0
+- .NET Core 8.0
 - Alternatively:
   - Docker
   - VSCode (it is recommended to work in a Dev Container)

@@ -19,28 +19,19 @@ will use.
 
 The Carbon Aware SDK is included in the function .csproj file by
 [creating and adding the SDK as a package](../../docs/packaging.md#included-scripts).
-The [Startup.cs](./Startup.cs) file uses dependency injection to access the
+The [Program.cs](./Program.cs) file uses dependency injection to access the
 handlers in the library. The following code initializes the C# Library:
 
 ```C#
- public override void Configure(IFunctionsHostBuilder builder)
-        {
-            var configuration = builder.GetContext().Configuration;
-            builder.Services
-            .AddEmissionsServices(configuration)
-            .AddForecastServices(configuration);
-        }
+    // omitted
+    .ConfigureServices((context,services) => {
+        services.AddApplicationInsightsTelemetryWorkerService();
+        services.ConfigureFunctionsApplicationInsights();
+        services.AddEmissionsServices(context.Configuration);
+        services.AddForecastServices(context.Configuration);
+    })
+    // omitted
 ```
-
-> Note as the in-process
-> [Azure Function uses dependency injection](https://learn.microsoft.com/en-us/azure/azure-functions/functions-dotnet-dependency-injection)
-> though via
-> [Microsoft.Azure.Functions.Extensions](https://www.nuget.org/packages/Microsoft.Azure.Functions.Extensions/)
-> there is a version conflict of
-> [Microsoft.Extensions.Configuration](https://www.nuget.org/packages/Microsoft.Extensions.Configuration).
-> It is fixed adding a version specific project dependency (in .csproj) to the
-> same version as the Carbon Aware SDK. Microsoft.Extensions.Configuration is
-> backwards compatible.
 
 ## Run Function Locally
 
