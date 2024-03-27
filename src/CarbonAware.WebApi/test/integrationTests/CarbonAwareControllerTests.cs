@@ -20,6 +20,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
 {
     private readonly string healthURI = "/health";
     private readonly string fakeURI = "/fake-endpoint";
+    private readonly string metricsURI = "/metrics";
     private readonly string bestLocationsURI = "/emissions/bylocations/best";
     private readonly string bylocationsURI = "/emissions/bylocations";
     private readonly string bylocationURI = "/emissions/bylocation";
@@ -46,6 +47,16 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         Assert.That(result, Is.Not.Null);
         Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
     }
+
+    [Test]
+    public async Task MetricsEndPoint_ReturnsOK()
+    {
+        //Use client to get endpoint
+        var result = await _client.GetAsync(metricsURI);
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+    }
+
 
     //ISO8601: YYYY-MM-DD
     [TestCase("2022-1-1T04:05:06Z", "2022-1-2T04:05:06Z", "eastus", nameof(ByLocationURI_ReturnsOK) + "0")]
