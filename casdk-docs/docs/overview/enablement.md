@@ -15,7 +15,7 @@ sidebar_position: 3
 
 2. [How to Use Carbon Aware SDK](#2-how-to-use-carbon-aware-sdk)  
 
-   2.1 [Pre-requisities](#21-pre-requisities)
+   2.1 [Pre-requisites](#21-pre-requisites)
     * Data sources
     * System requirement
 
@@ -67,7 +67,7 @@ we show some examples of the [use case](./adopters.md).
 
 ## 2. How to use Carbon Aware SDK?
 
-### 2.1 Pre-requisities
+### 2.1 Pre-requisites
 
 #### Data sources
 

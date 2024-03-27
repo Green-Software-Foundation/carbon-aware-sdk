@@ -22,13 +22,13 @@ We have opportunities for both code and non code contributors. We're currently l
 
 | Contribution Areas | Description |
 |----------|----------|
-|**Sample Creation** | These help adopters of the SDK learn how they can quick get started and build their own carbon aware solutions.|
+|**Sample Creation** | These help adopters of the SDK learn how they can quickly get started and build their own carbon aware solutions.|
 |**Documentation Updates** | The documentation always can be improved to make the Carbon Aware SDK more accessible to everyone.  Guides, SDK and API document, and more! |
-|**Video Content Creation (how to enable, demos etc)** | Quick videos help adopters undersatnd just how easy it is to get started in an easy to consume form.
+|**Video Content Creation (how to enable, demos etc)** | Quick videos help adopters understand just how easy it is to get started in an easy to consume form.
 |**Slide Deck Creation <br /> Available for presenter use, including real time video demo**| We get a lot of traction at conferences, and if we have a standard deck for anyone to present, it will enable those who might not be able to create a deck, but could easily present it, to also participate.
 
 ## How To Get Started 
-Introduce yourself on on our [discussions page](https://github.com/orgs/Green-Software-Foundation/discussions/65) and let us know where you think you can help. 
+Introduce yourself on our [discussions page](https://github.com/orgs/Green-Software-Foundation/discussions/65) and let us know where you think you can help. 
 Find the Project Key contacts in the [Confluence page](https://greensoftwarefoundation.atlassian.net/wiki/spaces/~612dd45e45cd76006a84071a/pages/17137665/Opensource+Carbon+Aware+SDK).
 
 If you are a GSF member organisation employee, you should:
