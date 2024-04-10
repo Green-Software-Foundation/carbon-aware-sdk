@@ -1,11 +1,12 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+ARG TARGETARCH
 WORKDIR /app
 
 ENV DOTNET_ROLL_FORWARD LatestMajor
 # Copy everything from source
 COPY . ./
 # Use implicit restore to build and publish
-RUN dotnet publish CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -c Release -o publish
+RUN dotnet publish CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -a $TARGETARCH -o publish
 # Generate OpenAPI spec
 WORKDIR /app/CarbonAware.WebApi/src
 RUN dotnet tool restore && \
