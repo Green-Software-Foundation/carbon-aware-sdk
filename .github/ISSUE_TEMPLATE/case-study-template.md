@@ -49,9 +49,14 @@ _Titles and links to press releases that can be viewed publicly online_
 
 ## Any other notes of significance 
 
-_For example... _
+_For example_
+
 _Was the SCI used?_
+
 _Was this built in conjuction with another party that should be included in the case study?_
+
 _Was there a contribution back to the Carbon Aware SDK project as part of this?_
+
 _Are there any further plans to implement the Carbon Aware SDK across other solutions that can be discussed?_
+
 _Are there any further plans to leverage other aspects of the Green Software Foundation to drive positive impact with software?_
