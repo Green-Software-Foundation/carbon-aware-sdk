@@ -2,6 +2,50 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
+
+## [1.4.0] - 2024-05
+
+### Added 
+
+-[#401] [Feature Contribution]: Upgrade .NET version to .NET 8 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401)
+-[#419] [Feature Contribution]: Migrate sample implementation of Azure Function to isolated worker model ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419)
+-[PR #500] Up Helm chart version to 1.2.0 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500)
+
+-[#397] [Feature Contribution]: Data caching in the SDK ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397)
+
+### Fixed
+
+-[#505] [Bug]: Project Page wiki from GSF website still says it's in incubation ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505)
+-[#496] [URGENT] WebAPI container has not built due to segmentation fault ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496)
+-[#487] [Bug]: Getting started guide is lost ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487)
+
+
+### Changed
+
+-[#477] [Bug]: Ensure the readme file shows as the project overview content on the documentation site ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477)
+-[PR #485] Docs overview, disclaimer & pipeline updates for graduation ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485)
+
+#### API
+
+- 
+
+#### API Deployment
+
+- 
+
+#### SDK 
+
+- 
+
+
+#### Other
+
+- 
+
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503) 
+
+
 ## [1.3.0] - 2024-02
 
 ### Added 
