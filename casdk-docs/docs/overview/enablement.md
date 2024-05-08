@@ -44,16 +44,16 @@ different endpoints to provide the most flexibility to integrate to your
 environment:
 
 * CLI  
-You can run the application using the [CLI](../src/CarbonAware.CLI) and refer
+You can run the application using the [CLI](/src/CarbonAware.CLI) and refer
   to more documentation [here](../tutorial-basics/carbon-aware-cli.md).  
 
 * WebAPI  
-You can build a container containing the [WebAPI](../src/CarbonAware.WebApi)
+You can build a container containing the [WebAPI](/src/CarbonAware.WebApi)
   and connect via REST requests and refer to more documentation
   [here](../tutorial-basics/carbon-aware-webapi.md).
 
 * SDK  
-You can reference the [Carbon Aware C# Library](../src/GSF.CarbonAware) in your
+You can reference the [Carbon Aware C# Library](/src/GSF.CarbonAware) in your
   projects and make use of its functionalities and features.
 
 | ![Image 2](./images/readme/screenshot_cli.png) | ![Image 1](./images/readme/screenshot_web_api.png) |
