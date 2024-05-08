@@ -34,27 +34,27 @@ The following is configured at  `CarbonAware.DataSources.WattTime/src/Constants/
 
 | API Endpoint | Description | Path (v2) | Path (v3) | Notes |
 |--------------|-------------|-----------|-----------|---|
-| Data         | Get data    | /data     | /historical          | Parameter changes outlined below. Start and End are now mandatory.
-| Forecast     | Get forecast| /forecast | /forecast   | Forecast parameters have undergone broader changes, and it can no longer be used for historical data 
+| Data         | Get data    | /data     | /historical          |  _Request_ <li> `starttime` is now `start` and mandatory <li> `endtime` is now `end` and mandatory <li> `ba` is now `region` <li> `signal_type` added <br> _Response_ <li> `signal_type` added
+| Forecast     | Get forecast| /forecast | /forecast   | **TODO: CHECK IMPACT** <br> No longer be used for historical data <br> _Request_ <li> `ba` is now `region` <li> `extended_forecast` removed <li> `horizon_hours` added  <li> `signal_type` added <li> Historical forecasts are now at `/forecast/historical` <br> _Response_ <li> `signal_type` added 
 | Historical   | Get historical forecast data | /historical (?) | /forecast/historical (?)           | **We need to validate why historical was being used for the API, and what historical used to be, and whether this should be the new /forecast/historical or not.**
-| BalancingAuthorityFromLocation | Get balancing authority from location | /ba-from-loc |           |
-| Login        | User login  | https://api2.watttime.org/v2/login    | https://api.watttime.org/login | No other changes
+| Balancing Authority From Location | Get balancing authority from location | /ba-from-loc | /region-from-loc          | _Request_ <li> `name` is now `region_full_name` <li> `abbrev` is now `region` <li> `signal_type` added <br> _Response_ <li> `id` removed <li> `signal_type` added  | 
+| Login        | User login  | https://api2.watttime.org/v2/login    | https://api.watttime.org/login | Path has changed from being version specific to being unique from the API version.  <br><br> **TODO: CHECK HOW BASE URL IS DEFINED AS THIS WILL NOW HAVE DIFFERENT VALUES** 
 
 ### Query Strings
 
 #### Signal Type
 Everything call takes an optional `signal_type` parameter that defaults to `co2_moer`.  
 
-The following comes from `CarbonAware.DataSources.WattTime/src/Constants/QueryStrings.cs` 
+The following comes from `CarbonAware.DataSources.WattTime/src/Constants/QueryStrings.cs` and the changes are consistent with the discussion above.
 
-| Query String (v2)                   | Query String (v3)                 | Description                  |
+| Query String (v2)                   | Query String if Changed (v3)                 | Description                  |
 |------------------------------------|----------------------------------|------------------------------|
-| ba                                 | region                                  | Balancing Authority / Region |
-| starttime                          | start                                 | Start Time                       |
-| endtime                            | end                                 | End Time                         |
-| latitude                           |                                  | Latitude                         |
-| longitude                          |                                  | Longitude                        |
-| username                           |                                  | Username                         |
+| `ba`                                 | `region`                                 | Balancing Authority / Region |
+| `starttime`                          | `start`                                | Start Time                       |
+| `endtime`                            | `end`                                 | End Time                         |
+| `latitude`                           | -                                 | Latitude                         |
+| `longitude`                          | -                                 | Longitude                        |
+| `username`                           | -                                 | Username                         |
 
 ## Green Impact  
 
