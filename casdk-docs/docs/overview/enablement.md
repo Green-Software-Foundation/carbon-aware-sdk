@@ -87,7 +87,7 @@ providers into the carbon aware SDK.
 #### System requirement
 
 * Command Line Interface (CLI)
-  * .NET Core 6.0
+  * .NET 8.0
   * Alternatively:
     * Docker
     * VSCode and its [Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
