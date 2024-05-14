@@ -4,7 +4,9 @@ sidebar_position: 7
 
 # Carbon Aware SDK adopters
 
+
 We're sharing adopters of the Carbon Aware SDK with public evidence, although we know many others are also using the Carbon Aware SDK to reduce the carbon footprint of their software.
+
 If you're using the Carbon Aware SDK and can share evidence, we'd love to add you to this list.
 Please reach out to carbon-aware-sdk@greensoftware.foundation or send a pull request.
 

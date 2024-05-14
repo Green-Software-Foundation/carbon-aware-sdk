@@ -17,7 +17,8 @@ By knowing the carbon emissions of the energy that powers your applications, you
 * Running software updates at greener energy time windows 
 * Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
 
-Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at its core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
+
+Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
 
 Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
 

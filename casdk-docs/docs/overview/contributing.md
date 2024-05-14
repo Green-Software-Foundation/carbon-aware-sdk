@@ -29,6 +29,7 @@ We have opportunities for both code and non code contributors. We're currently l
 
 ## How To Get Started 
 Introduce yourself on our [discussions page](https://github.com/orgs/Green-Software-Foundation/discussions/65) and let us know where you think you can help. 
+
 Find the Project Key contacts in the [Confluence page](https://greensoftwarefoundation.atlassian.net/wiki/spaces/~612dd45e45cd76006a84071a/pages/17137665/Opensource+Carbon+Aware+SDK).
 
 If you are a GSF member organisation employee, you should:
