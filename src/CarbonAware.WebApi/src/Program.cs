@@ -7,6 +7,7 @@ using GSF.CarbonAware.Exceptions;
 using Microsoft.OpenApi.Models;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using OpenTelemetry.Metrics;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
@@ -16,17 +17,16 @@ var serviceVersion = "1.0.0";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenTelemetryTracing(tracerProviderBuilder =>
-{
-    tracerProviderBuilder
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder =>
+        tracerProviderBuilder
         .AddConsoleExporter()
         .AddSource(serviceName)
         .SetResourceBuilder(
             ResourceBuilder.CreateDefault()
                 .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
         .AddHttpClientInstrumentation()
-        .AddAspNetCoreInstrumentation();
-});
+        .AddAspNetCoreInstrumentation());
 
 // Add services to the container.
 builder.Services.AddControllers(options =>
@@ -70,6 +70,8 @@ builder.Services.AddHealthChecks();
 
 builder.Services.AddMonitoringAndTelemetry(builder.Configuration);
 
+builder.Services.AddCarbonExporter(builder.Configuration);
+
 builder.Services.AddSwaggerGen(c => {
         c.MapType<TimeSpan>(() => new OpenApiSchema { Type = "string", Format = "time-span" });
     });
@@ -112,9 +114,14 @@ app.MapControllers();
 
 app.MapHealthChecks("/health");
 
+var enableCarbonExporter = config?.EnableCarbonExporter ?? false;
+if(enableCarbonExporter){
+    app.UseOpenTelemetryPrometheusScrapingEndpoint();
+}
+
 app.Run();
 
 
-// Please view https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-6.0#basic-tests-with-the-default-webapplicationfactory
+// Please view https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0#basic-tests-with-the-default-webapplicationfactory
 // This line is needed to allow for Integration Testing
 public partial class Program { }

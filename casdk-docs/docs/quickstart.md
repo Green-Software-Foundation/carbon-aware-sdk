@@ -18,7 +18,7 @@ generated libraries for your language of choice!
 
 Prerequisites:
 
-- .NET Core 6.0
+- .NET Core 8.0
 - Alternatively:
   - Docker
   - VSCode (it is recommended to work in a Dev Container)
@@ -404,7 +404,7 @@ installation and example usage.
 3. Install the Python client library using
    [`setuptools`](http://pypi.python.org/pypi/setuptools)):
    `python setup.py install --user`
-4. The library is now succesfully installed!
+4. The library is now successfully installed!
 
 There should be an example script in the `README` file, but this guide suggests
 trying the following example first:

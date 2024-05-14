@@ -17,6 +17,7 @@ By knowing the carbon emissions of the energy that powers your applications, you
 * Running software updates at greener energy time windows 
 * Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
 
+
 Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
 
 Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
@@ -102,7 +103,7 @@ centralised management, auditability and traceability, and more.
 The Carbon Aware SDK is a collaborative effort between companies around the
 world, with the intention of providing a platform that everyone can use. This
 means the API will be striving towards what solves the highest impact issues
-with diverse perspectives from these organisation and contributors.
+with diverse perspectives from these organisations and contributors.
 
 ### Standardization
 
@@ -151,7 +152,7 @@ capability.
 
 ### Aggregated Sources
 
-A feature we have in the roadmap is the ability aggregate data sources across
+A feature we have in the roadmap is the ability to aggregate data sources across
 multiple providers. Different data providers have different levels of
 granularity depending on region, and it may be that data provider A is preferred
 in Japan, while data provider B is preferred in US regions.

@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 ## Date
-YYYY-MM-DD - 8am UTC
+YYYY-MM-DD - 7am UTC
 
 ## Meeting notices
 
@@ -18,7 +18,7 @@ Linux Foundation meetings involve participation by industry competitors, and it 
 Examples of types of actions that are prohibited at Linux Foundation meetings and in connection with Linux Foundation activities are described in the Linux Foundation Antitrust Policy available at http://www.linuxfoundation.org/antitrust-policy. If you have questions about these matters, please contact your company counsel, or if you are a member of the Linux Foundation, feel free to contact Andrew Updegrove of the firm of Gesmer Updegrove LLP, which provides legal counsel to the Linux Foundation.
 
 ### Recordings
-GSF project meetings may be recorded for use solely by the GSF team for administration purposes. In very limited instances, and with explicit approval, recordings may be made more widely available.
+We're happy to start recording these meetings if we receive any requests to record them.
 
 ### Roll Call 
 Please *add a comment* to this issue during the meeting to denote attendance.

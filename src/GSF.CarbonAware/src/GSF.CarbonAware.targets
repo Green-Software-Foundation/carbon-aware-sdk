@@ -16,7 +16,7 @@
         <Copy SourceFiles="@(LocationSourceFiles)" DestinationFolder="$(TargetDir)/bin/location-sources/%(RecursiveDir)" />
     </Target>
     <ItemGroup>
-        <DllFiles Include="$(MSBuildThisFileDirectory)/../lib/net6.0/*.dll" />
+        <DllFiles Include="$(MSBuildThisFileDirectory)/../lib/net8.0/*.dll" />
     </ItemGroup>
     <Target Name="CopyDllFiles" BeforeTargets="BeforeBuild">
         <Copy SourceFiles="@(DllFiles)" DestinationFolder="$(TargetDir)" />

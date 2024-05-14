@@ -19,9 +19,11 @@
     - [ElectricityMapsFree Configuration](#electricitymapsfree-configuration)
       - [API Token](#api-token)
       - [BaseUrl](#baseurl)
+  - [Cache](#cache)
   - [CarbonAwareVars](#carbonawarevars)
     - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
     - [Verbosity](#verbosity)
+    - [Prometheus exporter](#prometheus-exporter-for-emissions-data)
     - [Web API Prefix](#web-api-prefix)
   - [LocationDataSourcesConfiguration](#locationdatasourcesconfiguration)
 - [Sample Configurations](#sample-configurations)
@@ -194,7 +196,7 @@ custom `EmissionsData` sets. The file should be located under the
 `<user's repo>/src/data/data-sources/` directory that is part of the repository.
 At build time, all the JSON files under `<user's repo>/src/data/data-sources/`
 are copied over the destination directory
-`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/data-sources/json`
+`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net8.0/data-sources/json`
 that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed
 where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json`
 directory. For instance, if the application is installed under `/app`, copy the
@@ -327,6 +329,29 @@ The url to use when connecting to ElectricityMapsFree. Defaults to
 "https://api.co2signal.com/v1/" but can be overridden in the config if needed
 (such as to enable integration testing scenarios).
 
+## Cache
+
+Frequent access to data sources could cause problems such as performance trouble
+or exceed rate limit. To avoid them, you can configure data cache like this:
+
+```json
+{
+  "EmissionsDataCache": {
+    "Enabled": true,
+    "ExpirationMin": 30
+  }
+}
+```
+
+The behavior of current cache implementation:
+* Only emissions data are cached
+  * Forecast data are not stored
+* The result of the latest query to data sources is cached
+* Use cache rather than data sources if even one datum in cache match with the query
+  * Even though more data in data sources would be matched, they are not retrieved
+* Cached data are stored in memory
+  * They are cleard when the process of the SDK is down
+
 ## CarbonAwareVars
 
 This section contains the global settings for the SDK. The configuration looks
@@ -379,6 +404,32 @@ InstrumentationKey. For more details, please refer to
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
 ```
 
+### Prometheus exporter for emissions data
+
+> DISCLAIMER:  The `/metrics` Prometheus exporter is currently unsupported, and is used for internal GSF needs, and may change in the future.  It will retrieve _all_ emissions data and create heavy load on your data API's.  It is turned off by default.
+
+In the WebApi project, this application can exporse latest carbon emissions data as a prometheus exporter.
+
+```bash
+CarbonAwareVars__EnableCarbonExporter="true"
+```
+The scraping endpoint is `<ROOT_PATH>/metrics` like this:
+
+```bash
+http://localhost/metrics
+```
+
+By default, the exposed data are latest ones within last 24 hours. If you would like to change the period 
+in some reasones, you can configure the value like this:
+
+```json
+{
+  "CarbonExporter": {
+    "PeriodInHours": 48
+  }
+}
+```
+
 ### Verbosity
 
 You can configure the verbosity of the application error messages by setting the
@@ -427,7 +478,7 @@ By setting `LocationDataSourcesConfiguration` property with one or more location
 data sources, it is possible to load different `Location` data sets in order to
 have more than one location. For instance by setting two location regions, the
 property would be set as follow using
-[environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#naming-of-environment-variables)
+[environment](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0#naming-of-environment-variables)
 variables:
 
 ```sh
@@ -458,7 +509,7 @@ curl "http://${IP_HOST}:${PORT}/emissions/bylocations/best?location=${REGION}&ti
 At build time, all the JSON files under
 `<user's repo>/src/data/location-sources` are copied over the destination
 directory
-`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net6.0/location-sources/json`
+`<user's repo>/src/CarbonAware.WebApi/src/bin/[Debug|Publish]/net8.0/location-sources/json`
 that is part of the `CarbonAware.WebApi` assembly. Also the file can be placed
 where the assembly `CarbonAware.WebApi.dll` is located under
 `location-sources/json` directory. For instance, if the application is installed

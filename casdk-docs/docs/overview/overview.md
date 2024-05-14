@@ -17,13 +17,13 @@ By knowing the carbon emissions of the energy that powers your applications, you
 * Running software updates at greener energy time windows 
 * Using data to run hypothetical models to understand how you could start driving impact and reduce emissions, drive business cases for change, and create a greener future. 
 
-Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at it's core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
+Within the [Green Software Foundations Theory of Change](https://greensoftware.foundation/articles/theory-of-change), we look at 3 pillars, that being **Knowledge**, **Tech Culture**, and **Tooling** as focus areas to drive this change.  The Carbon Aware SDK at its core sits firmly in the **Tooling** pillar, and also supports the other pillars, providing **Knowledge** through emissions data to inform change, and being core enabler for the **Tech Culture** for building carbon aware software.
 
 Companies including UBS and Vestas have already deployed the Carbon Aware SDK to build greener software, and you can too!
 
 # Getting Started Overview
 
-Head on over to the [Getting Started Overview Guide](./casdk-docs/docs/overview/overview.md) to get up and running.
+Head on over to the [quickstart guide](../quickstart.md) to get up and running.
 
 Get started on creating sustainable software innovation for a greener future
 today!
@@ -83,7 +83,7 @@ deployment in the greenest location.
 
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
-to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./casdk-docs/docs/overview/adopters.md).
+to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./adopters.md).
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
@@ -102,7 +102,7 @@ centralised management, auditability and traceability, and more.
 The Carbon Aware SDK is a collaborative effort between companies around the
 world, with the intention of providing a platform that everyone can use. This
 means the API will be striving towards what solves the highest impact issues
-with diverse perspectives from these organisation and contributors.
+with diverse perspectives from these organisations and contributors.
 
 ### Standardization
 
@@ -151,7 +151,7 @@ capability.
 
 ### Aggregated Sources
 
-A feature we have in the roadmap is the ability aggregate data sources across
+A feature we have in the roadmap is the ability to aggregate data sources across
 multiple providers. Different data providers have different levels of
 granularity depending on region, and it may be that data provider A is preferred
 in Japan, while data provider B is preferred in US regions.
@@ -170,7 +170,7 @@ percentage information only at the moment.
 ## Contributing
 
 The Carbon Aware SDK is open for contribution! Want to contribute? Check out the
-[contribution guide](./CONTRIBUTING.md).
+[contribution guide](./contributing.md).
 
 ## Green Software Foundation Project Summary
 
