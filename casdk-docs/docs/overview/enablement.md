@@ -44,16 +44,16 @@ different endpoints to provide the most flexibility to integrate to your
 environment:
 
 * CLI  
-You can run the application using the [CLI](../src/CarbonAware.CLI) and refer
+You can run the application using the [CLI](/src/CarbonAware.CLI) and refer
   to more documentation [here](../tutorial-basics/carbon-aware-cli.md).  
 
 * WebAPI  
-You can build a container containing the [WebAPI](../src/CarbonAware.WebApi)
+You can build a container containing the [WebAPI](/src/CarbonAware.WebApi)
   and connect via REST requests and refer to more documentation
   [here](../tutorial-basics/carbon-aware-webapi.md).
 
 * SDK  
-You can reference the [Carbon Aware C# Library](../src/GSF.CarbonAware) in your
+You can reference the [Carbon Aware C# Library](/src/GSF.CarbonAware) in your
   projects and make use of its functionalities and features.
 
 | ![Image 2](./images/readme/screenshot_cli.png) | ![Image 1](./images/readme/screenshot_web_api.png) |
@@ -87,7 +87,7 @@ providers into the carbon aware SDK.
 #### System requirement
 
 * Command Line Interface (CLI)
-  * .NET Core 6.0
+  * .NET 8.0
   * Alternatively:
     * Docker
     * VSCode and its [Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
@@ -588,7 +588,7 @@ using environment variables, you'd do this:
 #### Local project settings
 
 For local-only settings you can use environment variables,
-[the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows#secret-manager)
+[the Secret Manager tool](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?tabs=windows#secret-manager)
 , or an untracked Development appsettings file to override the default project
 settings.
 
@@ -598,7 +598,7 @@ remove the first line of (invalid) comments. Then update any settings according
 to your preferences.
 
 > Wherever possible, the projects leverage the
-> [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-6.0#default-application-configuration-sources)
+> [default .NET configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?#default-application-configuration-sources)
 > expectations. Thus, they can be configured using any file matching the format:
 > `appsettings.<ENV>.json`. Where `<ENV>` is the value of the
 > `ASPNETCORE_ENVIRONMENT` environment variable. By convention projects tend to
