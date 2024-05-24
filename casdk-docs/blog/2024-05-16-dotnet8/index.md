@@ -6,7 +6,7 @@ tags: [dotnet8]
 
 As most software nowadays, the Carbon Aware SDK relies on a stack of utilities, and while adding a new feature is usually the most appealing for a project, it’s also critical to maintain the stack, especially in a community effort.
 
-Containerization has helped shifting the upgrading work to a more convenient time for the development team, but there are still various motivation for keeping a stack up to date with current versions: security, bug fixes, performance, support… but the best it to couple with new feature development: such was the case for .NET framework.
+Containerization has helped shifting the upgrading work to a more convenient time for the development team, but there are still various motivation for keeping a stack up to date with current versions: security, bug fixes, performance, support… but the best is to couple with new feature development: such was the case for .NET framework.
 
 However, those updates often have ripple effects, as their dependencies are not always foreseeable, making software upgrade workload hard to predict.
 
@@ -18,7 +18,7 @@ Carbon Aware SDK v1.4.0 was released on May 2024, its core evolution was the upg
 
 Microsoft released .NET 8 in Nov 2023, this is the latest LTS version of .NET and [will be supported until Nov 2026](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core). 
 
-Wanting to display the Carbon Intensity metrics from the Carbon Aware SDK WebAPI, made .NET 8 a requirement, as .NET 8 introduced an [enhanced supports for implementing metrics features](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/runtime#extensions-metrics).
+Wanting to display the Software Carbon Intensity ([SCI - Software Carbon Intensity](https://sci.greensoftware.foundation/) as adopted in [ISO/IEC 21031:2024](https://www.iso.org/standard/86612.html)) metrics from the Carbon Aware SDK WebAPI, made .NET 8 a requirement, as .NET 8 introduced an [enhanced supports for implementing metrics features](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/runtime#extensions-metrics).
 
 Indeed, the newly introduced [IMeterFactory](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.imeterfactory?view=net-8.0) interface enabled us to create a [Meter](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meter?view=net-8.0) instance while maintaining modularity by using dependency injection (i.e. use the .NET 8 implementation of the feature, instead of recreating it… another software development sustainable pattern). 
 
@@ -119,6 +119,8 @@ Thanks to the new Carbon Aware SDK v1.4.0 carbon metrics exporter (thanks to .NE
 
 This feature facilitate integration with monitoring solutions like [Prometheus](https://prometheus.io/) and furthermore with a visualization solution like [Grafana](https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/): unlocking geomap style visualization (showing metrics at specified locations on a map). By enabling the exporter and making some settings on Grafana, carbon intensities can be exported from Carbon Aware SDK to a geomap, this is part of a dashboard to monitor carbon emissions for software systems.
 
+The Carbon Intensity can be intuitively visualized with size and colors on a geomap, beyond raising awareness, this can guide decisions on location or time shift.
+
 ![fig3](./fig3.png)
 
 ## Green Dashboard for Kubernetes
@@ -129,6 +131,26 @@ In practice, each container energy consumption is evaluated through [Kepler](htt
 
 All those emission data from power grid can be accessed through Prometheus exporter with Carbon Aware SDK (starting v1.4.0), and a visualized with Grafana dashboard.
 
-The power consumption, energy consumption, carbon emission, and SCI (Software Carbon Intensity) can be seen at a glance!
+The power consumption, energy consumption, carbon emission, and SCI can be seen at a glance!
+
+One of the upside of micro-services architecture, as Kubernetes facilitates it, is to be able to work on different piece of an application in a relatively independant fashion (maintaining, scaling, optimizing…).
+
+The Green Dashboard allows a team to check an application global energy consumption and carbon emission (dashboard left side), while drilling down at sustainability-related metrics for each micro-service (dashboard right side).
+
+It shows the SCI, allowing to get a sense of the rate of Carbon Emission down to a particular piece of an architecture (R being the [functional unit](https://learn.greensoftware.foundation/measurement/#software-carbon-intensity-specification) for that service - for example an API call, the data is being shown per R unit or over an hour).
+
+While in monolitic application optimization need customized instrumentation, and often have rippled effect, this green dashboard helps identifying which micro-service refactoring would have the maximum impact on the application carbon footprint, leveraging the team effort more efficiently.
 
 ![fig4](./fig4.png)
+
+# Moving Forward
+
+With the Cloud Computing expansion, and Kubernetes flexibility, more and more choices exist for running a workload, and while business and economical constraints seem obvious to lead those decisions, Carbon footprint have to be taken in account. Its relevance will be more and more pregnant.
+
+This is a difficult endeavour, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intent behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is key element in this approach.
+
+By providing a standard interface to the carbon emissions of the energy, the Carbon Aware SDK is a key element for IT sustainability: from evaluating current carbon footprint up to taking in account carbon intensity for geo or time shifting…
+
+Thanks to the community effort the first step is a click away with the quickstarting guide, available for everyone.
+
+No excuse !
