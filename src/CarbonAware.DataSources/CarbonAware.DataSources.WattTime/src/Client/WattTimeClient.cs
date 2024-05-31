@@ -46,11 +46,11 @@ internal class WattTimeClient : IWattTimeClient
         _client.BaseAddress = new Uri(this._configuration.BaseUrl);
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-        
+
         _authenticationClient.BaseAddress = new Uri(this._configuration.AuthenticationBaseUrl);
         _authenticationClient.DefaultRequestHeaders.Accept.Clear();
         _authenticationClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-        
+
         _memoryCache = memoryCache;
     }
 
@@ -61,14 +61,14 @@ internal class WattTimeClient : IWattTimeClient
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation },
+            { QueryStrings.Region, balancingAuthorityAbbreviation },
             { QueryStrings.StartTime, startTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
             { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
         };
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, balancingAuthorityAbbreviation }
         };
 
         using (var result = await this.MakeRequestGetStreamAsync(Paths.Data, parameters, tags))
@@ -91,12 +91,12 @@ internal class WattTimeClient : IWattTimeClient
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, balancingAuthorityAbbreviation }
         };
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, balancingAuthorityAbbreviation }
         };
 
         var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags);
@@ -119,14 +119,14 @@ internal class WattTimeClient : IWattTimeClient
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation },
+            { QueryStrings.Region, balancingAuthorityAbbreviation },
             { QueryStrings.StartTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
             { QueryStrings.EndTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
         };
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, balancingAuthorityAbbreviation }
         };
         using (var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags))
         {
@@ -161,7 +161,7 @@ internal class WattTimeClient : IWattTimeClient
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.BalancingAuthorityAbbreviation, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, balancingAuthorityAbbreviation }
         };
 
         var url = BuildUrlWithQueryString(Paths.Historical, parameters);

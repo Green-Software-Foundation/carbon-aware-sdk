@@ -2,7 +2,7 @@
 
 internal class QueryStrings
 {
-    public const string BalancingAuthorityAbbreviation = "ba";
+    public const string Region = "region";
     public const string StartTime = "start";
     public const string EndTime = "end";
     public const string Latitude = "latitude";
