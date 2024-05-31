@@ -26,6 +26,12 @@ internal class WattTimeClientConfiguration
     public string BaseUrl { get; set; } = "https://api2.watttime.org/v2/";
 
     /// <summary>
+    /// Authentication base url.  This changed between v2 and v3 
+    /// to be different to the API base url.
+    /// </summary>
+    public string AuthenticationBaseUrl { get; set; } = "https://api.watttime.org/";
+
+    /// <summary>
     /// Gets or sets the cached expiration time (in seconds) for a BalancingAuthority instance.
     /// It defaults to 86400 secs.
     /// </summary>
@@ -49,6 +55,11 @@ internal class WattTimeClientConfiguration
         if (!Uri.IsWellFormedUriString(this.BaseUrl, UriKind.Absolute))
         {
             throw new ConfigurationException($"{Key}:{nameof(this.BaseUrl)} is not a valid absolute url.");
+        }
+
+        if (!Uri.IsWellFormedUriString(this.AuthenticationBaseUrl, UriKind.Absolute))
+        {
+            throw new ConfigurationException($"{Key}:{nameof(this.AuthenticationBaseUrl)} is not a valid absolute url.");
         }
 
         // Validate credential encoding/decoding with UTF8

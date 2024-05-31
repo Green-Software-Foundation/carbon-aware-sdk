@@ -8,6 +8,7 @@ namespace CarbonAware.DataSources.WattTime.Client;
 internal interface IWattTimeClient
 {
     public const string NamedClient = "WattTimeClient";
+    public const string NamedAuthenticationClient = "WattTimeAuthenticationClient"
 
     /// <summary>
     /// Async method to get observed emission data for a given balancing authority and time period.

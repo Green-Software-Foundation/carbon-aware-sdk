@@ -25,6 +25,7 @@ internal class WattTimeClient : IWattTimeClient
     };
 
     private HttpClient _client;
+    private HttpClient _authenticationClient;
 
     private IOptionsMonitor<WattTimeClientConfiguration> _configurationMonitor { get; }
 
@@ -37,12 +38,19 @@ internal class WattTimeClient : IWattTimeClient
     public WattTimeClient(IHttpClientFactory factory, IOptionsMonitor<WattTimeClientConfiguration> configurationMonitor, ILogger<WattTimeClient> log, IMemoryCache memoryCache)
     {
         _client = factory.CreateClient(IWattTimeClient.NamedClient);
+        _authenticationClient = factory.CreateClient(IWattTimeClient.NamedAuthenticationClient);
+
         _configurationMonitor = configurationMonitor;
         _log = log;
         _configuration.Validate();
         _client.BaseAddress = new Uri(this._configuration.BaseUrl);
         _client.DefaultRequestHeaders.Accept.Clear();
         _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+        
+        _authenticationClient.BaseAddress = new Uri(this._configuration.AuthenticationBaseUrl);
+        _authenticationClient.DefaultRequestHeaders.Accept.Clear();
+        _authenticationClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+        
         _memoryCache = memoryCache;
     }
 
@@ -215,7 +223,7 @@ internal class WattTimeClient : IWattTimeClient
         _log.LogInformation("Attempting to log in user {username}", this._configuration.Username);
 
         this.SetBasicAuthenticationHeader();
-        HttpResponseMessage response = await this._client.GetAsync(Paths.Login);
+        HttpResponseMessage response = await this._authenticationClient.GetAsync(Paths.Login);
 
         LoginResult? data = null;
 
@@ -239,6 +247,7 @@ internal class WattTimeClient : IWattTimeClient
     {
         var authToken = Encoding.UTF8.GetBytes($"{this._configuration.Username}:{this._configuration.Password}");
         this._client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Basic, Convert.ToBase64String(authToken));
+        this._authenticationClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Basic, Convert.ToBase64String(authToken));
     }
 
     internal void SetBearerAuthenticationHeader(string token)

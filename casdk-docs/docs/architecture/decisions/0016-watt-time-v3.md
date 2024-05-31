@@ -38,7 +38,7 @@ The following is configured at  `CarbonAware.DataSources.WattTime/src/Constants/
 | Forecast     | Get forecast| /forecast | /forecast   | **TODO: CHECK IMPACT** <br> No longer be used for historical data <br> _Request_ <li> `ba` is now `region` <li> `extended_forecast` removed <li> `horizon_hours` added  <li> `signal_type` added <li> Historical forecasts are now at `/forecast/historical` <br> _Response_ <li> `signal_type` added 
 | Historical   | Get historical forecast data | /historical (?) | /forecast/historical (?)           | **We need to validate why historical was being used for the API, and what historical used to be, and whether this should be the new /forecast/historical or not.**
 | Balancing Authority From Location | Get balancing authority from location | /ba-from-loc | /region-from-loc          | Check if the CA SDK uses BA at all <br><br> _Request_ <li> `name` is now `region_full_name` <li> `abbrev` is now `region` <li> `signal_type` added <br> _Response_ <li> `id` removed <li> `signal_type` added  | 
-| Login        | User login  | https://api2.watttime.org/v2/login    | https://api.watttime.org/login | Path has changed from being version specific to being unique from the API version.  <br><br> **TODO: CHECK HOW BASE URL IS DEFINED AS THIS WILL NOW HAVE DIFFERENT VALUES** 
+| Login        | User login  | https://api2.watttime.org/v2/login    | https://api.watttime.org/login | Path has changed from being version specific to being no longer related to the API version.  <br><br> **TODO: CHECK HOW BASE URL IS DEFINED AS THIS WILL NOW HAVE DIFFERENT VALUES** 
 
 ### Query Strings
 
