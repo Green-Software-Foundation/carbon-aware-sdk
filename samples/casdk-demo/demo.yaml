@@ -26,7 +26,7 @@ spec:
         image: swaggerapi/swagger-ui
         env:
         - name: SWAGGER_JSON_URL
-          value: http://localhost:8082/swagger.yaml
+          value: /swagger.yaml
         - name: PORT
           value: "8081"
         ports:
