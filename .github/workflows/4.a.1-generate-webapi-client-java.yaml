@@ -60,14 +60,12 @@ jobs:
     concurrency: push-to-doc-website
     runs-on: ubuntu-latest
     env:
-      DOCPATH: client-apidocs/${{ inputs.apiver }}/java
+      DOCPATH: casdk-docs/static/client-apidocs/${{ inputs.apiver }}/java
     permissions:
       contents: write
     steps:
-      - name: Checkout doc-website branch
+      - name: Checkout
         uses: actions/checkout@v3
-        with:
-          ref: gh-pages
       - name: Prepare
         run: mkdir -p ${{ env.DOCPATH }}
       - name: Download Javadoc
@@ -81,6 +79,6 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add ${{ env.DOCPATH }}
           git commit -m "Add Javadoc for WeebAPI ${{ inputs.apiver }}"
-          git push origin gh-pages
+          git push origin ${{ github.ref_name }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
