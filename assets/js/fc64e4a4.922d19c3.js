@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkcasdk_docs=self.webpackChunkcasdk_docs||[]).push([[1256],{3982:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"Overview","slug":"/category/overview","permalink":"/docs/category/overview","sidebar":"tutorialSidebar","navigation":{"next":{"title":"Carbon Aware SDK","permalink":"/docs/overview/"}}}}')}}]);
