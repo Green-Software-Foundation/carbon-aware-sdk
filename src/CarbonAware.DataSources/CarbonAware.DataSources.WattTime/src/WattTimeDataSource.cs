@@ -103,19 +103,19 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         return ForecastToEmissionsForecast(forecast, location, requestedAt);
     }
 
-    private EmissionsForecast ForecastToEmissionsForecast(Forecast forecast, Location location, DateTimeOffset requestedAt)
+    private EmissionsForecast ForecastToEmissionsForecast(ForecastEmissionsDataResponse forecast, Location location, DateTimeOffset requestedAt)
     {
-        var duration = GetDurationFromGridEmissionDataPoints(forecast.ForecastData);
-        var forecastData = forecast.ForecastData.Select(e => new EmissionsData()
+        var duration = GetDurationFromGridEmissionDataPoints(forecast.Data);
+        var forecastData = forecast.Data.Select(e => new EmissionsData()
         {
-            Location = "", //e.Region, // TODO: VAUGHAN
+            Location = forecast.Meta.Region,
             Rating = ConvertMoerToGramsPerKilowattHour(e.Value),
             Time = e.PointTime,
             Duration = duration
         });
         var emissionsForecast = new EmissionsForecast()
         {
-            GeneratedAt = forecast.GeneratedAt,
+            GeneratedAt = forecast.Meta.GeneratedAt,
             Location = location,
             ForecastData = forecastData
         };
@@ -177,7 +177,7 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         try
         {
             var geolocation = await this.LocationSource.ToGeopositionLocationAsync(location);
-            balancingAuthority = await WattTimeClient.GetBalancingAuthorityAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
+            balancingAuthority = await WattTimeClient.GetRegionAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
         }
         catch (Exception ex) when (ex is LocationConversionException || ex is WattTimeClientHttpException)
         {

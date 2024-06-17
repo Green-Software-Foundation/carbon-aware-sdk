@@ -30,5 +30,5 @@ internal record GridEmissionsMetaData
     public int? GeneratedAtPeriodSeconds { get; set; }
 
     [JsonPropertyName("generated_at")]
-    public DateTimeOffset? GeneratedAt { get; set; }
+    public DateTimeOffset GeneratedAt { get; set; } = DateTimeOffset.MinValue;
 }

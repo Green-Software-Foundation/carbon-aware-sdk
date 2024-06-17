@@ -3,7 +3,7 @@
 namespace CarbonAware.DataSources.WattTime.Model;
 
 [Serializable]
-internal record GridEmissionsDataResponse
+internal record ForecastEmissionsDataResponse
 {
     [JsonPropertyName("data")]
     public List<GridEmissionDataPoint> Data { get; set; } = new List<GridEmissionDataPoint>();

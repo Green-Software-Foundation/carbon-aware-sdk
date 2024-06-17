@@ -36,7 +36,7 @@ internal interface IWattTimeClient
     /// <param name="balancingAuthorityAbbreviation">Balancing authority abbreviation</param>
     /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    Task<Forecast> GetCurrentForecastAsync(string balancingAuthorityAbbreviation);
+    Task<ForecastEmissionsDataResponse> GetCurrentForecastAsync(string balancingAuthorityAbbreviation);
 
     /// <summary>
     /// Async method to get the most recent 24 hour forecasted emission data for a given balancing authority.
@@ -44,7 +44,7 @@ internal interface IWattTimeClient
     /// <param name="balancingAuthority">Balancing authority</param>
     /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    Task<Forecast> GetCurrentForecastAsync(RegionResponse balancingAuthority);
+    Task<ForecastEmissionsDataResponse> GetCurrentForecastAsync(RegionResponse balancingAuthority);
 
     /// <summary>
     /// Async method to get generated forecast at requested time and balancing authority.
@@ -53,7 +53,7 @@ internal interface IWattTimeClient
     /// <param name="requestedAt">The historical time used to fetch the most recent forecast generated as of that time.</param>
     /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points or null if no Forecast generated at the requested time.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    Task<Forecast?> GetForecastOnDateAsync(string balancingAuthorityAbbreviation, DateTimeOffset requestedAt);
+    Task<ForecastEmissionsDataResponse?> GetForecastOnDateAsync(string balancingAuthorityAbbreviation, DateTimeOffset requestedAt);
 
     /// <summary>
     /// Async method to get generated forecast at requested time and balancing authority.
@@ -62,7 +62,7 @@ internal interface IWattTimeClient
     /// <param name="requestedAt">The historical time used to fetch the most recent forecast generated as of that time.</param>
     /// <returns>An <see cref="Task{Forecast}"/> which contains forecasted emissions data points or null if no Forecast generated at the requested time.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    Task<Forecast?> GetForecastOnDateAsync(RegionResponse balancingAuthority, DateTimeOffset requestedAt);
+    Task<ForecastEmissionsDataResponse?> GetForecastOnDateAsync(RegionResponse balancingAuthority, DateTimeOffset requestedAt);
 
     /// <summary>
     /// Async method to get the balancing authority for a given location.
@@ -71,7 +71,7 @@ internal interface IWattTimeClient
     /// <param name="longitude">Longitude of the location</param>
     /// <returns>An <see cref="Task{BalancingAuthority}"/> which contains the balancing authority details.</returns>
     /// <exception cref="WattTimeClientException">Can be thrown when errors occur connecting to WattTime client.  See the WattTimeClientException class for documentation of expected status codes.</exception>
-    Task<RegionResponse> GetBalancingAuthorityAsync(string latitude, string longitude);
+    Task<RegionResponse> GetRegionAsync(string latitude, string longitude);
 
     /// <summary>
     /// Async method to get the balancing authority abbreviation for a given location.
