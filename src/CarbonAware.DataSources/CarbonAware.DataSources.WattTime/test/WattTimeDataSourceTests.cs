@@ -25,7 +25,7 @@ class WattTimeDataSourceTests
 
     private Mock<ILocationSource> LocationSource { get; set; }
     private Location DefaultLocation { get; set; }
-    private BalancingAuthority DefaultBalancingAuthority { get; set; }
+    private RegionResponse DefaultBalancingAuthority { get; set; }
     private DateTimeOffset DefaultDataStartTime { get; set; }
 
     // Magic floating point tolerance to allow for minuscule differences in floating point arithmetic.
@@ -46,7 +46,7 @@ class WattTimeDataSourceTests
         this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
 
         this.DefaultLocation = new Location() { Name = "eastus" };
-        this.DefaultBalancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
+        this.DefaultBalancingAuthority = new RegionResponse() { Region = "BA" };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         MockBalancingAuthorityLocationMapping();
     }
@@ -76,7 +76,7 @@ class WattTimeDataSourceTests
         var first = result.First();
         Assert.IsNotNull(first);
         Assert.AreEqual(gPerKwhEmissions, first.Rating);
-        Assert.AreEqual(this.DefaultBalancingAuthority.Abbreviation, first.Location);
+        Assert.AreEqual(this.DefaultBalancingAuthority.Region, first.Location);
         Assert.AreEqual(startDate, first.Time);
 
         this.LocationSource.Verify(r => r.ToGeopositionLocationAsync(this.DefaultLocation));
@@ -158,13 +158,13 @@ class WattTimeDataSourceTests
         var lastDataPoint = result.ForecastData.Last();
         Assert.IsNotNull(firstDataPoint);
         Assert.AreEqual(gPerKwhEmissions, firstDataPoint.Rating);
-        Assert.AreEqual(this.DefaultBalancingAuthority.Abbreviation, firstDataPoint.Location);
+        Assert.AreEqual(this.DefaultBalancingAuthority.Region, firstDataPoint.Location);
         Assert.AreEqual(startDate, firstDataPoint.Time);
         Assert.AreEqual(expectedDuration, firstDataPoint.Duration);
 
         Assert.IsNotNull(lastDataPoint);
         Assert.AreEqual(gPerKwhEmissions, lastDataPoint.Rating);
-        Assert.AreEqual(this.DefaultBalancingAuthority.Abbreviation, lastDataPoint.Location);
+        Assert.AreEqual(this.DefaultBalancingAuthority.Region, lastDataPoint.Location);
         Assert.AreEqual(startDate + expectedDuration, lastDataPoint.Time);
         Assert.AreEqual(expectedDuration, lastDataPoint.Duration);
 
@@ -235,7 +235,7 @@ class WattTimeDataSourceTests
         // Assert
         Assert.IsNotNull(result);
         this.WattTimeClient.Verify(w => w.GetForecastOnDateAsync(
-            It.IsAny<BalancingAuthority>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
+            It.IsAny<RegionResponse>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
     }
 
     [DatapointSource]
@@ -274,7 +274,7 @@ class WattTimeDataSourceTests
         List<double> expectedDurationList = durationValues.ToList<double>();
 
         this.WattTimeClient.Setup(w => w.GetDataAsync(
-            It.IsAny<BalancingAuthority>(),
+            It.IsAny<RegionResponse>(),
             It.IsAny<DateTimeOffset>(),
             It.IsAny<DateTimeOffset>())
         ).ReturnsAsync(() => emissionData);
@@ -307,7 +307,7 @@ class WattTimeDataSourceTests
         {
             var dataPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = this.DefaultBalancingAuthority.Abbreviation,
+                Region = this.DefaultBalancingAuthority.Region,
                 PointTime = pointTime,
                 Value = value,
                 Frequency = defaultFrequency

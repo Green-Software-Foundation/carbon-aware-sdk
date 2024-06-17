@@ -13,11 +13,11 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
 {
     protected WireMockServer _server;
 
-    private static readonly BalancingAuthority defaultBalancingAuthority = new()
+    private static readonly RegionResponse defaultBalancingAuthority = new()
     {
         Id = 12345,
-        Abbreviation = "TEST_BA",
-        Name = "Test Balancing Authority"
+        Region = "TEST_BA",
+        RegionFullName = "Test Balancing Authority"
     };
 
     private static readonly LoginResult defaultLoginResult = new() { Token = "myDefaultToken123" };
@@ -39,11 +39,11 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         {
             var newDataPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
+                Region = defaultBalancingAuthority.Region,
                 PointTime = pointTime,
                 Value = 999.99F,
                 Version = "1.0",
-                Datatype = "dt",
+                SignalType = "dt",
                 Frequency = 300,
                 Market = "mkt",
             };
@@ -70,8 +70,8 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         {
             var newForecastPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
-                Datatype = "dt",
+                Region = defaultBalancingAuthority.Region,
+                SignalType = "dt",
                 Frequency = 300,
                 Market = "mkt",
                 PointTime = start,
@@ -104,8 +104,8 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         {
             var newForecastPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
-                Datatype = "dt",
+                Region = defaultBalancingAuthority.Region,
+                SignalType = "dt",
                 Frequency = 300,
                 Market = "mkt",
                 PointTime = start,
@@ -156,7 +156,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
                     .WithBody(body)
         );
     }
-    private void SetupBaMock(BalancingAuthority? content = null) =>
+    private void SetupBaMock(RegionResponse? content = null) =>
         SetupResponseGivenGetRequest(Paths.BalancingAuthorityFromLocation, JsonSerializer.Serialize(content ?? defaultBalancingAuthority));
 
     private void SetupLoginMock(LoginResult? content = null) =>

@@ -55,61 +55,66 @@ internal class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public async Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(string balancingAuthorityAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime)
+    public async Task<GridEmissionsDataResponse> GetDataAsync(string regionAbbreviation, DateTimeOffset startTime, DateTimeOffset endTime)
     {
         _log.LogInformation("Requesting grid emission data using start time {startTime} and endTime {endTime}", startTime, endTime);
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation },
+            { QueryStrings.Region, regionAbbreviation },
             { QueryStrings.StartTime, startTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
-            { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
+            { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
+            { QueryStrings.SignalType, SignalTypes.co2_moer},
         };
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, regionAbbreviation }
         };
 
         using (var result = await this.MakeRequestGetStreamAsync(Paths.Data, parameters, tags))
         {
-            return await JsonSerializer.DeserializeAsync<List<GridEmissionDataPoint>>(result, _options) ?? throw new WattTimeClientException($"Error getting forecasts for {balancingAuthorityAbbreviation}");
+            return await JsonSerializer.DeserializeAsync<GridEmissionsDataResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting forecasts for {regionAbbreviation}");
         }
     }
 
     /// <inheritdoc/>
-    public Task<IEnumerable<GridEmissionDataPoint>> GetDataAsync(BalancingAuthority balancingAuthority, DateTimeOffset startTime, DateTimeOffset endTime)
+    public Task<GridEmissionsDataResponse> GetDataAsync(RegionResponse region, DateTimeOffset startTime, DateTimeOffset endTime)
     {
-        return this.GetDataAsync(balancingAuthority.Abbreviation, startTime, endTime);
+        return this.GetDataAsync(region.Region, startTime, endTime);
     }
 
     /// <inheritdoc/>
-    public async Task<Forecast> GetCurrentForecastAsync(string balancingAuthorityAbbreviation)
+    public async Task<Forecast> GetCurrentForecastAsync(string region)
     {
 
-        _log.LogInformation("Requesting current forecast from balancing authority {balancingAuthority}", balancingAuthorityAbbreviation);
+        _log.LogInformation("Requesting current forecast from balancing authority {balancingAuthority}", region);
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, region },
+            { QueryStrings.SignalType, SignalTypes.co2_moer }
         };
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, region }
         };
 
         var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags);
 
-        var forecast = await JsonSerializer.DeserializeAsync<Forecast?>(result, _options) ?? throw new WattTimeClientException($"Error getting forecast for  {balancingAuthorityAbbreviation}");
+        var sr = new StreamReader(result);
+        var s = sr.ReadToEnd();
+
+        var forecast = await JsonSerializer.DeserializeAsync<Forecast?>(result, _options) ?? throw new WattTimeClientException($"Error getting forecast for  {region}");
 
         return forecast;
     }
 
     /// <inheritdoc/>
-    public Task<Forecast> GetCurrentForecastAsync(BalancingAuthority balancingAuthority)
+    public Task<Forecast> GetCurrentForecastAsync(RegionResponse balancingAuthority)
     {
-        return this.GetCurrentForecastAsync(balancingAuthority.Abbreviation);
+        return this.GetCurrentForecastAsync(balancingAuthority.Region);
     }
 
     /// <inheritdoc/>
@@ -136,13 +141,13 @@ internal class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public Task<Forecast?> GetForecastOnDateAsync(BalancingAuthority balancingAuthority, DateTimeOffset requestedAt)
+    public Task<Forecast?> GetForecastOnDateAsync(RegionResponse balancingAuthority, DateTimeOffset requestedAt)
     {
-        return this.GetForecastOnDateAsync(balancingAuthority.Abbreviation, requestedAt);
+        return this.GetForecastOnDateAsync(balancingAuthority.Region, requestedAt);
     }
 
     /// <inheritdoc/>
-    public async Task<BalancingAuthority> GetBalancingAuthorityAsync(string latitude, string longitude)
+    public async Task<RegionResponse> GetBalancingAuthorityAsync(string latitude, string longitude)
     {
         _log.LogInformation("Requesting balancing authority for lattitude {lattitude} and longitude {longitude}", latitude, longitude);
         return await GetBalancingAuthorityFromCacheAsync(latitude, longitude);
@@ -151,7 +156,7 @@ internal class WattTimeClient : IWattTimeClient
     /// <inheritdoc/>
     public async Task<string?> GetBalancingAuthorityAbbreviationAsync(string latitude, string longitude)
     {
-        return (await this.GetBalancingAuthorityAsync(latitude, longitude))?.Abbreviation;
+        return (await this.GetBalancingAuthorityAsync(latitude, longitude))?.Region;
     }
 
     /// <inheritdoc/>
@@ -176,9 +181,9 @@ internal class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public Task<Stream> GetHistoricalDataAsync(BalancingAuthority balancingAuthority)
+    public Task<Stream> GetHistoricalDataAsync(RegionResponse balancingAuthority)
     {
-        return this.GetHistoricalDataAsync(balancingAuthority.Abbreviation);
+        return this.GetHistoricalDataAsync(balancingAuthority.Region);
     }
 
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
@@ -290,7 +295,7 @@ internal class WattTimeClient : IWattTimeClient
         return result;
     }
 
-    private async Task<BalancingAuthority> GetBalancingAuthorityFromCacheAsync(string latitude, string longitude)
+    private async Task<RegionResponse> GetBalancingAuthorityFromCacheAsync(string latitude, string longitude)
     {
         var key = new Tuple<string, string>(latitude, longitude);
         var balancingAuthority = await this._memoryCache.GetOrCreateAsync(key, async entry =>
@@ -298,16 +303,18 @@ internal class WattTimeClient : IWattTimeClient
             var parameters = new Dictionary<string, string>()
             {
                 { QueryStrings.Latitude, latitude },
-                { QueryStrings.Longitude, longitude }
+                { QueryStrings.Longitude, longitude },
+                { QueryStrings.SignalType, SignalTypes.co2_moer}
             };
 
             var tags = new Dictionary<string, string>()
             {
                 { QueryStrings.Latitude, latitude },
-                { QueryStrings.Longitude, longitude }
+                { QueryStrings.Longitude, longitude },
+                { QueryStrings.SignalType, SignalTypes.co2_moer }
             };
             var result = await this.MakeRequestGetStreamAsync(Paths.BalancingAuthorityFromLocation, parameters, tags);
-            var baValue = await JsonSerializer.DeserializeAsync<BalancingAuthority>(result, _options) ?? throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}");
+            var baValue = await JsonSerializer.DeserializeAsync<RegionResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}");
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.BalancingAuthorityCacheTTL);
             entry.Value = baValue;
             return baValue;

@@ -8,4 +8,5 @@ internal class QueryStrings
     public const string Latitude = "latitude";
     public const string Longitude = "longitude";
     public const string Username = "username";
+    public const string SignalType = "signal_type";
 }

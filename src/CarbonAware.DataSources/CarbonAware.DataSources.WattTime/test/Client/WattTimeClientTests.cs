@@ -85,14 +85,14 @@ class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
+        var ba = new RegionResponse() { Region = "balauth" };
 
         Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba.Region, new DateTimeOffset(), new DateTimeOffset()));
         Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba.Region));
         Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba.Region, new DateTimeOffset()));
         Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
     }
 
@@ -103,14 +103,14 @@ class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
+        var ba = new RegionResponse() { Region = "balauth" };
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba.Abbreviation, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba.Region, new DateTimeOffset(), new DateTimeOffset()));
         Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba.Abbreviation));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba.Region));
         Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba.Region, new DateTimeOffset()));
         Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
     }
 
@@ -130,8 +130,8 @@ class WattTimeClientTests
 
         Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
-        Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
-        Assert.AreEqual("dt", gridDataPoint.Datatype);
+        Assert.AreEqual("ba", gridDataPoint.Region);
+        Assert.AreEqual("dt", gridDataPoint.SignalType);
         Assert.AreEqual(300, gridDataPoint.Frequency);
         Assert.AreEqual("mkt", gridDataPoint.Market);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), gridDataPoint.PointTime);
@@ -151,7 +151,7 @@ class WattTimeClientTests
 
         Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
-        Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
+        Assert.AreEqual("ba", gridDataPoint.Region);
     }
 
     [Test]
@@ -165,7 +165,7 @@ class WattTimeClientTests
 
         Assert.IsTrue(data.Count() > 0);
         var gridDataPoint = data.ToList().First();
-        Assert.AreEqual("ba", gridDataPoint.BalancingAuthorityAbbreviation);
+        Assert.AreEqual("ba", gridDataPoint.Region);
     }
 
     [Test]
@@ -180,9 +180,9 @@ class WattTimeClientTests
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
+        var ba = new RegionResponse() { Region = "balauth" };
 
-        var forecast = await client.GetCurrentForecastAsync(ba.Abbreviation);
+        var forecast = await client.GetCurrentForecastAsync(ba.Region);
         var overloadedForecast = await client.GetCurrentForecastAsync(ba);
 
         Assert.AreEqual(forecast.GeneratedAt, overloadedForecast.GeneratedAt);
@@ -191,7 +191,7 @@ class WattTimeClientTests
         Assert.IsNotNull(forecast);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast?.GeneratedAt);
         var forecastDataPoint = forecast?.ForecastData.First();
-        Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
+        Assert.AreEqual("ba", forecastDataPoint?.Region);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint?.PointTime);
         Assert.AreEqual("999.99", forecastDataPoint?.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint?.Version);
@@ -210,7 +210,7 @@ class WattTimeClientTests
         Assert.IsNotNull(forecast);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast?.GeneratedAt);
         var forecastDataPoint = forecast?.ForecastData.First();
-        Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
+        Assert.AreEqual("ba", forecastDataPoint?.Region);
     }
 
     [Test]
@@ -233,7 +233,7 @@ class WattTimeClientTests
         Assert.IsNotNull(forecast);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast?.GeneratedAt);
         var forecastDataPoint = forecast?.ForecastData.First();
-        Assert.AreEqual("ba", forecastDataPoint?.BalancingAuthorityAbbreviation);
+        Assert.AreEqual("ba", forecastDataPoint?.Region);
     }
 
     [Test]
@@ -247,9 +247,9 @@ class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new BalancingAuthority() { Abbreviation = "balauth" };
+        var ba = new RegionResponse() { Region = "balauth" };
 
-        var forecast = await client.GetForecastOnDateAsync(ba.Abbreviation, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var forecast = await client.GetForecastOnDateAsync(ba.Region, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
         var overloadedForecast = await client.GetForecastOnDateAsync(ba, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
 
         Assert.AreEqual(forecast!.GeneratedAt, overloadedForecast!.GeneratedAt);
@@ -257,7 +257,7 @@ class WattTimeClientTests
 
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecast.GeneratedAt);
         var forecastDataPoint = forecast.ForecastData.ToList().First();
-        Assert.AreEqual("ba", forecastDataPoint.BalancingAuthorityAbbreviation);
+        Assert.AreEqual("ba", forecastDataPoint.Region);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint.PointTime);
         Assert.AreEqual("999.99", forecastDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint.Version);
@@ -312,8 +312,8 @@ class WattTimeClientTests
 
         Assert.IsNotNull(ba);
         Assert.AreEqual(12345, ba?.Id);
-        Assert.AreEqual("TEST_BA", ba?.Abbreviation);
-        Assert.AreEqual("Test Balancing Authority", ba?.Name);
+        Assert.AreEqual("TEST_BA", ba?.Region);
+        Assert.AreEqual("Test Balancing Authority", ba?.RegionFullName);
     }
 
     [Test]

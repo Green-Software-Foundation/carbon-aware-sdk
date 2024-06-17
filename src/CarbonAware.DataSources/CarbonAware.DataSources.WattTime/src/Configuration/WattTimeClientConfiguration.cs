@@ -23,7 +23,7 @@ internal class WattTimeClientConfiguration
     /// <summary>
     /// Gets or sets the base url to use when connecting to WattTime
     /// </summary>
-    public string BaseUrl { get; set; } = "https://api2.watttime.org/v2/";
+    public string BaseUrl { get; set; } = "https://api.watttime.org/v3/";
 
     /// <summary>
     /// Authentication base url.  This changed between v2 and v3 

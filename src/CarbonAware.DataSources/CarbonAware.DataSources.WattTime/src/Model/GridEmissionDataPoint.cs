@@ -9,18 +9,6 @@ namespace CarbonAware.DataSources.WattTime.Model;
 internal record GridEmissionDataPoint
 {
     /// <summary>
-    /// Balancing authority abbreviation
-    /// </summary>
-    [JsonPropertyName("ba")]
-    public string BalancingAuthorityAbbreviation { get; set; } = string.Empty;
-
-    /// <summary>
-    /// Type of data. eg MOER
-    /// </summary>
-    [JsonPropertyName("datatype")]
-    public string? Datatype { get; set; }
-
-    /// <summary>
     /// Duration in seconds for which the data is valid from point_time.
     /// </summary>
     [JsonPropertyName("frequency")]
