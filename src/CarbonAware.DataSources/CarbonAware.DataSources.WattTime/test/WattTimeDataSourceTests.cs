@@ -127,6 +127,9 @@ class WattTimeDataSourceTests
         var forecastResponse = GenerateForecastResponse(2, value: lbsPerMwhEmissions);
         forecastResponse.Meta.GeneratedAt = generatedAt;
 
+        var historicalForecastResponse = GenerateHistoricalForecastResponse(2, value: lbsPerMwhEmissions);
+        historicalForecastResponse.Meta.GeneratedAt = generatedAt;
+
         EmissionsForecast result;
 
         if (getCurrentForecast)
@@ -140,10 +143,10 @@ class WattTimeDataSourceTests
         else
         {
             this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultRegion, generatedAt)
-                ).ReturnsAsync(() => forecastResponse);
+                ).ReturnsAsync(() => historicalForecastResponse);
 
             // Act
-            result = await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt);
+            result = await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt);
         }
 
         // Assert
@@ -174,18 +177,18 @@ class WattTimeDataSourceTests
         this.LocationSource.Setup(l => l.ToGeopositionLocationAsync(this.DefaultLocation)).Throws<LocationConversionException>();
 
         Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCurrentCarbonIntensityForecastAsync(this.DefaultLocation));
-        Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, new DateTimeOffset()));
+        Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, new DateTimeOffset()));
     }
 
     [Test]
-    public void GetCarbonIntensityForecastAsync_ThrowsWhenNoForecastFoundForReuqestedTime()
+    public void GetHistoricalCarbonIntensityForecastAsync_ThrowsWhenNoForecastFoundForReuqestedTime()
     {
         var generatedAt = new DateTimeOffset();
 
-        this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultRegion, generatedAt)).Returns(Task.FromResult<ForecastEmissionsDataResponse?>(null));
+        this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultRegion, generatedAt)).Returns(Task.FromResult<HistoricalForecastEmissionsDataResponse?>(null));
 
         // The datasource throws an exception if no forecasts are found at the requested generatedAt time.  
-        Assert.ThrowsAsync<ArgumentException>(async () => await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt));
+        Assert.ThrowsAsync<ArgumentException>(async () => await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt));
     }
 
     [TestCase(0, TestName = "GetCurrentCarbonIntensityForecastAsync throws for: No datapoints")]
@@ -211,7 +214,7 @@ class WattTimeDataSourceTests
         var requestedAt = DateTimeOffset.Parse(requested);
         var expectedAt = DateTimeOffset.Parse(expected);
 
-        var forecastResponse = GenerateForecastResponse(2, startTime: requestedAt);
+        var forecastResponse = GenerateHistoricalForecastResponse(2, startTime: requestedAt);
         forecastResponse.Meta.GeneratedAt = expectedAt;
 
 
@@ -219,7 +222,7 @@ class WattTimeDataSourceTests
                 ).ReturnsAsync(() => forecastResponse);
 
         // Act
-        var result = await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, requestedAt);
+        var result = await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, requestedAt);
 
         // Assert
         Assert.IsNotNull(result);
@@ -299,6 +302,31 @@ class WattTimeDataSourceTests
         var response = new GridEmissionsDataResponse()
         {
             Data = data,
+            Meta = meta
+        };
+
+        return response;
+    }
+
+    private HistoricalForecastEmissionsDataResponse GenerateHistoricalForecastResponse(int numberOfDatapoints, float value = 10, DateTimeOffset startTime = default)
+    {
+        var data = GenerateDataPoints(numberOfDatapoints, value, startTime);
+        var meta = new GridEmissionsMetaData()
+        {
+            Region = this.DefaultRegion.Region,
+            SignalType = SignalTypes.co2_moer
+        };
+
+        var response = new HistoricalForecastEmissionsDataResponse()
+        {
+            Data = new List<HistoricalEmissionsData>()
+            {
+                new HistoricalEmissionsData()
+                {
+                    Forecast = data,
+                    GeneratedAt = DateTimeOffset.Now
+                }
+            },
             Meta = meta
         };
 

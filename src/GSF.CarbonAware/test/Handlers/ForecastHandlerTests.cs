@@ -207,7 +207,7 @@ class ForecastHandlerTests
     {
         var datasource = new Mock<IForecastDataSource>();
         datasource
-            .Setup(x => x.GetCarbonIntensityForecastAsync(It.IsAny<Location>(), requested))
+            .Setup(x => x.GetHistoricalCarbonIntensityForecastAsync(It.IsAny<Location>(), requested))
             .ReturnsAsync(data);
 
         return datasource;
@@ -221,7 +221,7 @@ class ForecastHandlerTests
             .ThrowsAsync(new CarbonAware.Exceptions.CarbonAwareException(""));
 
         datasource
-            .Setup(x => x.GetCarbonIntensityForecastAsync(It.IsAny<Location>(), It.IsAny<DateTimeOffset>()))
+            .Setup(x => x.GetHistoricalCarbonIntensityForecastAsync(It.IsAny<Location>(), It.IsAny<DateTimeOffset>()))
             .ThrowsAsync(new CarbonAware.Exceptions.CarbonAwareException("", It.IsAny<Exception>()));
 
         return datasource;

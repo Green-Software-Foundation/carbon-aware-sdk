@@ -87,7 +87,7 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     }
 
     /// <inheritdoc />
-    public async Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
+    public async Task<EmissionsForecast> GetHistoricalCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location} requested at {requestedAt}");
         var balancingAuthority = await this.GetBalancingAuthority(location);
@@ -100,7 +100,26 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
             throw ex;
         }
         // keep input from the user.
-        return ForecastToEmissionsForecast(forecast, location, requestedAt);
+        return HistoricalForecastToEmissionsForecast(forecast, location, requestedAt);
+    }
+
+    private EmissionsForecast HistoricalForecastToEmissionsForecast(HistoricalForecastEmissionsDataResponse historicalForecast, Location location, DateTimeOffset requestedAt)
+    {
+        var duration = GetDurationFromGridEmissionDataPoints(historicalForecast.Data[0].Forecast);
+        var forecastData = historicalForecast.Data[0].Forecast.Select(e => new EmissionsData()
+        {
+            Location = historicalForecast.Meta.Region,
+            Rating = ConvertMoerToGramsPerKilowattHour(e.Value),
+            Time = e.PointTime,
+            Duration = duration
+        });
+        var emissionsForecast = new EmissionsForecast()
+        {
+            GeneratedAt = historicalForecast.Data[0].GeneratedAt,
+            Location = location,
+            ForecastData = forecastData
+        };
+        return emissionsForecast;
     }
 
     private EmissionsForecast ForecastToEmissionsForecast(ForecastEmissionsDataResponse forecast, Location location, DateTimeOffset requestedAt)

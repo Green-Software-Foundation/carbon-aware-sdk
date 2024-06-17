@@ -4,7 +4,7 @@ namespace CarbonAware;
 
 internal class NullForecastDataSource : IForecastDataSource
 {
-    public Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
+    public Task<EmissionsForecast> GetHistoricalCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {
         throw new ArgumentException("ForecastDataSource is not configured");
     }

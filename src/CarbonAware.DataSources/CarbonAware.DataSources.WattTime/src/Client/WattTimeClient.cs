@@ -103,9 +103,6 @@ internal class WattTimeClient : IWattTimeClient
 
         var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags);
 
-        var sr = new StreamReader(result);
-        var s = sr.ReadToEnd();
-
         var forecast = await JsonSerializer.DeserializeAsync<ForecastEmissionsDataResponse?>(result, _options) ?? throw new WattTimeClientException($"Error getting forecast for  {region}");
 
         return forecast;
@@ -118,32 +115,33 @@ internal class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public async Task<ForecastEmissionsDataResponse?> GetForecastOnDateAsync(string balancingAuthorityAbbreviation, DateTimeOffset requestedAt)
+    public async Task<HistoricalForecastEmissionsDataResponse?> GetForecastOnDateAsync(string region, DateTimeOffset requestedAt)
     {
-        _log.LogInformation($"Requesting forecast from balancingAuthority {balancingAuthorityAbbreviation} generated at {requestedAt}.");
+        _log.LogInformation($"Requesting forecast from balancingAuthority {region} generated at {requestedAt}.");
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation },
+            { QueryStrings.Region, region },
+            { QueryStrings.SignalType, SignalTypes.co2_moer },
             { QueryStrings.StartTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
             { QueryStrings.EndTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
         };
 
         var tags = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, region }
         };
-        using (var result = await this.MakeRequestGetStreamAsync(Paths.Forecast, parameters, tags))
+        using (var result = await this.MakeRequestGetStreamAsync(Paths.ForecastHistorical, parameters, tags))
         {
-            var forecasts = await JsonSerializer.DeserializeAsync<List<ForecastEmissionsDataResponse>>(result, _options) ?? throw new WattTimeClientException($"Error getting forecasts for {balancingAuthorityAbbreviation}");
-            return forecasts.FirstOrDefault();
+            var historicalForecastResponse = await JsonSerializer.DeserializeAsync<HistoricalForecastEmissionsDataResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting forecasts for {region}");
+            return historicalForecastResponse;
         }
     }
 
     /// <inheritdoc/>
-    public Task<ForecastEmissionsDataResponse?> GetForecastOnDateAsync(RegionResponse balancingAuthority, DateTimeOffset requestedAt)
+    public Task<HistoricalForecastEmissionsDataResponse?> GetForecastOnDateAsync(RegionResponse region, DateTimeOffset requestedAt)
     {
-        return this.GetForecastOnDateAsync(balancingAuthority.Region, requestedAt);
+        return this.GetForecastOnDateAsync(region.Region, requestedAt);
     }
 
     /// <inheritdoc/>

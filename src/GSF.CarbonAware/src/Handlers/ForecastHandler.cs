@@ -73,7 +73,7 @@ internal sealed class ForecastHandler : IForecastHandler
         {
             parameters.SetRequiredProperties(PropertyName.SingleLocation, PropertyName.Requested);
             parameters.Validate();
-            var forecast = await _forecastDataSource.GetCarbonIntensityForecastAsync(parameters.SingleLocation, parameters.Requested);
+            var forecast = await _forecastDataSource.GetHistoricalCarbonIntensityForecastAsync(parameters.SingleLocation, parameters.Requested);
             var emissionsForecast = ProcessAndValidateForecast(forecast, parameters);
             return emissionsForecast;
         }
