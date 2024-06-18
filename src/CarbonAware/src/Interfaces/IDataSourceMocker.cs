@@ -15,7 +15,7 @@ internal interface IDataSourceMocker
     public abstract void SetupDataMock(DateTimeOffset start, DateTimeOffset end, string location);
 
     public abstract void SetupForecastMock();
-    public abstract void SetupBatchForecastMock();
+    public abstract void SetupHistoricalBatchForecastMock();
 
     /// <summary>
     /// Initializes the DataSourceMocker with clean setup

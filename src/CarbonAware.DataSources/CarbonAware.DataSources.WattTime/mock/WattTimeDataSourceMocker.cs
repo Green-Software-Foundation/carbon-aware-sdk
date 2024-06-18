@@ -1,6 +1,6 @@
-﻿using CarbonAware.Interfaces;
-using CarbonAware.DataSources.WattTime.Constants;
+﻿using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.DataSources.WattTime.Model;
+using CarbonAware.Interfaces;
 using System.Net;
 using System.Net.Mime;
 using System.Text.Json;
@@ -13,11 +13,11 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
 {
     protected WireMockServer _server;
 
-    private static readonly BalancingAuthority defaultBalancingAuthority = new()
+    private static readonly RegionResponse defaultRegion = new()
     {
-        Id = 12345,
-        Abbreviation = "TEST_BA",
-        Name = "Test Balancing Authority"
+        Region = "TEST_REGION",
+        RegionFullName = "Test Region Full Name",
+        SignalType = SignalTypes.co2_moer
     };
 
     private static readonly LoginResult defaultLoginResult = new() { Token = "myDefaultToken123" };
@@ -26,6 +26,8 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
     {
         _server = WireMockServer.Start();
         Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__BaseURL", _server.Url!);
+        Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__AuthenticationBaseUrl", _server.Url!);
+
         Initialize();
     }
 
@@ -39,20 +41,31 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         {
             var newDataPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
                 PointTime = pointTime,
                 Value = 999.99F,
                 Version = "1.0",
-                Datatype = "dt",
                 Frequency = 300,
                 Market = "mkt",
             };
+
 
             data.Add(newDataPoint);
             pointTime = newDataPoint.PointTime + duration;
         }
 
-        SetupResponseGivenGetRequest(Paths.Data, JsonSerializer.Serialize(data));
+        var meta = new GridEmissionsMetaData()
+        {
+            Region = defaultRegion.Region,
+            SignalType = SignalTypes.co2_moer
+        };
+
+        var gridEmissionsResponse = new GridEmissionsDataResponse()
+        {
+            Data = data,
+            Meta = meta
+        };
+
+        SetupResponseGivenGetRequest(Paths.Data, JsonSerializer.Serialize(gridEmissionsResponse));
     }
 
     public void SetupForecastMock()
@@ -63,15 +76,13 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         var start = new DateTimeOffset(((curr.Ticks + d.Ticks - 1) / d.Ticks) * d.Ticks, TimeSpan.Zero);
         var end = start + TimeSpan.FromDays(1.0);
         var pointTime = start;
-        var ForecastData = new List<GridEmissionDataPoint>();
+        var forecastData = new List<GridEmissionDataPoint>();
         var currValue = 200.0F;
 
         while (pointTime < end)
         {
             var newForecastPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
-                Datatype = "dt",
                 Frequency = 300,
                 Market = "mkt",
                 PointTime = start,
@@ -80,32 +91,39 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
             };
             newForecastPoint.PointTime = pointTime;
             newForecastPoint.Value = currValue;
-            ForecastData.Add(newForecastPoint);
+            forecastData.Add(newForecastPoint);
             pointTime = pointTime + TimeSpan.FromMinutes(5);
             currValue = currValue + 5.0F;
         }
 
-        var forecast = new Forecast()
+        var meta = new GridEmissionsMetaData()
         {
-            ForecastData = ForecastData,
+            Region = defaultRegion.Region,
+            SignalType = SignalTypes.co2_moer,
             GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
         };
-        SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecast));
+
+        var forecastResponse = new ForecastEmissionsDataResponse()
+        {
+            Data = forecastData,
+            Meta = meta
+        };
+
+
+        SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastResponse));
     }
 
-    public void SetupBatchForecastMock()
+    public void SetupHistoricalBatchForecastMock()
     {
         var start = new DateTimeOffset(2021, 9, 1, 8, 30, 0, TimeSpan.Zero);
         var end = start + TimeSpan.FromDays(1.0);
         var pointTime = start;
-        var ForecastData = new List<GridEmissionDataPoint>();
+        var forecastData = new List<GridEmissionDataPoint>();
         var currValue = 200.0F;
         while (pointTime < end)
         {
             var newForecastPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = defaultBalancingAuthority.Abbreviation,
-                Datatype = "dt",
                 Frequency = 300,
                 Market = "mkt",
                 PointTime = start,
@@ -114,19 +132,41 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
             };
             newForecastPoint.PointTime = pointTime;
             newForecastPoint.Value = currValue;
-            ForecastData.Add(newForecastPoint);
+            forecastData.Add(newForecastPoint);
             pointTime = pointTime + TimeSpan.FromMinutes(5);
             currValue = currValue + 5.0F;
         }
 
-        var forecastData = new List<Forecast> {
-            new Forecast()
-            {
-                ForecastData = ForecastData,
-                GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
-            }
+        var meta = new GridEmissionsMetaData()
+        {
+            Region = defaultRegion.Region,
+            SignalType = SignalTypes.co2_moer,
+            GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
         };
-        SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastData));
+
+        //var forecastBatchData = new List<ForecastEmissionsDataResponse> {
+        //    new ForecastEmissionsDataResponse()
+        //    {
+        //        Data = forecastData,
+        //        Meta = meta
+        //    }
+        //};
+
+        var historicalForecastResponse = new HistoricalForecastEmissionsDataResponse()
+        {
+            Data = new List<HistoricalEmissionsData>()
+            {
+                new HistoricalEmissionsData()
+                {
+                    Forecast = forecastData,
+                    GeneratedAt = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)
+                }
+            },
+            Meta = meta
+        };
+
+
+        SetupResponseGivenGetRequest(Paths.ForecastHistorical, JsonSerializer.Serialize(historicalForecastResponse));
     }
 
     public void Initialize()
@@ -156,8 +196,8 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
                     .WithBody(body)
         );
     }
-    private void SetupBaMock(BalancingAuthority? content = null) =>
-        SetupResponseGivenGetRequest(Paths.BalancingAuthorityFromLocation, JsonSerializer.Serialize(content ?? defaultBalancingAuthority));
+    private void SetupBaMock(RegionResponse? content = null) =>
+        SetupResponseGivenGetRequest(Paths.RegionFromLocation, JsonSerializer.Serialize(content ?? defaultRegion));
 
     private void SetupLoginMock(LoginResult? content = null) =>
         SetupResponseGivenGetRequest(Paths.Login, JsonSerializer.Serialize(content ?? defaultLoginResult));

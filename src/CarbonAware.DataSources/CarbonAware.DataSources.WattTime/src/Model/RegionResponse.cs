@@ -6,24 +6,24 @@ namespace CarbonAware.DataSources.WattTime.Model;
 /// The details of the balancing authority (BA) serving a particular location.
 /// </summary>
 [Serializable]
-internal record BalancingAuthority
+internal record RegionResponse
 {
     /// <summary>
-    /// Balancing authority abbreviation.
+    /// Region abbreviation.
     /// </summary>
-    [JsonPropertyName("abbrev")]
-    public string Abbreviation { get; set; } = string.Empty;
+    [JsonPropertyName("region")]
+    public string Region { get; set; } = string.Empty;
 
     /// <summary>
-    /// Unique WattTime id for the region.
+    /// Signal Type
     /// </summary>
-    [JsonPropertyName("id")]
-    public int Id { get; set; }
+    [JsonPropertyName("signal_type")]
+    public string SignalType { get; set; } = string.Empty;
 
     /// <summary>
     /// Human readable name/description for the region.
     /// </summary>
-    [JsonPropertyName("name")]
-    public string Name { get; set; } = string.Empty;
+    [JsonPropertyName("region_full_name")]
+    public string RegionFullName { get; set; } = string.Empty;
 
 }

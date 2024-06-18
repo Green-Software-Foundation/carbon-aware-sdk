@@ -49,7 +49,7 @@ class ServiceCollectionExtensionTests
         var client = serviceProvider.GetRequiredService<IWattTimeClient>();
 
         // Act & Assert
-        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
+        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetRegionAsync("lat", "long"));
     }
 
     [Test]

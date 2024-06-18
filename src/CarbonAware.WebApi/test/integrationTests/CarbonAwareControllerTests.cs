@@ -280,7 +280,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
         var expectedRequestedAt = DateTimeOffset.Parse(reqAt);
         var expectedDataStartAt = DateTimeOffset.Parse(start);
         var expectedDataEndAt = DateTimeOffset.Parse(end);
-        _dataSourceMocker?.SetupBatchForecastMock();
+        _dataSourceMocker?.SetupHistoricalBatchForecastMock();
         var inputData = Enumerable.Range(0, nelems).Select(x => new
         {
             requestedAt = reqAt,
