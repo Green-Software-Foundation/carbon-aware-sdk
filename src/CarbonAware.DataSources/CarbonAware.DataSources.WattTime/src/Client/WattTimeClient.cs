@@ -215,7 +215,7 @@ internal class WattTimeClient : IWattTimeClient
 
     private async Task EnsureTokenAsync()
     {
-        if (this._authenticationClient.DefaultRequestHeaders.Authorization == null)
+        if (this._client.DefaultRequestHeaders.Authorization == null)
         {
             await this.UpdateAuthTokenAsync();
         }
