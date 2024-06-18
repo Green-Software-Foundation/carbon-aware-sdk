@@ -1,4 +1,5 @@
 ﻿using CarbonAware.DataSources.WattTime.Client;
+using CarbonAware.DataSources.WattTime.Client.Tests;
 using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.DataSources.WattTime.Model;
 using CarbonAware.Exceptions;
@@ -119,7 +120,7 @@ class WattTimeDataSourceTests
         // Arrange
         var startDate = this.DefaultDataStartTime;
         var endDate = startDate.AddMinutes(1);
-        var generatedAt = new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
+        var generatedAt = TestData.TestDataConstants.GeneratedAt;// new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
         var lbsPerMwhEmissions = 10;
         var gPerKwhEmissions = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
         var expectedDuration = TimeSpan.FromMinutes(5);
@@ -324,7 +325,7 @@ class WattTimeDataSourceTests
                 new HistoricalEmissionsData()
                 {
                     Forecast = data,
-                    GeneratedAt = DateTimeOffset.Now
+                    GeneratedAt = TestData.TestDataConstants.GeneratedAt
                 }
             },
             Meta = meta

@@ -152,7 +152,7 @@ class WattTimeClientTests
         var emissionsResponse = await client.GetDataAsync("region", new DateTimeOffset(), new DateTimeOffset());
 
         Assert.IsTrue(emissionsResponse.Data.Count() > 0);
-        Assert.AreEqual("region", emissionsResponse.Meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.Region, emissionsResponse.Meta.Region);
     }
 
     [Test]
@@ -165,7 +165,7 @@ class WattTimeClientTests
         var gridEmissionsResponse = await client.GetDataAsync("region", new DateTimeOffset(), new DateTimeOffset());
 
         Assert.IsTrue(gridEmissionsResponse.Data.Count() > 0);
-        Assert.AreEqual("region", gridEmissionsResponse.Meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.Region, gridEmissionsResponse.Meta.Region);
     }
 
     [Test]
@@ -241,15 +241,15 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals("https://api2.watttime.org/v2/forecast?ba=balauth&starttime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&endtime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00") && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Equals("https://api.watttime.org/v3/forecast/historical?region=region&start=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&end=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type=co2_moer") && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, TestData.GetHistoricalForecastDataJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new RegionResponse() { Region = "region" };
+        var region = new RegionResponse() { Region = "region" };
 
-        var forecastResponse = await client.GetForecastOnDateAsync(ba.Region, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
-        var overloadedForecast = await client.GetForecastOnDateAsync(ba, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var forecastResponse = await client.GetForecastOnDateAsync(region.Region, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+        var overloadedForecast = await client.GetForecastOnDateAsync(region, new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
 
         Assert.AreEqual(forecastResponse!.Meta.GeneratedAt, overloadedForecast!.Meta.GeneratedAt);
         Assert.AreEqual(forecastResponse.Data[0].Forecast.First(), overloadedForecast.Data[0].Forecast.First());
@@ -259,7 +259,7 @@ class WattTimeClientTests
 
         var forecastDataPoint = forecastResponse.Data[0].Forecast.ToList().First();
         Assert.AreEqual(TestData.TestDataConstants.PointTime, forecastDataPoint.PointTime);
-        Assert.AreEqual(TestData.TestDataConstants.Value, forecastDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
+        Assert.AreEqual(TestData.TestDataConstants.Value.ToString("0.00", CultureInfo.InvariantCulture), forecastDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint.Version);
     }
 
