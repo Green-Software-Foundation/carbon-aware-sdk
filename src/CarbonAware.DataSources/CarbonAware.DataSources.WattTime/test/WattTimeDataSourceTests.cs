@@ -50,7 +50,7 @@ class WattTimeDataSourceTests
         this.DefaultLocation = new Location() { Name = "eastus" };
         this.DefaultRegion = new RegionResponse() { Region = "TEST_REGION", RegionFullName = "Test Region Full Name", SignalType = SignalTypes.co2_moer };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
-        MockBalancingAuthorityLocationMapping();
+        MockRegionLocationMapping();
     }
 
     [Test]
@@ -281,7 +281,7 @@ class WattTimeDataSourceTests
         CollectionAssert.AreEqual(expectedDurationList, actualDurationList);
     }
 
-    private void MockBalancingAuthorityLocationMapping()
+    private void MockRegionLocationMapping()
     {
         this.LocationSource.Setup(r => r.ToGeopositionLocationAsync(this.DefaultLocation)).Returns(Task.FromResult(this.DefaultLocation));
         var latitude = this.DefaultLocation.Latitude.ToString();

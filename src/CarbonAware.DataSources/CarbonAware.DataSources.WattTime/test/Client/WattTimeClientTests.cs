@@ -71,12 +71,12 @@ class WattTimeClientTests
         this.BasicAuthValue = "invalid";
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
-        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetDataAsync("ba", new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetCurrentForecastAsync("ba"));
-        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetForecastOnDateAsync("ba", new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetDataAsync(TestData.TestDataConstants.Region, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetCurrentForecastAsync(TestData.TestDataConstants.Region));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetForecastOnDateAsync(TestData.TestDataConstants.Region, new DateTimeOffset()));
         Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetRegionAsync("lat", "long"));
-        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetBalancingAuthorityAbbreviationAsync("lat", "long"));
-        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetHistoricalDataAsync("ba"));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetRegionAbbreviationAsync("lat", "long"));
+        Assert.ThrowsAsync<WattTimeClientHttpException>(async () => await client.GetHistoricalDataAsync(TestData.TestDataConstants.Region));
     }
 
     [Test]
@@ -86,15 +86,15 @@ class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new RegionResponse() { Region = "balauth" };
+        var region = new RegionResponse() { Region = "balauth" };
 
         Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetRegionAsync("lat", "long"));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba.Region, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba.Region));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(ba));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba.Region, new DateTimeOffset()));
-        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(region.Region, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetDataAsync(region, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(region.Region));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetCurrentForecastAsync(region));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(region.Region, new DateTimeOffset()));
+        Assert.ThrowsAsync<WattTimeClientException>(async () => await client.GetForecastOnDateAsync(region, new DateTimeOffset()));
     }
 
     [Test]
@@ -104,15 +104,15 @@ class WattTimeClientTests
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
-        var ba = new RegionResponse() { Region = "balauth" };
+        var region = new RegionResponse() { Region = TestData.TestDataConstants.Region };
 
         Assert.ThrowsAsync<JsonException>(async () => await client.GetRegionAsync("lat", "long"));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba.Region, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(ba, new DateTimeOffset(), new DateTimeOffset()));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba.Region));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(ba));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba.Region, new DateTimeOffset()));
-        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(ba, new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(region.Region, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetDataAsync(region, new DateTimeOffset(), new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(region.Region));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetCurrentForecastAsync(region));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(region.Region, new DateTimeOffset()));
+        Assert.ThrowsAsync<JsonException>(async () => await client.GetForecastOnDateAsync(region, new DateTimeOffset()));
     }
 
     [Test]
@@ -297,7 +297,7 @@ class WattTimeClientTests
     }
 
     [Test]
-    public async Task GetBalancingAuthorityAsync_DeserializesExpectedResponse()
+    public async Task GetRegionAsync_DeserializesExpectedResponse()
     {
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
@@ -318,7 +318,7 @@ class WattTimeClientTests
     }
 
     [Test]
-    public async Task GetBalancingAuthorityAsync_RefreshesTokenWhenExpired()
+    public async Task GetRegionAsync_RefreshesTokenWhenExpired()
     {
         this.SetupBasicHandlers(TestData.GetRegionJsonString(), "REFRESHTOKEN");
 
@@ -332,7 +332,7 @@ class WattTimeClientTests
     }
 
     [Test]
-    public async Task GetBalancingAuthorityAsync_RefreshesTokenWhenNoneSet()
+    public async Task GetRegionAsync_RefreshesTokenWhenNoneSet()
     {
         // Override http client mock to remove authorization header
         Mock.Get(this.HttpClientFactory).Setup(x => x.CreateClient(IWattTimeClient.NamedClient))
@@ -363,7 +363,7 @@ class WattTimeClientTests
             var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
             client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-            var result = await client.GetHistoricalDataAsync("ba");
+            var result = await client.GetHistoricalDataAsync(TestData.TestDataConstants.Region);
             var sr = new StreamReader(result);
             string streamResult = sr.ReadToEnd();
 
@@ -390,7 +390,7 @@ class WattTimeClientTests
 
             var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
-            var result = await client.GetHistoricalDataAsync("ba");
+            var result = await client.GetHistoricalDataAsync(TestData.TestDataConstants.Region);
             var sr = new StreamReader(result);
             string streamResult = sr.ReadToEnd();
 
@@ -408,7 +408,7 @@ class WattTimeClientTests
             var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
             client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-            var result = await client.GetHistoricalDataAsync("ba");
+            var result = await client.GetHistoricalDataAsync(TestData.TestDataConstants.Region);
             var sr = new StreamReader(result);
             string streamResult = sr.ReadToEnd();
 

@@ -3,7 +3,7 @@
 namespace CarbonAware.DataSources.WattTime.Model;
 
 /// <summary>
-/// An object describing the emissions for a given time period and balancing authority.
+/// An object describing the emissions for a given time period and region.
 /// </summary>
 [Serializable]
 internal record GridEmissionDataPoint

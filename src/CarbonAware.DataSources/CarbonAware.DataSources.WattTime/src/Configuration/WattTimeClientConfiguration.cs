@@ -32,10 +32,10 @@ internal class WattTimeClientConfiguration
     public string AuthenticationBaseUrl { get; set; } = "https://api.watttime.org/";
 
     /// <summary>
-    /// Gets or sets the cached expiration time (in seconds) for a BalancingAuthority instance.
+    /// Gets or sets the cached expiration time (in seconds) for a Region instance.
     /// It defaults to 86400 secs.
     /// </summary>
-    public int BalancingAuthorityCacheTTL { get; set; } = 86400;
+    public int RegionCacheTTL { get; set; } = 86400;
 
     /// <summary>
     /// Validate that this object is properly configured.

@@ -35,7 +35,7 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     /// </summary>
     /// <param name="logger">The logger for the datasource</param>
     /// <param name="client">The WattTime Client</param>
-    /// <param name="locationSource">The location source to be used to convert a location to BA's.</param>
+    /// <param name="locationSource">The location source to be used to convert a location to named region's.</param>
     public WattTimeDataSource(ILogger<WattTimeDataSource> logger, IWattTimeClient client, ILocationSource locationSource)
     {
         this.Logger = logger;
@@ -60,9 +60,9 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     public async Task<IEnumerable<EmissionsData>> GetCarbonIntensityAsync(Location location, DateTimeOffset periodStartTime, DateTimeOffset periodEndTime)
     {
         Logger.LogInformation($"Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.");
-        var balancingAuthority = await this.GetBalancingAuthority(location);
+        var region = await this.GetRegion(location);
         var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(periodStartTime, periodEndTime, MinSamplingWindow);
-        var historicalResponse = await this.WattTimeClient.GetDataAsync(balancingAuthority, newStartTime, newEndTime);
+        var historicalResponse = await this.WattTimeClient.GetDataAsync(region, newStartTime, newEndTime);
         if (Logger.IsEnabled(LogLevel.Debug))
         {
             Logger.LogDebug($"Found {historicalResponse.Data.Count()} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.");
@@ -81,8 +81,8 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     public async Task<EmissionsForecast> GetCurrentCarbonIntensityForecastAsync(Location location)
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location}");
-        var balancingAuthority = await this.GetBalancingAuthority(location);
-        var forecast = await this.WattTimeClient.GetCurrentForecastAsync(balancingAuthority);
+        var region = await this.GetRegion(location);
+        var forecast = await this.WattTimeClient.GetCurrentForecastAsync(region);
         return ForecastToEmissionsForecast(forecast, location, DateTimeOffset.UtcNow);
     }
 
@@ -90,9 +90,9 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
     public async Task<EmissionsForecast> GetHistoricalCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {
         this.Logger.LogInformation($"Getting carbon intensity forecast for location {location} requested at {requestedAt}");
-        var balancingAuthority = await this.GetBalancingAuthority(location);
+        var region = await this.GetRegion(location);
         var roundedRequestedAt = TimeToLowestIncrement(requestedAt);
-        var forecast = await this.WattTimeClient.GetForecastOnDateAsync(balancingAuthority, roundedRequestedAt);
+        var forecast = await this.WattTimeClient.GetForecastOnDateAsync(region, roundedRequestedAt);
         if (forecast == null)
         {
             var ex = new ArgumentException($"No forecast was generated at the requested time {roundedRequestedAt}");
@@ -190,23 +190,23 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         return (frequency != null) ? TimeSpan.FromSeconds((double)frequency) : defaultValue;
     }
 
-    private async Task<RegionResponse> GetBalancingAuthority(Location location)
+    private async Task<RegionResponse> GetRegion(Location location)
     {
-        RegionResponse balancingAuthority;
+        RegionResponse region;
         try
         {
             var geolocation = await this.LocationSource.ToGeopositionLocationAsync(location);
-            balancingAuthority = await WattTimeClient.GetRegionAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
+            region = await WattTimeClient.GetRegionAsync(geolocation.LatitudeAsCultureInvariantString(), geolocation.LongitudeAsCultureInvariantString());
         }
         catch (Exception ex) when (ex is LocationConversionException || ex is WattTimeClientHttpException)
         {
-            Logger.LogError(ex, "Failed to convert the location {location} into a Balancing Authority.", location);
+            Logger.LogError(ex, "Failed to convert the location {location} into a Region.", location);
             throw;
         }
 
-        Logger.LogDebug("Converted location {location} to balancing authority {balancingAuthorityAbbreviation}", location, balancingAuthority.Region);
+        Logger.LogDebug("Converted location {location} to region {region}", location, region.Region);
 
-        return balancingAuthority;
+        return region;
     }
 
     private DateTimeOffset TimeToLowestIncrement(DateTimeOffset date, int minutes = 5)

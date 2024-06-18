@@ -88,7 +88,7 @@ internal class WattTimeClient : IWattTimeClient
     public async Task<ForecastEmissionsDataResponse> GetCurrentForecastAsync(string region)
     {
 
-        _log.LogInformation("Requesting current forecast from balancing authority {balancingAuthority}", region);
+        _log.LogInformation("Requesting current forecast from region: {region}", region);
 
         var parameters = new Dictionary<string, string>()
         {
@@ -109,15 +109,15 @@ internal class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public Task<ForecastEmissionsDataResponse> GetCurrentForecastAsync(RegionResponse balancingAuthority)
+    public Task<ForecastEmissionsDataResponse> GetCurrentForecastAsync(RegionResponse region)
     {
-        return this.GetCurrentForecastAsync(balancingAuthority.Region);
+        return this.GetCurrentForecastAsync(region.Region);
     }
 
     /// <inheritdoc/>
     public async Task<HistoricalForecastEmissionsDataResponse?> GetForecastOnDateAsync(string region, DateTimeOffset requestedAt)
     {
-        _log.LogInformation($"Requesting forecast from balancingAuthority {region} generated at {requestedAt}.");
+        _log.LogInformation($"Requesting forecast from region {region} generated at {requestedAt}.");
 
         var parameters = new Dictionary<string, string>()
         {
@@ -147,24 +147,24 @@ internal class WattTimeClient : IWattTimeClient
     /// <inheritdoc/>
     public async Task<RegionResponse> GetRegionAsync(string latitude, string longitude)
     {
-        _log.LogInformation("Requesting balancing authority for lattitude {lattitude} and longitude {longitude}", latitude, longitude);
-        return await GetBalancingAuthorityFromCacheAsync(latitude, longitude);
+        _log.LogInformation("Requesting region for lattitude {lattitude} and longitude {longitude}", latitude, longitude);
+        return await GetRegionFromCacheAsync(latitude, longitude);
     }
 
     /// <inheritdoc/>
-    public async Task<string?> GetBalancingAuthorityAbbreviationAsync(string latitude, string longitude)
+    public async Task<string?> GetRegionAbbreviationAsync(string latitude, string longitude)
     {
         return (await this.GetRegionAsync(latitude, longitude))?.Region;
     }
 
     /// <inheritdoc/>
-    public async Task<Stream> GetHistoricalDataAsync(string balancingAuthorityAbbreviation)
+    public async Task<Stream> GetHistoricalDataAsync(string regionAbbreviation)
     {
-        _log.LogInformation("Requesting historical data for balancing authority {balancingAuthority}", balancingAuthorityAbbreviation);
+        _log.LogInformation("Requesting historical data for region {regionAbbreviation}", regionAbbreviation);
 
         var parameters = new Dictionary<string, string>()
         {
-            { QueryStrings.Region, balancingAuthorityAbbreviation }
+            { QueryStrings.Region, regionAbbreviation }
         };
 
         var url = BuildUrlWithQueryString(Paths.Historical, parameters);
@@ -179,9 +179,9 @@ internal class WattTimeClient : IWattTimeClient
     }
 
     /// <inheritdoc/>
-    public Task<Stream> GetHistoricalDataAsync(RegionResponse balancingAuthority)
+    public Task<Stream> GetHistoricalDataAsync(RegionResponse region)
     {
-        return this.GetHistoricalDataAsync(balancingAuthority.Region);
+        return this.GetHistoricalDataAsync(region.Region);
     }
 
     private async Task<HttpResponseMessage> GetAsyncWithAuthRetry(string uriPath)
@@ -293,10 +293,10 @@ internal class WattTimeClient : IWattTimeClient
         return result;
     }
 
-    private async Task<RegionResponse> GetBalancingAuthorityFromCacheAsync(string latitude, string longitude)
+    private async Task<RegionResponse> GetRegionFromCacheAsync(string latitude, string longitude)
     {
         var key = new Tuple<string, string>(latitude, longitude);
-        var balancingAuthority = await this._memoryCache.GetOrCreateAsync(key, async entry =>
+        var region = await this._memoryCache.GetOrCreateAsync(key, async entry =>
         {
             var parameters = new Dictionary<string, string>()
             {
@@ -312,11 +312,11 @@ internal class WattTimeClient : IWattTimeClient
                 { QueryStrings.SignalType, SignalTypes.co2_moer }
             };
             var result = await this.MakeRequestGetStreamAsync(Paths.RegionFromLocation, parameters, tags);
-            var baValue = await JsonSerializer.DeserializeAsync<RegionResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}");
-            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.BalancingAuthorityCacheTTL);
-            entry.Value = baValue;
-            return baValue;
+            var regionResponse = await JsonSerializer.DeserializeAsync<RegionResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting Region for latitude {latitude} and longitude {longitude}");
+            entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.RegionCacheTTL);
+            entry.Value = regionResponse;
+            return regionResponse;
         });
-        return balancingAuthority;
+        return region;
     }
 }

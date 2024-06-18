@@ -3,7 +3,7 @@
 namespace CarbonAware.DataSources.WattTime.Model;
 
 /// <summary>
-/// The details of the balancing authority (BA) serving a particular location.
+/// The details of the region serving a particular location.
 /// </summary>
 [Serializable]
 internal record RegionResponse
