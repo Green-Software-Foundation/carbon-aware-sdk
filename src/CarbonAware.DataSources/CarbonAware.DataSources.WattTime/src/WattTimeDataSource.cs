@@ -62,12 +62,12 @@ internal class WattTimeDataSource : IEmissionsDataSource, IForecastDataSource
         Logger.LogInformation($"Getting carbon intensity for location {location} for period {periodStartTime} to {periodEndTime}.");
         var balancingAuthority = await this.GetBalancingAuthority(location);
         var (newStartTime, newEndTime) = IntervalHelper.ExtendTimeByWindow(periodStartTime, periodEndTime, MinSamplingWindow);
-        var historialResponse = await this.WattTimeClient.GetDataAsync(balancingAuthority, newStartTime, newEndTime);
+        var historicalResponse = await this.WattTimeClient.GetDataAsync(balancingAuthority, newStartTime, newEndTime);
         if (Logger.IsEnabled(LogLevel.Debug))
         {
-            Logger.LogDebug($"Found {historialResponse.Data.Count()} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.");
+            Logger.LogDebug($"Found {historicalResponse.Data.Count()} total forecasts for location {location} for period {periodStartTime} to {periodEndTime}.");
         }
-        var windowData = ConvertToEmissionsData(historialResponse);
+        var windowData = ConvertToEmissionsData(historicalResponse);
         var filteredData = IntervalHelper.FilterByDuration(windowData, periodStartTime, periodEndTime);
 
         if (!filteredData.Any())

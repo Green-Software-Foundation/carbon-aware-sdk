@@ -121,8 +121,8 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals("https://api2.watttime.org/v2/data?ba=balauth&starttime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&endtime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00") && r.Method == HttpMethod.Get;
-        }, System.Net.HttpStatusCode.OK, TestData.GetGridDataJsonString());
+            return r.RequestUri!.ToString().Equals($"https://api.watttime.org/v3/data?region=region&starttime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&endtime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type={SignalTypes.co2_moer}") && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, TestData.GetGridDataResponseJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
@@ -144,7 +144,7 @@ class WattTimeClientTests
     [Test]
     public async Task GetDataAsync_RefreshesTokenWhenExpired()
     {
-        this.SetupBasicHandlers(TestData.GetGridDataJsonString(), "REFRESHTOKEN");
+        this.SetupBasicHandlers(TestData.GetGridDataResponseJsonString(), "REFRESHTOKEN");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
@@ -158,7 +158,7 @@ class WattTimeClientTests
     [Test]
     public async Task GetDataAsync_RefreshesTokenWhenNoneSet()
     {
-        this.SetupBasicHandlers(TestData.GetGridDataJsonString(), "REFRESHTOKEN");
+        this.SetupBasicHandlers(TestData.GetGridDataResponseJsonString(), "REFRESHTOKEN");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
@@ -174,23 +174,23 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals("https://api2.watttime.org/v2/forecast?ba=balauth") && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Equals(@"https://api.watttime.org/v3/forecast?region=region&signal_type=co2_moer") && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, TestData.GetCurrentForecastJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
 
-        var regionResponse = new RegionResponse() { Region = "region" };
+        const string REGION = "region";
 
-        var forecastResponse = await client.GetCurrentForecastAsync(regionResponse.Region);
-        var overloadedForecast = await client.GetCurrentForecastAsync(regionResponse);
+        var forecastResponse = await client.GetCurrentForecastAsync(REGION);
+        var overloadedForecast = await client.GetCurrentForecastAsync(REGION);
 
         Assert.AreEqual(forecastResponse.Meta.GeneratedAt, overloadedForecast.Meta.GeneratedAt);
         Assert.AreEqual(forecastResponse.Data.First(), overloadedForecast.Data.First());
 
         Assert.IsNotNull(forecastResponse);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastResponse?.Meta.GeneratedAt);
-        Assert.AreEqual("region", forecastResponse?.Meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.Region, forecastResponse?.Meta.Region);
         var forecastDataPoint = forecastResponse?.Data.First();
 
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint?.PointTime);
@@ -210,7 +210,7 @@ class WattTimeClientTests
 
         Assert.IsNotNull(forecastResponse);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastResponse?.Meta.GeneratedAt);
-        Assert.AreEqual("region", forecastResponse?.Meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.Region, forecastResponse?.Meta.Region);
     }
 
     [Test]
@@ -232,7 +232,7 @@ class WattTimeClientTests
 
         Assert.IsNotNull(forecastResponse);
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastResponse?.Meta.GeneratedAt);
-        Assert.AreEqual("region", forecastResponse?.Meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.Region, forecastResponse?.Meta.Region);
     }
 
     [Test]
@@ -242,7 +242,7 @@ class WattTimeClientTests
         this.AddHandler_RequestResponse(r =>
         {
             return r.RequestUri!.ToString().Equals("https://api2.watttime.org/v2/forecast?ba=balauth&starttime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&endtime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00") && r.Method == HttpMethod.Get;
-        }, System.Net.HttpStatusCode.OK, TestData.GetForecastByDateJsonString());
+        }, System.Net.HttpStatusCode.OK, TestData.GetHistoricalForecastDataJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
@@ -255,18 +255,18 @@ class WattTimeClientTests
         Assert.AreEqual(forecastResponse.Data[0].Forecast.First(), overloadedForecast.Data[0].Forecast.First());
 
         Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastResponse.Meta.GeneratedAt);
-        Assert.AreEqual("region", forecastResponse.Meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.Region, forecastResponse.Meta.Region);
 
         var forecastDataPoint = forecastResponse.Data[0].Forecast.ToList().First();
-        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), forecastDataPoint.PointTime);
-        Assert.AreEqual("999.99", forecastDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
+        Assert.AreEqual(TestData.TestDataConstants.PointTime, forecastDataPoint.PointTime);
+        Assert.AreEqual(TestData.TestDataConstants.Value, forecastDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", forecastDataPoint.Version);
     }
 
     [Test]
     public async Task GetForecastOnDateAsync_RefreshesTokenWhenExpired()
     {
-        this.SetupBasicHandlers(TestData.GetForecastByDateJsonString(), "REFRESHTOKEN");
+        this.SetupBasicHandlers(TestData.GetHistoricalForecastDataJsonString(), "REFRESHTOKEN");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
@@ -287,7 +287,7 @@ class WattTimeClientTests
                 return client;
             });
 
-        this.SetupBasicHandlers(TestData.GetForecastByDateJsonString(), "REFRESHTOKEN");
+        this.SetupBasicHandlers(TestData.GetHistoricalForecastDataJsonString(), "REFRESHTOKEN");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
@@ -302,8 +302,9 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals("https://api2.watttime.org/v2/ba-from-loc?latitude=lat&longitude=long") && r.Method == HttpMethod.Get;
-        }, System.Net.HttpStatusCode.OK, TestData.GetBalancingAuthorityJsonString());
+            return r.RequestUri!.ToString().Equals("https://api.watttime.org/v3/region-from-loc?latitude=lat&longitude=long&signal_type=co2_moer") && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, TestData.GetRegionJsonString());
+
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
@@ -311,15 +312,15 @@ class WattTimeClientTests
         var regionResponse = await client.GetRegionAsync("lat", "long");
 
         Assert.IsNotNull(regionResponse);
-        Assert.AreEqual("TEST_BA", regionResponse?.Region);
-        Assert.AreEqual("Test Balancing Authority", regionResponse?.RegionFullName);
+        Assert.AreEqual(TestData.TestDataConstants.Region, regionResponse?.Region);
+        Assert.AreEqual(TestData.TestDataConstants.RegionFullName, regionResponse?.RegionFullName);
         Assert.AreEqual(SignalTypes.co2_moer, regionResponse?.SignalType);
     }
 
     [Test]
     public async Task GetBalancingAuthorityAsync_RefreshesTokenWhenExpired()
     {
-        this.SetupBasicHandlers(TestData.GetBalancingAuthorityJsonString(), "REFRESHTOKEN");
+        this.SetupBasicHandlers(TestData.GetRegionJsonString(), "REFRESHTOKEN");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
         client.SetBearerAuthenticationHeader(this.DefaultTokenValue);
@@ -342,7 +343,7 @@ class WattTimeClientTests
                 return client;
             });
 
-        this.SetupBasicHandlers(TestData.GetBalancingAuthorityJsonString(), "REFRESHTOKEN");
+        this.SetupBasicHandlers(TestData.GetRegionJsonString(), "REFRESHTOKEN");
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
 
@@ -429,12 +430,12 @@ class WattTimeClientTests
 
         AddHandler_RequestResponse(r =>
         {
-            return (r.RequestUri == new Uri("https://api2.watttime.org/v2/login") && ($"Basic {this.BasicAuthValue}".Equals(r.Headers.Authorization?.ToString())));
+            return (r.RequestUri == new Uri("https://api.watttime.org/login") && ($"Basic {this.BasicAuthValue}".Equals(r.Headers.Authorization?.ToString())));
         }, System.Net.HttpStatusCode.OK, "{\"token\":\"" + validToken + "\"}");
 
         AddHandler_RequestResponse(r =>
         {
-            return !(r.RequestUri == new Uri("https://api2.watttime.org/v2/login") && ($"Basic {this.BasicAuthValue}".Equals(r.Headers.Authorization?.ToString()))) && r.Headers.Authorization?.ToString() != $"Bearer {validToken}";
+            return !(r.RequestUri == new Uri("https://api.watttime.org/login") && ($"Basic {this.BasicAuthValue}".Equals(r.Headers.Authorization?.ToString()))) && r.Headers.Authorization?.ToString() != $"Bearer {validToken}";
         }, System.Net.HttpStatusCode.Forbidden);
     }
 
@@ -449,7 +450,7 @@ class WattTimeClientTests
 
         // Catch-all for "requesting url that is not login and has valid token"
         this.Handler
-            .SetupRequest(r => r.RequestUri != new Uri("https://api2.watttime.org/v2/login") && r.Headers.Authorization?.ToString() == $"Bearer {validToken}")
+            .SetupRequest(r => r.RequestUri != new Uri("https://api.watttime.org/login") && r.Headers.Authorization?.ToString() == $"Bearer {validToken}")
             .ReturnsResponse(System.Net.HttpStatusCode.OK, responseContent);
     }
 
@@ -463,7 +464,7 @@ class WattTimeClientTests
         AddHandlers_Auth(validToken);
 
         // Catch-all for "requesting url that is not login and has valid token"
-        AddHandler_RequestResponse(r => r.RequestUri != new Uri("https://api2.watttime.org/v2/login") && r.Headers.Authorization?.ToString() == $"Bearer {validToken}", System.Net.HttpStatusCode.OK, responseContent);
+        AddHandler_RequestResponse(r => r.RequestUri != new Uri("https://api.watttime.org/login") && r.Headers.Authorization?.ToString() == $"Bearer {validToken}", System.Net.HttpStatusCode.OK, responseContent);
     }
 
     /**

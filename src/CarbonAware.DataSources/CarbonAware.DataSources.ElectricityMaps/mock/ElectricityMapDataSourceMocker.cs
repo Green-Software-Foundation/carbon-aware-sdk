@@ -126,7 +126,7 @@ internal class ElectricityMapsDataSourceMocker : IDataSourceMocker
         SetupResponseGivenGetRequest(Paths.PastRange, pastRange);
     }
 
-    public void SetupBatchForecastMock()
+    public void SetupHistoricalBatchForecastMock()
     {
         throw new NotImplementedException();
     }

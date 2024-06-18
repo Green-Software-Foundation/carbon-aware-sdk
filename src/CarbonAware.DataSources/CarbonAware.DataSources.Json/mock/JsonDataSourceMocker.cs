@@ -42,7 +42,7 @@ internal class JsonDataSourceMocker : IDataSourceMocker
     public void Reset() { }
     public void Dispose() { }
 
-    public void SetupBatchForecastMock()
+    public void SetupHistoricalBatchForecastMock()
     {
         throw new NotImplementedException();
     }

@@ -26,6 +26,8 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
     {
         _server = WireMockServer.Start();
         Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__BaseURL", _server.Url!);
+        Environment.SetEnvironmentVariable("DataSources__Configurations__WattTime__AuthenticationBaseUrl", _server.Url!);
+
         Initialize();
     }
 
@@ -111,7 +113,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastResponse));
     }
 
-    public void SetupBatchForecastMock()
+    public void SetupHistoricalBatchForecastMock()
     {
         var start = new DateTimeOffset(2021, 9, 1, 8, 30, 0, TimeSpan.Zero);
         var end = start + TimeSpan.FromDays(1.0);
@@ -142,14 +144,29 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
             GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
         };
 
-        var forecastBatchData = new List<ForecastEmissionsDataResponse> {
-            new ForecastEmissionsDataResponse()
+        //var forecastBatchData = new List<ForecastEmissionsDataResponse> {
+        //    new ForecastEmissionsDataResponse()
+        //    {
+        //        Data = forecastData,
+        //        Meta = meta
+        //    }
+        //};
+
+        var historicalForecastResponse = new HistoricalForecastEmissionsDataResponse()
+        {
+            Data = new List<HistoricalEmissionsData>()
             {
-                Data = forecastData,
-                Meta = meta
-            }
+                new HistoricalEmissionsData()
+                {
+                    Forecast = forecastData,
+                    GeneratedAt = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)
+                }
+            },
+            Meta = meta
         };
-        SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastBatchData));
+
+
+        SetupResponseGivenGetRequest(Paths.ForecastHistorical, JsonSerializer.Serialize(historicalForecastResponse));
     }
 
     public void Initialize()
@@ -180,7 +197,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         );
     }
     private void SetupBaMock(RegionResponse? content = null) =>
-        SetupResponseGivenGetRequest(Paths.BalancingAuthorityFromLocation, JsonSerializer.Serialize(content ?? defaultRegion));
+        SetupResponseGivenGetRequest(Paths.RegionFromLocation, JsonSerializer.Serialize(content ?? defaultRegion));
 
     private void SetupLoginMock(LoginResult? content = null) =>
         SetupResponseGivenGetRequest(Paths.Login, JsonSerializer.Serialize(content ?? defaultLoginResult));

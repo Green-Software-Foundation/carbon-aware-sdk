@@ -122,9 +122,9 @@ internal class WattTimeClient : IWattTimeClient
         var parameters = new Dictionary<string, string>()
         {
             { QueryStrings.Region, region },
-            { QueryStrings.SignalType, SignalTypes.co2_moer },
             { QueryStrings.StartTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
-            { QueryStrings.EndTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) }
+            { QueryStrings.EndTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
+            { QueryStrings.SignalType, SignalTypes.co2_moer }
         };
 
         var tags = new Dictionary<string, string>()
@@ -215,7 +215,7 @@ internal class WattTimeClient : IWattTimeClient
 
     private async Task EnsureTokenAsync()
     {
-        if (this._client.DefaultRequestHeaders.Authorization == null)
+        if (this._authenticationClient.DefaultRequestHeaders.Authorization == null)
         {
             await this.UpdateAuthTokenAsync();
         }
@@ -249,7 +249,7 @@ internal class WattTimeClient : IWattTimeClient
     private void SetBasicAuthenticationHeader()
     {
         var authToken = Encoding.UTF8.GetBytes($"{this._configuration.Username}:{this._configuration.Password}");
-        this._client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Basic, Convert.ToBase64String(authToken));
+        //this._client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Basic, Convert.ToBase64String(authToken));
         this._authenticationClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(AuthenticationHeaderTypes.Basic, Convert.ToBase64String(authToken));
     }
 
@@ -311,7 +311,7 @@ internal class WattTimeClient : IWattTimeClient
                 { QueryStrings.Longitude, longitude },
                 { QueryStrings.SignalType, SignalTypes.co2_moer }
             };
-            var result = await this.MakeRequestGetStreamAsync(Paths.BalancingAuthorityFromLocation, parameters, tags);
+            var result = await this.MakeRequestGetStreamAsync(Paths.RegionFromLocation, parameters, tags);
             var baValue = await JsonSerializer.DeserializeAsync<RegionResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting Balancing Authority for latitude {latitude} and longitude {longitude}");
             entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.BalancingAuthorityCacheTTL);
             entry.Value = baValue;

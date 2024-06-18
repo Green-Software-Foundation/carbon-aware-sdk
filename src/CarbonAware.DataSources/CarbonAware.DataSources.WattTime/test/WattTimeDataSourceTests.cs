@@ -47,7 +47,7 @@ class WattTimeDataSourceTests
         this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
 
         this.DefaultLocation = new Location() { Name = "eastus" };
-        this.DefaultRegion = new RegionResponse() { Region = "BA" };
+        this.DefaultRegion = new RegionResponse() { Region = "TEST_REGION", RegionFullName = "Test Region Full Name", SignalType = SignalTypes.co2_moer };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         MockBalancingAuthorityLocationMapping();
     }
@@ -91,8 +91,8 @@ class WattTimeDataSourceTests
 
         this.WattTimeClient.Setup(w => w.GetDataAsync(
             this.DefaultRegion,
-            startDate,
-            endDate)
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>())
         ).ReturnsAsync(() => new GridEmissionsDataResponse());
 
         var result = await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { this.DefaultLocation }, startDate, endDate);
