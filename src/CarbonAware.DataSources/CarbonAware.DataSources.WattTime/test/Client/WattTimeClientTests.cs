@@ -121,7 +121,7 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals($"https://api.watttime.org/v3/data?region=region&starttime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&endtime=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type={SignalTypes.co2_moer}") && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Equals("https://api.watttime.org/v3/historical?region=region&start=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&end=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type=co2_moer") && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, TestData.GetGridDataResponseJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
@@ -131,12 +131,12 @@ class WattTimeClientTests
 
         Assert.IsTrue(emissionsResponse.Data.Count() > 0);
         var meta = emissionsResponse.Meta;
-        Assert.AreEqual("region", meta.Region);
-        Assert.AreEqual("signal_type", meta.SignalType);
+        Assert.AreEqual(TestData.TestDataConstants.Region, meta.Region);
+        Assert.AreEqual(TestData.TestDataConstants.SignalType, meta.SignalType);
         var gridDataPoint = emissionsResponse.Data.ToList().First();
         Assert.AreEqual(300, gridDataPoint.Frequency);
-        Assert.AreEqual("mkt", gridDataPoint.Market);
-        Assert.AreEqual(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero), gridDataPoint.PointTime);
+        Assert.AreEqual(TestData.TestDataConstants.Market, gridDataPoint.Market);
+        Assert.AreEqual(TestData.TestDataConstants.PointTime, gridDataPoint.PointTime);
         Assert.AreEqual("999.99", gridDataPoint.Value.ToString("0.00", CultureInfo.InvariantCulture)); //Format float to avoid precision issues
         Assert.AreEqual("1.0", gridDataPoint.Version);
     }

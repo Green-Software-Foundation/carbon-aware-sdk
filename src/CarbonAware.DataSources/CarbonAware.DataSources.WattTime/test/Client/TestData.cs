@@ -18,6 +18,7 @@ internal static class TestData
         public static DateTime Date = new DateTime(2099, 1, 1, 0, 0, 0);
         public const float Value = 999.99f;
         public const string Version = "1.0";
+        public const string SignalType = SignalTypes.co2_moer;
     }
 
     internal static string GetGridDataResponseJsonString()
