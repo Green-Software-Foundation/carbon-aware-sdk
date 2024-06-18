@@ -147,7 +147,7 @@ internal class WattTimeClient : IWattTimeClient
     /// <inheritdoc/>
     public async Task<RegionResponse> GetRegionAsync(string latitude, string longitude)
     {
-        _log.LogInformation("Requesting region for lattitude {lattitude} and longitude {longitude}", latitude, longitude);
+        _log.LogInformation("Requesting region for latitude {latitude} and longitude {longitude}", latitude, longitude);
         return await GetRegionFromCacheAsync(latitude, longitude);
     }
 
