@@ -27,7 +27,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddEmissionsServices(this IServiceCollection services, IConfiguration configuration)
     {
-        AddLocationServices(services, configuration);
+        AddLocationService(services, configuration);
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<IEmissionsHandler, EmissionsHandler>();
         services.TryAddSingleton<ILocationHandler, LocationHandler>();
@@ -40,7 +40,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     /// <param name="services"></param>
     /// <param name="configuration"></param>
-    private static void AddLocationServices(IServiceCollection services, IConfiguration configuration)
+    private static void AddLocationService(IServiceCollection services, IConfiguration configuration)
     {
         if (!services.Any(x => x.ServiceType == typeof(ILocationSource)))
         {
@@ -54,7 +54,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddForecastServices(this IServiceCollection services, IConfiguration configuration)
     {
-        AddLocationServices(services, configuration);
+        AddLocationService(services, configuration);
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<IForecastHandler, ForecastHandler>();
         services.TryAddSingleton<ILocationHandler, LocationHandler>();
