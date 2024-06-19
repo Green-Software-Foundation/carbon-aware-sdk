@@ -6,9 +6,9 @@ using System.Text.Json;
 
 namespace CarbonAware.DataSources.WattTime.Client.Tests;
 
-internal static class TestData
+public static class WattTimeTestData
 {
-    public class TestDataConstants
+    public class Constants
     {
         public const string Region = "TEST_REGION";
         public const string RegionFullName = "Test Region Full Name";
@@ -19,6 +19,7 @@ internal static class TestData
         public const float Value = 999.99f;
         public const string Version = "1.0";
         public const string SignalType = SignalTypes.co2_moer;
+        public const int Frequency = 300;
     }
 
     internal static string GetGridDataResponseJsonString()
@@ -39,12 +40,12 @@ internal static class TestData
     {
         var gridEmissionsMetaData = new GridEmissionsMetaData()
         {
-            Region = TestDataConstants.Region,
-            GeneratedAt = TestDataConstants.GeneratedAt,
+            Region = Constants.Region,
+            GeneratedAt = Constants.GeneratedAt,
             GeneratedAtPeriodSeconds = 30,
             Model = new GridEmissionsModelData()
             {
-                Date = TestDataConstants.Date,
+                Date = Constants.Date,
                 Type = SignalTypes.co2_moer
             },
             DataPointPeriodSeconds = 30,
@@ -67,10 +68,10 @@ internal static class TestData
         return new GridEmissionDataPoint()
         {
             Frequency = 300,
-            Market = TestDataConstants.Market,
-            PointTime = TestDataConstants.PointTime,
-            Value = TestDataConstants.Value,
-            Version = TestDataConstants.Version
+            Market = Constants.Market,
+            PointTime = Constants.PointTime,
+            Value = Constants.Value,
+            Version = Constants.Version
         };
     }
 
@@ -104,7 +105,7 @@ internal static class TestData
                 new HistoricalEmissionsData()
                 {
                     Forecast = _GetGridEmissionDataPoints(),
-                    GeneratedAt = TestDataConstants.GeneratedAt
+                    GeneratedAt = Constants.GeneratedAt
                 }
             }
         };
@@ -119,8 +120,8 @@ internal static class TestData
     {
         return new RegionResponse()
         {
-            Region = TestDataConstants.Region,
-            RegionFullName = TestDataConstants.RegionFullName,
+            Region = Constants.Region,
+            RegionFullName = Constants.RegionFullName,
             SignalType = SignalTypes.co2_moer
         };
     }

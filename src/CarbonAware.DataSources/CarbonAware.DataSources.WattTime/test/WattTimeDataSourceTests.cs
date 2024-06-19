@@ -120,7 +120,7 @@ class WattTimeDataSourceTests
         // Arrange
         var startDate = this.DefaultDataStartTime;
         var endDate = startDate.AddMinutes(1);
-        var generatedAt = TestData.TestDataConstants.GeneratedAt;// new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
+        var generatedAt = WattTimeTestData.Constants.GeneratedAt;// new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
         var lbsPerMwhEmissions = 10;
         var gPerKwhEmissions = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
         var expectedDuration = TimeSpan.FromMinutes(5);
@@ -325,7 +325,7 @@ class WattTimeDataSourceTests
                 new HistoricalEmissionsData()
                 {
                     Forecast = data,
-                    GeneratedAt = TestData.TestDataConstants.GeneratedAt
+                    GeneratedAt = WattTimeTestData.Constants.GeneratedAt
                 }
             },
             Meta = meta

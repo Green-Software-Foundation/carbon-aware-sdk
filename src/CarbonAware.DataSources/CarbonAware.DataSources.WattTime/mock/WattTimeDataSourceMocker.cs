@@ -1,4 +1,5 @@
-﻿using CarbonAware.DataSources.WattTime.Constants;
+﻿using CarbonAware.DataSources.WattTime.Client.Tests;
+using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.DataSources.WattTime.Model;
 using CarbonAware.Interfaces;
 using System.Net;
@@ -15,9 +16,9 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
 
     private static readonly RegionResponse defaultRegion = new()
     {
-        Region = "TEST_REGION",
-        RegionFullName = "Test Region Full Name",
-        SignalType = SignalTypes.co2_moer
+        Region = WattTimeTestData.Constants.Region,
+        RegionFullName = WattTimeTestData.Constants.RegionFullName,
+        SignalType = WattTimeTestData.Constants.SignalType
     };
 
     private static readonly LoginResult defaultLoginResult = new() { Token = "myDefaultToken123" };
@@ -42,12 +43,11 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
             var newDataPoint = new GridEmissionDataPoint()
             {
                 PointTime = pointTime,
-                Value = 999.99F,
-                Version = "1.0",
-                Frequency = 300,
-                Market = "mkt",
+                Value = WattTimeTestData.Constants.Value,
+                Version = WattTimeTestData.Constants.Version,
+                Frequency = WattTimeTestData.Constants.Frequency,
+                Market = WattTimeTestData.Constants.Market
             };
-
 
             data.Add(newDataPoint);
             pointTime = newDataPoint.PointTime + duration;
@@ -56,7 +56,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         var meta = new GridEmissionsMetaData()
         {
             Region = defaultRegion.Region,
-            SignalType = SignalTypes.co2_moer
+            SignalType = WattTimeTestData.Constants.SignalType
         };
 
         var gridEmissionsResponse = new GridEmissionsDataResponse()
@@ -83,11 +83,11 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         {
             var newForecastPoint = new GridEmissionDataPoint()
             {
-                Frequency = 300,
-                Market = "mkt",
+                Frequency = WattTimeTestData.Constants.Frequency,
+                Market = WattTimeTestData.Constants.Market,
                 PointTime = start,
                 Value = currValue,
-                Version = "1.0"
+                Version = WattTimeTestData.Constants.Version
             };
             newForecastPoint.PointTime = pointTime;
             newForecastPoint.Value = currValue;
@@ -99,8 +99,8 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         var meta = new GridEmissionsMetaData()
         {
             Region = defaultRegion.Region,
-            SignalType = SignalTypes.co2_moer,
-            GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
+            SignalType = WattTimeTestData.Constants.SignalType,
+            GeneratedAt = WattTimeTestData.Constants.GeneratedAt
         };
 
         var forecastResponse = new ForecastEmissionsDataResponse()
@@ -108,7 +108,6 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
             Data = forecastData,
             Meta = meta
         };
-
 
         SetupResponseGivenGetRequest(Paths.Forecast, JsonSerializer.Serialize(forecastResponse));
     }
@@ -124,11 +123,11 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         {
             var newForecastPoint = new GridEmissionDataPoint()
             {
-                Frequency = 300,
-                Market = "mkt",
+                Frequency = WattTimeTestData.Constants.Frequency,
+                Market = WattTimeTestData.Constants.Market,
                 PointTime = start,
                 Value = currValue,
-                Version = "1.0"
+                Version = WattTimeTestData.Constants.Version
             };
             newForecastPoint.PointTime = pointTime;
             newForecastPoint.Value = currValue;
@@ -140,17 +139,9 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
         var meta = new GridEmissionsMetaData()
         {
             Region = defaultRegion.Region,
-            SignalType = SignalTypes.co2_moer,
-            GeneratedAt = new DateTimeOffset(2022, 1, 1, 0, 0, 0, TimeSpan.Zero)
+            SignalType = WattTimeTestData.Constants.SignalType,
+            GeneratedAt = WattTimeTestData.Constants.GeneratedAt
         };
-
-        //var forecastBatchData = new List<ForecastEmissionsDataResponse> {
-        //    new ForecastEmissionsDataResponse()
-        //    {
-        //        Data = forecastData,
-        //        Meta = meta
-        //    }
-        //};
 
         var historicalForecastResponse = new HistoricalForecastEmissionsDataResponse()
         {
@@ -159,7 +150,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
                 new HistoricalEmissionsData()
                 {
                     Forecast = forecastData,
-                    GeneratedAt = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)
+                    GeneratedAt = WattTimeTestData.Constants.GeneratedAt
                 }
             },
             Meta = meta
@@ -171,7 +162,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
 
     public void Initialize()
     {
-        SetupBaMock();
+        SetupRegionMock();
         SetupLoginMock();
     }
 
@@ -196,7 +187,7 @@ internal class WattTimeDataSourceMocker : IDataSourceMocker
                     .WithBody(body)
         );
     }
-    private void SetupBaMock(RegionResponse? content = null) =>
+    private void SetupRegionMock(RegionResponse? content = null) =>
         SetupResponseGivenGetRequest(Paths.RegionFromLocation, JsonSerializer.Serialize(content ?? defaultRegion));
 
     private void SetupLoginMock(LoginResult? content = null) =>
