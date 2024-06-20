@@ -122,7 +122,7 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals("https://api.watttime.org/v3/historical?region=region&start=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&end=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type=co2_moer") && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Equals($"https://api.watttime.org/v3/historical?region={WattTimeTestData.Constants.Region}&start=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&end=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type=co2_moer") && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, WattTimeTestData.GetGridDataResponseJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
@@ -175,7 +175,7 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals(@"https://api.watttime.org/v3/forecast?region=region&signal_type=co2_moer") && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Equals($"https://api.watttime.org/v3/forecast?region={WattTimeTestData.Constants.Region}&signal_type=co2_moer") && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, WattTimeTestData.GetCurrentForecastJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
@@ -240,7 +240,7 @@ class WattTimeClientTests
         this.AddHandlers_Auth();
         this.AddHandler_RequestResponse(r =>
         {
-            return r.RequestUri!.ToString().Equals("https://api.watttime.org/v3/forecast/historical?region=region&start=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&end=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type=co2_moer") && r.Method == HttpMethod.Get;
+            return r.RequestUri!.ToString().Equals($"https://api.watttime.org/v3/forecast/historical?region={WattTimeTestData.Constants.Region}&start=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&end=2022-04-22T00%3a00%3a00.0000000%2b00%3a00&signal_type=co2_moer") && r.Method == HttpMethod.Get;
         }, System.Net.HttpStatusCode.OK, WattTimeTestData.GetHistoricalForecastDataJsonString());
 
         var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
