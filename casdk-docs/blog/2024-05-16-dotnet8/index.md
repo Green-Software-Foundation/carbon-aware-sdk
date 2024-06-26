@@ -6,7 +6,7 @@ tags: [dotnet8]
 
 As most software nowadays, the Carbon Aware SDK relies on a stack of utilities, and while adding a new feature is usually the most appealing for a project, it’s also critical to maintain the stack, especially in a community effort.
 
-Containerization has helped shifting the upgrading work to a more convenient time for the development team, but there are still various motivation for keeping a stack up to date with current versions: security, bug fixes, performance, support… but the best is to couple with new feature development: such was the case for .NET framework.
+Containerization has helped shift the upgrading work to a more convenient time for the development team, but there are still various motivations for keeping a stack up to date with current versions: security, bug fixes, performance, support… but the best is to couple with new feature development: such was the case for .NET framework.
 
 However, those updates often have ripple effects, as their dependencies are not always foreseeable, making software upgrade workload hard to predict.
 
@@ -90,7 +90,7 @@ Changing the port number from WebAPI container, which affects the containerPort 
 
 ## Broken build pipeline on GitHub Actions
 
-Thanks to GitHub, a lot of automation is available in order to publish code, allowing to focus more on coding, in particular the Carbon Aware SDK repository is configured to publish WebAPI container image (like a snapshot build) when a commit occurs on the dev branch. 
+Thanks to GitHub, a lot of automation is available in order to publish code, allowing contributors to focus more on coding. In particular the Carbon Aware SDK repository is configured to publish WebAPI container image (like a snapshot build) when a commit occurs on the dev branch.
 
 However, it suddenly stopped working after .NET 8 upgrade.
 
@@ -105,19 +105,19 @@ The team investigated the logs (Fig. 2), as a container image for both AMD64 and
 
 Fig.2 Logs in `dotnet publish` on GitHub Actions
 
-Further investigation was done, and thanks to a [.NET blog](https://devblogs.microsoft.com/dotnet/improving-multiplatform-container-support/), about multi-platform container support, that an unsupported approach was used for the build, and needed to be amended. More precisely, since .NET 6, QEMU static binaries were used to build container image for multi platforms.
+Further investigation was done, and thanks to a [.NET blog](https://devblogs.microsoft.com/dotnet/improving-multiplatform-container-support/) about multi-platform container support, we identified that an unsupported approach was used for the build, and needed to be amended. More precisely, since .NET 6, QEMU static binaries were used to build container image for multi platforms.
 
 Fortunately .NET blog guides how to build multi platform container images, and the workflow was fixed accordingly in [Pull Request #498](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/498). So WebAPI container image with .NET 8 can be pulled from [GitHub Packages](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/carbon-aware-sdk) now!
 
 # Use case in NTT / NTT DATA
 
-While NTT & NTT DATA have been contributing to the Carbon Aware SDK a long time, none appeared in the [adopters list](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/casdk-docs/docs/overview/adopters.md), it is now changed thanks to those uses cases.
+While NTT & NTT DATA have been contributing to the Carbon Aware SDK a long time, we had not previously publicly referenced our [adoption of the tool](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/casdk-docs/docs/overview/adopters.md).
+
+The Carbon Aware SDK v1.4.0 carbon metrics exporter (dependent on .NET8 upgrade) has increased the usefulness of the SDK due to increased visualization capability are reachable.
 
 ## Carbon Intensity map
 
-Thanks to the new Carbon Aware SDK v1.4.0 carbon metrics exporter (thanks to .NET 8), more visualization capability are reachable.
-
-This feature facilitate integration with monitoring solutions like [Prometheus](https://prometheus.io/) and furthermore with a visualization solution like [Grafana](https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/): unlocking geomap style visualization (showing metrics at specified locations on a map). By enabling the exporter and making some settings on Grafana, carbon intensities can be exported from Carbon Aware SDK to a geomap, this is part of a dashboard to monitor carbon emissions for software systems.
+This feature facilitates integration with monitoring solutions like [Prometheus](https://prometheus.io/) and furthermore with a visualization solution like [Grafana](https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/): unlocking geomap style visualization (showing metrics at specified locations on a map). By enabling the exporter and making some settings on Grafana, carbon intensities can be exported from Carbon Aware SDK to a geomap, this is part of a dashboard to monitor carbon emissions for software systems.
 
 The Carbon Intensity can be intuitively visualized with size and colors on a geomap, beyond raising awareness, this can guide decisions on location or time shift.
 
@@ -145,12 +145,12 @@ While in monolitic application optimization need customized instrumentation, and
 
 # Moving Forward
 
-With the Cloud Computing expansion, and Kubernetes flexibility, more and more choices exist for running a workload, and while business and economical constraints seem obvious to lead those decisions, Carbon footprint have to be taken in account. Its relevance will be more and more pregnant.
+With the Cloud Computing expansion, and Kubernetes flexibility, more and more choices exist for running a workload. While business and economical constraints often lead those decisions, the carbon footprint is becoming an increasingly critical consideration.
 
-This is a difficult endeavour, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intent behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is key element in this approach.
+This is a difficult endeavour, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intentions behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is key element in this approach.
 
 By providing a standard interface to the carbon emissions of the energy, the Carbon Aware SDK is a key element for IT sustainability: from evaluating current carbon footprint up to taking in account carbon intensity for geo or time shifting…
 
-Thanks to the community effort the first step is a click away with the quickstarting guide, available for everyone.
+Thanks to the community effort the first step is a click away with the [quickstarting guide](https://carbon-aware-sdk.greensoftware.foundation/docs/quickstart), available for everyone.
 
 No excuse !
