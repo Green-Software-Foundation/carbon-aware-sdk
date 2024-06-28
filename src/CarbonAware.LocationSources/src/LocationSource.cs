@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Reflection;
 using System.Text.Json;
+using System.Threading;
 
 namespace CarbonAware.LocationSources;
 
@@ -21,7 +22,6 @@ internal class LocationSource : ILocationSource
     private IOptionsMonitor<LocationDataSourcesConfiguration> _configurationMonitor { get; }
 
     private LocationDataSourcesConfiguration _configuration => _configurationMonitor.CurrentValue;
-
 
     /// <summary>
     /// Creates a new instance of the <see cref="LocationSource"/> class.
@@ -61,14 +61,21 @@ internal class LocationSource : ILocationSource
         var sourceFiles = !_configuration.LocationSourceFiles.Any() ? DiscoverFiles() : _configuration.LocationSourceFiles;
         foreach (var source in sourceFiles)
         {
-            using Stream stream = GetStreamFromFileLocation(source);
-            var namedGeoMap = await JsonSerializer.DeserializeAsync<Dictionary<string, NamedGeoposition>>(stream, options);
-            foreach (var locationKey in namedGeoMap!.Keys) 
+            if (File.Exists(source.DataFileLocation!))
             {
-                var geoInstance = namedGeoMap[locationKey];
-                geoInstance.AssertValid();
-                var key = BuildKey(source, locationKey);
-                AddToLocationMap(key, geoInstance, source.DataFileLocation, keyCounter);
+                using Stream stream = GetStreamFromFileLocation(source);
+                var namedGeoMap = await JsonSerializer.DeserializeAsync<Dictionary<string, NamedGeoposition>>(stream, options);
+                foreach (var locationKey in namedGeoMap!.Keys)
+                {
+                    var geoInstance = namedGeoMap[locationKey];
+                    geoInstance.AssertValid();
+                    var key = BuildKey(source, locationKey);
+                    AddToLocationMap(key, geoInstance, source.DataFileLocation, keyCounter);
+                }
+            }
+            else
+            {
+                _logger.LogError($"Configured data source not found at '{source.DataFileLocation}'");
             }
         }
     }
@@ -78,11 +85,27 @@ internal class LocationSource : ILocationSource
         return $"{locationData.Prefix}{locationData.Delimiter}{locationName}";
     }
 
+    /// <summary>
+    /// Semaphore is to stop any concurrent loading of the file, which 
+    /// could in turn update the list twice and result in duplicate entries, 
+    /// in turn resulting in suffixed keys to avoid clashes when not 
+    /// required.
+    /// </summary>
+    private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
     private async Task LoadLocationFromFileIfNotPresentAsync()
     {
-        if (!_allLocations.Any())
+        await _semaphore.WaitAsync();
+
+        try
         {
-            await LoadLocationJsonFileAsync();
+            if (!_allLocations.Any())
+            {
+                await LoadLocationJsonFileAsync();
+            }
+        }
+        finally
+        {
+            _semaphore.Release();
         }
     }
 

@@ -49,7 +49,7 @@ internal class ElectricityMapsFreeDataSourceMocker : IDataSourceMocker
         throw new NotImplementedException();
     }
 
-    public void SetupBatchForecastMock()
+    public void SetupHistoricalBatchForecastMock()
     {
         throw new NotImplementedException();
     }

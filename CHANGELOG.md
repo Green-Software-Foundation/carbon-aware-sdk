@@ -2,6 +2,69 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
+## [1.5.0] - 2024-05
+
+This is the WattTime v3 update.  Most notable changes that may require action are for deployment configuration, and these are minor.
+
+### Added 
+
+WattTime v3 API support.  This is an inplace upgrade for v2.
+
+### Removed
+
+WattTime v2 API support due to v3 in place replacement.
+
+### Fixed
+
+-[#535] [Bug]: Configuration for locations loads twice](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/535)
+
+### Changed
+
+Updates for WattTime v3 API endpoint from v2, details in the [ADR for WattTime v3 changes](./casdk-docs/docs/architecture//decisions/0016-watt-time-v3.md).
+
+#### API
+
+No changes
+
+#### API Deployment
+
+Due to the change for WattTime v3, there is change to the configuration for WattTime users.
+
+With some of the changes to the code, some of the configuration will also needs to change.
+
+| Config (v2)                   | Config (v3)                 | Description                  |
+|------------------------------------|----------------------------------|------------------------------|
+| `BalancingAuthorityCacheTTL`                                 | `RegionCacheTTL`                                 | This is the cache for regions data in seconds, and has a default value of 1 day.  This only needs updating if you set it |
+| n/a                        | `AuthenticationBaseUrl`                                | **NEW** This is the base URL for the WattTime Authentication API and defaults to `https://api.watttime.org/` if not set. |
+
+Example below if set (note they do not have to be set)
+```json
+"wattTime_no-proxy": {
+  "Type": "WattTime",
+  "Username": "the_username",
+  "Password": "super_secret_secret",
+  "BaseURL": "https://api.watttime.org/v3/",
+  "AutenticationBaseURL": "https://api.watttime.org", // This is new but not mandatory in config
+  "RegionCacheTTL": 86400, // This is changed but not mandatory in config
+  "Proxy": {
+    "UseProxy": false
+  }
+```
+
+#### SDK 
+
+No changes
+
+
+#### Other
+
+No changes
+
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503) 
+
+
+
 
 ## [1.4.0] - 2024-05
 

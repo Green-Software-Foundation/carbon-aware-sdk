@@ -423,7 +423,7 @@ EmissionsForecast()
 #### Locations
 
 Each WattTime emissions data point is associated with a particular named
-balancing authority. For transparency, this value is also used in
+region often referred to as a balancing authority. For transparency, this value is also used in
 `EmissionsData` response objects. It is not overwritten to match the named
 datacenter provided by any request.
 
