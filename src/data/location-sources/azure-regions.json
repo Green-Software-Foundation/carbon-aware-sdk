@@ -60,8 +60,8 @@
     "Name": "centralus"
   },
   "southafricanorth": {
-    "Latitude": "-25.731340",
-    "Longitude": "28.218370",
+    "Latitude": "-25.73134",
+    "Longitude": "28.21837",
     "Name": "southafricanorth"
   },
   "centralindia": {
@@ -81,7 +81,7 @@
   },
   "koreacentral": {
     "Latitude": "37.5665",
-    "Longitude": "126.9780",
+    "Longitude": "126.978",
     "Name": "koreacentral"
   },
   "canadacentral": {
@@ -91,7 +91,7 @@
   },
   "francecentral": {
     "Latitude": "46.3772",
-    "Longitude": "2.3730",
+    "Longitude": "2.373",
     "Name": "francecentral"
   },
   "germanywestcentral": {
@@ -99,10 +99,30 @@
     "Longitude": "8.682127",
     "Name": "germanywestcentral"
   },
+  "italynorth": {
+    "Latitude": "45.46888",
+    "Longitude": "9.18109",
+    "Name": "italynorth"
+  },
   "norwayeast": {
     "Latitude": "59.913868",
     "Longitude": "10.752245",
     "Name": "norwayeast"
+  },
+  "polandcentral": {
+    "Latitude": "52.23334",
+    "Longitude": "21.01666",
+    "Name": "polandcentral"
+  },
+  "spaincentral": {
+    "Latitude": "40.4259",
+    "Longitude": "3.4209",
+    "Name": "spaincentral"
+  },
+  "mexicocentral": {
+    "Latitude": "20.588818",
+    "Longitude": "-100.389888",
+    "Name": "mexicocentral"
   },
   "brazilsouth": {
     "Latitude": "-23.55",
@@ -113,6 +133,26 @@
     "Latitude": "36.6681",
     "Longitude": "-78.3889",
     "Name": "eastus2euap"
+  },
+  "israelcentral": {
+    "Latitude": "31.2655698",
+    "Longitude": "33.4506633",
+    "Name": "israelcentral"
+  },
+  "qatarcentral": {
+    "Latitude": "25.551462",
+    "Longitude": "51.439327",
+    "Name": "qatarcentral"
+  },
+  "brazilus": {
+    "Latitude": "0",
+    "Longitude": "0",
+    "Name": "brazilus"
+  },
+  "eastusstg": {
+    "Latitude": "37.3719",
+    "Longitude": "-79.8164",
+    "Name": "eastusstg"
   },
   "northcentralus": {
     "Latitude": "41.8819",
@@ -145,7 +185,7 @@
     "Name": "centraluseuap"
   },
   "westcentralus": {
-    "Latitude": "40.890",
+    "Latitude": "40.89",
     "Longitude": "-110.234",
     "Name": "westcentralus"
   },
