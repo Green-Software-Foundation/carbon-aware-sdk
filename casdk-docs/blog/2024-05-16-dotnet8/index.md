@@ -139,7 +139,7 @@ The Green Dashboard allows a team to check an application global energy consumpt
 
 It shows the SCI, allowing to get a sense of the rate of Carbon Emission down to a particular piece of an architecture (R being the [functional unit](https://learn.greensoftware.foundation/measurement/#software-carbon-intensity-specification) for that service - for example an API call, the data is being shown per R unit or over an hour).
 
-While in monolitic application optimization need customized instrumentation, and often have rippled effect, this green dashboard helps identifying which micro-service refactoring would have the maximum impact on the application carbon footprint, leveraging the team effort more efficiently.
+While in monolithic application optimization needs customized instrumentation, and often have rippled effects, this green dashboard helps identify which micro-service refactoring would have the maximum impact on the application's carbon footprint, leveraging the team effort more efficiently.
 
 ![fig4](./fig4.png)
 
