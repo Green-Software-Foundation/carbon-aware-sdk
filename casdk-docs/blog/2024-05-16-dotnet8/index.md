@@ -92,7 +92,7 @@ Changing the port number from WebAPI container affects the containerPort in the 
 
 Thanks to GitHub, a lot of automation is available to publish code, allowing contributors to focus more on coding. In particular, the Carbon Aware SDK repository is configured to publish the WebAPI container image (like a snapshot build) when a commit occurs on the dev branch.
 
-However, it suddenly stopped working after .NET 8 upgrade.
+However, it suddenly stopped working after the .NET 8 upgrade.
 
 The team investigated the logs (Fig. 2), as a container image for both AMD64 and Arm64 Linux in GitHub Actions with [docker/build-push-action](https://github.com/docker/build-push-action): a mysterious segmentation fault (SEGV) was occurring after the upgrade… the code was not changed,  `dotnet publish` was outside the scope.
 
