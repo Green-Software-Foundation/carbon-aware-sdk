@@ -44,7 +44,7 @@ Carbon Aware SDK includes 30 C# projects (in v1.3.0 at least), so automation is 
 find . -name "*.csproj" -exec sed -i 's|^\(\s\+\)<TargetFramework>net6.0</TargetFramework>$|\1<TargetFramework>net8.0</TargetFramework>|g' {} \;
 ```
 
-.NET version is specified in many other places, which need to be updated as well (`grep` will list them all).
+The .NET version is specified in many other places, which need to be updated as well (`grep` will list them all).
 
 * Base image in Docker file
     * Use tag `8.0` instead of `6.0` for `mcr.microsoft.com/dotnet/sdk`
