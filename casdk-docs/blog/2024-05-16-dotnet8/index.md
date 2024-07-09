@@ -153,4 +153,4 @@ By providing a standard interface to the carbon emissions of the energy, the Car
 
 Thanks to the community effort the first step is a click away with the [quickstarting guide](https://carbon-aware-sdk.greensoftware.foundation/docs/quickstart), available for everyone.
 
-No excuse !
+No excuse!
