@@ -71,7 +71,7 @@ Azure Functions for .NET is transitioning one of its execution modes (the In-pro
 
 As our sample was still implementing the in-process model (to be deprecated and not available in .NET 8 at this time), it made sense to migrate to the isolated worker model.
 
-For the code lover, there is an helpful [guide](https://learn.microsoft.com/en-us/azure/azure-functions/migrate-dotnet-to-isolated-model?tabs=net8) for the migration. This led to:
+For the code lover, there is a helpful [guide](https://learn.microsoft.com/en-us/azure/azure-functions/migrate-dotnet-to-isolated-model?tabs=net8) for the migration. This led to:
 
 * Change the version of container images to build and test
 * Update the `.csproj` file
