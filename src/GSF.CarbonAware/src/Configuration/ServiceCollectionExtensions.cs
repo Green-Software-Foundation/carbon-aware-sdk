@@ -27,6 +27,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddEmissionsServices(this IServiceCollection services, IConfiguration configuration)
     {
+
         AddLocationService(services, configuration);
         services.AddDataSourceService(configuration);
         services.TryAddSingleton<IEmissionsHandler, EmissionsHandler>();

@@ -65,7 +65,6 @@ For more details, checkout [https://github.com/Green-Software-Foundation/carbon-
 
 
 
-
 ## [1.4.0] - 2024-05
 
 ### Added 

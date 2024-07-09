@@ -14,9 +14,7 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="appsettings.Development.json" />
-  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.0-rc.1.23419.4" />
@@ -51,7 +49,4 @@
     <Folder Include="api\v1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="appsettings.Development.json" />
-  </ItemGroup>
 </Project>
