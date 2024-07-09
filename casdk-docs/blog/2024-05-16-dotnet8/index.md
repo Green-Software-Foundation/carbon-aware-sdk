@@ -18,7 +18,7 @@ Carbon Aware SDK v1.4.0 was released in May 2024, its core evolution was the upg
 
 Microsoft released .NET 8 in November 2023, the latest LTS version of .NET, which [will be supported until November 2026](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core). 
 
-Wanting to display the Software Carbon Intensity ([SCI - Software Carbon Intensity](https://sci.greensoftware.foundation/) as adopted in [ISO/IEC 21031:2024](https://www.iso.org/standard/86612.html)) metrics from the Carbon Aware SDK WebAPI, made .NET 8 a requirement, as .NET 8 introduced an [enhanced supports for implementing metrics features](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/runtime#extensions-metrics).
+Wanting to display the Software Carbon Intensity ([SCI - Software Carbon Intensity](https://sci.greensoftware.foundation/) as adopted in [ISO/IEC 21031:2024](https://www.iso.org/standard/86612.html)) metrics from the Carbon Aware SDK WebAPI made .NET 8 a requirement, as .NET 8 introduced [enhanced support for implementing metrics features](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/runtime#extensions-metrics).
 
 Indeed, the newly introduced [IMeterFactory](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.imeterfactory?view=net-8.0) interface enabled us to create a [Meter](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meter?view=net-8.0) instance while maintaining modularity by using dependency injection (i.e. use the .NET 8 implementation of the feature, instead of recreating it… another software development sustainable pattern). 
 
