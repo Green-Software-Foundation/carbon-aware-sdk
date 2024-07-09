@@ -147,7 +147,7 @@ While in monolithic application optimization needs customized instrumentation, a
 
 With the Cloud Computing expansion, and Kubernetes flexibility, more and more choices exist for running a workload. While business and economic constraints often lead those decisions, the carbon footprint is becoming an increasingly critical consideration.
 
-This is a difficult endeavour, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intentions behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is key element in this approach.
+This is a difficult endeavor, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intentions behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is a key element in this approach.
 
 By providing a standard interface to the carbon emissions of the energy, the Carbon Aware SDK is a key element for IT sustainability: from evaluating current carbon footprint up to taking in account carbon intensity for geo or time shifting…
 
