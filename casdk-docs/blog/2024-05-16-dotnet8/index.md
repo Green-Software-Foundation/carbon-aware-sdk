@@ -113,7 +113,7 @@ Fortunately, the .NET blog guides how to build multi-platform container images, 
 
 While NTT & NTT DATA have been contributing to the Carbon Aware SDK for a long time, we had not previously publicly referenced our [adoption of the tool](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/casdk-docs/docs/overview/adopters.md).
 
-The Carbon Aware SDK v1.4.0 carbon metrics exporter (dependent on .NET8 upgrade) has increased the usefulness of the SDK due to increased visualization capability are reachable.
+The Carbon Aware SDK v1.4.0 carbon metrics exporter (dependent on .NET8 upgrade) has increased the usefulness of the SDK due to increased visualization capabilities now available.
 
 ## Carbon Intensity map
 
