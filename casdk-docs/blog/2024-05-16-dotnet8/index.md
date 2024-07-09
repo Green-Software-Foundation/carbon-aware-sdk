@@ -22,7 +22,7 @@ Wanting to display the Software Carbon Intensity ([SCI - Software Carbon Intensi
 
 Indeed, the newly introduced [IMeterFactory](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.imeterfactory?view=net-8.0) interface enabled us to create a [Meter](https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meter?view=net-8.0) instance while maintaining modularity by using dependency injection (i.e. use the .NET 8 implementation of the feature, instead of recreating it… another software development sustainable pattern). 
 
-In summary, Carbon Intensity metrics handling was combined with the necessary support extension that .NET 8 upgrade provides.
+In summary, Carbon Intensity metrics handling was combined with the necessary support extension that the .NET 8 upgrade provides.
 
 # In practice
 
