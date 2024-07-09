@@ -119,7 +119,7 @@ The Carbon Aware SDK v1.4.0 carbon metrics exporter (dependent on .NET8 upgrade)
 
 This feature facilitates integration with monitoring solutions like [Prometheus](https://prometheus.io/) and furthermore with a visualization solution like [Grafana](https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/): unlocking geomap style visualization (showing metrics at specified locations on a map). By enabling the exporter and making some settings on Grafana, carbon intensities can be exported from Carbon Aware SDK to a geomap, this is part of a dashboard to monitor carbon emissions for software systems.
 
-The Carbon Intensity can be intuitively visualized with size and colors on a geomap, beyond raising awareness, this can guide decisions on location or time shift.
+The Carbon Intensity can be intuitively visualized with size and colors on a geomap. Beyond raising awareness, this can guide decisions on location or time shift.
 
 ![fig3](./fig3.png)
 
