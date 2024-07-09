@@ -129,7 +129,7 @@ Carbon Aware SDK helps increase awareness around Carbon emission, and it is now 
 
 In practice, each container's energy consumption is evaluated through [Kepler](https://www.cncf.io/projects/kepler/) (sandbox project in Cloud Native Cloud Foundation, [CNCF](https://www.cncf.io/)), and thanks to the Carbon Aware SDK, the carbon emission can be evaluated.
 
-All those emission data from power grid can be accessed through Prometheus exporter with Carbon Aware SDK (starting v1.4.0), and a visualized with Grafana dashboard.
+All those emission data from power grid can be accessed through the Prometheus exporter with the Carbon Aware SDK (starting v1.4.0), and visualized with the Grafana dashboard.
 
 The power consumption, energy consumption, carbon emission, and SCI can be seen at a glance!
 
