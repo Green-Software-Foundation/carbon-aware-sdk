@@ -90,7 +90,7 @@ Changing the port number from WebAPI container affects the containerPort in the 
 
 ## Broken build pipeline on GitHub Actions
 
-Thanks to GitHub, a lot of automation is available in order to publish code, allowing contributors to focus more on coding. In particular the Carbon Aware SDK repository is configured to publish WebAPI container image (like a snapshot build) when a commit occurs on the dev branch.
+Thanks to GitHub, a lot of automation is available to publish code, allowing contributors to focus more on coding. In particular, the Carbon Aware SDK repository is configured to publish the WebAPI container image (like a snapshot build) when a commit occurs on the dev branch.
 
 However, it suddenly stopped working after .NET 8 upgrade.
 
