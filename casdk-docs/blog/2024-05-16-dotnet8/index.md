@@ -14,7 +14,7 @@ As NTT and NTT DATA were key participants in this contribution, this is a good o
 
 # Why .NET 8 ?
 
-Carbon Aware SDK v1.4.0 was released on May 2024, its core evolution was the upgrade to .NET 8. Until v1.3.x, the Carbon Aware SDK has relied on the LTS (Long Term Support) version .NET 6. With an EOL (End of Life) set for November 2024, an upgrade was unavoidable.
+Carbon Aware SDK v1.4.0 was released in May 2024, its core evolution was the upgrade to .NET 8. Until v1.3.x, the Carbon Aware SDK has relied on the LTS (Long Term Support) version .NET 6. With an EOL (End of Life) set for November 2024, an upgrade was unavoidable.
 
 Microsoft released .NET 8 in Nov 2023, this is the latest LTS version of .NET and [will be supported until Nov 2026](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core). 
 
