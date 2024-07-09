@@ -86,7 +86,7 @@ For more details browse: [Pull Request #420](https://github.com/Green-Software-F
 
 As Carbon Aware SDK WebAPI uses ASP.NET Core technology another collateral must do change was required since .NET 8 changed its default port number from 80 to 8080 [Microsoft Learn document](https://learn.microsoft.com/en-us/dotnet/core/compatibility/containers/8.0/aspnet-port)).
 
-Changing the port number from WebAPI container, which affects the containerPort in Helm chart and some GitHub Workflows which uses WebAPI.
+Changing the port number from WebAPI container affects the containerPort in the Helm chart and some GitHub Workflows that uses WebAPI.
 
 ## Broken build pipeline on GitHub Actions
 
