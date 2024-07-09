@@ -133,7 +133,7 @@ All those emission data from power grid can be accessed through the Prometheus e
 
 The power consumption, energy consumption, carbon emission, and SCI can be seen at a glance!
 
-One of the upside of micro-services architecture, as Kubernetes facilitates it, is to be able to work on different piece of an application in a relatively independant fashion (maintaining, scaling, optimizing…).
+One of the upsides of micro-services architecture, as Kubernetes facilitates it, is to be able to work on different pieces of an application in a relatively independent fashion (maintaining, scaling, optimizing…).
 
 The Green Dashboard allows a team to check an application global energy consumption and carbon emission (dashboard left side), while drilling down at sustainability-related metrics for each micro-service (dashboard right side).
 
