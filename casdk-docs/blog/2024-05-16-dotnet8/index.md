@@ -149,7 +149,7 @@ With the Cloud Computing expansion, and Kubernetes flexibility, more and more ch
 
 This is a difficult endeavor, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intentions behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is a key element in this approach.
 
-By providing a standard interface to the carbon emissions of the energy, the Carbon Aware SDK is a key element for IT sustainability: from evaluating current carbon footprint up to taking in account carbon intensity for geo or time shifting…
+By providing a standard interface to the carbon emissions of the energy, the Carbon Aware SDK is a key element for IT sustainability: from evaluating current carbon footprint up to taking into account carbon intensity for geo or time shifting…
 
 Thanks to the community effort the first step is a click away with the [quickstarting guide](https://carbon-aware-sdk.greensoftware.foundation/docs/quickstart), available for everyone.
 
