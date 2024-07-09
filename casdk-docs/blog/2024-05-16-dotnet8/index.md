@@ -8,7 +8,7 @@ As most software nowadays, the Carbon Aware SDK relies on a stack of utilities, 
 
 Containerization has helped shift the upgrading work to a more convenient time for the development team, but there are still various motivations for keeping a stack up to date with current versions: security, bug fixes, performance, support… but the best is to couple with new feature development: such was the case for the .NET framework.
 
-However, those updates often have ripple effects, as their dependencies are not always foreseeable, making software upgrade workload hard to predict.
+However, those updates often have ripple effects, as their dependencies are not always foreseeable, making the software upgrade workload hard to predict.
 
 As NTT and NTT DATA were key participants in this contribution, this is a good occasion to cast a light on the behind the scenes, and the way this new Carbon Aware SDK is being used internally.
 
