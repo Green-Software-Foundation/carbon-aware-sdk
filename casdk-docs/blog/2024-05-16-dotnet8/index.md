@@ -107,7 +107,7 @@ Fig.2 Logs in `dotnet publish` on GitHub Actions
 
 Further investigation was done, and thanks to a [.NET blog](https://devblogs.microsoft.com/dotnet/improving-multiplatform-container-support/) about multi-platform container support, we identified that an unsupported approach was used for the build, and needed to be amended. More precisely, since .NET 6, QEMU static binaries were used to build container images for multi-platform.
 
-Fortunately .NET blog guides how to build multi platform container images, and the workflow was fixed accordingly in [Pull Request #498](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/498). So WebAPI container image with .NET 8 can be pulled from [GitHub Packages](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/carbon-aware-sdk) now!
+Fortunately, the .NET blog guides how to build multi-platform container images, and the workflow was fixed accordingly in [Pull Request #498](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/498). So the WebAPI container image with .NET 8 can be pulled from [GitHub Packages](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/carbon-aware-sdk) now!
 
 # Use case in NTT / NTT DATA
 
