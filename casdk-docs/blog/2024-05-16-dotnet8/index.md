@@ -65,7 +65,7 @@ While the .NET 8 upgrade was done, some unexpected issues surfaced.
 
 ## Ripple effect on sample code
 
-To help onboard new comers to the Carbon Aware SDK, a sample running on Azure Functions is provided.
+To help onboard newcomers to the Carbon Aware SDK, a sample running on Azure Functions is provided.
 
 Azure Functions for .NET is transitioning one of its execution modes (the In-process model) for the Isolated worker model ([more details here](https://learn.microsoft.com/en-us/azure/azure-functions/dotnet-isolated-in-process-differences)). Moreover, .NET 8 did not provide yet an option to use the former model in its initial release (cf. [roadmap of Azure Functions](https://techcommunity.microsoft.com/t5/apps-on-azure-blog/net-on-azure-functions-august-2023-roadmap-update/ba-p/3910098)).
 
