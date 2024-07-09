@@ -38,7 +38,7 @@ It can be done in the property window of each of the C# projects, for example, i
 
 Fig.1 Property window of C# project in Carbon Aware SDK on Visual Studio Community Edition
 
-Carbon Aware SDK includes 30 C# projects (in v1.3.0 at least), so automation is welcomed. The target framework version is described in `/Project/PropertyGroup/TargetFramework` in `.csproj` file. For example, running the command on WSL:
+Carbon Aware SDK includes 30 C# projects (in v1.3.0 at least), so automation is welcomed. The target framework version is described in `/Project/PropertyGroup/TargetFramework` in the `.csproj` file. For example, running the command on WSL:
 
 ```
 find . -name "*.csproj" -exec sed -i 's|^\(\s\+\)<TargetFramework>net6.0</TargetFramework>$|\1<TargetFramework>net8.0</TargetFramework>|g' {} \;
