@@ -16,7 +16,7 @@ As NTT and NTT DATA were key participants in this contribution, this is a good o
 
 Carbon Aware SDK v1.4.0 was released in May 2024, its core evolution was the upgrade to .NET 8. Until v1.3.x, the Carbon Aware SDK has relied on the LTS (Long Term Support) version .NET 6. With an EOL (End of Life) set for November 2024, an upgrade was unavoidable.
 
-Microsoft released .NET 8 in Nov 2023, this is the latest LTS version of .NET and [will be supported until Nov 2026](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core). 
+Microsoft released .NET 8 in November 2023, the latest LTS version of .NET, which [will be supported until November 2026](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core). 
 
 Wanting to display the Software Carbon Intensity ([SCI - Software Carbon Intensity](https://sci.greensoftware.foundation/) as adopted in [ISO/IEC 21031:2024](https://www.iso.org/standard/86612.html)) metrics from the Carbon Aware SDK WebAPI, made .NET 8 a requirement, as .NET 8 introduced an [enhanced supports for implementing metrics features](https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/runtime#extensions-metrics).
 
