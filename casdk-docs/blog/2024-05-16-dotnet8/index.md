@@ -26,7 +26,7 @@ In summary, Carbon Intensity metrics handling was combined with the necessary su
 
 # In practice
 
-The initial work for upgrading to .NET 8 was done in [Pull Request #404](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/404) (aka PR, basically a code change proposal, which once approved will be merged in the main code).
+The initial work for upgrading to .NET 8 was done in [Pull Request #404](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/404) (aka PR, a code change proposal, which once approved will be merged in the main code).
 
 Without being a C# expert, it’s still interesting to look at the PR and see that: it involves several individuals working together as a community, many files were impacted, tests and samples are as critical as they should.
 
