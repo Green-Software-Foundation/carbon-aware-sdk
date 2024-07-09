@@ -32,7 +32,7 @@ Without being a C# expert, it’s still interesting to look at the PR and see th
 
 For the nitty gritty (else jump to the next paragraph): the core work is “simply” updating the target framework version. 
 
-It can be done in the property window of each C# projects, for example in the Japanese version of Visual Studio (Fig.1).
+It can be done in the property window of each of the C# projects, for example, in the Japanese version of Visual Studio (Fig.1).
 
 ![fig1](./fig1.png)
 
