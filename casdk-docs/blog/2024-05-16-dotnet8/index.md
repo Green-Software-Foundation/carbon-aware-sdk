@@ -135,7 +135,7 @@ The power consumption, energy consumption, carbon emission, and SCI can be seen 
 
 One of the upsides of micro-services architecture, as Kubernetes facilitates it, is to be able to work on different pieces of an application in a relatively independent fashion (maintaining, scaling, optimizing…).
 
-The Green Dashboard allows a team to check an application global energy consumption and carbon emission (dashboard left side), while drilling down at sustainability-related metrics for each micro-service (dashboard right side).
+The Green Dashboard allows a team to check an application's global energy consumption and carbon emission (dashboard left side), while drilling down into sustainability-related metrics for each micro-service (dashboard right side).
 
 It shows the SCI, allowing to get a sense of the rate of Carbon Emission down to a particular piece of an architecture (R being the [functional unit](https://learn.greensoftware.foundation/measurement/#software-carbon-intensity-specification) for that service - for example an API call, the data is being shown per R unit or over an hour).
 
