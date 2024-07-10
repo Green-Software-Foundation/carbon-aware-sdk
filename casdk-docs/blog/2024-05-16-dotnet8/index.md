@@ -14,7 +14,7 @@ As NTT and NTT DATA were key participants in this contribution, this is a good o
 
 # Why .NET 8 ?
 
-Carbon Aware SDK v1.4.0 was released in May 2024, its core evolution was the upgrade to .NET 8. Until v1.3.x, the Carbon Aware SDK has relied on the LTS (Long Term Support) version .NET 6. With an EOL (End of Life) set for November 2024, an upgrade was unavoidable.
+Carbon Aware SDK v1.4.0 was released in May 2024. Its core evolution was the upgrade to .NET 8. Until v1.3.x, the Carbon Aware SDK relied on the LTS (Long Term Support) version .NET 6. With an EOL (End of Life) set for November 2024, an upgrade was unavoidable.
 
 Microsoft released .NET 8 in November 2023, the latest LTS version of .NET, which [will be supported until November 2026](https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core). 
 
@@ -28,7 +28,7 @@ In summary, Carbon Intensity metrics handling was combined with the necessary su
 
 The initial work for upgrading to .NET 8 was done in [Pull Request #404](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/404) (aka PR, a code change proposal, which once approved will be merged in the main code).
 
-Without being a C# expert, it’s still interesting to look at the PR and see that: it involves several individuals working together as a community, many files were impacted, tests and samples are as critical as they should.
+Without being a C# expert, it’s still interesting to look at the PR and see that: it involves several individuals working together as a community, many files were impacted, and highlights the importance of tests and samples, which required further work due to some ripple effects.
 
 For the nitty gritty (else jump to the next paragraph): the core work is “simply” updating the target framework version. 
 
