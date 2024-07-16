@@ -10,12 +10,12 @@ This is the WattTime v3 update.  Most notable changes that may require action ar
 
 WattTime v3 API support.  This is an inplace upgrade for v2.
 
--[PR #532] Watt Time v3 Support  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/532)
--[PR #340] Add example for 'podman play kube' ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/340)
--[PR #536] Updated azure-regions.json with new regions ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/536)
--[#519] Remove hackathon sentence from our website banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/519)
--[#510] Gap Analysis for WattTime v3 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/510)
--[#262] [Feature Contribution]: Publish the docker file in a docker registry ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/262)
+- [PR #532] Watt Time v3 Support  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/532)
+- [PR #340] Add example for 'podman play kube' ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/340)
+- [PR #536] Updated azure-regions.json with new regions ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/536)
+- [#519] Remove hackathon sentence from our website banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/519)
+- [#510] Gap Analysis for WattTime v3 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/510)
+- [#262] [Feature Contribution]: Publish the docker file in a docker registry ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/262)
 
 ### Removed
 
@@ -23,12 +23,12 @@ WattTime v2 API support due to v3 in place replacement.
 
 ### Fixed
 
--[PR #522] Remove Hack mention from the Docs's banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/522)
--[#535] [Bug]: Configuration for locations loads twice  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/535)
--[PR #516] Update published documentation to .NET 8 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/516)
--[PR #515] overview.md: Fixed three broken links Signed-off-by: joecus1 <joecusa… ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/515)
--[#506] Check our published documentation to identify any references to .NET7 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/506)
--[#512] [Bug]: Broken links in overview.md file ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/512)
+- [PR #522] Remove Hack mention from the Docs's banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/522)
+- [#535] [Bug]: Configuration for locations loads twice  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/535)
+- [PR #516] Update published documentation to .NET 8 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/516)
+- [PR #515] overview.md: Fixed three broken links Signed-off-by: joecus1 <joecusa… ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/515)
+- [#506] Check our published documentation to identify any references to .NET7 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/506)
+- [#512] [Bug]: Broken links in overview.md file ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/512)
 
 ### Changed
 
