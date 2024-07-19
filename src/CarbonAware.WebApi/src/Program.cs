@@ -46,6 +46,11 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations();
     c.OperationFilter<CarbonAwareParametersBaseDtoOperationFilter>();
     c.SchemaFilter<CarbonAwareParametersBaseDtoSchemaFilter>();
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = serviceVersion,
+        Title = serviceName,
+    });
 });
 
 builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));

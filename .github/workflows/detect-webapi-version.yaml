@@ -1,0 +1,55 @@
+name: Detect API version from OpenAPI document in WebAPI container image
+
+on:
+  workflow_call:
+    inputs:
+      registry:
+        type: string
+        required: true
+      image-repo:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: false
+        default: latest
+    outputs:
+      image:
+        value: ${{ jobs.make-image-name-for-pull.outputs.image }}
+      apiver:
+        value: ${{ jobs.detect-api-version.outputs.apiver }}
+
+jobs:
+  make-image-name-for-pull:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.make-image-name.outputs.IMAGE_NAME }}
+    steps:
+      - name: Make string for pulling container image
+        id: make-image-name
+        run: |
+          REPO=${{ inputs.registry }}/${{ inputs.image-repo }}
+          REPO_LOWER=${REPO,,}
+          echo "IMAGE_NAME=$REPO_LOWER:${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+
+  detect-api-version:
+    needs: make-image-name-for-pull
+    runs-on: ubuntu-latest
+    services:
+      webapi:
+        image: ${{ needs.make-image-name-for-pull.outputs.image }}
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd "curl -sS http://localhost:8080/health"
+          --health-interval 3s
+          --health-timeout 5s
+          --health-retries 5
+    outputs:
+      apiver: ${{ steps.detect-api-version.outputs.CURRENT_API_VERSION }}
+    steps:
+      - name: Detect API version
+        id: detect-api-version
+        run: |
+          API_VERSION=`curl -sS http://localhost:8080/api/v1/swagger.yaml | yq -r .info.version`
+          echo "CURRENT_API_VERSION=$API_VERSION" >> "$GITHUB_OUTPUT"
