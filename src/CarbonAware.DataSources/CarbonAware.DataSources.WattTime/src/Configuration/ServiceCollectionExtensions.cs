@@ -39,6 +39,7 @@ internal static class ServiceCollectionExtensions
         });
 
         var httpClientBuilder = services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedClient);
+        var authenticationClientBuilder = services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedAuthenticationClient);
 
         var Proxy = configSection.GetSection("Proxy").Get<WebProxyConfiguration>();
         if (Proxy != null && Proxy.UseProxy == true)
@@ -47,15 +48,18 @@ internal static class ServiceCollectionExtensions
             {
                 throw new Exceptions.ConfigurationException("Proxy Url is not configured.");
             }
-            httpClientBuilder.ConfigurePrimaryHttpMessageHandler(() => 
-                new HttpClientHandler() {
-                    Proxy = new WebProxy {
-                        Address = new Uri(Proxy.Url),
-                        Credentials = new NetworkCredential(Proxy.Username, Proxy.Password),
-                        BypassProxyOnLocal = true
-                    }
+            var handler = new HttpClientHandler()
+            {
+                Proxy = new WebProxy
+                {
+                    Address = new Uri(Proxy.Url),
+                    Credentials = new NetworkCredential(Proxy.Username, Proxy.Password),
+                    BypassProxyOnLocal = true
                 }
-            );
+            };
+
+            httpClientBuilder.ConfigurePrimaryHttpMessageHandler(() => handler );
+            authenticationClientBuilder.ConfigurePrimaryHttpMessageHandler(() => handler );
         }
         services.TryAddSingleton<IWattTimeClient, WattTimeClient>();
     }

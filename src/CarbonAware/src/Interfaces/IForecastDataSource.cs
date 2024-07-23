@@ -14,5 +14,5 @@ internal interface IForecastDataSource
     /// <param name="location">The location that should be used for getting the forecast.</param>
     /// <param name="requestedAt">The historical time used to fetch the most recent forecast generated as of that time.</param>
     /// <returns>A forecasted emissions object for the given location generated at the given time.</returns>
-    Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt);
+    Task<EmissionsForecast> GetHistoricalCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt);
 }

@@ -15,6 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="8.0.0-rc.1.23419.4" />
     <PackageReference Include="Opentelemetry.Exporter.Prometheus.AspNetCore" Version="1.6.0-rc.1" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets"
@@ -47,4 +48,5 @@
   <ItemGroup>
     <Folder Include="api\v1" />
   </ItemGroup>
+
 </Project>
