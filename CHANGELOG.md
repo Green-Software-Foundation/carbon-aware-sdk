@@ -76,8 +76,6 @@ No changes
 For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503) 
 
 
-
-
 ## [1.4.0] - 2024-05
 
 ### Added 
