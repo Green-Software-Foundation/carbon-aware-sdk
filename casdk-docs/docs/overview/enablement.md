@@ -399,6 +399,8 @@ tolerations: []
 
 affinity: {}
 
+env: []
+
 # appsettings.json
 appsettings: |-
   {
