@@ -1,5 +1,5 @@
 ---
-slug: .NET 8 upgrade
+slug: dotnet-8-upgrade
 title: Carbon Aware SDK 1.4, behind the scenes
 tags: [dotnet8, post]
 ---
