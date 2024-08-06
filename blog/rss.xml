@@ -73,17 +73,17 @@
             <description><![CDATA[Release 1.4]]></description>
             <content:encoded><![CDATA[<p>Release 1.4</p>
 <h3 id="added">Added</h3>
-<p>-[#401] [Feature Contribution]: Upgrade .NET version to .NET 8 ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401</a>)
--[#419] [Feature Contribution]: Migrate sample implementation of Azure Function to isolated worker model ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419</a>)
+<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401">#401 Feature Contribution: Upgrade .NET version to .NET 8 </a>
+-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419">#419 Feature Contribution: Migrate sample implementation of Azure Function to isolated worker model </a>
 -[PR #500] Up Helm chart version to 1.2.0 ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500</a>)</p>
-<p>-[#397] [Feature Contribution]: Data caching in the SDK ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397</a>)</p>
+<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397">#397 Feature Contribution: Data caching in the SDK </a></p>
 <h3 id="fixed">Fixed</h3>
-<p>-[#505] [Bug]: Project Page wiki from GSF website still says it's in incubation ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505</a>)
--[#496] [URGENT] WebAPI container has not built due to segmentation fault ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496</a>)
--[#487] [Bug]: Getting started guide is lost ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487</a>)</p>
+<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505">#505 Bug: Project Page wiki from GSF website still says it's in incubation </a>
+-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496">#496 URGENT WebAPI container has not built due to segmentation fault </a>
+-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487">#487 Bug: Getting started guide is lost </a></p>
 <h3 id="changed">Changed</h3>
-<p>-[#477] [Bug]: Ensure the readme file shows as the project overview content on the documentation site ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477</a>)
--[PR #485] Docs overview, disclaimer &amp; pipeline updates for graduation ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485</a>)</p>
+<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477">#477 Bug: Ensure the readme file shows as the project overview content on the documentation site </a>
+-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485">PR #485 Docs overview, disclaimer &amp; pipeline updates for graduation </a></p>
 <h4 id="api">API</h4>
 <ul>
 <li></li>
@@ -221,8 +221,8 @@
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/457">PR #457 Features/codespaces quickstart </a></li>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/459">PR #459 Readme updates for clarity </a></li>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/449">PR #449 Support location source setting in Helm chart </a></li>
-<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/431">PR #431 Update documentation of Usefulness (adopters.md)  </a>%</li>
-<li>[#416 Add disclaimer banner to any public-facing documentation (docusaurus webpage) ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-s">https://github.com/Green-Software-Foundation/carbon-aware-s</a> dk/issues/416)</li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/431">PR #431 Update documentation of Usefulness (adopters.md)  </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/416">#416 Add disclaimer banner to any public-facing documentation (docusaurus webpage) </a></li>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/415">#415 Update documentation of secureness (security.md) </a></li>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/414">#414 Update documentation of Usefulness (adopters.md) </a></li>
 <li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/413">#413 Update documentation for Test Coverage </a></li>
