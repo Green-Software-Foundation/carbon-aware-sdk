@@ -203,6 +203,7 @@
 <p>Thanks to the community effort the first step is a click away with the <a href="https://carbon-aware-sdk.greensoftware.foundation/docs/quickstart">quickstarting guide</a>, available for everyone.</p>
 <p>No excuse!</p>]]></content>
         <category label="dotnet8" term="dotnet8"/>
+        <category label="post" term="post"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[Release v1.3]]></title>
