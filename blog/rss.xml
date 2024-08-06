@@ -4,10 +4,260 @@
         <title>Carbon Aware SDK Blog</title>
         <link>https://carbon-aware-sdk.greensoftware.foundation/blog</link>
         <description>Carbon Aware SDK Blog</description>
-        <lastBuildDate>Sun, 14 Jan 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 23 Jul 2024 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release v1.5]]></title>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.5</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.5</guid>
+            <pubDate>Tue, 23 Jul 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Release 1.5]]></description>
+            <content:encoded><![CDATA[<p>Release 1.5</p>
+<p>This is the WattTime v3 update.  Most notable changes that may require action are for deployment configuration, and these are minor.</p>
+<h3 id="added">Added</h3>
+<p>WattTime v3 API support.  This is an inplace upgrade for v2.</p>
+<ul>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/532">PR #532 Watt Time v3 Support  </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/340">PR #340 Add example for 'podman play kube' </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/536">PR #536 Updated azure-regions.json with new regions </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/519">#519 Remove hackathon sentence from our website banner </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/510">#510 Gap Analysis for WattTime v3 </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/262">#262 Feature Contribution: Publish the docker file in a docker registry </a></li>
+</ul>
+<h3 id="removed">Removed</h3>
+<p>WattTime v2 API support due to v3 in place replacement.</p>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/522">PR #522 Remove Hack mention from the Docs's banner </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/535">#535 Bug: Configuration for locations loads twice  </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/516">PR #516 Update published documentation to .NET 8 </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/515">PR #515 overview.md: Fixed three broken links Signed-off-by: joecus1 </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/506">#506 Check our published documentation to identify any references to .NET7 </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/512">#512 Bug: Broken links in overview.md file </a></li>
+</ul>
+<h3 id="changed">Changed</h3>
+<p>Updates for WattTime v3 API endpoint from v2, details in the <a href="https://carbon-aware-sdk.greensoftware.foundation/blog/casdk-docs/docs/architecture//decisions/0016-watt-time-v3.md">ADR for WattTime v3 changes</a>.</p>
+<h4 id="api">API</h4>
+<p>No changes</p>
+<h4 id="api-deployment">API Deployment</h4>
+<p>Due to the change for WattTime v3, there is change to the configuration for WattTime users.</p>
+<p>With some of the changes to the code, some of the configuration will also needs to change.</p>
+<table><thead><tr><th>Config (v2)</th><th>Config (v3)</th><th>Description</th></tr></thead><tbody><tr><td><code>BalancingAuthorityCacheTTL</code></td><td><code>RegionCacheTTL</code></td><td>This is the cache for regions data in seconds, and has a default value of 1 day.  This only needs updating if you set it</td></tr><tr><td>n/a</td><td><code>AuthenticationBaseUrl</code></td><td><strong>NEW</strong> This is the base URL for the WattTime Authentication API and defaults to <code>https://api.watttime.org/</code> if not set.</td></tr></tbody></table>
+<p>Example below if set (note they do not have to be set)</p>
+<pre><code class="language-json">"wattTime_no-proxy": {
+  "Type": "WattTime",
+  "Username": "the_username",
+  "Password": "super_secret_secret",
+  "BaseURL": "https://api.watttime.org/v3/",
+  "AutenticationBaseURL": "https://api.watttime.org", // This is new but not mandatory in config
+  "RegionCacheTTL": 86400, // This is changed but not mandatory in config
+  "Proxy": {
+    "UseProxy": false
+  }
+</code></pre>
+<h4 id="sdk">SDK</h4>
+<p>No changes</p>
+<h4 id="other">Other</h4>
+<p>No changes</p>
+<p>For more details, checkout <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503</a></p>]]></content:encoded>
+            <category>v1.5</category>
+            <category>release</category>
+        </item>
+        <item>
+            <title><![CDATA[Release v1.4]]></title>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.4</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.4</guid>
+            <pubDate>Fri, 24 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Release 1.4]]></description>
+            <content:encoded><![CDATA[<p>Release 1.4</p>
+<h3 id="added">Added</h3>
+<p>-[#401] [Feature Contribution]: Upgrade .NET version to .NET 8 ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401</a>)
+-[#419] [Feature Contribution]: Migrate sample implementation of Azure Function to isolated worker model ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419</a>)
+-[PR #500] Up Helm chart version to 1.2.0 ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500</a>)</p>
+<p>-[#397] [Feature Contribution]: Data caching in the SDK ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397</a>)</p>
+<h3 id="fixed">Fixed</h3>
+<p>-[#505] [Bug]: Project Page wiki from GSF website still says it's in incubation ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505</a>)
+-[#496] [URGENT] WebAPI container has not built due to segmentation fault ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496</a>)
+-[#487] [Bug]: Getting started guide is lost ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487</a>)</p>
+<h3 id="changed">Changed</h3>
+<p>-[#477] [Bug]: Ensure the readme file shows as the project overview content on the documentation site ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477</a>)
+-[PR #485] Docs overview, disclaimer &amp; pipeline updates for graduation ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485</a>)</p>
+<h4 id="api">API</h4>
+<ul>
+<li></li>
+</ul>
+<h4 id="api-deployment">API Deployment</h4>
+<ul>
+<li></li>
+</ul>
+<h4 id="sdk">SDK</h4>
+<ul>
+<li></li>
+</ul>
+<h4 id="other">Other</h4>
+<ul>
+<li></li>
+</ul>
+<p>For more details, checkout <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503</a></p>]]></content:encoded>
+            <category>v1.4</category>
+            <category>release</category>
+        </item>
+        <item>
+            <title><![CDATA[Carbon Aware SDK 1.4, behind the scenes]]></title>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/.NET 8 upgrade</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/.NET 8 upgrade</guid>
+            <pubDate>Thu, 16 May 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[As most software nowadays, the Carbon Aware SDK relies on a stack of utilities, and while adding a new feature is usually the most appealing for a project, it’s also critical to maintain the stack, especially in a community effort.]]></description>
+            <content:encoded><![CDATA[<p>As most software nowadays, the Carbon Aware SDK relies on a stack of utilities, and while adding a new feature is usually the most appealing for a project, it’s also critical to maintain the stack, especially in a community effort.</p>
+<p>Containerization has helped shift the upgrading work to a more convenient time for the development team, but there are still various motivations for keeping a stack up to date with current versions: security, bug fixes, performance, support… but the best is to couple with new feature development: such was the case for the .NET framework.</p>
+<p>However, those updates often have ripple effects, as their dependencies are not always foreseeable, making the software upgrade workload hard to predict.</p>
+<p>As NTT and NTT DATA were key participants in this contribution, this is a good occasion to cast a light on the behind the scenes, and the way this new Carbon Aware SDK is being used internally.</p>
+<p>Carbon Aware SDK v1.4.0 was released in May 2024. Its core evolution was the upgrade to .NET 8. Until v1.3.x, the Carbon Aware SDK relied on the LTS (Long Term Support) version .NET 6. With an EOL (End of Life) set for November 2024, an upgrade was unavoidable.</p>
+<p>Microsoft released .NET 8 in November 2023, the latest LTS version of .NET, which <a href="https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core">will be supported until November 2026</a>.</p>
+<p>Wanting to display the Software Carbon Intensity (<a href="https://sci.greensoftware.foundation/">SCI - Software Carbon Intensity</a> as adopted in <a href="https://www.iso.org/standard/86612.html">ISO/IEC 21031:2024</a>) metrics from the Carbon Aware SDK WebAPI made .NET 8 a requirement, as .NET 8 introduced <a href="https://learn.microsoft.com/en-us/dotnet/core/whats-new/dotnet-8/runtime#extensions-metrics">enhanced support for implementing metrics features</a>.</p>
+<p>Indeed, the newly introduced <a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.imeterfactory?view=net-8.0">IMeterFactory</a> interface enabled us to create a <a href="https://learn.microsoft.com/en-us/dotnet/api/system.diagnostics.metrics.meter?view=net-8.0">Meter</a> instance while maintaining modularity by using dependency injection (i.e. use the .NET 8 implementation of the feature, instead of recreating it… another software development sustainable pattern).</p>
+<p>In summary, Carbon Intensity metrics handling was combined with the necessary support extension that the .NET 8 upgrade provides.</p>
+<h1 id="in-practice">In practice</h1>
+<p>The initial work for upgrading to .NET 8 was done in <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/404">Pull Request #404</a> (aka PR, a code change proposal, which once approved will be merged in the main code).</p>
+<p>Without being a C# expert, it’s still interesting to look at the PR and see that: it involves several individuals working together as a community, many files were impacted, and highlights the importance of tests and samples, which required further work due to some ripple effects.</p>
+<p>For the nitty gritty (else jump to the next paragraph): the core work is “simply” updating the target framework version.</p>
+<p>It can be done in the property window of each of the C# projects, for example, in the Japanese version of Visual Studio (Fig.1).</p>
+<p><img alt="fig1" src="https://carbon-aware-sdk.greensoftware.foundation/assets/images/fig1-798bfd7a1f30b0b88d900e60fbc48bd3.png" width="1118" height="430"></p>
+<p>Fig.1 Property window of C# project in Carbon Aware SDK on Visual Studio Community Edition</p>
+<p>Carbon Aware SDK includes 30 C# projects (in v1.3.0 at least), so automation is welcomed. The target framework version is described in <code>/Project/PropertyGroup/TargetFramework</code> in the <code>.csproj</code> file. For example, running the command on WSL:</p>
+<pre><code>find . -name "*.csproj" -exec sed -i 's|^\(\s\+\)&lt;TargetFramework&gt;net6.0&lt;/TargetFramework&gt;$|\1&lt;TargetFramework&gt;net8.0&lt;/TargetFramework&gt;|g' {} \;
+</code></pre>
+<p>The .NET version is specified in many other places, which need to be updated as well (<code>grep</code> will list them all).</p>
+<ul>
+<li>Base image in Docker file<!-- -->
+<ul>
+<li>Use tag <code>8.0</code> instead of <code>6.0</code> for <code>mcr.microsoft.com/dotnet/sdk</code></li>
+</ul>
+</li>
+<li>Tool configurations<!-- -->
+<ul>
+<li>global.json</li>
+<li>dotnet-tools.json</li>
+<li>launch.json for VSCode</li>
+</ul>
+</li>
+<li>Target framework version for OpenAPI generator for .NET</li>
+<li>.NET version for <a href="https://github.com/actions/setup-dotnet">actions/setup-dotnet</a> in GitHub Actions Workflow</li>
+<li>Comments in source files</li>
+<li>Documents</li>
+</ul>
+<p>While the updating part is done, the work does not end there…</p>
+<h1 id="unexpected-work-items">Unexpected work items</h1>
+<p>While the .NET 8 upgrade was done, some unexpected issues surfaced.</p>
+<h2 id="ripple-effect-on-sample-code">Ripple effect on sample code</h2>
+<p>To help onboard newcomers to the Carbon Aware SDK, a sample running on Azure Functions is provided.</p>
+<p>Azure Functions for .NET is transitioning one of its execution modes (the In-process model) to the Isolated worker model (<a href="https://learn.microsoft.com/en-us/azure/azure-functions/dotnet-isolated-in-process-differences">more details here</a>). Moreover, .NET 8 did not yet provide an option to use the former model in its initial release (cf. <a href="https://techcommunity.microsoft.com/t5/apps-on-azure-blog/net-on-azure-functions-august-2023-roadmap-update/ba-p/3910098">roadmap of Azure Functions</a>).</p>
+<p>As our sample was still implementing the in-process model (to be deprecated and not available in .NET 8 at this time), it made sense to migrate to the isolated worker model.</p>
+<p>For the code lover, there is a helpful <a href="https://learn.microsoft.com/en-us/azure/azure-functions/migrate-dotnet-to-isolated-model?tabs=net8">guide</a> for the migration. This led to:</p>
+<ul>
+<li>Change the version of container images to build and test</li>
+<li>Update the <code>.csproj</code> file</li>
+<li>Replace <code>Startup.cs</code> with <code>Program.cs</code></li>
+<li>Replace <code>FunctionName</code> attribute with <code>Function</code></li>
+<li>Change loggers to be obtained from the DI container</li>
+<li>Update the document</li>
+</ul>
+<p>For more details browse: <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/420">Pull Request #420</a>.</p>
+<h2 id="port-number-breaking-change">Port Number Breaking change</h2>
+<p>As the Carbon Aware SDK WebAPI uses ASP.NET Core technology, another collateral change was required since .NET 8 changed its default port number from 80 to 8080 <a href="https://learn.microsoft.com/en-us/dotnet/core/compatibility/containers/8.0/aspnet-port">Microsoft Learn document</a>).</p>
+<p>Changing the port number from WebAPI container affects the containerPort in the Helm chart and some GitHub Workflows that uses WebAPI.</p>
+<h2 id="broken-build-pipeline-on-github-actions">Broken build pipeline on GitHub Actions</h2>
+<p>Thanks to GitHub, a lot of automation is available to publish code, allowing contributors to focus more on coding. In particular, the Carbon Aware SDK repository is configured to publish the WebAPI container image (like a snapshot build) when a commit occurs on the dev branch.</p>
+<p>However, it suddenly stopped working after the .NET 8 upgrade.</p>
+<p>The team investigated the logs (Fig. 2), as a container image for both AMD64 and Arm64 Linux in GitHub Actions with <a href="https://github.com/docker/build-push-action">docker/build-push-action</a>: a mysterious segmentation fault (SEGV) was occurring after the upgrade… the code was not changed,  <code>dotnet publish</code> was outside the scope.</p>
+<pre><code> &gt; [linux/arm64 build-env 4/6] RUN dotnet publish CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -c Release -o publish:
+7.209 MSBuild version 17.9.6+a4ecab324 for .NET
+24.69   Determining projects to restore...
+41.42 Segmentation fault (core dumped)
+</code></pre>
+<p>Fig.2 Logs in <code>dotnet publish</code> on GitHub Actions</p>
+<p>Further investigation was done, and thanks to a <a href="https://devblogs.microsoft.com/dotnet/improving-multiplatform-container-support/">.NET blog</a> about multi-platform container support, we identified that an unsupported approach was used for the build, and needed to be amended. More precisely, since .NET 6, QEMU static binaries were used to build container images for multi-platform.</p>
+<p>Fortunately, the .NET blog guides how to build multi-platform container images, and the workflow was fixed accordingly in <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/498">Pull Request #498</a>. So the WebAPI container image with .NET 8 can be pulled from <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pkgs/container/carbon-aware-sdk">GitHub Packages</a> now!</p>
+<h1 id="use-case-in-ntt--ntt-data">Use case in NTT / NTT DATA</h1>
+<p>While NTT &amp; NTT DATA have been contributing to the Carbon Aware SDK for a long time, we had not previously publicly referenced our <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/casdk-docs/docs/overview/adopters.md">adoption of the tool</a>.</p>
+<p>The Carbon Aware SDK v1.4.0 carbon metrics exporter (dependent on .NET8 upgrade) has increased the usefulness of the SDK due to increased visualization capabilities now available.</p>
+<h2 id="carbon-intensity-map">Carbon Intensity map</h2>
+<p>This feature facilitates integration with monitoring solutions like <a href="https://prometheus.io/">Prometheus</a> and furthermore with a visualization solution like <a href="https://grafana.com/docs/grafana/latest/panels-visualizations/visualizations/">Grafana</a>: unlocking geomap style visualization (showing metrics at specified locations on a map). By enabling the exporter and making some settings on Grafana, carbon intensities can be exported from Carbon Aware SDK to a geomap, this is part of a dashboard to monitor carbon emissions for software systems.</p>
+<p>The Carbon Intensity can be intuitively visualized with size and colors on a geomap. Beyond raising awareness, this can guide decisions on location or time shift.</p>
+<p><img alt="fig3" src="https://carbon-aware-sdk.greensoftware.foundation/assets/images/fig3-49e2337ba84c6840781d36bde8e958f0.png" width="2860" height="1434"></p>
+<h2 id="green-dashboard-for-kubernetes">Green Dashboard for Kubernetes</h2>
+<p>Carbon Aware SDK helps increase awareness around Carbon emission, and it is now possible to monitor carbon emission per application within Kubernetes.</p>
+<p>In practice, each container's energy consumption is evaluated through <a href="https://www.cncf.io/projects/kepler/">Kepler</a> (sandbox project in Cloud Native Cloud Foundation, <a href="https://www.cncf.io/">CNCF</a>), and thanks to the Carbon Aware SDK, the carbon emission can be evaluated.</p>
+<p>All those emission data from power grid can be accessed through the Prometheus exporter with the Carbon Aware SDK (starting v1.4.0), and visualized with the Grafana dashboard.</p>
+<p>The power consumption, energy consumption, carbon emission, and SCI can be seen at a glance!</p>
+<p>One of the upsides of micro-services architecture, as Kubernetes facilitates it, is to be able to work on different pieces of an application in a relatively independent fashion (maintaining, scaling, optimizing…).</p>
+<p>The Green Dashboard allows a team to check an application's global energy consumption and carbon emission (dashboard left side), while drilling down into sustainability-related metrics for each micro-service (dashboard right side).</p>
+<p>It shows the SCI, allowing to get a sense of the rate of Carbon Emission down to a particular piece of an architecture (R being the <a href="https://learn.greensoftware.foundation/measurement/#software-carbon-intensity-specification">functional unit</a> for that service - for example, an API call, the data is being shown per R unit or over an hour).</p>
+<p>While in monolithic application optimization needs customized instrumentation, and often have rippled effects, this green dashboard helps identify which micro-service refactoring would have the maximum impact on the application's carbon footprint, leveraging the team effort more efficiently.</p>
+<p><img alt="fig4" src="https://carbon-aware-sdk.greensoftware.foundation/assets/images/fig4-fc3b6185d725da8a78be25d93439263e.png" width="1901" height="925"></p>
+<h1 id="moving-forward">Moving Forward</h1>
+<p>With the Cloud Computing expansion, and Kubernetes flexibility, more and more choices exist for running a workload. While business and economic constraints often lead those decisions, the carbon footprint is becoming an increasingly critical consideration.</p>
+<p>This is a difficult endeavor, and the first step is to know where one stands, measure but also later evaluate and confirm what action would lead to improvement. That was one of the intentions behind the Green Dashboard for Kubernetes, and the Carbon Aware SDK 1.4 is a key element in this approach.</p>
+<p>By providing a standard interface to the carbon emissions of the energy, the Carbon Aware SDK is a key element for IT sustainability: from evaluating current carbon footprint up to taking into account carbon intensity for geo or time shifting…</p>
+<p>Thanks to the community effort the first step is a click away with the <a href="https://carbon-aware-sdk.greensoftware.foundation/docs/quickstart">quickstarting guide</a>, available for everyone.</p>
+<p>No excuse!</p>]]></content:encoded>
+            <category>dotnet8</category>
+        </item>
+        <item>
+            <title><![CDATA[Release v1.3]]></title>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.3</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.3</guid>
+            <pubDate>Tue, 13 Feb 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Release 1.3]]></description>
+            <content:encoded><![CDATA[<p>Release 1.3</p>
+<h3 id="added">Added</h3>
+<ul>
+<li>docs site at <a href="https://carbon-aware-sdk.greensoftware.foundation/">https://carbon-aware-sdk.greensoftware.foundation/</a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/464">PR #464 Create SECURITY.md </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/461">PR #461 CarbonHack24 Update to README.md </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/457">PR #457 Features/codespaces quickstart </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/459">PR #459 Readme updates for clarity </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/449">PR #449 Support location source setting in Helm chart </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/431">PR #431 Update documentation of Usefulness (adopters.md)  </a>%</li>
+<li>[#416 Add disclaimer banner to any public-facing documentation (docusaurus webpage) ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-s">https://github.com/Green-Software-Foundation/carbon-aware-s</a> dk/issues/416)</li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/415">#415 Update documentation of secureness (security.md) </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/414">#414 Update documentation of Usefulness (adopters.md) </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/413">#413 Update documentation for Test Coverage </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/412">#412 Update documentation for End User Guide (enablement.md) </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/410">#410 Update documentation for How to contribute (contributing.md ) </a></li>
+</ul>
+<h3 id="fixed">Fixed</h3>
+<ul>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/344">#344 [Bug]: Fix and update doc deployment workflow </a></li>
+</ul>
+<h3 id="changed">Changed</h3>
+<ul>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/411">#411 Update documentation for Project overview (ReadMe) </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/454">PR #454 Update quickstart.md </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/453">PR #453 Update overview.md </a></li>
+</ul>
+<h4 id="api">API</h4>
+<ul>
+<li></li>
+</ul>
+<h4 id="api-deployment">API Deployment</h4>
+<ul>
+<li></li>
+</ul>
+<h4 id="sdk">SDK</h4>
+<ul>
+<li></li>
+</ul>
+<h4 id="other">Other</h4>
+<ul>
+<li></li>
+</ul>
+<p>For more details, checkout <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/474">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/474</a></p>]]></content:encoded>
+            <category>v1.3</category>
+            <category>release</category>
+        </item>
         <item>
             <title><![CDATA[Release v1.2]]></title>
             <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.2</link>
