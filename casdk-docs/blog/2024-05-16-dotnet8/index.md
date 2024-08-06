@@ -1,7 +1,7 @@
 ---
 slug: .NET 8 upgrade
 title: Carbon Aware SDK 1.4, behind the scenes
-tags: [dotnet8]
+tags: [dotnet8, post]
 ---
 
 As most software nowadays, the Carbon Aware SDK relies on a stack of utilities, and while adding a new feature is usually the most appealing for a project, it’s also critical to maintain the stack, especially in a community effort.
