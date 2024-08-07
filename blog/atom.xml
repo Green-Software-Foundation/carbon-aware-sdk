@@ -72,17 +72,31 @@
         <summary type="html"><![CDATA[Release 1.4]]></summary>
         <content type="html"><![CDATA[<p>Release 1.4</p>
 <h3 id="added">Added</h3>
-<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401">#401 Feature Contribution: Upgrade .NET version to .NET 8 </a>
--<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419">#419 Feature Contribution: Migrate sample implementation of Azure Function to isolated worker model </a>
--[PR #500] Up Helm chart version to 1.2.0 ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500</a>)</p>
-<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397">#397 Feature Contribution: Data caching in the SDK </a></p>
+<ul>
+<li>
+<p><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401">#401 Feature Contribution: Upgrade .NET version to .NET 8 </a></p>
+</li>
+<li>
+<p><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419">#419 Feature Contribution: Migrate sample implementation of Azure Function to isolated worker model </a></p>
+</li>
+<li>
+<p><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500">PR #500 Up Helm chart version to 1.2.0 </a></p>
+</li>
+<li>
+<p><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397">#397 Feature Contribution: Data caching in the SDK </a></p>
+</li>
+</ul>
 <h3 id="fixed">Fixed</h3>
-<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505">#505 Bug: Project Page wiki from GSF website still says it's in incubation </a>
--<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496">#496 URGENT WebAPI container has not built due to segmentation fault </a>
--<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487">#487 Bug: Getting started guide is lost </a></p>
+<ul>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505">#505 Bug: Project Page wiki from GSF website still says it's in incubation </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496">#496 URGENT WebAPI container has not built due to segmentation fault </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487">#487 Bug: Getting started guide is lost </a></li>
+</ul>
 <h3 id="changed">Changed</h3>
-<p>-<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477">#477 Bug: Ensure the readme file shows as the project overview content on the documentation site </a>
--<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485">PR #485 Docs overview, disclaimer &amp; pipeline updates for graduation </a></p>
+<ul>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477">#477 Bug: Ensure the readme file shows as the project overview content on the documentation site </a></li>
+<li><a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485">PR #485 Docs overview, disclaimer &amp; pipeline updates for graduation </a></li>
+</ul>
 <h4 id="api">API</h4>
 <ul>
 <li></li>
