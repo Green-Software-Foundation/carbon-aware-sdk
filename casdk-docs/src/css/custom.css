@@ -30,6 +30,6 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
-#__blog-post-container img, .theme-doc-markdown img{
+#__blog-post-container img, .theme-doc-markdown img, article img{
   height: auto;
 }
