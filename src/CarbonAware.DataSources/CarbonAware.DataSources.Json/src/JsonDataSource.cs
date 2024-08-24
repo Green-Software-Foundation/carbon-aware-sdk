@@ -104,11 +104,11 @@ internal class JsonDataSource : IEmissionsDataSource
         }
         using Stream stream = GetStreamFromFileLocation();
         var jsonObject = await JsonSerializer.DeserializeAsync<EmissionsJsonFile>(stream);
-        if (_emissionsData is null || !_emissionsData.Any())
+        if (_configuration.CacheJsonData && (_emissionsData is null || !_emissionsData.Any()))
         {
             _emissionsData = jsonObject?.Emissions;
         }
-        return _emissionsData;
+        return jsonObject?.Emissions;
     }
 
     private Stream GetStreamFromFileLocation()
