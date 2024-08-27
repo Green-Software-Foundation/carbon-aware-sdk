@@ -9,6 +9,7 @@ using System.Linq;
 using Moq.Protected;
 using Microsoft.Extensions.Options;
 using CarbonAware.DataSources.Json.Configuration;
+using CarbonAware.DataSources.Json.Mocks;
 
 namespace CarbonAware.DataSources.Json.Tests;
 
@@ -103,6 +104,56 @@ class JsonDataSourceTests
         var result = await dataSource.GetCarbonIntensityAsync(locations, start, end);
         Assert.That(result.Count(), Is.EqualTo(0));
         Assert.That(!result.Any(), Is.True);
+    }
+
+    [TestCase(true, TestName = "Test JsonDataSource with caching")]
+    [TestCase(false, TestName = "Test JsonDataSource without caching")]
+    public async Task GetCarbonIntensityAsync_CacheEmissionData(bool cache)
+    {
+        var logger = Mock.Of<ILogger<JsonDataSource>>();
+
+        var monitor = new Mock<IOptionsMonitor<JsonDataSourceConfiguration>>();
+        var config = new JsonDataSourceConfiguration
+        {
+            CacheJsonData = cache
+        };
+        monitor.Setup(m => m.CurrentValue).Returns(config);
+        var dataSource = new JsonDataSource(logger, monitor.Object);
+
+        JsonDataSourceMocker dsMocker = new();
+
+        var today = DateTimeOffset.Now;
+        var todayEnd = today.AddMinutes(30);
+        var todayLocation = new Location() { Name = "japan" };
+        dsMocker.SetupDataMock(today, todayEnd, todayLocation.Name);
+        var result1 = await dataSource.GetCarbonIntensityAsync(todayLocation, today, todayEnd);
+        Assert.AreEqual(1, result1.Count());
+        foreach (var r in result1)
+        {
+            Assert.AreEqual(r.Location, todayLocation.Name);
+        }
+
+        var yesterday = today.AddDays(-1);
+        var yesterdayEnd = yesterday.AddMinutes(30);
+        var yesterdayLocation = new Location() { Name = "uk" };
+        dsMocker.SetupDataMock(yesterday, yesterdayEnd, yesterdayLocation.Name);
+        if (cache)
+        {
+            var result2 = await dataSource.GetCarbonIntensityAsync(todayLocation, today, todayEnd);
+            Assert.AreEqual(1, result2.Count());
+            foreach (var r in result2)
+            {
+                Assert.AreEqual(r.Location, todayLocation.Name);
+            }
+        } else
+        {
+            var result2 = await dataSource.GetCarbonIntensityAsync(yesterdayLocation, yesterday, yesterdayEnd);
+            Assert.AreEqual(1, result2.Count());
+            foreach (var r in result2)
+            {
+                Assert.AreEqual(r.Location, yesterdayLocation.Name);
+            }
+        }
     }
 
     private Mock<JsonDataSource> SetupMockDataSource() {
