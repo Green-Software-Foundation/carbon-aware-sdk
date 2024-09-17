@@ -2,6 +2,27 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
+## [1.6.0] - 2024-09
+
+Release for milestone https://github.com/Green-Software-Foundation/carbon-aware-sdk/milestone/8?closed=1 with general bugs fixes and improvements
+
+### Added 
+
+- [PR #555] Add a configuration for disabling to cache JSON emission data ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/555)
+- [PR #544] Add env directive to values.yaml and troubleshooting guide to avoid inotify limitation on Linux ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/544)
+- [PR #524] Add blog article for .NET 8 upgrade ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/524)
+- [PR #523] documentation-change.yml: Created issue template for documentation ch… ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/523)
+
+### Removed
+
+### Fixed
+
+- [#528] [Bug]: Avoid inotify limit in WebAPI container on Kubernetes ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/528)
+- [PR #553] Documentation: "it's" is used incorrectly several times ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/553)
+- [PR #551] Docs/blog update for releases 1.3 to1.5 and fix ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/551)
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/559](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/559) 
+
 ## [1.5.0] - 2024-05
 
 This is the WattTime v3 update.  Most notable changes that may require action are for deployment configuration, and these are minor.
@@ -73,7 +94,7 @@ No changes
 No changes
 
 
-For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503) 
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/540](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/540) 
 
 
 ## [1.4.0] - 2024-05
