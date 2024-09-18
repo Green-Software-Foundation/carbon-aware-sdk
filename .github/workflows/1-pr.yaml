@@ -188,7 +188,7 @@ jobs:
         with:
           name: dev-swagger.yaml
           path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pr-swagger.yaml
           path: ./src/CarbonAware.WebApi/src/wwwroot/api/v1/pr-swagger.yaml
