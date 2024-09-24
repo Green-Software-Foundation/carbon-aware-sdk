@@ -97,10 +97,10 @@ public class CarbonAwareController : ControllerBase
     ///   boundaries are provided, the entire forecast dataset is used. The scoped data points are used to calculate average marginal 
     ///   carbon intensities of the specified "windowSize" and the optimal marginal carbon intensity window is identified.
     ///
-    ///   The forecast data represents what the data source predicts future marginal carbon intesity values to be, 
+    ///   The forecast data represents what the data source predicts future marginal carbon intensity values to be, 
     ///   not actual measured emissions data (as future values cannot be known).
     ///
-    ///   This endpoint is useful for determining if there is a more carbon-optimal time to use electicity predicted in the future.
+    ///   This endpoint is useful for determining if there is a more carbon-optimal time to use electricity predicted in the future.
     /// </remarks>
     /// <returns>An array of forecasts (one per requested location) with their optimal marginal carbon intensity windows.</returns>
     /// <response code="200">Returns the requested forecast objects</response>
