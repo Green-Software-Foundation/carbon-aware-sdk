@@ -134,6 +134,7 @@ class ElectricityMapsDataSourceTests
     public async Task GetCarbonIntensity_DateRangeWithin24Hours_ReturnsResultsWhenRecordsFound()
     {
         var startDate = DateTimeOffset.UtcNow.AddHours(-10);
+        var expectedDate = startDate.AddMinutes(-10);
         var endDate = startDate.AddHours(1);
         var expectedCarbonIntensity = 100;
 
@@ -145,10 +146,12 @@ class ElectricityMapsDataSourceTests
             {
                 new CarbonIntensity()
                 {
-                    Value = expectedCarbonIntensity,
+                    DateTime = startDate.AddMinutes(-40),  // out of range
+                    Value = 0,
                 },
                 new CarbonIntensity()
                 {
+                    DateTime = expectedDate,
                     Value = expectedCarbonIntensity,
                 }
             }
@@ -162,10 +165,11 @@ class ElectricityMapsDataSourceTests
         var result = await this._dataSource.GetCarbonIntensityAsync(new List<Location>() { _defaultLocation }, startDate, endDate);
 
         Assert.IsNotNull(result);
-        Assert.That(result.Count(), Is.EqualTo(2));
+        Assert.That(result.Count(), Is.EqualTo(1));
 
         var first = result.First();
         Assert.IsNotNull(first);
+        Assert.That(expectedDate, Is.EqualTo(first.Time));
         Assert.That(first.Rating, Is.EqualTo(expectedCarbonIntensity));
         Assert.That(first.Location, Is.EqualTo(_defaultLocation.Name));
 
@@ -176,6 +180,7 @@ class ElectricityMapsDataSourceTests
     public async Task GetCarbonIntensity_DateRangeMore24Hours_ReturnsResultsWhenRecordsFound()
     {
         var startDate = _defaultDataStartTime;
+        var expectedDate = startDate.AddMinutes(-10);
         var endDate = startDate.AddHours(1);
         var expectedCarbonIntensity = 100;
 
@@ -187,10 +192,12 @@ class ElectricityMapsDataSourceTests
             {
                 new CarbonIntensity()
                 {
-                    Value = expectedCarbonIntensity,
+                    DateTime = startDate.AddMinutes(-40),  // out of range
+                    Value = 0,
                 },
                 new CarbonIntensity()
                 {
+                    DateTime = expectedDate,
                     Value = expectedCarbonIntensity,
                 }
             }
@@ -206,10 +213,11 @@ class ElectricityMapsDataSourceTests
         var result = await this._dataSource.GetCarbonIntensityAsync(new List<Location>() { _defaultLocation }, startDate, endDate);
 
         Assert.IsNotNull(result);
-        Assert.That(result.Count(), Is.EqualTo(2));
+        Assert.That(result.Count(), Is.EqualTo(1));
 
         var first = result.First();
         Assert.IsNotNull(first);
+        Assert.That(expectedDate, Is.EqualTo(first.Time));
         Assert.That(first.Rating, Is.EqualTo(expectedCarbonIntensity));
         Assert.That(first.Location, Is.EqualTo(_defaultLocation.Name));
 
@@ -261,7 +269,9 @@ class ElectricityMapsDataSourceTests
         {
             HistoryData = new List<CarbonIntensity>()
             {
-                new CarbonIntensity()
+                new CarbonIntensity(){
+                    DateTime = startDate.AddMinutes(30),
+                },
             }
         };
 
@@ -285,7 +295,7 @@ class ElectricityMapsDataSourceTests
     {
         var startDate = DateTimeOffset.UtcNow.AddHours(-8);
         var endDate = startDate.AddHours(1);
-        var expectedDuration = TimeSpan.FromHours(1);
+        var expectedDuration = TimeSpan.FromMinutes(59);
         // Arrange
         _locationSource.Setup(l => l.ToGeopositionLocationAsync(_defaultLocation)).Returns(Task.FromResult(_defaultLocation));
 
