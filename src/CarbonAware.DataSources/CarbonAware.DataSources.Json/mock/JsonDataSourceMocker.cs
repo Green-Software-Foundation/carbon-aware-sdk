@@ -4,7 +4,7 @@ using CarbonAware.Model;
 using System.Text.Json;
 
 namespace CarbonAware.DataSources.Json.Mocks;
-internal class JsonDataSourceMocker : IDataSourceMocker
+public class JsonDataSourceMocker : IDataSourceMocker
 {
     public JsonDataSourceMocker() { }
 

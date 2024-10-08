@@ -23,7 +23,7 @@ handle these calls, only the data source should have access to, and knowledge
 of, that client.
 
 - For example, the WattTimeDataSource has a reference to a private
-  WattTimeClient within it's implementation. The WattTimeClient handles the HTTP
+  WattTimeClient within its implementation. The WattTimeClient handles the HTTP
   GET/POST calls to WattTime and the data source invokes the client once it has
   processed the request, and then processes the response before returning a
   final result.
@@ -82,7 +82,7 @@ dotnet add package Microsoft.Extensions.DependencyInjection
 
 Each new data source should extend from a generic data source interface. A data
 source interface defines all the parameters and functions that any data source
-that falls under it's purview must define/implement. By defining the interface,
+that falls under its purview must define/implement. By defining the interface,
 it allows the SDK to switch between the set of data sources seamlessly because
 they all share the same input functions and output types.
 

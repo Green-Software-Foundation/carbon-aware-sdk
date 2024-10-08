@@ -202,6 +202,11 @@ where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json`
 directory. For instance, if the application is installed under `/app`, copy the
 file to `/app/data-sources/json`.
 
+Emission data in JSON is cached by default, it means original data would be handled
+even if JSON is updated.
+You need to set `DataSources__Configurations__JSON__CacheJsonData=false`
+if you want to handle updated data.
+
 ```sh
 cp <mydir>/mycustomfile.json /app/data-sources/json
 export DataSources__Configurations=Json

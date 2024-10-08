@@ -128,7 +128,7 @@ jobs:
         working-directory: ./src/CarbonAware.WebApi/src 
       
       - name: Upload swagger artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: pr-swagger.yaml
           path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
@@ -184,11 +184,11 @@ jobs:
         env:
           DOTNET_ROLL_FORWARD: LatestMajor
       - name: Upload dev artifact
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: dev-swagger.yaml
           path: src/CarbonAware.WebApi/src/wwwroot/api/v1/swagger.yaml
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: pr-swagger.yaml
           path: ./src/CarbonAware.WebApi/src/wwwroot/api/v1/pr-swagger.yaml
