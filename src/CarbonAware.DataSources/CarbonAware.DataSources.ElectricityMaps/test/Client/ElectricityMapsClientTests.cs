@@ -8,6 +8,7 @@ using Moq;
 using Moq.Protected;
 using Moq.Contrib.HttpClient;
 using System.Text.Json;
+using CarbonAware.Model;
 
 namespace CarbonAware.DataSources.ElectricityMaps.Tests;
 
@@ -299,4 +300,36 @@ class ElectricityMapsClientTests
                 .ReturnsResponse(statusCode);
         }    
     }
+
+    [Test]
+    public async Task GetRecentCarbonIntensityHistoryAsync_DeserializesExpectedResponseWithNull()
+    {
+        AddHandler_RequestResponse(r =>
+        {
+            return r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, TestData.GetHistoryCarbonIntensityDataJsonStringWithNull());
+
+        var client = new ElectricityMapsClient(this.HttpClientFactory, this.Options.Object, this.Log.Object);
+
+        // Act
+        var data = await client.GetRecentCarbonIntensityHistoryAsync(TestLatitude, TestLongitude);
+        var dataPoint = data?.HistoryData.First();
+
+        // Assert
+        Assert.That(data, Is.Not.Null);
+        Assert.That(data?.Zone, Is.EqualTo(TestZone));
+        Assert.That(data?.HistoryData.Count(), Is.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(dataPoint?.DateTime, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            Assert.That(dataPoint?.UpdatedAt, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            Assert.That(dataPoint?.CreatedAt, Is.EqualTo(new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero)));
+            Assert.That(dataPoint?.Value, Is.Null);
+            Assert.That(((EmissionsData)dataPoint).Rating, Is.EqualTo(-1));
+            Assert.That(dataPoint?.EmissionFactorType, Is.EqualTo("lifecycle"));
+            Assert.That(dataPoint?.IsEstimated, Is.False);
+            Assert.That(dataPoint?.EstimationMethod, Is.Null);
+        });
+    }
+
 }
