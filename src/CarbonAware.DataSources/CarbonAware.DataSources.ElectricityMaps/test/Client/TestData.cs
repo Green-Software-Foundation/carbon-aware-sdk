@@ -92,4 +92,28 @@ internal static class TestData
 
         return json.ToString();
     }
+
+    public static string GetHistoryCarbonIntensityDataJsonStringWithNull()
+    {
+        var json = new JsonObject
+        {
+            ["zone"] = TestZoneId1,
+            ["history"] = new JsonArray
+            {
+                new JsonObject
+                {
+                    ["datetime"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
+                    ["updatedAt"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
+                    ["createdAt"] = new DateTimeOffset(2099, 1, 1, 0, 0, 0, TimeSpan.Zero),
+                    ["carbonIntensity"] = null,
+                    ["emissionFactorType"] = "lifecycle",
+                    ["isEstimated"] = false,
+                    ["estimatedMethod"] = null,
+                }
+            }
+        };
+
+        return json.ToString();
+    }
+
 }

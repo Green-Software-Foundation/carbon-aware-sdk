@@ -32,7 +32,7 @@ internal record CarbonIntensity
     /// Carbon Intensity value.
     /// </summary>
     [JsonPropertyName("carbonIntensity")]
-    public int Value { get; init; }
+    public int? Value { get; init; }
 
     /// <summary>
     /// Indicates the datetime of the carbon intensity
@@ -74,7 +74,7 @@ internal record CarbonIntensity
     {
         return new EmissionsData
         {
-            Rating = historyCarbonIntensity.Value,
+            Rating = historyCarbonIntensity.Value ?? -1,
             Time = historyCarbonIntensity.UpdatedAt,
         };
     }
