@@ -1,6 +1,8 @@
 using Microsoft.Extensions.Options;
 using CarbonAware.WebApi.Metrics;
 using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 namespace CarbonAware.WebApi.Configuration;
 
@@ -32,7 +34,23 @@ internal static class ServiceCollectionExtensions
           // Can be extended in the future to support a different provider like Zipkin, Prometheus etc 
         }
 
+        var enableTelemetryLogging = envVars?.EnableTelemetryLogging ?? true;
+        if (enableTelemetryLogging)
+        {
+            const string serviceName = "CarbonAware.WebAPI";
+            const string serviceVersion = "1.0.0";
 
+            services.AddOpenTelemetry()
+                .WithTracing(tracerProviderBuilder =>
+                    tracerProviderBuilder
+                    .AddConsoleExporter()
+                    .AddSource(serviceName)
+                    .SetResourceBuilder(
+                        ResourceBuilder.CreateDefault()
+                            .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
+                    .AddHttpClientInstrumentation()
+                    .AddAspNetCoreInstrumentation());
+        }
     }
 
     public static IServiceCollection AddCarbonExporter(this IServiceCollection services, IConfiguration configuration)
