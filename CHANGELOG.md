@@ -4,7 +4,7 @@ All notable changes to the Carbon Aware SDK will be documented in this file.
 
 ## [1.6.1] - 2024-11
 
-Release addressing minor issues [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1)
+Release addressing minor issues [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1) 
 
 ### Added
 
