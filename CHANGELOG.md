@@ -2,6 +2,21 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
+## [1.6.1] - 2024-11
+
+Release addressing minor issues [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1) 
+
+### Added
+
+- [PR #531] Add configuration for tracing log](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/531)
+
+### Fixed 
+
+- [PR #575] Consider null value in carbonIntensity on EM ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/575)
+- [PR #572] EM datasource didn't filter out-of-range emission data ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/572)
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/579](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/579)
+
 ## [1.6.0] - 2024-09
 
 Release for milestone https://github.com/Green-Software-Foundation/carbon-aware-sdk/milestone/8?closed=1 with general bugs fixes and improvements

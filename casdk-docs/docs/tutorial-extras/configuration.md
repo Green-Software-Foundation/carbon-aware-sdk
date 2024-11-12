@@ -409,6 +409,16 @@ InstrumentationKey. For more details, please refer to
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
 ```
 
+#### Configuring telemetry log
+
+WebAPI configures [console exporter of OpenTelemetry](https://opentelemetry.io/docs/languages/net/exporters/#console) by default.
+You can configure whether the exporter is enabled with `EnableTelemetryLogging`.
+Set `false` if you want to reduce the log.
+
+```bash
+CarbonAwareVars__EnableTelemetryLogging=false
+```
+
 ### Prometheus exporter for emissions data
 
 > DISCLAIMER:  The `/metrics` Prometheus exporter is currently unsupported, and is used for internal GSF needs, and may change in the future.  It will retrieve _all_ emissions data and create heavy load on your data API's.  It is turned off by default.
