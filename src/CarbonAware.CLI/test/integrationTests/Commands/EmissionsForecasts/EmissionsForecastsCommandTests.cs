@@ -99,7 +99,7 @@ internal class EmissionsForecastsCommandTests : IntegrationTestingBase
         IgnoreTestForDataSource("data source does not implement '--requested-at'", DataSourceType.ElectricityMaps);
 
         // Arrange
-        _dataSourceMocker.SetupBatchForecastMock();
+        _dataSourceMocker.SetupHistoricalBatchForecastMock();
 
         // Act
         var exitCode = await InvokeCliAsync($"emissions-forecasts -l eastus -r 2022-09-01");

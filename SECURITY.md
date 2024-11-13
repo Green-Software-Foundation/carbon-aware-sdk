@@ -75,11 +75,11 @@ We perform regular reviews inline with the information provided below.  All rele
 
 ### Use basic good cryptographic practices
 - https://www.bestpractices.dev/en/criteria/0#0.crypto_published - ✅ uses HTTPS for WebAPI, N/A for CLI
-- https://www.bestpractices.dev/en/criteria/0#0.crypto_floss - ✅ uses dotnet 6.0 implementations
-- https://www.bestpractices.dev/en/criteria/0#0.crypto_keylength - ✅ uses dotnet 6.0 implementations
-- https://www.bestpractices.dev/en/criteria/0#0.crypto_working - ✅ uses dotnet 6.0 implementations
-- https://www.bestpractices.dev/en/criteria/0#0.crypto_password_storage - ✅ ⚠️  uses dotnet 6.0 implementations
-- https://www.bestpractices.dev/en/criteria/0#0.crypto_random - ✅ uses dotnet 6.0 implementatons for HTTPS
+- https://www.bestpractices.dev/en/criteria/0#0.crypto_floss - ✅ uses dotnet 8.0 implementations
+- https://www.bestpractices.dev/en/criteria/0#0.crypto_keylength - ✅ uses dotnet 8.0 implementations
+- https://www.bestpractices.dev/en/criteria/0#0.crypto_working - ✅ uses dotnet 8.0 implementations
+- https://www.bestpractices.dev/en/criteria/0#0.crypto_password_storage - ✅ ⚠️  uses dotnet 8.0 implementations
+- https://www.bestpractices.dev/en/criteria/0#0.crypto_random - ✅ uses dotnet 8.0 implementatons for HTTPS
 
 ### Secured delivery against man-in-the-middle (MITM) attacks
 - Delivery mechanisms that counters MITM - ✅ uses HTTPS

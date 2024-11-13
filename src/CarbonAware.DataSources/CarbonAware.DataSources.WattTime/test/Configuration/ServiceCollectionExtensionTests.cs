@@ -26,31 +26,7 @@ class ServiceCollectionExtensionTests
     private readonly string ProxyPassword = $"DataSources:Configurations:WattTimeTest:Proxy:Password";
     private readonly string UseProxyKey = $"DataSources:Configurations:WattTimeTest:Proxy:UseProxy";
 
-    [Test]
-    public void ClientProxyTest_With_Invalid_ProxyURL_ThrowsException()
-    {
-        // Arrange
-        var settings = new Dictionary<string, string> {
-            { ForecastDataSourceKey, ForecastDataSourceValue },
-            { EmissionsDataSourceKey, EmissionsDataSourceValue },
-            { UsernameKey, Username },
-            { PasswordKey, Password },
-            { ProxyUrl, "http://fakeproxy:8080" },
-            { UseProxyKey, "true" },
-        };
-
-        var configuration = new ConfigurationBuilder()
-            .AddInMemoryCollection(settings)
-            .AddEnvironmentVariables()
-            .Build();
-        var serviceCollection = new ServiceCollection();
-        serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources());
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        var client = serviceProvider.GetRequiredService<IWattTimeClient>();
-
-        // Act & Assert
-        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetBalancingAuthorityAsync("lat", "long"));
-    }
+    
 
     [Test]
     public void ClientProxyTest_With_Missing_ProxyURL_ThrowsException()
@@ -73,6 +49,33 @@ class ServiceCollectionExtensionTests
         // Act & Assert
         Assert.Throws<ConfigurationException>(() => serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources()));
         Assert.Throws<ConfigurationException>(() => serviceCollection.AddWattTimeEmissionsDataSource(configuration.DataSources()));
+    }
+
+    [Test]
+    public void ClientProxyTest_With_Invalid_ProxyURL_ThrowsException()
+    {
+        // Arrange
+        var settings = new Dictionary<string, string> {
+            { ForecastDataSourceKey, ForecastDataSourceValue },
+            { EmissionsDataSourceKey, EmissionsDataSourceValue },
+            { UsernameKey, Username },
+            { PasswordKey, Password },
+            { ProxyUrl, "http://fakeproxy:8080" },
+            { UseProxyKey, "true" },
+        };
+
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(settings)
+            .AddEnvironmentVariables()
+            .Build();
+        var serviceCollection = new ServiceCollection();
+        serviceCollection.AddWattTimeForecastDataSource(configuration.DataSources());
+
+        var serviceProvider = serviceCollection.BuildServiceProvider();
+        var client = serviceProvider.GetRequiredService<IWattTimeClient>();
+
+        // Act & Assert
+        Assert.ThrowsAsync<HttpRequestException>(async () => await client.GetRegionAsync("lat", "long"));
     }
 
     [TestCase(true, TestName = "ClientProxyTest, successful: denotes adding WattTime data sources using proxy.")]

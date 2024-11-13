@@ -1,0 +1,80 @@
+---
+slug: release-v1.5
+title: Release v1.5
+tags: [v1.5, release]
+---
+
+Release 1.5
+
+This is the WattTime v3 update.  Most notable changes that may require action are for deployment configuration, and these are minor.
+
+<!-- truncate -->
+
+### Added 
+
+WattTime v3 API support.  This is an inplace upgrade for v2.
+
+- [PR #532 Watt Time v3 Support  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/532)
+- [PR #340 Add example for 'podman play kube' ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/340)
+- [PR #536 Updated azure-regions.json with new regions ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/536)
+- [#519 Remove hackathon sentence from our website banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/519)
+- [#510 Gap Analysis for WattTime v3 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/510)
+- [#262 Feature Contribution: Publish the docker file in a docker registry ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/262)
+
+### Removed 
+
+WattTime v2 API support due to v3 in place replacement.
+
+### Fixed
+
+- [PR #522 Remove Hack mention from the Docs's banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/522)
+- [#535 Bug: Configuration for locations loads twice  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/535)
+- [PR #516 Update published documentation to .NET 8 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/516)
+- [PR #515 overview.md: Fixed three broken links Signed-off-by: joecus1 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/515)
+- [#506 Check our published documentation to identify any references to .NET7 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/506)
+- [#512 Bug: Broken links in overview.md file ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/512)
+
+### Changed
+
+Updates for WattTime v3 API endpoint from v2, details in the [ADR for WattTime v3 changes](/docs/architecture/decisions/watt-time-v3).
+
+#### API
+
+No changes
+
+#### API Deployment
+
+Due to the change for WattTime v3, there is change to the configuration for WattTime users.
+
+With some of the changes to the code, some of the configuration will also needs to change.
+
+| Config (v2)                   | Config (v3)                 | Description                  |
+|------------------------------------|----------------------------------|------------------------------|
+| `BalancingAuthorityCacheTTL`                                 | `RegionCacheTTL`                                 | This is the cache for regions data in seconds, and has a default value of 1 day.  This only needs updating if you set it |
+| n/a                        | `AuthenticationBaseUrl`                                | **NEW** This is the base URL for the WattTime Authentication API and defaults to `https://api.watttime.org/` if not set. |
+
+Example below if set (note they do not have to be set)
+```json
+"wattTime_no-proxy": {
+  "Type": "WattTime",
+  "Username": "the_username",
+  "Password": "super_secret_secret",
+  "BaseURL": "https://api.watttime.org/v3/",
+  "AutenticationBaseURL": "https://api.watttime.org", // This is new but not mandatory in config
+  "RegionCacheTTL": 86400, // This is changed but not mandatory in config
+  "Proxy": {
+    "UseProxy": false
+  }
+```
+
+#### SDK 
+
+No changes
+
+
+#### Other
+
+No changes
+
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503) 

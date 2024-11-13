@@ -5,28 +5,10 @@ using CarbonAware.WebApi.Filters;
 using GSF.CarbonAware.Configuration;
 using GSF.CarbonAware.Exceptions;
 using Microsoft.OpenApi.Models;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Metrics;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
-// Define constants to initialize tracing with
-var serviceName = "CarbonAware.WebAPI";
-var serviceVersion = "1.0.0";
-
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddOpenTelemetry()
-    .WithTracing(tracerProviderBuilder =>
-        tracerProviderBuilder
-        .AddConsoleExporter()
-        .AddSource(serviceName)
-        .SetResourceBuilder(
-            ResourceBuilder.CreateDefault()
-                .AddService(serviceName: serviceName, serviceVersion: serviceVersion))
-        .AddHttpClientInstrumentation()
-        .AddAspNetCoreInstrumentation());
 
 // Add services to the container.
 builder.Services.AddControllers(options =>

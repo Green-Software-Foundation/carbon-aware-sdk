@@ -2,6 +2,159 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
+## [1.6.1] - 2024-11
+
+Release addressing minor issues [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1) 
+
+### Added
+
+- [PR #531] Add configuration for tracing log](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/531)
+
+### Fixed 
+
+- [PR #575] Consider null value in carbonIntensity on EM ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/575)
+- [PR #572] EM datasource didn't filter out-of-range emission data ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/572)
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/579](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/579)
+
+## [1.6.0] - 2024-09
+
+Release for milestone https://github.com/Green-Software-Foundation/carbon-aware-sdk/milestone/8?closed=1 with general bugs fixes and improvements
+
+### Added 
+
+- [PR #555] Add a configuration for disabling to cache JSON emission data ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/555)
+- [PR #544] Add env directive to values.yaml and troubleshooting guide to avoid inotify limitation on Linux ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/544)
+- [PR #524] Add blog article for .NET 8 upgrade ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/524)
+- [PR #523] documentation-change.yml: Created issue template for documentation ch… ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/523)
+
+### Removed
+
+### Fixed
+
+- [#528] [Bug]: Avoid inotify limit in WebAPI container on Kubernetes ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/528)
+- [PR #553] Documentation: "it's" is used incorrectly several times ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/553)
+- [PR #551] Docs/blog update for releases 1.3 to1.5 and fix ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/551)
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/559](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/559) 
+
+## [1.5.0] - 2024-05
+
+This is the WattTime v3 update.  Most notable changes that may require action are for deployment configuration, and these are minor.
+
+### Added 
+
+WattTime v3 API support.  This is an inplace upgrade for v2.
+
+- [PR #532] Watt Time v3 Support  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/532)
+- [PR #340] Add example for 'podman play kube' ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/340)
+- [PR #536] Updated azure-regions.json with new regions ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/536)
+- [#519] Remove hackathon sentence from our website banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/519)
+- [#510] Gap Analysis for WattTime v3 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/510)
+- [#262] [Feature Contribution]: Publish the docker file in a docker registry ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/262)
+
+### Removed
+
+WattTime v2 API support due to v3 in place replacement.
+
+### Fixed
+
+- [PR #522] Remove Hack mention from the Docs's banner ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/522)
+- [#535] [Bug]: Configuration for locations loads twice  ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/535)
+- [PR #516] Update published documentation to .NET 8 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/516)
+- [PR #515] overview.md: Fixed three broken links Signed-off-by: joecus1 <joecusa… ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/515)
+- [#506] Check our published documentation to identify any references to .NET7 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/506)
+- [#512] [Bug]: Broken links in overview.md file ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/512)
+
+### Changed
+
+Updates for WattTime v3 API endpoint from v2, details in the [ADR for WattTime v3 changes](./casdk-docs/docs/architecture//decisions/0016-watt-time-v3.md).
+
+#### API
+
+No changes
+
+#### API Deployment
+
+Due to the change for WattTime v3, there is change to the configuration for WattTime users.
+
+With some of the changes to the code, some of the configuration will also needs to change.
+
+| Config (v2)                   | Config (v3)                 | Description                  |
+|------------------------------------|----------------------------------|------------------------------|
+| `BalancingAuthorityCacheTTL`                                 | `RegionCacheTTL`                                 | This is the cache for regions data in seconds, and has a default value of 1 day.  This only needs updating if you set it |
+| n/a                        | `AuthenticationBaseUrl`                                | **NEW** This is the base URL for the WattTime Authentication API and defaults to `https://api.watttime.org/` if not set. |
+
+Example below if set (note they do not have to be set)
+```json
+"wattTime_no-proxy": {
+  "Type": "WattTime",
+  "Username": "the_username",
+  "Password": "super_secret_secret",
+  "BaseURL": "https://api.watttime.org/v3/",
+  "AutenticationBaseURL": "https://api.watttime.org", // This is new but not mandatory in config
+  "RegionCacheTTL": 86400, // This is changed but not mandatory in config
+  "Proxy": {
+    "UseProxy": false
+  }
+```
+
+#### SDK 
+
+No changes
+
+
+#### Other
+
+No changes
+
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/540](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/540) 
+
+
+## [1.4.0] - 2024-05
+
+### Added 
+
+-[#401] [Feature Contribution]: Upgrade .NET version to .NET 8 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/401)
+-[#419] [Feature Contribution]: Migrate sample implementation of Azure Function to isolated worker model ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/419)
+-[PR #500] Up Helm chart version to 1.2.0 ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/500)
+
+-[#397] [Feature Contribution]: Data caching in the SDK ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/397)
+
+### Fixed
+
+-[#505] [Bug]: Project Page wiki from GSF website still says it's in incubation ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/505)
+-[#496] [URGENT] WebAPI container has not built due to segmentation fault ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/496)
+-[#487] [Bug]: Getting started guide is lost ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/487)
+
+
+### Changed
+
+-[#477] [Bug]: Ensure the readme file shows as the project overview content on the documentation site ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/477)
+-[PR #485] Docs overview, disclaimer & pipeline updates for graduation ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/485)
+
+#### API
+
+- 
+
+#### API Deployment
+
+- 
+
+#### SDK 
+
+- 
+
+
+#### Other
+
+- 
+
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/503) 
+
+
 ## [1.3.0] - 2024-02
 
 ### Added 

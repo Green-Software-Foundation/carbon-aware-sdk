@@ -80,6 +80,8 @@ tolerations: []
 
 affinity: {}
 
+env: []
+
 # /app/appsettings.json
 appsettings: |-
   {

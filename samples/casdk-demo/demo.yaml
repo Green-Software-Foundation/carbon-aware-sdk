@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: casdk-demo
+  labels:
+    app: casdk-demo
+spec:
+  selector:
+    matchLabels:
+      app: casdk-demo
+  template:
+    metadata:
+      labels:
+        app: casdk-demo
+    spec:
+      containers:
+      - name: carbon-aware-sdk
+        image: ghcr.io/green-software-foundation/carbon-aware-sdk:pre
+        envFrom:
+        - configMapRef:
+            name: casdk-config
+        ports:
+        - containerPort: 8080
+          hostPort: 8080
+      - name: swagger-ui
+        image: swaggerapi/swagger-ui
+        env:
+        - name: SWAGGER_JSON_URL
+          value: /swagger.yaml
+        - name: PORT
+          value: "8081"
+        ports:
+        - containerPort: 8081
+          hostPort: 8081
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 8082
+          hostPort: 8082
+        volumeMounts:
+        - name: rp-config
+          mountPath: /etc/nginx/conf.d/default.conf
+      volumes:
+      - name: rp-config
+        hostPath:
+          path: nginx-rp.conf
+          type: File

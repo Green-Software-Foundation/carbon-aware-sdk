@@ -202,6 +202,11 @@ where the assembly `CarbonAware.WebApi.dll` is located under `data-sources/json`
 directory. For instance, if the application is installed under `/app`, copy the
 file to `/app/data-sources/json`.
 
+Emission data in JSON is cached by default, it means original data would be handled
+even if JSON is updated.
+You need to set `DataSources__Configurations__JSON__CacheJsonData=false`
+if you want to handle updated data.
+
 ```sh
 cp <mydir>/mycustomfile.json /app/data-sources/json
 export DataSources__Configurations=Json
@@ -402,6 +407,16 @@ InstrumentationKey. For more details, please refer to
 
 ```bash
 AppInsights_InstrumentationKey="AppInsightsInstrumentationKey"
+```
+
+#### Configuring telemetry log
+
+WebAPI configures [console exporter of OpenTelemetry](https://opentelemetry.io/docs/languages/net/exporters/#console) by default.
+You can configure whether the exporter is enabled with `EnableTelemetryLogging`.
+Set `false` if you want to reduce the log.
+
+```bash
+CarbonAwareVars__EnableTelemetryLogging=false
 ```
 
 ### Prometheus exporter for emissions data

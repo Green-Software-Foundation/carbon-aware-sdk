@@ -23,7 +23,7 @@ Companies including UBS and Vestas have already deployed the Carbon Aware SDK to
 
 # Getting Started Overview
 
-Head on over to the [Getting Started Overview Guide](./casdk-docs/docs/overview/overview.md) to get up and running.
+Head on over to the [quickstart guide](../quickstart.md) to get up and running.
 
 Get started on creating sustainable software innovation for a greener future
 today!
@@ -83,7 +83,7 @@ deployment in the greenest location.
 
 The Carbon Aware SDK is being used by large and small companies around the
 world. Some of the world’s biggest enterprises and software companies, through
-to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./casdk-docs/docs/overview/adopters.md).
+to start-ups.  Both UBS and Vestas have used the SDK, with further details over on the [adopters overview](./adopters.md).
 
 Machine Learning (ML) workloads are a great example of long running compute
 intensive workloads, that often are also not time critical. By moving these workloads to a different time, the carbon emissions from the ML training can be reduced by up to 15%, and by moving the location of the training this can be
@@ -170,7 +170,7 @@ percentage information only at the moment.
 ## Contributing
 
 The Carbon Aware SDK is open for contribution! Want to contribute? Check out the
-[contribution guide](./CONTRIBUTING.md).
+[contribution guide](./contributing.md).
 
 ## Green Software Foundation Project Summary
 

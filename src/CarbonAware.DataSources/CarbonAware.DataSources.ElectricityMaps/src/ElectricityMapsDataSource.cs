@@ -72,7 +72,7 @@ internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSo
     }
 
     /// <inheritdoc />
-    public async Task<EmissionsForecast> GetCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
+    public async Task<EmissionsForecast> GetHistoricalCarbonIntensityForecastAsync(Location location, DateTimeOffset requestedAt)
     {
         await Task.Run(() => true);
         throw new NotImplementedException();
@@ -138,18 +138,18 @@ internal class ElectricityMapsDataSource : IForecastDataSource, IEmissionsDataSo
 
     private IEnumerable<EmissionsData> HistoryCarbonIntensityToEmissionsData(Location location, IEnumerable<CarbonIntensity> data, DateTimeOffset startTime, DateTimeOffset endTime)
     {
-        IEnumerable<EmissionsData> emissions;
         var duration = GetDurationFromHistoryDataPointsOrDefault(data, TimeSpan.Zero);
-        emissions = data.Select(d =>
-        {
-            var emission = (EmissionsData) d;
-            emission.Location = location.Name ?? string.Empty;
-            emission.Time = d.DateTime;
-            emission.Duration = duration;
-            return emission;
-        });
-
-        return emissions;
+        return data.Where(d => ((startTime <= d.DateTime) && (d.DateTime < endTime)) ||
+                               ((startTime <= d.DateTime.Add(duration)) && (d.DateTime.Add(duration) < endTime)) ||
+                               ((d.DateTime < startTime) && (endTime < d.DateTime.Add(duration))))
+            .Select(d =>
+            {
+                var emission = (EmissionsData)d;
+                emission.Location = location.Name ?? string.Empty;
+                emission.Time = d.DateTime;
+                emission.Duration = duration;
+                return emission;
+            });
     }
 
     private TimeSpan GetDurationFromHistoryDataPointsOrDefault(IEnumerable<CarbonIntensity> carbonIntensityDataPoints, TimeSpan defaultValue)

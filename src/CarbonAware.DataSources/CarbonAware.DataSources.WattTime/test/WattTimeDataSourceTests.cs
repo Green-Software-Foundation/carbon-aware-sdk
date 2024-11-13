@@ -1,4 +1,6 @@
 ﻿using CarbonAware.DataSources.WattTime.Client;
+using CarbonAware.DataSources.WattTime.Client.Tests;
+using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.DataSources.WattTime.Model;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
@@ -25,7 +27,7 @@ class WattTimeDataSourceTests
 
     private Mock<ILocationSource> LocationSource { get; set; }
     private Location DefaultLocation { get; set; }
-    private BalancingAuthority DefaultBalancingAuthority { get; set; }
+    private RegionResponse DefaultRegion { get; set; }
     private DateTimeOffset DefaultDataStartTime { get; set; }
 
     // Magic floating point tolerance to allow for minuscule differences in floating point arithmetic.
@@ -46,9 +48,9 @@ class WattTimeDataSourceTests
         this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
 
         this.DefaultLocation = new Location() { Name = "eastus" };
-        this.DefaultBalancingAuthority = new BalancingAuthority() { Abbreviation = "BA" };
+        this.DefaultRegion = new RegionResponse() { Region = "TEST_REGION", RegionFullName = "Test Region Full Name", SignalType = SignalTypes.co2_moer };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
-        MockBalancingAuthorityLocationMapping();
+        MockRegionLocationMapping();
     }
 
     [Test]
@@ -60,13 +62,13 @@ class WattTimeDataSourceTests
         var lbsPerMwhEmissions = 10;
         var gPerKwhEmissions = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
 
-        var emissionData = GenerateDataPoints(1, value: lbsPerMwhEmissions);
+        var emissionDataResponse = GenerateGridEmissionsResponse(1, value: lbsPerMwhEmissions);
 
         this.WattTimeClient.Setup(w => w.GetDataAsync(
-            this.DefaultBalancingAuthority,
+            this.DefaultRegion,
             It.IsAny<DateTimeOffset>(),
             It.IsAny<DateTimeOffset>())
-        ).ReturnsAsync(() => emissionData);
+        ).ReturnsAsync(() => emissionDataResponse);
 
         var result = await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { this.DefaultLocation }, startDate, endDate);
 
@@ -76,7 +78,7 @@ class WattTimeDataSourceTests
         var first = result.First();
         Assert.IsNotNull(first);
         Assert.AreEqual(gPerKwhEmissions, first.Rating);
-        Assert.AreEqual(this.DefaultBalancingAuthority.Abbreviation, first.Location);
+        Assert.AreEqual(this.DefaultRegion.Region, first.Location);
         Assert.AreEqual(startDate, first.Time);
 
         this.LocationSource.Verify(r => r.ToGeopositionLocationAsync(this.DefaultLocation));
@@ -89,10 +91,10 @@ class WattTimeDataSourceTests
         var endDate = startDate.AddMinutes(1);
 
         this.WattTimeClient.Setup(w => w.GetDataAsync(
-            this.DefaultBalancingAuthority,
-            startDate,
-            endDate)
-        ).ReturnsAsync(() => new List<GridEmissionDataPoint>());
+            this.DefaultRegion,
+            It.IsAny<DateTimeOffset>(),
+            It.IsAny<DateTimeOffset>())
+        ).ReturnsAsync(() => new GridEmissionsDataResponse());
 
         var result = await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { this.DefaultLocation }, startDate, endDate);
 
@@ -118,35 +120,34 @@ class WattTimeDataSourceTests
         // Arrange
         var startDate = this.DefaultDataStartTime;
         var endDate = startDate.AddMinutes(1);
-        var generatedAt = new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
+        var generatedAt = WattTimeTestData.Constants.GeneratedAt;// new DateTimeOffset(2022, 4, 18, 12, 30, 00, TimeSpan.FromHours(-6));
         var lbsPerMwhEmissions = 10;
         var gPerKwhEmissions = this.DataSource.ConvertMoerToGramsPerKilowattHour(lbsPerMwhEmissions);
         var expectedDuration = TimeSpan.FromMinutes(5);
 
-        var emissionData = GenerateDataPoints(2, value: lbsPerMwhEmissions);
-        var forecast = new Forecast()
-        {
-            GeneratedAt = generatedAt,
-            ForecastData = emissionData
-        };
+        var forecastResponse = GenerateForecastResponse(2, value: lbsPerMwhEmissions);
+        forecastResponse.Meta.GeneratedAt = generatedAt;
+
+        var historicalForecastResponse = GenerateHistoricalForecastResponse(2, value: lbsPerMwhEmissions);
+        historicalForecastResponse.Meta.GeneratedAt = generatedAt;
 
         EmissionsForecast result;
 
         if (getCurrentForecast)
         {
-            this.WattTimeClient.Setup(w => w.GetCurrentForecastAsync(this.DefaultBalancingAuthority)
-                ).ReturnsAsync(() => forecast);
+            this.WattTimeClient.Setup(w => w.GetCurrentForecastAsync(this.DefaultRegion)
+                ).ReturnsAsync(() => forecastResponse);
 
             // Act
             result = await this.DataSource.GetCurrentCarbonIntensityForecastAsync(this.DefaultLocation);
         }
         else
         {
-            this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultBalancingAuthority, generatedAt)
-                ).ReturnsAsync(() => forecast);
+            this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultRegion, generatedAt)
+                ).ReturnsAsync(() => historicalForecastResponse);
 
             // Act
-            result = await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt);
+            result = await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt);
         }
 
         // Assert
@@ -158,13 +159,13 @@ class WattTimeDataSourceTests
         var lastDataPoint = result.ForecastData.Last();
         Assert.IsNotNull(firstDataPoint);
         Assert.AreEqual(gPerKwhEmissions, firstDataPoint.Rating);
-        Assert.AreEqual(this.DefaultBalancingAuthority.Abbreviation, firstDataPoint.Location);
+        Assert.AreEqual(this.DefaultRegion.Region, firstDataPoint.Location);
         Assert.AreEqual(startDate, firstDataPoint.Time);
         Assert.AreEqual(expectedDuration, firstDataPoint.Duration);
 
         Assert.IsNotNull(lastDataPoint);
         Assert.AreEqual(gPerKwhEmissions, lastDataPoint.Rating);
-        Assert.AreEqual(this.DefaultBalancingAuthority.Abbreviation, lastDataPoint.Location);
+        Assert.AreEqual(this.DefaultRegion.Region, lastDataPoint.Location);
         Assert.AreEqual(startDate + expectedDuration, lastDataPoint.Time);
         Assert.AreEqual(expectedDuration, lastDataPoint.Duration);
 
@@ -177,18 +178,18 @@ class WattTimeDataSourceTests
         this.LocationSource.Setup(l => l.ToGeopositionLocationAsync(this.DefaultLocation)).Throws<LocationConversionException>();
 
         Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCurrentCarbonIntensityForecastAsync(this.DefaultLocation));
-        Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, new DateTimeOffset()));
+        Assert.ThrowsAsync<LocationConversionException>(async () => await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, new DateTimeOffset()));
     }
 
     [Test]
-    public void GetCarbonIntensityForecastAsync_ThrowsWhenNoForecastFoundForReuqestedTime()
+    public void GetHistoricalCarbonIntensityForecastAsync_ThrowsWhenNoForecastFoundForReuqestedTime()
     {
         var generatedAt = new DateTimeOffset();
 
-        this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultBalancingAuthority, generatedAt)).Returns(Task.FromResult<Forecast?>(null));
+        this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultRegion, generatedAt)).Returns(Task.FromResult<HistoricalForecastEmissionsDataResponse?>(null));
 
         // The datasource throws an exception if no forecasts are found at the requested generatedAt time.  
-        Assert.ThrowsAsync<ArgumentException>(async () => await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt));
+        Assert.ThrowsAsync<ArgumentException>(async () => await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, generatedAt));
     }
 
     [TestCase(0, TestName = "GetCurrentCarbonIntensityForecastAsync throws for: No datapoints")]
@@ -196,16 +197,11 @@ class WattTimeDataSourceTests
     public void GetCurrentCarbonIntensityForecastAsync_ThrowsWhenTooFewDatapointsReturned(int numDataPoints)
     {
         // Arrange
-        var emissionData = GenerateDataPoints(numDataPoints);
+        var forecastResponse = GenerateForecastResponse(numDataPoints);
+        forecastResponse.Meta.GeneratedAt = DateTimeOffset.Now;
 
-        var forecast = new Forecast()
-        {
-            GeneratedAt = DateTimeOffset.Now,
-            ForecastData = emissionData
-        };
-
-        this.WattTimeClient.Setup(w => w.GetCurrentForecastAsync(this.DefaultBalancingAuthority)
-            ).ReturnsAsync(() => forecast);
+        this.WattTimeClient.Setup(w => w.GetCurrentForecastAsync(this.DefaultRegion)
+            ).ReturnsAsync(() => forecastResponse);
 
         Assert.ThrowsAsync<WattTimeClientException>(async () => await this.DataSource.GetCurrentCarbonIntensityForecastAsync(this.DefaultLocation));
     }
@@ -219,27 +215,24 @@ class WattTimeDataSourceTests
         var requestedAt = DateTimeOffset.Parse(requested);
         var expectedAt = DateTimeOffset.Parse(expected);
 
-        var emissionData = GenerateDataPoints(2, startTime: requestedAt);
-        var forecast = new Forecast()
-        {
-            GeneratedAt = expectedAt,
-            ForecastData = emissionData
-        };
+        var forecastResponse = GenerateHistoricalForecastResponse(2, startTime: requestedAt);
+        forecastResponse.Meta.GeneratedAt = expectedAt;
 
-        this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultBalancingAuthority, expectedAt)
-                ).ReturnsAsync(() => forecast);
+
+        this.WattTimeClient.Setup(w => w.GetForecastOnDateAsync(this.DefaultRegion, expectedAt)
+                ).ReturnsAsync(() => forecastResponse);
 
         // Act
-        var result = await this.DataSource.GetCarbonIntensityForecastAsync(this.DefaultLocation, requestedAt);
-        
+        var result = await this.DataSource.GetHistoricalCarbonIntensityForecastAsync(this.DefaultLocation, requestedAt);
+
         // Assert
         Assert.IsNotNull(result);
         this.WattTimeClient.Verify(w => w.GetForecastOnDateAsync(
-            It.IsAny<BalancingAuthority>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
+            It.IsAny<RegionResponse>(), It.Is<DateTimeOffset>(date => date.Equals(expectedAt))), Times.Once);
     }
 
     [DatapointSource]
-    public float[] moerValues = new float[] { 0.0F, 10.0F, 100.0F, 1000.0F, 596.1367F};
+    public float[] moerValues = new float[] { 0.0F, 10.0F, 100.0F, 1000.0F, 596.1367F };
 
     [Theory]
     public void GetCarbonIntensity_ConvertsMoerToGramsPerKwh(float lbsPerMwhEmissions)
@@ -265,37 +258,98 @@ class WattTimeDataSourceTests
         // Arrange
         var startDate = this.DefaultDataStartTime;
         var endDate = startDate.AddMinutes(10);
-        var emissionData = GenerateDataPoints(frequencyValues.Length);
-        for( int i = 0; i < frequencyValues.Length; i++)
+        var emissionResponse = GenerateGridEmissionsResponse(frequencyValues.Length);
+        for (int i = 0; i < frequencyValues.Length; i++)
         {
-            emissionData[i].Frequency = frequencyValues[i];
+            emissionResponse.Data[i].Frequency = frequencyValues[i];
         }
-        
+
         List<double> expectedDurationList = durationValues.ToList<double>();
 
         this.WattTimeClient.Setup(w => w.GetDataAsync(
-            It.IsAny<BalancingAuthority>(),
+            It.IsAny<RegionResponse>(),
             It.IsAny<DateTimeOffset>(),
             It.IsAny<DateTimeOffset>())
-        ).ReturnsAsync(() => emissionData);
+        ).ReturnsAsync(() => emissionResponse);
 
         // Act
         var result = await this.DataSource.GetCarbonIntensityAsync(new List<Location>() { this.DefaultLocation }, startDate, endDate);
 
         // Assert
         List<double> actualDurationList = result.Select(e => e.Duration.TotalSeconds).ToList();
-        
+
         CollectionAssert.AreEqual(expectedDurationList, actualDurationList);
     }
 
-    private void MockBalancingAuthorityLocationMapping()
+    private void MockRegionLocationMapping()
     {
         this.LocationSource.Setup(r => r.ToGeopositionLocationAsync(this.DefaultLocation)).Returns(Task.FromResult(this.DefaultLocation));
         var latitude = this.DefaultLocation.Latitude.ToString();
         var longitude = this.DefaultLocation.Longitude.ToString();
 
-        this.WattTimeClient.Setup(w => w.GetBalancingAuthorityAsync(latitude!, longitude!)
-        ).ReturnsAsync(() => this.DefaultBalancingAuthority);
+        this.WattTimeClient.Setup(w => w.GetRegionAsync(latitude!, longitude!)
+        ).ReturnsAsync(() => this.DefaultRegion);
+    }
+
+    private GridEmissionsDataResponse GenerateGridEmissionsResponse(int numberOfDatapoints, float value = 10, DateTimeOffset startTime = default)
+    {
+        var data = GenerateDataPoints(numberOfDatapoints, value, startTime);
+        var meta = new GridEmissionsMetaData()
+        {
+            Region = this.DefaultRegion.Region,
+            SignalType = SignalTypes.co2_moer
+        };
+
+        var response = new GridEmissionsDataResponse()
+        {
+            Data = data,
+            Meta = meta
+        };
+
+        return response;
+    }
+
+    private HistoricalForecastEmissionsDataResponse GenerateHistoricalForecastResponse(int numberOfDatapoints, float value = 10, DateTimeOffset startTime = default)
+    {
+        var data = GenerateDataPoints(numberOfDatapoints, value, startTime);
+        var meta = new GridEmissionsMetaData()
+        {
+            Region = this.DefaultRegion.Region,
+            SignalType = SignalTypes.co2_moer
+        };
+
+        var response = new HistoricalForecastEmissionsDataResponse()
+        {
+            Data = new List<HistoricalEmissionsData>()
+            {
+                new HistoricalEmissionsData()
+                {
+                    Forecast = data,
+                    GeneratedAt = WattTimeTestData.Constants.GeneratedAt
+                }
+            },
+            Meta = meta
+        };
+
+        return response;
+    }
+
+    private ForecastEmissionsDataResponse GenerateForecastResponse(int numberOfDatapoints, float value = 10, DateTimeOffset startTime = default)
+    {
+        var data = GenerateDataPoints(numberOfDatapoints, value, startTime);
+        var meta = new GridEmissionsMetaData()
+        {
+            Region = this.DefaultRegion.Region,
+            SignalType = SignalTypes.co2_moer
+        };
+
+        var response = new ForecastEmissionsDataResponse()
+        {
+            Data = data,
+            Meta = meta
+        };
+
+        return response;
     }
 
     private List<GridEmissionDataPoint> GenerateDataPoints(int numberOfDatapoints, float value = 10, DateTimeOffset startTime = default)
@@ -307,7 +361,6 @@ class WattTimeDataSourceTests
         {
             var dataPoint = new GridEmissionDataPoint()
             {
-                BalancingAuthorityAbbreviation = this.DefaultBalancingAuthority.Abbreviation,
                 PointTime = pointTime,
                 Value = value,
                 Frequency = defaultFrequency
