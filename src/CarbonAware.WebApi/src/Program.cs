@@ -30,8 +30,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SchemaFilter<CarbonAwareParametersBaseDtoSchemaFilter>();
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Version = serviceVersion,
-        Title = serviceName,
+        Version = "CarbonAware.WebAPI",
+        Title = "1.0.0",
     });
 });
 
