@@ -32,7 +32,9 @@
 
 	// Uncomment the line below to mount your local usersecrets into the devcontainer from a Mac/Linux OS
 	// "mounts": [ "source=${localEnv:HOME}/.microsoft/usersecrets,target=/root/.microsoft/usersecrets,type=bind" ],
-	
+	"features": {
+		"ghcr.io/devcontainers/features/github-cli:1": {}
+	},
 	
 	// Add the IDs of extensions you want installed when the container is created in the array below.
 	"customizations": {
