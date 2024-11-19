@@ -1,4 +1,4 @@
-package foundation.greensoftware.carbonawaresdk.samples.java;
+package example.foundation.greensoftware.carbonawaresdk;
 
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -6,11 +6,11 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
+import foundation.greensoftware.carbonaware.webapi.ApiClient;
+import foundation.greensoftware.carbonaware.webapi.ApiException;
+import foundation.greensoftware.carbonaware.webapi.Configuration;
 import org.openapitools.client.model.*;
-import org.openapitools.client.api.CarbonAwareApi;
+import foundation.greensoftware.carbonaware.webapi.client.CarbonAwareApi;
 
 
 public class WebApiClient{
