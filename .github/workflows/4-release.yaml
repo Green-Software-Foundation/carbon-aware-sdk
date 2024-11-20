@@ -67,6 +67,7 @@ jobs:
     permissions:
       contents: write
       packages: write
+      pull-requests: write
     with:
       # We cannot use environment variables here due to workflow limitation.
       # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows#limitations
