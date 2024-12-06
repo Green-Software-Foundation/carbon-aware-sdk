@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "@Green-Software-Foundation/casdk-client": "1.0.0"
+  }
+}
