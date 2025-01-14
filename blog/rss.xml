@@ -4,10 +4,56 @@
         <title>Carbon Aware SDK Blog</title>
         <link>https://carbon-aware-sdk.greensoftware.foundation/blog</link>
         <description>Carbon Aware SDK Blog</description>
-        <lastBuildDate>Wed, 18 Sep 2024 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 07 Jan 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
+        <item>
+            <title><![CDATA[Release v1.7]]></title>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.7</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.7</guid>
+            <pubDate>Tue, 07 Jan 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[Release 1.7]]></description>
+            <content:encoded><![CDATA[<p>Release 1.7</p>
+<p>This release mainly introduces new clients libraries for NPM and Java <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/milestone/9" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/milestone/9</a></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="added">Added<a href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.7#added" class="hash-link" aria-label="Direct link to Added" title="Direct link to Added">​</a></h3>
+<ul>
+<li>[PR #591] Publish WebAPI client library for NPM ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/591" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/591</a>)</li>
+<li>[PR #597] Add Client API documents for WebAPI 1.0.0 ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/597" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/597</a>)</li>
+<li>[PR #588] Add gh cli to devcontainer/codespace ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/588" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/588</a>)</li>
+<li>[PR #471] Add GHA workflow for generating WebAPI client library for Java ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/471" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/471</a>)</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="fixed">Fixed<a href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.7#fixed" class="hash-link" aria-label="Direct link to Fixed" title="Direct link to Fixed">​</a></h3>
+<ul>
+<li>[#571] [Bug]: Cannot get the value of a token type 'Null' as a number ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/571" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/571</a>)</li>
+<li>[#570] [Bug]:  webapi query on bylocation shows 24 hours worth of data even when smaller range requested ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-</a>
+sdk/issues/570)</li>
+</ul>
+<p>For more details, checkout <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/601" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/601</a></p>]]></content:encoded>
+            <category>v1.7</category>
+            <category>release</category>
+        </item>
+        <item>
+            <title><![CDATA[Release v1.6.1]]></title>
+            <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.6.1</link>
+            <guid>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.6.1</guid>
+            <pubDate>Sat, 30 Nov 2024 00:00:00 GMT</pubDate>
+            <description><![CDATA[Release 1.6.1]]></description>
+            <content:encoded><![CDATA[<p>Release 1.6.1</p>
+<p>Release addressing minor issues <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.6.1</a></p>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="added">Added<a href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.6.1#added" class="hash-link" aria-label="Direct link to Added" title="Direct link to Added">​</a></h3>
+<ul>
+<li>[PR #531] Add configuration for tracing log](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/531" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/531</a>)</li>
+</ul>
+<h3 class="anchor anchorWithStickyNavbar_LWe7" id="fixed">Fixed<a href="https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.6.1#fixed" class="hash-link" aria-label="Direct link to Fixed" title="Direct link to Fixed">​</a></h3>
+<ul>
+<li>[PR #575] Consider null value in carbonIntensity on EM ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/575" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/575</a>)</li>
+<li>[PR #572] EM datasource didn't filter out-of-range emission data ](<a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/572" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/572</a>)</li>
+</ul>
+<p>For more details, checkout <a href="https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/579" target="_blank" rel="noopener noreferrer">https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/579</a></p>]]></content:encoded>
+            <category>v1.6.1</category>
+            <category>release</category>
+        </item>
         <item>
             <title><![CDATA[Release v1.6]]></title>
             <link>https://carbon-aware-sdk.greensoftware.foundation/blog/release-v1.6</link>
