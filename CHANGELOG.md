@@ -2,7 +2,7 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
-## [1.7] - 2024-11
+## [1.7] - 2025-01
 
 This release mainly introduces new clients libraries for NPM and Java [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.7](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.7) 
 
