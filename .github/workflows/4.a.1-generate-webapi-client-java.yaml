@@ -1,0 +1,56 @@
+name: 4.a.1-Generate WebAPI client library for Java
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      apiver:
+        required: true
+        type: string
+
+jobs:
+  generate-java-client:
+    runs-on: ubuntu-latest
+    services:
+      webapi:
+        image: ${{ inputs.image }}
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd "curl -sS http://localhost:8080/health"
+          --health-interval 3s
+          --health-timeout 5s
+          --health-retries 5
+    permissions:
+      packages: write
+    env:
+      API: http://localhost:8080/api/v1/swagger.yaml
+    steps:
+      - name: Prepare
+        run: |
+          mkdir work pages
+          npm install -g @openapitools/openapi-generator-cli@2.5.2
+      - name: Generate client library
+        run: |
+          echo '{"apiPackage": "foundation.greensoftware.carbonaware.webapi.client", "artifactDescription": "Carbon Aware SDK client library for Java", "artifactId": "casdk-client", "artifactVersion": "${{ inputs.apiver }}", "developerOrganization": "Green Software Foundation", "developerOrganizationUrl": "https://greensoftware.foundation/", "groupId": "foundation.greensoftware", "licenseName": "MIT License", "scmUrl": "${{ env.REPO }}", "artifactUrl": "${{ env.REPO }}/packages/", "scmConnection": "${{ github.repositoryUrl }}", "scmDeveloperConnection": "${{ github.repositoryUrl }}", "licenseUrl": "https://opensource.org/license/mit/", "developerName": "Green Software Foundation", "developerEmail": "carbon-aware-sdk@greensoftware.foundation"}' > config.json
+          openapi-generator-cli generate -i ${{ env.API }} -g java -o work -c config.json
+          sed -i "s|</project>|<distributionManagement><repository><id>github</id><name>GitHub Packages</name><url>https://maven.pkg.github.com/${{ github.repository }}</url></repository></distributionManagement></project>|" work/pom.xml
+        shell: bash
+      - name: Setup Java 8
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 8
+          cache: maven
+      - name: Run Maven
+        run: mvn -B deploy javadoc:javadoc
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        working-directory: work
+      - name: Upload Javadoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: javadoc
+          path: work/target/apidocs

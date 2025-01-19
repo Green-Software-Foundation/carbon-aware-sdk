@@ -37,8 +37,8 @@ internal static class ServiceCollectionExtensions
         var enableTelemetryLogging = envVars?.EnableTelemetryLogging ?? true;
         if (enableTelemetryLogging)
         {
-            const string serviceName = "CarbonAware.WebAPI";
-            const string serviceVersion = "1.0.0";
+            string serviceName = envVars?.WebAPISpecTitle ?? "CarbonAware.WebAPI";
+            string serviceVersion = envVars?.WebAPISpecVersion ?? "1.0.0";
 
             services.AddOpenTelemetry()
                 .WithTracing(tracerProviderBuilder =>

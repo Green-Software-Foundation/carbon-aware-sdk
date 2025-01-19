@@ -35,3 +35,4 @@ src/data/location-sources/custom-azure-zones.json
 samples/java-client/target
 
 casdk-docs/docs/samples/*
+node_modules/

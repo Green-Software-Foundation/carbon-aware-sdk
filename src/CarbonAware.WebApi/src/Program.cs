@@ -9,6 +9,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
+CarbonAwareVariablesConfiguration config = new();
+builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
 
 // Add services to the container.
 builder.Services.AddControllers(options =>
@@ -28,9 +31,12 @@ builder.Services.AddSwaggerGen(c =>
     c.EnableAnnotations();
     c.OperationFilter<CarbonAwareParametersBaseDtoOperationFilter>();
     c.SchemaFilter<CarbonAwareParametersBaseDtoSchemaFilter>();
+    c.SwaggerDoc(config.WebAPISpecName, new OpenApiInfo
+    {
+        Version = config.WebAPISpecVersion,
+        Title = config.WebAPISpecTitle,
+    });
 });
-
-builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key));
 
 bool successfulServices = true;
 string? errorMessage = null;
@@ -43,10 +49,6 @@ try
     successfulServices = false;
     errorMessage = e.Message;
 }
-
-CarbonAwareVariablesConfiguration config = new();
-
-builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
 
 builder.Services.AddHealthChecks();
 
