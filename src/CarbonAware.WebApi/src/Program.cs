@@ -13,7 +13,6 @@ builder.Services.Configure<CarbonAwareVariablesConfiguration>(builder.Configurat
 CarbonAwareVariablesConfiguration config = new();
 builder.Configuration.GetSection(CarbonAwareVariablesConfiguration.Key).Bind(config);
 
-
 // Add services to the container.
 builder.Services.AddControllers(options =>
 {
