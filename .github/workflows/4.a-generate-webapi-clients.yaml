@@ -1,0 +1,89 @@
+name: 4.a-Generate WebAPI client libraries
+
+on:
+  workflow_call:
+    inputs:
+      registry:
+        type: string
+        required: true
+      image-repo:
+        type: string
+        required: true
+      tag:
+        type: string
+        required: false
+        default: latest
+  workflow_dispatch:
+    inputs:
+      registry:
+        type: string
+        required: false
+        default: ghcr.io
+      image-repo:
+        type: string
+        required: false
+        default: "green-software-foundation/carbon-aware-sdk"
+      tag:
+        type: string
+        required: false
+        default: latest
+
+permissions:
+  contents: write
+  packages: write
+  pull-requests: write
+
+jobs:
+  detect-api-version:
+    uses: ./.github/workflows/detect-webapi-version.yaml
+    with:
+      registry: ${{ inputs.registry }}
+      image-repo: ${{ inputs.image-repo }}
+      tag: ${{ inputs.tag }}
+
+  generate-java-client:
+    needs: detect-api-version
+    uses: ./.github/workflows/4.a.1-generate-webapi-client-java.yaml
+    with:
+      image: ${{ needs.detect-api-version.outputs.image }}
+      apiver: ${{ needs.detect-api-version.outputs.apiver }}
+
+  generate-npm-client:
+    needs: detect-api-version
+    uses: ./.github/workflows/4.a.1-generate-webapi-client-npm.yaml
+    with:
+      image: ${{ needs.detect-api-version.outputs.image }}
+      apiver: ${{ needs.detect-api-version.outputs.apiver }}
+
+  push-apidocs:
+    runs-on: ubuntu-latest
+    needs:
+      - detect-api-version
+      - generate-java-client
+      - generate-npm-client
+    env:
+      DOCPATH: casdk-docs/static/client-apidocs/${{ needs.detect-api-version.outputs.apiver }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+      - name: Extract Javadoc
+        uses: actions/download-artifact@v4
+        with:
+          name: javadoc
+          path: ${{ env.DOCPATH }}/java
+      - name: Extract TypeDoc
+        uses: actions/download-artifact@v4
+        with:
+          name: typedoc
+          path: ${{ env.DOCPATH }}/npm
+      - name: Create PR for Client API docs
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Add Client API documents for WebAPI ${{ needs.detect-api-version.outputs.apiver }}"
+          branch: gha/pr/webapidoc-${{ needs.detect-api-version.outputs.apiver }}
+          delete-branch: true
+          title: "Add Client API documents for WebAPI ${{ needs.detect-api-version.outputs.apiver }}"
+          body: |
+            This PR has been created by 4.a-generate-webapi-clients.yaml due to WebAPI version update.

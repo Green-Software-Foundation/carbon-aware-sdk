@@ -9,8 +9,17 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+  detect-current-api-version:
+    uses: ./.github/workflows/detect-webapi-version.yaml
+    with:
+      # We cannot use environment variables here due to workflow limitation.
+      # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows#limitations
+      registry: ghcr.io
+      image-repo: ${{ github.repository }}
+
   publish-container-image:
     runs-on: ubuntu-latest
+    needs: detect-current-api-version
     permissions:
       packages: write
     steps:
@@ -39,3 +48,28 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           provenance: false
+
+  detect-newer-api-version:
+    needs: publish-container-image
+    uses: ./.github/workflows/detect-webapi-version.yaml
+    with:
+      # We cannot use environment variables here due to workflow limitation.
+      # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows#limitations
+      registry: ghcr.io
+      image-repo: ${{ github.repository }}
+
+  generate-webapi-clients:
+    needs:
+      - detect-current-api-version
+      - detect-newer-api-version
+    if: ${{ needs.detect-current-api-version.outputs.apiver != needs.detect-newer-api-version.outputs.apiver }}
+    uses: ./.github/workflows/4.a-generate-webapi-clients.yaml
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+    with:
+      # We cannot use environment variables here due to workflow limitation.
+      # https://docs.github.com/en/enterprise-cloud@latest/actions/using-workflows/reusing-workflows#limitations
+      registry: ghcr.io
+      image-repo: ${{ github.repository }}

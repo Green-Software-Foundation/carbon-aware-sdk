@@ -1,0 +1,65 @@
+name: 4.a.1-Generate WebAPI client library for NPM
+
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      apiver:
+        required: true
+        type: string
+
+jobs:
+  generate-npm-client:
+    runs-on: ubuntu-latest
+    services:
+      webapi:
+        image: ${{ inputs.image }}
+        ports:
+          - 8080:8080
+        options: >-
+          --health-cmd "curl -sS http://localhost:8080/health"
+          --health-interval 3s
+          --health-timeout 5s
+          --health-retries 5
+    permissions:
+      packages: write
+    env:
+      API: http://localhost:8080/api/v1/swagger.yaml
+    steps:
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          registry-url: https://npm.pkg.github.com
+      - name: Prepare
+        run: |
+          mkdir work
+          npm install -g @openapitools/openapi-generator-cli@2.5.2
+      - name: Generate client library
+        run: |
+          echo -n '{"npmName": "@${{ github.repository_owner }}/casdk-client", "npmVersion": "${{ inputs.apiver  }}", "licenseName": "MIT", "gitUserId": "${{ github.repository_owner }}", "gitRepoId": "' > config.json
+          echo -n "${{ github.repository  }}" | sed -e 's|^.\+/||' >> config.json
+          echo -n '", "npmRepository": "https://npm.pkg.github.com"}' >> config.json
+          openapi-generator-cli generate -i ${{ env.API }} -g typescript-axios -o work -c config.json
+        shell: bash
+      - name: Publish NPM library
+        working-directory: work
+        run: |
+          npm install
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: Setup TypeDoc
+        run: npm install -g typedoc
+      - name: Generate documents
+        working-directory: work
+        run: |
+          echo '{"out": "docs", "excludePrivate": true, "excludeProtected": true, "excludeExternals": true, "includeVersion": true}' > ../typedoc.json
+          npx typedoc --options ../typedoc.json --entryPoints index.ts
+      - name: Upload TypeDoc
+        uses: actions/upload-artifact@v4
+        with:
+          name: typedoc
+          path: docs
