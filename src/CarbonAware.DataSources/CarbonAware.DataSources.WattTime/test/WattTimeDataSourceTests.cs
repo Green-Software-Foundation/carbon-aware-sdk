@@ -48,7 +48,7 @@ class WattTimeDataSourceTests
         this.DataSource = new WattTimeDataSource(this.Logger.Object, this.WattTimeClient.Object, this.LocationSource.Object);
 
         this.DefaultLocation = new Location() { Name = "eastus" };
-        this.DefaultRegion = new RegionResponse() { Region = "TEST_REGION", RegionFullName = "Test Region Full Name", SignalType = SignalTypes.co2_moer };
+        this.DefaultRegion = new RegionResponse() { Region = "TEST_REGION", RegionFullName = "Test Region Full Name", SignalType = "co2_moer" };
         this.DefaultDataStartTime = new DateTimeOffset(2022, 4, 18, 12, 32, 42, TimeSpan.FromHours(-6));
         MockRegionLocationMapping();
     }
@@ -297,7 +297,7 @@ class WattTimeDataSourceTests
         var meta = new GridEmissionsMetaData()
         {
             Region = this.DefaultRegion.Region,
-            SignalType = SignalTypes.co2_moer
+            SignalType = "co2_moer"
         };
 
         var response = new GridEmissionsDataResponse()
@@ -315,7 +315,7 @@ class WattTimeDataSourceTests
         var meta = new GridEmissionsMetaData()
         {
             Region = this.DefaultRegion.Region,
-            SignalType = SignalTypes.co2_moer
+            SignalType = "co2_moer"
         };
 
         var response = new HistoricalForecastEmissionsDataResponse()
@@ -340,7 +340,7 @@ class WattTimeDataSourceTests
         var meta = new GridEmissionsMetaData()
         {
             Region = this.DefaultRegion.Region,
-            SignalType = SignalTypes.co2_moer
+            SignalType = "co2_moer"
         };
 
         var response = new ForecastEmissionsDataResponse()

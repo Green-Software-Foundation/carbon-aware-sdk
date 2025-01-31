@@ -313,7 +313,7 @@ class WattTimeClientTests
         Assert.IsNotNull(regionResponse);
         Assert.AreEqual(WattTimeTestData.Constants.Region, regionResponse?.Region);
         Assert.AreEqual(WattTimeTestData.Constants.RegionFullName, regionResponse?.RegionFullName);
-        Assert.AreEqual(SignalTypes.co2_moer, regionResponse?.SignalType);
+        Assert.AreEqual(SignalTypes.co2_moer.ToString(), regionResponse?.SignalType);
     }
 
     [Test]

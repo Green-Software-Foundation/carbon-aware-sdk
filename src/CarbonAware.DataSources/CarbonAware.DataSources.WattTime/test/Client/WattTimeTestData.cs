@@ -18,7 +18,7 @@ public static class WattTimeTestData
         public static DateTime Date = new DateTime(2099, 1, 1, 0, 0, 0);
         public const float Value = 999.99f;
         public const string Version = "1.0";
-        public const string SignalType = SignalTypes.co2_moer;
+        public const string SignalType = "co2_moer";
         public const int Frequency = 300;
     }
 
@@ -46,10 +46,10 @@ public static class WattTimeTestData
             Model = new GridEmissionsModelData()
             {
                 Date = Constants.Date,
-                Type = SignalTypes.co2_moer
+                Type = "co2_moer"
             },
             DataPointPeriodSeconds = 30,
-            SignalType = SignalTypes.co2_moer,
+            SignalType = "co2_moer",
             Units = "co2_moer"
         };
 
@@ -122,7 +122,7 @@ public static class WattTimeTestData
         {
             Region = Constants.Region,
             RegionFullName = Constants.RegionFullName,
-            SignalType = SignalTypes.co2_moer
+            SignalType = "co2_moer"
         };
     }
 }
