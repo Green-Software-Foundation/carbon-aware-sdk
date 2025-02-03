@@ -1,8 +1,8 @@
 # Carbon Aware WebApi
 
-The Carbon Aware SDK provides an API to get the marginal carbon intensity for a
+The Carbon Aware SDK provides an API to get the carbon intensity for a
 given location and time period. The values reported in the Green Software
-Foundation's specification for marginal carbon intensity (Grams per Kilowatt
+Foundation's specification for carbon intensity (Grams per Kilowatt
 Hour).
 
 **_Highly Recommended_** - This user interface is best for when you can change
@@ -131,11 +131,11 @@ This endpoint fetches only the most recently generated forecast for all provided
 locations. It uses the "dataStartAt" and "dataEndAt" parameters to scope the
 forecasted data points (if available for those times). If no start or end time
 boundaries are provided, the entire forecast dataset is used. The scoped data
-points are used to calculate average marginal carbon intensities of the
-specified "windowSize" and the optimal marginal carbon intensity window is
+points are used to calculate average carbon intensities of the
+specified "windowSize" and the optimal carbon intensity window is
 identified.
 
-The forecast data represents what the data source predicts future marginal
+The forecast data represents what the data source predicts future
 carbon intesity values to be, not actual measured emissions data (as future
 values cannot be known).
 
@@ -154,7 +154,7 @@ Parameters:
    current forecast data points after this time. Must be within the forecast
    data point timestamps. Defaults to the latest time in the forecast data. If
    neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data
-   points are used in calculating the optimal marginal carbon intensity window.
+   points are used in calculating the optimal carbon intensity window.
 4. `windowSize`: The estimated duration (in minutes) of the workload. Defaults
    to the duration of a single forecast data point.
 
@@ -163,7 +163,7 @@ https://<server_name>/emissions/forecasts/current?location=northeurope&dataStart
 ```
 
 The response is an array of forecasts (one per requested location) with their
-optimal marginal carbon intensity windows.
+optimal carbon intensity windows.
 
 ```json
 [
@@ -202,7 +202,7 @@ optimal marginal carbon intensity windows.
 ### POST emissions/forecasts/batch
 
 This endpoint takes a batch of requests for historical forecast data, fetches
-them, and calculates the optimal marginal carbon intensity windows for each
+them, and calculates the optimal carbon intensity windows for each
 using the same parameters available to the '/emissions/forecasts/current'
 endpoint.
 
@@ -227,7 +227,7 @@ Parameters:
      to the duration of a single forecast data point
 
 If neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data
-points are used in calculating the optimal marginal carbon intensity window.
+points are used in calculating the optimal carbon intensity window.
 
 ```json
 [
@@ -249,7 +249,7 @@ points are used in calculating the optimal marginal carbon intensity window.
 ```
 
 The response is an array of forecasts (one per requested location) with their
-optimal marginal carbon intensity windows.
+optimal carbon intensity windows.
 
 ```json
 [
@@ -310,7 +310,7 @@ https://<server_name>/emissions/average-carbon-intensity?location=eastus&startTi
 ```
 
 The response is a single object that contains the information about the request
-and the average marginal carbon intensity
+and the average carbon intensity
 
 ```json
 {
@@ -330,7 +330,7 @@ location and time period.
 This endpoint only supports batching across a single location with different
 time boundaries. If multiple locations are provided, an error is returned. For
 each item in the request array, the application returns a corresponding object
-containing the location, time boundaries, and average marginal carbon intensity.
+containing the location, time boundaries, and average carbon intensity.
 
 Parameters:
 
@@ -364,7 +364,7 @@ Parameters:
 ```
 
 The response is an array of CarbonIntensityDTO objects which each have a
-location, start time, end time, and the average marginal carbon intensity over
+location, start time, end time, and the average carbon intensity over
 that time period.
 
 ```json
