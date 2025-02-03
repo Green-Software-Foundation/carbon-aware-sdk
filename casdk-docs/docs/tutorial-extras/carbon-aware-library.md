@@ -1,8 +1,8 @@
 # Carbon Aware Library
 
-The Carbon Aware SDK provides a C\# Client Library to get the marginal carbon
+The Carbon Aware SDK provides a C\# Client Library to get the carbon
 intensity for a given location and time period. The values reported in the Green
-Software Foundation's specification for marginal carbon intensity (Grams per
+Software Foundation's specification for carbon intensity (Grams per
 Kilowatt Hour).
 
 **_Recommended_** - This user interface is best for when you need a consumable
@@ -247,8 +247,7 @@ var data =  await this._emissionsHandler.GetAverageCarbonIntensityAsync(
 );
 ```
 
-The response is a single double value representing the calculated average
-marginal carbon intensity g/kWh.
+The response is a single double value representing the calculated average carbon intensity g/kWh.
 
 ```csharp
 345.434
@@ -269,11 +268,11 @@ This function fetches only the most recently generated forecast for all provided
 locations. It uses the "dataStartAt" and "dataEndAt" parameters to scope the
 forecasted data points (if available for those times). If no start or end time
 boundaries are provided, the entire forecast dataset is used. The scoped data
-points are used to calculate average marginal carbon intensities of the
-specified "windowSize" and the optimal marginal carbon intensity window is
+points are used to calculate average carbon intensities of the
+specified "windowSize" and the optimal carbon intensity window is
 identified.
 
-The forecast data represents what the data source predicts future marginal
+The forecast data represents what the data source predicts future
 carbon intensity values to be, not actual measured emissions data (as future
 values cannot be known).
 
@@ -292,7 +291,7 @@ Parameters:
    current forecast data points after this time. Must be within the forecast
    data point timestamps. Defaults to the latest time in the forecast data. If
    neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data
-   points are used in calculating the optimal marginal carbon intensity window.
+   points are used in calculating the optimal carbon intensity window.
 4. `windowSize`: The estimated duration (in minutes) of the workload. Defaults
    to the duration of a single forecast data point.
 
@@ -306,7 +305,7 @@ var data = await this._forecastHandler.GetCurrentForecastAsync(
 ```
 
 The response is an array of `EmissionsForecast` objects (one per requested
-location) with their optimal marginal carbon intensity windows.
+location) with their optimal carbon intensity windows.
 
 ```csharp
 [
@@ -347,7 +346,7 @@ location) with their optimal marginal carbon intensity windows.
 ### GetForecastByDateAsync
 
 This function takes a requests for historical forecast data, fetches it, and
-calculates the optimal marginal carbon intensity window. This endpoint is useful
+calculates the optimal carbon intensity window. This endpoint is useful
 for back-testing what one might have done in the past, if they had access to the
 current forecast at the time.
 
@@ -367,7 +366,7 @@ Parameters:
    to the duration of a single forecast data point
 
 If neither `dataStartAt` nor `dataEndAt` are provided, all forecasted data
-points are used in calculating the optimal marginal carbon intensity window.
+points are used in calculating the optimal carbon intensity window.
 
 ```csharp
 var data = await this._forecastHandler.GetForecastByDateAsync(
@@ -379,7 +378,7 @@ var data = await this._forecastHandler.GetForecastByDateAsync(
 );
 ```
 
-The response is an `EmissionsForecast` object with the optimal marginal carbon
+The response is an `EmissionsForecast` object with the optimal carbon
 intensity window.
 
 ```csharp
