@@ -50,12 +50,13 @@
     <Content Include="$(AssemblyName).targets" Pack="true"
       PackagePath="build/$(AssemblyName).targets" />
     <Content Include="$(TargetDir)/CarbonAware*.dll" Pack="true" PackagePath="lib/net8.0/" />
-    <Content Include="$(TargetDir)/data-sources/**/*.json" Pack="true" PackagePath="data-sources/" />
-    <Content Include="$(TargetDir)/location-sources/**/*.json" Pack="true"
-      PackagePath="location-sources/" />
   </ItemGroup>
 
   <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
     <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net8.0/" />
   </ItemGroup>
+
+  <Target Name="CreateDatasourceDirectory" AfterTargets="Build">
+    <MakeDir Directories="$(TargetDir)\data-sources\json;$(TargetDir)\location-sources\json" />
+  </Target>
 </Project>
