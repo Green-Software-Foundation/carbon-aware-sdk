@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using CarbonAware.DataSources.WattTime.Constants;
+using System.Text.Json.Serialization;
 
 namespace CarbonAware.DataSources.WattTime.Model;
 
@@ -18,7 +19,7 @@ internal record GridEmissionsMetaData
     /// Signal Type. eg MOER
     /// </summary>
     [JsonPropertyName("signal_type")]
-    public string? SignalType { get; set; }
+    public SignalTypes? SignalType { get; set; }
 
     [JsonPropertyName("model")]
     public GridEmissionsModelData? Model { get; set; }

@@ -1,5 +1,6 @@
 using CarbonAware.Configuration;
 using CarbonAware.DataSources.WattTime.Client;
+using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.Exceptions;
 using CarbonAware.Interfaces;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ internal static class ServiceCollectionExtensions
         services.TryAddSingleton<IEmissionsDataSource, WattTimeDataSource>();
         return services;
     }
-    
+
     private static void AddDependencies(IServiceCollection services, IConfigurationSection configSection)
     {
         AddWattTimeClient(services, configSection);
@@ -33,10 +34,10 @@ internal static class ServiceCollectionExtensions
 
     private static void AddWattTimeClient(IServiceCollection services, IConfigurationSection configSection)
     {
-        services.Configure<WattTimeClientConfiguration>(c =>
-        {
-            configSection.Bind(c);
-        });
+        services.AddOptions<WattTimeClientConfiguration>()
+                .Bind(configSection)
+                .Validate(config => Enum.IsDefined(typeof(SignalTypes), config.SignalType), "Invalid SignalType")
+                .ValidateOnStart();
 
         var httpClientBuilder = services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedClient);
         var authenticationClientBuilder = services.AddHttpClient<WattTimeClient>(IWattTimeClient.NamedAuthenticationClient);

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using CarbonAware.DataSources.WattTime.Constants;
+using System.Text.Json.Serialization;
 
 namespace CarbonAware.DataSources.WattTime.Model;
 
@@ -18,7 +19,7 @@ internal record RegionResponse
     /// Signal Type
     /// </summary>
     [JsonPropertyName("signal_type")]
-    public string SignalType { get; set; } = string.Empty;
+    public SignalTypes SignalType { get; set; }
 
     /// <summary>
     /// Human readable name/description for the region.
