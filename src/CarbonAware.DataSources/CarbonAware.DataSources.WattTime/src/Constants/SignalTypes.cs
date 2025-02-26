@@ -1,6 +1,6 @@
 ﻿namespace CarbonAware.DataSources.WattTime.Constants;
 
-internal enum SignalTypes
+public enum SignalTypes
 {
     co2_moer,
     co2_aoer

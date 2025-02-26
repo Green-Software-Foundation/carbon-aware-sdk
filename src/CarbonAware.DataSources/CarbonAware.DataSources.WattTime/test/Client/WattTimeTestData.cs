@@ -18,7 +18,7 @@ public static class WattTimeTestData
         public static DateTime Date = new DateTime(2099, 1, 1, 0, 0, 0);
         public const float Value = 999.99f;
         public const string Version = "1.0";
-        public const string SignalType = "co2_moer";
+        public const SignalTypes SignalType = SignalTypes.co2_moer;
         public const int Frequency = 300;
     }
 
@@ -46,11 +46,11 @@ public static class WattTimeTestData
             Model = new GridEmissionsModelData()
             {
                 Date = Constants.Date,
-                Type = "co2_moer"
+                Type = "binned_regression"  // from a response example of WattTime API: https://docs.watttime.org/#tag/GET-Historical/operation/get_historical_datapoint_v3_historical_get
             },
             DataPointPeriodSeconds = 30,
-            SignalType = "co2_moer",
-            Units = "co2_moer"
+            SignalType = SignalTypes.co2_moer,
+            Units = "lbs_co2_per_mwh"  // from a response example of WattTime API: https://docs.watttime.org/#tag/GET-Historical/operation/get_historical_datapoint_v3_historical_get
         };
 
         return gridEmissionsMetaData;
@@ -122,7 +122,7 @@ public static class WattTimeTestData
         {
             Region = Constants.Region,
             RegionFullName = Constants.RegionFullName,
-            SignalType = "co2_moer"
+            SignalType = SignalTypes.co2_moer
         };
     }
 }
