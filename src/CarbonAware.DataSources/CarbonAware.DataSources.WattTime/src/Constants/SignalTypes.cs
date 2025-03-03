@@ -1,6 +1,7 @@
 ﻿namespace CarbonAware.DataSources.WattTime.Constants;
 
-internal class SignalTypes
+public enum SignalTypes
 {
-    public const string co2_moer = "co2_moer";
+    co2_moer,
+    co2_aoer
 }

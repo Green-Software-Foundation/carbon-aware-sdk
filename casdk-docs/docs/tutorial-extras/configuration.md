@@ -9,6 +9,7 @@
       - [baseUrl](#baseurl)
       - [Proxy](#proxy)
       - [WattTime Caching BalancingAuthority](#watttime-caching-balancingauthority)
+      - [SignalType](#signaltype)
     - [Json Configuration](#json-configuration)
     - [ElectricityMaps Configuration](#electricitymaps-configuration)
       - [API Token Header](#api-token-header)
@@ -111,7 +112,8 @@ data provider must also be supplied.
           "url": "http://10.10.10.1",
           "username": "proxyUsername",
           "password": "proxyPassword"
-        }
+        },
+        "SignalType": "co2_aoer"
       },
       "ElectricityMaps": {
         "Type": "ElectricityMaps",
@@ -185,6 +187,20 @@ recommends not caching for longer than 1 month.
 
 ```bash
 DataSources__Configurations__WattTime__BalancingAuthorityCacheTTL="90"
+```
+
+#### SignalType
+
+WattTime supports 2 signal type. They can be set as a parameter.
+
+* `co2_moer`: Marginal operating emissions rate
+* `co2_aoer`: Average operating emissions rate
+
+If values other than these are set, an error occurs.
+See [WattTime documentation](https://watttime.org/data-science/data-signals/) for details.
+
+```bash
+DataSources__Configurations__WattTime__SignalType=co2_aoer
 ```
 
 ### Json Configuration
