@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <InternalsVisibleTo Include="CarbonAware.WebApi.IntegrationTests" />
     <InternalsVisibleTo Include="CarbonAware.CLI.IntegrationTests" />
   </ItemGroup>
 

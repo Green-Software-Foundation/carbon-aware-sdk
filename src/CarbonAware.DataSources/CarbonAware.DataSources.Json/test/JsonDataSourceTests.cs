@@ -111,16 +111,15 @@ class JsonDataSourceTests
     public async Task GetCarbonIntensityAsync_CacheEmissionData(bool cache)
     {
         var logger = Mock.Of<ILogger<JsonDataSource>>();
-
         var monitor = new Mock<IOptionsMonitor<JsonDataSourceConfiguration>>();
+        JsonDataSourceMocker dsMocker = new();
         var config = new JsonDataSourceConfiguration
         {
+            DataFileLocation = dsMocker.DataFileName,
             CacheJsonData = cache
         };
         monitor.Setup(m => m.CurrentValue).Returns(config);
         var dataSource = new JsonDataSource(logger, monitor.Object);
-
-        JsonDataSourceMocker dsMocker = new();
 
         var today = DateTimeOffset.Now;
         var todayEnd = today.AddMinutes(30);

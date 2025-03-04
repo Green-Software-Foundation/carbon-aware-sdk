@@ -3,8 +3,11 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS openapi-env
 WORKDIR /app
 ENV DOTNET_ROLL_FORWARD LatestMajor
 COPY . ./
-RUN dotnet build CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -o build
+RUN dotnet build CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -c Release -o build
 WORKDIR /app/CarbonAware.WebApi/src
+# Set environment variables for dummy datasource to start "dotnet tool run"
+ENV DataSources__EmissionsDataSource=Json
+ENV DataSources__Configurations__Json__Type=JSON
 RUN dotnet tool restore && \
     dotnet tool run swagger tofile --output /app/build/swagger.yaml --yaml /app/build/CarbonAware.WebApi.dll v1
 
@@ -17,7 +20,7 @@ ENV DOTNET_ROLL_FORWARD LatestMajor
 # Copy everything from source
 COPY . ./
 # Use implicit restore to build and publish
-RUN dotnet publish CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -a $TARGETARCH -o publish
+RUN dotnet publish CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -a $TARGETARCH -c Release -o publish
 
 
 # Build runtime image

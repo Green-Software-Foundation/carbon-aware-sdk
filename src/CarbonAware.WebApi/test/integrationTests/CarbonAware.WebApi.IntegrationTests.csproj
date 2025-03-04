@@ -22,20 +22,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference
-      Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.Json\mock\CarbonAware.DataSources.Json.Mocks.csproj" />
-    <ProjectReference
-      Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.WattTime\mock\CarbonAware.DataSources.WattTime.Mocks.csproj" />
-    <ProjectReference
-      Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\mock\CarbonAware.DataSources.ElectricityMaps.Mocks.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMapsFree\mock\CarbonAware.DataSources.ElectricityMapsFree.Mocks.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.Json\mock\CarbonAware.DataSources.Json.Mocks.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.WattTime\mock\CarbonAware.DataSources.WattTime.Mocks.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\mock\CarbonAware.DataSources.ElectricityMaps.Mocks.csproj" />
     <ProjectReference Include="..\..\src\CarbonAware.WebApi.csproj" />
-    <ProjectReference
-      Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj" />
+    <ProjectReference Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.Registration\CarbonAware.DataSources.Registration.csproj" />
   </ItemGroup>
 
   <Target Name="CopyDataFiles" AfterTargets="Build">
-    <Copy SourceFiles="$(ProjectDir)..\..\..\data\data-sources\test-data-azure-emissions.json"
-      DestinationFiles="$(TargetDir)\data-sources\json\demo.json" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ProjectDir)..\..\..\data\data-sources\test-data-azure-emissions.json" DestinationFiles="$(TargetDir)\data-sources\json\demo.json" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="$(ProjectDir)..\..\..\data\location-sources\azure-regions.json" DestinationFiles="$(TargetDir)\location-sources\json\azure-regions.json" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>
