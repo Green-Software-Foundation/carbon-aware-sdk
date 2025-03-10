@@ -16,9 +16,6 @@
       - [BaseUrl](#baseurl)
       - [Emission Factor Type](#emission-factor-type)
       - [Disable Estimations](#disable-estimations)
-    - [ElectricityMapsFree Configuration](#electricitymapsfree-configuration)
-      - [API Token](#api-token)
-      - [BaseUrl](#baseurl)
   - [Cache](#cache)
   - [CarbonAwareVars](#carbonawarevars)
     - [Tracing and Monitoring Configuration](#tracing-and-monitoring-configuration)
@@ -30,7 +27,6 @@
   - [Configuration for Emissions data Using WattTime](#configuration-for-emissions-data-using-watttime)
   - [Configuration for Forecast data Using ElectricityMaps](#configuration-for-forecast-data-using-electricitymaps)
   - [Configuration for Emissions data using ElectricityMaps and Forecast data using WattTime](#configuration-for-emissions-data-using-electricitymaps-and-forecast-data-using-watttime)
-  - [Configuration for Emissions data using ElectricityMapsFree and Forecast data using WattTime](#configuration-for-emissions-data-using-electricitymapsfree-and-forecast-data-using-watttime)
   - [Configuration For Emissions data Using JSON](#configuration-for-emissions-data-using-json)
   - [Configuration Using WattTime and Defined Location Source Files](#configuration-using-watttime-and-defined-location-source-files)
 
@@ -296,44 +292,6 @@ See the
 [ElectricityMaps API Documentation](https://static.electricitymaps.com/api/docs/index.html#estimations)
 for more details.
 
-### ElectricityMapsFree Configuration
-
-If using the ElectricityMapsFree data source, ElectricityMapsFree configuration
-is required.
-
-**With an account token:**
-
-> **NOTE** The ElectricityMapsFree API does not currently support access to
-> historical forecasts. This means that functionality such as the CLI
-> `emissions-forecasts` > `--requested-at` flag and the API `/forecasts/batch` >
-> `requestedAt` input will respond with a `NotImplemented` error.
->
-> The ElectricityMapsFree API also does not currently support access to
-> historical emissions data. It only supports getting the single latest
-> emissions data point for the given location.
->
-> If either of these restrictions are an issue, a data source that has support
-> for historical forecasts, such as [WattTime](#watttime-configuration) or
-> historical emissions, such as
-> [ElectricityMaps](#electricitymaps-configuration) may be preferable.
-
-```json
-{
-  "token": "<api-token>",
-  "baseUrl": "https://api.co2signal.com/v1/"
-}
-```
-
-#### API Token
-
-The ElectricityMapsFree token you receive with your account.
-
-#### BaseUrl
-
-The url to use when connecting to ElectricityMapsFree. Defaults to
-"https://api.co2signal.com/v1/" but can be overridden in the config if needed
-(such as to enable integration testing scenarios).
-
 ## Cache
 
 Frequent access to data sources could cause problems such as performance trouble
@@ -434,7 +392,7 @@ The scraping endpoint is `<ROOT_PATH>/metrics` like this:
 http://localhost/metrics
 ```
 
-By default, the exposed data are latest ones within last 24 hours. If you would like to change the period 
+By default, the exposed data are latest ones within last 24 hours. If you would like to change the period
 in some reasones, you can configure the value like this:
 
 ```json
@@ -608,28 +566,6 @@ DataSources__Configurations__WattTime__Password="wattTimePassword"
         "APITokenHeader": "auth-token",
         "APIToken": "token",
         "BaseURL": "https://api.electricitymap.org/v3/"
-      }
-    }
-  }
-```
-
-## Configuration for Emissions data using ElectricityMapsFree and Forecast data using WattTime
-
-```json
-  "DataSources": {
-    "EmissionsDataSource": "ElectricityMapsFree",
-    "ForecastDataSource": "WattTime",
-    "Configurations": {
-      "WattTime": {
-        "Type": "WattTime",
-        "Username": "username",
-        "Password": "password",
-        "BaseURL": "https://api2.watttime.org/v2/",
-      },
-      "ElectricityMapsFree": {
-        "Type": "ElectricityMapsFree",
-        "token": "token",
-        "BaseURL": "https://api.co2signal.com/v1/"
       }
     }
   }
