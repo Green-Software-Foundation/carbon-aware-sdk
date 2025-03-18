@@ -180,6 +180,7 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecastsCurrent_SupportedDataSources_ReturnsOk()
     {
+        IgnoreTestForDataSource($"data source does not implement '{currentForecastURI}'", DataSourceType.JSON);
 
         _dataSourceMocker?.SetupForecastMock();
 
