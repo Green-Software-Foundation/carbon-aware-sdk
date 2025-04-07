@@ -10,13 +10,17 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 
 namespace CarbonAware.DataSources.WattTime.Client;
 
 internal class WattTimeClient : IWattTimeClient
 {
-    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
 
     private static readonly HttpStatusCode[] _retriableStatusCodes = new HttpStatusCode[]
     {
