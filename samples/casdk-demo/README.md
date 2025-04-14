@@ -59,7 +59,8 @@ Run demonstration with ElectricityMaps datasource
 export CASDK_DataSources__EmissionsDataSource=ElectricityMaps
 export CASDK_DataSources__ForecastDataSource=ElectricityMaps
 export CASDK_DataSources__Configurations__ElectricityMaps__Type=ElectricityMaps
-export CASDK_DataSources__Configurations__ElectricityMaps__token=YOUR_SECRET_TOKEN
+export CASDK_DataSources__Configurations__ElectricityMaps__APITokenHeader = "auth-token"
+export CASDK_DataSources__Configurations__ElectricityMaps__APIToken=YOUR_SECRET_TOKEN
 
 ./demo.sh start
 ```
