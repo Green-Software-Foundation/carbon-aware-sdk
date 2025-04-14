@@ -10,7 +10,6 @@ showing how the package can be consumed.
   - [Included Scripts](#included-scripts)
     - [Running the packaging scripts](#running-the-packaging-scripts)
   - [SDK Configuration](#sdk-configuration)
-    - [ElectricityMapsFree](#electricitymapsfree)
     - [ElectricityMaps](#electricitymaps)
     - [WattTime](#watttime)
     - [Json](#json)
@@ -24,7 +23,6 @@ The current package include 8 projects from the SDK:
 
 1. "GSF.CarbonAware"
 2. "CarbonAware"
-3. "CarbonAware.DataSources.ElectricityMapsFree"
 4. "CarbonAware.DataSources.ElectricityMaps"
 5. "CarbonAware.DataSources.Json"
 6. "CarbonAware.DataSources.Registration"
@@ -67,25 +65,16 @@ Alternatively you can run in your local environment using the
 
 ## SDK Configuration
 
-The configuration needed to connect to WattTime, ElectricityMaps, ElectricityMapsFree, or Json data sources can be managed using environment variables or appsettings.
+The configuration needed to connect to WattTime, ElectricityMaps, or Json data sources can be managed using environment variables or appsettings.
 More information on data source configuration can be found [here](configuration.md#datasources)
 
-### ElectricityMapsFree
-
-Below are the environment variables needed to set up the
-**ElectricityMapsFree** data source.
-
-```bash
-export DataSources__EmissionsDataSource=ElectricityMapsFree
-export DataSources__Configurations__ElectricityMapsFree__Type=ElectricityMapsFree
-export DataSources__Configurations__ElectricityMapsFree__token=[ElectricityMapsFree APIToken]`
-```
 
 ### ElectricityMaps
 
 Below are the environment variables needed to set up the **ElectricityMaps** data source.
 
 ```bash
+export DataSources__EmissionsDataSource=ElectricityMaps
 export DataSources__ForecastDataSource=ElectricityMaps
 export DataSources__Configurations__ElectricityMaps__Type=ElectricityMaps
 export DataSources__Configurations__ElectricityMaps__APITokenHeader=[ElectricityMaps APITokenHeader]

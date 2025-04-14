@@ -21,8 +21,6 @@
       Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.WattTime\mock\CarbonAware.DataSources.WattTime.Mocks.csproj" />
     <ProjectReference
       Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMaps\mock\CarbonAware.DataSources.ElectricityMaps.Mocks.csproj" />
-    <ProjectReference
-      Include="..\..\..\CarbonAware.DataSources\CarbonAware.DataSources.ElectricityMapsFree\mock\CarbonAware.DataSources.ElectricityMapsFree.Mocks.csproj" />
     <ProjectReference Include="..\..\src\CarbonAware.CLI.csproj" />
   </ItemGroup>
 </Project>
