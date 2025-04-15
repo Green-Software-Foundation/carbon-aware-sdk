@@ -10,13 +10,17 @@ using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Web;
 
 namespace CarbonAware.DataSources.WattTime.Client;
 
 internal class WattTimeClient : IWattTimeClient
 {
-    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+    private static readonly JsonSerializerOptions _options = new JsonSerializerOptions(JsonSerializerDefaults.Web)
+    {
+        Converters = { new JsonStringEnumConverter() }
+    };
 
     private static readonly HttpStatusCode[] _retriableStatusCodes = new HttpStatusCode[]
     {
@@ -64,7 +68,7 @@ internal class WattTimeClient : IWattTimeClient
             { QueryStrings.Region, regionAbbreviation },
             { QueryStrings.StartTime, startTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
             { QueryStrings.EndTime, endTime.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
-            { QueryStrings.SignalType, SignalTypes.co2_moer},
+            { QueryStrings.SignalType, _configuration.SignalType.ToString()},
         };
 
         var tags = new Dictionary<string, string>()
@@ -93,7 +97,7 @@ internal class WattTimeClient : IWattTimeClient
         var parameters = new Dictionary<string, string>()
         {
             { QueryStrings.Region, region },
-            { QueryStrings.SignalType, SignalTypes.co2_moer }
+            { QueryStrings.SignalType, _configuration.SignalType.ToString() }
         };
 
         var tags = new Dictionary<string, string>()
@@ -124,7 +128,7 @@ internal class WattTimeClient : IWattTimeClient
             { QueryStrings.Region, region },
             { QueryStrings.StartTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
             { QueryStrings.EndTime, requestedAt.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture) },
-            { QueryStrings.SignalType, SignalTypes.co2_moer }
+            { QueryStrings.SignalType, _configuration.SignalType.ToString() }
         };
 
         var tags = new Dictionary<string, string>()
@@ -302,14 +306,14 @@ internal class WattTimeClient : IWattTimeClient
             {
                 { QueryStrings.Latitude, latitude },
                 { QueryStrings.Longitude, longitude },
-                { QueryStrings.SignalType, SignalTypes.co2_moer}
+                { QueryStrings.SignalType, _configuration.SignalType.ToString()}
             };
 
             var tags = new Dictionary<string, string>()
             {
                 { QueryStrings.Latitude, latitude },
                 { QueryStrings.Longitude, longitude },
-                { QueryStrings.SignalType, SignalTypes.co2_moer }
+                { QueryStrings.SignalType, _configuration.SignalType.ToString() }
             };
             var result = await this.MakeRequestGetStreamAsync(Paths.RegionFromLocation, parameters, tags);
             var regionResponse = await JsonSerializer.DeserializeAsync<RegionResponse>(result, _options) ?? throw new WattTimeClientException($"Error getting Region for latitude {latitude} and longitude {longitude}");

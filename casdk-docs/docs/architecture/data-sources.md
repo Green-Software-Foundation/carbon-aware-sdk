@@ -7,8 +7,7 @@ sidebar_position: 3
 
 Data sources allow developers easily integrate different data providers into the
 carbon aware SDK ([WattTime](https://www.wattime.org),
-[ElectricityMaps](https://www.electricitymaps.com/),
-[ElectricityMapsFree](https://www.co2signal.com/) etc) to be made available to
+[ElectricityMaps](https://www.electricitymaps.com/), etc) to be made available to
 all higher-level user-interfaces (WebAPI, CLI, etc), while avoiding the details
 of how to interact with any specific provider.
 

@@ -13,7 +13,7 @@ sidebar_position: 3
    * SDK
    * Use cases
 
-2. [How to Use Carbon Aware SDK](#2-how-to-use-carbon-aware-sdk)  
+2. [How to Use Carbon Aware SDK](#2-how-to-use-carbon-aware-sdk)
 
    2.1 [Pre-requisites](#21-pre-requisites)
     * Data sources
@@ -23,13 +23,13 @@ sidebar_position: 3
     * Setup
     * Usage
 
-   2.3 [WebAPI](#23-webapi)  
+   2.3 [WebAPI](#23-webapi)
     * Setup
       * Deploying with container
       * Deploying with Kubernetes
     * Usage
       * Calling WebAPI using CLI
-      * Calling WebAPI using client libraries  
+      * Calling WebAPI using client libraries
 
    2.4 [Configurations](#24-configurations)
 
@@ -43,16 +43,16 @@ you different data than the WebAPI for the same query). We provide a number of
 different endpoints to provide the most flexibility to integrate to your
 environment:
 
-* CLI  
+* CLI
 You can run the application using the [CLI](/src/CarbonAware.CLI) and refer
-  to more documentation [here](../tutorial-basics/carbon-aware-cli.md).  
+  to more documentation [here](../tutorial-basics/carbon-aware-cli.md).
 
-* WebAPI  
+* WebAPI
 You can build a container containing the [WebAPI](/src/CarbonAware.WebApi)
   and connect via REST requests and refer to more documentation
   [here](../tutorial-basics/carbon-aware-webapi.md).
 
-* SDK  
+* SDK
 You can reference the [Carbon Aware C# Library](/src/GSF.CarbonAware) in your
   projects and make use of its functionalities and features.
 
@@ -75,7 +75,6 @@ We support various data sources of carbon aware data:
 
 * [WattTime](https://www.watttime.org/)
 * [ElectricityMaps](https://www.electricitymaps.com/)
-* [ElectricityMapsFree](https://www.co2signal.com/)
 * JSON file
 
 There are a few constraints to select data sources to some functions of
@@ -91,7 +90,7 @@ providers into the carbon aware SDK.
   * Alternatively:
     * Docker
     * VSCode and its [Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-* WebAPI  
+* WebAPI
   * Docker
   * VSCode and its [Remote Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
@@ -127,18 +126,11 @@ VSCode Remote Containers (Dev Container). To run locally:
    or
 
    ```bash
+   export DataSources__EmissionsDataSource="ElectricityMaps"
    export DataSources__ForecastDataSource="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
-   ```
-
-   or
-
-   ```bash
-    export DataSources__EmissionsDataSource="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
    ```
 
 4. Run the CLI using `dotnet run`
@@ -271,19 +263,13 @@ First we need to set up the GitHub repository
    or
 
    ```bash
+   export DataSources__EmissionsDataSource="ElectricityMaps"
    export DataSources__ForecastDataSource="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-   or
-
-   ```bash
-    export DataSources__EmissionsDataSource="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
-   ```
 
 6. In the VSCode Terminal:
 7. Change directory to: `cd src/CarbonAware.WebApi/src`

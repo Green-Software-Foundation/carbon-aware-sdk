@@ -7,12 +7,11 @@ using System.Text.Json;
 namespace CarbonAware.WepApi.IntegrationTests;
 
 /// <summary>
-/// Tests that the Web API controller handles locations instances 
+/// Tests that the Web API controller handles locations instances
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
-[TestFixture(DataSourceType.ElectricityMapsFree)]
 class LocationsControllerTests : IntegrationTestingBase
 {
     private readonly string locationsURI = "/locations";

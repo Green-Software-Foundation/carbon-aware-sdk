@@ -55,19 +55,13 @@ VSCode Remote Containers (Dev Container). To run locally:
    or
 
    ```bash
+   export DataSources__EmissionsDataSource="ElectricityMaps"
    export DataSources__ForecastDataSource="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-   or
-
-   ```bash
-    export DataSources__EmissionsDataSource="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
-   ```
 
 1. Run the CLI using `dotnet run`
 
@@ -214,19 +208,13 @@ First we need to set up the GitHub repository
    or
 
    ```bash
+   export DataSources__EmissionsDataSource="ElectricityMaps"
    export DataSources__ForecastDataSource="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-   or
-
-   ```bash
-    export DataSources__EmissionsDataSource="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
-   ```
 
 6. In the VSCode Terminal:
 7. Change directory to: `cd src/CarbonAware.WebApi/src`

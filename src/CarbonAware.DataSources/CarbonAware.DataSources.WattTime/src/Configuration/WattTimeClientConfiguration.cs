@@ -1,3 +1,4 @@
+using CarbonAware.DataSources.WattTime.Constants;
 using CarbonAware.Exceptions;
 using System.Text;
 
@@ -24,6 +25,11 @@ internal class WattTimeClientConfiguration
     /// Gets or sets the base url to use when connecting to WattTime
     /// </summary>
     public string BaseUrl { get; set; } = "https://api.watttime.org/v3/";
+
+    /// <summary>
+    /// Gets or sets the signal type to use: co2_moer or co2_aoer
+    /// </summary>
+     public SignalTypes SignalType { get; set; } = SignalTypes.co2_moer;
 
     /// <summary>
     /// Authentication base url.  This changed between v2 and v3 

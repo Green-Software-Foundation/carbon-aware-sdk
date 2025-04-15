@@ -1,7 +1,6 @@
 ﻿using CarbonAware.DataSources.Configuration;
 using CarbonAware.Interfaces;
 using CarbonAware.DataSources.ElectricityMaps.Mocks;
-using CarbonAware.DataSources.ElectricityMapsFree.Mocks;
 using CarbonAware.DataSources.Json.Mocks;
 using CarbonAware.DataSources.WattTime.Mocks;
 using NUnit.Framework;
@@ -81,7 +80,7 @@ internal abstract class IntegrationTestingBase
         var standardError = new StreamWriter(Console.OpenStandardError());
         standardOutput.AutoFlush = true;
         standardError.AutoFlush = true;
-        
+
         Console.SetOut(standardOutput);
         Console.SetError(standardError);
 
@@ -116,21 +115,13 @@ internal abstract class IntegrationTestingBase
                 }
             case DataSourceType.ElectricityMaps:
                 {
+                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "ElectricityMaps");
                     Environment.SetEnvironmentVariable("DataSources__ForecastDataSource", "ElectricityMaps");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__Type", "ElectricityMaps");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APITokenHeader", "token");
                     Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMaps__APIToken", "test");
 
                     _dataSourceMocker = new ElectricityMapsDataSourceMocker();
-                    break;
-                }
-            case DataSourceType.ElectricityMapsFree:
-                {
-                    Environment.SetEnvironmentVariable("DataSources__EmissionsDataSource", "ElectricityMapsFree");
-                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMapsFree__Type", "ElectricityMapsFree");
-                    Environment.SetEnvironmentVariable("DataSources__Configurations__ElectricityMapsFree__token", "token");
-
-                    _dataSourceMocker = new ElectricityMapsFreeDataSourceMocker();
                     break;
                 }
             case DataSourceType.None:
