@@ -212,8 +212,6 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [Test]
     public async Task EmissionsForecastsCurrent_StartAndEndOutsideWindow_ReturnsBadRequest()
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
-
         _dataSourceMocker?.SetupForecastMock();
 
         var queryStrings = new Dictionary<string, string>();
@@ -235,8 +233,6 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     public async Task EmissionsForecastsCurrent_InvalidLocationQueryString_ReturnsBadRequest(string queryString, string value)
     {
 
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/current'", DataSourceType.JSON);
-
         _dataSourceMocker?.SetupForecastMock();
 
         var queryStrings = new Dictionary<string, string>();
@@ -255,8 +251,6 @@ class CarbonAwareControllerTests : IntegrationTestingBase
     [TestCase("eastus", "2021-9-1T08:30:00Z", TestName = "EmissionsForecastsBatch returns BadRequest for wrong date format")]
     public async Task EmissionsForecastsBatch_MissingRequiredParams_ReturnsBadRequest(string location, string requestedAt)
     {
-        IgnoreTestForDataSource("data source does not implement '/emissions/forecasts/batch'", DataSourceType.JSON);
-
         _dataSourceMocker?.SetupForecastMock();
         var forecastData = Enumerable.Range(0, 1).Select(x => new
         {

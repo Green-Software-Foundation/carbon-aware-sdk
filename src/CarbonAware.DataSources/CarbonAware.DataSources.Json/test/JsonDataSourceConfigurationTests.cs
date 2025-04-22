@@ -24,14 +24,6 @@ class JsonDataSourceConfigurationTests
         AssemblyPath = Assembly.GetExecutingAssembly().Location;
     }
 
-    [Test]
-    public void GetDefaultDataFileLocation_IsNotNull_ExpectedBaseDir()
-    {
-        Assert.That(_configuration.DataFileLocation, Is.Not.Null);
-        var expectedDir = Path.Combine(Path.GetDirectoryName(AssemblyPath)!, BaseDir);
-        Assert.That(_configuration.DataFileLocation, Contains.Substring(expectedDir));
-    }
-
     [TestCase("../newfile.json", TestName = "setting parent's dir")]
     [TestCase("~/newfile.json", TestName = "setting user's home dir")]
     [TestCase(null, TestName = "setting null filepath")]

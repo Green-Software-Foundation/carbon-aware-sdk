@@ -147,6 +147,8 @@ parameters and short explanations.
 To get a list of all locations supported, you can use the Locations API,
 referenced in `src/CarbonAware.CLI/src/Commands/Location`
 and the command `.\caw locations`.
+Note that you have to configure `LocationDataSourcesConfiguration`
+into `appsettings.json` before running the command.
 
 Expected output:
 
@@ -438,6 +440,9 @@ endpoints, full endpoint description can be found [here](https://github.com/Gree
 To get a list of all locations supported, you can use the Locations API endpoint
 `/locations` referenced in
 `src/CarbonAware.WebApi/src/Controllers/LocationsController.cs`.
+Note that you have to configure `LocationDataSourcesConfiguration`
+into `appsettings.json` before launching WebAPI, otherwise WebAPI returns
+HTTP 204 (No Content).
 
 Expected Output:
 
@@ -460,11 +465,15 @@ Expected Output:
 ##### Calling the `/emissions/bylocation` endpoint
 
 In console, we can run the below command, to request data for a single location
-(currently Azure region names supported) in a particular timeframe:
+in a particular timeframe:
 
 ```bash
 curl "http://localhost:5073/emissions/bylocation?location=westus&time=2022-08-23T14%3A00&toTime=2022-08-23T14%3A30" | jq
 ```
+
+Note that region names in this example (e.g. `westus`) are defined in
+[azure-regions.json](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/data/location-sources/azure-regions.json).
+AWS region is also available in [aws-regions.json](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/data/data-files/aws-regions.json).
 
 You can omit the `| jq` to get the JSON data raw and unparsed. This is a request
 for data in the `westus` region from the date `2022-08-23 at 14:00` to
