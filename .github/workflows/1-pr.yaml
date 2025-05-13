@@ -184,6 +184,8 @@ jobs:
       - name: Generate Open API
         run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
         env:
+          DataSources__EmissionsDataSource: Json
+          DataSources__Configurations__Json__Type: JSON
           DOTNET_ROLL_FORWARD: LatestMajor
       - name: Upload dev artifact
         uses: actions/upload-artifact@v4
