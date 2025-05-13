@@ -3,7 +3,6 @@
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
 
-
 ## [1.8] - 2025-04
 
 This release consolidates the ElectricityMaps sources, introduces new CO₂-intensity signal support in WattTime, and rounds out the release with documentation improvements and critical bug fixes [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.8](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.8).
@@ -28,8 +27,6 @@ And supporting issues:
 - [PR #623] [URGENT] Set JsonStringConverter to JSON deserializer option in WattTimeClient ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/623)
 
 For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/628](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/628)
-
-
 
 ## [1.7] - 2025-01
 
