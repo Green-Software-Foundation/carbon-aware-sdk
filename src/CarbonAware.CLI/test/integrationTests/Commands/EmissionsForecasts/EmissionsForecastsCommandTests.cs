@@ -5,12 +5,11 @@ using System.Text.Json.Nodes;
 namespace CarbonAware.CLI.IntegrationTests.Commands.EmissionsForecasts;
 
 /// <summary>
-/// Tests that the CLI handles and packages various responses from handlers 
+/// Tests that the CLI handles and packages various responses from handlers
 /// and data sources properly, including empty responses and exceptions.
 /// </summary>
 [TestFixture(DataSourceType.WattTime)]
 [TestFixture(DataSourceType.ElectricityMaps)]
-//[TestFixture(DataSourceType.ElectricityMapsFree)] // Left out because these tests are not relevant for this data source
 internal class EmissionsForecastsCommandTests : IntegrationTestingBase
 {
     public EmissionsForecastsCommandTests(DataSourceType dataSource) : base(dataSource) { }
@@ -73,14 +72,14 @@ internal class EmissionsForecastsCommandTests : IntegrationTestingBase
         var end =  start.AddHours(5);
         var dataStartAt = start.ToString("yyyy-MM-ddTHH:mm:ssZ");
         var dataEndAt = end.ToString("yyyy-MM-ddTHH:mm:ssZ");
-       
+
         _dataSourceMocker.SetupForecastMock();
         // Act
         var exitCode = await InvokeCliAsync($"emissions-forecasts -l {location} -s {dataStartAt} -e {dataEndAt}");
 
         // Assert
         Assert.AreEqual(0, exitCode, _console.Error.ToString());
-     
+
         var jsonResults = JsonNode.Parse(_console.Out.ToString()!)!.AsArray()!;
         var firstResult = jsonResults.First()!.AsObject();
         Assert.AreEqual(1, jsonResults.Count);

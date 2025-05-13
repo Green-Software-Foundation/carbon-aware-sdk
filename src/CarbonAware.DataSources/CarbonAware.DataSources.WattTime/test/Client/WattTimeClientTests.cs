@@ -413,6 +413,60 @@ class WattTimeClientTests
         }
     }
 
+    [Test]
+    public async Task JsonStringEnumConverter_CorrectlyDeserializesEnumValues()
+    {
+        // Arrange
+        // Create a custom response with a specific signal_type enum value
+        var customResponse = new
+        {
+            meta = new 
+            {
+                region = WattTimeTestData.Constants.Region,
+                generated_at = WattTimeTestData.Constants.GeneratedAt,
+                generated_at_period_seconds = 30,
+                signal_type = "co2_aoer", // Different from default co2_moer to verify conversion
+                units = "lbs_co2_per_mwh",
+                model = new { date = WattTimeTestData.Constants.Date, type = "binned_regression" }
+            },
+            data = new[] 
+            {
+                new {
+                    point_time = WattTimeTestData.Constants.PointTime,
+                    value = WattTimeTestData.Constants.Value,
+                    frequency = WattTimeTestData.Constants.Frequency,
+                    market = WattTimeTestData.Constants.Market,
+                    version = WattTimeTestData.Constants.Version
+                }
+            }
+        };
+        
+        var responseJson = System.Text.Json.JsonSerializer.Serialize(customResponse);
+        
+        this.AddHandlers_Auth();
+        this.AddHandler_RequestResponse(r =>
+        {
+            return r.RequestUri!.ToString().Contains("/v3/historical") && r.Method == HttpMethod.Get;
+        }, System.Net.HttpStatusCode.OK, responseJson);
+
+        // Act
+        var client = new WattTimeClient(this.HttpClientFactory, this.Options.Object, this.Log.Object, this.MemoryCache);
+        client.SetBearerAuthenticationHeader(_DEFAULT_TOKEN_VALUE);
+
+        var emissionsResponse = await client.GetDataAsync(
+            WattTimeTestData.Constants.Region, 
+            new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero), 
+            new DateTimeOffset(2022, 4, 22, 0, 0, 0, TimeSpan.Zero));
+
+        // Assert
+        Assert.IsNotNull(emissionsResponse);
+        Assert.AreEqual(SignalTypes.co2_aoer, emissionsResponse.Meta.SignalType);
+        
+        // Verify other properties were correctly deserialized
+        Assert.AreEqual(WattTimeTestData.Constants.Region, emissionsResponse.Meta.Region);
+        Assert.IsTrue(emissionsResponse.Data.Count() > 0);
+    }
+
     /**
     * Helper to add client handlers for auth checking
     */

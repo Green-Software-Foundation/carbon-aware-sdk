@@ -22,8 +22,8 @@ NGINX is a reverse proxy to both Carbon Aware SDK and Swagger UI. To avoid CORS 
 
 See [nginx-rp.conf](nginx-rp.conf)
 
-/ -> Carbon Aware SDK  
-/swagger.yaml -> OpenAPI document provided by Carbon Aware SDK  
+/ -> Carbon Aware SDK
+/swagger.yaml -> OpenAPI document provided by Carbon Aware SDK
 /swagger-ui/ -> Swagger UI for Carbon Aware SDK
 
 ## How to run
@@ -53,12 +53,14 @@ See [nginx-rp.conf](nginx-rp.conf)
 
 ## Example
 
-Run demonstration with ElectricityMapsFree datasource
+Run demonstration with ElectricityMaps datasource
 
 ```
-export CASDK_DataSources__EmissionsDataSource=ElectricityMapsFree
-export CASDK_DataSources__Configurations__ElectricityMapsFree__Type=ElectricityMapsFree
-export CASDK_DataSources__Configurations__ElectricityMapsFree__token=YOUR_SECRET_TOKEN
+export CASDK_DataSources__EmissionsDataSource=ElectricityMaps
+export CASDK_DataSources__ForecastDataSource=ElectricityMaps
+export CASDK_DataSources__Configurations__ElectricityMaps__Type=ElectricityMaps
+export CASDK_DataSources__Configurations__ElectricityMaps__APITokenHeader = "auth-token"
+export CASDK_DataSources__Configurations__ElectricityMaps__APIToken=YOUR_SECRET_TOKEN
 
 ./demo.sh start
 ```

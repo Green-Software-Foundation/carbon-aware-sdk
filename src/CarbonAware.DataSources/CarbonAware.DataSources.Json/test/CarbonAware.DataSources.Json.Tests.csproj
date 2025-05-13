@@ -27,4 +27,7 @@
     <ProjectReference Include="..\src\CarbonAware.DataSources.Json.csproj" />
   </ItemGroup>
 
+  <Target Name="CreateDatasourceDirectory" AfterTargets="Build">
+    <MakeDir Directories="$(TargetDir)\data-sources\json" />
+  </Target>
 </Project>

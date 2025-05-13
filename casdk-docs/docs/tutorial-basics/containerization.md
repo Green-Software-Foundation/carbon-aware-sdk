@@ -49,16 +49,6 @@ carbon_aware   v1        6293e2528bf2   About an hour ago   230MB
    > carbon_aware:v1
    ```
 
-   or the [ElectricityMapsFree](https://www.co2signal.com/) provider
-
-   ```sh
-   docker run --rm -p 8000:8080 \
-   > -e DataSources__EmissionsDataSource="ElectricityMapsFree" \
-   > -e DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree" \
-   > -e DataSources__Configurations__ElectricityMapsFree__token="<YOUR_CO2SIGNAL_TOKEN>" \
-   > carbon_aware:v1
-   ```
-
 1. Verify that the WebApi is responding to requests using an HTTP client tool
    (e.g. `postman`, `curl`)
 

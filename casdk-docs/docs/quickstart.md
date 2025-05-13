@@ -55,19 +55,13 @@ VSCode Remote Containers (Dev Container). To run locally:
    or
 
    ```bash
+   export DataSources__EmissionsDataSource="ElectricityMaps"
    export DataSources__ForecastDataSource="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-   or
-
-   ```bash
-    export DataSources__EmissionsDataSource="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
-   ```
 
 1. Run the CLI using `dotnet run`
 
@@ -81,7 +75,8 @@ parameters and short explanations.
 
 To get a list of all locations supported, you can use the Locations API,
 referenced in `src/CarbonAware.CLI/src/Commands/Location`
-and the command `.\caw locations`.
+and the command `.\caw locations`. Note that you have to configure `LocationDataSourcesConfiguration`
+into `appsettings.json` before running the command.
 
 Expected output:
 
@@ -213,19 +208,13 @@ First we need to set up the GitHub repository
    or
 
    ```bash
+   export DataSources__EmissionsDataSource="ElectricityMaps"
    export DataSources__ForecastDataSource="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__Type="ElectricityMaps"
    export DataSources__Configurations__ElectricityMaps__APITokenHeader="auth-token"
    export DataSources__Configurations__ElectricityMaps__APIToken="<YOUR_ELECTRICITYMAPS_TOKEN>"
    ```
 
-   or
-
-   ```bash
-    export DataSources__EmissionsDataSource="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__Type="ElectricityMapsFree"
-    export DataSources__Configurations__ElectricityMapsFree__token="<CO2SIGNAL_TOKEN>"
-   ```
 
 6. In the VSCode Terminal:
 7. Change directory to: `cd src/CarbonAware.WebApi/src`
@@ -246,6 +235,9 @@ endpoints, full endpoint description can be found here:
 To get a list of all locations supported, you can use the Locations API endpoint
 `/locations` referenced in
 `src/CarbonAware.WebApi/src/Controllers/LocationsController.cs`.
+Note that you have to configure `LocationDataSourcesConfiguration`
+into `appsettings.json` before launching WebAPI, otherwise WebAPI returns
+HTTP 204 (No Content).
 
 Expected Output:
 
@@ -269,11 +261,15 @@ Expected Output:
 #### Calling the `/emissions/bylocation` endpoint
 
 In console, we can run the below command, to request data for a single location
-(currently Azure region names supported) in a particular timeframe:
+in a particular timeframe:
 
 ```bash
 curl "http://localhost:5073/emissions/bylocation?location=westus&time=2022-08-23T14%3A00&toTime=2022-08-23T14%3A30" | jq
 ```
+
+Note that region names in this example (e.g. `westus`) are defined in
+[azure-regions.json](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/data/location-sources/azure-regions.json).
+AWS region is also available in [aws-regions.json](https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/src/data/data-files/aws-regions.json).
 
 You can omit the `| jq` to get the JSON data raw and unparsed. This is a request
 for data in the `westus` region from the date `2022-08-23 at 14:00` to

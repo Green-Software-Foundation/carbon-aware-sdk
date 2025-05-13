@@ -88,21 +88,21 @@ public class CarbonAwareController : ControllerBase
     }
 
     /// <summary>
-    ///   Retrieves the most recent forecasted data and calculates the optimal marginal carbon intensity window.
+    ///   Retrieves the most recent forecasted data and calculates the optimal carbon intensity window.
     /// </summary>
     /// <param name="parameters">The request object <see cref="EmissionsForecastCurrentParametersDTO"/></param>
     /// <remarks>
     ///   This endpoint fetches only the most recently generated forecast for all provided locations.  It uses the "dataStartAt" and 
     ///   "dataEndAt" parameters to scope the forecasted data points (if available for those times). If no start or end time 
-    ///   boundaries are provided, the entire forecast dataset is used. The scoped data points are used to calculate average marginal 
-    ///   carbon intensities of the specified "windowSize" and the optimal marginal carbon intensity window is identified.
+    ///   boundaries are provided, the entire forecast dataset is used. The scoped data points are used to calculate average 
+    ///   carbon intensities of the specified "windowSize" and the optimal carbon intensity window is identified.
     ///
-    ///   The forecast data represents what the data source predicts future marginal carbon intensity values to be, 
+    ///   The forecast data represents what the data source predicts future carbon intensity values to be, 
     ///   not actual measured emissions data (as future values cannot be known).
     ///
     ///   This endpoint is useful for determining if there is a more carbon-optimal time to use electricity predicted in the future.
     /// </remarks>
-    /// <returns>An array of forecasts (one per requested location) with their optimal marginal carbon intensity windows.</returns>
+    /// <returns>An array of forecasts (one per requested location) with their optimal carbon intensity windows.</returns>
     /// <response code="200">Returns the requested forecast objects</response>
     /// <response code="400">Returned if any of the input parameters are invalid</response>
     /// <response code="500">Internal server error</response>
@@ -126,14 +126,14 @@ public class CarbonAwareController : ControllerBase
     /// </summary>
     /// <remarks>
     /// This endpoint takes a batch of requests for historical forecast data, fetches them, and calculates the optimal 
-    /// marginal carbon intensity windows for each using the same parameters available to the '/emissions/forecasts/current'
+    /// carbon intensity windows for each using the same parameters available to the '/emissions/forecasts/current'
     /// endpoint.
     ///
     /// This endpoint is useful for back-testing what one might have done in the past, if they had access to the 
     /// current forecast at the time.
     /// </remarks>
     /// <param name="requestedForecasts"> Array of requested forecasts.</param>
-    /// <returns>An array of forecasts with their optimal marginal carbon intensity window.</returns>
+    /// <returns>An array of forecasts with their optimal carbon intensity window.</returns>
     /// <response code="200">Returns the requested forecast objects</response>
     /// <response code="400">Returned if any of the input parameters are invalid</response>
     /// <response code="500">Internal server error</response>
@@ -169,7 +169,7 @@ public class CarbonAwareController : ControllerBase
     /// </remarks>
     /// <param name="parameters">The request object <see cref="CarbonIntensityParametersDTO"/></param>
     /// <returns>A single object that contains the location, time boundaries and average carbon intensity value.</returns>
-    /// <response code="200">Returns a single object that contains the information about the request and the average marginal carbon intensity</response>
+    /// <response code="200">Returns a single object that contains the information about the request and the average carbon intensity</response>
     /// <response code="400">Returned if any of the requested items are invalid</response>
     /// <response code="500">Internal server error</response>
     [Produces("application/json", "application/json; charset=utf-8")]
@@ -202,11 +202,11 @@ public class CarbonAwareController : ControllerBase
     /// </summary>
     /// <remarks>
     /// The application only supports batching across a single location with different time boundaries. If multiple locations are provided, an error is returned.
-    /// For each item in the request array, the application returns a corresponding object containing the location, time boundaries, and average marginal carbon intensity. 
+    /// For each item in the request array, the application returns a corresponding object containing the location, time boundaries, and average carbon intensity. 
     /// </remarks>
-    /// <param name="requestedCarbonIntensities"> Array of inputs where each contains a "location", "startDate", and "endDate" for which to calculate average marginal carbon intensity. </param>
-    /// <returns>An array of CarbonIntensityDTO objects which each have a location, start time, end time, and the average marginal carbon intensity over that time period.</returns>
-    /// <response code="200">Returns an array of objects where each contains location, time boundaries and the corresponding average marginal carbon intensity</response>
+    /// <param name="requestedCarbonIntensities"> Array of inputs where each contains a "location", "startDate", and "endDate" for which to calculate average carbon intensity. </param>
+    /// <returns>An array of CarbonIntensityDTO objects which each have a location, start time, end time, and the average carbon intensity over that time period.</returns>
+    /// <response code="200">Returns an array of objects where each contains location, time boundaries and the corresponding average carbon intensity</response>
     /// <response code="400">Returned if any of the requested items are invalid</response>
     /// <response code="500">Internal server error</response>
     [Produces("application/json", "application/json; charset=utf-8")]

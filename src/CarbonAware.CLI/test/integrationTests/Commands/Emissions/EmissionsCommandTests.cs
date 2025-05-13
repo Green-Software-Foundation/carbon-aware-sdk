@@ -6,12 +6,11 @@ using System.Text.RegularExpressions;
 namespace CarbonAware.CLI.IntegrationTests.Commands.Emissions;
 
 /// <summary>
-/// Tests that the CLI handles and packages various responses from handlers 
+/// Tests that the CLI handles and packages various responses from handlers
 /// and data sources properly, including empty responses and exceptions.
 /// </summary>
 [TestFixture(DataSourceType.JSON)]
 [TestFixture(DataSourceType.WattTime)]
-[TestFixture(DataSourceType.ElectricityMapsFree)]
 internal class EmissionsCommandTests : IntegrationTestingBase
 {
     public EmissionsCommandTests(DataSourceType dataSource) : base(dataSource) { }
@@ -98,7 +97,7 @@ internal class EmissionsCommandTests : IntegrationTestingBase
         string expectedError = "Invalid parameters Start: Start must be before End ";
         // Act
         var exitCode = await InvokeCliAsync($"emissions -l {location} -s 2022-09-01T02:05:00Z -e 2022-09-01T01:00:00Z");
-        // Whitespace characters regex 
+        // Whitespace characters regex
         var regex = @"\s+";
         var output = Regex.Replace(_console.Error.ToString()!, regex, " ");
 
@@ -134,7 +133,6 @@ internal class EmissionsCommandTests : IntegrationTestingBase
     [Test]
     public async Task Emissions_AverageOption_ReturnsExpectedData()
     {
-        IgnoreTestForDataSource($"data source does not implement the '-a' switch", DataSourceType.ElectricityMapsFree);
 
         // Arrange
         var start = DateTimeOffset.Parse("2022-09-01T00:00:00Z");
@@ -171,7 +169,7 @@ internal class EmissionsCommandTests : IntegrationTestingBase
         // Assert
         Assert.AreEqual(1, exitCode);
         var expectedError = "Options --average and --best cannot be used together Option '-s' expects a single argument but 2 were provided. ";
-        // Whitespace characters regex 
+        // Whitespace characters regex
         var regex = @"\s+";
         var output = Regex.Replace(_console.Error.ToString()!, regex, " ");
 

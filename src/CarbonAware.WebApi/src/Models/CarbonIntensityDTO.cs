@@ -22,7 +22,7 @@ public record CarbonIntensityDTO
     [JsonPropertyName("endTime")]
     public DateTimeOffset? EndTime { get => _endTime; set => _endTime = value?.ToUniversalTime(); }
 
-    /// <summary>Value of the marginal carbon intensity in grams per kilowatt-hour.</summary>
+    /// <summary>Value of the carbon intensity in grams per kilowatt-hour.</summary>
     /// <example>345.434</example>
     [JsonPropertyName("carbonIntensity")]
     public double CarbonIntensity { get; set; }

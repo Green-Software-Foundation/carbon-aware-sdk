@@ -2,6 +2,32 @@
 
 All notable changes to the Carbon Aware SDK will be documented in this file.
 
+
+## [1.8] - 2025-04
+
+This release consolidates the ElectricityMaps sources, introduces new CO₂-intensity signal support in WattTime, and rounds out the release with documentation improvements and critical bug fixes [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.8](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.8).
+
+### Added
+
+
+- [PR #619] feat(ElectricityMaps source): unify ElectricityMaps and ElectricityMapsFree ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/619)
+- [PR #614] Make documentation for forecasts signal agnostic ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/614)
+- [PR #611] Support co2_aoer in WattTime ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/611)
+- [PR #450] Remove JSON examples from artifacts ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/450)
+
+And supporting issues:
+
+- [#612] Documentation: Update wording about marginal signal ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/612)
+- [#440] [Feature Contribution]: Remove JSON examples from WebAPI container ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/440)
+- [#396] [Feature Contribution]: Better to throw exception when future datetime is specified to endpoints for current/historical data ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/396)
+
+### Fixed 
+
+- [#613] [Bug]: Electricity Maps API configuration is out of date ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/613)
+- [PR #623] [URGENT] Set JsonStringConverter to JSON deserializer option in WattTimeClient ](https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/623)
+
+For more details, checkout [https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/628](https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues/628)
+
 ## [1.7] - 2025-01
 
 This release mainly introduces new clients libraries for NPM and Java [https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.7](https://github.com/Green-Software-Foundation/carbon-aware-sdk/labels/v1.7) 
