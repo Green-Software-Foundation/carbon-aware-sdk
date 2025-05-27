@@ -40,6 +40,9 @@ jobs:
         image: ${{ needs.make-image-name-for-pull.outputs.image }}
         ports:
           - 8080:8080
+        env:
+          DataSources__EmissionsDataSource: Json
+          DataSources__Configurations__Json__Type: JSON
         options: >-
           --health-cmd "curl -sS http://localhost:8080/health"
           --health-interval 3s
