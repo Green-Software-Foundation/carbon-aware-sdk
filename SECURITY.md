@@ -7,7 +7,7 @@ To report a security issue, please email carbon-aware-sdk@greensoftware.foundati
 Our contributors are comprised of volunteers so we cannot guarantee a specific response time, but someone from our team will reply and address the issue as soon as possible.
 
 # Security Review
-We perform regular reviews inline with the information provided below. All releases go through these reviews by multiple people in the project team prior to release as part of our quality and security review.
+We perform regular reviews in line with the information provided below. All releases go through these reviews by multiple people in the project team prior to release as part of our quality and security review.
 
 ## Basics
 ### Basic Project Website Content
