@@ -89,7 +89,7 @@ We perform regular reviews in line with the information provided below. All rele
 - No unpatched vulnerabilities of medium or higher severity that have been publicly known for more than 60 days - ✅ no such vulnerabilities
 
 ### Other security issues
-- Public repo doesn't leak private credential - ✅ does not do that
+- Public repo doesn't leak private credentials - ✅ does not do that
 
 ## Analysis
 ### Static code analysis
