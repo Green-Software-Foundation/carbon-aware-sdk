@@ -7,18 +7,18 @@ To report a security issue, please email carbon-aware-sdk@greensoftware.foundati
 Our contributors are comprised of volunteers so we cannot guarantee a specific response time, but someone from our team will reply and address the issue as soon as possible.
 
 # Security Review
-We perform regular reviews inline with the information provided below.  All releases go through these reviews but multiple people in the project team prior to release as part of our quality and security review.
+We perform regular reviews in line with the information provided below. All releases go through these reviews by multiple people in the project team prior to release as part of our quality and security review.
 
 ## Basics
 ### Basic Project Website Content
-- Describe what the project does - ✅  in README
+- Describe what the project does - ✅ in README
 - Provide info how to obtain/provide feedback and contribute - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/CONTRIBUTING.md#code-contribution-steps
 - Explain contribution process - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/CONTRIBUTING.md#collaborating-with-the-opensource-working-group
 
 ### FLOSS license
 - Must be released as FLOSS - ✅ MIT License https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/LICENSE
 - Must post the license - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/LICENSE
-- Also approved by OSI - ✅  https://opensource.org/license/MIT/
+- Also approved by OSI - ✅ https://opensource.org/license/MIT/
 
 ### Documentation
 - Provides basic documentation - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/tree/dev/docs
@@ -27,16 +27,16 @@ We perform regular reviews inline with the information provided below.  All rele
 ### Other
 - Project site, downloads etc must support HTTPS with TLS - ✅ using GitHub to host which supports this https://github.com/Green-Software-Foundation/carbon-aware-sdk/
 - Have mechanism for discussion - ✅ github issues https://github.com/Green-Software-Foundation/carbon-aware-sdk/issues
-- Project must be maintained - ✅ actively maintaned by GSF and its members
+- Project must be maintained - ✅ actively maintained by GSF and its members
 
 ## Change control
-###  Public VCS repo
+### Public VCS repo
 - Readable public VCS repo - ✅ yes, Github https://github.com/Green-Software-Foundation/carbon-aware-sdk/
 - Track changes - ✅ yes, Git https://github.com/Green-Software-Foundation/carbon-aware-sdk/commits/dev/
-- Interim versions between releases available for review - ✅ yes, interim versions actively developed and availble on the `dev` branch https://github.com/Green-Software-Foundation/carbon-aware-sdk
+- Interim versions between releases available for review - ✅ yes, interim versions actively developed and available on the `dev` branch https://github.com/Green-Software-Foundation/carbon-aware-sdk
 
 ### Unique versioning numbering
-- Unique indentifier for each release - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/releases
+- Unique identifier for each release - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/releases
 
 ### Release notes
 - Human readable release notes for each release (not git log) - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/releases
@@ -58,9 +58,9 @@ We perform regular reviews inline with the information provided below.  All rele
 - Must provide a working build system - ✅ https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/carbon-aware-cli.md#build-and-install https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/docs/containerization.md
 
 ### Automated test suite
-- Have at least one automated test suite and documentation hwo to run it - ✅  https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/.github/workflows/1-pr.yaml as automated CI during PRs
+- Have at least one automated test suite and documentation how to run it - ✅  https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/.github/workflows/1-pr.yaml as automated CI during PRs
 
-## New functionaility testing
+## New functionality testing
 - Formal/informal policy for adding tests for new features - ✅ PR template requires stating if a breaking feature added, maintainers ensure tests are in place: https://github.com/Green-Software-Foundation/carbon-aware-sdk/blob/dev/.github/pull_request_template.md 
 - Evidence of policy being adhered to - ✅ on release code coverage increase (new code added did not decrease test coverage): https://github.com/Green-Software-Foundation/carbon-aware-sdk/pull/437#issuecomment-1862346606 
 
@@ -79,17 +79,17 @@ We perform regular reviews inline with the information provided below.  All rele
 - https://www.bestpractices.dev/en/criteria/0#0.crypto_keylength - ✅ uses dotnet 8.0 implementations
 - https://www.bestpractices.dev/en/criteria/0#0.crypto_working - ✅ uses dotnet 8.0 implementations
 - https://www.bestpractices.dev/en/criteria/0#0.crypto_password_storage - ✅ ⚠️  uses dotnet 8.0 implementations
-- https://www.bestpractices.dev/en/criteria/0#0.crypto_random - ✅ uses dotnet 8.0 implementatons for HTTPS
+- https://www.bestpractices.dev/en/criteria/0#0.crypto_random - ✅ uses dotnet 8.0 implementations for HTTPS
 
 ### Secured delivery against man-in-the-middle (MITM) attacks
 - Delivery mechanisms that counters MITM - ✅ uses HTTPS
-- Cyrptographic hash NOT retrived over HTTP - ✅  ues HTTPS
+- Cryptographic hash NOT retrieved over HTTP - ✅ uses HTTPS
 
 ### Publicly known vulnerabilities fixed
-- No unpatched vulnerabilities of medium or higher severity that have been publicly known for more than 60 day - ✅ no such vulnerabilities
+- No unpatched vulnerabilities of medium or higher severity that have been publicly known for more than 60 days - ✅ no such vulnerabilities
 
 ### Other security issues
-- Public repo doesnt leak private credential - ✅ does not do that
+- Public repo doesn't leak private credentials - ✅ does not do that
 
 ## Analysis
 ### Static code analysis
