@@ -49,11 +49,11 @@
   <ItemGroup Label="FilesToCopy">
     <Content Include="$(AssemblyName).targets" Pack="true"
       PackagePath="build/$(AssemblyName).targets" />
-    <Content Include="$(TargetDir)/CarbonAware*.dll" Pack="true" PackagePath="lib/net8.0/" />
+    <Content Include="$(TargetDir)/CarbonAware*.dll" Pack="true" PackagePath="lib/net10.0/" />
   </ItemGroup>
 
   <ItemGroup Label="IncludeSymbols" Condition="$(IncludeSymbols) == true">
-    <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net8.0/" />
+    <Content Include="$(TargetDir)/CarbonAware*.pdb" Pack="true" PackagePath="lib/net10.0/" />
   </ItemGroup>
 
   <Target Name="CreateDatasourceDirectory" AfterTargets="Build">
