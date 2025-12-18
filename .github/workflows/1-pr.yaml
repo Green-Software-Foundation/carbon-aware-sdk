@@ -172,7 +172,6 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '10.0.x'
-          include-prerelease: false
       - name: Install dependencies
         run: dotnet restore
         working-directory: ${{ env.DOTNET_SRC_DIR }}
@@ -253,3 +252,26 @@ jobs:
           globs: |
             ./custom.markdownlint.jsonc
             {"*[^.github]/**,*"}.md
+
+  # Build and test Docusaurus documentation
+  docs-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./casdk-docs
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'yarn'
+          cache-dependency-path: casdk-docs/yarn.lock
+      
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+      
+      - name: Build documentation
+        run: yarn build
