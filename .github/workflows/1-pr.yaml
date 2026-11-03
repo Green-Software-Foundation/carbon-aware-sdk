@@ -183,8 +183,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
         working-directory: ${{ env.DOTNET_SRC_DIR }}
+      # dev may target a different framework than this PR; locate the built dll
       - name: Generate Open API
-        run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml ${{ env.DLL_FILE_PATH }} v1
+        run: dotnet tool run swagger tofile --output ./wwwroot/api/v1/swagger.yaml --yaml "$(ls ./bin/Release/net*/CarbonAware.WebApi.dll | head -n 1)" v1
         env:
           DataSources__EmissionsDataSource: Json
           DataSources__Configurations__Json__Type: JSON
