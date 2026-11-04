@@ -1,5 +1,5 @@
 # For OpenAPI document
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS openapi-env
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS openapi-env
 WORKDIR /app
 ENV DOTNET_ROLL_FORWARD LatestMajor
 COPY . ./
@@ -13,7 +13,7 @@ RUN dotnet tool restore && \
 
 
 # Builder
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
 ARG TARGETARCH
 WORKDIR /app
 ENV DOTNET_ROLL_FORWARD LatestMajor
@@ -24,7 +24,7 @@ RUN dotnet publish CarbonAware.WebApi/src/CarbonAware.WebApi.csproj -a $TARGETAR
 
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM mcr.microsoft.com/dotnet/aspnet:10.0
 # Install curl for health check
 RUN apt-get update && \
     apt-get install -y --no-install-recommends curl
